@@ -1,7 +1,7 @@
 // https://eslint.org/docs/rules/ for referring the rules of Eslint
 // https://prettier.io/docs/en/configuration.html for referring the configurations of prettier
 {
-  "extends": ["airbnb", "prettier", "plugin:node/recommended"],
+  "extends": ["airbnb-base", "prettier", "plugin:node/recommended"],
   "plugins": ["prettier"],
   "rules": {
     "no-unused-vars": "warn",
