@@ -41,7 +41,7 @@ prerequisites:
 1. Create a new branch
 
 ```
-	git checkout -b branch_name
+git checkout -b branch_name
 
 ```
 2. Make your relevant changes
