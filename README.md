@@ -8,20 +8,20 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them follow the [SETUP](https://github.com/CodeRoyale/codeRoyale-frontend/blob/master/SETUP.md#prerequisites)
+What things you need to install the software and how to install them follow the [SETUP](https://github.com/CodeRoyale/codeRoyale-frontend/blob/develop/SETUP.md#prerequisites)
 
 ### Installing
 
 Things you need to install before you get started with playing with the code.
-Follow the [Installation](https://github.com/CodeRoyale/codeRoyale-frontend/blob/master/SETUP.md#installation-and-usage)
+Follow the [Installation](https://github.com/CodeRoyale/codeRoyale-frontend/blob/develop/SETUP.md#installation-and-usage)
 
 ## Making changes
 
-Before starting to make [changes](https://github.com/CodeRoyale/codeRoyale-frontend/blob/master/SETUP.md#before-starting-to-make-changes)
+Before starting to make [changes](https://github.com/CodeRoyale/codeRoyale-frontend/blob/develop/SETUP.md#before-starting-to-make-changes)
 
 ## Coding style tests
 
-Before commiting make sure your code follows the standard code style on the orgnisation. This can be done using this [Guide](https://github.com/CodeRoyale/codeRoyale-api/blob/master/SETUP.md#before-commiting--pushing-to-repo)
+Before commiting make sure your code follows the standard code style on the orgnisation. This can be done using this [Guide](https://github.com/CodeRoyale/codeRoyale-api/blob/develop/SETUP.md#before-commiting--pushing-to-repo)
 
 ## Built With
 
@@ -31,7 +31,7 @@ Before commiting make sure your code follows the standard code style on the orgn
 
 ## Contributing
 
-Please read [CONTRIBUTING](https://github.com/CodeRoyale/codeRoyale-frontend/blob/master/CONTRIBUTING.md) for details on our code, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING](https://github.com/CodeRoyale/codeRoyale-frontend/blob/develop/CONTRIBUTING.md) for details on our code, and the process for submitting pull requests to us.
 
 ## Authors
 
