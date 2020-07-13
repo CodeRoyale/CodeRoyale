@@ -1,0 +1,93 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.app {
+  width: 90%;
+  margin: auto;
+}
+
+.header-container {
+  display: flex;
+  background-color: white;
+  color: black;
+}
+
+.header-links {
+  flex: 2;
+}
+
+.header-logo h2 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+
+.main-button {
+  background-color: #dd2c00;
+  border: solid 1px #dd2c00;
+  color: white;
+  font-weight: 700;
+  width: max-content;
+  padding: 13px 22px;
+  text-transform: uppercase;
+  border-radius: 6px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.main-button:hover {
+  background-color: #ffffff;
+  color: black;
+  transition: all 0.3s ease 0s;
+  transform: translateY(-3px);
+}
+
+.intro-container {
+  display: flex;
+}
+
+.intro-text {
+  margin: auto;
+}
+
+.intro-text-heading {
+  color: #dd2c00;
+}
+
+.intro-text-content {
+  color: #636363;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  line-height: 30px;
+}
+
+.intro-separator {
+  flex: 2;
+}
+
+.intro-image {
+  width: 500px;
+  height: 500px;
+}
+
+.footer-container {
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.popup-close-button {
+  margin-top: 20px;
+}
+
+.popup-close-para {
+  margin-bottom: 20px;
+}
