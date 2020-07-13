@@ -1,4 +1,4 @@
-# CodeRoyale-API
+# CodeRoyale-Frontend
 
 This repository holds the React (frontend) for the CodeRoyale platform. The goal of CodeRoyale is to create Competitive Programming platform where users can have coding battle with friends, random users and team battles to show case your DSA skills.
 
