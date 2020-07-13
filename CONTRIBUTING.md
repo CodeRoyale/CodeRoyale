@@ -82,6 +82,8 @@
 
 - If your PR is Work In Progress, please make a [Draft_Pull_Request](https://github.blog/2019-02-14-introducing-draft-pull-requests/) on GitHub. This indicates to other developers and reviewers that you’d like detailed feedback on your work, but it is incomplete. When a PR is in the draft state it cannot be merged into the master branch. Note that draft pull requests will run the “Github Actions - Branch” test suite, but will skip the more extensive “Github Actions - Pull Request” test suite.
 
+- The PR description must follow the PR template (feel free to add new headings for better description).
+
 - The body of the PR should describe the purpose of the PR.
 
   - When merged, this PR body will be part of the documentation for the next CodeRoyale release. Thus, the contents should be understandable to an average CodeRoyale instructor user or system administrator. The description can include links to related issues or PRs, but this description should not require the user to follow links to have a general understanding of the PR purpose.
