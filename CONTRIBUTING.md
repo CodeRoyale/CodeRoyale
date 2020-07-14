@@ -73,6 +73,7 @@
 
   - And `MODULE` is one of the following:
 
+    - Docs,
     - Frontend,
     - Code-Setup
 
