@@ -5,6 +5,7 @@
 import React, { Component } from 'react';
 import Button from './Button';
 import Modal from 'react-modal';
+import GoogleSignIn from './GoogleSignIn';
 
 Modal.setAppElement('#root');
 
@@ -58,6 +59,7 @@ class Header extends Component {
           <p className='popup-close-para'>
             You need to make an account to use CodeRoyale
           </p>
+          <GoogleSignIn />
           <button
             className='popup-close-button'
             onClick={(e) => this.setState({ isOpen: false })}
