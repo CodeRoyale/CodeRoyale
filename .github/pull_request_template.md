@@ -1,3 +1,6 @@
+<!-- Make sure you follow the PR title format [<TYPE>:<MODULE>] <SUBJECT> -->
+<!-- For more info visit the CONTRIBUTING.md file -->
+
 ## Description
 
 <!--- Describe your changes  -->
