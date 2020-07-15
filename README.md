@@ -1,50 +1,66 @@
 # CodeRoyale-Frontend
 
-This repository holds the React (frontend) for the CodeRoyale platform. The goal of CodeRoyale is to create Competitive Programming platform where users can have coding battle with friends, random users and team battles to show case your DSA skills.
+This is the frontend for **CodeRoyale**.
 
-## Getting Started
+## Setup and run
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+To setup the project locally follow the instructions:
 
-### Prerequisites
+#### Fork
 
-What things you need to install the software and how to install them follow the [SETUP](https://github.com/CodeRoyale/codeRoyale-frontend/blob/develop/SETUP.md#prerequisites)
+_**Note**_: _This is only needed if you want to contribute to the project._
 
-### Installing
+If you want to contribute to the project you will have to create your own copy of the project on GitHub. You can do this by clicking the Fork button that can be found on the top right corner of the [landing page](https://github.com/CodeRoyale/codeRoyale-frontend) of the repository.
 
-Things you need to install before you get started with playing with the code.
-Follow the [Installation](https://github.com/CodeRoyale/codeRoyale-frontend/blob/develop/SETUP.md#installation-and-usage)
+#### Clone
 
-## Making changes
+_**Note**_: _For this you need to install git on your machine. You can download the git tool from [here](https://git-scm.com/downloads)._
 
-Before starting to make [changes](https://github.com/CodeRoyale/codeRoyale-frontend/blob/develop/SETUP.md#before-starting-to-make-changes)
+- If you have forked the project, run the following command -
 
-## Coding style tests
+  `git clone https://github.com/YOUR_GITHUB_USER_NAME/codeRoyale-frontend`
 
-Before commiting make sure your code follows the standard code style on the orgnisation. This can be done using this [Guide](https://github.com/CodeRoyale/codeRoyale-api/blob/develop/SETUP.md#before-commiting--pushing-to-repo)
+  where `YOUR_GITHUB_USER_NAME` is your GitHub handle.
 
-## Built With
+- If you haven't forked the project, run the following command -
 
-- [React](https://reactjs.org/) - The frontend framework used
-- [npm](https://www.npmjs.com/get-npm) - Dependency Management
-- [ESlint](https://eslint.org/docs/user-guide/configuring) - Code Style
+  `git clone https://github.com/CodeRoyale/codeRoyale-frontend`
+
+#### Remote
+
+_**Note**_: _This is only needed if you want to contribute to the project._
+
+When a repository is cloned, it has a default remote named `origin` that points to your fork on GitHub, not the original repository it was forked from. To keep track of the original repository, you should add another remote named upstream. For this project it can be done by running the following command -
+
+`git remote add upstream https://github.com/CodeRoyale/codeRoyale-frontend`
+
+You can check that the previous command worked by running `git remote -v`. You should see the following output:
+
+```
+$ git remote -v
+origin  https://github.com/YOUR_GITHUB_USER_NAME/codeRoyale-frontend (fetch)
+origin  https://github.com/YOUR_GITHUB_USER_NAME/codeRoyale-frontend (push)
+upstream        https://github.com/CodeRoyale/codeRoyale-frontend (fetch)
+upstream        https://github.com/CodeRoyale/codeRoyale-frontend (push)
+```
+
+### Run app
+
+Download the latest stable version of NodeJs [here](https://nodejs.org/en/download/) and install it. Run `node --version` to verify successful installation.
+
+To get the frontend running locally:
+
+- Clone this repository
+- `npm install` to install all required dependencies
+- `npm start` to start the local server
 
 ## Contributing
 
-Please read [CONTRIBUTING](https://github.com/CodeRoyale/codeRoyale-frontend/blob/develop/CONTRIBUTING.md) for details on our code, and the process for submitting pull requests to us.
+**This project is under active development**
 
-## Authors
+Please read our [Contributing Guidelines](CONTRIBUTING.md)
 
-- **CodeRoyale** - _Initial work_ - [CodeRoyale](https://github.com/CodeRoyale)
+## Branches
 
-See also the list of [contributors](https://github.com/orgs/CodeRoyale/people) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-- Inspiration
-- Fun
-- Better
+- **master**: This branch contains the code running at production.
+- **develop**: This contains the latest code. All the contributing PRs must be sent to this branch.
