@@ -6,6 +6,7 @@
 
 :root {
   --side-size: 230px;
+  --harley-davidson-orange: #dd2c00;
 }
 
 * {
@@ -36,8 +37,8 @@
 }
 
 .main-button {
-  background-color: #dd2c00;
-  border: solid 1px #dd2c00;
+  background-color: var(--harley-davidson-orange);
+  border: solid 1px var(--harley-davidson-orange);
   color: white;
   font-weight: 700;
   width: max-content;
@@ -69,7 +70,7 @@
 }
 
 .intro-text-heading {
-  color: #dd2c00;
+  color: var(--harley-davidson-orange);
 }
 
 .intro-text-content {
@@ -149,7 +150,7 @@
 .game-start-button {
   width: 280px;
   height: 100px;
-  background-color: red;
+  background-color: var(--harley-davidson-orange);
   border: 0;
   border-radius: 5px;
   font-size: 200%;
@@ -161,7 +162,7 @@
 
 .game-start-button:hover {
   background-color: whitesmoke;
-  color: red;
+  color: var(--harley-davidson-orange);
   transition-duration: 0.2s;
 }
 

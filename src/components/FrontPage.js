@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from './front-page-components/Header';
-import Intro from './front-page-components/Intro';
-import Footer from './front-page-components/Footer';
+import Header from './Header';
+import Intro from './Intro';
+import Footer from './Footer';
 
 function FrontPage() {
   return (

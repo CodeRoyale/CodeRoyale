@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import StartButton from './lobby-components/StartButton';
-import ProfileCard from './lobby-components/ProfileCard';
+import StartButton from './StartButton';
+import ProfileCard from './ProfileCard';
 
 function Lobby() {
   const username = 'Sawarni Swaroop'; // Change this after getting the name from server...
