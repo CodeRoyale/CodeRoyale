@@ -5,7 +5,7 @@
 import React from 'react';
 import Button from './Button';
 import emoji from 'react-easy-emoji';
-import Coder from './assets/images/coding.svg';
+import Coder from '../../assets/images/coding.svg';
 
 function Intro() {
   return (

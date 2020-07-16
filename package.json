@@ -11,6 +11,8 @@
     "react-easy-emoji": "^1.4.0",
     "react-google-login": "^5.1.21",
     "react-modal": "^3.11.2",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1"
   },
   "scripts": {

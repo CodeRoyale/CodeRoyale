@@ -1,10 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap'); /* font-family: "Rowdies", cursive */
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap'); /*font-family: 'Pacifico', cursive;*/
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap'); /*font-family: 'Do Hyeon', sans-serif;*/
+
+/*Remove all the 'border: solid black;' from the lobby css while production...*/
+
+:root {
+  --side-size: 230px;
+}
+
 * {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
 }
 
-.App {
+.front-page {
   width: 90%;
   margin: auto;
 }
@@ -90,4 +100,97 @@
 
 .popup-close-para {
   margin-bottom: 20px;
+}
+
+/*************************************/
+/***** CSS for lobby starts here *****/
+/*************************************/
+.Lobby {
+  position: relative;
+}
+
+.header {
+  border: solid black;
+  height: 80px;
+}
+
+.sections {
+  border: solid black;
+  position: relative;
+  height: 400px;
+}
+
+.footer {
+  border: solid black;
+  height: 72px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.left-section {
+  border: solid black;
+  margin-right: var(--side-size);
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.right-section {
+  z-index: 1;
+  float: right;
+  border: solid black;
+  height: 100%;
+  width: var(--side-size);
+}
+
+.game-start-button {
+  width: 280px;
+  height: 100px;
+  background-color: red;
+  border: 0;
+  border-radius: 5px;
+  font-size: 200%;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  color: whitesmoke;
+  transition-duration: 0.2s;
+  font-family: 'Rowdies', cursive;
+}
+
+.game-start-button:hover {
+  background-color: whitesmoke;
+  color: red;
+  transition-duration: 0.2s;
+}
+
+.game-start-button:active {
+  box-shadow: 0 0px 0px;
+}
+
+.profile-card {
+  float: left;
+  height: 150px;
+  width: 150px;
+  text-align: center;
+}
+
+.profile-card-picture {
+  border: solid black;
+  height: 80px;
+  width: 80px;
+}
+
+.profile-card-name {
+  font-family: 'Rowdies', cursive;
+  font-size: large;
+}
+
+.versus-style {
+  float: left;
+  margin: 20px;
+  font-size: 30px;
+  color: #a70404;
+  font-family: 'Do Hyeon', sans-serif;
 }
