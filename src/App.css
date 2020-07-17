@@ -5,6 +5,8 @@
 /*Remove all the 'border: solid black;' from the lobby css while production...*/
 
 :root {
+  --side-size-percent-left: 80%;
+  --side-size-percent-right: calc(100% - var(--side-size-percent-left));
   --side-size: 230px;
   --harley-davidson-orange: #dd2c00;
 }
@@ -110,41 +112,33 @@
   position: relative;
 }
 
+.section {
+  width: var(--side-size-percent-left);
+  float: left;
+}
 .header {
-  border: solid black;
   height: 80px;
 }
-
-.sections {
-  border: solid black;
-  position: relative;
-  height: 400px;
+.left-section {
+  /*border: solid black;*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 463px;
+}
+.right-section {
+  height: 100%;
+  width: var(--side-size-percent-right);
+  background-color: lightgray;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  position: fixed;
+  right: 0;
 }
 
 .footer {
   border: solid black;
   height: 72px;
-  position: fixed;
-  bottom: 0;
   width: 100%;
-}
-
-.left-section {
-  border: solid black;
-  margin-right: var(--side-size);
-  height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-}
-
-.right-section {
-  z-index: 1;
-  float: right;
-  border: solid black;
-  height: 100%;
-  width: var(--side-size);
 }
 
 .game-start-button {
@@ -178,7 +172,6 @@
 }
 
 .profile-card-picture {
-  border: solid black;
   height: 80px;
   width: 80px;
 }
@@ -188,10 +181,34 @@
   font-size: large;
 }
 
-.versus-style {
+.sharable-link {
   float: left;
-  margin: 20px;
-  font-size: 30px;
-  color: #a70404;
-  font-family: 'Do Hyeon', sans-serif;
+  margin-left: 20px;
+}
+
+.sharable-link b {
+  font-size: 20px;
+}
+.sharable-link p {
+  border-left: 6px solid red;
+  background-color: whitesmoke;
+  padding: 8px;
+  float: left;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.match-link {
+  cursor: pointer;
+}
+.tooltip-text {
+  visibility: hidden;
+  width: 120px;
+  background-color: gray;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  margin-left: 5px;
+}
+.match-link:hover .tooltip-text {
+  visibility: visible;
 }
