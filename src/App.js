@@ -1,16 +1,20 @@
 import React from 'react';
 import './App.css';
-import Header from './components/Header';
-import Intro from './components/Intro';
-import Footer from './components/Footer';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Lobby from './components/Lobby';
+import FrontPage from './components/FrontPage';
 
 function App() {
   return (
-    <div className='App'>
-      <Header />
-      <Intro />
-      <Footer />
-    </div>
+    <Router>
+      <div>
+        <Switch>
+          <Route exact path='/lobby' component={Lobby} />
+          <Route exact path='' component={FrontPage} />
+          <Route exact path='/' component={FrontPage} />
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
