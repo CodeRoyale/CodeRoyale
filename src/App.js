@@ -6,7 +6,6 @@ import FrontPage from './components/FrontPage';
 
 function App() {
   return (
-    // I think this route should be modified...
     <Router>
       <div>
         <Switch>
