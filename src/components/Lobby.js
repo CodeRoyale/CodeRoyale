@@ -3,6 +3,7 @@ import StartButton from './StartButton';
 import ProfileCard from './ProfileCard';
 import SharableLink from './SharableLink';
 import TextHeading from './TextHeading';
+import ProfileButton from './ProfileButton';
 
 function Lobby() {
   const username = 'Sawarni Swaroop'; // Change this after getting the name from server...
@@ -30,12 +31,15 @@ function Lobby() {
   return (
     <div className='Lobby'>
       <div className='section'>
-        <div className='header'>
-          <TextHeading />
-        </div>
+        <div className='header'>{<TextHeading />}</div>
         <div className='left-section'>{startGame}</div>
       </div>
-      <div className='right-section'></div>
+      {
+        // TODO: Have to do somethings to make it look good...
+        <div className='right-section'>
+          <div className='profile-tab'>{<ProfileButton />}</div>
+        </div>
+      }
       {/*<div className='footer'></div>*/}
     </div>
   );

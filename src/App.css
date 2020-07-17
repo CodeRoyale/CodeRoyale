@@ -36,6 +36,7 @@
   margin-top: 20px;
   margin-bottom: 20px;
   margin-left: 20px;
+  float: left;
 }
 
 .main-button {
@@ -211,4 +212,29 @@
 }
 .match-link:hover .tooltip-text {
   visibility: visible;
+}
+
+.profile-button {
+  height: 60px;
+  width: 60px;
+  margin: 10px;
+  float: left;
+  border-radius: 50%;
+  background-image: url('/logo192.png');
+  border-style: solid;
+}
+
+.profile-popup {
+  background-color: whitesmoke;
+  padding: 10px;
+  margin-top: 5px;
+  margin-right: 10px;
+}
+
+.profile-tab {
+  position: relative;
+  border-bottom: solid var(--harley-davidson-orange) 5px;
+  display: flex;
+  flex: wrap;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
