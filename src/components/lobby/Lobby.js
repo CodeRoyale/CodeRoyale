@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import StartButton from '../../components/startButton/StartButton';
 import ProfileCard from '../../components/profileCard/ProfileCard';
-import SharableLink from '../../components/shareableLink/ShareableLink';
+import ShareableLink from '../../components/shareableLink/ShareableLink';
 import TextHeading from '../../components/textHeading/TextHeading';
 import ProfileButton from '../../components/profileButton/ProfileButton';
 import './Lobby.css';
@@ -24,7 +24,7 @@ function Lobby() {
     startGame = (
       <div>
         <ProfileCard name={username} imageUrl={userImageURL} />
-        <SharableLink matchLink={matchLink} />
+        <ShareableLink matchLink={matchLink} />
       </div>
     );
   }
