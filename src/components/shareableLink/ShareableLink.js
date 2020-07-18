@@ -1,5 +1,6 @@
 import React from 'react';
 import copy from 'copy-to-clipboard';
+import './ShareableLink.css';
 
 function SharableLink(props) {
   const matchLink = props.matchLink;

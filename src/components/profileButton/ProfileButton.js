@@ -1,5 +1,6 @@
 import React from 'react';
 import { Header, Popup, Grid } from 'semantic-ui-react';
+import './ProfileButton.css';
 
 function ProfileButton() {
   return (

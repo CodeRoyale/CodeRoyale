@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import StartButton from './StartButton';
-import ProfileCard from './ProfileCard';
-import SharableLink from './SharableLink';
-import TextHeading from './TextHeading';
-import ProfileButton from './ProfileButton';
+import StartButton from '../../components/startButton/StartButton';
+import ProfileCard from '../../components/profileCard/ProfileCard';
+import SharableLink from '../../components/shareableLink/ShareableLink';
+import TextHeading from '../../components/textHeading/TextHeading';
+import ProfileButton from '../../components/profileButton/ProfileButton';
+import './Lobby.css';
 
 function Lobby() {
   const username = 'Sawarni Swaroop'; // Change this after getting the name from server...
