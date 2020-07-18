@@ -1,4 +1,5 @@
 import React from 'react';
+import './StartButton.css';
 
 function StartButton(props) {
   const buttonText = 'Start';

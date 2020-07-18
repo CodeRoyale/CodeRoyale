@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import StartButton from './StartButton';
-import ProfileCard from './ProfileCard';
-import SharableLink from './SharableLink';
-import TextHeading from './TextHeading';
-import ProfileButton from './ProfileButton';
+import StartButton from '../../components/startButton/StartButton';
+import ProfileCard from '../../components/profileCard/ProfileCard';
+import ShareableLink from '../../components/shareableLink/ShareableLink';
+import LogoContainer from '../../components/logoContainer/LogoContainer';
+import ProfileButton from '../../components/profileButton/ProfileButton';
+import './Lobby.css';
 
 function Lobby() {
   const username = 'Sawarni Swaroop'; // Change this after getting the name from server...
@@ -23,7 +24,7 @@ function Lobby() {
     startGame = (
       <div>
         <ProfileCard name={username} imageUrl={userImageURL} />
-        <SharableLink matchLink={matchLink} />
+        <ShareableLink matchLink={matchLink} />
       </div>
     );
   }
@@ -31,7 +32,7 @@ function Lobby() {
   return (
     <div className='Lobby'>
       <div className='section'>
-        <div className='header'>{<TextHeading />}</div>
+        <div className='header'>{<LogoContainer />}</div>
         <div className='left-section'>{startGame}</div>
       </div>
       {

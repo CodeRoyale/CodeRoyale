@@ -1,0 +1,31 @@
+.sharable-link {
+  float: left;
+  margin-left: 20px;
+}
+
+.sharable-link b {
+  font-size: 20px;
+}
+.sharable-link p {
+  border-left: 6px solid red;
+  background-color: whitesmoke;
+  padding: 8px;
+  float: left;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.match-link {
+  cursor: pointer;
+}
+.tooltip-text {
+  visibility: hidden;
+  width: 120px;
+  background-color: gray;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  margin-left: 5px;
+}
+.match-link:hover .tooltip-text {
+  visibility: visible;
+}

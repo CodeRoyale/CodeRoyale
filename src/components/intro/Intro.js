@@ -3,9 +3,9 @@
 */
 
 import React from 'react';
-import Button from './Button';
 import emoji from 'react-easy-emoji';
-import Coder from './assets/images/coding.svg';
+import Button from '../../components/button/Button';
+import './Intro.css';
 
 function Intro() {
   return (
@@ -21,7 +21,7 @@ function Intro() {
         <Button text='Get Started' href='#' />
       </div>
       <div className='intro-separator' />
-      <img className='intro-image' alt='coder concentrating' src={Coder} />
+      {/* <img className='intro-image' alt='coder concentrating' src={Coder} /> */}
     </div>
   );
 }

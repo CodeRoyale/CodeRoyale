@@ -1,0 +1,17 @@
+.header-container {
+  display: flex;
+  background-color: white;
+  color: black;
+}
+
+.header-links {
+  flex: 2;
+}
+
+.popup-close-button {
+  margin-top: 20px;
+}
+
+.popup-close-para {
+  margin-bottom: 20px;
+}

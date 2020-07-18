@@ -4,6 +4,7 @@
 
 import React from 'react';
 import emoji from 'react-easy-emoji';
+import './Footer.css';
 
 function Footer() {
   return (
