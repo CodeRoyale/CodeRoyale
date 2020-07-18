@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import Button from '../../components/button/Button';
 import Modal from 'react-modal';
 import GoogleSignIn from '../../components/googleSignIn/GoogleSignIn';
-import TextHeading from '../../components/textHeading/TextHeading';
+import LogoContainer from '../../components/logoContainer/LogoContainer';
 import './Header.css';
 
 Modal.setAppElement('#root');
@@ -24,7 +24,7 @@ class Header extends Component {
     let offsetPx = heightOffset + 'px';
     return (
       <div className='header-container'>
-        <TextHeading />
+        <LogoContainer />
         <div className='header-links'></div>
         <div
           className='header-sign-in'

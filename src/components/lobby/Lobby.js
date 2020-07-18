@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import StartButton from '../../components/startButton/StartButton';
 import ProfileCard from '../../components/profileCard/ProfileCard';
 import ShareableLink from '../../components/shareableLink/ShareableLink';
-import TextHeading from '../../components/textHeading/TextHeading';
+import LogoContainer from '../../components/logoContainer/LogoContainer';
 import ProfileButton from '../../components/profileButton/ProfileButton';
 import './Lobby.css';
 
@@ -32,7 +32,7 @@ function Lobby() {
   return (
     <div className='Lobby'>
       <div className='section'>
-        <div className='header'>{<TextHeading />}</div>
+        <div className='header'>{<LogoContainer />}</div>
         <div className='left-section'>{startGame}</div>
       </div>
       {
