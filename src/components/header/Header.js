@@ -3,10 +3,11 @@
 */
 
 import React, { Component } from 'react';
-import Button from './button/Button';
+import Button from '../../components/button/Button';
 import Modal from 'react-modal';
-import GoogleSignIn from './GoogleSignIn';
-import TextHeading from './TextHeading';
+import GoogleSignIn from '../../components/GoogleSignIn';
+import TextHeading from '../../components/TextHeading';
+import './Header.css';
 
 Modal.setAppElement('#root');
 
