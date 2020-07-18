@@ -3,7 +3,7 @@
 */
 
 import React, { Component } from 'react';
-import Button from './Button';
+import Button from './button/Button';
 import Modal from 'react-modal';
 import GoogleSignIn from './GoogleSignIn';
 import TextHeading from './TextHeading';

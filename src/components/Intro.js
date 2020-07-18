@@ -3,9 +3,9 @@
 */
 
 import React from 'react';
-import Button from './Button';
 import emoji from 'react-easy-emoji';
 import Coder from './assets/images/coding.svg';
+import Button from './button/Button';
 
 function Intro() {
   return (
