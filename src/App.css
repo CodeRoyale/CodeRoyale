@@ -1,22 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap'); /* font-family: "Rowdies", cursive */
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap'); /*font-family: 'Pacifico', cursive;*/
-@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap'); /*font-family: 'Do Hyeon', sans-serif;*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap'); /* font-family: 'Roboto', sans-serif; */
 
 :root {
-  --side-size-percent-left: 80%;
-  --side-size-percent-right: calc(100% - var(--side-size-percent-left));
-  --side-size: 230px;
-  --harley-davidson-orange: #dd2c00;
+  --primary-color: #dd2c00;
+  --primary-font: 'Roboto', sans-serif;
 }
 
 * {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
-}
-
-.footer {
-  border: solid black;
-  height: 72px;
-  width: 100%;
 }

@@ -7,7 +7,7 @@ import FrontPage from './components/frontPage/FrontPage';
 function App() {
   return (
     <Router>
-      <div>
+      <div className='App'>
         <Switch>
           <Route exact path='/lobby' component={Lobby} />
           <Route exact path='' component={FrontPage} />
