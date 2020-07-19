@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Lobby from './components/lobby/Lobby';
 import FrontPage from './components/frontPage/FrontPage';
+import ProfileSettingsMain from './pages/profileSettingsPage/ProfileSettingsMain';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <div className='App'>
         <Switch>
           <Route exact path='/lobby' component={Lobby} />
+          <Route exact path='/settings' component={ProfileSettingsMain} />
           <Route exact path='' component={FrontPage} />
           <Route exact path='/' component={FrontPage} />
         </Switch>
