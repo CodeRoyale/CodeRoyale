@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import SigninButton from '../../components/signinButton/SigninButton';
 
 class FrontMain extends Component {
   render() {
     return (
       <div>
-        <h1>FrontPage</h1>
+        <SigninButton text='Sign in' />
       </div>
     );
   }
