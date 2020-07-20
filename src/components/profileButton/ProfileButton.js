@@ -1,33 +1,40 @@
-import React from 'react';
-import { Header, Popup, Grid } from 'semantic-ui-react';
+import React, { useState } from 'react';
 import './ProfileButton.css';
 
-function ProfileButton() {
-  return (
-    <Popup
-      trigger={<div className='profile-button'></div>}
-      on='click'
-      offset='10px'
-      position='bottom center'
-    >
-      <div className='profile-popup'>
-        <Grid centered divided rows={3}>
-          <Grid.Row textAlign='center'>
-            <Header as='h4'>UserName</Header>
-            <p>Recoil</p>
-            <hr></hr>
-          </Grid.Row>
-          <Grid.Row textAlign='center'>
-            <Header as='h4'>Rank</Header>
-            <p>1234</p>
-            <hr></hr>
-          </Grid.Row>
-          <Grid.Row textAlign='center'>
-            <Header as='h4'>Signout</Header>
-          </Grid.Row>
-        </Grid>
+function ProfileButton(props) {
+  const profileData = props.profileData;
+  const imageUrl = profileData.imageUrl;
+  const email = profileData.email;
+  const username = profileData.username;
+  const [profileClicked, setProfileClicked] = useState(false);
+  const onClickProfileButton = () => {
+    setProfileClicked(!profileClicked);
+  };
+  let profileMenuBar;
+  if (profileClicked) {
+    profileMenuBar = (
+      <div className='profile-menu-bar'>
+        <b className='profile-menu-bar-username'>{username}</b>
+        <br />
+        <span className='profile-menu-bar-email'>{email}</span>
+        <br />
+        <div className='profile-menu-bar-line'></div>
+        <br />
       </div>
-    </Popup>
+    );
+  } else {
+    profileMenuBar = null;
+  }
+  return (
+    <div className='profile-button'>
+      <img
+        className='profile-image'
+        src={imageUrl}
+        alt=''
+        onClick={onClickProfileButton}
+      />
+      {profileMenuBar}
+    </div>
   );
 }
 

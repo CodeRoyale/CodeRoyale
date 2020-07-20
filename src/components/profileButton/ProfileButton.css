@@ -1,16 +1,29 @@
 .profile-button {
-  height: 60px;
-  width: 60px;
-  margin: 10px;
-  float: left;
-  border-radius: 50%;
-  background-image: url('/logo192.png');
-  border-style: solid;
+  margin: 0 auto;
+  float: right;
+  margin-right: 17px;
+  margin-top: 10px;
+  text-align: right;
 }
 
-.profile-popup {
-  background-color: whitesmoke;
+.profile-image {
+  height: 55px;
+  width: 55px;
+  border-radius: 50%;
+}
+
+.profile-menu-bar {
+  width: 250px;
   padding: 10px;
-  margin-top: 5px;
-  margin-right: 10px;
+  text-align: left;
+  background-color: white;
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
+}
+
+.profile-menu-bar-line {
+  border: solid black 1px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-color: var(--primary-color);
+  opacity: 0.8;
 }
