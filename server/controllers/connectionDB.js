@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
-const URL = "mongodb+srv://dbroyale:dbroyale@cluster0.c9qtb.mongodb.net/dbroyale?retryWrites=true&w=majority";
+const URL = process.env.DATABASE_CONNECT;
 
 const connectDB = async () => {
     await mongoose.connect(URL, {
