@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import SigninButton from '../../components/signinButton/SigninButton';
+import FrontPageHeader from '../../components/frontpage-header/FrontPageHeader';
+import './FrontPageMain.css';
 
 class FrontMain extends Component {
   render() {
     return (
-      <div>
-        <SigninButton text='Sign in' />
+      <div className='front-page'>
+        <FrontPageHeader />
       </div>
     );
   }

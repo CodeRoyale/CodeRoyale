@@ -1,4 +1,4 @@
-.main-button {
+.auth-button {
   background-color: var(--primary-color);
   color: white;
   font-weight: 700;
@@ -12,7 +12,7 @@
   cursor: pointer;
 }
 
-.main-button:hover {
+.auth-button:hover {
   background-color: #c42700;
   color: #e8e8e8;
 }

@@ -1,0 +1,13 @@
+.frontpage-header {
+  display: flex;
+  padding: 20px;
+}
+
+.frontpage-header-links {
+  flex: 2;
+  margin: auto;
+}
+
+.coderoyale-title {
+  margin-right: 20px;
+}
