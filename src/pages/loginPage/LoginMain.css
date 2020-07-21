@@ -1,0 +1,10 @@
+.login-page {
+  margin: auto;
+  background-color: black;
+}
+
+.login-left-section {
+  width: 50%;
+  height: 100%;
+  background-color: blue;
+}
