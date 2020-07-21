@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import './ProfileButton.css';
+import '../settingsButton/Settingsbutton';
+import Settingsbutton from '../settingsButton/Settingsbutton';
+import SignoutButton from '../signoutButton/SignoutButton';
 
 function ProfileButton(props) {
   const profileData = props.profileData;
@@ -19,7 +22,12 @@ function ProfileButton(props) {
         <span className='profile-menu-bar-email'>{email}</span>
         <br />
         <div className='profile-menu-bar-line'></div>
-        <br />
+        <div className='profile-menu-bar-settings-button'>
+          <Settingsbutton />
+        </div>
+        <div className='profile-menu-bar-signout-button'>
+          <SignoutButton />
+        </div>
       </div>
     );
   } else {

@@ -5,6 +5,7 @@
 .lobby {
   position: relative;
   background-color: whitesmoke;
+  font-family: (--primary-font);
 }
 
 /************************************/
@@ -25,15 +26,62 @@
 /************************************/
 .lobby-body {
   margin-top: var(--lobby-header-height);
-  padding-top: 10px;
-
+  padding: 50px;
   height: 460px;
   width: 100%;
 }
+.lobby-body-left {
+  float: left;
+}
+.lobby-body-right {
+  float: right;
+}
 
+/* .lobby-text-dashboard {
+  margin-top: 10px;
+  float: left;
+  font-size: 20px;
+} */
+/* .lobby-design-dashboard {
+  margin-top: 14px;
+  margin-left: 3px;
+  float: left;
+  height: 20px;
+  width: 12px;
+  background-color: var(--primary-color);
+} */
+
+.lobby-text-heading {
+  margin-top: 50px;
+  color: rgba(128, 128, 128, 0.877);
+  font-size: 40px;
+}
+.lobby-play-body {
+  display: flex;
+  flex: wrap;
+  width: auto;
+  margin-top: 20px;
+}
+.lobby-play-friends {
+  margin-right: 10px;
+  float: left;
+  width: 320px;
+}
+
+.lobby-play-random {
+  margin-right: 10px;
+  float: right;
+  width: 320px;
+}
+
+.lobby-image {
+  width: 420px;
+  height: 400px;
+}
 /************************************/
 /*********** Footer CSS *************/
 /************************************/
 .lobby-footer {
+  text-align: center;
   height: 50px;
 }

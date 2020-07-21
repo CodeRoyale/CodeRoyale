@@ -13,7 +13,7 @@
 }
 
 .profile-menu-bar {
-  width: 250px;
+  width: 270px;
   padding: 10px;
   text-align: left;
   background-color: white;
@@ -22,8 +22,14 @@
 
 .profile-menu-bar-line {
   border: solid black 1px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-color: var(--primary-color);
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border-color: rgba(128, 128, 128, 0.425);
   opacity: 0.8;
+}
+.profile-menu-bar-settings-button {
+  text-align: center;
+}
+.profile-menu-bar-signout-button {
+  text-align: center;
 }

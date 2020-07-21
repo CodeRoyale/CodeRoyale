@@ -1,0 +1,14 @@
+.button-settings {
+  width: 210px;
+  height: 27px;
+  background-color: var(--primary-color);
+  color: white;
+  border: 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.19);
+  font-size: 100%;
+}
+
+.button-settings:active {
+  box-shadow: 0 0px 0px;
+}
