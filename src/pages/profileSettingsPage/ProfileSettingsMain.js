@@ -1,9 +1,6 @@
 import React from 'react';
 import Header from '../../components/header/Header';
 import './ProfileSettingsMain.css';
-import { Input } from 'semantic-ui-react';
-
-//components used from https://react.semantic-ui.com/
 
 const userEmailId = 'recoilop@gmail.com'; //to be fetched from api
 
@@ -15,16 +12,22 @@ function ProfileSettingsMain() {
       <div className='settings-title'>Profile Settings</div>
 
       <div className='options-header'>First Name</div>
-      <div className='options-input'>
-        <Input fluid style={{ width: '370px' }} />
+      <div>
+        <input type='text' size='90' className='options-input'></input>
       </div>
       <div className='options-header'>Last Name</div>
-      <div className='options-input'>
-        <Input fluid style={{ width: '670px' }} />
+      <div>
+        <input type='text' size='90' className='options-input'></input>
       </div>
       <div className='options-header'>Email Id</div>
-      <div className='options-input'>
-        <Input disabled placeholder={userEmailId} style={{ width: '500px' }} />
+      <div>
+        <input
+          type='text'
+          size='90'
+          disabled
+          placeholder={userEmailId}
+          className='options-input'
+        ></input>
       </div>
 
       <button className='save-button'>Save Settings</button>
