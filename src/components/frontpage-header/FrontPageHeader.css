@@ -1,6 +1,11 @@
 .frontpage-header {
   display: flex;
-  padding: 20px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  background-color: white;
+  width: 100%;
 }
 
 .frontpage-header-links {
@@ -8,6 +13,11 @@
   margin: auto;
 }
 
+.frontpage-header-links p {
+  background-color: white;
+}
+
 .coderoyale-title {
   margin-right: 20px;
+  background-color: white;
 }
