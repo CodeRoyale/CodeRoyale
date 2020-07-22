@@ -4,9 +4,9 @@ const Question = require('../models/questionModel');
 const route = express.Router();
 
 const {
-    getQuestion,
-    putQuestion,
-  } = require('../controllers/questionController');
+  getQuestion,
+  putQuestion,
+} = require('../controllers/questionController');
 
 route.post('/', putQuestion);
 
