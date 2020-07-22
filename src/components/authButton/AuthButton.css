@@ -10,6 +10,7 @@
   display: block;
   font-size: 14px;
   cursor: pointer;
+  border: none;
 }
 
 .auth-button:hover {

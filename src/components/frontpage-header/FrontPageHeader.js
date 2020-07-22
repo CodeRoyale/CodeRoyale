@@ -37,7 +37,7 @@ function FrontPageHeader() {
           </li>
         </ul>
       </div>
-      <AuthButton text='Sign in' />
+      <AuthButton text='Sign in' to='/login' />
     </div>
   );
 }

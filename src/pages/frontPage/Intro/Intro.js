@@ -12,7 +12,7 @@ function Intro() {
           coders from around the globe.
         </p>
         <div className='intro-signin'>
-          <AuthButton text='Sign in' />
+          <AuthButton text='Sign in' to='/login' />
         </div>
       </div>
       <div className='intro-separator'></div>
