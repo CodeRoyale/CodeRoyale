@@ -2,7 +2,8 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Lobby from './components/lobby/Lobby';
-import FrontPage from './components/frontPage/FrontPage';
+import FrontPage from './pages/frontPage/FrontPageMain';
+import LoginMain from './pages/loginPage/LoginMain';
 import ProfileSettingsMain from './pages/profileSettingsPage/ProfileSettingsMain';
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
     <Router>
       <div className='App'>
         <Switch>
+          <Route exact path='/login' component={LoginMain} />
           <Route exact path='/lobby' component={Lobby} />
           <Route exact path='/settings' component={ProfileSettingsMain} />
           <Route exact path='' component={FrontPage} />
