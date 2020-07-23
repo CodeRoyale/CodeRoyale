@@ -1,6 +1,7 @@
 .dashboard {
-  position: relative;
-  background-color: whitesmoke;
+  margin: auto;
+  height: 100%;
+  background-color: #f5f8f8;
   font-family: (--primary-font);
 }
 
