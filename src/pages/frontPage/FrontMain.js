@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FrontPageHeader from '../../components/frontPageHeader/FrontPageHeader';
 import './FrontMain.css';
-import Intro from './intro/Intro';
+import Intro from './Intro/Intro';
 
 class FrontMain extends Component {
   render() {
