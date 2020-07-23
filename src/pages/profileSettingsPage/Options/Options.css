@@ -1,0 +1,19 @@
+.settings-title {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+.setting-separator {
+  flex: 2;
+}
+
+.settings-image {
+  width: 450px;
+  height: 450px;
+  margin-right: 100px;
+}
+
+.settings-container {
+  display: flex;
+}

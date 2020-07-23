@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Lobby from './components/lobby/Lobby';
 import FrontPage from './pages/frontPage/FrontPageMain';
 import LoginMain from './pages/loginPage/LoginMain';
+import ProfileSettingsMain from './pages/profileSettingsPage/ProfileSettingsMain';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Switch>
           <Route exact path='/login' component={LoginMain} />
           <Route exact path='/lobby' component={Lobby} />
+          <Route exact path='/settings' component={ProfileSettingsMain} />
           <Route exact path='' component={FrontPage} />
           <Route exact path='/' component={FrontPage} />
         </Switch>
