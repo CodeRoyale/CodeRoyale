@@ -8,7 +8,7 @@ const os = require("os");
 const cors = require("cors");
 const http = require("http");
 const socketio = require("socket.io");
-const { checkToken } = require("./utils/auth");
+const { authUser } = require("./utils/auth");
 const { CONNECTION_ACK } = require("./socketActions/serverActions");
 
 //remove all this stupidity from here and port these to the new server
@@ -34,8 +34,7 @@ const io = socketio(server, {
 });
 
 try {
-  io.use(checkToken).on("connection", (socket) => {
-    socket.emit(CONNECTION_ACK);
+  io.use(authUser).on("connection", (socket) => {
     console.log("user allowed");
   });
 } catch (err) {
