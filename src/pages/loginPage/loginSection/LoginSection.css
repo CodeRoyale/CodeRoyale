@@ -1,0 +1,25 @@
+.login-section-container {
+  height: 100%;
+  width: 50%;
+}
+
+.login-section-content {
+  padding-top: 40%;
+}
+
+.login-section-title {
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.login-section-sign-up {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.span-text {
+  font-weight: bold;
+  cursor: pointer;
+  color: brown;
+}
