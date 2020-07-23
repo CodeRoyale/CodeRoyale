@@ -1,7 +1,7 @@
 import React from 'react';
 import './SettingsButton.css';
 
-function Settingsbutton() {
+function SettingsButton() {
   const onClickSettings = () => {
     // TODO: Function to go to settings page...
   };
@@ -15,4 +15,4 @@ function Settingsbutton() {
   );
 }
 
-export default Settingsbutton;
+export default SettingsButton;
