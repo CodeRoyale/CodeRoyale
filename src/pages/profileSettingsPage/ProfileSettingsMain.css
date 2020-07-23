@@ -1,19 +1,20 @@
 .settings-title {
-  margin-left: 180px;
+  margin-left: 100px;
   font-size: 30px;
   padding-bottom: 80px;
-  font-weight: 500;
+  font-weight: 700;
+  margin-top: 80px;
 }
 
 .options-header {
-  margin-left: 180px;
+  margin-left: 100px;
   font-size: 20px;
   margin-top: 15px;
 }
 
 .options-input {
   height: 30px;
-  margin-left: 180px;
+  margin-left: 100px;
   font-size: 20 px;
   padding: 5px;
   background-color: #eaecee;
@@ -26,15 +27,25 @@
   padding: 10px;
   font-weight: 1000;
   color: white;
-  margin-left: 180px;
+  margin-left: 100px;
   width: 300px;
   border-radius: 8px;
   border-style: none;
+  outline: none;
+  cursor: pointer;
 }
 
-.diabled-icon {
-  background-image: url('/logo192.png');
-  width: 10px;
-  height: 10px;
-  margin-left: 180px;
+.setting-separator {
+  flex: 2;
+}
+
+.settings-image {
+  width: 550px;
+  height: 550px;
+  margin-right: 160px;
+}
+
+.settings-container {
+  display: flex;
+  background-color: #f5f8f8;
 }
