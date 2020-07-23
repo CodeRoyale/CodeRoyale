@@ -1,7 +1,7 @@
 import React from 'react';
 import './SettingsPageHeader.css';
 
-function FrontPageHeader() {
+function SettingsPageHeader() {
   return (
     <div className='settings-header'>
       <h2 className='coderoyale-title'>CodeRoyale</h2>
@@ -9,4 +9,4 @@ function FrontPageHeader() {
   );
 }
 
-export default FrontPageHeader;
+export default SettingsPageHeader;

@@ -1,0 +1,18 @@
+.settings-title {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.setting-separator {
+  flex: 2;
+}
+
+.settings-image {
+  width: 550px;
+  height: 550px;
+}
+
+.settings-container {
+  display: flex;
+  background-color: #f5f8f8;
+}

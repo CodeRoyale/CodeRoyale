@@ -1,0 +1,12 @@
+.options-header {
+  font-size: 20px;
+  margin-top: 15px;
+}
+
+.options-input {
+  height: 30px;
+  font-size: 20px;
+  padding: 5px;
+  background-color: #eaecee;
+  border-style: none;
+}
