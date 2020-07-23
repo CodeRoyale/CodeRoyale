@@ -1,37 +1,95 @@
-.Lobby {
-  position: relative;
+:root {
+  --lobby-header-height: 75px;
 }
 
-.section {
-  width: var(--side-size-percent-left);
+.lobby {
+  position: relative;
+  background-color: whitesmoke;
+  font-family: (--primary-font);
+}
+
+/************************************/
+/*********** Header CSS *************/
+/************************************/
+.lobby-header {
+  height: var(--lobby-header-height);
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
+  background-color: white;
+}
+
+/************************************/
+/*********** Body CSS ***************/
+/************************************/
+.lobby-body {
+  margin-top: var(--lobby-header-height);
+  padding: 50px;
+  height: 460px;
+  width: 100%;
+}
+.lobby-body-left {
   float: left;
 }
-
-.header {
-  height: 80px;
+.lobby-body-right {
+  float: right;
 }
 
-.left-section {
-  /*border: solid black;*/
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 463px;
-}
+/* .lobby-text-dashboard {
+  margin-top: 10px;
+  float: left;
+  font-size: 20px;
+} */
+/* .lobby-design-dashboard {
+  margin-top: 14px;
+  margin-left: 3px;
+  float: left;
+  height: 20px;
+  width: 12px;
+  background-color: var(--primary-color);
+} */
 
-.right-section {
-  height: 100%;
-  width: var(--side-size-percent-right);
-  background-color: lightgray;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  position: fixed;
-  right: 0;
+.lobby-text-heading {
+  margin-top: 50px;
+  color: rgba(128, 128, 128, 0.877);
+  font-size: 40px;
 }
-
-.profile-tab {
-  position: relative;
-  border-bottom: solid var(--harley-davidson-orange) 5px;
+.lobby-play-body {
   display: flex;
   flex: wrap;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: auto;
+  margin-top: 20px;
+}
+.lobby-play-friends {
+  margin-right: 10px;
+  float: left;
+  width: 320px;
+}
+
+.lobby-play-random {
+  margin-right: 10px;
+  float: right;
+  width: 320px;
+}
+
+.lobby-image {
+  width: 420px;
+  height: 400px;
+}
+
+.lobby-link-share-card {
+  /* border: dotted black; */
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/************************************/
+/*********** Footer CSS *************/
+/************************************/
+.lobby-footer {
+  text-align: center;
+  height: 50px;
 }

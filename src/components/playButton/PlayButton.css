@@ -1,0 +1,19 @@
+.game-start-button {
+  width: 280px;
+  height: 30px;
+  background-color: var(--primary-color);
+  border: 0;
+  border-radius: 5px;
+  font-size: 110%;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  color: whitesmoke;
+  transition-duration: 0.2s;
+  font-family: var(--primary-font);
+  margin-top: 15px;
+}
+
+.game-start-button:hover {
+  background-color: whitesmoke;
+  color: var(--primary-color);
+  transition-duration: 0.2s;
+}

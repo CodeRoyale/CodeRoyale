@@ -1,7 +1,7 @@
 import React from 'react';
 import './Options.css';
-import SettingsButton from '../../../components/settingsButton/SettingsButton';
 import SettingsInput from '../../../components/SettingsInput/SettingsInput';
+import SaveButton from '../../../components/saveButton/SaveButton';
 
 function Options() {
   return (
@@ -17,7 +17,7 @@ function Options() {
           disabled={true}
         />
 
-        <SettingsButton />
+        <SaveButton />
       </div>
 
       <div className='setting-separator' />

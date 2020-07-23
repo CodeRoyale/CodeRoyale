@@ -1,4 +1,5 @@
 import React from 'react';
+import './LogoContainer.css';
 
 function TextHeading() {
   return (
