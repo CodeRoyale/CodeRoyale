@@ -3,7 +3,7 @@
 */
 
 import React, { Component } from 'react';
-import Button from '../../components/button/Button';
+import AuthButton from '../../components/authButton/AuthButton';
 import Modal from 'react-modal';
 import GoogleSignIn from '../../components/googleSignIn/GoogleSignIn';
 import LogoContainer from '../../components/logoContainer/LogoContainer';
@@ -30,7 +30,7 @@ class Header extends Component {
           className='header-sign-in'
           onClick={(e) => this.setState({ isOpen: true })}
         >
-          <Button text='sign in' href='#' />
+          <AuthButton text='sign in' href='#' />
         </div>
         <Modal
           isOpen={this.state.isOpen}
