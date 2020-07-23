@@ -6,16 +6,16 @@ const {
 const checkToken = (socket, next) => {
   try {
     // check the token
-    const userAllowed = true;
-
+    const userAllowed = socket.handshake.headers.authorization === "Bearer 123";
+    console.log(userAllowed);
     //if sucessfull
     if (userAllowed) {
       // connection accepted
 
-      socket.emit(CONNECTION_ACK);
       next();
     } else {
-      socket.emit(CONNECTION_DENY);
+      console.log("Invalid token");
+
       throw new Error("Auth failed");
     }
   } catch (err) {

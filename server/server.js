@@ -9,6 +9,7 @@ const cors = require("cors");
 const http = require("http");
 const socketio = require("socket.io");
 const { checkToken } = require("./utils/auth");
+const { CONNECTION_ACK } = require("./socketActions/serverActions");
 
 //remove all this stupidity from here and port these to the new server
 //crearte server using http
@@ -24,7 +25,7 @@ const io = socketio(server, {
       "Access-Control-Allow-Origin":
         process.env.NODE_ENV === "development"
           ? "http://localhost:3000"
-          : "https://kite-chat.herokuapp.com", //or the specific origin you want to give access to,
+          : "https://codeRoyale.herokuapp.com", //or the specific origin you want to give access to,
       "Access-Control-Allow-Credentials": true,
     };
     res.writeHead(200, headers);
@@ -34,65 +35,13 @@ const io = socketio(server, {
 
 try {
   io.use(checkToken).on("connection", (socket) => {
-    const { userName } = socket.handshake.headers;
-    //if user is not already connected
-    try {
-      addUser({ userName, socketId: socket.id });
-      socket.emit("connected", "User authorized and connected");
-      socket["_friendList"] = [];
-    } catch (err) {
-      socket.emit("disconnected", err.message);
-      socket.disconnect();
-    }
-
-    socket.on("onlineFriendList", (friendList, cb) => {
-      //notify all friends here
-      //this method could be way better
-      let onlineFriends = getOnline(friendList);
-
-      //storing the friends list associated with each socket
-      socket["_friendList"] = friendList;
-      //notifyAll
-      console.log(friendList);
-      onlineFriends.forEach((friend) => {
-        console.log(" conn ", userName, " tel ", friend);
-        io.to(getSocketID(friend)).emit("friendConnected", { userName });
-      });
-      cb({ onlineFriends });
-    });
-
-    //client1 --> server --> client2
-    socket.on("SEND_MESSAGE", ({ sender, receiver, content }, cb) => {
-      let socketId = getSocketID(receiver);
-      if (socketId) {
-        io.to(socketId).emit("RECV_MESSAGE", { sender, content });
-      }
-    });
-
-    socket.on("disconnect", () => {
-      //notifyFriends about this
-      //notifyAll
-      socket["_friendList"].forEach((friend) => {
-        console.log(" dis ", userName, " tel ", friend);
-        io.to(getSocketID(friend)).emit("friendDisconnected", {
-          userName,
-        });
-      });
-      removeUser(userName);
-    });
-
-    //friend request
-    socket.on("UPDATE_USER_DETAIL", ({ sender, receiver }) => {
-      let socketId = getSocketID(receiver);
-      if (socketId) {
-        io.to(socketId).emit("UPDATE_USER_DETAIL", { sender });
-      }
-    });
+    socket.emit(CONNECTION_ACK);
+    console.log("user allowed");
   });
 } catch (err) {
   console.log(err.message);
 }
-var whitelist = ["http://localhost:3000", "https://kite-chat.herokuapp.com"];
+var whitelist = ["http://localhost:3000", "https://codeRoyale.herokuapp.com"];
 var corsOptions = {
   origin: function (origin, callback) {
     //the !origin is for services like postman
@@ -116,7 +65,7 @@ app.use("/", require("./routes/main"));
 
 //start listening
 server.listen(PORT, () => {
-  console.log(`Chat Server running at - ${os.hostname()} on PORT : ${PORT}`);
+  console.log(`Loby Server running at - ${os.hostname()} on PORT : ${PORT}`);
 });
 
 module.exports = {
