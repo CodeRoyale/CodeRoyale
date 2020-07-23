@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const questionSchema = new mongoose.Schema({
-  question_title: {
+  questionTitle: {
     type: String,
     required: true,
   },
-  problem_code: {
+  problemCode: {
     type: String,
     required: true,
   },
@@ -21,25 +21,25 @@ const questionSchema = new mongoose.Schema({
     type: [String],
     required: true,
   },
-  date_added: {
+  dateAdded: {
     type: String,
-    required: true, 
+    required: true,
   },
-  time_limit: {
+  timeLimit: {
     type: Number,
     required: true,
     default: 1,
   },
-  source_limit:{
+  sourceLimit: {
     type: Number,
     required: true,
     default: 50000,
   },
-  difficulty:{
+  difficulty: {
     type: Number,
     required: true,
   },
 });
 
+// eslint-disable-next-line prettier/prettier
 module.exports = mongoose.model('question', questionSchema);
-
