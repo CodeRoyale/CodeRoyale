@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './ProfileButton.css';
-import '../settingsButton/Settingsbutton';
-import Settingsbutton from '../settingsButton/Settingsbutton';
+import Settingsbutton from '../settingsButton/SettingsButton';
 import SignoutButton from '../signoutButton/SignoutButton';
 
 function ProfileButton(props) {
