@@ -14,15 +14,3 @@
   color: var(--primary-color);
   background-color: whitesmoke;
 }
-.save-button {
-  margin-top: 30px;
-  background-color: var(--primary-color);
-  padding: 10px;
-  font-weight: 1000;
-  color: white;
-  width: 300px;
-  border-radius: 8px;
-  border-style: none;
-  outline: none;
-  cursor: pointer;
-}

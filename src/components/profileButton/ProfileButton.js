@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './ProfileButton.css';
-import Settingsbutton from '../settingsButton/SettingsButton';
 import SignoutButton from '../signoutButton/SignoutButton';
+import Settingsbutton from '../settingsButton/Settingsbutton';
 
 function ProfileButton(props) {
   const profileData = props.profileData;
