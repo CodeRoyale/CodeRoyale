@@ -5,9 +5,11 @@ import Options from './Options/Options';
 
 function ProfileSettingsMain() {
   return (
-    <div>
+    <div className='profile-settings'>
       <SettingsPageHeader />
-      <Options />
+      <div className='options-container'>
+        <Options />
+      </div>
     </div>
   );
 }

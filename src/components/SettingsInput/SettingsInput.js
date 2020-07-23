@@ -9,7 +9,7 @@ function SettingsInput(props) {
         <div>
           <input
             type='text'
-            size='90'
+            size='70'
             className='options-input'
             value={props.value}
           ></input>
@@ -23,7 +23,7 @@ function SettingsInput(props) {
         <div>
           <input
             type='text'
-            size='90'
+            size='70'
             disabled
             className='options-input'
             value={props.value}
