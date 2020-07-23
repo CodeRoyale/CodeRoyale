@@ -4,11 +4,13 @@ import LogoContainer from '../logoContainer/LogoContainer';
 import ProfileButton from '../profileButton/ProfileButton';
 import PlayFriendButton from '../playFriendButton/PlayFriendButton';
 import PlayRandomButton from '../playRandomButton/PlayRandomButton';
+import ShareLinkFriend from '../../pages/lobbyPage/shareLinkCardFriend/ShareLinkCardFriend';
 import lobby_image from '../assets/images/lobby_image.svg';
 
 function Lobby() {
   const alreadyClickedStartFriend = false; // Get this from API...
   const alreadyClickedStartRandom = false; // Get this form API...
+  const friendLink = 'Share this link to start'; // get this from API...
   const profileData = {
     imageUrl:
       'https://media-exp1.licdn.com/dms/image/C5103AQHuIxezqseoGQ/profile-displayphoto-shrink_200_200/0?e=1597276800&v=beta&t=tREaHG412Mr99Tfke80DMtuQtVQyB4378ptl3SlwDvI',
@@ -33,9 +35,18 @@ function Lobby() {
 
   let startGame;
   if (clickedStartFriend) {
-    // TODO: UI when clicked play with friends...
+    startGame = (
+      <div className='lobby-link-share-card'>
+        <ShareLinkFriend profileData={profileData} sharableLink={friendLink} />
+      </div>
+    );
   } else if (clickedStartRandom) {
     // TODO: UI when clicked play with random...
+    startGame = (
+      <div className='lobby-link-share-card'>
+        <ShareLinkFriend profileData={profileData} sharableLink={friendLink} />
+      </div>
+    );
   } else {
     startGame = (
       <>

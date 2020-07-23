@@ -4,7 +4,7 @@
   background-color: var(--primary-color);
   border: 0;
   border-radius: 5px;
-  font-size: 150%;
+  font-size: 110%;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   color: whitesmoke;
   transition-duration: 0.2s;
@@ -16,8 +16,4 @@
   background-color: whitesmoke;
   color: var(--primary-color);
   transition-duration: 0.2s;
-}
-
-.game-start-button:active {
-  box-shadow: 0 0px 0px;
 }

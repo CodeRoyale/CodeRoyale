@@ -78,6 +78,14 @@
   width: 420px;
   height: 400px;
 }
+
+.lobby-link-share-card {
+  /* border: dotted black; */
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 /************************************/
 /*********** Footer CSS *************/
 /************************************/

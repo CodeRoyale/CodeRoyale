@@ -9,6 +9,8 @@
   font-size: 100%;
 }
 
-.button-settings:active {
-  box-shadow: 0 0px 0px;
+.button-settings:hover {
+  cursor: pointer;
+  color: var(--primary-color);
+  background-color: whitesmoke;
 }

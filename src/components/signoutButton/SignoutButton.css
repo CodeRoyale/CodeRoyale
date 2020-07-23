@@ -10,6 +10,6 @@
   margin-top: 10px;
 }
 
-.button-signout:active {
-  box-shadow: 0 0px 0px;
+.button-signout:hover {
+  cursor: pointer;
 }

@@ -12,6 +12,10 @@
   border-radius: 50%;
 }
 
+.profile-image:hover {
+  cursor: pointer;
+}
+
 .profile-menu-bar {
   width: 270px;
   padding: 10px;
