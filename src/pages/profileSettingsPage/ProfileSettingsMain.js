@@ -1,7 +1,7 @@
 import React from 'react';
-import SettingsPageHeader from '../../components/SettingsPageHeader/SettingsPageHeader';
+import SettingsPageHeader from '../../components/settingsPageHeader/SettingsPageHeader';
 import './ProfileSettingsMain.css';
-import Options from './Options/Options';
+import Options from './options/Options';
 
 function ProfileSettingsMain() {
   return (

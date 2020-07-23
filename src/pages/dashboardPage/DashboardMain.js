@@ -1,6 +1,5 @@
 import React from 'react';
-import './DashboardPage.css';
-import dashboard_image from '../../components/assets/images/lobby_image.svg';
+import './DashboardMain.css';
 import DashboardNavBar from '../../components/dashboardNavBar/DashboardNavBar';
 import PlayButton from '../../components/playButton/PlayButton';
 
@@ -48,7 +47,11 @@ function DashboardMain() {
           </div>
         </div>
         <div className='dashboard-body-right'>
-          <img className='dashboard-image' src={dashboard_image} alt='' />
+          <img
+            className='dashboard-image'
+            src='./images/lobby_image.svg'
+            alt=''
+          />
         </div>
       </div>
       <div className='dashboard-footer'></div>
