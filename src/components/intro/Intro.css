@@ -1,0 +1,27 @@
+.intro-container {
+  display: flex;
+}
+
+.intro-text {
+  margin: auto;
+}
+
+.intro-text-heading {
+  color: var(--harley-davidson-orange);
+}
+
+.intro-text-content {
+  color: #636363;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  line-height: 30px;
+}
+
+.intro-separator {
+  flex: 2;
+}
+
+.intro-image {
+  width: 500px;
+  height: 500px;
+}
