@@ -1,23 +1,23 @@
 import React from 'react';
 import AuthButton from '../../../components/authButton/AuthButton';
-import './Intro.css';
+import './Description.css';
 
-function Intro() {
+function Description() {
   return (
-    <div className='intro-container'>
-      <div className='intro-text-container'>
-        <p className='intro-heading'>Compete with other coders</p>
-        <p className='intro-text'>
+    <div className='desc-container'>
+      <div className='desc-text-container'>
+        <p className='desc-heading'>Compete with other coders</p>
+        <p className='desc-text'>
           Challenge your friends to a coding match or play <br /> against random
           coders from around the globe.
         </p>
-        <div className='intro-signin'>
+        <div className='desc-signin'>
           <AuthButton text='Sign in' to='/login' />
         </div>
       </div>
-      <div className='intro-separator'></div>
+      <div className='desc-separator'></div>
       <img
-        className='intro-image'
+        className='desc-image'
         alt='coder programming'
         src='/images/programming.svg'
       />
@@ -25,4 +25,4 @@ function Intro() {
   );
 }
 
-export default Intro;
+export default Description;
