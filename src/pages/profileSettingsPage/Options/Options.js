@@ -1,7 +1,7 @@
 import React from 'react';
 import './Options.css';
-import SettingsInput from '../../../components/settingsInput/SettingsInput';
 import SaveButton from '../../../components/saveButton/SaveButton';
+import SettingsField from '../../../components/settingsField/SettingsField';
 
 function Options() {
   return (
@@ -9,9 +9,9 @@ function Options() {
       <div>
         <div className='settings-title'>Profile Settings</div>
 
-        <SettingsInput heading='First Name' value='Alan' disabled={false} />
-        <SettingsInput heading='Last Name' value='Henry' disabled={false} />
-        <SettingsInput
+        <SettingsField heading='First Name' value='Alan' disabled={false} />
+        <SettingsField heading='Last Name' value='Henry' disabled={false} />
+        <SettingsField
           heading='Email'
           value='alanhenry@gmail.com'
           disabled={true}
