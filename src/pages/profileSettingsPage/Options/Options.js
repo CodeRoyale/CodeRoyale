@@ -1,6 +1,6 @@
 import React from 'react';
 import './Options.css';
-import SettingsInput from '../../../components/settingsInput/SettingsInput';
+import SettingsInput from '../../../components/SettingsInput/SettingsInput';
 import SaveButton from '../../../components/saveButton/SaveButton';
 
 function Options() {

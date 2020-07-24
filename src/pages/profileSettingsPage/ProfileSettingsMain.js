@@ -1,5 +1,5 @@
 import React from 'react';
-import SettingsPageHeader from '../../components/settingsPageHeader/SettingsPageHeader';
+import SettingsPageHeader from '../../components/SettingsPageHeader/SettingsPageHeader';
 import './ProfileSettingsMain.css';
 import Options from './Options/Options';
 
