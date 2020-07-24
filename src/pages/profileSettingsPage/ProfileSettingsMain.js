@@ -1,6 +1,6 @@
 import React from 'react';
 import './ProfileSettingsMain.css';
-import Options from './Options/Options';
+import Options from './options/Options';
 import SettingsHeader from '../../components/settingsHeader/SettingsHeader';
 
 function ProfileSettingsMain() {
