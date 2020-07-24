@@ -4,16 +4,15 @@
   margin-bottom: 40px;
 }
 
-.setting-separator {
-  flex: 2;
-}
-
 .settings-image {
-  width: 450px;
-  height: 450px;
-  margin-right: 100px;
+  float: left;
+  width: 400px;
+  height: 400px;
 }
-
+.settings-forms {
+  margin-top: 50px;
+  float: left;
+}
 .settings-container {
   display: flex;
 }

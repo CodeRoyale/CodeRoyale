@@ -8,7 +8,7 @@
 /*********** Body CSS ***************/
 /************************************/
 .dashboard-body {
-  margin-top: 75px;
+  margin-top: var(--height-nav-bar);
   padding: 50px;
   height: 460px;
   width: 100%;
@@ -23,13 +23,14 @@
 .dashboard-text-heading {
   margin-top: 50px;
   color: rgba(128, 128, 128, 0.877);
-  font-size: 40px;
+  font-size: 45px;
 }
 .dashboard-play-body {
   display: flex;
   flex: wrap;
   width: auto;
   margin-top: 20px;
+  font-size: 18px;
 }
 .dashboard-play-friends {
   margin-right: 10px;

@@ -1,5 +1,9 @@
+:root {
+  --height-nav-bar: 75px;
+}
+
 .dashboard-nav-bar {
-  height: 75px;
+  height: var(--height-nav-bar);
   width: 100%;
   position: fixed;
   top: 0;

@@ -6,7 +6,7 @@ import SettingsField from '../../../components/settingsField/SettingsField';
 function SettingsBody() {
   return (
     <div className='settings-container'>
-      <div>
+      <div className='settings-forms'>
         <div className='settings-title'>Profile Settings</div>
 
         <SettingsField heading='First Name' value='Alan' disabled={false} />
@@ -19,8 +19,6 @@ function SettingsBody() {
 
         <SaveButton />
       </div>
-
-      <div className='setting-separator' />
 
       <img
         className='settings-image'
