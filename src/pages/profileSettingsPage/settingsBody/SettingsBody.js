@@ -1,9 +1,9 @@
 import React from 'react';
-import './Options.css';
+import './SettingsBody.css';
 import SaveButton from '../../../components/saveButton/SaveButton';
 import SettingsField from '../../../components/settingsField/SettingsField';
 
-function Options() {
+function SettingsBody() {
   return (
     <div className='settings-container'>
       <div>
@@ -31,4 +31,4 @@ function Options() {
   );
 }
 
-export default Options;
+export default SettingsBody;
