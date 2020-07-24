@@ -1,7 +1,7 @@
 import React from 'react';
 import './LogoContainer.css';
 
-function TextHeading() {
+function LogoContainer() {
   return (
     <div className='header-logo'>
       <h2>CodeRoyale</h2>
@@ -9,4 +9,4 @@ function TextHeading() {
   );
 }
 
-export default TextHeading;
+export default LogoContainer;
