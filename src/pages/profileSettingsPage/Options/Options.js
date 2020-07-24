@@ -13,7 +13,7 @@ function Options() {
         <SettingsField heading='Last Name' value='Henry' disabled={false} />
         <SettingsField
           heading='Email'
-          value='alanhenryjoel@gmail.com'
+          value='alanhenry@gmail.com'
           disabled={true}
         />
 
