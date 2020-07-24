@@ -6,10 +6,10 @@
   border: 0;
   border-radius: 5px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.19);
-  font-size: 100%;
   margin-top: 10px;
 }
 
 .button-signout:hover {
-  cursor: pointer;
+  background-color: rgb(202, 0, 0);
+  color: white;
 }

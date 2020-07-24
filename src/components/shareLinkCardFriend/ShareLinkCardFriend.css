@@ -10,7 +10,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: var(--primary-font);
 }
 .share-link-card-body {
   height: 200px;
@@ -64,18 +63,5 @@
 
 .share-link-card-copy-button {
   width: 220px;
-  color: white;
-  background-color: var(--primary-color);
-  border: 0;
   height: 27px;
-  border-radius: 5px;
-  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
-  transition-duration: 0.2s;
-  font-size: 15px;
-}
-
-.share-link-card-copy-button:hover {
-  color: var(--primary-color);
-  background-color: whitesmoke;
-  cursor: pointer;
 }

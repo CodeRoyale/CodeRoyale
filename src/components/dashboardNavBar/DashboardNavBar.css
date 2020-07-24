@@ -1,9 +1,27 @@
+:root {
+  --height-nav-bar: 75px;
+}
+
 .dashboard-nav-bar {
-  height: 75px;
+  height: var(--height-nav-bar);
   width: 100%;
   position: fixed;
   top: 0;
   z-index: 1;
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
   background-color: white;
+  padding: 10px;
+}
+
+.nav-bar-logo {
+  display: flex;
+  float: left;
+  height: 100%;
+  align-items: center;
+}
+
+.nav-bar-profile {
+  float: right;
+  height: 100%;
+  align-items: center;
 }

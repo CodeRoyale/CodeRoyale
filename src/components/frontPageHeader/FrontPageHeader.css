@@ -5,12 +5,9 @@
   padding-right: 20px;
   padding-bottom: 20px;
   background-color: white;
+  height: var(--height-nav-bar);
   width: 100%;
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
-}
-
-.coderoyale-title {
-  margin-right: 20px;
 }
 
 .frontpage-header-links {
@@ -23,6 +20,7 @@
 }
 
 .frontpage-header-links li {
+  margin-left: 20px;
   cursor: pointer;
   color: #575757;
 }

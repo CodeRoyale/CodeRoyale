@@ -9,6 +9,27 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+  font-family: var(--primary-font);
+}
+
+button {
+  border: none;
+  background-color: var(--primary-color);
+  color: whitesmoke;
+  border-radius: 5px;
+  font-size: 15px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19);
+  transition-duration: 0.2s;
+}
+button:hover {
+  background-color: whitesmoke;
+  color: var(--primary-color);
+}
+button:focus {
+  outline: 0;
+}
+button:active {
+  box-shadow: none;
 }
 
 body > #root > div {

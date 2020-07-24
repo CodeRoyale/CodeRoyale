@@ -14,7 +14,7 @@ function LobbyMain() {
   return (
     <div className='lobby'>
       <div className='lobby-header'>
-        <DashboardNavBar profileData={profileData} />
+        <DashboardNavBar />
       </div>
       <div className='lobby-body'>
         <ShareLinkCardFriend
