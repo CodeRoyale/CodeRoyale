@@ -9,7 +9,7 @@ function Intro() {
         <p className='intro-heading'>Compete with other coders</p>
         <p className='intro-text'>
           Challenge your friends to a coding match or play <br /> against random
-          coders from around the globe.
+          coders from around the globe gg.
         </p>
         <div className='intro-signin'>
           <AuthButton text='Sign in' to='/login' />
