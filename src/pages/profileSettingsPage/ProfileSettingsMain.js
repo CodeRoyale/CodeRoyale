@@ -1,12 +1,12 @@
 import React from 'react';
-import SettingsPageHeader from '../../components/SettingsPageHeader/SettingsPageHeader';
 import './ProfileSettingsMain.css';
 import Options from './Options/Options';
+import SettingsHeader from '../../components/settingsHeader/SettingsHeader';
 
 function ProfileSettingsMain() {
   return (
     <div className='profile-settings'>
-      <SettingsPageHeader />
+      <SettingsHeader />
       <div className='options-container'>
         <Options />
       </div>

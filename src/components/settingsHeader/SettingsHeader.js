@@ -1,7 +1,7 @@
 import React from 'react';
-import './SettingsPageHeader.css';
+import './SettingsHeader.css';
 
-function SettingsPageHeader() {
+function SettingsHeader() {
   return (
     <div className='settings-header'>
       <h2 className='coderoyale-title'>CodeRoyale</h2>
@@ -9,4 +9,4 @@ function SettingsPageHeader() {
   );
 }
 
-export default SettingsPageHeader;
+export default SettingsHeader;
