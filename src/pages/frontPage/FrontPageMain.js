@@ -3,7 +3,7 @@ import FrontPageHeader from '../../components/frontPageHeader/FrontPageHeader';
 import './FrontPageMain.css';
 import Intro from './intro/Intro';
 
-class FrontMain extends Component {
+class FrontPageMain extends Component {
   render() {
     return (
       <div className='front-page'>
@@ -14,4 +14,4 @@ class FrontMain extends Component {
   }
 }
 
-export default FrontMain;
+export default FrontPageMain;
