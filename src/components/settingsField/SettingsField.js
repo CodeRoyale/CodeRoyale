@@ -1,7 +1,7 @@
 import React from 'react';
-import './SettingsInput.css';
+import './SettingsField.css';
 
-function SettingsInput(props) {
+function SettingsField(props) {
   if (!props.disabled) {
     return (
       <div>
@@ -34,4 +34,4 @@ function SettingsInput(props) {
   }
 }
 
-export default SettingsInput;
+export default SettingsField;

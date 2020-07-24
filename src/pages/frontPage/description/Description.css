@@ -1,31 +1,31 @@
-.intro-container {
+.desc-container {
   display: flex;
   padding: 20px;
   width: 90%;
   margin: auto;
 }
 
-.intro-separator {
+.desc-separator {
   flex: 2;
 }
 
-.intro-image {
+.desc-image {
   width: 650px;
   height: 650px;
   margin: auto;
 }
 
-.intro-text-container {
+.desc-text-container {
   margin: auto;
 }
 
-.intro-heading {
+.desc-heading {
   margin-bottom: 16px;
   font-size: 43px;
   font-weight: bold;
 }
 
-.intro-text {
+.desc-text {
   margin-bottom: 20px;
   font-size: 22px;
 }

@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import FrontPageHeader from '../../components/frontPageHeader/FrontPageHeader';
 import './FrontPageMain.css';
-import Intro from './Intro/Intro';
+import Description from './description/Description';
 
-class FrontMain extends Component {
+class FrontPageMain extends Component {
   render() {
     return (
       <div className='front-page'>
         <FrontPageHeader />
-        <Intro />
+        <Description />
       </div>
     );
   }
 }
 
-export default FrontMain;
+export default FrontPageMain;

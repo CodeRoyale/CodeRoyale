@@ -1,17 +1,17 @@
 import React from 'react';
-import './Options.css';
-import SettingsInput from '../../../components/SettingsInput/SettingsInput';
+import './SettingsBody.css';
 import SaveButton from '../../../components/saveButton/SaveButton';
+import SettingsField from '../../../components/settingsField/SettingsField';
 
-function Options() {
+function SettingsBody() {
   return (
     <div className='settings-container'>
       <div>
         <div className='settings-title'>Profile Settings</div>
 
-        <SettingsInput heading='First Name' value='Alan' disabled={false} />
-        <SettingsInput heading='Last Name' value='Henry' disabled={false} />
-        <SettingsInput
+        <SettingsField heading='First Name' value='Alan' disabled={false} />
+        <SettingsField heading='Last Name' value='Henry' disabled={false} />
+        <SettingsField
           heading='Email'
           value='alanhenry@gmail.com'
           disabled={true}
@@ -31,4 +31,4 @@ function Options() {
   );
 }
 
-export default Options;
+export default SettingsBody;
