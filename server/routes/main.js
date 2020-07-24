@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) =>
-  res.send(`COdeRoyae Lobby Server is up and running`)
+  res.send(`CodeRoyae Lobby Server is up and running`)
 );
 
 module.exports = router;

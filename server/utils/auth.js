@@ -3,7 +3,7 @@ const {
   CONNECTION_DENY,
 } = require("../socketActions/serverActions");
 
-const { userConnnected } = require("../controllers/userController");
+const { addUser } = require("../controllers/userController");
 
 const checkToken = (token) => {
   if (token[0] !== "z") {
@@ -21,15 +21,17 @@ const authUser = (socket, next) => {
     // token format "Bearer Token"
     const token = socket.handshake.headers.authorization.split(" ")[1];
     const payload = checkToken(token);
+
     //if sucessfull
     if (payload) {
       // connection accepted
       // now check if user is already connected or not
-      if (!addUser(payload.userName)) {
+      if (!addUser(payload.userName, socket.id)) {
         socket.emit(CONNECTION_ACK);
+        socket.userDetails = payload;
         next();
       } else {
-        throw new Error("Auth failed");
+        throw new Error("Already Conected");
       }
     } else {
       console.log("Invalid token");

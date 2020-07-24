@@ -10,6 +10,7 @@ const http = require("http");
 const socketio = require("socket.io");
 const { authUser } = require("./utils/auth");
 const { CONNECTION_ACK } = require("./socketActions/serverActions");
+const { createRoom } = require("../server/controllers/roomController");
 
 //remove all this stupidity from here and port these to the new server
 //crearte server using http
@@ -35,7 +36,9 @@ const io = socketio(server, {
 
 try {
   io.use(authUser).on("connection", (socket) => {
-    console.log("user allowed");
+    let userDetails = socket.userDetails;
+    let config = { admin: userDetails.userName };
+    createRoom(config);
   });
 } catch (err) {
   console.log(err.message);
@@ -61,6 +64,8 @@ app.use(express.json());
 
 //Routes
 app.use("/", require("./routes/main"));
+app.use("/users", require("./routes/users"));
+app.use("/rooms", require("./routes/rooms"));
 
 //start listening
 server.listen(PORT, () => {

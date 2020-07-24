@@ -3,9 +3,10 @@ users = {};
 
 // all details related to a user connected to socket will be stored here
 
-const adduser = (userName, socket_id) => {
+const addUser = (userName, socket_id) => {
   if (!users[userName]) {
     users[userName] = socket_id;
+    return true;
   }
   return false;
 };
@@ -20,11 +21,17 @@ const deleteUser = (userName) => {
 
 // this is just for extra checking
 // can change room_id and team_name
-const updateUserDetails = (changes) => {
+const setRoom = (room_id, team_name) => {
+  //check if user is still connected
   if (users[userName]) {
-    users[userName].changes.roomId;
+    if (users[userName].room_id) users[userName].room_id = room_id;
+    users[userName].team_name = team_name || "";
   }
   return false;
 };
 
-module.exports;
+const getUser = (userName) => users[userName];
+
+const getUserData = () => users;
+
+module.exports = { addUser, getUserData, setRoom, getUser, deleteUser };
