@@ -12,10 +12,10 @@ function DashboardNavBar(props) {
   }; // Get this from API...;
   return (
     <div className='dashboard-nav-bar'>
-      <div className='lobby-logo'>
+      <div className='nav-bar-logo'>
         <LogoContainer />
       </div>
-      <div className='lobby-profile'>
+      <div className='nav-bar-profile'>
         <ProfileButton profileData={profileData} />
       </div>
     </div>

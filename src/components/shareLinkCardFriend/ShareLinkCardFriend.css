@@ -10,7 +10,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: var(--primary-font);
 }
 .share-link-card-body {
   height: 200px;
