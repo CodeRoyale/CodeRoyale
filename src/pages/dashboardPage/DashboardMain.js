@@ -1,13 +1,13 @@
 import React from 'react';
 import './DashboardPage.css';
-import DashboardNavBar from '../../components/dashboardNavBar/DashboardNavBar';
 import Button from '../../components/button/Button';
+import NavBar from '../../components/navBar/NavBar';
 
 function DashboardMain() {
   return (
     <div className='dashboard'>
       <div className='dashboard-header'>
-        <DashboardNavBar />
+        <NavBar />
       </div>
       <div className='dashboard-body'>
         <div className='dashboard-body-left'>

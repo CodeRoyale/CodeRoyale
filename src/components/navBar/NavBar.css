@@ -2,7 +2,7 @@
   --height-nav-bar: 75px;
 }
 
-.dashboard-nav-bar {
+.nav-bar {
   height: var(--height-nav-bar);
   width: 100%;
   position: fixed;
