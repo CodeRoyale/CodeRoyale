@@ -1,7 +1,7 @@
 import React from 'react';
-import DashboardNavBar from '../../components/dashboardNavBar/DashboardNavBar';
 import ShareLinkCardFriend from '../../components/shareLinkCardFriend/ShareLinkCardFriend';
 import './LobbyMain.css';
+import NavBar from '../../components/navBar/NavBar';
 
 function LobbyMain() {
   const friendLink = 'Share this link'; // Get this from API...
@@ -14,7 +14,7 @@ function LobbyMain() {
   return (
     <div className='lobby'>
       <div className='lobby-header'>
-        <DashboardNavBar />
+        <NavBar />
       </div>
       <div className='lobby-body'>
         <ShareLinkCardFriend

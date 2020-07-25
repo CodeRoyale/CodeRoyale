@@ -1,13 +1,21 @@
 import React from 'react';
 import './DashboardPage.css';
-import DashboardNavBar from '../../components/dashboardNavBar/DashboardNavBar';
-import PlayButton from '../../components/playButton/PlayButton';
+import { useHistory } from 'react-router-dom';
+import Button from '../../components/button/Button';
+import NavBar from '../../components/navBar/NavBar';
 
 function DashboardMain() {
+  // Redirect to /login
+  const history = useHistory();
+  const lobbyRedirect = () => {
+    let path = `lobby`;
+    history.push(path);
+  };
+
   return (
     <div className='dashboard'>
       <div className='dashboard-header'>
-        <DashboardNavBar />
+        <NavBar />
       </div>
       <div className='dashboard-body'>
         <div className='dashboard-body-left'>
@@ -25,7 +33,16 @@ function DashboardMain() {
                 competitive programming skills.
               </span>
               <br />
-              <PlayButton />
+              <div class='dashboard-play-button'>
+                <Button
+                  type='button'
+                  onClick={lobbyRedirect}
+                  buttonStyle='btn--primary--normal'
+                  buttonSize='btn--large'
+                >
+                  Play
+                </Button>
+              </div>
             </div>
             <div className='dashboard-play-random'>
               <b>Play with a random coder</b>
@@ -35,7 +52,16 @@ function DashboardMain() {
                 your competitive programming skills.
               </span>
               <br />
-              <PlayButton />
+              <div class='dashboard-play-button'>
+                <Button
+                  type='button'
+                  onClick={lobbyRedirect}
+                  buttonStyle='btn--primary--normal'
+                  buttonSize='btn--large'
+                >
+                  Play
+                </Button>
+              </div>
             </div>
           </div>
         </div>

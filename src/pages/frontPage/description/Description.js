@@ -1,8 +1,16 @@
 import React from 'react';
-import AuthButton from '../../../components/authButton/AuthButton';
 import './Description.css';
+import { useHistory } from 'react-router-dom';
+import Button from '../../../components/button/Button';
 
 function Description() {
+  // Redirect to /login
+  const history = useHistory();
+  const loginRedirect = () => {
+    let path = `login`;
+    history.push(path);
+  };
+
   return (
     <div className='desc-container'>
       <div className='desc-text-container'>
@@ -12,7 +20,14 @@ function Description() {
           coders from around the globe.
         </p>
         <div className='desc-signin'>
-          <AuthButton text='Sign in' to='/login' />
+          <Button
+            type='button'
+            onClick={loginRedirect}
+            buttonStyle='btn--primary--normal'
+            buttonSize='btn--small'
+          >
+            Sign in
+          </Button>
         </div>
       </div>
       <div className='desc-separator'></div>

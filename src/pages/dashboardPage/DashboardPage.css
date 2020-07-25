@@ -20,6 +20,10 @@
   float: right;
 }
 
+.dashboard-play-button {
+  margin-top: 15px;
+}
+
 .dashboard-text-heading {
   margin-top: 50px;
   color: rgba(128, 128, 128, 0.877);
