@@ -1,0 +1,17 @@
+.chat-header {
+  background-color: #dd2c00;
+  color: white;
+  height: 30px;
+  padding: 5px;
+}
+.chat-container {
+  background-color: white;
+  height: 150px;
+  overflow: auto;
+  margin: 10px;
+}
+
+.chat-body {
+  margin: 10px;
+  border-style: solid;
+}

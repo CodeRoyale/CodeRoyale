@@ -1,0 +1,18 @@
+.problem-header {
+  background-color: #dd2c00;
+  color: white;
+  height: 30px;
+  padding: 5px;
+}
+
+.problem-content {
+  background-color: white;
+  margin: 10px;
+  overflow: auto;
+  height: 300px;
+}
+
+.problem-body {
+  margin: 10px;
+  border-style: solid;
+}
