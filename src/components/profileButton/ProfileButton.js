@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './ProfileButton.css';
-import EditSettingsButton from '../editSettingsButton/EditSettingsButton';
-import SignoutButton from '../signoutButton/SignoutButton';
+import Button from '../button/Button';
 
 function ProfileButton(props) {
   const profileData = props.profileData;
@@ -22,10 +21,22 @@ function ProfileButton(props) {
         <br />
         <div className='profile-menu-bar-line'></div>
         <div className='profile-menu-bar-settings-button'>
-          <EditSettingsButton />
+          <Button
+            type='button'
+            buttonStyle='btn--primary--normal'
+            buttonSize='btn--medium'
+          >
+            Edit Settings
+          </Button>
         </div>
         <div className='profile-menu-bar-signout-button'>
-          <SignoutButton />
+          <Button
+            type='button'
+            buttonStyle='btn--primary--logout'
+            buttonSize='btn--medium'
+          >
+            Sign out
+          </Button>
         </div>
       </div>
     );

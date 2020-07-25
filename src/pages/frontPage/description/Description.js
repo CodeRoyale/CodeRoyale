@@ -1,6 +1,6 @@
 import React from 'react';
-import AuthButton from '../../../components/authButton/AuthButton';
 import './Description.css';
+import Button from '../../../components/button/Button';
 
 function Description() {
   return (
@@ -12,7 +12,13 @@ function Description() {
           coders from around the globe.
         </p>
         <div className='desc-signin'>
-          <AuthButton text='Sign in' to='/login' />
+          <Button
+            type='button'
+            buttonStyle='btn--primary--normal'
+            buttonSize='btn--small'
+          >
+            Sign in
+          </Button>
         </div>
       </div>
       <div className='desc-separator'></div>

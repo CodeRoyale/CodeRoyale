@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap'); /* font-family: 'Roboto', sans-serif; */
 
 :root {
-  --primary-color: #dd2c00; /* Harley Davidson Orange*/
+  --primary-color: #dd2c00; /* Harley Davidson Orange */
+  --log-out: rgb(202, 0, 0); /* Red for logout */
   --primary-font: 'Roboto', sans-serif;
 }
 

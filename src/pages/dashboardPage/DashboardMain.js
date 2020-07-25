@@ -1,7 +1,7 @@
 import React from 'react';
 import './DashboardPage.css';
 import DashboardNavBar from '../../components/dashboardNavBar/DashboardNavBar';
-import PlayButton from '../../components/playButton/PlayButton';
+import Button from '../../components/button/Button';
 
 function DashboardMain() {
   return (
@@ -25,7 +25,15 @@ function DashboardMain() {
                 competitive programming skills.
               </span>
               <br />
-              <PlayButton />
+              <div class='dashboard-play-button'>
+                <Button
+                  type='button'
+                  buttonStyle='btn--primary--normal'
+                  buttonSize='btn--large'
+                >
+                  Play
+                </Button>
+              </div>
             </div>
             <div className='dashboard-play-random'>
               <b>Play with a random coder</b>
@@ -35,7 +43,15 @@ function DashboardMain() {
                 your competitive programming skills.
               </span>
               <br />
-              <PlayButton />
+              <div class='dashboard-play-button'>
+                <Button
+                  type='button'
+                  buttonStyle='btn--primary--normal'
+                  buttonSize='btn--large'
+                >
+                  Play
+                </Button>
+              </div>
             </div>
           </div>
         </div>

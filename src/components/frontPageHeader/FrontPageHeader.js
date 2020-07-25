@@ -1,7 +1,7 @@
 import React from 'react';
-import AuthButton from '../authButton/AuthButton';
 import LogoContainer from '../logoContainer/LogoContainer';
 import './FrontPageHeader.css';
+import Button from '../button/Button';
 
 function FrontPageHeader() {
   return (
@@ -38,7 +38,7 @@ function FrontPageHeader() {
           </li>
         </ul>
       </div>
-      <AuthButton text='Sign in' to='/login' />
+      <Button>Sign in</Button>
     </div>
   );
 }

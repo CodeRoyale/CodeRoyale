@@ -16,3 +16,7 @@
 .settings-container {
   display: flex;
 }
+
+.settings-save-button {
+  margin-top: 30px;
+}
