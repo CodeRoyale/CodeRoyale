@@ -1,7 +1,7 @@
 import React from 'react';
 import './SettingsBody.css';
-import SaveButton from '../../../components/saveButton/SaveButton';
 import SettingsField from '../../../components/settingsField/SettingsField';
+import Button from '../../../components/button/Button';
 
 function SettingsBody() {
   return (
@@ -16,8 +16,15 @@ function SettingsBody() {
           value='alanhenry@gmail.com'
           disabled={true}
         />
-
-        <SaveButton />
+        <div className='settings-save-button'>
+          <Button
+            type='button'
+            buttonStyle='btn--primary--normal'
+            buttonSize='btn--large'
+          >
+            Save Settings
+          </Button>
+        </div>
       </div>
 
       <img

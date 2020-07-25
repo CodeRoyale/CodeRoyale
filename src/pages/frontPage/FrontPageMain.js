@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import FrontPageHeader from '../../components/frontPageHeader/FrontPageHeader';
 import './FrontPageMain.css';
 import Description from './description/Description';
+import FrontPageNavBar from '../../components/frontPageNavBar/FrontPageNavBar';
 
 class FrontPageMain extends Component {
   render() {
     return (
       <div className='front-page'>
-        <FrontPageHeader />
+        <FrontPageNavBar />
         <Description />
       </div>
     );

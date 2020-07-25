@@ -29,8 +29,10 @@
   opacity: 0.8;
 }
 .profile-menu-bar-settings-button {
+  margin-top: 10px;
   text-align: center;
 }
 .profile-menu-bar-signout-button {
+  margin-top: 10px;
   text-align: center;
 }

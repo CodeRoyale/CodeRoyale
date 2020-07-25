@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
 import './ProfileButton.css';
-import EditSettingsButton from '../editSettingsButton/EditSettingsButton';
-import SignoutButton from '../signoutButton/SignoutButton';
+import { useHistory } from 'react-router-dom';
+import Button from '../button/Button';
 
 function ProfileButton(props) {
+  // Redirect to /login
+  const history = useHistory();
+  const settingsRedirect = () => {
+    let path = `settings`;
+    history.push(path);
+  };
+
   const profileData = props.profileData;
   const imageUrl = profileData.imageUrl;
   const email = profileData.email;
@@ -22,10 +29,23 @@ function ProfileButton(props) {
         <br />
         <div className='profile-menu-bar-line'></div>
         <div className='profile-menu-bar-settings-button'>
-          <EditSettingsButton />
+          <Button
+            type='button'
+            onClick={settingsRedirect}
+            buttonStyle='btn--primary--normal'
+            buttonSize='btn--medium'
+          >
+            Edit Settings
+          </Button>
         </div>
         <div className='profile-menu-bar-signout-button'>
-          <SignoutButton />
+          <Button
+            type='button'
+            buttonStyle='btn--primary--logout'
+            buttonSize='btn--medium'
+          >
+            Sign out
+          </Button>
         </div>
       </div>
     );
