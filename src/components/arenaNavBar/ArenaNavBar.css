@@ -5,7 +5,6 @@
 .dashboard-nav-bar {
   height: var(--height-nav-bar);
   width: 100%;
-  position: fixed;
   top: 0;
   z-index: 1;
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);

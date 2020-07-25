@@ -1,12 +1,12 @@
 .arena-body {
-  margin-top: 100px;
   display: flex;
-  height: 100%;
   padding: 10px;
 }
 
 .arena-page {
   background-color: #f5f8f8;
+  margin: auto;
+  height: 100%;
 }
 
 .left-container {
@@ -19,4 +19,9 @@
 
 .arena-seperator {
   flex: 1;
+}
+
+.button-container {
+  float: right;
+  margin: 10px;
 }
