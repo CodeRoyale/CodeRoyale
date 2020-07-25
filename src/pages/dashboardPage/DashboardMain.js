@@ -1,9 +1,17 @@
 import React from 'react';
 import './DashboardPage.css';
+import { useHistory } from 'react-router-dom';
 import Button from '../../components/button/Button';
 import NavBar from '../../components/navBar/NavBar';
 
 function DashboardMain() {
+  // Redirect to /login
+  const history = useHistory();
+  const lobbyRedirect = () => {
+    let path = `lobby`;
+    history.push(path);
+  };
+
   return (
     <div className='dashboard'>
       <div className='dashboard-header'>
@@ -28,6 +36,7 @@ function DashboardMain() {
               <div class='dashboard-play-button'>
                 <Button
                   type='button'
+                  onClick={lobbyRedirect}
                   buttonStyle='btn--primary--normal'
                   buttonSize='btn--large'
                 >
@@ -46,6 +55,7 @@ function DashboardMain() {
               <div class='dashboard-play-button'>
                 <Button
                   type='button'
+                  onClick={lobbyRedirect}
                   buttonStyle='btn--primary--normal'
                   buttonSize='btn--large'
                 >

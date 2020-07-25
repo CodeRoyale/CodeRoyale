@@ -1,8 +1,16 @@
 import React from 'react';
 import './Description.css';
+import { useHistory } from 'react-router-dom';
 import Button from '../../../components/button/Button';
 
 function Description() {
+  // Redirect to /login
+  const history = useHistory();
+  const loginRedirect = () => {
+    let path = `login`;
+    history.push(path);
+  };
+
   return (
     <div className='desc-container'>
       <div className='desc-text-container'>
@@ -14,6 +22,7 @@ function Description() {
         <div className='desc-signin'>
           <Button
             type='button'
+            onClick={loginRedirect}
             buttonStyle='btn--primary--normal'
             buttonSize='btn--small'
           >

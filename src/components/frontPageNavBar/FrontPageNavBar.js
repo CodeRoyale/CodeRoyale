@@ -1,13 +1,21 @@
 import React from 'react';
 import LogoContainer from '../logoContainer/LogoContainer';
-import './FrontPageHeader.css';
+import { useHistory } from 'react-router-dom';
+import './FrontPageNavBar.css';
 import Button from '../button/Button';
 
-function FrontPageHeader() {
+function FrontPageNavBar() {
+  // Redirect to /login
+  const history = useHistory();
+  const loginRedirect = () => {
+    let path = `login`;
+    history.push(path);
+  };
+
   return (
-    <div className='frontpage-header'>
+    <div className='frontpage-navbar'>
       <LogoContainer />
-      <div className='frontpage-header-links'>
+      <div className='frontpage-navbar-links'>
         <ul>
           <li>
             Play
@@ -38,9 +46,16 @@ function FrontPageHeader() {
           </li>
         </ul>
       </div>
-      <Button>Sign in</Button>
+      <Button
+        type='button'
+        onClick={loginRedirect}
+        buttonStyle='btn--primary--normal'
+        buttonSize='btn--small'
+      >
+        Sign in
+      </Button>
     </div>
   );
 }
 
-export default FrontPageHeader;
+export default FrontPageNavBar;

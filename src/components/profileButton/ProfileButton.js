@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 import './ProfileButton.css';
+import { useHistory } from 'react-router-dom';
 import Button from '../button/Button';
 
 function ProfileButton(props) {
+  // Redirect to /login
+  const history = useHistory();
+  const settingsRedirect = () => {
+    let path = `settings`;
+    history.push(path);
+  };
+
   const profileData = props.profileData;
   const imageUrl = profileData.imageUrl;
   const email = profileData.email;
@@ -23,6 +31,7 @@ function ProfileButton(props) {
         <div className='profile-menu-bar-settings-button'>
           <Button
             type='button'
+            onClick={settingsRedirect}
             buttonStyle='btn--primary--normal'
             buttonSize='btn--medium'
           >
