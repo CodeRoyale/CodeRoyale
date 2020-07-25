@@ -21,11 +21,18 @@ const deleteUser = (userName) => {
 
 // this is just for extra checking
 // can change room_id and team_name
-const setRoom = (room_id, team_name) => {
+const setRoom = (userName, room_id, team_name) => {
   //check if user is still connected
   if (users[userName]) {
-    if (users[userName].room_id) users[userName].room_id = room_id;
+    users[userName].room_id = room_id;
     users[userName].team_name = team_name || "";
+  }
+  return false;
+};
+const setTeam = (userName, team_name) => {
+  if (users[userName]) {
+    users[userName].team_name = team_name;
+    return true;
   }
   return false;
 };
@@ -34,4 +41,11 @@ const getUser = (userName) => users[userName];
 
 const getUserData = () => users;
 
-module.exports = { addUser, getUserData, setRoom, getUser, deleteUser };
+module.exports = {
+  addUser,
+  getUserData,
+  setRoom,
+  getUser,
+  deleteUser,
+  setTeam,
+};

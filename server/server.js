@@ -8,17 +8,45 @@ const os = require("os");
 const cors = require("cors");
 const http = require("http");
 const socketio = require("socket.io");
-const { authUser } = require("./utils/auth");
-const { CONNECTION_ACK } = require("./socketActions/serverActions");
-const { createRoom } = require("../server/controllers/roomController");
 
-//remove all this stupidity from here and port these to the new server
-//crearte server using http
-//we need to use http here for socket.io
+// importing controllers
+const {
+  authUser,
+  handleUserEvents,
+} = require("./controllers/socketController");
 
-//-add origin in options
+// crearte server using http
+// we need to use http here for socket.io
 const app = express();
 const server = http.createServer(app);
+
+// HACKER BOII
+var whitelist = ["http://localhost:3000", "https://codeRoyale.herokuapp.com"];
+var corsOptions = {
+  origin: function (origin, callback) {
+    //the !origin is for services like postman
+
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      //i dont like this it prints the shit
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  // no need for cookies
+  credentials: false,
+};
+
+// middlewares
+app.use(cors(corsOptions));
+app.use(express.json());
+
+//Routes
+app.use("/", require("./routes/main"));
+app.use("/users", require("./routes/users"));
+app.use("/rooms", require("./routes/rooms"));
+
+// socket io server
 const io = socketio(server, {
   handlePreflightRequest: (req, res) => {
     const headers = {
@@ -35,37 +63,10 @@ const io = socketio(server, {
 });
 
 try {
-  io.use(authUser).on("connection", (socket) => {
-    let userDetails = socket.userDetails;
-    let config = { admin: userDetails.userName };
-    createRoom(config);
-  });
+  io.use(authUser).on("connection", handleUserEvents);
 } catch (err) {
   console.log(err.message);
 }
-var whitelist = ["http://localhost:3000", "https://codeRoyale.herokuapp.com"];
-var corsOptions = {
-  origin: function (origin, callback) {
-    //the !origin is for services like postman
-
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      //i dont like this it prints the shit
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
-
-app.use(express.json());
-
-//Routes
-app.use("/", require("./routes/main"));
-app.use("/users", require("./routes/users"));
-app.use("/rooms", require("./routes/rooms"));
 
 //start listening
 server.listen(PORT, () => {

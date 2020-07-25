@@ -1,4 +1,4 @@
-const { setRoom, getUser } = require("../controllers/userController");
+const { setRoom, getUser, setTeam } = require("../controllers/userController");
 
 // this is my db for now
 rooms = {};
@@ -26,12 +26,12 @@ const createRoom = (config) => {
       admin: config.admin,
       teams: {},
       questions: {},
-      bench: [],
+      bench: [admin],
       privateRoom: config.private === true,
       privateList: [],
       max_teams: config.max_teams || 2,
       max_perTeam: config.max_perTeam || 3,
-      cur_memCount: 0,
+      cur_memCount: 1,
       max_perRoom: config.max_perTeam || 10,
       banList: [],
       createdAt: Date.now(),
@@ -47,7 +47,7 @@ const createRoom = (config) => {
 };
 
 // users connecting to room
-const joinRoom = (userName, room_id, teamName) => {
+const joinRoom = (userName, room_id, team_name = "") => {
   if (
     rooms[room_id] &&
     (!rooms[room_id].privateRoom ||
@@ -64,16 +64,18 @@ const joinRoom = (userName, room_id, teamName) => {
     }
 
     if (
-      teamName &&
-      rooms[room_id].teams[teamName] &&
-      rooms[room_id].teams[teamName].length < rooms[room_id].max_perTeam
+      team_name &&
+      rooms[room_id].teams[team_name] &&
+      rooms[room_id].teams[team_name].length < rooms[room_id].max_perTeam
     ) {
       // if user passess a team and that team exist and ther is space in that team
-      rooms[room_id].teams[teamName].push(userName);
+      rooms[room_id].teams[team_name].push(userName);
     } else {
       // else bench the user
       rooms[room_id].bench.push(userName);
     }
+
+    setRoom(userName, room_id, team_name);
     //user has been added to bench or a Team
     rooms[room_id].cur_memCount += 1;
     return true;
@@ -91,30 +93,34 @@ const removeUserFromRoom = (userName) => {
     return false;
   }
 
-  if (user.teamName) {
+  if (user.team_name) {
     // if user has joined a team
-    let newTeam = rooms[user.room_id].teams[user.teamName].filter(
+    let newTeam = rooms[user.room_id].teams[user.team_name].filter(
       (ele) => ele !== userName
     );
-    rooms[user.room_id].teams[user.teamName] = newTeam;
+    rooms[user.room_id].teams[user.team_name] = newTeam;
   } else {
     // if user is on a bench
     let newBench = rooms[user.room_id].bench.filter((ele) => ele !== userName);
     rooms[user.room_id].bench = newBench;
   }
+
+  setRoom(userName, "", "");
   rooms[room_id].cur_memCount -= 1;
   return true;
 };
 
 const createTeam = (room_id, team_name) => {
   // if more teams are allowed
-  //if teamName is not already used
+  //if team_name is not already used
   if (
     Object.keys(rooms[room_id].teams).length < rooms[room_id].max_teams &&
     !rooms[room_id].teams[team_name]
   ) {
     rooms[room_id].teams[team_name] = [];
+    return true;
   }
+  return false;
 };
 
 const joinTeam = (userName, team_name) => {
@@ -128,20 +134,58 @@ const joinTeam = (userName, team_name) => {
     room.teams[team_name] &&
     room.teams[team_name].length < room.max_perTeam
   ) {
-    //ditch prev team
     if (user.team_name) {
-    } else {
-      // user was on bench
+      //ditch prev team
+      let newTeam = rooms[user.room_id].teams[user.team_name].filter(
+        (ele) => ele !== userName
+      );
+      rooms[user.room_id].teams[user.team_name] = newTeam;
     }
+    //in new team
+    rooms[user.room_id].teams[team_name].push(userName);
+    setTeam(userName, team_name);
+    return true;
   }
+  return false;
 };
 
 const leaveTeam = (userName) => {
   const user = getUser(userName);
-  //onit
+  // check if in a room and in a team
+  if (user.room_id && user.team_name) {
+    let newTeam = rooms[user.room_id].teams[user.team_name].filter(
+      (ele) => ele !== userName
+    );
+    rooms[user.room_id].teams[user.team_name] = newTeam;
+    rooms[user.room_id].bench.push(userName);
+    setTeam(userName, "");
+    return true;
+  }
+  return false;
 };
 
-const closeRoom = (room_id) => {};
+const closeRoom = (room_id) => {
+  if (rooms[room_id]) {
+    // everyone from room except admin
+    let allMembers = rooms[room_id].bench;
+    // from all teams
+    Object.keys(rooms[room_id].teams).map((team_name) => {
+      rooms[room_id].teams[team_name].forEach((user) => {
+        allMembers.push(user);
+      });
+    });
+
+    // not need to chage room data since we are going to delete it
+    allMembers.forEach((userName) => {
+      setRoom(userName, "");
+    });
+
+    // delete the stupid room
+    delete rooms[room_id];
+    return true;
+  }
+  return false;
+};
 
 const banMember = (room_id) => {};
 
@@ -149,7 +193,8 @@ const addPrivateList = (room_id) => {
   // only private rooms can have rivate lists
 };
 
-const getRoomData = () => rooms;
+const getRoomData = (room_id) => rooms[room_id];
+const getRoomsData = () => rooms;
 
 module.exports = {
   createRoom,
@@ -158,4 +203,6 @@ module.exports = {
   closeRoom,
   createTeam,
   getRoomData,
+  getRoomsData,
+  leaveTeam,
 };

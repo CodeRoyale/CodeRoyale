@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const { getRoomData } = require("../controllers/roomController");
+const { getRoomsData } = require("../controllers/roomController");
 
 router.get("/", (req, res) =>
   res.send(
-    `CodeRoyae Lobby Server is up and running. ${JSON.stringify(getRoomData())}`
+    `CodeRoyae Lobby Server is up and running. ${JSON.stringify(
+      getRoomsData()
+    )}`
   )
 );
 
