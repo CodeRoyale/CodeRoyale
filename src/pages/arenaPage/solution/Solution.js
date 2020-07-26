@@ -1,15 +1,13 @@
 import React from 'react';
 import './Solution.css';
+import AceEditor from 'react-ace';
 
 function solution() {
   return (
     <div className='solution-body'>
       <div className='solution-header'>SOLUTION</div>
       <div className='solution-content'>
-        # Enter your code here. Read input from STDIN. Print output to STDOUT
-        import string words = raw_input().split(' ') for i in
-        xrange(len(words)): words[i] = string.capitalize(words[i]) print '
-        '.join(words)
+        <AceEditor height='100%' width='100%' />
       </div>
     </div>
   );
