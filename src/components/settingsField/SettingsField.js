@@ -2,6 +2,7 @@ import React from 'react';
 import './SettingsField.css';
 
 function SettingsField(props) {
+  const fieldSize = 50;
   if (!props.disabled) {
     return (
       <div>
@@ -9,9 +10,10 @@ function SettingsField(props) {
         <div>
           <input
             type='text'
-            size='70'
+            size={fieldSize}
             className='options-input'
             value={props.value}
+            onChange={props.onChange}
           ></input>
         </div>
       </div>
@@ -23,7 +25,7 @@ function SettingsField(props) {
         <div>
           <input
             type='text'
-            size='70'
+            size={fieldSize}
             disabled
             className='options-input'
             value={props.value}
