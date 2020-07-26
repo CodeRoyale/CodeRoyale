@@ -39,6 +39,8 @@ function SettingsBody() {
         </div>
       </div>
 
+      <div className='settings-separator'></div>
+
       <img
         className='settings-image'
         alt='setting illustration'
