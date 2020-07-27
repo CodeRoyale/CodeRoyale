@@ -6,7 +6,9 @@
   "scripts": {
     "start": "nodemon server/server.js",
     "prettier:check": "prettier --check ./server",
-    "prettier:write": "prettier --write ./server"
+    "prettier:write": "prettier --write ./server",
+    "lint": "eslint ./server",
+    "lint:fix": "eslint --fix ./server"
   },
   "author": "",
   "license": "ISC",

@@ -1,8 +1,6 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const Question = require('../models/questionModel');
-const route = express.Router();
 
+const route = express.Router();
 const {
   getQuestion,
   putQuestion,
