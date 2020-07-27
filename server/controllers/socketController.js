@@ -1,5 +1,10 @@
 // import all actions
-const { CREATE_ROOM } = require("../socketActions/userActions");
+const {
+  CREATE_ROOM,
+  JOIN_ROOM,
+  CREATE_TEAM,
+  JOIN_TEAM,
+} = require("../socketActions/userActions");
 const {
   CONNECTION_ACK,
   CONNECTION_DENY,
@@ -9,6 +14,8 @@ const {
 const { addUser } = require("../controllers/userController");
 const {
   createRoom,
+  createTeam,
+  joinTeam,
   joinRoom,
   getRoomData,
 } = require("../controllers/roomController");
@@ -53,19 +60,55 @@ const authUser = (socket, next) => {
   }
 };
 
+const genericActionCreater = (
+  actionResponder,
+  actionReply,
+  userDetails,
+  failReply = "Some error occured !",
+  ACTION = ""
+) => (config, cb) => {
+  // only passes userName
+  console.log(config);
+  console.log(`Got ${ACTION}`);
+  config.userName = userDetails.userName;
+  let data = failReply;
+  if (actionResponder(config)) {
+    console.log(`${ACTION} succesfull !`);
+    data = actionReply(userDetails.userName);
+  }
+  cb(data);
+};
+
 const handleUserEvents = (socket) => {
   // auth middle ware will set this based on jwt payload
-  let userDetails = socket.userDetails;
-  socket.on(CREATE_ROOM, (config, cb) => {
-    console.log("got req");
-    config.admin = userDetails.userName;
-    let data = "error";
-    if (createRoom(config)) {
-      console.log("made room");
-      data = getRoomData(userDetails.userName);
-    }
-    cb(data);
-  });
+  console.log(socket.userDetails.userName);
+  // ideal
+  // socket.on(
+  //   CREATE_ROOM,
+  //   genericActionCreater(
+  //     createRoom,
+  //     getRoomData,
+  //     "Could'nt create room !",
+  //     CREATE_ROOM
+  //   )
+  // );
+  // shorter
+  socket.on(
+    CREATE_ROOM,
+    genericActionCreater(createRoom, getRoomData, socket.userDetails)
+  );
+  socket.on(
+    JOIN_ROOM,
+    genericActionCreater(joinRoom, getRoomData, socket.userDetails)
+  );
+  socket.on(
+    CREATE_TEAM,
+    genericActionCreater(createTeam, getRoomData, socket.userDetails)
+  );
+  socket.on(
+    JOIN_TEAM,
+    genericActionCreater(joinTeam, getRoomData, socket.userDetails)
+  );
 };
 
 module.exports = {

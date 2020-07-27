@@ -6,6 +6,9 @@ rooms = {};
 // room_id will be admin name
 
 const createRoom = (config) => {
+  // user who made room is admin
+  config.admin = config.userName;
+
   if (!config.admin) {
     return false;
   }
@@ -26,7 +29,7 @@ const createRoom = (config) => {
       admin: config.admin,
       teams: {},
       questions: {},
-      bench: [admin],
+      bench: [config.admin],
       privateRoom: config.private === true,
       privateList: [],
       max_teams: config.max_teams || 2,
@@ -47,7 +50,7 @@ const createRoom = (config) => {
 };
 
 // users connecting to room
-const joinRoom = (userName, room_id, team_name = "") => {
+const joinRoom = ({ userName, room_id, team_name }) => {
   if (
     rooms[room_id] &&
     (!rooms[room_id].privateRoom ||
@@ -83,7 +86,7 @@ const joinRoom = (userName, room_id, team_name = "") => {
   return false;
 };
 
-const removeUserFromRoom = (userName) => {
+const removeUserFromRoom = ({ userName }) => {
   // remove from room
   const user = getUser(userName);
 
@@ -110,7 +113,7 @@ const removeUserFromRoom = (userName) => {
   return true;
 };
 
-const createTeam = (room_id, team_name) => {
+const createTeam = ({ room_id, team_name }) => {
   // if more teams are allowed
   //if team_name is not already used
   if (
@@ -123,7 +126,7 @@ const createTeam = (room_id, team_name) => {
   return false;
 };
 
-const joinTeam = (userName, team_name) => {
+const joinTeam = ({ userName, team_name }) => {
   const user = getUser(userName),
     room = rooms[user.room_id];
   // only run if user and room exits and user is in that room
@@ -149,7 +152,7 @@ const joinTeam = (userName, team_name) => {
   return false;
 };
 
-const leaveTeam = (userName) => {
+const leaveTeam = ({ userName }) => {
   const user = getUser(userName);
   // check if in a room and in a team
   if (user.room_id && user.team_name) {
@@ -164,7 +167,7 @@ const leaveTeam = (userName) => {
   return false;
 };
 
-const closeRoom = (room_id) => {
+const closeRoom = ({ room_id }) => {
   if (rooms[room_id]) {
     // everyone from room except admin
     let allMembers = rooms[room_id].bench;
@@ -187,9 +190,9 @@ const closeRoom = (room_id) => {
   return false;
 };
 
-const banMember = (room_id) => {};
+const banMember = ({ room_id }) => {};
 
-const addPrivateList = (room_id) => {
+const addPrivateList = ({ room_id }) => {
   // only private rooms can have rivate lists
 };
 

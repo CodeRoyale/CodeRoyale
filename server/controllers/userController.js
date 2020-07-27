@@ -1,3 +1,5 @@
+const { submitCode } = require("../utils/codeExecution");
+
 // this is my db for now
 users = {};
 
@@ -40,6 +42,12 @@ const setTeam = (userName, team_name) => {
 const getUser = (userName) => users[userName];
 
 const getUserData = () => users;
+
+const makeUserSubmission = ({ userName, code, cb }) => {
+  // room
+  // check contest
+  // code
+};
 
 module.exports = {
   addUser,
