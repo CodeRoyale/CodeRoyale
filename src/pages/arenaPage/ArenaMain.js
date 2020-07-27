@@ -1,5 +1,5 @@
 import React from 'react';
-import ArenaNavBar from '../../components/arenaNavBar/ArenaNavBar';
+import NavBar from '../../components/navBar/NavBar';
 import './ArenaMain.css';
 import Problem from './problem/Problem';
 import Chat from './chat/Chat';
@@ -10,7 +10,7 @@ function ArenaPage() {
   return (
     <div className='arena-page'>
       <div>
-        <ArenaNavBar />
+        <NavBar />
       </div>
 
       <div className='arena-body'>
