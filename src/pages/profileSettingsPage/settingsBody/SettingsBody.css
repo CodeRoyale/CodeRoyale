@@ -5,10 +5,16 @@
 }
 
 .settings-image {
-  float: left;
+  float: right;
+  margin-top: 20px;
   width: 400px;
   height: 400px;
 }
+
+.settings-separator {
+  flex: 2;
+}
+
 .settings-forms {
   margin-top: 50px;
   float: left;
