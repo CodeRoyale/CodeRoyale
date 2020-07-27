@@ -1,13 +1,16 @@
 .solution-header {
+  display: flex;
   background-color: #dd2c00;
   color: white;
   height: 30px;
   padding: 5px;
+  z-index: 3;
 }
 .solution-content {
   background-color: white;
   height: 480px;
   margin: 10px;
+  z-index: 2;
 }
 
 .solution-body {
@@ -16,4 +19,12 @@
   border-width: 0.5px;
   box-shadow: 5px 5px 5px grey;
   border-color: grey;
+}
+
+.language-options {
+  flex: 1;
+}
+
+.solution-title {
+  flex: 1;
 }
