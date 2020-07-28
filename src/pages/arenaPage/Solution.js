@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import './ArenaMain.css';
 import AceEditor from 'react-ace';
+import { Popup, Grid } from 'semantic-ui-react';
 import 'ace-builds/src-noconflict/mode-java';
 import 'ace-builds/src-noconflict/mode-c_cpp';
 import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/theme-github';
 import 'ace-builds/src-noconflict/theme-monokai';
+import 'ace-builds/src-noconflict/theme-tomorrow';
+import 'ace-builds/src-noconflict/theme-terminal';
 
 function Solution() {
   const [ideLanguage, setLanguage] = useState('c_cpp');
+  const [ideFontSize, setFontSize] = useState('12');
+  const [ideTheme, setTheme] = useState('tomorrow');
 
   return (
     <div className='solution-body'>
@@ -22,6 +27,48 @@ function Solution() {
             <option value='python'>python</option>
           </select>
         </div>
+
+        <div className='ide-options'>
+          <Popup
+            width='100%'
+            className='ide-options-popup'
+            trigger={<div>Settings</div>} //replace this with settings Icon
+            flowing
+            on='click'
+            position='bottom left'
+          >
+            <Grid centered divided rows={3}>
+              <Grid.Row className='ide-options-row'>
+                <div>FontSize:</div>
+                <div>
+                  <select onChange={(e) => setFontSize(Number(e.target.value))}>
+                    <option value='10'>10</option>
+                    <option value='12'>12</option>
+                    <option value='14'>14</option>
+                    <option value='16'>16</option>
+                    <option value='18'>18</option>
+                    <option value='20'>20</option>
+                    <option value='22'>22</option>
+                    <option value='24'>24</option>
+                  </select>
+                </div>
+
+                <hr />
+              </Grid.Row>
+              <Grid.Row className='ide-options-row'>
+                <div>Theme:</div>
+                <div>
+                  <select onChange={(e) => setTheme(e.target.value)}>
+                    <option value='tomorrow'>tomorrow</option>
+                    <option value='terminal'>terminal</option>
+                    <option value='monokai'>monokai</option>
+                  </select>
+                </div>
+                <hr />
+              </Grid.Row>
+            </Grid>
+          </Popup>
+        </div>
       </div>
 
       <div className='solution-content'>
@@ -29,7 +76,10 @@ function Solution() {
           height='100%'
           width='100%'
           mode={ideLanguage}
-          theme='monokai'
+          theme={ideTheme}
+          fontSize={ideFontSize}
+          showGutter={true}
+          showPrintMargin={false}
         />
       </div>
     </div>

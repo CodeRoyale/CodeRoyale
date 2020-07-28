@@ -103,3 +103,11 @@
 .solution-title {
   flex: 1;
 }
+
+.ide-options-popup {
+  background-color: white;
+}
+
+.ide-options-row {
+  display: flex;
+}
