@@ -1,5 +1,6 @@
 import React from 'react';
 import GoogleSignIn from '../../../components/googleSignIn/GoogleSignIn';
+import { Link } from 'react-router-dom';
 import './SignUpSec.css';
 
 function SignUpSec() {
@@ -10,7 +11,10 @@ function SignUpSec() {
           <p className='signup-section-title'>Sign up for CodeRoyale</p>
           <GoogleSignIn text='Sign up with Google' />
           <p className='signup-section-sign-up'>
-            Already a member? <span className='span-text'>Sign in now</span>
+            Already a member?{' '}
+            <Link to='/signin' style={{ textDecoration: 'none' }}>
+              <span className='span-text'>Sign in now</span>
+            </Link>
           </p>
         </center>
       </div>

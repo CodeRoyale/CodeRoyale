@@ -1,20 +1,20 @@
-.left-section-container {
+.left-signin-container {
   height: 100%;
   width: 50%;
   background-color: #edb3a4;
 }
 
-.left-section-content {
+.left-signin-content {
   padding-top: 20%;
 }
 
-.left-section-title {
+.left-signin-title {
   font-weight: bold;
   font-size: 40px;
   color: #6b554f;
 }
 
-.left-section-text {
+.left-signin-text {
   font-size: 20px;
   color: #6b554f;
 }

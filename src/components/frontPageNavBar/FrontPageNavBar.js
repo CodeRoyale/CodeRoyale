@@ -8,7 +8,7 @@ function FrontPageNavBar() {
   // Redirect to /signin
   const history = useHistory();
   const loginRedirect = () => {
-    let path = `login`;
+    let path = `signin`;
     history.push(path);
   };
 
