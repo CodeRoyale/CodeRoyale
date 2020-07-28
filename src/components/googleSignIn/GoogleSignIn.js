@@ -16,7 +16,7 @@ class GoogleSignIn extends Component {
       <div>
         <GoogleLogin
           clientId={this.googleClientID}
-          buttonText='Login with Google'
+          buttonText={this.props.text}
           onSuccess={this.responseSuccess}
           onFailure={this.responseFailure}
           cookiePolicy={'single_host_origin'}

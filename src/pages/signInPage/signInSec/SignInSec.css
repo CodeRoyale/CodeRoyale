@@ -1,19 +1,19 @@
-.login-section-container {
+.signin-section-container {
   height: 100%;
   width: 50%;
 }
 
-.login-section-content {
+.signin-section-content {
   padding-top: 40%;
 }
 
-.login-section-title {
+.signin-section-title {
   font-weight: bold;
   font-size: 24px;
   margin-bottom: 20px;
 }
 
-.login-section-sign-up {
+.signin-section-sign-up {
   margin-top: 15px;
   font-size: 14px;
 }

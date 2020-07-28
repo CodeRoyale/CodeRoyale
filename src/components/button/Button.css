@@ -32,6 +32,10 @@
   background-color: var(--log-out);
 }
 
+.btn--primary--signin {
+  background-color: var(--sign-in);
+}
+
 /* Button size options */
 .btn--small {
   width: 100px;
