@@ -1,7 +1,7 @@
 import React from 'react';
 import './SignUpMain.css';
 
-function leftSecSignUp() {
+function LeftSecSignUp() {
   return (
     <div className='left-signup-container'>
       <center>
@@ -20,4 +20,4 @@ function leftSecSignUp() {
   );
 }
 
-export default leftSecSignUp;
+export default LeftSecSignUp;
