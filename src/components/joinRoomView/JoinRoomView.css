@@ -1,0 +1,23 @@
+.join-room-join-input-container {
+  margin-top: 10px;
+}
+
+.join-room-join-input {
+  border: solid black 1px;
+  height: 27px;
+  width: 230px;
+  border-radius: 2px;
+  background-color: whitesmoke;
+  border-color: gray;
+  font-size: medium;
+  padding: 5px;
+  margin-top: 7px;
+}
+.join-room-join-input:focus {
+  outline: none;
+}
+
+.join-room-join-button-container {
+  text-align: center;
+  margin-top: 10px;
+}

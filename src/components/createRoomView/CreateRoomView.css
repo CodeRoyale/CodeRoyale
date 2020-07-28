@@ -1,0 +1,16 @@
+.create-room-text-heading {
+  text-align: center;
+}
+.create-room-link {
+  background-color: rgba(128, 128, 128, 0.445);
+  width: var(--share-card-copy-button-width);
+  height: 30px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.create-room-copy-button-container {
+  text-align: center;
+  margin-top: 10px;
+}
