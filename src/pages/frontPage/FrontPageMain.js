@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './FrontPageMain.css';
-import Description from './description/Description';
+import Description from './Description';
 import FrontPageNavBar from '../../components/frontPageNavBar/FrontPageNavBar';
 
 class FrontPageMain extends Component {

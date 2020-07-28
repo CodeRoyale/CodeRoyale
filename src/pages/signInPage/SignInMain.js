@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import LeftSecSignIn from './leftSecSignIn/LeftSecSignIn';
-import SignInSec from './signInSec/SignInSec';
+import LeftSecSignIn from './LeftSecSignIn';
+import SignInSec from './SignInSec';
 import './SignInMain.css';
 
 class SignInPage extends Component {

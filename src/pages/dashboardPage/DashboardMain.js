@@ -1,5 +1,5 @@
 import React from 'react';
-import './DashboardPage.css';
+import './DashboardMain.css';
 import { useHistory } from 'react-router-dom';
 import Button from '../../components/button/Button';
 import NavBar from '../../components/navBar/NavBar';

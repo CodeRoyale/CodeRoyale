@@ -1,7 +1,7 @@
 import React from 'react';
-import GoogleSignIn from '../../../components/googleSignIn/GoogleSignIn';
+import GoogleSignIn from '../../components/googleSignIn/GoogleSignIn';
 import { Link } from 'react-router-dom';
-import './SignUpSec.css';
+import './SignUpMain.css';
 
 function SignUpSec() {
   return (

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './SettingsBody.css';
-import SettingsField from '../../../components/settingsField/SettingsField';
-import Button from '../../../components/button/Button';
+import './ProfileSettingsMain.css';
+import SettingsField from '../../components/settingsField/SettingsField';
+import Button from '../../components/button/Button';
 
 function SettingsBody() {
   const [firstName, setFirstName] = useState('Alan');

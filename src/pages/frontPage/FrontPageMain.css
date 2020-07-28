@@ -3,3 +3,36 @@
   height: 100%;
   background-color: #f5f8f8;
 }
+
+/* Description container css */
+.desc-container {
+  display: flex;
+  padding: 20px;
+  width: 90%;
+  margin: auto;
+}
+
+.desc-separator {
+  flex: 2;
+}
+
+.desc-image {
+  width: 650px;
+  height: 650px;
+  margin: auto;
+}
+
+.desc-text-container {
+  margin: auto;
+}
+
+.desc-heading {
+  margin-bottom: 16px;
+  font-size: 43px;
+  font-weight: bold;
+}
+
+.desc-text {
+  margin-bottom: 20px;
+  font-size: 22px;
+}
