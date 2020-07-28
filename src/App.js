@@ -6,6 +6,7 @@ import LoginMain from './pages/loginPage/LoginMain';
 import ProfileSettingsMain from './pages/profileSettingsPage/ProfileSettingsMain';
 import LobbyMain from './pages/lobbyPage/LobbyMain';
 import DashboardMain from './pages/dashboardPage/DashboardMain';
+import SignUpMain from './pages/signUpPage/SignUpMain';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Switch>
           <Route exact path='/dashboard' component={DashboardMain} />
           <Route exact path='/login' component={LoginMain} />
+          <Route exact path='/signup' component={SignUpMain} />
           <Route exact path='/lobby' component={LobbyMain} />
           <Route exact path='/settings' component={ProfileSettingsMain} />
           <Route exact path='' component={FrontPage} />
