@@ -1,0 +1,55 @@
+.signup-page {
+  display: flex;
+  margin: auto;
+  height: 100%;
+  background-color: #f5f8f8;
+}
+
+/* Left section for sign up */
+.left-signup-container {
+  height: 100%;
+  width: 50%;
+  background-color: #edb3a4;
+}
+
+.left-signup-content {
+  padding-top: 20%;
+}
+
+.left-signup-title {
+  font-weight: bold;
+  font-size: 40px;
+  color: #6b554f;
+}
+
+.left-signup-text {
+  font-size: 20px;
+  color: #6b554f;
+}
+
+/* Sign up section */
+.signup-section-container {
+  height: 100%;
+  width: 50%;
+}
+
+.signup-section-content {
+  padding-top: 40%;
+}
+
+.signup-section-title {
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.signup-section-sign-up {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.span-text {
+  font-weight: bold;
+  cursor: pointer;
+  color: brown;
+}
