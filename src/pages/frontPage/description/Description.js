@@ -4,10 +4,10 @@ import { useHistory } from 'react-router-dom';
 import Button from '../../../components/button/Button';
 
 function Description() {
-  // Redirect to /login
+  // Redirect to /signup
   const history = useHistory();
-  const loginRedirect = () => {
-    let path = `login`;
+  const signUpRedirect = () => {
+    let path = `signup`;
     history.push(path);
   };
 
@@ -22,11 +22,11 @@ function Description() {
         <div className='desc-signin'>
           <Button
             type='button'
-            onClick={loginRedirect}
+            onClick={signUpRedirect}
             buttonStyle='btn--primary--normal'
             buttonSize='btn--small'
           >
-            Sign in
+            Sign up
           </Button>
         </div>
       </div>

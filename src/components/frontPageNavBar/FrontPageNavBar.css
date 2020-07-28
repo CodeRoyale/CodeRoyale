@@ -46,6 +46,10 @@
   color: black;
 }
 
+.frontpage-navbar-signin {
+  margin-right: 16px;
+}
+
 .play-menu-options {
   display: flex;
 }

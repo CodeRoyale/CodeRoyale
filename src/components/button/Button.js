@@ -2,7 +2,11 @@ import React from 'react';
 import './Button.css';
 
 // All styles available for button
-const STYLES = ['btn--primary--normal', 'btn--primary--logout'];
+const STYLES = [
+  'btn--primary--normal',
+  'btn--primary--logout',
+  'btn--primary--signin',
+];
 
 // All sizes available for button
 const SIZES = ['btn--small', 'btn--medium', 'btn--large'];

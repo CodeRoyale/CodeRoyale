@@ -8,7 +8,7 @@ function LoginSection() {
       <div className='login-section-content'>
         <center>
           <p className='login-section-title'>Sign into CodeRoyale</p>
-          <GoogleSignIn />
+          <GoogleSignIn text='Sign in with Google' />
           <p className='login-section-sign-up'>
             Not a member? <span className='span-text'>Sign up now</span>
           </p>

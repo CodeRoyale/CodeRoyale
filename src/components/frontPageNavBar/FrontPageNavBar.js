@@ -5,10 +5,16 @@ import './FrontPageNavBar.css';
 import Button from '../button/Button';
 
 function FrontPageNavBar() {
-  // Redirect to /login
+  // Redirect to /signin
   const history = useHistory();
   const loginRedirect = () => {
     let path = `login`;
+    history.push(path);
+  };
+
+  // Redirect for /signup
+  const signUpRedirect = () => {
+    let path = `signup`;
     history.push(path);
   };
 
@@ -46,13 +52,23 @@ function FrontPageNavBar() {
           </li>
         </ul>
       </div>
+      <div className='frontpage-navbar-signin'>
+        <Button
+          type='button'
+          onClick={loginRedirect}
+          buttonStyle='btn--primary--signin'
+          buttonSize='btn--small'
+        >
+          Sign in
+        </Button>
+      </div>
       <Button
         type='button'
-        onClick={loginRedirect}
+        onClick={signUpRedirect}
         buttonStyle='btn--primary--normal'
         buttonSize='btn--small'
       >
-        Sign in
+        Sign up
       </Button>
     </div>
   );
