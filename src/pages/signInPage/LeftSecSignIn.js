@@ -1,5 +1,5 @@
 import React from 'react';
-import './LeftSecSignIn.css';
+import './SignInMain.css';
 
 function LeftSecSignIn() {
   return (

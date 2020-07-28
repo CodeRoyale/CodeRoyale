@@ -1,7 +1,7 @@
 import React from 'react';
-import './Description.css';
+import './FrontPageMain.css';
 import { useHistory } from 'react-router-dom';
-import Button from '../../../components/button/Button';
+import Button from '../../components/button/Button';
 
 function Description() {
   // Redirect to /signup

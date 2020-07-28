@@ -1,9 +1,9 @@
 import React from 'react';
 import NavBar from '../../components/navBar/NavBar';
 import './ArenaMain.css';
-import Problem from './problem/Problem';
-import Chat from './chat/Chat';
-import Solution from './solution/Solution';
+import Problem from './Problem';
+import Chat from './Chat';
+import Solution from './Solution';
 import Button from '../../components/button/Button';
 
 function ArenaPage() {

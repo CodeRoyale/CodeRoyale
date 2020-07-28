@@ -1,5 +1,5 @@
 import React from 'react';
-import './leftSecSignUp.css';
+import './SignUpMain.css';
 
 function leftSecSignUp() {
   return (

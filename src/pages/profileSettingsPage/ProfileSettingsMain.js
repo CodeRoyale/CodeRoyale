@@ -1,6 +1,6 @@
 import React from 'react';
 import './ProfileSettingsMain.css';
-import SettingsBody from './settingsBody/SettingsBody';
+import SettingsBody from './SettingsBody';
 import NavBar from '../../components/navBar/NavBar';
 
 function ProfileSettingsMain() {

@@ -1,5 +1,5 @@
 import React from 'react';
-import './Problem.css';
+import './ArenaMain.css';
 
 function Problem() {
   return (
