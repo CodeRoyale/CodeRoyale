@@ -1,6 +1,7 @@
 import React from 'react';
 import copy from 'copy-to-clipboard';
 import './ShareLinkCardFriend.css';
+import Button from '../../components/button/Button';
 
 function ShareLinkCardFriend(props) {
   const profileData = props.profileData;
@@ -32,12 +33,14 @@ function ShareLinkCardFriend(props) {
           <div>
             <div className='share-link-card-link'>{friendLink}</div>
             <div className='share-link-card-copy-button-container'>
-              <button
-                className='share-link-card-copy-button'
+              <Button
+                type='button'
                 onClick={onClickCopyButton}
+                buttonStyle='btn--primary--normal'
+                buttonSize='btn--medium'
               >
-                Copy
-              </button>
+                Copy to Clipboard
+              </Button>
             </div>
           </div>
         </div>

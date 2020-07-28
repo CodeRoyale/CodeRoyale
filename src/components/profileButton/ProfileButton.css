@@ -14,6 +14,7 @@
 }
 
 .profile-menu-bar {
+  z-index: 5;
   width: 270px;
   padding: 10px;
   text-align: left;

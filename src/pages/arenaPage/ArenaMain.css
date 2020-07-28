@@ -1,0 +1,28 @@
+.arena-body {
+  display: flex;
+  padding: 10px;
+  z-index: 1;
+}
+
+.arena-page {
+  background-color: #f5f8f8;
+  margin: auto;
+  height: 100%;
+}
+
+.left-container {
+  flex: 2;
+}
+
+.right-container {
+  flex: 2;
+}
+
+.arena-seperator {
+  flex: 1;
+}
+
+.button-container {
+  float: right;
+  margin: 10px;
+}
