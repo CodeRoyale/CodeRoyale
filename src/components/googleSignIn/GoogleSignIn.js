@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
 
 class GoogleSignIn extends Component {
+  // Google Client ID from .env file
+  googleClientID = process.env.REACT_APP_CLIENT_ID;
+
   // This function is called on successful login from google...
   responseSuccess = (response) => {
     console.log(response);
@@ -12,7 +15,7 @@ class GoogleSignIn extends Component {
     return (
       <div>
         <GoogleLogin
-          clientId='1011215903549-gk04pquqgtbkkeft8rvked0eb08lks61.apps.googleusercontent.com'
+          clientId={this.googleClientID}
           buttonText='Login with Google'
           onSuccess={this.responseSuccess}
           onFailure={this.responseFailure}
