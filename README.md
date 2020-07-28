@@ -63,3 +63,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 * Fun
 * Better
 
+## Branches
+
+- **master**: This branch contains the code running at production.
+- **develop**: This contains the latest code. All the contributing PRs must be sent to this branch.
