@@ -2,45 +2,88 @@ const Question = require('../models/questionModel');
 
 const putQuestion = async (req, res) => {
   try {
-    const {
-      questionTitle,
-      problemCode,
-      description,
-      author,
-      tags,
-      dateAdded,
-      timeLimit,
-      sourceLimit,
-      difficulty,
-    } = req.body; // storing everything from request body into new question object
-
-    const question = {};
-    question.questionTitle = questionTitle;
-    question.problemCode = problemCode;
-    question.description = description;
-    question.author = author;
-    question.tags = tags;
-    question.dateAdded = dateAdded;
-    question.timeLimit = timeLimit;
-    question.sourceLimit = sourceLimit;
-    question.difficulty = difficulty;
-
-    const questionModel = new Question(question);
-    await questionModel.save();
-    res.json(questionModel);
+    const question = await Question.create(req.body);
+    console.log('Question Created', question);
+    res.status(201).json({
+      message: question,
+    });
   } catch (err) {
     res.status(401).json({
       message: err.message,
     });
-    console.log(err);
   }
 };
 
 const getQuestion = async (req, res) => {
   try {
-    const questions = await Question.find({});
+    console.log(req.query);
+    if (req.query.tags) {
+      console.log(req.query.tags);
+
+      const questions = await Question.find({
+        tags: {
+          $in: req.query.tags,
+        },
+      });
+
+      res.status(200).json({
+        message: questions,
+      });
+    } else {
+      const questions = await Question.findOne({});
+      console.log(questions);
+      res.status(200).json({
+        message: questions,
+      });
+    }
+  } catch (err) {
+    res.status(401).json({
+      message: err.message,
+    });
+  }
+};
+
+const deleteQuestion = async (req, res) => {
+  try {
+    const resp = await Question.remove({});
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json(resp);
+  } catch (err) {
+    res.status(401).json({
+      message: err.message,
+    });
+  }
+};
+
+const deleteQuestionById = async (req, res) => {
+  try {
+    const deleteMessage = await Question.deleteOne({
+      _id: req.params.questionId,
+    });
     res.status(201).json({
-      message: questions,
+      message: deleteMessage,
+    });
+  } catch (err) {
+    res.status(401).json({
+      message: err.message,
+    });
+  }
+};
+
+const patchQuestionById = async (req, res) => {
+  try {
+    const updateMessage = await Question.updateOne(
+      {
+        _id: req.params.questionId,
+      },
+      {
+        $set: req.body,
+      }
+    );
+    console.log(updateMessage);
+    res.status(201).json({
+      message: updateMessage,
     });
   } catch (err) {
     res.status(401).json({
@@ -52,5 +95,7 @@ const getQuestion = async (req, res) => {
 module.exports = {
   getQuestion,
   putQuestion,
-  // eslint-disable-next-line prettier/prettier
+  deleteQuestion,
+  deleteQuestionById,
+  patchQuestionById,
 };

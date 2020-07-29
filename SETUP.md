@@ -62,7 +62,7 @@ git checkout -b branch_name
 ## Before Commiting / Pushing to repo
 
 ```
-npm run prettier:write - Formats all files supported by Prettier in the current directory and its subdirectories
+npm run prettier:write - Formats all files to match prettier code style
 
 npm run prettier:check - Checks that all files match prettier code style
 
