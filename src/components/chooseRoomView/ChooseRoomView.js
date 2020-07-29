@@ -2,13 +2,13 @@ import React from 'react';
 import './ChooseRoomView.css';
 import Button from '../button/Button';
 
-function ChooseRoomView() {
+function ChooseRoomView({ onClickChoose }) {
   const onClickCreateRoom = () => {
-    //TODO: Write here...
+    onClickChoose('CREATE_ROOM');
   };
 
   const onClickJoinRoom = () => {
-    //TODO: Write here...
+    onClickChoose('JOIN_ROOM');
   };
   return (
     <div>

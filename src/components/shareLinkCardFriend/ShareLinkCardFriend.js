@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-// import CreateRoomView from '../createRoomView/CreateRoomView';
-// import JoinRoomView from '../joinRoomView/JoinRoomView';
+import CreateRoomView from '../createRoomView/CreateRoomView';
+import JoinRoomView from '../joinRoomView/JoinRoomView';
 import ChooseRoomView from '../chooseRoomView/ChooseRoomView';
 import io from 'socket.io-client';
 import './ShareLinkCardFriend.css';
@@ -13,6 +13,22 @@ function ShareLinkCardFriend(props) {
   const ENDPOINT = 'http://localhost:2500';
   const [connectionResponse, setConnectionResponse] = useState('');
   const [, setSocket] = useState(null);
+  const [chooseOption, setChooseOption] = useState(null);
+
+  // OnClickChoose...
+  let chosenView;
+  switch (chooseOption) {
+    case 'CREATE_ROOM':
+      chosenView = <CreateRoomView />;
+      break;
+    case 'JOIN_ROOM':
+      chosenView = <JoinRoomView />;
+      break;
+    default:
+      chosenView = (
+        <ChooseRoomView onClickChoose={(option) => setChooseOption(option)} />
+      );
+  }
 
   // Connection to server...
   useEffect(() => {
@@ -64,13 +80,7 @@ function ShareLinkCardFriend(props) {
             </div>
           </div>
         </div>
-        <div className='share-link-card-body-right'>
-          {
-            // <CreateRoomView />
-            // <JoinRoomView />
-            <ChooseRoomView />
-          }
-        </div>
+        <div className='share-link-card-body-right'>{chosenView}</div>
       </div>
     </div>
   );
