@@ -61,13 +61,20 @@ git checkout -b branch_name
 
 ## Before Commiting / Pushing to repo
 
+- Format all files supported by Prettier in the current directory and its subdirectories
 ```
-npm run prettier:write - Formats all files supported by Prettier in the current directory and its subdirectories
-
-npm run prettier:check - Checks that all files match prettier code style
-
-npm run lint - Runs eslint ./server to check whether all files follow the lint rules
-
-npm run lint:fix - Runs eslint --fix ./server to handle the simple fixes automatically
+npm run prettier:write
+```
+- Check that all files match prettier code style
+```
+npm run prettier:check 
+```
+- Run eslint to check whether all files follow the lint rules
+```
+npm run lint
+```
+- Run eslint to handle the simple fixes automatically
+```
+npm run lint:fix
 
 ```
