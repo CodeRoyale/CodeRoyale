@@ -7,7 +7,8 @@ const googleClientID = process.env.REACT_APP_CLIENT_ID;
 class GoogleSignIn extends Component {
   // This function is called on successful login from google...
   responseSuccess = (response) => {
-    this.props.receiveGoogleData(response);
+    // Send data to SignUpSec.js props
+    this.props.sendGoogleData(response);
   };
 
   render() {
