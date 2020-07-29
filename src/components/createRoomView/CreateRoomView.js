@@ -3,7 +3,7 @@ import './CreateRoomView.css';
 import Button from '../button/Button';
 
 function CreateRoomView() {
-  const onClickGenerateButton = () => {
+  const onClickCreateButton = () => {
     // TODO: Write onClick function...
   };
   return (
@@ -13,7 +13,7 @@ function CreateRoomView() {
       <div className='create-room-copy-button-container'>
         <Button
           type='button'
-          onClick={onClickGenerateButton}
+          onClick={onClickCreateButton}
           buttonStyle='btn--primary--normal'
           buttonSize='btn--medium'
         >

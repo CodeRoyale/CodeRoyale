@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from 'react';
-// import copy from 'copy-to-clipboard';
 // import CreateRoomView from '../createRoomView/CreateRoomView';
-import JoinRoomView from '../joinRoomView/JoinRoomView';
+// import JoinRoomView from '../joinRoomView/JoinRoomView';
+import ChooseRoomView from '../chooseRoomView/ChooseRoomView';
 import io from 'socket.io-client';
 import './ShareLinkCardFriend.css';
 
 function ShareLinkCardFriend(props) {
   const profileData = props.profileData;
   const userName = profileData.username;
-  const CREATE_ROOM = 'CREATE_ROOM';
   const CONNECTION_ACK = 'CONNECTION_ACK';
   const CONNECTION_DENY = 'CONNECTION_DENY';
-  const COPY_CLIPBOARD = 'Copy to clipboard';
-  const GENERATE_LINK = 'Generate Link';
   const ENDPOINT = 'http://localhost:2500';
-  const [generateButtonName] = useState(GENERATE_LINK);
   const [connectionResponse, setConnectionResponse] = useState('');
-  const [, setRoomId] = useState('');
-  const [socket, setSocket] = useState(null);
+  const [, setSocket] = useState(null);
 
   // Connection to server...
   useEffect(() => {
@@ -52,16 +47,6 @@ function ShareLinkCardFriend(props) {
     }
   }, [connectionResponse]);
 
-  // Create room...
-  useEffect(() => {
-    if (generateButtonName === COPY_CLIPBOARD) {
-      socket.emit(CREATE_ROOM, {}, (data) => {
-        console.log(data);
-        setRoomId(userName);
-      });
-    }
-  });
-
   return (
     <div className='share-link-card'>
       <div className='share-link-card-body'>
@@ -82,7 +67,8 @@ function ShareLinkCardFriend(props) {
         <div className='share-link-card-body-right'>
           {
             // <CreateRoomView />
-            <JoinRoomView />
+            // <JoinRoomView />
+            <ChooseRoomView />
           }
         </div>
       </div>
