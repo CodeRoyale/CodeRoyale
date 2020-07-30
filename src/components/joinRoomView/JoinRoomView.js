@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './JoinRoomView.css';
 import Button from '../button/Button';
 
-function JoinRoomView() {
+function JoinRoomView({ socket }) {
   const [joinInputValue, setJoinInputValue] = useState('');
+  const [joinButtonClicked, setJoinButtonClicked] = useState(false);
 
-  const onClickJoinButton = () => {
-    // TODO: Write here...
-  };
+  // TODO: Have to include code for what happens if false....
+  // Join Room...
+  useEffect(() => {
+    let room_id;
+    if (joinButtonClicked) {
+      room_id = joinInputValue;
+      socket.emit('JOIN_ROOM', { room_id }, (data) => {
+        console.log(data);
+      });
+    }
+  });
 
+  // Main Render...
   return (
     <div>
       <div className='join-room-join-input-container'>
@@ -23,7 +33,7 @@ function JoinRoomView() {
       <div className='join-room-join-button-container'>
         <Button
           type='button'
-          onClick={onClickJoinButton}
+          onClick={() => setJoinButtonClicked(true)}
           buttonStyle='btn--primary--normal'
           buttonSize='btn--medium'
         >

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import './ShareLinkCardFriend.css';
 import CreateRoomView from '../createRoomView/CreateRoomView';
 import JoinRoomView from '../joinRoomView/JoinRoomView';
 import ChooseRoomView from '../chooseRoomView/ChooseRoomView';
 import io from 'socket.io-client';
-import './ShareLinkCardFriend.css';
 
 function ShareLinkCardFriend(props) {
   const profileData = props.profileData;
@@ -12,17 +12,18 @@ function ShareLinkCardFriend(props) {
   const CONNECTION_DENY = 'CONNECTION_DENY';
   const ENDPOINT = 'http://localhost:2500';
   const [connectionResponse, setConnectionResponse] = useState('');
-  const [, setSocket] = useState(null);
+  const [socket, setSocket] = useState(null);
   const [chooseOption, setChooseOption] = useState(null);
 
   // OnClickChoose...
+  // TODO: This view should be shown after ACK from server connection....
   let chosenView;
   switch (chooseOption) {
     case 'CREATE_ROOM':
-      chosenView = <CreateRoomView />;
+      chosenView = <CreateRoomView socket={socket} />;
       break;
     case 'JOIN_ROOM':
-      chosenView = <JoinRoomView />;
+      chosenView = <JoinRoomView socket={socket} />;
       break;
     default:
       chosenView = (
@@ -63,6 +64,7 @@ function ShareLinkCardFriend(props) {
     }
   }, [connectionResponse]);
 
+  // Main Render...
   return (
     <div className='share-link-card'>
       <div className='share-link-card-body'>
