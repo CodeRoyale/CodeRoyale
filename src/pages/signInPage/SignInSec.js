@@ -33,6 +33,7 @@ class SignInSec extends Component {
       .then((res) => res.json())
       .then((jsonRes) => {
         // Success response from server
+        console.log(jsonRes);
         if (jsonRes.message === 'Login successful') {
           this.setState({ signInSuccess: true });
         }
