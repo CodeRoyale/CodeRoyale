@@ -37,6 +37,15 @@ function SettingsBody() {
             Save Settings
           </Button>
         </div>
+        <div className='settings-deactivate-profile-button'>
+          <Button
+            type='button'
+            buttonStyle='btn--primary--logout'
+            buttonSize='btn--large'
+          >
+            Deactivate my Account
+          </Button>
+        </div>
       </div>
 
       <div className='settings-separator'></div>
