@@ -35,10 +35,12 @@ const createRoom = (config) => {
       max_teams: config.max_teams || 2,
       max_perTeam: config.max_perTeam || 3,
       cur_memCount: 1,
-      max_perRoom: config.max_perTeam || 10,
+      max_perRoom: config.max_perRoom || 10,
       banList: [],
       createdAt: Date.now(),
       contestStartedAt: null,
+      contnetEndedAt: null,
+      contestOngoing: false,
       timeLimit: config.timeLimit || 2700000,
     };
 
@@ -195,6 +197,45 @@ const banMember = ({ room_id }) => {};
 const addPrivateList = ({ room_id }) => {
   // only private rooms can have rivate lists
 };
+
+const startCompetition = ({ userName }) => {
+  //Contest (username, teamID)
+
+  // 1) User is in room && UserName == Admin && user is in team && No of teams in room == 2
+  // 2) Contest is Ready
+  // 3) Veto => Tag => UI => Send the tag to Question API => Get Question => Show question in Lobby UI => Show start contest button only to the Admin
+  // 4) Start Contest
+  // Update contestStartedAt and timeLimit
+  // setTimeout(config.timeLimit, ( )=>{ //code to send stop contest} )
+
+  let user = getUser(userName);
+  room = getRoomData(user.room_id);
+
+  if (
+    user &&
+    room &&
+    room.admin === user.userName &&
+    Object.keys(room.teams).length > 1
+  ) {
+    // allowed to start
+    // do a veto
+    // returns set of tag
+    const getTagsFromRoom = getTagsFromRoom({ room_id });
+  }
+
+  rooms[room_id].contestOngoing = true;
+};
+
+const getTagsFromRoom = () => {
+  // let p = new Promes( awd)
+  // call q api
+  // get any 9 random tags
+  // ask user vote
+};
+
+const notifyTeam = () => {};
+
+const notifyRoom = () => {};
 
 const getRoomData = (room_id) => rooms[room_id];
 const getRoomsData = () => rooms;
