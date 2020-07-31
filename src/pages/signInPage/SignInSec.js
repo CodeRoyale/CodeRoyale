@@ -9,8 +9,13 @@ const SIGNIN_API = process.env.REACT_APP_SIGNIN_API;
 class SignInSec extends Component {
   constructor(props) {
     super(props);
+    const accessToken = localStorage.getItem('access-token');
+    let loggedIn = true;
+    if (accessToken === null) {
+      loggedIn = false;
+    }
     this.state = {
-      signInSuccess: false,
+      loggedIn,
       googleData: {},
     };
   }
@@ -33,9 +38,10 @@ class SignInSec extends Component {
       .then((res) => res.json())
       .then((jsonRes) => {
         // Success response from server
-        localStorage.setItem('user-data', JSON.stringify(jsonRes));
         if (jsonRes.message === 'Login successful') {
-          this.setState({ signInSuccess: true });
+          this.setState({ loggedIn: true });
+          localStorage.setItem('user-data', JSON.stringify(jsonRes));
+          localStorage.setItem('access-token', jsonRes.accessToken);
         }
       })
       .catch((err) => {
@@ -54,29 +60,28 @@ class SignInSec extends Component {
   };
 
   render() {
-    if (!this.state.signInSuccess) {
-      return (
-        <div className='signin-section-container'>
-          <div className='signin-section-content'>
-            <center>
-              <p className='signin-section-title'>Sign into CodeRoyale</p>
-              <GoogleSignIn
-                text='Sign in with Google'
-                sendGoogleData={this.handleGoogleData}
-              />
-              <p className='signin-section-sign-up'>
-                Not a member?{' '}
-                <Link to='signup' style={{ textDecoration: 'none' }}>
-                  <span className='span-text'>Sign up now</span>
-                </Link>
-              </p>
-            </center>
-          </div>
-        </div>
-      );
-    } else {
+    if (this.state.loggedIn) {
       return <Redirect to='/dashboard' />;
     }
+    return (
+      <div className='signin-section-container'>
+        <div className='signin-section-content'>
+          <center>
+            <p className='signin-section-title'>Sign into CodeRoyale</p>
+            <GoogleSignIn
+              text='Sign in with Google'
+              sendGoogleData={this.handleGoogleData}
+            />
+            <p className='signin-section-sign-up'>
+              Not a member?{' '}
+              <Link to='signup' style={{ textDecoration: 'none' }}>
+                <span className='span-text'>Sign up now</span>
+              </Link>
+            </p>
+          </center>
+        </div>
+      </div>
+    );
   }
 }
 
