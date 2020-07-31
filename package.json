@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server/server.js",
+    "dev": "nodemon server/server.js",
+    "start": "node server/server.js",
     "prettier:check": "prettier --check ./server",
     "prettier:write": "prettier --write ./server",
     "lint": "eslint ./server",

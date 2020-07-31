@@ -3,7 +3,6 @@ const Question = require('../models/questionModel');
 const putQuestion = async (req, res) => {
   try {
     const question = await Question.create(req.body);
-    console.log('Question Created', question);
     res.status(201).json({
       message: question,
     });
@@ -16,10 +15,7 @@ const putQuestion = async (req, res) => {
 
 const getQuestion = async (req, res) => {
   try {
-    console.log(req.query);
     if (req.query.tags) {
-      console.log(req.query.tags);
-
       const questions = await Question.find({
         tags: {
           $in: req.query.tags,
@@ -31,7 +27,7 @@ const getQuestion = async (req, res) => {
       });
     } else {
       const questions = await Question.findOne({});
-      console.log(questions);
+
       res.status(200).json({
         message: questions,
       });
@@ -46,11 +42,11 @@ const getQuestion = async (req, res) => {
 const deleteQuestion = async (req, res) => {
   try {
     const resp = await Question.remove({});
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
-    res.json(resp);
+    res.status(201).json({
+      message: resp,
+    });
   } catch (err) {
-    res.status(401).json({
+    res.status(200).json({
       message: err.message,
     });
   }
@@ -81,7 +77,7 @@ const patchQuestionById = async (req, res) => {
         $set: req.body,
       }
     );
-    console.log(updateMessage);
+
     res.status(201).json({
       message: updateMessage,
     });
