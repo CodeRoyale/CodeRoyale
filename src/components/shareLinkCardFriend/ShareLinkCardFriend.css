@@ -47,21 +47,3 @@
   align-items: center;
   padding: 5px;
 }
-
-.share-link-card-link {
-  background-color: rgba(128, 128, 128, 0.445);
-  width: var(--share-card-copy-button-width);
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.share-link-card-copy-button-container {
-  text-align: center;
-  margin-top: 10px;
-}
-
-.share-link-card-copy-button {
-  width: 220px;
-  height: 27px;
-}

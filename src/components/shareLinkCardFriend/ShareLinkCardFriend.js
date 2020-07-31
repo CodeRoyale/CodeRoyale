@@ -1,17 +1,74 @@
-import React from 'react';
-import copy from 'copy-to-clipboard';
+import React, { useState, useEffect } from 'react';
 import './ShareLinkCardFriend.css';
-import Button from '../../components/button/Button';
+import CreateRoomView from '../createRoomView/CreateRoomView';
+import JoinRoomView from '../joinRoomView/JoinRoomView';
+import ChooseRoomView from '../chooseRoomView/ChooseRoomView';
+import io from 'socket.io-client';
 
 function ShareLinkCardFriend(props) {
   const profileData = props.profileData;
-  const friendLink = props.sharableLink;
+  const userName = profileData.username;
+  const CONNECTION_ACK = 'CONNECTION_ACK';
+  const CONNECTION_DENY = 'CONNECTION_DENY';
+  const ENDPOINT = 'http://localhost:2500';
+  const [connectionResponse, setConnectionResponse] = useState('');
+  const [socket, setSocket] = useState(null);
+  const [chooseOption, setChooseOption] = useState(null);
 
-  const onClickCopyButton = () => {
-    //TODO: write down this function...
-    copy(friendLink);
-  };
+  // OnClickChoose...
+  // TODO: This view should be shown after ACK from server connection....
+  let chosenView;
+  if (connectionResponse === CONNECTION_ACK) {
+    switch (chooseOption) {
+      case 'CREATE_ROOM':
+        chosenView = <CreateRoomView socket={socket} />;
+        break;
+      case 'JOIN_ROOM':
+        chosenView = <JoinRoomView socket={socket} />;
+        break;
+      default:
+        chosenView = (
+          <ChooseRoomView onClickChoose={(option) => setChooseOption(option)} />
+        );
+    }
+  } else if (connectionResponse === CONNECTION_DENY) {
+    alert('Connection to server failed...');
+  }
 
+  // Connection to server...
+  useEffect(() => {
+    const options = {
+      transportOptions: {
+        polling: {
+          extraHeaders: {
+            Authorization: `Bearer ${userName}`,
+          },
+        },
+      },
+    };
+    console.log('sending req');
+    let socket = io.connect(ENDPOINT, options);
+    setSocket(socket);
+    socket.on(CONNECTION_ACK, () => {
+      setConnectionResponse(CONNECTION_ACK);
+    });
+    socket.on(CONNECTION_DENY, () => {
+      setConnectionResponse(CONNECTION_DENY);
+    });
+  }, [userName]);
+
+  // After connection response comes...
+  useEffect(() => {
+    if (connectionResponse === CONNECTION_ACK) {
+      console.log(CONNECTION_ACK);
+    } else if (connectionResponse === CONNECTION_DENY) {
+      console.log(CONNECTION_DENY);
+    } else {
+      console.log('No Connection yet...');
+    }
+  }, [connectionResponse]);
+
+  // Main Render...
   return (
     <div className='share-link-card'>
       <div className='share-link-card-body'>
@@ -29,21 +86,7 @@ function ShareLinkCardFriend(props) {
             </div>
           </div>
         </div>
-        <div className='share-link-card-body-right'>
-          <div>
-            <div className='share-link-card-link'>{friendLink}</div>
-            <div className='share-link-card-copy-button-container'>
-              <Button
-                type='button'
-                onClick={onClickCopyButton}
-                buttonStyle='btn--primary--normal'
-                buttonSize='btn--medium'
-              >
-                Copy to Clipboard
-              </Button>
-            </div>
-          </div>
-        </div>
+        <div className='share-link-card-body-right'>{chosenView}</div>
       </div>
     </div>
   );
