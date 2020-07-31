@@ -3,10 +3,11 @@
 }
 
 .nav-bar {
+  position: relative;
   height: var(--height-nav-bar);
   width: 100%;
   top: 0;
-  z-index: 1;
+  z-index: 5;
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
   background-color: white;
   padding: 10px;
