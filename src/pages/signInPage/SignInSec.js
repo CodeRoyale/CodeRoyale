@@ -33,7 +33,7 @@ class SignInSec extends Component {
       .then((res) => res.json())
       .then((jsonRes) => {
         // Success response from server
-        sessionStorage.setItem('user-data', JSON.stringify(jsonRes));
+        localStorage.setItem('user-data', JSON.stringify(jsonRes));
         if (jsonRes.message === 'Login successful') {
           this.setState({ signInSuccess: true });
         }

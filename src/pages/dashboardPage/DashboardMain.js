@@ -5,7 +5,7 @@ import Button from '../../components/button/Button';
 import NavBar from '../../components/navBar/NavBar';
 
 function DashboardMain() {
-  // Redirect to /login
+  // Redirect to /lobby
   const history = useHistory();
   const lobbyRedirect = () => {
     let path = `lobby`;
