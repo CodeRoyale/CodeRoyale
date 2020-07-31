@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const swaggerJSDoc = require('swagger-jsdoc');
+const os = require('os');
 const path = require('path');
 const connectDB = require('./controllers/connectionDB');
 
@@ -11,9 +12,10 @@ connectDB();
 app.use(bodyParser.json());
 app.use('/questions', require('./routes/question'));
 
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => console.log('Server started'));
+const server = app.listen(process.env.PORT || 3000, () => {
+  const host = os.hostname();
+  console.log('Server Started at ', host, ':', server.address().port);
+});
 
 // parameter for swaggerJSDoc to render the json for redoc
 const options = {
@@ -44,3 +46,7 @@ app.get('/swagger.json', (req, res) => {
 app.get('/docs', (req, res) => {
   res.sendFile(path.join(__dirname, 'redoc.html'));
 });
+
+module.exports = {
+  server,
+};
