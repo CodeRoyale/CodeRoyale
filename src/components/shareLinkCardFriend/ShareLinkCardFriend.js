@@ -18,17 +18,21 @@ function ShareLinkCardFriend(props) {
   // OnClickChoose...
   // TODO: This view should be shown after ACK from server connection....
   let chosenView;
-  switch (chooseOption) {
-    case 'CREATE_ROOM':
-      chosenView = <CreateRoomView socket={socket} />;
-      break;
-    case 'JOIN_ROOM':
-      chosenView = <JoinRoomView socket={socket} />;
-      break;
-    default:
-      chosenView = (
-        <ChooseRoomView onClickChoose={(option) => setChooseOption(option)} />
-      );
+  if (connectionResponse === CONNECTION_ACK) {
+    switch (chooseOption) {
+      case 'CREATE_ROOM':
+        chosenView = <CreateRoomView socket={socket} />;
+        break;
+      case 'JOIN_ROOM':
+        chosenView = <JoinRoomView socket={socket} />;
+        break;
+      default:
+        chosenView = (
+          <ChooseRoomView onClickChoose={(option) => setChooseOption(option)} />
+        );
+    }
+  } else if (connectionResponse === CONNECTION_DENY) {
+    alert('Connection to server failed...');
   }
 
   // Connection to server...
