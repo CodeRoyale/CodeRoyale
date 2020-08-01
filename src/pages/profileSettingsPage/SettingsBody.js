@@ -4,8 +4,17 @@ import SettingsField from '../../components/settingsField/SettingsField';
 import Button from '../../components/button/Button';
 
 function SettingsBody() {
-  const [firstName, setFirstName] = useState('Alan');
-  const [lastName, setLastName] = useState('Henry');
+  let profileData = localStorage.getItem('user-data');
+  profileData = JSON.parse(profileData);
+  const [firstName, setFirstName] = useState(profileData.firstName);
+  const [lastName, setLastName] = useState(profileData.lastName);
+  const email = profileData.email;
+
+  // Function to deactivate account
+  const deactivateAccount = () => {
+    // TODO: Call to delete api
+  };
+
   return (
     <div className='settings-container'>
       <div className='settings-forms'>
@@ -23,11 +32,7 @@ function SettingsBody() {
           disabled={false}
           onChange={(e) => setLastName(e.target.value)}
         />
-        <SettingsField
-          heading='Email'
-          value='alanhenry@gmail.com'
-          disabled={true}
-        />
+        <SettingsField heading='Email' value={email} disabled={true} />
         <div className='settings-save-button'>
           <Button
             type='button'
@@ -42,6 +47,7 @@ function SettingsBody() {
             type='button'
             buttonStyle='btn--primary--logout'
             buttonSize='btn--large'
+            onClick={deactivateAccount}
           >
             Deactivate my Account
           </Button>

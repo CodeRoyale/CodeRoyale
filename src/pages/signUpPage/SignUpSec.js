@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import GoogleSignIn from '../../components/googleSignIn/GoogleSignIn';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import './SignUpMain.css';
 
 const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
@@ -9,7 +9,13 @@ const SIGNUP_API = process.env.REACT_APP_SIGNUP_API;
 class SignUpSec extends Component {
   constructor(props) {
     super(props);
+    const accessToken = localStorage.getItem('access-token');
+    let loggedIn = true;
+    if (accessToken === null) {
+      loggedIn = false;
+    }
     this.state = {
+      loggedIn,
       googleData: {},
     };
   }
@@ -50,6 +56,9 @@ class SignUpSec extends Component {
   };
 
   render() {
+    if (this.state.loggedIn) {
+      return <Redirect to='/dashboard' />;
+    }
     return (
       <div className='signup-section-container'>
         <div className='signup-section-content'>

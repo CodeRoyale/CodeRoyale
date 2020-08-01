@@ -4,12 +4,8 @@ import ProfileButton from '../../components/profileButton/ProfileButton';
 import './NavBar.css';
 
 function NavBar() {
-  const profileData = {
-    imageUrl:
-      'https://media-exp1.licdn.com/dms/image/C5103AQHuIxezqseoGQ/profile-displayphoto-shrink_200_200/0?e=1597276800&v=beta&t=tREaHG412Mr99Tfke80DMtuQtVQyB4378ptl3SlwDvI',
-    username: 'sawarni99',
-    email: 'sawarni99@gmail.com',
-  }; // Get this from API...
+  let profileData = localStorage.getItem('user-data');
+  profileData = JSON.parse(profileData);
   return (
     <div className='nav-bar'>
       <div className='nav-bar-logo'>
