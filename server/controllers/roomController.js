@@ -24,6 +24,7 @@ const createRoom = (config) => {
 
     // if private is not passed then privateRoom will be false(not undefined)
     //we can add limits to all these paramerters afterwards
+    // -TODO --> add score for teams
     const room_id = config.admin;
     const room_obj = {
       admin: config.admin,
