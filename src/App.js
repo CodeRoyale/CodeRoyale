@@ -8,12 +8,14 @@ import DashboardMain from './pages/dashboardPage/DashboardMain';
 import SignUpMain from './pages/signUpPage/SignUpMain';
 import SignInMain from './pages/signInPage/SignInMain';
 import Arena from './pages/arenaPage/ArenaMain';
+import OutroMain from './pages/outroPage/OutroMain';
 
 function App() {
   return (
     <Router>
       <div className='App'>
         <Switch>
+          <Route exact path='/sorry' component={OutroMain} />
           <Route exact path='/dashboard' component={DashboardMain} />
           <Route exact path='/signin' component={SignInMain} />
           <Route exact path='/signup' component={SignUpMain} />

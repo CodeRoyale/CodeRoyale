@@ -20,6 +20,14 @@ class SignInSec extends Component {
     };
   }
 
+  handleGoogleData = (data) => {
+    this.setState({
+      googleData: data,
+    });
+    // Send to CodeRoyale API for signing up
+    this.sendToServer();
+  };
+
   sendToServer = () => {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -49,14 +57,6 @@ class SignInSec extends Component {
         // TODO: Show alerts based on error response
         console.log(err);
       });
-  };
-
-  handleGoogleData = (data) => {
-    this.setState({
-      googleData: data,
-    });
-    // Send to CodeRoyale API for signing up
-    this.sendToServer();
   };
 
   render() {

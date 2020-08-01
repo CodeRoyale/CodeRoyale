@@ -11,15 +11,23 @@ function ProfileButton(props) {
     history.push(path);
   };
 
-  const profileData = props.profileData;
-  const imageUrl = profileData.imageUrl;
-  const email = profileData.email;
-  const username = profileData.username;
+  const imageUrl = props.profileData.picture;
+  const email = props.profileData.email;
+  const username = props.profileData.userName;
   const [profileClicked, setProfileClicked] = useState(false);
   const onClickProfileButton = () => {
     setProfileClicked(!profileClicked);
   };
   let profileMenuBar;
+
+  const signOutUser = () => {
+    localStorage.removeItem('access-token');
+    localStorage.removeItem('user-data');
+    // Redirect to '/sorry'
+    let path = `sorry`;
+    history.push(path);
+  };
+
   if (profileClicked) {
     profileMenuBar = (
       <div className='profile-menu-bar'>
@@ -43,6 +51,7 @@ function ProfileButton(props) {
             type='button'
             buttonStyle='btn--primary--logout'
             buttonSize='btn--medium'
+            onClick={signOutUser}
           >
             Sign out
           </Button>
