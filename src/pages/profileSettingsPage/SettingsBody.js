@@ -12,7 +12,7 @@ function SettingsBody() {
 
   // Function to deactivate account
   const deactivateAccount = () => {
-    console.log('deactivate');
+    // TODO: Call to delete api
   };
 
   return (

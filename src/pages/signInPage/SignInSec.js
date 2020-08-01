@@ -24,7 +24,7 @@ class SignInSec extends Component {
     this.setState({
       googleData: data,
     });
-    // Send to CodeRoyale API for signing up
+    // Send to CodeRoyale API for signing in
     this.sendToServer();
   };
 

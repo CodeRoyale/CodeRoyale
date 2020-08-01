@@ -21,6 +21,7 @@ function ProfileButton(props) {
   let profileMenuBar;
 
   const signOutUser = () => {
+    // TODO: Call logout api
     localStorage.removeItem('access-token');
     localStorage.removeItem('user-data');
     // Redirect to '/sorry'
