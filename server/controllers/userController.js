@@ -43,11 +43,6 @@ const getUser = (userName) => users[userName];
 
 const getUserData = () => users;
 
-const makeUserSubmission = ({ userName, code, cb }) => {
-  // room
-  // check contest
-  // code
-};
 
 module.exports = {
   addUser,

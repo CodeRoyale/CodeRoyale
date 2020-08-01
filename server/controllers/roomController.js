@@ -29,6 +29,7 @@ const createRoom = (config) => {
       admin: config.admin,
       teams: {},
       questions: {},
+      max_questions: config.max_questions || 4,
       bench: [config.admin],
       privateRoom: config.private === true,
       privateList: [],
@@ -198,44 +199,21 @@ const addPrivateList = ({ room_id }) => {
   // only private rooms can have rivate lists
 };
 
-const startCompetition = ({ userName }) => {
-  //Contest (username, teamID)
-
-  // 1) User is in room && UserName == Admin && user is in team && No of teams in room == 2
-  // 2) Contest is Ready
-  // 3) Veto => Tag => UI => Send the tag to Question API => Get Question => Show question in Lobby UI => Show start contest button only to the Admin
-  // 4) Start Contest
-  // Update contestStartedAt and timeLimit
-  // setTimeout(config.timeLimit, ( )=>{ //code to send stop contest} )
-
+const roomEligible = ({ userName }) => {
+  // user is the one who requested
   let user = getUser(userName);
-  room = getRoomData(user.room_id);
+  room = rooms[user.userName];
 
+  // if room exists user also exists
   if (
-    user &&
     room &&
     room.admin === user.userName &&
     Object.keys(room.teams).length > 1
   ) {
-    // allowed to start
-    // do a veto
-    // returns set of tag
-    const getTagsFromRoom = getTagsFromRoom({ room_id });
+    return room;
   }
-
-  rooms[room_id].contestOngoing = true;
+  return false;
 };
-
-const getTagsFromRoom = () => {
-  // let p = new Promes( awd)
-  // call q api
-  // get any 9 random tags
-  // ask user vote
-};
-
-const notifyTeam = () => {};
-
-const notifyRoom = () => {};
 
 const getRoomData = (room_id) => rooms[room_id];
 const getRoomsData = () => rooms;
@@ -249,4 +227,5 @@ module.exports = {
   getRoomData,
   getRoomsData,
   leaveTeam,
+  roomEligible,
 };

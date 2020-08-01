@@ -1,4 +1,4 @@
-const submitCode = (code) => {
+const submitCode = (questionCode, code) => {
   ///
   let result = "succ";
   return result;

@@ -4,6 +4,7 @@ const {
   JOIN_ROOM,
   CREATE_TEAM,
   JOIN_TEAM,
+  START_COMPETITION,
 } = require("../socketActions/userActions");
 const {
   CONNECTION_ACK,
@@ -18,7 +19,11 @@ const {
   joinTeam,
   joinRoom,
   getRoomData,
+  roomEligible,
 } = require("../controllers/roomController");
+
+// import utils
+const { getQuestions } = require("../utils/qapiConn");
 
 const checkToken = (token) => {
   //just for testing will change later
@@ -109,6 +114,40 @@ const handleUserEvents = (socket) => {
     JOIN_TEAM,
     genericActionCreater(joinTeam, getRoomData, socket.userDetails)
   );
+  socket.on(START_COMPETITION, async (dataFromClient, cb) => {
+    // check if room is eligible
+    let { userDetails } = socket;
+    // user is allowed to start, and room meets requirement
+    let eligibleRoom = roomEligible(userDetails.userName);
+    if (eligibleRoom) {
+      // add event listeners and remove for veto
+
+      // start question selection
+      // get numberOfTeams+numberQuestion ques from api
+      // start selection process
+
+      let allQuestions = await getQuestions();
+
+      // veto process
+      let selectedQuestions = await setQuestions(allQuestions);
+      // end of selection
+
+      // add event listeners for code submit
+      // this is just prototype
+      socket.on("CODE_SUBMIT", ({ code, lang }, cb) => {
+        // call codeExec api
+        //wait for result
+        // check output
+        // send back result in cb
+        // update score based on result
+        // call other events if required
+      });
+    }
+  });
+};
+
+const setQuestions = async () => {
+  // veto proceess here
 };
 
 module.exports = {
