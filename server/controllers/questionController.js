@@ -46,7 +46,7 @@ const deleteQuestion = async (req, res) => {
       message: resp,
     });
   } catch (err) {
-    res.status(200).json({
+    res.status(401).json({
       message: err.message,
     });
   }
