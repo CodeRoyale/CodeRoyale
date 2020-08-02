@@ -3,7 +3,7 @@
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 /* eslint-enable global-require */
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 // importing packages
 const express = require('express');
@@ -18,9 +18,11 @@ const path = require('path');
 (async () => {
   try {
     await mongoose.connect(
+      /* eslint-disable */
       process.env.NODE_ENV !== 'test'
-        ? process.env.DATABASE_URL
+        ? process.env.DATABASE_URL || secrets.DATABASE_URL
         : process.env.TEST_DATABASE_URL,
+      /* eslint-enable */
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -54,11 +56,12 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
 app.use(express.json());
 
 // Routes
 app.use('/', require('./routes/main'));
+app.use('/users', require('./routes/users'));
+app.use('/token', require('./middlerwares/accessTokenGenerator'));
 
 // start listening
 const server = app.listen(PORT, () => {
