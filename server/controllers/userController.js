@@ -60,7 +60,7 @@ const signupUser = async (req, res) => {
                 });
               }
               const newUser = new User({
-                userName: data.given_name[0],
+                userName: data.given_name + data.iat,
                 firstName: data.given_name,
                 lastName: data.family_name,
                 email: data.email,
