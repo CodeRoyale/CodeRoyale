@@ -21,9 +21,12 @@ class ProfileSettingsMain extends Component {
       return <Redirect to='/' />;
     }
     return (
-      <div className='profile-settings'>
+      <div data-test='profile-settings' className='profile-settings'>
         <NavBar />
-        <div className='settings-body-container'>
+        <div
+          data-test='settings-body-container'
+          className='settings-body-container'
+        >
           <SettingsBody />
         </div>
       </div>

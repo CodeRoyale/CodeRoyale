@@ -18,20 +18,29 @@ function Solution() {
 
   return (
     <div>
-      <div className='solution-body'>
-        <div className='solution-header'>
-          <div className='solution-title'>SOLUTION</div>
+      <div data-testid='solution-body' className='solution-body'>
+        <div data-testid='solution-header' className='solution-header'>
+          <div data-testid='solution-title' className='solution-title'>
+            SOLUTION
+          </div>
 
-          <div className='language-options'>
-            <select onChange={(e) => setLanguage(e.target.value)}>
+          <div
+            data-testid='language-options-container'
+            className='language-options'
+          >
+            <select
+              data-testid='language-options'
+              onChange={(e) => setLanguage(e.target.value)}
+            >
               <option value='c++'>c++</option>
               <option value='java'>java</option>
               <option value='python'>python</option>
             </select>
           </div>
 
-          <div className='ide-options'>
+          <div data-testid='ide-options' className='ide-options'>
             <Popup
+              data-testid='ide-options-popup'
               width='100%'
               className='ide-options-popup'
               trigger={<div>Settings</div>} //replace this with settings Icon
@@ -40,7 +49,10 @@ function Solution() {
               position='bottom left'
             >
               <Grid centered divided rows={3}>
-                <Grid.Row className='ide-options-row'>
+                <Grid.Row
+                  data-testid='ide-options-row'
+                  className='ide-options-row'
+                >
                   <div>FontSize:</div>
                   <div>
                     <select
@@ -59,7 +71,10 @@ function Solution() {
 
                   <hr />
                 </Grid.Row>
-                <Grid.Row className='ide-options-row'>
+                <Grid.Row
+                  data-testid='ide-options-row'
+                  className='ide-options-row'
+                >
                   <div>Theme:</div>
                   <div>
                     <select onChange={(e) => setTheme(e.target.value)}>
@@ -75,8 +90,13 @@ function Solution() {
           </div>
         </div>
 
-        <div id='MyAceEditor' className='solution-content'>
+        <div
+          data-testid='solution-content'
+          id='MyAceEditor'
+          className='solution-content'
+        >
           <AceEditor
+            data-testid='solution-editor'
             height='100%'
             width='100%'
             mode={ideLanguage}
@@ -87,7 +107,7 @@ function Solution() {
           />
         </div>
       </div>
-      <div className='button-container'>
+      <div data-testid='button-container' className='button-container'>
         <Button
           type='button'
           buttonStyle='btn--primary--normal'

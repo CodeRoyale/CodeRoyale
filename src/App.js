@@ -13,17 +13,57 @@ import OutroMain from './pages/outroPage/OutroMain';
 function App() {
   return (
     <Router>
-      <div className='App'>
+      <div data-testid='App' className='App'>
         <Switch>
-          <Route exact path='/sorry' component={OutroMain} />
-          <Route exact path='/dashboard' component={DashboardMain} />
-          <Route exact path='/signin' component={SignInMain} />
-          <Route exact path='/signup' component={SignUpMain} />
-          <Route exact path='/arena' component={Arena} />
-          <Route exact path='/lobby' component={LobbyMain} />
-          <Route exact path='/settings' component={ProfileSettingsMain} />
-          <Route exact path='' component={FrontPage} />
-          <Route exact path='/' component={FrontPage} />
+          <Route
+            data-testid='route-sorry'
+            exact
+            path='/sorry'
+            component={OutroMain}
+          />
+          <Route
+            data-testid='route-dashboard'
+            exact
+            path='/dashboard'
+            component={DashboardMain}
+          />
+          <Route
+            data-testid='route-signin'
+            exact
+            path='/signin'
+            component={SignInMain}
+          />
+          <Route
+            data-testid='route-signup'
+            exact
+            path='/signup'
+            component={SignUpMain}
+          />
+          <Route
+            data-testid='route-arena'
+            exact
+            path='/arena'
+            component={Arena}
+          />
+          <Route
+            data-testid='route-lobby'
+            exact
+            path='/lobby'
+            component={LobbyMain}
+          />
+          <Route
+            data-testid='route-settings'
+            exact
+            path='/settings'
+            component={ProfileSettingsMain}
+          />
+          <Route data-testid='route-none' exact path='' component={FrontPage} />
+          <Route
+            data-testid='route-home'
+            exact
+            path='/'
+            component={FrontPage}
+          />
         </Switch>
       </div>
     </Router>

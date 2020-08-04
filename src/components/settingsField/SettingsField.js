@@ -5,10 +5,13 @@ function SettingsField(props) {
   const fieldSize = 50;
   if (!props.disabled) {
     return (
-      <div>
-        <div className='options-header'>{props.heading}</div>
-        <div>
+      <div data-testid='settings-field'>
+        <div data-testid='options-header' className='options-header'>
+          {props.heading}
+        </div>
+        <div data-testid='settings-input-container'>
           <input
+            data-testid='settings-input'
             type='text'
             size={fieldSize}
             className='options-input'
@@ -21,9 +24,12 @@ function SettingsField(props) {
   } else {
     return (
       <div>
-        <div className='options-header'>{props.heading}</div>
-        <div>
+        <div data-testid='options-header' className='options-header'>
+          {props.heading}
+        </div>
+        <div data-testid='settings-input-container'>
           <input
+            data-testid='settings-input'
             type='text'
             size={fieldSize}
             disabled

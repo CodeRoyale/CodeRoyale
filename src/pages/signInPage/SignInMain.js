@@ -6,7 +6,7 @@ import './SignInMain.css';
 class SignInPage extends Component {
   render() {
     return (
-      <div className='signin-page'>
+      <div data-textid='signin-page' className='signin-page'>
         <LeftSecSignIn />
         <SignInSec />
       </div>

@@ -16,9 +16,11 @@ function SettingsBody() {
   };
 
   return (
-    <div className='settings-container'>
-      <div className='settings-forms'>
-        <div className='settings-title'>Profile Settings</div>
+    <div data-test='settings-container' className='settings-container'>
+      <div data-test='settings-forms' className='settings-forms'>
+        <div data-test='settings-title' className='settings-title'>
+          Profile Settings
+        </div>
 
         <SettingsField
           heading='First Name'
@@ -33,7 +35,7 @@ function SettingsBody() {
           onChange={(e) => setLastName(e.target.value)}
         />
         <SettingsField heading='Email' value={email} disabled={true} />
-        <div className='settings-save-button'>
+        <div data-test='settings-save-button' className='settings-save-button'>
           <Button
             type='button'
             buttonStyle='btn--primary--normal'
@@ -42,7 +44,10 @@ function SettingsBody() {
             Save Settings
           </Button>
         </div>
-        <div className='settings-deactivate-profile-button'>
+        <div
+          data-test='settings-deactivate-profile-button'
+          className='settings-deactivate-profile-button'
+        >
           <Button
             type='button'
             buttonStyle='btn--primary--logout'
@@ -54,9 +59,10 @@ function SettingsBody() {
         </div>
       </div>
 
-      <div className='settings-separator'></div>
+      <div data-test='settings-separator' className='settings-separator'></div>
 
       <img
+        data-test='settings-image'
         className='settings-image'
         alt='setting illustration'
         src='/images/settings.svg'

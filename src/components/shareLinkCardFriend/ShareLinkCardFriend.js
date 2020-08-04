@@ -70,23 +70,38 @@ function ShareLinkCardFriend(props) {
 
   // Main Render...
   return (
-    <div className='share-link-card'>
-      <div className='share-link-card-body'>
-        <div className='share-link-card-body-left'>
+    <div data-testid='share-link-card' className='share-link-card'>
+      <div data-testid='share-link-card-body' className='share-link-card-body'>
+        <div
+          data-testid='share-link-card-body-left'
+          className='share-link-card-body-left'
+        >
           <div>
-            <div className='share-link-card-image-container'>
+            <div
+              data-testid='share-link-card-image-container'
+              className='share-link-card-image-container'
+            >
               <img
+                data-testid='share-link-card-image'
                 className='share-link-card-image'
                 src={profileData.imageUrl}
                 alt=''
               />
             </div>
-            <div className='share-link-card-username'>
+            <div
+              data-testid='share-link-card-username'
+              className='share-link-card-username'
+            >
               <b>{profileData.username}</b>
             </div>
           </div>
         </div>
-        <div className='share-link-card-body-right'>{chosenView}</div>
+        <div
+          data-testid='share-link-card-body-right'
+          className='share-link-card-body-right'
+        >
+          {chosenView}
+        </div>
       </div>
     </div>
   );

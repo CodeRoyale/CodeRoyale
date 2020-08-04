@@ -7,11 +7,11 @@ function NavBar() {
   let profileData = localStorage.getItem('user-data');
   profileData = JSON.parse(profileData);
   return (
-    <div className='nav-bar'>
-      <div className='nav-bar-logo'>
+    <div data-testid='nav-bar' className='nav-bar'>
+      <div data-testid='nav-bar-logo' className='nav-bar-logo'>
         <LogoContainer />
       </div>
-      <div className='nav-bar-profile'>
+      <div data-testid='nav-bar-profile' className='nav-bar-profile'>
         <ProfileButton profileData={profileData} />
       </div>
     </div>

@@ -12,15 +12,18 @@ function OutroContent() {
   };
 
   return (
-    <div>
+    <div data-test='outro-content'>
       <center>
         <img
+          data-test='outro-image'
           className='outro-image'
           alt='coder programming'
           src='/images/sad.svg'
         />
-        <p className='outro-text'>We are sorry to see you go!</p>
-        <div className='outro-button'>
+        <p data-test='outro-text' className='outro-text'>
+          We are sorry to see you go!
+        </p>
+        <div data-test='outro-button' className='outro-button'>
           <Button
             type='button'
             onClick={homeRedirect}
