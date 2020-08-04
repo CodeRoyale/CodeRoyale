@@ -29,11 +29,11 @@ class LobbyMain extends Component {
       return <Redirect to='/' />;
     }
     return (
-      <div className='lobby'>
-        <div className='lobby-header'>
+      <div data-test='lobby' className='lobby'>
+        <div data-test='lobby-header' className='lobby-header'>
           <NavBar />
         </div>
-        <div className='lobby-body'>
+        <div data-test='lobby-lobby' className='lobby-body'>
           <ShareLinkCardFriend
             profileData={this.state.profileData}
             sharableLink='Share this link'

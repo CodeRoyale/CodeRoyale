@@ -6,7 +6,7 @@ import SignUpSec from './SignUpSec';
 class SignUpMain extends Component {
   render() {
     return (
-      <div className='signup-page'>
+      <div data-testid='signup-page' className='signup-page'>
         <LeftSecSignUp />
         <SignUpSec />
       </div>

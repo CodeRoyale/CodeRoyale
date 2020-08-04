@@ -20,8 +20,11 @@ function JoinRoomView({ socket }) {
 
   // Main Render...
   return (
-    <div>
-      <div className='join-room-join-input-container'>
+    <div data-testid='join-room-view'>
+      <div
+        data-testid='join-room-join-input-container'
+        className='join-room-join-input-container'
+      >
         <input
           type='text'
           className='join-room-join-input'
@@ -30,7 +33,10 @@ function JoinRoomView({ socket }) {
           placeholder='Enter Room ID...'
         />
       </div>
-      <div className='join-room-join-button-container'>
+      <div
+        data-testid='join-room-join-button-container'
+        className='join-room-join-button-container'
+      >
         <Button
           type='button'
           onClick={() => setJoinButtonClicked(true)}

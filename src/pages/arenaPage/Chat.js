@@ -3,9 +3,11 @@ import './ArenaMain.css';
 
 function Chat() {
   return (
-    <div className='chat-body'>
-      <div className='chat-header'>CHAT</div>
-      <div className='chat-container'>
+    <div data-testid='chat-body' className='chat-body'>
+      <div data-testid='chat-header' className='chat-header'>
+        CHAT
+      </div>
+      <div data-testid='chat-container' className='chat-container'>
         JOEL OP JOEL OP JOEL OP JOEL OP JOEL OP JOEL OP JOEL OP JOEL OP JOEL OP
         JOEL OP JOEL OP JOEL OP JOEL OP JOEL OP JOEL OP JOEL OP JOEL OP JOEL OP
         JOEL OP JOEL OP JOEL OP JOEL OP JOEL OP JOEL OP JOEL OP JOEL OP JOEL OP

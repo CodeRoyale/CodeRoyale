@@ -28,19 +28,31 @@ class DashboardMain extends Component {
       return <Redirect to='/' />;
     }
     return (
-      <div className='dashboard'>
-        <div className='dashboard-header'>
+      <div data-testid='dashboard' className='dashboard'>
+        <div data-testid='dashboard-header' className='dashboard-header'>
           <NavBar />
         </div>
-        <div className='dashboard-body'>
-          <div className='dashboard-body-left'>
-            <div className='dashboard-text-heading'>
+        <div data-testid='dashboard-body' className='dashboard-body'>
+          <div
+            data-testid='dashboard-body-left'
+            className='dashboard-body-left'
+          >
+            <div
+              data-testid='dashboard-text-heading'
+              className='dashboard-text-heading'
+            >
               <b>
                 Compete Your Coding Skills <br /> With Others
               </b>
             </div>
-            <div className='dashboard-play-body'>
-              <div className='dashboard-play-friends'>
+            <div
+              data-testid='dashboard-play-body'
+              className='dashboard-play-body'
+            >
+              <div
+                data-testid='dashboard-play-friends'
+                className='dashboard-play-friends'
+              >
                 <b>Play with a friend</b>
                 <br />
                 <span>
@@ -48,7 +60,10 @@ class DashboardMain extends Component {
                   competitive programming skills.
                 </span>
                 <br />
-                <div className='dashboard-play-button'>
+                <div
+                  data-testid='dashboard-play-button'
+                  className='dashboard-play-button'
+                >
                   <Button
                     type='button'
                     onClick={this.lobbyRedirect}
@@ -59,7 +74,10 @@ class DashboardMain extends Component {
                   </Button>
                 </div>
               </div>
-              <div className='dashboard-play-random'>
+              <div
+                data-testid='dashoard-play-random'
+                className='dashboard-play-random'
+              >
                 <b>Play with a random coder</b>
                 <br />
                 <span>
@@ -67,7 +85,10 @@ class DashboardMain extends Component {
                   out your competitive programming skills.
                 </span>
                 <br />
-                <div className='dashboard-play-button'>
+                <div
+                  data-testid='dashboard-play-button'
+                  className='dashboard-play-button'
+                >
                   <Button
                     type='button'
                     onClick={this.lobbyRedirect}
@@ -80,15 +101,19 @@ class DashboardMain extends Component {
               </div>
             </div>
           </div>
-          <div className='dashboard-body-right'>
+          <div
+            data-testid='dashboard-body-right'
+            className='dashboard-body-right'
+          >
             <img
+              data-testid='dashboard-image'
               className='dashboard-image'
               src='/images/lobby_image.svg'
               alt=''
             />
           </div>
         </div>
-        <div className='dashboard-footer'></div>
+        <div data-testid='dashboard-footer' className='dashboard-footer'></div>
       </div>
     );
   }

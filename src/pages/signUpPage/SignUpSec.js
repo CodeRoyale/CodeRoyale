@@ -60,18 +60,34 @@ class SignUpSec extends Component {
       return <Redirect to='/dashboard' />;
     }
     return (
-      <div className='signup-section-container'>
-        <div className='signup-section-content'>
+      <div
+        data-testid='signup-section-container'
+        className='signup-section-container'
+      >
+        <div
+          data-testid='signup-section-content'
+          className='signup-section-content'
+        >
           <center>
-            <p className='signup-section-title'>Sign up for CodeRoyale</p>
+            <p
+              data-testid='signup-section-title'
+              className='signup-section-title'
+            >
+              Sign up for CodeRoyale
+            </p>
             <GoogleSignIn
               text='Sign up with Google'
               sendGoogleData={this.handleGoogleData}
             />
-            <p className='signup-section-sign-up'>
+            <p
+              data-testid='signup-section-sign-up'
+              className='signup-section-sign-up'
+            >
               Already a member?{' '}
               <Link to='/signin' style={{ textDecoration: 'none' }}>
-                <span className='span-text'>Sign in now</span>
+                <span data-testid='span-text' className='span-text'>
+                  Sign in now
+                </span>
               </Link>
             </p>
           </center>

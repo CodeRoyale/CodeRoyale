@@ -22,6 +22,7 @@ function Button({ children, type, onClick, buttonStyle, buttonSize }) {
 
   return (
     <button
+      data-testid='test-general-button'
       className={`btn ${checkButtonStyle} ${checkButtonSize}`}
       onClick={onClick}
       type={type}
