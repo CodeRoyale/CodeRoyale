@@ -9,6 +9,7 @@ import SignUpMain from './pages/signUpPage/SignUpMain';
 import SignInMain from './pages/signInPage/SignInMain';
 import Arena from './pages/arenaPage/ArenaMain';
 import OutroMain from './pages/outroPage/OutroMain';
+import Testing from './pages/testPage/TestPage';
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
             path='/lobby'
             component={LobbyMain}
           />
+          <Route data-testid='test' exact path='/test' component={Testing} />
           <Route
             data-testid='route-settings'
             exact
