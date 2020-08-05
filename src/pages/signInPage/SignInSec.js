@@ -51,6 +51,7 @@ class SignInSec extends Component {
           localStorage.setItem('user-data', JSON.stringify(jsonRes));
           localStorage.setItem('access-token', jsonRes.accessToken);
         }
+        // React to other response messages from server
       })
       .catch((err) => {
         // Error response from server
