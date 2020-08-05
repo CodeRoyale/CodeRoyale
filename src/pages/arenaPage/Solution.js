@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './ArenaMain.css';
 import AceEditor from 'react-ace';
-import { Popup, Grid } from 'semantic-ui-react';
 import 'ace-builds/src-noconflict/mode-java';
 import 'ace-builds/src-noconflict/mode-c_cpp';
 import 'ace-builds/src-noconflict/mode-python';
@@ -10,93 +9,132 @@ import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/theme-tomorrow';
 import 'ace-builds/src-noconflict/theme-terminal';
 import Button from '../../components/button/Button';
+import Popper from '@material-ui/core/Popper';
+import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    border: '1px solid',
+    padding: theme.spacing(1),
+    backgroundColor: theme.palette.background.paper,
+  },
+}));
+
+const Fade = React.forwardRef(function Fade(props, ref) {
+  const { in: open, children, onEnter, onExited, ...other } = props;
+  const style = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: open ? 1 : 0 },
+    onStart: () => {
+      if (open && onEnter) {
+        onEnter();
+      }
+    },
+    onRest: () => {
+      if (!open && onExited) {
+        onExited();
+      }
+    },
+  });
+
+  return (
+    <animated.div ref={ref} style={style} {...other}>
+      {children}
+    </animated.div>
+  );
+});
+
+Fade.propTypes = {
+  children: PropTypes.element,
+  in: PropTypes.bool,
+  onEnter: PropTypes.func,
+  onExited: PropTypes.func,
+};
 
 function Solution() {
   const [ideLanguage, setLanguage] = useState('c_cpp');
   const [ideFontSize, setFontSize] = useState('12');
   const [ideTheme, setTheme] = useState('terminal');
 
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'spring-popper' : undefined;
+
   return (
     <div>
-      <div data-testid='solution-body' className='solution-body'>
-        <div data-testid='solution-header' className='solution-header'>
-          <div data-testid='solution-title' className='solution-title'>
-            SOLUTION
-          </div>
+      <div className='solution-body'>
+        <div className='solution-header'>
+          <div className='solution-title'>SOLUTION</div>
 
-          <div
-            data-testid='language-options-container'
-            className='language-options'
-          >
-            <select
-              data-testid='language-options'
-              onChange={(e) => setLanguage(e.target.value)}
-            >
+          <div className='language-options'>
+            <select onChange={(e) => setLanguage(e.target.value)}>
               <option value='c++'>c++</option>
               <option value='java'>java</option>
               <option value='python'>python</option>
             </select>
           </div>
 
-          <div data-testid='ide-options' className='ide-options'>
-            <Popup
-              data-testid='ide-options-popup'
-              width='100%'
-              className='ide-options-popup'
-              trigger={<div>Settings</div>} //replace this with settings Icon
-              flowing
-              on='click'
-              position='bottom left'
-            >
-              <Grid centered divided rows={3}>
-                <Grid.Row
-                  data-testid='ide-options-row'
-                  className='ide-options-row'
-                >
-                  <div>FontSize:</div>
-                  <div>
-                    <select
-                      onChange={(e) => setFontSize(Number(e.target.value))}
-                    >
-                      <option value='10'>10</option>
-                      <option value='12'>12</option>
-                      <option value='14'>14</option>
-                      <option value='16'>16</option>
-                      <option value='18'>18</option>
-                      <option value='20'>20</option>
-                      <option value='22'>22</option>
-                      <option value='24'>24</option>
-                    </select>
-                  </div>
+          <div className='ide-options'>
+            <div>
+              <button aria-describedby={id} type='button' onClick={handleClick}>
+                Settings
+              </button>
+              <Popper id={id} open={open} anchorEl={anchorEl} transition>
+                {({ TransitionProps }) => (
+                  <Fade {...TransitionProps}>
+                    <div className={classes.paper}>
+                      <div centered divided rows={3}>
+                        <div className='ide-options-row'>
+                          <div>FontSize:</div>
+                          <div>
+                            <select
+                              onChange={(e) =>
+                                setFontSize(Number(e.target.value))
+                              }
+                            >
+                              <option value='10'>10</option>
+                              <option value='12'>12</option>
+                              <option value='14'>14</option>
+                              <option value='16'>16</option>
+                              <option value='18'>18</option>
+                              <option value='20'>20</option>
+                              <option value='22'>22</option>
+                              <option value='24'>24</option>
+                            </select>
+                          </div>
 
-                  <hr />
-                </Grid.Row>
-                <Grid.Row
-                  data-testid='ide-options-row'
-                  className='ide-options-row'
-                >
-                  <div>Theme:</div>
-                  <div>
-                    <select onChange={(e) => setTheme(e.target.value)}>
-                      <option value='tomorrow'>tomorrow</option>
-                      <option value='terminal'>terminal</option>
-                      <option value='monokai'>monokai</option>
-                    </select>
-                  </div>
-                  <hr />
-                </Grid.Row>
-              </Grid>
-            </Popup>
+                          <hr />
+                        </div>
+                        <div className='ide-options-row'>
+                          <div>Theme:</div>
+                          <div>
+                            <select onChange={(e) => setTheme(e.target.value)}>
+                              <option value='tomorrow'>tomorrow</option>
+                              <option value='terminal'>terminal</option>
+                              <option value='monokai'>monokai</option>
+                            </select>
+                          </div>
+                          <hr />
+                        </div>
+                      </div>
+                    </div>
+                  </Fade>
+                )}
+              </Popper>
+            </div>
           </div>
         </div>
 
-        <div
-          data-testid='solution-content'
-          id='MyAceEditor'
-          className='solution-content'
-        >
+        <div id='MyAceEditor' className='solution-content'>
           <AceEditor
-            data-testid='solution-editor'
             height='100%'
             width='100%'
             mode={ideLanguage}
@@ -107,7 +145,7 @@ function Solution() {
           />
         </div>
       </div>
-      <div data-testid='button-container' className='button-container'>
+      <div className='button-container'>
         <Button
           type='button'
           buttonStyle='btn--primary--normal'
