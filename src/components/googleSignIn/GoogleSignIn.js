@@ -13,7 +13,7 @@ class GoogleSignIn extends Component {
 
   render() {
     return (
-      <div data-testid='google-sign-in'>
+      <div>
         <GoogleLogin
           clientId={googleClientID}
           buttonText={this.props.text}

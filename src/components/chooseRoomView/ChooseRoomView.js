@@ -12,10 +12,7 @@ function ChooseRoomView({ onClickChoose }) {
   };
   return (
     <div>
-      <div
-        data-testid='choose-create-room-button'
-        className='choose-create-room-button'
-      >
+      <div className='choose-create-room-button'>
         <Button
           type='button'
           onClick={onClickCreateRoom}
@@ -25,10 +22,7 @@ function ChooseRoomView({ onClickChoose }) {
           Create Room
         </Button>
       </div>
-      <div
-        data-testid='choose-join-room-button'
-        className='choose-join-room-button'
-      >
+      <div className='choose-join-room-button'>
         <Button
           type='button'
           onClick={onClickJoinRoom}

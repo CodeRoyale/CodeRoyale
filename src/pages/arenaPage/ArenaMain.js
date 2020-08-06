@@ -23,18 +23,18 @@ class ArenaMain extends Component {
       return <Redirect to='/' />;
     }
     return (
-      <div data-testid='arena-page' className='arena-page'>
-        <div data-testid='arena-navbar'>
+      <div className='arena-page'>
+        <div>
           <NavBar />
         </div>
 
-        <div data-testid='arena-body' className='arena-body'>
-          <div data-testid='left-container' className='left-container'>
+        <div className='arena-body'>
+          <div className='left-container'>
             <Problem />
             <Chat />
           </div>
 
-          <div data-testid='right-container' className='right-container'>
+          <div className='right-container'>
             <Solution />
           </div>
         </div>

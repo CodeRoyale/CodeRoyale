@@ -3,7 +3,7 @@ import './LogoContainer.css';
 
 function LogoContainer() {
   return (
-    <div data-testid='header-logo' className='header-logo'>
+    <div className='header-logo'>
       <h2>CodeRoyale</h2>
     </div>
   );
