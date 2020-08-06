@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import GoogleSignIn from '../../components/googleSignIn/GoogleSignIn';
 import { Link, Redirect } from 'react-router-dom';
+import { message } from 'antd';
+import 'antd/dist/antd.css';
 import './SignUpMain.css';
 
 const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
@@ -19,6 +21,14 @@ class SignUpSec extends Component {
       googleData: {},
     };
   }
+
+  signUpError = (msg) => {
+    message.error(msg);
+  };
+
+  signUpSuccess = (msg) => {
+    message.success(msg);
+  };
 
   sendToServer = () => {
     let headers = new Headers();
@@ -41,18 +51,20 @@ class SignUpSec extends Component {
         // Success response from server
         // Alerts based on response
         if (jsonRes.message === 'User Account Created') {
+          this.signUpSuccess(
+            'User account has been created successfully. Please login to use CodeRoyale!'
+          );
         } else if (jsonRes.message === 'User Already Exists') {
-        } else if (
-          jsonRes.message === 'Required field missing or Username is in use'
-        ) {
+          this.signUpError(
+            'Sorry, email already exists please sign up with a different email!'
+          );
         } else {
+          this.signUpError('Sorry, couldnt sign up. Please try again!');
         }
-        console.log(jsonRes);
       })
       .catch((err) => {
         // Error response from server
-        // TODO: Show alerts based on error response
-        console.log(err);
+        this.signUpError('Sorry, couldnt sign up. Please try again later!');
       });
   };
 
