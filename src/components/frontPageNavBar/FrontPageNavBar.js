@@ -19,26 +19,16 @@ function FrontPageNavBar() {
   };
 
   return (
-    <div data-testid='frontpage-navbar' className='frontpage-navbar'>
+    <div className='frontpage-navbar'>
       <LogoContainer />
-      <div
-        data-testid='frontpage-navbar-links'
-        className='frontpage-navbar-links'
-      >
+      <div className='frontpage-navbar-links'>
         <ul>
           <li>
             Play
-            <div data-testid='play-menu' className='play-menu'>
-              <div
-                data-testid='play-menu-options'
-                className='play-menu-options'
-              >
-                <div
-                  data-testid='play-item-with-friend'
-                  className='play-item-with-friend'
-                >
+            <div className='play-menu'>
+              <div className='play-menu-options'>
+                <div className='play-item-with-friend'>
                   <img
-                    data-testid='image-front-navbar-friends'
                     alt='programming'
                     src='images/friends.svg'
                     width='150px'
@@ -47,12 +37,8 @@ function FrontPageNavBar() {
                   <h4>Play with a friend</h4>
                   <p>Challenge a friend to a 1v1 coding competition.</p>
                 </div>
-                <div
-                  data-testid='play-item-with-random'
-                  className='play-item-with-random'
-                >
+                <div className='play-item-with-random'>
                   <img
-                    data-testid='image-front-navbvar-random'
                     alt='programming'
                     src='images/random.svg'
                     width='150px'
@@ -66,10 +52,7 @@ function FrontPageNavBar() {
           </li>
         </ul>
       </div>
-      <div
-        data-testid='frontpage-navbar-signin'
-        className='frontpage-navbar-signin'
-      >
+      <div className='frontpage-navbar-signin'>
         <Button
           type='button'
           onClick={loginRedirect}

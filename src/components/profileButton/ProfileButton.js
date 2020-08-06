@@ -31,29 +31,13 @@ function ProfileButton(props) {
 
   if (profileClicked) {
     profileMenuBar = (
-      <div data-testid='profile-menu-bar' className='profile-menu-bar'>
-        <b
-          data-testid='profile-menu-bar-username'
-          className='profile-menu-bar-username'
-        >
-          {username}
-        </b>
+      <div className='profile-menu-bar'>
+        <b className='profile-menu-bar-username'>{username}</b>
         <br />
-        <span
-          data-testid='profile-menu-bar-email'
-          className='profile-menu-bar-email'
-        >
-          {email}
-        </span>
+        <span className='profile-menu-bar-email'>{email}</span>
         <br />
-        <div
-          data-testid='profile-menu-bar-line'
-          className='profile-menu-bar-line'
-        ></div>
-        <div
-          data-testid='profile-menu-bar-settings-button'
-          className='profile-menu-bar-settings-button'
-        >
+        <div className='profile-menu-bar-line'></div>
+        <div className='profile-menu-bar-settings-button'>
           <Button
             type='button'
             onClick={settingsRedirect}
@@ -63,10 +47,7 @@ function ProfileButton(props) {
             Edit Settings
           </Button>
         </div>
-        <div
-          data-testid='proofile-menu-bar-signout-button'
-          className='profile-menu-bar-signout-button'
-        >
+        <div className='profile-menu-bar-signout-button'>
           <Button
             type='button'
             buttonStyle='btn--primary--logout'
@@ -82,9 +63,8 @@ function ProfileButton(props) {
     profileMenuBar = null;
   }
   return (
-    <div data-testid='profile-button' className='profile-button'>
+    <div className='profile-button'>
       <img
-        data-testid='profile-image'
         className='profile-image'
         src={imageUrl}
         alt=''

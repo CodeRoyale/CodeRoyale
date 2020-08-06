@@ -3,15 +3,11 @@ import './SignInMain.css';
 
 function LeftSecSignIn() {
   return (
-    <div data-test='left-signin-container' className='left-signin-container'>
+    <div className='left-signin-container'>
       <center>
-        <div data-test='left-signin-content' className='left-signin-content'>
-          <p data-test='left-signin-title' className='left-signin-title'>
-            CodeRoyale
-          </p>
-          <p data-test='left-signin-text' className='left-signin-text'>
-            Compete with the best coders
-          </p>
+        <div className='left-signin-content'>
+          <p className='left-signin-title'>CodeRoyale</p>
+          <p className='left-signin-text'>Compete with the best coders</p>
           <img
             alt='login'
             src='/images/login.svg'
