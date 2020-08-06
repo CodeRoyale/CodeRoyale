@@ -13,6 +13,7 @@ import Popper from '@material-ui/core/Popper';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -84,9 +85,11 @@ function Solution() {
 
           <div className='ide-options'>
             <div>
-              <button aria-describedby={id} type='button' onClick={handleClick}>
-                Settings
-              </button>
+              <SettingsIcon
+                aria-describedby={id}
+                onClick={handleClick}
+              ></SettingsIcon>
+
               <Popper id={id} open={open} anchorEl={anchorEl} transition>
                 {({ TransitionProps }) => (
                   <Fade {...TransitionProps}>
