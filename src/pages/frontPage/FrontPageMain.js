@@ -21,7 +21,7 @@ class FrontPageMain extends Component {
       return <Redirect to='/dashboard' />;
     }
     return (
-      <div data-testid='front-page' className='front-page'>
+      <div className='front-page'>
         <FrontPageNavBar />
         <Description />
       </div>

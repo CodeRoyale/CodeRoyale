@@ -32,24 +32,14 @@ function CreateRoomView({ socket }) {
 
   // Main Render...
   return (
-    <div data-testid='create-room-view'>
+    <div>
       {generateClicked ? (
         <>
-          <div
-            data-testid='create-room-text-heading'
-            className='create-room-text-heading'
-          >
-            Your Room ID
-          </div>
-          <div data-testid='create-room-link' className='create-room-link'>
-            {roomId}
-          </div>
+          <div className='create-room-text-heading'>Your Room ID</div>
+          <div className='create-room-link'>{roomId}</div>
         </>
       ) : null}
-      <div
-        data-testid='create-room-copy-button-container'
-        className='create-room-copy-button-container'
-      >
+      <div className='create-room-copy-button-container'>
         <Button
           type='button'
           onClick={onClickGenerateButton}
