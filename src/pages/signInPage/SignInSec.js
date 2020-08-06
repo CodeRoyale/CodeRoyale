@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import GoogleSignIn from '../../components/googleSignIn/GoogleSignIn';
 import { Link, Redirect } from 'react-router-dom';
 import { message } from 'antd';
+import 'antd/dist/antd.css';
 import './SignInMain.css';
 
 const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
