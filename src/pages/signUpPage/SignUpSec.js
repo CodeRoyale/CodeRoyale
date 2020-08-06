@@ -39,7 +39,14 @@ class SignUpSec extends Component {
       .then((res) => res.json())
       .then((jsonRes) => {
         // Success response from server
-        // TODO: Show alerts based on response
+        // alerts based on response
+        if (jsonRes.message === 'User Already Exists') {
+        } else if (jsonRes.message === 'User Account Created') {
+        } else if (
+          jsonRes.message === 'Required field missing or Username is in use'
+        ) {
+        } else {
+        }
         console.log(jsonRes);
       })
       .catch((err) => {
