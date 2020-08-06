@@ -13,6 +13,11 @@ import Popper from '@material-ui/core/Popper';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import SettingsIcon from '@material-ui/icons/Settings';
+
+const SendCode = () => {
+  console.log('ABCD');
+};
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -74,61 +79,67 @@ function Solution() {
         <div className='solution-header'>
           <div className='solution-title'>SOLUTION</div>
 
-          <div className='language-options'>
-            <select onChange={(e) => setLanguage(e.target.value)}>
-              <option value='c++'>c++</option>
-              <option value='java'>java</option>
-              <option value='python'>python</option>
-            </select>
-          </div>
+          <div className='solution-heading-right'>
+            <div className='language-options'>
+              <select onChange={(e) => setLanguage(e.target.value)}>
+                <option value='c++'>c++</option>
+                <option value='java'>java</option>
+                <option value='python'>python</option>
+              </select>
+            </div>
 
-          <div className='ide-options'>
-            <div>
-              <button aria-describedby={id} type='button' onClick={handleClick}>
-                Settings
-              </button>
-              <Popper id={id} open={open} anchorEl={anchorEl} transition>
-                {({ TransitionProps }) => (
-                  <Fade {...TransitionProps}>
-                    <div className={classes.paper}>
-                      <div centered divided rows={3}>
-                        <div className='ide-options-row'>
-                          <div>FontSize:</div>
-                          <div>
-                            <select
-                              onChange={(e) =>
-                                setFontSize(Number(e.target.value))
-                              }
-                            >
-                              <option value='10'>10</option>
-                              <option value='12'>12</option>
-                              <option value='14'>14</option>
-                              <option value='16'>16</option>
-                              <option value='18'>18</option>
-                              <option value='20'>20</option>
-                              <option value='22'>22</option>
-                              <option value='24'>24</option>
-                            </select>
-                          </div>
+            <div className='ide-options'>
+              <div>
+                <SettingsIcon
+                  aria-describedby={id}
+                  onClick={handleClick}
+                ></SettingsIcon>
 
-                          <hr />
-                        </div>
-                        <div className='ide-options-row'>
-                          <div>Theme:</div>
-                          <div>
-                            <select onChange={(e) => setTheme(e.target.value)}>
-                              <option value='tomorrow'>tomorrow</option>
-                              <option value='terminal'>terminal</option>
-                              <option value='monokai'>monokai</option>
-                            </select>
+                <Popper id={id} open={open} anchorEl={anchorEl} transition>
+                  {({ TransitionProps }) => (
+                    <Fade {...TransitionProps}>
+                      <div className={classes.paper}>
+                        <div centered divided rows={3}>
+                          <div className='ide-options-row'>
+                            <div>FontSize:</div>
+                            <div>
+                              <select
+                                onChange={(e) =>
+                                  setFontSize(Number(e.target.value))
+                                }
+                              >
+                                <option value='10'>10</option>
+                                <option value='12'>12</option>
+                                <option value='14'>14</option>
+                                <option value='16'>16</option>
+                                <option value='18'>18</option>
+                                <option value='20'>20</option>
+                                <option value='22'>22</option>
+                                <option value='24'>24</option>
+                              </select>
+                            </div>
+
+                            <hr />
                           </div>
-                          <hr />
+                          <div className='ide-options-row'>
+                            <div>Theme:</div>
+                            <div>
+                              <select
+                                onChange={(e) => setTheme(e.target.value)}
+                              >
+                                <option value='tomorrow'>tomorrow</option>
+                                <option value='terminal'>terminal</option>
+                                <option value='monokai'>monokai</option>
+                              </select>
+                            </div>
+                            <hr />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </Fade>
-                )}
-              </Popper>
+                    </Fade>
+                  )}
+                </Popper>
+              </div>
             </div>
           </div>
         </div>
@@ -150,6 +161,7 @@ function Solution() {
           type='button'
           buttonStyle='btn--primary--normal'
           buttonSize='btn--medium'
+          onClick={SendCode}
         >
           SUBMIT
         </Button>
