@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import GoogleSignIn from '../../components/googleSignIn/GoogleSignIn';
 import { Link, Redirect } from 'react-router-dom';
+import { message } from 'antd';
+import 'antd/dist/antd.css';
 import './SignInMain.css';
 
 const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
@@ -19,6 +21,14 @@ class SignInSec extends Component {
       googleData: {},
     };
   }
+
+  signInError = (msg) => {
+    message.error(msg);
+  };
+
+  signInSuccess = (msg) => {
+    message.success(msg);
+  };
 
   handleGoogleData = (data) => {
     this.setState({
@@ -47,15 +57,22 @@ class SignInSec extends Component {
       .then((jsonRes) => {
         // Success response from server
         if (jsonRes.message === 'Login successful') {
+          this.signInSuccess('Welcome back!');
           this.setState({ loggedIn: true });
           localStorage.setItem('user-data', JSON.stringify(jsonRes));
           localStorage.setItem('access-token', jsonRes.accessToken);
+        } else if (jsonRes.message === "User Doesn't Exists") {
+          this.signInError(
+            'Sorry, you will need to sign up first to use CodeRoyale'
+          );
+        } else {
+          this.signInError("Sorry, couldn't login please try again later!");
         }
       })
       .catch((err) => {
         // Error response from server
         // TODO: Show alerts based on error response
-        console.log(err);
+        this.signInError("Sorry, couldn't login please try again later!");
       });
   };
 
