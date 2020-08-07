@@ -38,7 +38,33 @@ function CreateRoomView({ socket }) {
           <div className='create-room-text-heading'>Your Room ID</div>
           <div className='create-room-link'>{roomId}</div>
         </>
-      ) : null}
+      ) : (
+        <div className=''>
+          <div>Maximum team</div>
+          <div>
+            {
+              // TODO: Input...
+            }
+          </div>
+          <div>Maximum players per team</div>
+          <div>
+            {
+              //TODO: Input...
+            }
+          </div>
+          <div>Time Limit</div>
+          <div>
+            {
+              //TODO: Input...
+            }
+          </div>
+          <div>
+            {
+              //TODO: Input Private Room...
+            }
+          </div>
+        </div>
+      )}
       <div className='create-room-copy-button-container'>
         <Button
           type='button'
