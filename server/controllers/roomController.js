@@ -32,7 +32,7 @@ const createRoom = (config) => {
       questions: {},
       max_questions: config.max_questions || 4,
       bench: [config.admin],
-      privateRoom: config.private === true,
+      privateRoom: config.privateRoom === true,
       privateList: [],
       max_teams: config.max_teams || 2,
       max_perTeam: config.max_perTeam || 3,

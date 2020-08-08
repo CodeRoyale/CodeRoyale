@@ -114,6 +114,8 @@ const handleUserEvents = (socket) => {
     JOIN_TEAM,
     genericActionCreater(joinTeam, getRoomData, socket.userDetails)
   );
+
+  // admin wants to start the competition
   socket.on(START_COMPETITION, async (dataFromClient, cb) => {
     // check if room is eligible
     let { userDetails } = socket;
