@@ -8,6 +8,11 @@ import 'ace-builds/src-noconflict/theme-github';
 import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/theme-tomorrow';
 import 'ace-builds/src-noconflict/theme-terminal';
+import 'ace-builds/src-noconflict/snippets/c_cpp';
+import 'ace-builds/src-noconflict/snippets/python';
+import 'ace-builds/src-noconflict/snippets/java';
+
+import 'ace-builds/src-noconflict/ext-language_tools';
 import Button from '../../components/button/Button';
 import Popper from '@material-ui/core/Popper';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
@@ -158,7 +163,14 @@ function Solution() {
             fontSize={ideFontSize}
             showGutter={true}
             showPrintMargin={false}
+            editorProps={{ $blockScrolling: Infinity }}
             onChange={onChangeIDE}
+            setOptions={{
+              enableBasicAutocompletion: true,
+              enableLiveAutocompletion: false,
+              enableSnippets: true,
+              tabSize: 2,
+            }}
           />
         </div>
       </div>
