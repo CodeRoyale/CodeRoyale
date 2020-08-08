@@ -122,3 +122,8 @@
 .ide-options {
   padding-left: 5px;
 }
+
+.language-options {
+  color: black;
+  outline: none;
+}
