@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^5.6.4",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@testing-library/jest-dom": "^4.2.4",
@@ -26,9 +27,9 @@
     "socket.io-client": "^2.3.0"
   },
   "scripts": {
-    "start": "env-cmd -f .env.development react-scripts start",
-    "build": "react-scripts build",
-    "test": "env-cmd -f .env.development react-scripts test",
+    "start": "env-cmd -f .env.development craco start",
+    "build": "craco build",
+    "test": "env-cmd -f .env.development craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
