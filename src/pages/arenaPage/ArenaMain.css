@@ -112,12 +112,18 @@
 
 .ide-options-popup {
   background-color: white;
+  width: 100px;
 }
 
 .ide-options-row {
-  display: flex;
+  padding: 5px;
 }
 
 .ide-options {
   padding-left: 5px;
+}
+
+.language-options {
+  color: black;
+  outline: none;
 }
