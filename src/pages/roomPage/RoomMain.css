@@ -1,0 +1,28 @@
+.room {
+  margin: auto;
+  height: 100%;
+  background-color: #f5f8f8;
+}
+
+/*CreateTeamView.css*/
+.create-team-container {
+  margin: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.create-team-input-container {
+  margin-right: 5px;
+}
+.create-team-input {
+  border: black solid 1px;
+  border-radius: 2px;
+  width: 180px;
+  height: 28px;
+}
+.create-team-input:focus {
+  outline: none;
+}
+.create-team-submit-container {
+  margin-left: 5px;
+}

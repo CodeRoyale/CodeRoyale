@@ -7,11 +7,12 @@ function JoinRoomView({ socket }) {
   const [joinButtonClicked, setJoinButtonClicked] = useState(false);
 
   // TODO: Have to include code for what happens if false....
+  // TODO: Have to include code for indicating the joining of room...
   // Join Room...
   useEffect(() => {
     let room_id;
     if (joinButtonClicked) {
-      room_id = joinInputValue;
+      room_id = joinInputValue.toString().trim();
       socket.emit('JOIN_ROOM', { room_id }, (data) => {
         console.log(data);
       });

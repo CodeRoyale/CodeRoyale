@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import './LobbyMain.css';
 import Button from '../../components/button/Button';
+import { Redirect } from 'react-router';
+
+// Have to implement this...
+//import { Link } from 'react-router';
 //import copy from 'copy-to-clipboard';
 
 function CreateRoomView({ socket }) {
   const [generateClicked, setGenerateClicked] = useState(false);
-  const [roomId, setRoomId] = useState('');
+  const [room_id, setRoomId] = useState('');
+  const [roomCreated, setRoomCreated] = useState(false);
   const [max_teams, setMaxTeams] = useState(2);
   const [max_perTeam, setMaxPerTeam] = useState(1);
   const [max_perRoom, setMaxPerRoom] = useState(2);
@@ -18,7 +23,6 @@ function CreateRoomView({ socket }) {
   const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const times = [0.5, 1, 3, 6, 12, 24, 48];
 
-  // TODO: Have to include code for what happens if false....
   // TODO: Have to include code for indicating the creation of room...
   // Create room...
   useEffect(() => {
@@ -27,9 +31,10 @@ function CreateRoomView({ socket }) {
         'CREATE_ROOM',
         { max_teams, max_perTeam, max_perRoom, timeLimit, privateRoom },
         (data) => {
-          console.log(data);
-          setRoomId(data.admin);
-          console.log('RoomId: ' + roomId);
+          if (data !== null) {
+            setRoomId(data.admin);
+            setRoomCreated(true);
+          }
         }
       );
     }
@@ -41,8 +46,16 @@ function CreateRoomView({ socket }) {
     privateRoom,
     socket,
     timeLimit,
-    roomId,
   ]);
+
+  // If room created successfully....
+  if (roomCreated) {
+    return (
+      <Redirect
+        to={{ pathname: '/room', props: { room_id: room_id, socket: socket } }}
+      />
+    );
+  }
 
   // options for creating room....
   const optionNumbers = numbers.map((number) => (

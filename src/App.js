@@ -10,6 +10,7 @@ import SignInMain from './pages/signInPage/SignInMain';
 import Arena from './pages/arenaPage/ArenaMain';
 import OutroMain from './pages/outroPage/OutroMain';
 import Testing from './pages/testPage/TestPage';
+import RoomMain from './pages/roomPage/RoomMain';
 
 function App() {
   return (
@@ -51,6 +52,12 @@ function App() {
             exact
             path='/lobby'
             component={LobbyMain}
+          />
+          <Route
+            data-testid='route-room'
+            exact
+            path='/room'
+            component={(props) => <RoomMain {...props} />}
           />
           <Route data-testid='test' exact path='/test' component={Testing} />
           <Route
