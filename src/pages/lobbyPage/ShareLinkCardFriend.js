@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import './ShareLinkCardFriend.css';
-import CreateRoomView from '../createRoomView/CreateRoomView';
-import JoinRoomView from '../joinRoomView/JoinRoomView';
-import ChooseRoomView from '../chooseRoomView/ChooseRoomView';
+import './LobbyMain.css';
+import CreateRoomView from './CreateRoomView';
+import JoinRoomView from './JoinRoomView';
+import ChooseRoomView from './ChooseRoomView';
 import io from 'socket.io-client';
 
 function ShareLinkCardFriend(props) {

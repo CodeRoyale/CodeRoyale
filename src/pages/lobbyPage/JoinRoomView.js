@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './JoinRoomView.css';
-import Button from '../../../components/button/Button';
+import './LobbyMain.css';
+import Button from '../../components/button/Button';
 
 function JoinRoomView({ socket }) {
   const [joinInputValue, setJoinInputValue] = useState('');
