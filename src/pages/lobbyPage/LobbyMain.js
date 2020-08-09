@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ShareLinkCardFriend from '../../components/shareLinkCardFriend/ShareLinkCardFriend';
+import ShareLinkCardFriend from './shareLinkCardFriend/ShareLinkCardFriend';
 import './LobbyMain.css';
 import NavBar from '../../components/navBar/NavBar';
 import { Redirect } from 'react-router';
