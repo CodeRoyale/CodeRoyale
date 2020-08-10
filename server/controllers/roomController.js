@@ -25,6 +25,7 @@ const createRoom = (config) => {
     // a room has 4 parts -> config, state, competition, teams
     const room_obj = {
       config: {
+        id: room_id,
         admin: config.admin,
         max_teams: config.max_teams || 2,
         max_perTeam: config.max_perTeam || 3,

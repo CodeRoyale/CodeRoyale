@@ -1,4 +1,5 @@
 const { submitCode } = require("../utils/codeExecution");
+const { removeUserFromRoom } = require("./roomController");
 
 // this is my db for now
 users = {};
@@ -7,14 +8,18 @@ users = {};
 
 const addUser = (userName, socket_id) => {
   if (!users[userName]) {
+    console.log(userName + " added");
     users[userName] = { socket_id, room_id: "", team_name: "" };
     return true;
   }
   return false;
 };
 
-const deleteUser = (userName) => {
+const removeUser = ({ userName }) => {
   if (users[userName]) {
+    if (users[userName].room_id) {
+      removeUserFromRoom(userName);
+    }
     delete users[userName];
     return true;
   }
@@ -49,6 +54,6 @@ module.exports = {
   getUserData,
   setRoom,
   getUser,
-  deleteUser,
+  removeUser,
   setTeam,
 };

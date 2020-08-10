@@ -47,7 +47,7 @@ const authUser = (socket, next) => {
     if (payload) {
       // connection accepted
       // now check if user is already connected or not
-      if (!addUser(payload.userName, socket.id)) {
+      if (addUser(payload.userName, socket.id)) {
         socket.emit(CONNECTION_ACK);
         socket.userDetails = payload;
         next();
@@ -84,7 +84,6 @@ const genericActionCreater = (
 const handleUserEvents = (socket) => {
   // auth middle ware will set this based on jwt payload
   console.log(socket.userDetails.userName);
-  addUser(socket.userDetails.userName, socket.id);
 
   // ideal
   // socket.on(
@@ -132,6 +131,10 @@ const handleUserEvents = (socket) => {
         // call other events if required
       });
     }
+  });
+
+  socket.on("disconnect", () => {
+    removeUser(socket.userDetails.userName);
   });
 };
 
