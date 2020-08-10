@@ -7,7 +7,7 @@ users = {};
 
 const addUser = (userName, socket_id) => {
   if (!users[userName]) {
-    users[userName] = socket_id;
+    users[userName] = { socket_id, room_id: "", team_name: "" };
     return true;
   }
   return false;
@@ -42,7 +42,6 @@ const setTeam = (userName, team_name) => {
 const getUser = (userName) => users[userName];
 
 const getUserData = () => users;
-
 
 module.exports = {
   addUser,
