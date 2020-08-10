@@ -1,4 +1,5 @@
 const { setRoom, getUser, setTeam } = require("../controllers/userController");
+const { encryptData } = require("../utils/auth");
 
 // this is my db for now
 rooms = {};
@@ -6,48 +7,57 @@ rooms = {};
 // room_id will be admin name
 
 const createRoom = (config) => {
+  const user = getUser(config.userName);
+  if (user.room_id) {
+    // please leave current room
+    return false;
+  }
+
+  const room_id = encryptData(config.userName);
   // user who made room is admin
   config.admin = config.userName;
 
-  if (!config.admin) {
-    return false;
-  }
-  if (!rooms[config.admin]) {
-    // remove admin from current room
-
-    let admin = getUser(config.admin);
-    if (admin.room_id) {
-      // admin is already in a grp
-      //this will always return true,cause user doesnt have a room
-      removeUserFromRoom(admin);
-    }
-
+  if (!rooms[room_id]) {
     // if private is not passed then privateRoom will be false(not undefined)
     //we can add limits to all these paramerters afterwards
     // -TODO --> add score for teams
-    const room_id = config.admin;
+
+    // a room has 3 parts -> state, competition, teams, bench
     const room_obj = {
-      admin: config.admin,
+      state: {
+        admin: config.admin,
+
+        privateRoom: config.privateRoom === false,
+        privateList: [],
+        max_teams: config.max_teams || 2,
+        max_perTeam: config.max_perTeam || 3,
+        cur_memCount: 1,
+        max_perRoom: config.max_perRoom || 10,
+        banList: [],
+        createdAt: Date.now(),
+      },
+      competition: {
+        questions: {},
+        max_questions: config.max_questions || 4,
+        contestStartedAt: null,
+        contnetEndedAt: null,
+        contestOngoing: false,
+        timeLimit: config.timeLimit || 2700000,
+        veto: {
+          allQuestions: {},
+          votes: {},
+          voted: [],
+          vetoOngoing: false,
+        },
+      },
+
       teams: {},
-      questions: {},
-      max_questions: config.max_questions || 4,
+
       bench: [config.admin],
-      privateRoom: config.privateRoom === true,
-      privateList: [],
-      max_teams: config.max_teams || 2,
-      max_perTeam: config.max_perTeam || 3,
-      cur_memCount: 1,
-      max_perRoom: config.max_perRoom || 10,
-      banList: [],
-      createdAt: Date.now(),
-      contestStartedAt: null,
-      contnetEndedAt: null,
-      contestOngoing: false,
-      timeLimit: config.timeLimit || 2700000,
     };
 
+    // craeted room
     rooms[room_id] = room_obj;
-    return true;
   }
   // user already has an active room
   return true;
