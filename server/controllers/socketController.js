@@ -12,7 +12,7 @@ const {
 } = require("../socketActions/serverActions");
 
 //import controllers
-const { addUser } = require("../controllers/userController");
+const { addUser, removeUser } = require("../controllers/userController");
 const {
   createRoom,
   createTeam,
@@ -83,8 +83,6 @@ const genericActionCreater = (
 
 const handleUserEvents = (socket) => {
   // auth middle ware will set this based on jwt payload
-  console.log(socket.userDetails.userName);
-
   // ideal
   // socket.on(
   //   CREATE_ROOM,

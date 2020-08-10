@@ -96,6 +96,8 @@ const joinRoom = ({ userName, room_id, team_name }) => {
     setRoom(userName, room_id, team_name);
     //user has been added to bench or a Team
     rooms[room_id].state.cur_memCount += 1;
+
+    console.log(userName, " joined from ", room_id);
     return rooms[room_id];
   }
   return false;
@@ -124,7 +126,7 @@ const removeUserFromRoom = ({ userName }) => {
     );
     rooms[user.room_id].state.bench = newBench;
   }
-
+  console.log(userName, " removed from ", user.room_id);
   setRoom(userName, "", "");
   rooms[room_id].state.cur_memCount -= 1;
   return true;

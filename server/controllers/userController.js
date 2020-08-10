@@ -15,11 +15,12 @@ const addUser = (userName, socket_id) => {
   return false;
 };
 
-const removeUser = ({ userName }) => {
+const removeUser = (userName) => {
   if (users[userName]) {
     if (users[userName].room_id) {
       removeUserFromRoom(userName);
     }
+    console.log(userName + " removed");
     delete users[userName];
     return true;
   }
