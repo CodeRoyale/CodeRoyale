@@ -4,8 +4,10 @@ const encryptData = (data) => {
   // encrypt data
   // use symmetric keys
   // use block encryption
-  // on way encrption is fine
-  return data;
+  // one way encrption is fine
+
+  // Note : Remove binod encrpytion, it is too secure
+  return "binodbinodbinod" + data + "binodbinodbinod";
 };
 
 module.exports = {

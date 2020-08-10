@@ -22,19 +22,21 @@ const createRoom = (config) => {
     //we can add limits to all these paramerters afterwards
     // -TODO --> add score for teams
 
-    // a room has 3 parts -> state, competition, teams, bench
+    // a room has 4 parts -> config, state, competition, teams
     const room_obj = {
-      state: {
+      config: {
         admin: config.admin,
-
-        privateRoom: config.privateRoom === false,
-        privateList: [],
         max_teams: config.max_teams || 2,
         max_perTeam: config.max_perTeam || 3,
-        cur_memCount: 1,
+        privateRoom: config.privateRoom === false,
         max_perRoom: config.max_perRoom || 10,
-        banList: [],
         createdAt: Date.now(),
+      },
+      state: {
+        privateList: [],
+        cur_memCount: 1,
+        banList: [],
+        bench: [config.admin],
       },
       competition: {
         questions: {},
@@ -50,13 +52,10 @@ const createRoom = (config) => {
           vetoOngoing: false,
         },
       },
-
       teams: {},
-
-      bench: [config.admin],
     };
 
-    // craeted room
+    // created room
     rooms[room_id] = room_obj;
   }
   // user already has an active room
@@ -67,9 +66,9 @@ const createRoom = (config) => {
 const joinRoom = ({ userName, room_id, team_name }) => {
   if (
     rooms[room_id] &&
-    (!rooms[room_id].privateRoom ||
-      rooms[room_id].privateList.includes(userName)) &&
-    rooms[room_id].cur_memCount < rooms[room_id].max_perRoom
+    (!rooms[room_id].config.privateRoom ||
+      rooms[room_id].state.privateList.includes(userName)) &&
+    rooms[room_id].state.cur_memCount < rooms[room_id].config.max_perRoom
   ) {
     //(only run if room exists) and (user is allowed if private) and (space is there)
 
@@ -83,18 +82,19 @@ const joinRoom = ({ userName, room_id, team_name }) => {
     if (
       team_name &&
       rooms[room_id].teams[team_name] &&
-      rooms[room_id].teams[team_name].length < rooms[room_id].max_perTeam
+      rooms[room_id].teams[team_name].length < rooms[room_id].config.max_perTeam
     ) {
-      // if user passess a team and that team exist and ther is space in that team
+      // if user passess a team and that team exist and there is space in that team
       rooms[room_id].teams[team_name].push(userName);
     } else {
       // else bench the user
-      rooms[room_id].bench.push(userName);
+      team_name = "";
+      rooms[room_id].state.bench.push(userName);
     }
 
     setRoom(userName, room_id, team_name);
     //user has been added to bench or a Team
-    rooms[room_id].cur_memCount += 1;
+    rooms[room_id].state.cur_memCount += 1;
     return true;
   }
   return false;
@@ -104,9 +104,9 @@ const removeUserFromRoom = ({ userName }) => {
   // remove from room
   const user = getUser(userName);
 
-  // if user is a admin then no leave only delelte possible
+  // if user is a admin then no leave only delete possible
   // it cause of the way i am storing room_id ( == adminName)
-  if (rooms[user.room_id].admin === userName) {
+  if (rooms[user.room_id].config.admin === userName) {
     return false;
   }
 
@@ -118,12 +118,14 @@ const removeUserFromRoom = ({ userName }) => {
     rooms[user.room_id].teams[user.team_name] = newTeam;
   } else {
     // if user is on a bench
-    let newBench = rooms[user.room_id].bench.filter((ele) => ele !== userName);
-    rooms[user.room_id].bench = newBench;
+    let newBench = rooms[user.room_id].state.bench.filter(
+      (ele) => ele !== userName
+    );
+    rooms[user.room_id].state.bench = newBench;
   }
 
   setRoom(userName, "", "");
-  rooms[room_id].cur_memCount -= 1;
+  rooms[room_id].state.cur_memCount -= 1;
   return true;
 };
 
@@ -239,4 +241,5 @@ module.exports = {
   getRoomsData,
   leaveTeam,
   roomEligible,
+  removeUserFromRoom,
 };
