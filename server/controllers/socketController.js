@@ -67,20 +67,15 @@ const authUser = (socket, next) => {
 
 const genericActionCreater = (
   actionResponder,
-  actionReply,
   userDetails,
   failReply = "Some error occured !",
   ACTION = ""
 ) => (config, cb) => {
   // only passes userName
-  console.log(config);
-  console.log(`Got ${ACTION}`);
   config.userName = userDetails.userName;
-  let data = failReply;
-  let room = actionResponder(config);
-  if (room) {
+  let data = actionResponder(config) || failReply;
+  if (data) {
     console.log(`${ACTION} succesfull !`);
-    data = room;
   }
   console.log(data);
   cb(data);
@@ -102,22 +97,10 @@ const handleUserEvents = (socket) => {
   //   )
   // );
   // but below approach is shorter
-  socket.on(
-    CREATE_ROOM,
-    genericActionCreater(createRoom, getRoomData, socket.userDetails)
-  );
-  socket.on(
-    JOIN_ROOM,
-    genericActionCreater(joinRoom, getRoomData, socket.userDetails)
-  );
-  socket.on(
-    CREATE_TEAM,
-    genericActionCreater(createTeam, getRoomData, socket.userDetails)
-  );
-  socket.on(
-    JOIN_TEAM,
-    genericActionCreater(joinTeam, getRoomData, socket.userDetails)
-  );
+  socket.on(CREATE_ROOM, genericActionCreater(createRoom, socket.userDetails));
+  socket.on(JOIN_ROOM, genericActionCreater(joinRoom, socket.userDetails));
+  socket.on(CREATE_TEAM, genericActionCreater(createTeam, socket.userDetails));
+  socket.on(JOIN_TEAM, genericActionCreater(joinTeam, socket.userDetails));
 
   // admin wants to start the competition
   socket.on(START_COMPETITION, async (dataFromClient, cb) => {
