@@ -59,7 +59,7 @@ const createRoom = (config) => {
     rooms[room_id] = room_obj;
   }
   // user already has an active room
-  return true;
+  return rooms[room_id];
 };
 
 // users connecting to room
@@ -95,7 +95,7 @@ const joinRoom = ({ userName, room_id, team_name }) => {
     setRoom(userName, room_id, team_name);
     //user has been added to bench or a Team
     rooms[room_id].state.cur_memCount += 1;
-    return true;
+    return rooms[room_id];
   }
   return false;
 };
@@ -129,15 +129,24 @@ const removeUserFromRoom = ({ userName }) => {
   return true;
 };
 
-const createTeam = ({ room_id, team_name }) => {
+const createTeam = ({ userName, team_name }) => {
   // if more teams are allowed
   //if team_name is not already used
+  // and user is admin
+  const user = getUser(userName);
+
+  // if user not in room or not admin of the room
+  if (!user.room_id || rooms[user.room_id].config.admin !== userName) {
+    return false;
+  }
+
   if (
-    Object.keys(rooms[room_id].teams).length < rooms[room_id].max_teams &&
+    Object.keys(rooms[room_id].teams).length <
+      rooms[room_id].config.max_teams &&
     !rooms[room_id].teams[team_name]
   ) {
     rooms[room_id].teams[team_name] = [];
-    return true;
+    return rooms[room_id].teams;
   }
   return false;
 };
@@ -148,7 +157,6 @@ const joinTeam = ({ userName, team_name }) => {
   // only run if user and room exits and user is in that room
   // and there is space
   if (
-    user &&
     room &&
     room.teams[team_name] &&
     room.teams[team_name].length < room.max_perTeam
@@ -163,7 +171,7 @@ const joinTeam = ({ userName, team_name }) => {
     //in new team
     rooms[user.room_id].teams[team_name].push(userName);
     setTeam(userName, team_name);
-    return true;
+    return rooms[user.room_id].teams[team_name];
   }
   return false;
 };

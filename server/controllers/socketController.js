@@ -77,16 +77,20 @@ const genericActionCreater = (
   console.log(`Got ${ACTION}`);
   config.userName = userDetails.userName;
   let data = failReply;
-  if (actionResponder(config)) {
+  let room = actionResponder(config);
+  if (room) {
     console.log(`${ACTION} succesfull !`);
-    data = actionReply(userDetails.userName);
+    data = room;
   }
+  console.log(data);
   cb(data);
 };
 
 const handleUserEvents = (socket) => {
   // auth middle ware will set this based on jwt payload
   console.log(socket.userDetails.userName);
+  addUser(socket.userDetails.userName, socket.id);
+
   // ideal
   // socket.on(
   //   CREATE_ROOM,
@@ -97,7 +101,7 @@ const handleUserEvents = (socket) => {
   //     CREATE_ROOM
   //   )
   // );
-  // shorter
+  // but below approach is shorter
   socket.on(
     CREATE_ROOM,
     genericActionCreater(createRoom, getRoomData, socket.userDetails)

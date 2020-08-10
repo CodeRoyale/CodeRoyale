@@ -15,7 +15,7 @@ const addUser = (userName, socket_id) => {
 
 const deleteUser = (userName) => {
   if (users[userName]) {
-    delete users.userName;
+    delete users[userName];
     return true;
   }
   return false;
@@ -28,6 +28,7 @@ const setRoom = (userName, room_id, team_name) => {
   if (users[userName]) {
     users[userName].room_id = room_id;
     users[userName].team_name = team_name || "";
+    return true;
   }
   return false;
 };
