@@ -56,7 +56,7 @@ const createRoom = (config) => {
       teams: {},
     };
 
-    setRoom(config.userName, room_id, "");
+    setRoom(config.userName, room_id);
     // created room
     rooms[room_id] = room_obj;
   }
@@ -128,7 +128,7 @@ const removeUserFromRoom = ({ userName }) => {
     rooms[user.room_id].state.bench = newBench;
   }
   console.log(userName, " removed from ", user.room_id);
-  setRoom(userName, "", "");
+  setRoom(userName, "");
   rooms[room_id].state.cur_memCount -= 1;
   return true;
 };
@@ -194,19 +194,21 @@ const leaveTeam = ({ userName }) => {
   return false;
 };
 
-const closeRoom = ({ room_id }) => {
+const closeRoom = ({ userName }) => {
+  const { room_id } = getUser(userName);
   if (rooms[room_id]) {
-    // everyone from room except admin
-    let allMembers = rooms[room_id].bench;
+    // everyone from room bench
+    let allMembers = rooms[room_id].state.bench;
     // from all teams
-    Object.keys(rooms[room_id].teams).map((team_name) => {
+    Object.keys(rooms[room_id].teams).forEach((team_name) => {
       rooms[room_id].teams[team_name].forEach((user) => {
         allMembers.push(user);
       });
     });
-
+    console.log(allMembers);
     // not need to chage room data since we are going to delete it
     allMembers.forEach((userName) => {
+      // this is a server action notify all
       setRoom(userName, "");
     });
 
