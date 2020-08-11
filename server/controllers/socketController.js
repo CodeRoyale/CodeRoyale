@@ -12,11 +12,7 @@ const {
 } = require("../socketActions/serverActions");
 
 //import controllers
-const {
-  addUser,
-  getUser,
-  removeUser,
-} = require("../controllers/userController");
+const { addUser, removeUser } = require("../controllers/userController");
 const {
   createRoom,
   createTeam,
@@ -78,7 +74,7 @@ const genericActionCreater = (
   // only passes userName
   config.userName = userDetails.userName;
   let data = actionResponder(config) || failReply;
-  if (data) {
+  if (data != failReply) {
     console.log(`${ACTION} succesfull !`);
   }
   console.log(data);

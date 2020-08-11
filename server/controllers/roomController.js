@@ -56,7 +56,7 @@ const createRoom = (config) => {
       teams: {},
     };
 
-    setRoom(config.userName, "", "");
+    setRoom(config.userName, room_id, "");
     // created room
     rooms[room_id] = room_obj;
   }
@@ -137,10 +137,10 @@ const createTeam = ({ userName, team_name }) => {
   // if more teams are allowed
   //if team_name is not already used
   // and user is admin
-  const user = getUser(userName);
-
+  const { room_id } = getUser(userName);
+  console.log(user);
   // if user not in room or not admin of the room
-  if (!user.room_id || rooms[user.room_id].config.admin !== userName) {
+  if (!room_id || rooms[room_id].config.admin !== userName) {
     return false;
   }
 

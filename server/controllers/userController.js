@@ -16,9 +16,6 @@ const addUser = (userName, socket_id) => {
 
 const removeUser = (userName) => {
   if (users[userName]) {
-    if (users[userName].room_id) {
-      // removeUserFromRoom(userName);
-    }
     console.log(userName + " removed");
     delete users[userName];
     return true;
