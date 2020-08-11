@@ -1,5 +1,4 @@
 const { submitCode } = require("../utils/codeExecution");
-const { removeUserFromRoom } = require("./roomController");
 
 // this is my db for now
 users = {};
@@ -18,7 +17,7 @@ const addUser = (userName, socket_id) => {
 const removeUser = (userName) => {
   if (users[userName]) {
     if (users[userName].room_id) {
-      removeUserFromRoom(userName);
+      // removeUserFromRoom(userName);
     }
     console.log(userName + " removed");
     delete users[userName];

@@ -1,5 +1,5 @@
-const { setRoom, getUser, setTeam } = require("../controllers/userController");
 const { encryptData } = require("../utils/auth");
+const { setRoom, getUser, setTeam } = require("./userController");
 
 // this is my db for now
 rooms = {};
@@ -239,6 +239,10 @@ const roomEligible = ({ userName }) => {
   return false;
 };
 
+const handleUserDisconnect = (userName) => {
+  // need to fill this
+};
+
 const getRoomData = (room_id) => rooms[room_id];
 const getRoomsData = () => rooms;
 
@@ -253,4 +257,5 @@ module.exports = {
   leaveTeam,
   roomEligible,
   removeUserFromRoom,
+  handleUserDisconnect,
 };

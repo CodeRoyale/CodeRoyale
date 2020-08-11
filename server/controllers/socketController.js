@@ -12,7 +12,11 @@ const {
 } = require("../socketActions/serverActions");
 
 //import controllers
-const { addUser, removeUser } = require("../controllers/userController");
+const {
+  addUser,
+  getUser,
+  removeUser,
+} = require("../controllers/userController");
 const {
   createRoom,
   createTeam,
