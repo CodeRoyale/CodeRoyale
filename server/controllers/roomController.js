@@ -56,6 +56,7 @@ const createRoom = (config) => {
       teams: {},
     };
 
+    setRoom(config.userName, "", "");
     // created room
     rooms[room_id] = room_obj;
   }
