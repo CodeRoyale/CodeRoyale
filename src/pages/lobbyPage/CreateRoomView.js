@@ -3,11 +3,8 @@ import './LobbyMain.css';
 import Button from '../../components/button/Button';
 import { Redirect } from 'react-router';
 
-// Have to implement this...
-// import { Link } from 'react-router';
-// import copy from 'copy-to-clipboard';
-
 function CreateRoomView({ socket }) {
+  const errorMessage = 'Some error occured !';
   const [generateClicked, setGenerateClicked] = useState(false);
   const [room_id, setRoomId] = useState('');
   const [roomCreated, setRoomCreated] = useState(false);
@@ -24,6 +21,7 @@ function CreateRoomView({ socket }) {
   const times = [0.5, 1, 3, 6, 12, 24, 48];
 
   // TODO: Have to include code for indicating the creation of room...
+  // TODO: Have to refactor code and make use of less useStates...
   // Create room...
   useEffect(() => {
     if (generateClicked) {
@@ -31,11 +29,11 @@ function CreateRoomView({ socket }) {
         'CREATE_ROOM',
         { max_teams, max_perTeam, max_perRoom, timeLimit, privateRoom },
         (data) => {
-          if (data !== null) {
-            console.log(data);
+          if (data !== errorMessage) {
             setRoomId(data.config.id);
             setRoomCreated(true);
           }
+          console.log(data);
         }
       );
     }
