@@ -3,17 +3,20 @@ import Button from '../../components/button/Button';
 
 function CreateTeamView({ socket, room_id }) {
   const [team_name, setCreateTeamInput] = useState('');
-  const [createTeamClicked, setCreateTeamClicked] = useState(false);
-  const [closeRoomClicked, setCloseRoomClicked] = useState(false);
+  const [state, setState] = useState({
+    createTeamClicked: false,
+    closeRoomClicked: false,
+    teams: null,
+  });
 
-  // TODO: Have to write code for what
+  // TODO: Have to write code for indication for creation of team...
   // Create team...
   useEffect(() => {
-    if (createTeamClicked && team_name) {
+    if (state.createTeamClicked && team_name) {
       socket.emit('CREATE_TEAM', { team_name }, (data) => {
         if (data !== null) {
           console.log(data);
-          setCreateTeamClicked(false);
+          setState({ ...state, createTeamClicked: false, teams: data });
         }
       });
     }
@@ -21,7 +24,7 @@ function CreateTeamView({ socket, room_id }) {
 
   // Close Room...
   useEffect(() => {
-    if (closeRoomClicked) {
+    if (state.closeRoomClicked) {
       socket.emit('CLOSE_ROOM', {}, (data) => {
         console.log(data);
       });
@@ -42,7 +45,7 @@ function CreateTeamView({ socket, room_id }) {
       <div className='create-team-submit-container'>
         <Button
           type='button'
-          onClick={() => setCreateTeamClicked(true)}
+          onClick={() => setState({ ...state, createTeamClicked: true })}
           buttonStyle='btn--primary--normal'
           buttonSize='btn--small'
         >
@@ -52,7 +55,7 @@ function CreateTeamView({ socket, room_id }) {
       <div className='create-team-submit-container'>
         <Button
           type='button'
-          onClick={() => setCloseRoomClicked(true)}
+          onClick={() => setState({ ...state, closeRoomClicked: true })}
           buttonStyle='btn--primary--normal'
           buttonSize='btn--small'
         >
