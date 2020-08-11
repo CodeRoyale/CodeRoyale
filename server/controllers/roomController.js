@@ -138,7 +138,6 @@ const createTeam = ({ userName, team_name }) => {
   //if team_name is not already used
   // and user is admin
   const { room_id } = getUser(userName);
-  console.log(user);
   // if user not in room or not admin of the room
   if (!room_id || rooms[room_id].config.admin !== userName) {
     return false;

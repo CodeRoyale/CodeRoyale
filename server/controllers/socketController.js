@@ -5,6 +5,7 @@ const {
   CREATE_TEAM,
   JOIN_TEAM,
   START_COMPETITION,
+  CLOSE_ROOM,
 } = require("../socketActions/userActions");
 const {
   CONNECTION_ACK,
@@ -19,6 +20,7 @@ const {
   joinTeam,
   joinRoom,
   getRoomData,
+  closeRoom,
   roomEligible,
 } = require("../controllers/roomController");
 
@@ -77,7 +79,6 @@ const genericActionCreater = (
   if (data != failReply) {
     console.log(`${ACTION} succesfull !`);
   }
-  console.log(data);
   cb(data);
 };
 
@@ -98,6 +99,7 @@ const handleUserEvents = (socket) => {
   socket.on(JOIN_ROOM, genericActionCreater(joinRoom, socket.userDetails));
   socket.on(CREATE_TEAM, genericActionCreater(createTeam, socket.userDetails));
   socket.on(JOIN_TEAM, genericActionCreater(joinTeam, socket.userDetails));
+  socket.on(CLOSE_ROOM, genericActionCreater(closeRoom, socket.userDetails));
 
   // admin wants to start the competition
   socket.on(START_COMPETITION, async (dataFromClient, cb) => {

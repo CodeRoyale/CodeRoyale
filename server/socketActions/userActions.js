@@ -12,13 +12,16 @@ const JOIN_ROOM = "JOIN_ROOM";
 const CREATE_TEAM = "CREATE_TEAM";
 
 // user tries to join a room
-const JOIN_TEAM = "CREATE_TEAM";
+const JOIN_TEAM = "JOIN_TEAM";
 
 // user submits code
 const SUBMIT_CODE = "SUBMIT_CODE";
 
 // user starts the competition
 const START_COMPETITION = "START_COMPETITION";
+
+// user starts the competition
+const CLOSE_ROOM = "CLOSE_ROOM";
 
 module.exports = {
   CONNECTION,
@@ -28,4 +31,5 @@ module.exports = {
   JOIN_TEAM,
   SUBMIT_CODE,
   START_COMPETITION,
+  CLOSE_ROOM,
 };
