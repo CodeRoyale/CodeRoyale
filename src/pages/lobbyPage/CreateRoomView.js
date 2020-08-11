@@ -4,8 +4,8 @@ import Button from '../../components/button/Button';
 import { Redirect } from 'react-router';
 
 // Have to implement this...
-//import { Link } from 'react-router';
-//import copy from 'copy-to-clipboard';
+// import { Link } from 'react-router';
+// import copy from 'copy-to-clipboard';
 
 function CreateRoomView({ socket }) {
   const [generateClicked, setGenerateClicked] = useState(false);
@@ -15,7 +15,7 @@ function CreateRoomView({ socket }) {
   const [max_perTeam, setMaxPerTeam] = useState(1);
   const [max_perRoom, setMaxPerRoom] = useState(2);
   const [timeLimit, setTimeLimit] = useState(0.5 * 60 * 60 * 60);
-  const [privateRoom, setPrivateRoom] = useState(false);
+  const [privateRoom, setPrivateRoom] = useState(true);
 
   const onClickGenerateButton = () => {
     setGenerateClicked(true);
@@ -32,7 +32,8 @@ function CreateRoomView({ socket }) {
         { max_teams, max_perTeam, max_perRoom, timeLimit, privateRoom },
         (data) => {
           if (data !== null) {
-            setRoomId(data.admin);
+            console.log(data);
+            setRoomId(data.config.id);
             setRoomCreated(true);
           }
         }

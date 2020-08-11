@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '../../components/button/Button';
 
 function CreateTeamView({ socket, room_id }) {
-  const [createTeamInput, setCreateTeamInput] = useState('');
+  const [team_name, setCreateTeamInput] = useState('');
+  const [createTeamClicked, setCreateTeamClicked] = useState(false);
 
-  // On Click create team...
-  const onClickCreateTeam = () => {
-    //TODO: Complete this....
-  };
+  // Create team...
+  useEffect(() => {
+    if (createTeamClicked) {
+      socket.emit('CREATE_TEAM', { team_name }, (data) => {
+        console.log(data);
+      });
+    }
+  });
 
   return (
     <div className='create-team-container'>
@@ -15,7 +20,7 @@ function CreateTeamView({ socket, room_id }) {
         <input
           type='text'
           className='create-team-input'
-          value={createTeamInput}
+          value={team_name}
           onChange={(event) => setCreateTeamInput(event.target.value)}
           placeholder='Enter a Team Name...'
         />
@@ -23,7 +28,7 @@ function CreateTeamView({ socket, room_id }) {
       <div className='create-team-submit-container'>
         <Button
           type='button'
-          onClick={onClickCreateTeam}
+          onClick={() => setCreateTeamClicked(true)}
           buttonStyle='btn--primary--normal'
           buttonSize='btn--small'
         >
