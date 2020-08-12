@@ -1,3 +1,12 @@
+:root {
+  --border-radius-card: 0px 15px 0px 15px;
+  --margin-team-member-card: 10px;
+  --width-team-member-card: 230px;
+  --width-team-card: calc(
+    var(--width-team-member-card) + 3 * var(--margin-team-member-card)
+  );
+}
+
 .room {
   margin: auto;
   height: 100%;
@@ -30,12 +39,13 @@
 /*TeamMemberCard.css*/
 .team-member-card {
   padding: 10px;
-  width: 230px;
+  width: var(--width-team-member-card);
   display: flex;
   height: wrap;
   background-color: white;
-  margin: 5px;
+  margin: var(--margin-team-member-card);
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 3px 0 rgba(0, 0, 0, 0.19);
+  border-radius: var(--border-radius-card);
 }
 
 .team-member-card-image-container {
@@ -66,12 +76,62 @@
 }
 .team-member-card-leave-button {
   opacity: 0;
-  height: 20%;
-  width: 20%;
+  height: 15%;
+  width: 15%;
   float: right;
   transition-duration: 0.4s;
   cursor: pointer;
 }
 .team-member-card:hover .team-member-card-leave-button {
+  opacity: 1;
+}
+
+/*TeamCard.css*/
+.team-card {
+  margin: 15px;
+}
+.team-card-team-name-container {
+  display: flex;
+  flex: 2;
+  border: solid var(--primary-color);
+  height: 20px;
+  width: 150px;
+  font-size: medium;
+  color: white;
+  background-color: var(--primary-color);
+  padding: 10px;
+}
+.team-card-team-name-text {
+  display: flex;
+  align-items: center;
+}
+.team-card-team-name-close-button-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.team-card-team-name-close-button-container-row {
+  width: 100%;
+}
+.team-card-team-name-close-button {
+  height: 15px;
+  width: 15px;
+  float: right;
+  opacity: 0;
+  cursor: pointer;
+  transition-duration: 0.3s;
+}
+.team-card-container-row {
+  display: flex;
+  border: solid var(--primary-color) 5px;
+  height: wrap;
+  width: var(--width-team-card);
+  border-radius: var(--border-radius-card);
+}
+.team-card-container {
+  height: 100%;
+  width: 100%;
+}
+.team-card-team-name-container:hover .team-card-team-name-close-button {
   opacity: 1;
 }

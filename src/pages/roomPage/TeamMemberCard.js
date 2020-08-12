@@ -11,14 +11,12 @@ function TeamMemberCard({ username, imageUrl }) {
         <img className='team-member-card-image' src={imageUrl} alt='' />
       </div>
       <div className='team-member-card-username-container'>
-        <span className='team-member-card-username'>
-          <b>{username}</b>
-        </span>
+        <span className='team-member-card-username'>{username}</span>
       </div>
       <div className='team-member-card-leave-button-container'>
         <div className='team-member-card-leave-button-container-row'>
           <img
-            src='/images/close_button.svg'
+            src='/images/close_button_black.svg'
             className='team-member-card-leave-button'
             alt='no'
             onClick={onClickLeaveButton()}

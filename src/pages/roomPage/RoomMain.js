@@ -3,7 +3,8 @@ import './RoomMain.css';
 import { Redirect } from 'react-router';
 import NavBar from '../../components/navBar/NavBar';
 import CreateTeamView from './CreateTeamView';
-// import profileData from '../../utils/examples';
+import TeamCard from './TeamCard';
+//import profileData from '../../utils/examples';
 
 function RoomMain(props) {
   // TODO: pass the data object from CreatTeamView.js....
@@ -28,7 +29,7 @@ function RoomMain(props) {
   // console.log('Room Created with room id: ' + room_id);
 
   //Example data....
-  // const { username, imageUrl } = profileData;
+  //const { username, imageUrl } = profileData;
   // const data = { team1: [], team2: [], team3: [] };
 
   return (
@@ -40,7 +41,9 @@ function RoomMain(props) {
         <div className='room-create-team-container'>
           <CreateTeamView socket={socket} room_id={room_id} />
         </div>
-        <div className='room-team-display-container'></div>
+        <div className='room-team-display-container'>
+          <TeamCard />
+        </div>
       </div>
     </div>
   );
