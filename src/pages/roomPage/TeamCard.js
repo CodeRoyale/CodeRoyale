@@ -1,16 +1,19 @@
 import React from 'react';
 import TeamMemberCard from './TeamMemberCard';
-import profileData from '../../utils/examples';
 
-function TeamCard() {
+function TeamCard({ team_name, team }) {
   const onClickCloseTeam = () => {
     //TODO: Delete team...
   };
 
+  // Setting team members cards...
+  const team_members = team.map((username) => (
+    <TeamMemberCard key={username} username={username} />
+  ));
   return (
     <div className='team-card'>
       <div className='team-card-team-name-container'>
-        <div className='team-card-team-name-text'>TEAM_NAME</div>
+        <div className='team-card-team-name-text'>{team_name}</div>
         <div className='team-card-team-name-close-button-container'>
           <div className='team-card-team-name-close-button-container-row'>
             <img
@@ -23,17 +26,8 @@ function TeamCard() {
         </div>
       </div>
       <div>
-        <div className='team-card-container-row'>
-          <div className='team-card-container'>
-            <TeamMemberCard
-              username={profileData.username}
-              imageUrl={profileData.imageUrl}
-            />
-            <TeamMemberCard
-              username={profileData.username}
-              imageUrl={profileData.imageUrl}
-            />
-          </div>
+        <div className='team-card-container'>
+          <div>{team_members}</div>
         </div>
       </div>
     </div>

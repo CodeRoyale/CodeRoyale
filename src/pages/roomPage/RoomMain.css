@@ -15,6 +15,11 @@
   background-color: #f5f8f8;
 }
 
+.room-team-display-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 /*CreateTeamView.css*/
 .create-team-container {
   margin: 15px;
@@ -125,17 +130,16 @@
   cursor: pointer;
   transition-duration: 0.3s;
 }
-.team-card-container-row {
+.team-card-container {
   display: flex;
   border: solid var(--primary-color) 5px;
   height: wrap;
   box-shadow: var(--border-shadow-card);
   border-radius: var(--border-radius-card);
-}
-.team-card-container {
   height: 100%;
   width: 100%;
 }
+
 .team-card-team-name-container:hover .team-card-team-name-close-button {
   opacity: 1;
 }
