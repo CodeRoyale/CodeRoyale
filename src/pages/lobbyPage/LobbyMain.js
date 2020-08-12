@@ -3,16 +3,11 @@ import ShareLinkCardFriend from './ShareLinkCardFriend';
 import './LobbyMain.css';
 import NavBar from '../../components/navBar/NavBar';
 import { Redirect } from 'react-router';
+import profileData from '../../utils/examples';
 
 class LobbyMain extends Component {
   constructor(props) {
     super(props);
-    let profileData = {
-      imageUrl:
-        'https://media-exp1.licdn.com/dms/image/C5103AQHuIxezqseoGQ/profile-displayphoto-shrink_200_200/0?e=1597276800&v=beta&t=tREaHG412Mr99Tfke80DMtuQtVQyB4378ptl3SlwDvI',
-      username: 'baal',
-      email: 'sawarni99@gmail.com',
-    };
     const accessToken = localStorage.getItem('access-token');
     let loggedIn = true;
     if (accessToken === null) {
