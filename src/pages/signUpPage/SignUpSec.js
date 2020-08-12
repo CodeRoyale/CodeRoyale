@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import GoogleSignIn from '../../components/googleSignIn/GoogleSignIn';
 import { Link, Redirect } from 'react-router-dom';
-import { message } from 'antd';
+import { message, Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import './SignUpMain.css';
 
 const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
 const SIGNUP_API = process.env.REACT_APP_SIGNUP_API;
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 class SignUpSec extends Component {
   constructor(props) {
@@ -93,6 +95,7 @@ class SignUpSec extends Component {
                 <span className='span-text'>Sign in now</span>
               </Link>
             </p>
+            <Spin indicator={antIcon} />
           </center>
         </div>
       </div>
