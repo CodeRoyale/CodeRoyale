@@ -5,6 +5,8 @@
   --width-team-card: calc(
     var(--width-team-member-card) + 3 * var(--margin-team-member-card)
   );
+  --border-shadow-card: 0 2px 5px 0 rgba(0, 0, 0, 0.2),
+    0 2px 3px 0 rgba(0, 0, 0, 0.19);
 }
 
 .room {
@@ -44,7 +46,7 @@
   height: wrap;
   background-color: white;
   margin: var(--margin-team-member-card);
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 3px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: var(--border-shadow-card);
   border-radius: var(--border-radius-card);
 }
 
@@ -89,6 +91,7 @@
 /*TeamCard.css*/
 .team-card {
   margin: 15px;
+  width: var(--width-team-card);
 }
 .team-card-team-name-container {
   display: flex;
@@ -100,6 +103,7 @@
   color: white;
   background-color: var(--primary-color);
   padding: 10px;
+  box-shadow: var(--border-shadow-card);
 }
 .team-card-team-name-text {
   display: flex;
@@ -125,7 +129,7 @@
   display: flex;
   border: solid var(--primary-color) 5px;
   height: wrap;
-  width: var(--width-team-card);
+  box-shadow: var(--border-shadow-card);
   border-radius: var(--border-radius-card);
 }
 .team-card-container {
