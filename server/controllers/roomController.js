@@ -1,12 +1,20 @@
 const { encryptData } = require("../utils/auth");
 const { setRoom, getUser, setTeam } = require("./userController");
+const {
+  ROOM_UPDATED,
+  RCV_MSG,
+  JOINED_ROOM,
+  JOINED_TEAM,
+  LEFT_TEAM,
+  LEFT_ROOM,
+} = require("../socketActions/serverActions");
 
 // this is my db for now
 rooms = {};
 
 // room_id will be admin name
 
-const createRoom = (config) => {
+const createRoom = (config, socket) => {
   const user = getUser(config.userName);
   if (user.room_id) {
     // please leave current room
@@ -57,6 +65,7 @@ const createRoom = (config) => {
     };
 
     setRoom(config.userName, room_id);
+    socket.join(room_id);
     // created room
     rooms[room_id] = room_obj;
   }
@@ -81,6 +90,8 @@ const joinRoom = ({ userName, room_id, team_name }) => {
       return false;
     }
 
+    // succesfull (user will now be added)
+
     if (
       team_name &&
       rooms[room_id].teams[team_name] &&
@@ -88,6 +99,12 @@ const joinRoom = ({ userName, room_id, team_name }) => {
     ) {
       // if user passess a team and that team exist and there is space in that team
       rooms[room_id].teams[team_name].push(userName);
+      // tell team-mates
+      socket.join(`${room_id}/${team_name}`);
+      socket.to(room_id).broadcast.emit(ROOM_UPDATED, {
+        type: JOINED_TEAM,
+        data: { userName, team_name },
+      });
     } else {
       // else bench the user
       team_name = "";
@@ -95,9 +112,15 @@ const joinRoom = ({ userName, room_id, team_name }) => {
     }
 
     setRoom(userName, room_id, team_name);
+
     //user has been added to bench or a Team
     rooms[room_id].state.cur_memCount += 1;
 
+    // tell others , notify others ROOM_UPDATED
+    socket.to(room_id).broadcast.emit(ROOM_UPDATED, {
+      type: JOINED_ROOM,
+      data: { userName },
+    });
     console.log(userName, " joined from ", room_id);
     return rooms[room_id];
   }
@@ -106,30 +129,46 @@ const joinRoom = ({ userName, room_id, team_name }) => {
 
 const removeUserFromRoom = ({ userName }) => {
   // remove from room
-  const user = getUser(userName);
+  const { room_id, team_name } = getUser(userName);
 
   // if user is a admin then no leave only delete possible
   // it cause of the way i am storing room_id ( == adminName)
-  if (rooms[user.room_id].config.admin === userName) {
+  if (rooms[room_id].config.admin === userName) {
     return false;
   }
 
-  if (user.team_name) {
+  if (team_name) {
     // if user has joined a team
-    let newTeam = rooms[user.room_id].teams[user.team_name].filter(
+    let newTeam = rooms[room_id].teams[team_name].filter(
       (ele) => ele !== userName
     );
-    rooms[user.room_id].teams[user.team_name] = newTeam;
+    rooms[room_id].teams[team_name] = newTeam;
+
+    // no need to send team_name as this will only be sent to
+    // ppl in "same team"
+    socket.leave(`${room_id}/${team_name}`);
+    socket.to(room_id).broadcast.emit(ROOM_UPDATED, {
+      type: LEFT_TEAM,
+      data: { userName, team_name },
+    });
   } else {
     // if user is on a bench
-    let newBench = rooms[user.room_id].state.bench.filter(
-      (ele) => ele !== userName
-    );
-    rooms[user.room_id].state.bench = newBench;
+    let newBench = rooms[room_id].state.bench.filter((ele) => ele !== userName);
+    rooms[room_id].state.bench = newBench;
   }
-  console.log(userName, " removed from ", user.room_id);
-  setRoom(userName, "");
+
+  // removed
   rooms[room_id].state.cur_memCount -= 1;
+
+  // tell others
+  console.log(userName, " removed from ", room_id);
+  setRoom(userName, "");
+  socket.to(room_id).broadcast.emit(ROOM_UPDATED, {
+    type: LEFT_ROOM,
+    data: { userName },
+  });
+  socket.leave(room_id);
+
   return true;
 };
 
@@ -149,6 +188,12 @@ const createTeam = ({ userName, team_name }) => {
     !rooms[room_id].teams[team_name]
   ) {
     rooms[room_id].teams[team_name] = [];
+
+    // tell everyone
+    socket.to(room_id).broadcast.emit(ROOM_UPDATED, {
+      type: TEAM_CREATED,
+      data: { team_name },
+    });
     return rooms[room_id].teams;
   }
   return false;
@@ -166,14 +211,20 @@ const joinTeam = ({ userName, team_name }) => {
   ) {
     if (user.team_name) {
       //ditch prev team
-      let newTeam = rooms[user.room_id].teams[user.team_name].filter(
-        (ele) => ele !== userName
-      );
-      rooms[user.room_id].teams[user.team_name] = newTeam;
+      return false;
     }
     //in new team
     rooms[user.room_id].teams[team_name].push(userName);
     setTeam(userName, team_name);
+
+    // tell team-mates
+    // tell team-mates
+    socket.join(`${room_id}/${team_name}`);
+    socket.to(room_id).broadcast.emit(ROOM_UPDATED, {
+      type: JOINED_TEAM,
+      data: { userName, team_name },
+    });
+
     return rooms[user.room_id].teams[team_name];
   }
   return false;
@@ -189,6 +240,14 @@ const leaveTeam = ({ userName }) => {
     rooms[user.room_id].teams[user.team_name] = newTeam;
     rooms[user.room_id].bench.push(userName);
     setTeam(userName, "");
+
+    // tell eveyone
+    socket.leave(`${room_id}/${team_name}`);
+    socket.to(room_id).broadcast.emit(ROOM_UPDATED, {
+      type: LEFT_TEAM,
+      data: { userName, team_name },
+    });
+
     return true;
   }
   return false;
@@ -209,6 +268,7 @@ const closeRoom = ({ userName }) => {
     // not need to chage room data since we are going to delete it
     allMembers.forEach((userName) => {
       // this is a server action notify all
+      // TODO --> add kick all and remove functions for sockets
       setRoom(userName, "");
     });
 
@@ -218,6 +278,8 @@ const closeRoom = ({ userName }) => {
   }
   return false;
 };
+
+//TODO --> DELETE TEAM
 
 const banMember = ({ room_id }) => {};
 
@@ -245,6 +307,15 @@ const handleUserDisconnect = (userName) => {
   // need to fill this
 };
 
+const forwardMsg = ({ content, toTeam, userName }, socket) => {
+  const { room_id, team_name } = getUser(userName);
+  const rcvrs = room_id;
+  if (toTeam && team_name) {
+    rcvrs += `/${team_name}`;
+  }
+  socket.to(rcvrs).broadcast.emit(RCV_MSG, { userName, content });
+};
+
 const getRoomData = (room_id) => rooms[room_id];
 const getRoomsData = () => rooms;
 
@@ -259,5 +330,6 @@ module.exports = {
   leaveTeam,
   roomEligible,
   removeUserFromRoom,
+  forwardMsg,
   handleUserDisconnect,
 };

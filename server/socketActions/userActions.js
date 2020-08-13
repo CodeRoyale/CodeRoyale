@@ -23,6 +23,15 @@ const START_COMPETITION = "START_COMPETITION";
 // user starts the competition
 const CLOSE_ROOM = "CLOSE_ROOM";
 
+// uesr can request for a room
+const GET_ROOM = "GET_ROOM";
+
+// leave team
+const LEAVE_TEAM = "LEAVE_TEAM";
+
+// send msg to team or room
+const SEND_MSG = "SEND_MSG";
+
 module.exports = {
   CONNECTION,
   CREATE_ROOM,
@@ -32,4 +41,7 @@ module.exports = {
   SUBMIT_CODE,
   START_COMPETITION,
   CLOSE_ROOM,
+  SEND_MSG,
+  LEAVE_TEAM,
+  GET_ROOM,
 };

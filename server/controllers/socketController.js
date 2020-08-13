@@ -6,6 +6,9 @@ const {
   JOIN_TEAM,
   START_COMPETITION,
   CLOSE_ROOM,
+  SEND_MSG,
+  LEAVE_TEAM,
+  GET_ROOM,
 } = require("../socketActions/userActions");
 const {
   CONNECTION_ACK,
@@ -20,8 +23,10 @@ const {
   joinTeam,
   joinRoom,
   getRoomData,
+  leaveTeam,
   closeRoom,
   roomEligible,
+  forwardMsg,
 } = require("../controllers/roomController");
 
 // import utils
@@ -67,15 +72,17 @@ const authUser = (socket, next) => {
   }
 };
 
+// we can move this inside handleuserevnets
+
 const genericActionCreater = (
   actionResponder,
-  userDetails,
+  socket,
   failReply = "Some error occured !",
   ACTION = ""
 ) => (config, cb) => {
   // only passes userName
-  config.userName = userDetails.userName;
-  let data = actionResponder(config) || failReply;
+  config.userName = socket.userDetails.userName;
+  let data = actionResponder(config, socket) || failReply;
   if (data != failReply) {
     console.log(`${ACTION} succesfull !`);
   }
@@ -95,12 +102,14 @@ const handleUserEvents = (socket) => {
   //   )
   // );
   // but below approach is shorter
-  socket.on(CREATE_ROOM, genericActionCreater(createRoom, socket.userDetails));
-  socket.on(JOIN_ROOM, genericActionCreater(joinRoom, socket.userDetails));
-  socket.on(CREATE_TEAM, genericActionCreater(createTeam, socket.userDetails));
-  socket.on(JOIN_TEAM, genericActionCreater(joinTeam, socket.userDetails));
-  socket.on(CLOSE_ROOM, genericActionCreater(closeRoom, socket.userDetails));
-
+  socket.on(CREATE_ROOM, genericActionCreater(createRoom, socket));
+  socket.on(JOIN_ROOM, genericActionCreater(joinRoom, socket));
+  socket.on(CREATE_TEAM, genericActionCreater(createTeam, socket));
+  socket.on(JOIN_TEAM, genericActionCreater(joinTeam, socket));
+  socket.on(CLOSE_ROOM, genericActionCreater(closeRoom, socket));
+  socket.on(SEND_MSG, genericActionCreater(forwardMsg, socket));
+  socket.on(LEAVE_TEAM, genericActionCreater(leaveTeam, socket));
+  socket.on(GET_ROOM, genericActionCreater(getRoomData, socket));
   // admin wants to start the competition
   socket.on(START_COMPETITION, async (dataFromClient, cb) => {
     // check if room is eligible
