@@ -1,32 +1,27 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './FrontPageMain.css';
 import Description from './Description';
 import FrontPageNavBar from '../../components/frontPageNavBar/FrontPageNavBar';
 import { Redirect } from 'react-router';
 
-class FrontPageMain extends Component {
-  constructor(props) {
-    super(props);
-    const accessToken = localStorage.getItem('access-token');
-    let loggedIn = true;
-    if (accessToken === null) {
-      loggedIn = false;
-    }
-    this.state = {
-      loggedIn,
-    };
+const FrontPageMain = () => {
+  const accessToken = localStorage.getItem('access-token');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  if (accessToken != null) {
+    setIsLoggedIn(true);
   }
-  render() {
-    if (this.state.loggedIn) {
-      return <Redirect to='/dashboard' />;
-    }
-    return (
-      <div className='front-page'>
-        <FrontPageNavBar />
-        <Description />
-      </div>
-    );
+
+  if (isLoggedIn) {
+    return <Redirect to='/dashboard' />;
   }
-}
+
+  return (
+    <div className='front-page'>
+      <FrontPageNavBar />
+      <Description />
+    </div>
+  );
+};
 
 export default FrontPageMain;
