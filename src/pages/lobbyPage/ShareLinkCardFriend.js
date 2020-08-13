@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import './ShareLinkCardFriend.css';
-import CreateRoomView from '../createRoomView/CreateRoomView';
-import JoinRoomView from '../joinRoomView/JoinRoomView';
-import ChooseRoomView from '../chooseRoomView/ChooseRoomView';
+import './LobbyMain.css';
+import CreateRoomView from './CreateRoomView';
+import JoinRoomView from './JoinRoomView';
+import ChooseRoomView from './ChooseRoomView';
 import io from 'socket.io-client';
 
 function ShareLinkCardFriend(props) {
@@ -16,7 +16,7 @@ function ShareLinkCardFriend(props) {
   const [chooseOption, setChooseOption] = useState(null);
 
   // OnClickChoose...
-  // TODO: This view should be shown after ACK from server connection....
+  // TODO: Have to implement what happens if server is down....
   let chosenView;
   if (connectionResponse === CONNECTION_ACK) {
     switch (chooseOption) {
