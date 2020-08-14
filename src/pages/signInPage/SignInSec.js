@@ -79,7 +79,6 @@ const SignInSec = () => {
           // Error response from server
           setIsLoading(false);
           setGoogleData(null);
-          setIsLoggedIn(false);
           // TODO: Show alerts based on error response
           signInError("Sorry, couldn't login please try again later!");
         });
@@ -107,7 +106,7 @@ const SignInSec = () => {
   );
 
   if (isLoggedIn) {
-    return <Redirect to='/dashboard' />;
+    content = <Redirect to='/dashboard' />;
   }
 
   if (isLoading) {

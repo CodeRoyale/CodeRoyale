@@ -5,7 +5,7 @@ import NavBar from '../../components/navBar/NavBar';
 import CreateTeamView from './CreateTeamView';
 import TeamCard from './TeamCard';
 
-function RoomMain(props) {
+const RoomMain = () => {
   // TODO: pass the data object from CreatTeamView.js....
   // TODO: Have to implement, what happens if the user goes to create page again....
   // TODO: Create Copy-to-clipboard...
@@ -21,10 +21,16 @@ function RoomMain(props) {
   // console.log('Room Created with room id: ' + room_id);
 
   // Checking if the user is logged-in...
-  const accessToken = localStorage.getItem('access-token');
-  if (accessToken === null) {
-    return <Redirect to='/' />;
-  }
+  const accessToken = () => {
+    let ac = localStorage.getItem('access-token');
+    if (ac === null) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const isLoggedIn = accessToken ? true : false;
 
   //Example data....
   const socket = null;
@@ -45,7 +51,7 @@ function RoomMain(props) {
     );
   }
 
-  return (
+  let content = (
     <div className='room'>
       <div className='room-header'>
         <NavBar />
@@ -58,6 +64,12 @@ function RoomMain(props) {
       </div>
     </div>
   );
-}
+
+  if (!isLoggedIn) {
+    content = <Redirect to='/' />;
+  }
+
+  return content;
+};
 
 export default RoomMain;
