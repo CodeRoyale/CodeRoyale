@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import './ArenaMain.css';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-java';
@@ -14,42 +14,9 @@ import 'ace-builds/src-noconflict/snippets/java';
 
 import 'ace-builds/src-noconflict/ext-language_tools';
 import Button from '../../components/button/Button';
-import Popper from '@material-ui/core/Popper';
-import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
-import PropTypes from 'prop-types';
-import SettingsIcon from '@material-ui/icons/Settings';
+import { Popover } from 'antd';
 import { Row, Col } from 'antd';
-
-const Fade = React.forwardRef(function Fade(props, ref) {
-  const { in: open, children, onEnter, onExited, ...other } = props;
-  const style = useSpring({
-    from: { opacity: 0 },
-    to: { opacity: open ? 1 : 0 },
-    onStart: () => {
-      if (open && onEnter) {
-        onEnter();
-      }
-    },
-    onRest: () => {
-      if (!open && onExited) {
-        onExited();
-      }
-    },
-  });
-
-  return (
-    <animated.div ref={ref} style={style} {...other}>
-      {children}
-    </animated.div>
-  );
-});
-
-Fade.propTypes = {
-  children: PropTypes.element,
-  in: PropTypes.bool,
-  onEnter: PropTypes.func,
-  onExited: PropTypes.func,
-};
+import { SettingFilled } from '@ant-design/icons';
 
 function Solution() {
   const [ideLanguage, setLanguage] = useState('c_cpp');
@@ -57,19 +24,45 @@ function Solution() {
   const [ideTheme, setTheme] = useState('terminal');
   const [ideCode, setCode] = useState('');
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
-  };
-
-  const Alan = useRef('ace');
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'spring-popper' : undefined;
+  const settings_popup_content = (
+    <div className='ide-options-popup'>
+      <Row className='ide-options-row'>
+        <Col span={20}>
+          <div>FontSize:</div>
+        </Col>
+        <Col span={20}>
+          <div>
+            <select onChange={(e) => setFontSize(Number(e.target.value))}>
+              <option value='10'>10</option>
+              <option value='12'>12</option>
+              <option value='14'>14</option>
+              <option value='16'>16</option>
+              <option value='18'>18</option>
+              <option value='20'>20</option>
+              <option value='22'>22</option>
+              <option value='24'>24</option>
+            </select>
+          </div>
+        </Col>
+      </Row>
+      <Row className='ide-options-row'>
+        <Col span={20}>
+          <div>Theme:</div>
+        </Col>
+        <Col span={20}>
+          <div>
+            <select onChange={(e) => setTheme(e.target.value)}>
+              <option value='tomorrow'>tomorrow</option>
+              <option value='terminal'>terminal</option>
+              <option value='monokai'>monokai</option>
+            </select>
+          </div>
+        </Col>
+      </Row>
+    </div>
+  );
 
   function onChangeIDE(newValue) {
-    //console.log('change', newValue);
     setCode(newValue);
   }
 
@@ -94,60 +87,13 @@ function Solution() {
 
             <div className='ide-options'>
               <div>
-                <SettingsIcon
-                  aria-describedby={id}
-                  onClick={handleClick}
-                ></SettingsIcon>
-
-                <Popper id={id} open={open} anchorEl={anchorEl} transition>
-                  {({ TransitionProps }) => (
-                    <Fade {...TransitionProps}>
-                      <div className='ide-options-popup'>
-                        <>
-                          <Row className='ide-options-row'>
-                            <Col span={20}>
-                              <div>FontSize:</div>
-                            </Col>
-                            <Col span={20}>
-                              <div>
-                                <select
-                                  onChange={(e) =>
-                                    setFontSize(Number(e.target.value))
-                                  }
-                                >
-                                  <option value='10'>10</option>
-                                  <option value='12'>12</option>
-                                  <option value='14'>14</option>
-                                  <option value='16'>16</option>
-                                  <option value='18'>18</option>
-                                  <option value='20'>20</option>
-                                  <option value='22'>22</option>
-                                  <option value='24'>24</option>
-                                </select>
-                              </div>
-                            </Col>
-                          </Row>
-                          <Row className='ide-options-row'>
-                            <Col span={20}>
-                              <div>Theme:</div>
-                            </Col>
-                            <Col span={20}>
-                              <div>
-                                <select
-                                  onChange={(e) => setTheme(e.target.value)}
-                                >
-                                  <option value='tomorrow'>tomorrow</option>
-                                  <option value='terminal'>terminal</option>
-                                  <option value='monokai'>monokai</option>
-                                </select>
-                              </div>
-                            </Col>
-                          </Row>
-                        </>
-                      </div>
-                    </Fade>
-                  )}
-                </Popper>
+                <Popover
+                  content={settings_popup_content}
+                  trigger='click'
+                  placement='bottomRight'
+                >
+                  <SettingFilled />
+                </Popover>
               </div>
             </div>
           </div>
@@ -155,7 +101,6 @@ function Solution() {
 
         <div id='MyAceEditor' className='solution-content'>
           <AceEditor
-            ref={Alan}
             height='100%'
             width='100%'
             mode={ideLanguage}
