@@ -8,15 +8,18 @@ const {
   deleteQuestion,
   deleteQuestionById,
   patchQuestionById,
+  getQuestionById,
 } = require('../controllers/questionController');
 
 route.post('/', putQuestion);
 
 route.get('/', getQuestion);
 
-route.delete('/', deleteQuestion);
+route.post('/getQById', getQuestionById);
 
-route.delete('/:questionId', deleteQuestionById);
+route.delete('/deleteAll', deleteQuestion);
+
+route.delete('/deleteById/:questionId', deleteQuestionById);
 
 route.patch('/:questionId', patchQuestionById);
 

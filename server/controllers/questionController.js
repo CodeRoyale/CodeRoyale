@@ -39,6 +39,25 @@ const getQuestion = async (req, res) => {
   }
 };
 
+const getQuestionById = async (req, res) => {
+  try {
+    const size = req.body.id.length;
+    const qids = [];
+    let i;
+    for (i = 0; i < size; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      const question = await Question.findOne({ _id: req.body.id[i] });
+      qids.push(question);
+    }
+    res.status(200).json({
+      message: qids,
+    });
+  } catch (err) {
+    // wrong id by user
+    res.status(401).json({ message: err.message });
+  }
+};
+
 const deleteQuestion = async (req, res) => {
   try {
     const resp = await Question.remove({});
@@ -91,6 +110,7 @@ const patchQuestionById = async (req, res) => {
 module.exports = {
   getQuestion,
   putQuestion,
+  getQuestionById,
   deleteQuestion,
   deleteQuestionById,
   patchQuestionById,
