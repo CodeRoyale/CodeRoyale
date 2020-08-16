@@ -7,7 +7,7 @@ import LobbyMain from './pages/lobbyPage/LobbyMain';
 import DashboardMain from './pages/dashboardPage/DashboardMain';
 import SignUpMain from './pages/signUpPage/SignUpMain';
 import SignInMain from './pages/signInPage/SignInMain';
-import ArenaMain from './pages/arenaPage/ArenaMain';
+import Arena from './pages/arenaPage/ArenaMain';
 import OutroMain from './pages/outroPage/OutroMain';
 import Testing from './pages/testPage/TestPage';
 import RoomMain from './pages/roomPage/RoomMain';
@@ -45,7 +45,7 @@ function App() {
             data-testid='route-arena'
             exact
             path='/arena'
-            component={ArenaMain}
+            component={Arena}
           />
           <Route
             data-testid='route-lobby'

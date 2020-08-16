@@ -7,6 +7,9 @@ function Chat({ socket }) {
   const [message, setMessage] = useState('');
   const [generateClick, setGenerateClick] = useState(false);
 
+  // Use this socket to emit in useEffect...
+  console.log(socket);
+
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
   };
