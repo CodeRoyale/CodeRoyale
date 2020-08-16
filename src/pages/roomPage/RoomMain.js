@@ -11,14 +11,14 @@ function RoomMain(props) {
   // TODO: Create Copy-to-clipboard...
 
   // Checking if the socket and room_id are not null...
-  // if (props.location.props === undefined) {
-  //   return <Redirect to='/lobby' />;
-  // }
+  if (props.location.props === undefined) {
+    return <Redirect to='/lobby' />;
+  }
 
   // Initializations....
-  // const socket = props.location.props.socket;
-  // const room_id = props.location.props.room_id;
-  // console.log('Room Created with room id: ' + room_id);
+  const socket = props.location.props.socket;
+  const room_id = props.location.props.room_id;
+  console.log('Room Created with room id: ' + room_id);
 
   // Checking if the user is logged-in...
   const accessToken = localStorage.getItem('access-token');
@@ -27,8 +27,8 @@ function RoomMain(props) {
   }
 
   //Example data....
-  const socket = null;
-  const room_id = null;
+  // const socket = null;
+  // const room_id = null;
   const data = {
     team1: ['Mayur', 'Anugya'],
     team2: ['Alan', 'joel'],

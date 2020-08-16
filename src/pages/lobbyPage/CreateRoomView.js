@@ -13,7 +13,7 @@ function CreateRoomView({ socket }) {
   const [max_perRoom, setMaxPerRoom] = useState(2);
   const [timeLimit, setTimeLimit] = useState(0.5 * 60 * 60 * 60);
   const [privateRoom, setPrivateRoom] = useState(true);
-  const [moveToArena, setMoveToArena] = useState(false);
+  const [arenaTestClicked, setArenaTestClicked] = useState(false);
 
   const onClickGenerateButton = () => {
     setGenerateClicked(true);
@@ -48,6 +48,16 @@ function CreateRoomView({ socket }) {
     timeLimit,
   ]);
 
+  // Testing Arena....
+  //**************************************//
+  const onClickTestArena = () => {
+    setArenaTestClicked(true);
+  };
+  if (arenaTestClicked) {
+    return <Redirect to={{ pathname: '/arena', props: { socket: socket } }} />;
+  }
+  //**************************************//
+
   // If room created successfully....
   if (roomCreated) {
     return (
@@ -56,15 +66,6 @@ function CreateRoomView({ socket }) {
       />
     );
   }
-
-  // move to arena (this is for testing only)
-  if (moveToArena) {
-    return <Redirect to={{ pathname: '/arena', props: { socket: socket } }} />;
-  }
-
-  const onClickArena = () => {
-    setMoveToArena(true);
-  };
 
   // options for creating room....
   const optionNumbers = numbers.map((number) => (
@@ -175,14 +176,21 @@ function CreateRoomView({ socket }) {
           Create Room
         </Button>
       </div>
-      <Button
-        type='button'
-        onClick={onClickArena}
-        buttonStyle='btn--primary--normal'
-        buttonSize='btn--medium'
-      >
-        Arena (Test)
-      </Button>
+      {
+        /********************************/
+        /*This is only for test...*/
+        <div className='create-room-button-container'>
+          <Button
+            type='button'
+            onClick={onClickTestArena}
+            buttonStyle='btn--primary--normal'
+            buttonSize='btn--medium'
+          >
+            Test Arena
+          </Button>
+        </div>
+        /********************************/
+      }
     </div>
   );
 }

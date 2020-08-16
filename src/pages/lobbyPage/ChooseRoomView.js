@@ -10,6 +10,7 @@ function ChooseRoomView({ onClickChoose }) {
   const onClickJoinRoom = () => {
     onClickChoose('JOIN_ROOM');
   };
+
   return (
     <div>
       <div className='choose-create-room-button'>

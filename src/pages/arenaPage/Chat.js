@@ -3,10 +3,9 @@ import './ArenaMain.css';
 import { Input } from 'antd';
 import Button from '../../components/button/Button';
 
-function Chat(props) {
+function Chat({ socket }) {
   const [message, setMessage] = useState('');
   const [generateClick, setGenerateClick] = useState(false);
-  const socket = props.location.props.socket;
 
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
