@@ -10,7 +10,7 @@ function ShareLinkCardFriend(props) {
   const userName = profileData.username;
   const CONNECTION_ACK = 'CONNECTION_ACK';
   const CONNECTION_DENY = 'CONNECTION_DENY';
-  const ENDPOINT = 'http://localhost:2500';
+  const ENDPOINT = process.env.REACT_APP_LOBBY_SERVER;
   const [connectionResponse, setConnectionResponse] = useState('');
   const [socket, setSocket] = useState(null);
   const [chooseOption, setChooseOption] = useState(null);
@@ -58,7 +58,7 @@ function ShareLinkCardFriend(props) {
     socket.on('RCV_MSG', (data) => {
       console.log(data);
     });
-  }, [userName]);
+  }, [userName, ENDPOINT]);
 
   // After connection response comes...
   useEffect(() => {
