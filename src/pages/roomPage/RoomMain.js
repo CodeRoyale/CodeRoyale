@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './RoomMain.css';
 import { Redirect } from 'react-router';
 import NavBar from '../../components/navBar/NavBar';
 import CreateTeamView from './CreateTeamView';
 import TeamCard from './TeamCard';
+import Button from '../../components/button/Button';
 
 function RoomMain(props) {
+  const [arenaTestClicked, setArenaTestClicked] = useState(false);
   // TODO: pass the data object from CreatTeamView.js....
   // TODO: Have to implement, what happens if the user goes to create page again....
   // TODO: Create Copy-to-clipboard...
@@ -45,11 +47,36 @@ function RoomMain(props) {
     );
   }
 
+  // Testing Arena....
+  //**************************************//
+  const onClickTestArena = () => {
+    setArenaTestClicked(true);
+  };
+  if (arenaTestClicked) {
+    return <Redirect to={{ pathname: '/arena', props: { socket: socket } }} />;
+  }
+  //**************************************//
+
   return (
     <div className='room'>
       <div className='room-header'>
         <NavBar />
       </div>
+      {
+        /********************************/
+        /*This is only for test...*/
+        <div className='create-room-button-container'>
+          <Button
+            type='button'
+            onClick={onClickTestArena}
+            buttonStyle='btn--primary--normal'
+            buttonSize='btn--medium'
+          >
+            Test Arena
+          </Button>
+        </div>
+        /********************************/
+      }
       <div className='room-body'>
         <div className='room-create-team-container'>
           <CreateTeamView socket={socket} room_id={room_id} />

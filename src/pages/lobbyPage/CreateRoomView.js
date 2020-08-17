@@ -13,7 +13,6 @@ function CreateRoomView({ socket }) {
   const [max_perRoom, setMaxPerRoom] = useState(2);
   const [timeLimit, setTimeLimit] = useState(0.5 * 60 * 60 * 60);
   const [privateRoom, setPrivateRoom] = useState(true);
-  const [arenaTestClicked, setArenaTestClicked] = useState(false);
 
   const onClickGenerateButton = () => {
     setGenerateClicked(true);
@@ -47,16 +46,6 @@ function CreateRoomView({ socket }) {
     socket,
     timeLimit,
   ]);
-
-  // Testing Arena....
-  //**************************************//
-  const onClickTestArena = () => {
-    setArenaTestClicked(true);
-  };
-  if (arenaTestClicked) {
-    return <Redirect to={{ pathname: '/arena', props: { socket: socket } }} />;
-  }
-  //**************************************//
 
   // If room created successfully....
   if (roomCreated) {
@@ -176,21 +165,6 @@ function CreateRoomView({ socket }) {
           Create Room
         </Button>
       </div>
-      {
-        /********************************/
-        /*This is only for test...*/
-        <div className='create-room-button-container'>
-          <Button
-            type='button'
-            onClick={onClickTestArena}
-            buttonStyle='btn--primary--normal'
-            buttonSize='btn--medium'
-          >
-            Test Arena
-          </Button>
-        </div>
-        /********************************/
-      }
     </div>
   );
 }
