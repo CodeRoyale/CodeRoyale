@@ -118,6 +118,7 @@ const joinRoom = ({ userName, room_id, team_name }, socket) => {
     rooms[room_id].state.cur_memCount += 1;
 
     // tell others , notify others ROOM_UPDATED
+    socket.join(room_id);
     socket.to(room_id).broadcast.emit(ROOM_UPDATED, {
       type: JOINED_ROOM,
       data: { userName },
