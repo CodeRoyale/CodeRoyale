@@ -75,7 +75,7 @@ const createRoom = (config, socket) => {
 };
 
 // users connecting to room
-const joinRoom = ({ userName, room_id, team_name }) => {
+const joinRoom = ({ userName, room_id, team_name }, socket) => {
   if (
     rooms[room_id] &&
     (!rooms[room_id].config.privateRoom ||
@@ -308,13 +308,18 @@ const handleUserDisconnect = (userName) => {
   // need to fill this
 };
 
-const forwardMsg = ({ content, toTeam, userName }, socket) => {
+const forwardMsg = ({ userName, content, toTeam }, socket) => {
   const { room_id, team_name } = getUser(userName);
+
+  // not in a room
+  if (!room_id || !content) return false;
+
   const rcvrs = room_id;
   if (toTeam && team_name) {
     rcvrs += `/${team_name}`;
   }
   socket.to(rcvrs).broadcast.emit(RCV_MSG, { userName, content });
+  return true;
 };
 
 const getRoomData = (room_id) => rooms[room_id];
