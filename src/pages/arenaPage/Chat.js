@@ -15,7 +15,7 @@ function Chat({ socket }) {
     const { name, message } = state;
     console.log(message);
     console.log(socket);
-    socket.emit('SEND_MSG', { message }, (data) => {
+    socket.emit('SEND_MSG', { content: message }, (data) => {
       console.log(data);
     });
     setState({ message: '', name });
