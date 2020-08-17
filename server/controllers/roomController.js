@@ -7,6 +7,7 @@ const {
   JOINED_TEAM,
   LEFT_TEAM,
   LEFT_ROOM,
+  TEAM_CREATED,
 } = require("../socketActions/serverActions");
 
 // this is my db for now
@@ -172,7 +173,7 @@ const removeUserFromRoom = ({ userName }) => {
   return true;
 };
 
-const createTeam = ({ userName, team_name }) => {
+const createTeam = ({ userName, team_name }, socket) => {
   // if more teams are allowed
   //if team_name is not already used
   // and user is admin
