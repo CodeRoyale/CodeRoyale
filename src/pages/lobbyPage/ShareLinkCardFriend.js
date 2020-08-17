@@ -56,7 +56,7 @@ function ShareLinkCardFriend(props) {
       setConnectionResponse(CONNECTION_DENY);
     });
     socket.on('RCV_MSG', (data) => {
-      alert(data);
+      console.log(data);
     });
   }, [userName]);
 
