@@ -98,6 +98,7 @@ const illegalQuestion = {
   sourceLimit: 5,
   difficulty: 7,
 };
+
 // for getting the question id for the 1st question
 let questionId = 0;
 
@@ -241,7 +242,7 @@ describe('Question test suit', () => {
     it('it should delete question by id ', (done) => {
       chai
         .request(server)
-        .delete('/questions/', questionId)
+        .delete(`/questions/deleteById/${questionId}`)
         .end((err, res) => {
           res.should.have.status(201);
           res.body.should.be.a('object');
@@ -256,7 +257,7 @@ describe('Question test suit', () => {
       chai
         .request(server)
         // random and illegal id
-        .delete('/questions/5ea5dc9e92a6a52cc245389e')
+        .delete('/questions/deleteById/5ea5dc9e92a6a52cc245389e')
         .end((err, res) => {
           res.should.have.status(201);
           res.body.should.be.a('object');
@@ -288,7 +289,7 @@ describe('Question test suit', () => {
     it('it should delete all the questions', (done) => {
       chai
         .request(server)
-        .delete('/questions')
+        .delete('/questions/deleteAll')
         .end((err, res) => {
           res.body.should.be.a('object');
           res.body.message.should.have.property('n').eql(1);
@@ -385,6 +386,112 @@ describe('Question test suit', () => {
           res.body.should.have
             .property('message')
             .eql('Cast to ObjectId failed for value "newID6969" at path "_id"');
+          done();
+        });
+    });
+  });
+  let questionId1 = '';
+  let questionId2 = '';
+  let questionId3 = '';
+  // created a array to push the ids of the questions
+  const arr = [];
+
+  describe('/POST question for getById functionality', () => {
+    // ADD question
+    it('it should post question to get Id1', (done) => {
+      chai
+        .request(server)
+        .post('/questions')
+        .send(questionDetails)
+        .end((err, res) => {
+          res.should.have.status(201);
+          res.body.message.should.be.an('Object');
+
+          // stored the question id and will be used in delete question by id
+          questionId1 = res.body.message._id;
+          arr.push(questionId1);
+          done();
+        });
+    });
+
+    it('it should post question to get Id2', (done) => {
+      chai
+        .request(server)
+        .post('/questions')
+        .send(questionDetails1)
+        .end((err, res) => {
+          res.should.have.status(201);
+          res.body.message.should.be.an('Object');
+
+          // stored the question id and will be used in delete question by id
+          questionId2 = res.body.message._id;
+          arr.push(questionId2);
+          done();
+        });
+    });
+
+    it('it should post question to get Id3', (done) => {
+      chai
+        .request(server)
+        .post('/questions')
+        .send(beforeQuestion)
+        .end((err, res) => {
+          res.should.have.status(201);
+          res.body.message.should.be.an('Object');
+          // stored the question id and will be used in delete question by id
+          questionId3 = res.body.message._id;
+          done();
+        });
+    });
+  });
+
+  // json object for getQById
+  const messageFromFrontEnd = {
+    id: arr,
+  };
+
+  describe('/POST by the front-end', () => {
+    // ADD question
+    it('it should post a json to get respective ids', (done) => {
+      chai
+        .request(server)
+        .post('/questions/getQById')
+        .send(messageFromFrontEnd)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.an('object');
+          res.body.message[0].should.have
+            .property('questionTitle')
+            .eql('Chef and Street Food');
+          res.body.message[0].should.have.property('problemCode').eql('STFOOD');
+          res.body.message[0].should.have
+            .property('description')
+            .eql(
+              'Chef wants to maximise his daily profit. Help Chef choose which type of food to offer and find the maximum daily profit he can make.'
+            );
+          res.body.message[0].should.have
+            .property('author')
+            .eql('kingofnumbers');
+          res.body.message[0].should.have
+            .property('tags')
+            .eql(['Linear Data Structure']);
+          res.body.message[0].should.have.property('dateAdded').eql('12-13-11');
+          res.body.message[0].should.have.property('timeLimit').eql(1);
+          res.body.message[0].should.have.property('sourceLimit').eql(3);
+          res.body.message[0].should.have.property('difficulty').eql(5);
+          res.body.message[1].should.have
+            .property('questionTitle')
+            .eql('Prime Numbers');
+          res.body.message[1].should.have.property('problemCode').eql('PMNRS');
+          res.body.message[1].should.have
+            .property('description')
+            .eql('FIND PRIME NUMBERS');
+          res.body.message[1].should.have.property('author').eql('naveen');
+          res.body.message[1].should.have.property('tags').eql(['Mathematics']);
+          res.body.message[1].should.have.property('dateAdded').eql('29-07-20');
+          res.body.message[1].should.have.property('timeLimit').eql(3);
+          res.body.message[1].should.have.property('sourceLimit').eql(4);
+          res.body.message[1].should.have.property('difficulty').eql(7);
           done();
         });
     });
