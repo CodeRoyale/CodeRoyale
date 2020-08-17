@@ -319,7 +319,7 @@ const forwardMsg = ({ userName, content, toTeam }, socket) => {
   if (toTeam && team_name) {
     rcvrs += `/${team_name}`;
   }
-  socket.to(rcvrs).broadcast.emit(RCV_MSG, { userName, content });
+  socket.to(rcvrs).broadcast.emit(RCV_MSG, { userName, content, toTeam });
   return true;
 };
 
