@@ -202,8 +202,8 @@ const createTeam = ({ userName, team_name }, socket) => {
 };
 
 const joinTeam = ({ userName, team_name }, socket) => {
-  const { room_id, team_name } = getUser(userName),
-    room = rooms[room_id];
+  const user = getUser(userName),
+    room = rooms[user.room_id];
   // only run if user and room exits and user is in that room
   // and there is space
   if (
@@ -211,23 +211,23 @@ const joinTeam = ({ userName, team_name }, socket) => {
     room.teams[team_name] &&
     room.teams[team_name].length < room.config.max_perTeam
   ) {
-    if (team_name) {
+    if (user.team_name) {
       //ditch prev team
       return false;
     }
     //in new team
-    rooms[room_id].teams[team_name].push(userName);
+    rooms[user.room_id].teams[team_name].push(userName);
     setTeam(userName, team_name);
 
     // tell team-mates
     // tell team-mates
-    socket.join(`${room_id}/${team_name}`);
-    socket.to(room_id).broadcast.emit(ROOM_UPDATED, {
+    socket.join(`${user.room_id}/${team_name}`);
+    socket.to(user.room_id).broadcast.emit(ROOM_UPDATED, {
       type: JOINED_TEAM,
       data: { userName, team_name },
     });
 
-    return rooms[room_id].teams[team_name];
+    return rooms[user.room_id].teams[team_name];
   }
   return false;
 };
