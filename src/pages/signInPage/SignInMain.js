@@ -25,7 +25,7 @@ const SignInMain = () => {
 
   useEffect(() => {
     if (googleData != null) {
-      // setIsLoading(true);
+      setIsLoading(true);
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('Origin', CLIENT_URL);
@@ -44,33 +44,28 @@ const SignInMain = () => {
         .then((jsonRes) => {
           // Success response from server
           if (jsonRes.message === 'Login successful') {
-            // setIsLoading(false);
-            // setGoogleData(null);
-            // signInSuccess('Welcome back!');
-            console.log(jsonRes);
+            setIsLoading(false);
+            setGoogleData(null);
+            signInSuccess('Welcome back!');
             // localStorage.setItem('user-data', JSON.stringify(jsonRes));
             // localStorage.setItem('access-token', jsonRes.accessToken);
           } else if (jsonRes.message === "User Doesn't Exists") {
-            // setIsLoading(false);
-            // setGoogleData(null);
-            console.log(jsonRes);
-            // signInError(
-            //   'Sorry, you will need to sign up first to use CodeRoyale'
-            // );
+            setIsLoading(false);
+            setGoogleData(null);
+            signInError(
+              'Sorry, you will need to sign up first to use CodeRoyale'
+            );
           } else {
-            // setIsLoading(false);
-            // setGoogleData(null);
-            console.log(jsonRes);
-            // signInError("Sorry, couldn't login please try again later!");
+            setIsLoading(false);
+            setGoogleData(null);
+            signInError("Sorry, couldn't login please try again later!");
           }
         })
         .catch((err) => {
           // Error response from server
-          // setIsLoading(false);
-          // setGoogleData(null);
-          console.log(err);
-          // TODO: Show alerts based on error response
-          // signInError("Sorry, couldn't login please try again later!");
+          setIsLoading(false);
+          setGoogleData(null);
+          signInError("Sorry, couldn't login please try again later!");
         });
     }
   }, [googleData, CLIENT_URL, SIGNIN_API]);
