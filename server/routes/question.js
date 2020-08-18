@@ -14,7 +14,7 @@ const {
 
 route.post('/', putQuestion);
 
-route.get('/random/:noIds', getRandom);
+route.get('/random', getRandom);
 
 route.get('/', getQuestion);
 

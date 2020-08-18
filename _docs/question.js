@@ -104,6 +104,24 @@
  *           date_added:"23-02-2009",
  *           difficulty:3
  *                    }]
+ *      getQuestionById:
+ *        type: object
+ *        properties:
+ *          message:
+ *            type: array
+ *            description: To get questions from their respective questionsIds
+ *        example:
+ *           message: [{
+ *           tags:['graph'],
+ *           time_limit:1,
+ *           source_limit:50000,
+ *           question_title:"Life, the Universe, and Everything",
+ *           problem_code:"test",
+ *           description:"Your program is to use the brute-force approach in order to find the A...",
+ *           author:"admin",
+ *           date_added:"23-02-2009",
+ *           difficulty:3
+ *                    }]
  *      deleteQuestion:
  *        type: object
  *        properties:
@@ -122,6 +140,18 @@
  *          message:
  *            type: array
  *            description: Update a question by ID
+ *      getRandom:
+ *        type: object
+ *        properties:
+ *          message:
+ *            type: array
+ *            description: To get n random question IDs
+ *        example:
+ *           message: [
+ *           "5f32a127c5e5b2da2163957c",
+ *           "5f3374e499b995216f0aece4",
+ *           "5f3374dc99b995216f0aece3"
+ *                     ]
  *      Error:
  *        type: object
  *        properties:
@@ -169,16 +199,23 @@
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/Error'
- *    delete:
- *      summary: delete all questions
+ *  /question/getQById/:
+ *    post:
+ *      summary: Get questions by Id
  *      tags: [Question]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/getQuestionById'
  *      responses:
  *        "200":
- *          description: delete all questions
+ *          description: Return the questions of the questionIds
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/deleteQuestion'
+ *                $ref: '#/components/schemas/getQuestionById'
  *        "401":
  *          description: Client mistake
  *          content:
@@ -218,6 +255,23 @@
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/patchQuestionById'
+ *        "401":
+ *          description: Client mistake
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
+ *  /question/random/:
+ *    get:
+ *      summary: Get n random question Ids
+ *      tags: [Question]
+ *      responses:
+ *        "200":
+ *          description: get n random questionIds
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/getRandom'
  *        "401":
  *          description: Client mistake
  *          content:
