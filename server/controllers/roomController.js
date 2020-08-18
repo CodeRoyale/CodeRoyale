@@ -201,7 +201,7 @@ const createTeam = ({ userName, team_name }, socket) => {
   return false;
 };
 
-const joinTeam = ({ userName, team_name }) => {
+const joinTeam = ({ userName, team_name }, scoket) => {
   const user = getUser(userName),
     room = rooms[user.room_id];
   // only run if user and room exits and user is in that room
