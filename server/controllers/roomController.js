@@ -233,14 +233,14 @@ const joinTeam = ({ userName, team_name }, socket) => {
 };
 
 const leaveTeam = ({ userName }, socket) => {
-  const user = getUser(userName);
+  const { room_id, team_name } = getUser(userName);
   // check if in a room and in a team
-  if (user.room_id && user.team_name) {
-    let newTeam = rooms[user.room_id].teams[user.team_name].filter(
+  if (room_id && team_name) {
+    let newTeam = rooms[room_id].teams[team_name].filter(
       (ele) => ele !== userName
     );
-    rooms[user.room_id].teams[user.team_name] = newTeam;
-    rooms[user.room_id].state.bench.push(userName);
+    rooms[room_id].teams[team_name] = newTeam;
+    rooms[room_id].state.bench.push(userName);
     setTeam(userName, "");
 
     // tell eveyone
