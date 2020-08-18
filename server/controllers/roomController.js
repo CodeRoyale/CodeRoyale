@@ -240,7 +240,7 @@ const leaveTeam = ({ userName }) => {
       (ele) => ele !== userName
     );
     rooms[user.room_id].teams[user.team_name] = newTeam;
-    rooms[user.room_id].bench.push(userName);
+    rooms[user.room_id].state.bench.push(userName);
     setTeam(userName, "");
 
     // tell eveyone
