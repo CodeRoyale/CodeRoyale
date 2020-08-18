@@ -5,8 +5,8 @@
   --width-team-card: calc(
     var(--width-team-member-card) + 3 * var(--margin-team-member-card)
   );
-  --border-shadow-card: 0 2px 5px 0 rgba(0, 0, 0, 0.2),
-    0 2px 3px 0 rgba(0, 0, 0, 0.19);
+  --width-left-section: 23%;
+  --border-shadow-card: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
 .room {
@@ -15,32 +15,49 @@
   background-color: #f5f8f8;
 }
 
-.room-team-display-container {
+.room-body {
+  display: flex;
+  flex: 2;
+}
+
+.room-left-section {
+  background-color: white;
+  box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.2);
+  width: var(--width-left-section);
+}
+
+.room-line {
+  border: solid gray 1.5px;
+  opacity: 0.8;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.room-right-section {
   display: flex;
   flex-wrap: wrap;
+  width: calc(100% - var(--width-left-section));
 }
 
 /*CreateTeamView.css*/
 .create-team-container {
-  margin: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 10px;
+  text-align: center;
 }
-.create-team-input-container {
-  margin-right: 5px;
+.create-team-text {
+  font-size: medium;
 }
 .create-team-input {
   border: black solid 1px;
   border-radius: 2px;
-  width: 180px;
+  width: 100%;
   height: 28px;
 }
 .create-team-input:focus {
   outline: none;
 }
 .create-team-submit-container {
-  margin-left: 5px;
+  margin: 10px;
 }
 
 /*TeamMemberCard.css*/
@@ -142,4 +159,20 @@
 
 .team-card-team-name-container:hover .team-card-team-name-close-button {
   opacity: 1;
+}
+
+/*CopyRoomCodeView.css*/
+.copy-room-code {
+  text-align: center;
+  margin: 10px;
+}
+.copy-room-code-text {
+  font-size: medium;
+}
+.copy-room-code-room_id {
+  font-size: 16px;
+  background-color: #f5f8f8;
+}
+.copy-room-code-button {
+  margin: 10px;
 }

@@ -4,6 +4,7 @@ import { Redirect } from 'react-router';
 import NavBar from '../../components/navBar/NavBar';
 import CreateTeamView from './CreateTeamView';
 import TeamCard from './TeamCard';
+import CopyRoomCodeView from './CopyRoomCodeView';
 
 function RoomMain(props) {
   // TODO: pass the data object from CreatTeamView.js....
@@ -51,10 +52,17 @@ function RoomMain(props) {
         <NavBar />
       </div>
       <div className='room-body'>
-        <div className='room-create-team-container'>
-          <CreateTeamView socket={socket} room_id={room_id} />
+        <div className='room-left-section'>
+          <div className='room-copy-code'>
+            <CopyRoomCodeView room_id='mayur' />
+          </div>
+          <div className='room-line'></div>
+          <div className='room-create-team'>
+            <CreateTeamView socket={socket} room_id={room_id} />
+          </div>
+          <div className='room-line'></div>
         </div>
-        <div className='room-team-display-container'>{team_cards}</div>
+        <div className='room-right-section'>{team_cards}</div>
       </div>
     </div>
   );
