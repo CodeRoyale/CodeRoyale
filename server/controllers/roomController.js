@@ -215,6 +215,13 @@ const joinTeam = ({ userName, team_name }, socket) => {
       //ditch prev team
       return false;
     }
+
+    // remove from bench
+    let newBench = rooms[user.room_id].state.bench.filter(
+      (ele) => ele != userName
+    );
+    rooms[user.room_id].state.bench = newBench;
+
     //in new team
     rooms[user.room_id].teams[team_name].push(userName);
     setTeam(userName, team_name);
