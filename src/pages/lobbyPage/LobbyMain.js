@@ -6,18 +6,12 @@ import { Redirect } from 'react-router';
 import profileData from '../../utils/examples';
 
 const LobbyMain = () => {
-  const accessToken = () => {
-    let ac = localStorage.getItem('access-token');
-    if (ac === null) {
-      return false;
-    } else {
-      return true;
-    }
-  };
+  const accessToken = localStorage.getItem('access-token');
+  if (accessToken === null) {
+    return <Redirect to='/' />;
+  }
 
-  const isLoggedIn = accessToken ? true : false;
-
-  let content = (
+  return (
     <div className='lobby'>
       <div className='lobby-header'>
         <NavBar />
@@ -30,11 +24,6 @@ const LobbyMain = () => {
       </div>
     </div>
   );
-
-  if (!isLoggedIn) {
-    content = <Redirect to='/' />;
-  }
-  return content;
 };
 
 export default LobbyMain;

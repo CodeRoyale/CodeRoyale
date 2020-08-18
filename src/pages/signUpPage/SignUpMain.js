@@ -3,17 +3,21 @@ import './SignUpMain.css';
 import LeftSecSignUp from './LeftSecSignUp';
 import SignUpSec from './SignUpSec';
 import { message } from 'antd';
+import { Redirect } from 'react-router';
 
 const SignUpMain = () => {
   const [googleData, setGoogleData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSignedUp, setIsSignedUp] = useState(false);
   const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
   const SIGNUP_API = `${process.env.REACT_APP_SERVER_URL}/users/signup`;
 
+  // Message to user for signup error
   const signUpError = (msg) => {
     message.error(msg);
   };
 
+  // Message to user for signup successs
   const signUpSuccess = (msg) => {
     message.success(msg);
   };
@@ -22,8 +26,8 @@ const SignUpMain = () => {
     setGoogleData(data);
   };
 
+  // API call to signup API
   useEffect(() => {
-    // Send to CodeRoyale API for signing up
     if (googleData != null) {
       setIsLoading(true);
       let headers = new Headers();
@@ -51,29 +55,38 @@ const SignUpMain = () => {
             signUpSuccess(
               'User account has been created successfully. Please login to use CodeRoyale!'
             );
+            setIsSignedUp(true);
           } else if (jsonRes.message === 'User Already Exists') {
             signUpError(
               'Sorry, email already exists please sign up with a different email!'
             );
+            setIsSignedUp(false);
           } else {
             signUpError('Sorry, couldnt sign up. Please try again!');
+            setIsSignedUp(false);
           }
         })
         .catch((err) => {
           setIsLoading(false);
-          setGoogleData(null);
+          setIsSignedUp(false);
           // Error response from server
           signUpError('Sorry, couldnt sign up. Please try again later!');
         });
     }
   }, [googleData, CLIENT_URL, SIGNUP_API]);
 
-  return (
+  // Default content
+  let content = (
     <div className='signup-page'>
       <LeftSecSignUp />
       <SignUpSec isLoading={isLoading} getGoogleData={handleGoogleData} />
     </div>
   );
+
+  if (isSignedUp) {
+    content = <Redirect to='/' />;
+  }
+  return content;
 };
 
 export default SignUpMain;

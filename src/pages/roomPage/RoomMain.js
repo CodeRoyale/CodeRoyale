@@ -21,16 +21,10 @@ const RoomMain = () => {
   // console.log('Room Created with room id: ' + room_id);
 
   // Checking if the user is logged-in...
-  const accessToken = () => {
-    let ac = localStorage.getItem('access-token');
-    if (ac === null) {
-      return false;
-    } else {
-      return true;
-    }
-  };
-
-  const isLoggedIn = accessToken ? true : false;
+  const accessToken = localStorage.getItem('access-token');
+  if (accessToken === null) {
+    return <Redirect to='/' />;
+  }
 
   //Example data....
   const socket = null;
@@ -51,7 +45,7 @@ const RoomMain = () => {
     );
   }
 
-  let content = (
+  return (
     <div className='room'>
       <div className='room-header'>
         <NavBar />
@@ -64,12 +58,6 @@ const RoomMain = () => {
       </div>
     </div>
   );
-
-  if (!isLoggedIn) {
-    content = <Redirect to='/' />;
-  }
-
-  return content;
 };
 
 export default RoomMain;

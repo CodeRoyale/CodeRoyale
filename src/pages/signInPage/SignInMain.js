@@ -8,15 +8,17 @@ import { Redirect } from 'react-router';
 
 const SignInMain = () => {
   const [googleData, setGoogleData] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
   const SIGNIN_API = `${process.env.REACT_APP_SERVER_URL}/users/login`;
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // Message to user for sign in error
   const signInError = (msg) => {
     message.error(msg);
   };
 
+  // Message to user for sign in success
   const signInSuccess = (msg) => {
     message.success(msg);
   };
@@ -25,6 +27,7 @@ const SignInMain = () => {
     setGoogleData(data);
   };
 
+  // API call to signin API
   useEffect(() => {
     if (googleData != null) {
       setIsLoading(true);
@@ -45,37 +48,31 @@ const SignInMain = () => {
         .then((res) => res.json())
         .then((jsonRes) => {
           // Success response from server
+          setIsLoading(false);
           if (jsonRes.message === 'Login successful') {
-            setIsLoading(false);
-            setGoogleData(null);
-            signInSuccess('Welcome back!');
-            setIsLoggedIn(true);
             localStorage.setItem('user-data', JSON.stringify(jsonRes));
             localStorage.setItem('access-token', jsonRes.accessToken);
+            setIsLoggedIn(true);
+            signInSuccess('Welcome back!');
           } else if (jsonRes.message === "User Doesn't Exists") {
-            setIsLoading(false);
-            setGoogleData(null);
             setIsLoggedIn(false);
             signInError(
               'Sorry, you will need to sign up first to use CodeRoyale'
             );
           } else {
-            setIsLoading(false);
-            setGoogleData(null);
             setIsLoggedIn(false);
             signInError("Sorry, couldn't login please try again later!");
           }
         })
         .catch((err) => {
           // Error response from server
-          setIsLoading(false);
-          setGoogleData(null);
           setIsLoggedIn(false);
           signInError("Sorry, couldn't login please try again later!");
         });
     }
   }, [googleData, CLIENT_URL, SIGNIN_API]);
 
+  // Default content
   let content = (
     <div className='signin-page'>
       <LeftSecSignIn />
@@ -83,8 +80,9 @@ const SignInMain = () => {
     </div>
   );
 
+  // Check if user if logged in
   if (isLoggedIn) {
-    content = <Redirect to='/sorry' />;
+    content = <Redirect to='/dashboard' />;
   }
 
   return content;

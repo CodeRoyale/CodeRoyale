@@ -7,18 +7,12 @@ import Solution from './Solution';
 import { Redirect } from 'react-router';
 
 const ArenaMain = () => {
-  const accessToken = () => {
-    let ac = localStorage.getItem('access-token');
-    if (ac === null) {
-      return false;
-    } else {
-      return true;
-    }
-  };
+  const accessToken = localStorage.getItem('access-token');
+  if (accessToken === null) {
+    return <Redirect to='/' />;
+  }
 
-  const isLoggedIn = accessToken ? true : false;
-
-  let content = (
+  return (
     <div className='arena-page'>
       <div>
         <NavBar />
@@ -36,12 +30,6 @@ const ArenaMain = () => {
       </div>
     </div>
   );
-
-  if (!isLoggedIn) {
-    content = <Redirect to='/' />;
-  }
-
-  return content;
 };
 
 export default ArenaMain;

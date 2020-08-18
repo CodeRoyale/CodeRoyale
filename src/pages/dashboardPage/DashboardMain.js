@@ -5,24 +5,17 @@ import NavBar from '../../components/navBar/NavBar';
 import { Redirect } from 'react-router';
 
 const DashboardMain = () => {
-  const accessToken = () => {
-    let ac = localStorage.getItem('access-token');
-    if (ac === null) {
-      return false;
-    } else {
-      return true;
-    }
-  };
+  const accessToken = localStorage.getItem('access-token');
+  if (accessToken === null) {
+    return <Redirect to='/' />;
+  }
 
-  const isLoggedIn = accessToken ? true : false;
-
+  // TODO: Redirect to lobbby
   const lobbyRedirect = () => {
-    this.props.history.push({
-      pathname: `/lobby`,
-    });
+    console.log('NEED TO FIX');
   };
 
-  let content = (
+  return (
     <div className='dashboard'>
       <div className='dashboard-header'>
         <NavBar />
@@ -86,11 +79,6 @@ const DashboardMain = () => {
       <div className='dashboard-footer'></div>
     </div>
   );
-
-  if (!isLoggedIn) {
-    content = <Redirect to='/' />;
-  }
-  return content;
 };
 
 export default DashboardMain;
