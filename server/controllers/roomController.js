@@ -209,7 +209,7 @@ const joinTeam = ({ userName, team_name }) => {
   if (
     room &&
     room.teams[team_name] &&
-    room.teams[team_name].length < room.max_perTeam
+    room.teams[team_name].length < room.config.max_perTeam
   ) {
     if (user.team_name) {
       //ditch prev team
