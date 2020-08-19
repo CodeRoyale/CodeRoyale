@@ -51,20 +51,16 @@ const RoomMain = (props) => {
     return <Redirect to='/' />;
   }
 
-  //Example data....
-  const data = {
-    team1: ['Mayur', 'Anugya'],
-    team2: ['Alan', 'joel'],
-    team3: ['Justin'],
-    team4: ['Donald', 'Chirag', 'Sachin', 'Sanith', 'Rahul'],
-    team5: ['Sawarni', 'Swaroop'],
-  };
-
   // Setting Team Cards...
   let team_cards = [];
-  for (var team_name in data) {
+  for (var team_name in teams) {
     team_cards.push(
-      <TeamCard key={team_name} team_name={team_name} team={data[team_name]} />
+      <TeamCard
+        key={team_name}
+        team_name={team_name}
+        team={teams[team_name]}
+        socket={socket}
+      />
     );
   }
 
@@ -76,7 +72,7 @@ const RoomMain = (props) => {
       <div className='room-body'>
         <div className='room-left-section'>
           <div className='room-copy-code'>
-            <CopyRoomCodeView room_id='mayur' />
+            <CopyRoomCodeView room_id={room_id} />
           </div>
 
           <div className='room-create-team'>

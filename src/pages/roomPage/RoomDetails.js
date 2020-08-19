@@ -21,11 +21,11 @@ function RoomDetails({ config, state, teams }) {
     max_perTeam = config.max_perTeam;
     privateRoom = config.privateRoom;
     max_teams = config.max_teams;
-    playersRoom = state.bench.length;
     teamsNumber = Object.keys(teams).length;
     for (let key in teams) {
       playersTeam += teams[key].length;
     }
+    playersRoom = state.bench.length + playersTeam;
   }
   return (
     <div className='room-details'>
