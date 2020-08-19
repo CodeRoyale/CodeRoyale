@@ -6,6 +6,7 @@ import CreateTeamView from './CreateTeamView';
 import TeamCard from './TeamCard';
 import CopyRoomCodeView from './CopyRoomCodeView';
 import RoomDetails from './RoomDetails';
+import CloseRoomView from './CloseRoomView';
 import ERROR_MSG from '../../utils/constants';
 
 const RoomMain = (props) => {
@@ -84,6 +85,9 @@ const RoomMain = (props) => {
 
           <div className='room-details-container'>
             <RoomDetails config={config} state={state} teams={teams} />
+          </div>
+          <div className='room-details-close-room-container'>
+            <CloseRoomView socket={socket} />
           </div>
         </div>
         <div className='room-right-section'>{team_cards}</div>

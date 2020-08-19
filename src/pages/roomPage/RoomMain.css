@@ -203,3 +203,16 @@
 .room-details-right-section {
   text-align: center;
 }
+
+/*CloseRoomView.css*/
+.close-room-view {
+  margin: 15px;
+}
+.close-room-view-text {
+  font-size: medium;
+  text-align: center;
+}
+.close-room-view-button {
+  margin: 10px;
+  text-align: center;
+}

@@ -34,108 +34,110 @@ function RoomDetails({ config, state, teams }) {
       </div>
       <div className='room-details-section'>
         <table>
-          <tr>
-            <td>
-              <div className='room-details-left-section'>Room Admin:</div>
-            </td>
-            <td>
-              <div className='room-details-right-section'>
-                <b>{admin}</b>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div className='room-details-left-section'>
-                No. of players in room:{' '}
-              </div>
-            </td>
-            <td>
-              <div className='room-details-right-section'>
-                <b>{playersRoom}</b>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div className='room-details-left-section'>
-                Max players in room:{' '}
-              </div>
-            </td>
-            <td>
-              <div className='room-details-right-section'>
-                <b>{max_perRoom}</b>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div className='room-details-left-section'>
-                No. of players in teams:{' '}
-              </div>
-            </td>
-            <td>
-              <div className='room-details-right-section'>
-                <b>{playersTeam}</b>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div className='room-details-left-section'>
-                Max players per team:{' '}
-              </div>
-            </td>
-            <td>
-              <div className='room-details-right-section'>
-                <b>{max_perTeam}</b>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div className='room-details-left-section'>
-                No. of players left to join team:
-              </div>
-            </td>
-            <td>
-              <div className='room-details-right-section'>
-                <b>{playersRoom - playersTeam}</b>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div className='room-details-left-section'>No. of teams: </div>
-            </td>
-            <td>
-              <div className='room-details-right-section'>
-                <b>{teamsNumber}</b>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div className='room-details-left-section'>
-                Max no. of teams:{' '}
-              </div>
-            </td>
-            <td>
-              <div className='room-details-right-section'>
-                <b>{max_teams}</b>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div className='room-details-left-section'>Private Room: </div>
-            </td>
-            <td>
-              <div className='room-details-right-section'>
-                <b>{privateRoom ? 'Yes' : 'No'}</b>
-              </div>
-            </td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>
+                <div className='room-details-left-section'>Room Admin:</div>
+              </td>
+              <td>
+                <div className='room-details-right-section'>
+                  <b>{admin}</b>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div className='room-details-left-section'>
+                  No. of players in room:{' '}
+                </div>
+              </td>
+              <td>
+                <div className='room-details-right-section'>
+                  <b>{playersRoom}</b>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div className='room-details-left-section'>
+                  Max players in room:{' '}
+                </div>
+              </td>
+              <td>
+                <div className='room-details-right-section'>
+                  <b>{max_perRoom}</b>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div className='room-details-left-section'>
+                  No. of players in teams:{' '}
+                </div>
+              </td>
+              <td>
+                <div className='room-details-right-section'>
+                  <b>{playersTeam}</b>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div className='room-details-left-section'>
+                  Max players per team:{' '}
+                </div>
+              </td>
+              <td>
+                <div className='room-details-right-section'>
+                  <b>{max_perTeam}</b>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div className='room-details-left-section'>
+                  No. of players left to join team:
+                </div>
+              </td>
+              <td>
+                <div className='room-details-right-section'>
+                  <b>{playersRoom - playersTeam}</b>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div className='room-details-left-section'>No. of teams: </div>
+              </td>
+              <td>
+                <div className='room-details-right-section'>
+                  <b>{teamsNumber}</b>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div className='room-details-left-section'>
+                  Max no. of teams:{' '}
+                </div>
+              </td>
+              <td>
+                <div className='room-details-right-section'>
+                  <b>{max_teams}</b>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div className='room-details-left-section'>Private Room: </div>
+              </td>
+              <td>
+                <div className='room-details-right-section'>
+                  <b>{privateRoom ? 'Yes' : 'No'}</b>
+                </div>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
