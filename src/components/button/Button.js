@@ -6,10 +6,11 @@ const STYLES = [
   'btn--primary--normal',
   'btn--primary--logout',
   'btn--primary--signin',
+  'btn--primary--circle',
 ];
 
 // All sizes available for button
-const SIZES = ['btn--small', 'btn--medium', 'btn--large'];
+const SIZES = ['btn--small', 'btn--medium', 'btn--large', 'btn--extra--large'];
 
 function Button({ children, type, onClick, buttonStyle, buttonSize }) {
   // Check if button style passed in props is valid

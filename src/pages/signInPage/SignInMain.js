@@ -3,7 +3,6 @@ import LeftSecSignIn from './LeftSecSignIn';
 import SignInSec from './SignInSec';
 import './SignInMain.css';
 import { message } from 'antd';
-import 'antd/dist/antd.css';
 import { Redirect } from 'react-router';
 
 const SignInMain = () => {

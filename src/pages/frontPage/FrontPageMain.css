@@ -1,14 +1,13 @@
 .front-page {
   margin: auto;
   height: 100%;
-  background-color: #f5f8f8;
 }
 
-/* Description container css */
-.desc-container {
+/* Description container head css */
+.desc-container-head {
   display: flex;
-  padding: 20px;
-  width: 90%;
+  padding: 20px 90px;
+  background-color: #fcede8;
   margin: auto;
 }
 
@@ -27,12 +26,91 @@
 }
 
 .desc-heading {
+  font-family: 'Roboto', sans-serif;
   margin-bottom: 16px;
-  font-size: 43px;
+  font-size: 60px;
   font-weight: bold;
 }
 
 .desc-text {
+  font-family: 'Roboto', sans-serif;
   margin-bottom: 20px;
   font-size: 22px;
+}
+
+/* Description container what is coderoyale css */
+.desc-container-what {
+  padding: 120px 380px;
+}
+
+.desc-what {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 40px;
+  text-align: center;
+}
+
+.desc-what-text {
+  margin-top: 25px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.desc-what-image {
+  width: 350px;
+  height: 350px;
+  display: block;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Description container how does it work css */
+.desc-container-how {
+  display: flex;
+  padding: 100px 200px;
+  background-color: #fcede8;
+  margin: auto;
+}
+
+.desc-how-image {
+  width: 500px;
+  height: 500px;
+  margin: auto;
+}
+
+.desc-how {
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 16px;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.desc-how-text {
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 20px;
+  line-height: 2;
+  font-size: 20px;
+}
+
+/* Description container sign up now css */
+.desc-container-sign-up {
+  padding: 100px 380px;
+}
+
+.desc-sign-up {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 50px;
+  text-align: center;
+}
+
+span {
+  color: #dd2c00;
+}
+
+.desc-sign-up-btn {
+  margin-top: 25px;
 }

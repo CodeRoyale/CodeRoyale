@@ -1,7 +1,6 @@
 import React from 'react';
 import GoogleSignIn from '../../components/googleSignIn/GoogleSignIn';
 import { Link } from 'react-router-dom';
-import 'antd/dist/antd.css';
 import './SignInMain.css';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
