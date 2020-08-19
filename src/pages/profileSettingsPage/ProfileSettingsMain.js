@@ -1,34 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './ProfileSettingsMain.css';
 import SettingsBody from './SettingsBody';
 import NavBar from '../../components/navBar/NavBar';
 import { Redirect } from 'react-router-dom';
 
-class ProfileSettingsMain extends Component {
-  constructor(props) {
-    super(props);
-    const accessToken = localStorage.getItem('access-token');
-    let loggedIn = true;
-    if (accessToken === null) {
-      loggedIn = false;
-    }
-    this.state = {
-      loggedIn,
-    };
+const ProfileSettingsMain = () => {
+  const accessToken = localStorage.getItem('access-token');
+  if (accessToken === null) {
+    return <Redirect to='/' />;
   }
-  render() {
-    if (!this.state.loggedIn) {
-      return <Redirect to='/' />;
-    }
-    return (
-      <div className='profile-settings'>
-        <NavBar />
-        <div className='settings-body-container'>
-          <SettingsBody />
-        </div>
+
+  return (
+    <div className='profile-settings'>
+      <NavBar />
+      <div className='settings-body-container'>
+        <SettingsBody />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default ProfileSettingsMain;
