@@ -8,7 +8,7 @@ class GoogleSignIn extends Component {
   // This function is called on successful login from google...
   responseSuccess = (response) => {
     // Send data to SignUpSec.js props
-    this.props.sendGoogleData(response);
+    this.props.getGoogleData(response);
   };
 
   render() {

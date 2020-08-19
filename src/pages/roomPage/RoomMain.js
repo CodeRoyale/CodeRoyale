@@ -7,7 +7,7 @@ import TeamCard from './TeamCard';
 import CopyRoomCodeView from './CopyRoomCodeView';
 import RoomDetails from './RoomDetails';
 
-function RoomMain(props) {
+const RoomMain = () => {
   // TODO: pass the data object from CreatTeamView.js....
   // TODO: Have to implement, what happens if the user goes to create page again....
   // TODO: Create Copy-to-clipboard...
@@ -70,6 +70,6 @@ function RoomMain(props) {
       </div>
     </div>
   );
-}
+};
 
 export default RoomMain;
