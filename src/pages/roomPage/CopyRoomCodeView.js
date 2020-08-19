@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import Button from '../../components/button/Button';
+import { Menu, Dropdown } from 'antd';
 
 function CopyRoomCodeView({ room_id }) {
   const copyTextRef = useRef(null);
@@ -11,24 +11,27 @@ function CopyRoomCodeView({ room_id }) {
     document.execCommand('copy');
     window.getSelection().removeAllRanges();
   };
+  const menu = (
+    <Menu className='copy-room-code-menu'>
+      <Menu.Item className='copy-room-code-menu-item'>
+        <div onClick={onClickCopyToClipboard}>Copy to Clipboard</div>
+      </Menu.Item>
+    </Menu>
+  );
   return (
     <div className='copy-room-code'>
       <div className='copy-room-code-text'>
         <b>Room Code</b>
       </div>
-      <div ref={copyTextRef} className='copy-room-code-room_id'>
-        {room_id}
-      </div>
-      <div className='copy-room-code-button'>
-        <Button
-          type='button'
-          buttonStyle='btn--primary--normal'
-          buttonSize='btn--medium'
+      <Dropdown overlay={menu} placement='bottomCenter'>
+        <div
           onClick={onClickCopyToClipboard}
+          ref={copyTextRef}
+          className='copy-room-code-room_id'
         >
-          Copy to Clipboard
-        </Button>
-      </div>
+          {room_id}
+        </div>
+      </Dropdown>
     </div>
   );
 }

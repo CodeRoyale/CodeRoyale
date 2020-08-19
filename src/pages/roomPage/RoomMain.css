@@ -27,10 +27,11 @@
 }
 
 .room-line {
-  border: solid gray 1.5px;
-  opacity: 0.8;
-  margin-left: 5px;
-  margin-right: 5px;
+  border: solid gray 0.5px;
+  opacity: 0.3;
+  margin-right: 2.5px;
+  margin-left: 2.5px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.7);
 }
 
 .room-right-section {
@@ -171,8 +172,26 @@
 }
 .copy-room-code-room_id {
   font-size: 16px;
-  background-color: #f5f8f8;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  cursor: pointer;
 }
-.copy-room-code-button {
+.copy-room-code-menu-item {
+  color: white;
+  background-color: black;
+  text-align: center;
+}
+
+.copy-room-code-menu-item:hover {
+  background-color: black;
+}
+
+/*RoomDetails.css*/
+.room-details {
   margin: 10px;
+  font-size: 14.5px;
+}
+.room-details-heading {
+  text-align: center;
+  font-size: medium;
 }

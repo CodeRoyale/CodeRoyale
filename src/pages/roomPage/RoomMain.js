@@ -5,6 +5,7 @@ import NavBar from '../../components/navBar/NavBar';
 import CreateTeamView from './CreateTeamView';
 import TeamCard from './TeamCard';
 import CopyRoomCodeView from './CopyRoomCodeView';
+import RoomDetails from './RoomDetails';
 
 function RoomMain(props) {
   // TODO: pass the data object from CreatTeamView.js....
@@ -12,14 +13,14 @@ function RoomMain(props) {
   // TODO: Create Copy-to-clipboard...
 
   // Checking if the socket and room_id are not null...
-  // if (props.location.props === undefined) {
-  //   return <Redirect to='/lobby' />;
-  // }
+  if (props.location.props === undefined) {
+    return <Redirect to='/lobby' />;
+  }
 
   // Initializations....
-  // const socket = props.location.props.socket;
-  // const room_id = props.location.props.room_id;
-  // console.log('Room Created with room id: ' + room_id);
+  const socket = props.location.props.socket;
+  const room_id = props.location.props.room_id;
+  console.log('Room Created with room id: ' + room_id);
 
   // Checking if the user is logged-in...
   const accessToken = localStorage.getItem('access-token');
@@ -28,13 +29,13 @@ function RoomMain(props) {
   }
 
   //Example data....
-  const socket = null;
-  const room_id = null;
+  // const socket = null;
+  // const room_id = null;
   const data = {
     team1: ['Mayur', 'Anugya'],
     team2: ['Alan', 'joel'],
     team3: ['Justin'],
-    team4: ['Donald', 'Chirag', 'Sachin', 'Sanith'],
+    team4: ['Donald', 'Chirag', 'Sachin', 'Sanith', 'Rahul'],
     team5: ['Sawarni', 'Swaroop'],
   };
 
@@ -56,11 +57,14 @@ function RoomMain(props) {
           <div className='room-copy-code'>
             <CopyRoomCodeView room_id='mayur' />
           </div>
-          <div className='room-line'></div>
+
           <div className='room-create-team'>
             <CreateTeamView socket={socket} room_id={room_id} />
           </div>
-          <div className='room-line'></div>
+
+          <div className='room-details-container'>
+            <RoomDetails />
+          </div>
         </div>
         <div className='room-right-section'>{team_cards}</div>
       </div>
