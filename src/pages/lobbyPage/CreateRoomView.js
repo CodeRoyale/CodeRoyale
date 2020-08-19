@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './LobbyMain.css';
 import Button from '../../components/button/Button';
 import { Redirect } from 'react-router';
+import ERROR_MSG from '../../utils/constants';
 
 function CreateRoomView({ socket }) {
-  const errorMessage = 'Some error occured !';
   const [generateClicked, setGenerateClicked] = useState(false);
   const [room_id, setRoomId] = useState('');
   const [roomCreated, setRoomCreated] = useState(false);
@@ -29,7 +29,7 @@ function CreateRoomView({ socket }) {
         'CREATE_ROOM',
         { max_teams, max_perTeam, max_perRoom, timeLimit, privateRoom },
         (data) => {
-          if (data !== errorMessage) {
+          if (data !== ERROR_MSG) {
             setRoomId(data.config.id);
             setRoomCreated(true);
           }

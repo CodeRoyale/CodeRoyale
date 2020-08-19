@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './RoomMain.css';
 import { Redirect } from 'react-router';
 import NavBar from '../../components/navBar/NavBar';
@@ -6,11 +6,34 @@ import CreateTeamView from './CreateTeamView';
 import TeamCard from './TeamCard';
 import CopyRoomCodeView from './CopyRoomCodeView';
 import RoomDetails from './RoomDetails';
+import ERROR_MSG from '../../utils/constants';
 
 const RoomMain = (props) => {
-  // TODO: pass the data object from CreatTeamView.js....
   // TODO: Have to implement, what happens if the user goes to create page again....
-  // TODO: Create Copy-to-clipboard...
+  let socket = null;
+  let room_id = null;
+  let config = null;
+  let state = null;
+  let teams = null;
+  const [roomData, setRoomData] = useState(null);
+
+  // Getting Room Datas...
+  useEffect(() => {
+    if (socket !== null) {
+      socket.emit('GET_ROOM', { room_id }, (data) => {
+        if (data !== ERROR_MSG && roomData === null) {
+          setRoomData(data);
+        }
+      });
+    }
+  });
+
+  // Setting up config for display in room details....
+  if (roomData !== null) {
+    config = roomData.config;
+    state = roomData.state;
+    teams = roomData.teams;
+  }
 
   // Checking if the socket and room_id are not null...
   if (props.location.props === undefined) {
@@ -18,9 +41,8 @@ const RoomMain = (props) => {
   }
 
   // Initializations....
-  const socket = props.location.props.socket;
-  const room_id = props.location.props.room_id;
-  console.log('Room Created with room id: ' + room_id);
+  socket = props.location.props.socket;
+  room_id = props.location.props.room_id;
 
   // Checking if the user is logged-in...
   const accessToken = localStorage.getItem('access-token');
@@ -29,8 +51,6 @@ const RoomMain = (props) => {
   }
 
   //Example data....
-  // const socket = null;
-  // const room_id = null;
   const data = {
     team1: ['Mayur', 'Anugya'],
     team2: ['Alan', 'joel'],
@@ -63,7 +83,7 @@ const RoomMain = (props) => {
           </div>
 
           <div className='room-details-container'>
-            <RoomDetails />
+            <RoomDetails config={config} state={state} teams={teams} />
           </div>
         </div>
         <div className='room-right-section'>{team_cards}</div>

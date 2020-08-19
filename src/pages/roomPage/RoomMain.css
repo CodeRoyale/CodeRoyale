@@ -195,3 +195,11 @@
   text-align: center;
   font-size: medium;
 }
+.room-details-section {
+  display: flex;
+  flex: 2;
+}
+
+.room-details-right-section {
+  text-align: center;
+}
