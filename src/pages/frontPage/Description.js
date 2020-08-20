@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Button from '../../components/button/Button';
 import Footer from '../../components/footer/Footer';
 
-function Description() {
+const Description = () => {
   // Redirect to /signup
   const history = useHistory();
   const signUpRedirect = () => {
@@ -17,7 +17,7 @@ function Description() {
       <div className='desc-container-head'>
         <div className='desc-text-container'>
           <p className='desc-heading'>
-            A new way to compete in <span>coding</span>
+            A new way to compete in <span className='desc-span'>coding</span>
           </p>
           <p className='desc-text'>
             Challenge teams/individuals to a coding match today.
@@ -42,7 +42,7 @@ function Description() {
       </div>
       <div className='desc-container-what'>
         <p className='desc-what'>
-          What is <span>CodeRoyale?</span>
+          What is <span className='desc-span'>CodeRoyale?</span>
         </p>
         <p className='desc-what-text'>
           CodeRoyale is a competitive programming platform that lets coders from
@@ -57,7 +57,7 @@ function Description() {
       <div className='desc-container-how'>
         <div className='desc-text-container'>
           <p className='desc-how'>
-            How does it <span>work?</span>
+            How does it <span className='desc-span'>work?</span>
           </p>
           <p className='desc-how-text'>
             1. Create a room
@@ -80,7 +80,7 @@ function Description() {
       <div className='desc-container-sign-up'>
         <p className='desc-sign-up'>
           It takes only 1 min to sign up <br />
-          and <span>it's free!</span>
+          and <span className='desc-span'>it's free!</span>
         </p>
         <center>
           <div className='desc-sign-up-btn'>
@@ -98,6 +98,6 @@ function Description() {
       <Footer />
     </div>
   );
-}
+};
 
 export default Description;

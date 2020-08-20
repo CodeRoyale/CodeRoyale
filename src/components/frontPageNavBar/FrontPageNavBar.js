@@ -4,11 +4,11 @@ import './FrontPageNavBar.css';
 import Button from '../button/Button';
 import LogoContainer from '../logoContainer/LogoContainer';
 
-function FrontPageNavBar() {
+const FrontPageNavBar = () => {
   // Redirect to /signin
   const history = useHistory();
   const loginRedirect = () => {
-    let path = `signin`;
+    let path = `login`;
     history.push(path);
   };
 
@@ -43,12 +43,12 @@ function FrontPageNavBar() {
             buttonStyle='btn--primary--signin'
             buttonSize='btn--small'
           >
-            Sign in
+            Login
           </Button>
         </div>
       </header>
     </div>
   );
-}
+};
 
 export default FrontPageNavBar;

@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import LeftSecSignIn from './LeftSecSignIn';
-import SignInSec from './SignInSec';
-import './SignInMain.css';
+import LeftSecLogin from './LeftSecLogin';
+import LoginSec from './LoginSec';
+import './LoginMain.css';
 import { message } from 'antd';
 import { Redirect } from 'react-router';
 
-const SignInMain = () => {
+const LoginMain = () => {
   const [googleData, setGoogleData] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
-  const SIGNIN_API = `${process.env.REACT_APP_SERVER_URL}/users/login`;
+  const LOGIN_API = `${process.env.REACT_APP_SERVER_URL}/users/login`;
 
-  // Message to user for sign in error
-  const signInError = (msg) => {
+  // Message to user for login error
+  const loginError = (msg) => {
     message.error(msg);
   };
 
-  // Message to user for sign in success
-  const signInSuccess = (msg) => {
+  // Message to user for login success
+  const loginSuccess = (msg) => {
     message.success(msg);
   };
 
@@ -26,7 +26,7 @@ const SignInMain = () => {
     setGoogleData(data);
   };
 
-  // API call to signin API
+  // API call to login API
   useEffect(() => {
     if (googleData != null) {
       setIsLoading(true);
@@ -39,7 +39,7 @@ const SignInMain = () => {
         issuer: 'google',
         idToken: googleData.wc.id_token,
       };
-      fetch(SIGNIN_API, {
+      fetch(LOGIN_API, {
         method: 'POST',
         headers,
         body: JSON.stringify(thirdPartyData),
@@ -52,30 +52,30 @@ const SignInMain = () => {
             localStorage.setItem('user-data', JSON.stringify(jsonRes));
             localStorage.setItem('access-token', jsonRes.accessToken);
             setIsLoggedIn(true);
-            signInSuccess('Welcome back!');
+            loginSuccess('Welcome back!');
           } else if (jsonRes.message === "User Doesn't Exists") {
             setIsLoggedIn(false);
-            signInError(
+            loginError(
               'Sorry, you will need to sign up first to use CodeRoyale'
             );
           } else {
             setIsLoggedIn(false);
-            signInError("Sorry, couldn't login please try again later!");
+            loginError("Sorry, couldn't login please try again later!");
           }
         })
         .catch((err) => {
           // Error response from server
           setIsLoggedIn(false);
-          signInError("Sorry, couldn't login please try again later!");
+          loginError("Sorry, couldn't login please try again later!");
         });
     }
-  }, [googleData, CLIENT_URL, SIGNIN_API]);
+  }, [googleData, CLIENT_URL, LOGIN_API]);
 
   // Default content
   let content = (
-    <div className='signin-page'>
-      <LeftSecSignIn />
-      <SignInSec isLoading={isLoading} getGoogleData={handleGoogleData} />
+    <div className='login-page'>
+      <LeftSecLogin />
+      <LoginSec isLoading={isLoading} getGoogleData={handleGoogleData} />
     </div>
   );
 
@@ -87,4 +87,4 @@ const SignInMain = () => {
   return content;
 };
 
-export default SignInMain;
+export default LoginMain;

@@ -113,10 +113,11 @@
   text-align: center;
 }
 
-span {
-  color: var(--primary-color);
-}
-
 .desc-sign-up-btn {
   margin-top: 25px;
+}
+
+/* For span used in description */
+.desc-span {
+  color: var(--primary-color);
 }
