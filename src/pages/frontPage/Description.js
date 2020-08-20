@@ -2,6 +2,7 @@ import React from 'react';
 import './FrontPageMain.css';
 import { useHistory } from 'react-router-dom';
 import Button from '../../components/button/Button';
+import Footer from '../../components/footer/Footer';
 
 function Description() {
   // Redirect to /signup
@@ -15,7 +16,9 @@ function Description() {
     <div>
       <div className='desc-container-head'>
         <div className='desc-text-container'>
-          <p className='desc-heading'>A new way to compete in coding</p>
+          <p className='desc-heading'>
+            A new way to compete in <span>coding</span>
+          </p>
           <p className='desc-text'>
             Challenge teams/individuals to a coding match today.
           </p>
@@ -88,6 +91,7 @@ function Description() {
           </div>
         </center>
       </div>
+      <Footer />
     </div>
   );
 }
