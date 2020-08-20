@@ -9,14 +9,15 @@ const {
   SEND_MSG,
   LEAVE_TEAM,
   GET_ROOM,
-} = require("../socketActions/userActions");
+  ADD_PRIVATE_LIST,
+} = require('../socketActions/userActions');
 const {
   CONNECTION_ACK,
   CONNECTION_DENY,
-} = require("../socketActions/serverActions");
+} = require('../socketActions/serverActions');
 
 //import controllers
-const { addUser, removeUser } = require("../controllers/userController");
+const { addUser, removeUser } = require('../controllers/userController');
 const {
   createRoom,
   createTeam,
@@ -27,14 +28,15 @@ const {
   closeRoom,
   roomEligible,
   forwardMsg,
-} = require("../controllers/roomController");
+  addPrivateList,
+} = require('../controllers/roomController');
 
 // import utils
-const { getQuestions } = require("../utils/qapiConn");
+const { getQuestions } = require('../utils/qapiConn');
 
 const checkToken = (token) => {
   //just for testing will change later
-  if (token[0] !== "z") {
+  if (token[0] !== 'z') {
     return {
       userName: token,
     };
@@ -47,7 +49,7 @@ const authUser = (socket, next) => {
   try {
     // check the token
     // token format "Bearer Token"
-    const token = socket.handshake.headers.authorization.split(" ")[1];
+    const token = socket.handshake.headers.authorization.split(' ')[1];
     const payload = checkToken(token);
 
     //if sucessfull
@@ -59,12 +61,12 @@ const authUser = (socket, next) => {
         socket.userDetails = payload;
         next();
       } else {
-        throw new Error("Already Conected");
+        throw new Error('Already Conected');
       }
     } else {
-      console.log("Invalid token");
+      console.log('Invalid token');
       socket.emit(CONNECTION_DENY);
-      throw new Error("Auth failed");
+      throw new Error('Auth failed');
     }
   } catch (err) {
     socket.emit();
@@ -77,8 +79,8 @@ const authUser = (socket, next) => {
 const genericActionCreater = (
   actionResponder,
   socket,
-  failReply = "Some error occured !",
-  ACTION = ""
+  failReply = 'Some error occured !',
+  ACTION = ''
 ) => (config, cb) => {
   // only passes userName
   config.userName = socket.userDetails.userName;
@@ -110,6 +112,7 @@ const handleUserEvents = (socket) => {
   socket.on(SEND_MSG, genericActionCreater(forwardMsg, socket));
   socket.on(LEAVE_TEAM, genericActionCreater(leaveTeam, socket));
   socket.on(GET_ROOM, genericActionCreater(getRoomData, socket));
+  socket.on(ADD_PRIVATE_LIST, genericActionCreater(addPrivateList, socket));
   // admin wants to start the competition
   socket.on(START_COMPETITION, async (dataFromClient, cb) => {
     // check if room is eligible
@@ -131,7 +134,7 @@ const handleUserEvents = (socket) => {
 
       // add event listeners for code submit
       // this is just prototype
-      socket.on("CODE_SUBMIT", ({ code, lang }, cb) => {
+      socket.on('CODE_SUBMIT', ({ code, lang }, cb) => {
         // call codeExec api
         //wait for result
         // check output
@@ -142,7 +145,7 @@ const handleUserEvents = (socket) => {
     }
   });
 
-  socket.on("disconnect", () => {
+  socket.on('disconnect', () => {
     removeUser(socket.userDetails.userName);
   });
 };

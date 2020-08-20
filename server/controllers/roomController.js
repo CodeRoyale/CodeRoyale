@@ -1,5 +1,5 @@
-const { encryptData } = require("../utils/auth");
-const { setRoom, getUser, setTeam } = require("./userController");
+const { encryptData } = require('../utils/auth');
+const { setRoom, getUser, setTeam } = require('./userController');
 const {
   ROOM_UPDATED,
   RCV_MSG,
@@ -8,7 +8,8 @@ const {
   LEFT_TEAM,
   LEFT_ROOM,
   TEAM_CREATED,
-} = require("../socketActions/serverActions");
+  ADDED_PRIVATE_MEMBER,
+} = require('../socketActions/serverActions');
 
 // this is my db for now
 rooms = {};
@@ -108,7 +109,7 @@ const joinRoom = ({ userName, room_id, team_name }, socket) => {
       });
     } else {
       // else bench the user
-      team_name = "";
+      team_name = '';
       rooms[room_id].state.bench.push(userName);
     }
 
@@ -123,7 +124,7 @@ const joinRoom = ({ userName, room_id, team_name }, socket) => {
       type: JOINED_ROOM,
       data: { userName },
     });
-    console.log(userName, " joined from ", room_id);
+    console.log(userName, ' joined from ', room_id);
     return rooms[room_id];
   }
   return false;
@@ -163,8 +164,8 @@ const removeUserFromRoom = ({ userName }) => {
   rooms[room_id].state.cur_memCount -= 1;
 
   // tell others
-  console.log(userName, " removed from ", room_id);
-  setRoom(userName, "");
+  console.log(userName, ' removed from ', room_id);
+  setRoom(userName, '');
   socket.to(room_id).broadcast.emit(ROOM_UPDATED, {
     type: LEFT_ROOM,
     data: { userName },
@@ -248,7 +249,7 @@ const leaveTeam = ({ userName }, socket) => {
     );
     rooms[room_id].teams[team_name] = newTeam;
     rooms[room_id].state.bench.push(userName);
-    setTeam(userName, "");
+    setTeam(userName, '');
 
     // tell eveyone
     socket.leave(`${room_id}/${team_name}`);
@@ -278,7 +279,7 @@ const closeRoom = ({ userName }) => {
     allMembers.forEach((userName) => {
       // this is a server action notify all
       // TODO --> add kick all and remove functions for sockets
-      setRoom(userName, "");
+      setRoom(userName, '');
     });
 
     // delete the stupid room
@@ -292,14 +293,31 @@ const closeRoom = ({ userName }) => {
 
 const banMember = ({ room_id }) => {};
 
-const addPrivateList = ({ room_id }) => {
-  // only private rooms can have rivate lists
+const addPrivateList = ({ userName, privateList }, socket) => {
+  // only private rooms can have private lists
+  let user = getUser(userName);
+  room = rooms[user.room_id];
+  room_id = user.room_id;
+
+  if (room && room.admin === user.userName && room.config.privateRoom) {
+    privateList.forEach((ele) => {
+      if (!room.state.privateList.includes(ele)) {
+        rooms[room_id].state.privateList.push(ele);
+      }
+    });
+    socket.to(room_id).broadcast.emit(ROOM_UPDATED, {
+      type: ADDED_PRIVATE_MEMBER,
+      data: { privateList: rooms[room_id].state.privateList },
+    });
+  } else {
+    return false;
+  }
 };
 
 const roomEligible = ({ userName }) => {
   // user is the one who requested
   let user = getUser(userName);
-  room = rooms[user.userName];
+  room = rooms[user.room_id];
 
   // if room exists user also exists
   if (
@@ -346,4 +364,5 @@ module.exports = {
   removeUserFromRoom,
   forwardMsg,
   handleUserDisconnect,
+  addPrivateList,
 };
