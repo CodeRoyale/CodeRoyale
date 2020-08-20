@@ -6,7 +6,10 @@
 /* Description container head css */
 .desc-container-head {
   display: flex;
-  padding: 80px 90px;
+  padding-top: 120px;
+  padding-bottom: 80px;
+  padding-left: 90px;
+  padding-right: 90px;
   background-color: var(--frontpage-bg-light);
   margin: auto;
 }
