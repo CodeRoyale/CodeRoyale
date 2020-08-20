@@ -32,7 +32,9 @@ function FrontPageNavBar() {
           </ul>
         </nav>
         <div>
-          <a href='https://www.google.com/'>Sign up</a>
+          <a className='frontpage-nav-signup' href='https://www.google.com/'>
+            Sign up
+          </a>
           <Button
             type='button'
             onClick={loginRedirect}

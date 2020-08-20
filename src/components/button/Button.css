@@ -37,9 +37,9 @@
 }
 
 .btn--primary--signin {
-  border-radius: 5px;
+  border-radius: 50px;
   font-size: 15px;
-  background-color: var(--sign-in);
+  background-color: var(--primary-color);
 }
 
 .btn--primary--circle {
