@@ -6,7 +6,7 @@ import CreateTeamView from './CreateTeamView';
 import TeamCard from './TeamCard';
 import Button from '../../components/button/Button';
 
-function RoomMain(props) {
+const RoomMain = (props) => {
   const [arenaTestClicked, setArenaTestClicked] = useState(false);
   // TODO: pass the data object from CreatTeamView.js....
   // TODO: Have to implement, what happens if the user goes to create page again....
@@ -85,6 +85,6 @@ function RoomMain(props) {
       </div>
     </div>
   );
-}
+};
 
 export default RoomMain;

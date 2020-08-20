@@ -1,42 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ShareLinkCardFriend from './ShareLinkCardFriend';
 import './LobbyMain.css';
 import NavBar from '../../components/navBar/NavBar';
 import { Redirect } from 'react-router';
 import profileData from '../../utils/examples';
 
-class LobbyMain extends Component {
-  constructor(props) {
-    super(props);
-    const accessToken = localStorage.getItem('access-token');
-    let loggedIn = true;
-    if (accessToken === null) {
-      loggedIn = false;
-    }
-    this.state = {
-      profileData,
-      loggedIn,
-    };
+const LobbyMain = () => {
+  const accessToken = localStorage.getItem('access-token');
+  if (accessToken === null) {
+    return <Redirect to='/' />;
   }
 
-  render() {
-    if (!this.state.loggedIn) {
-      return <Redirect to='/' />;
-    }
-    return (
-      <div className='lobby'>
-        <div className='lobby-header'>
-          <NavBar />
-        </div>
-        <div className='lobby-body'>
-          <ShareLinkCardFriend
-            profileData={this.state.profileData}
-            sharableLink='Share this link'
-          />
-        </div>
+  return (
+    <div className='lobby'>
+      <div className='lobby-header'>
+        <NavBar />
       </div>
-    );
-  }
-}
+      <div className='lobby-body'>
+        <ShareLinkCardFriend
+          profileData={profileData}
+          sharableLink='Share this link'
+        />
+      </div>
+    </div>
+  );
+};
 
 export default LobbyMain;
