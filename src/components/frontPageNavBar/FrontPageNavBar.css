@@ -36,7 +36,7 @@ header {
 }
 
 .frontpage-navlinks li a:hover {
-  color: #0088a9;
+  color: var(--primary-color);
 }
 
 .frontpage-nav-signup {
@@ -47,5 +47,5 @@ header {
 }
 
 .frontpage-nav-signup:hover {
-  color: #0088a9;
+  color: var(--primary-color);
 }

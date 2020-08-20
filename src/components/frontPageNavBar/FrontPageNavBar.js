@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import './FrontPageNavBar.css';
 import Button from '../button/Button';
+import LogoContainer from '../logoContainer/LogoContainer';
 
 function FrontPageNavBar() {
   // Redirect to /signin
@@ -20,7 +21,8 @@ function FrontPageNavBar() {
   return (
     <div className='frontpage-navbar'>
       <header>
-        <h2>CodeRoyale</h2>
+        {/* <h2 className='frontpage-logo'>CodeRoyale</h2> */}
+        <LogoContainer />
         <nav>
           <ul className='frontpage-navlinks'>
             <li>

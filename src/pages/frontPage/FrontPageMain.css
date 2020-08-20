@@ -7,7 +7,7 @@
 .desc-container-head {
   display: flex;
   padding: 80px 90px;
-  background-color: #fcede8;
+  background-color: var(--frontpage-bg-light);
   margin: auto;
 }
 
@@ -16,8 +16,8 @@
 }
 
 .desc-image {
-  width: 650px;
-  height: 650px;
+  width: 600px;
+  height: 600px;
   margin: auto;
 }
 
@@ -36,6 +36,7 @@
   font-family: 'Roboto', sans-serif;
   margin-bottom: 20px;
   font-size: 22px;
+  font-weight: 500;
 }
 
 /* Description container what is coderoyale css */
@@ -56,6 +57,7 @@
   font-size: 20px;
   text-align: center;
   line-height: 1.5;
+  font-weight: 500;
 }
 
 .desc-what-image {
@@ -71,7 +73,7 @@
 .desc-container-how {
   display: flex;
   padding: 100px 200px;
-  background-color: #fcede8;
+  background-color: var(--frontpage-bg-light);
   margin: auto;
 }
 
@@ -93,6 +95,7 @@
   margin-bottom: 20px;
   line-height: 2;
   font-size: 20px;
+  font-weight: 500;
 }
 
 /* Description container sign up now css */
@@ -108,7 +111,7 @@
 }
 
 span {
-  color: #dd2c00;
+  color: var(--primary-color);
 }
 
 .desc-sign-up-btn {

@@ -37,11 +37,13 @@ function Description() {
         <img
           className='desc-image'
           alt='coder programming'
-          src='/images/programming.svg'
+          src='/images/winning.svg'
         />
       </div>
       <div className='desc-container-what'>
-        <p className='desc-what'>What is CodeRoyale?</p>
+        <p className='desc-what'>
+          What is <span>CodeRoyale?</span>
+        </p>
         <p className='desc-what-text'>
           CodeRoyale is a competitive programming platform that lets coders from
           around the World create teams/solo to compete with other coders.
@@ -49,12 +51,14 @@ function Description() {
         <img
           className='desc-what-image'
           alt='what is coderoyale'
-          src='/images/test1.svg'
+          src='/images/laptop-coding.svg'
         />
       </div>
       <div className='desc-container-how'>
         <div className='desc-text-container'>
-          <p className='desc-how'>How does it work?</p>
+          <p className='desc-how'>
+            How does it <span>work?</span>
+          </p>
           <p className='desc-how-text'>
             1. Create a room
             <br />
@@ -70,7 +74,7 @@ function Description() {
         <img
           className='desc-how-image'
           alt='coder programming'
-          src='/images/test2.svg'
+          src='/images/laptop.svg'
         />
       </div>
       <div className='desc-container-sign-up'>
