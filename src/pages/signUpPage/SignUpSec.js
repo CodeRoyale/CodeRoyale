@@ -1,9 +1,9 @@
 import React from 'react';
-import GoogleSignIn from '../../components/googleSignIn/GoogleSignIn';
 import { Link } from 'react-router-dom';
 import './SignUpMain.css';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
+import GoogleAuth from '../../components/googleAuth/GoogleAuth';
 
 const SignUpSec = (props) => {
   const ANT_LOADING_ICON = (
@@ -20,7 +20,7 @@ const SignUpSec = (props) => {
       <div className='signup-section-content'>
         <center>
           <p className='signup-section-title'>Sign up for CodeRoyale</p>
-          <GoogleSignIn
+          <GoogleAuth
             text='Sign up with Google'
             getGoogleData={handleGoogleData}
           />
@@ -41,7 +41,7 @@ const SignUpSec = (props) => {
         <div className='signup-section-content'>
           <center>
             <p className='signup-section-title'>Sign up for CodeRoyale</p>
-            <GoogleSignIn
+            <GoogleAuth
               text='Sign up with Google'
               getGoogleData={handleGoogleData}
             />
