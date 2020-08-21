@@ -1,7 +1,6 @@
 import React from 'react';
 import GoogleSignIn from '../../components/googleSignIn/GoogleSignIn';
 import { Link } from 'react-router-dom';
-import 'antd/dist/antd.css';
 import './SignUpMain.css';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -27,8 +26,8 @@ const SignUpSec = (props) => {
           />
           <p className='signup-section-sign-up'>
             Already a member?{' '}
-            <Link to='/signin' style={{ textDecoration: 'none' }}>
-              <span className='span-text'>Sign in now</span>
+            <Link to='/login' style={{ textDecoration: 'none' }}>
+              <span className='span-text'>Login now</span>
             </Link>
           </p>
         </center>
