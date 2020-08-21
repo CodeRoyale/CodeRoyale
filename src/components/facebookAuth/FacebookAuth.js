@@ -15,12 +15,12 @@ const FacebookAuth = (props) => {
     <div>
       <FacebookLogin
         appId={facebookAppID}
-        autoLoad={true}
         fields='name,email,picture'
         callback={responseSuccess}
         render={(renderProps) => (
           <button
             onClick={renderProps.onClick}
+            disabled={renderProps.disabled}
             className='facebook-custom-button'
           >
             <FacebookFilled className='facebook-icon' /> {props.text}
