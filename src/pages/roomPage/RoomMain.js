@@ -38,7 +38,7 @@ const RoomMain = (props) => {
     }
   }, [teamCreated, socket, room_id, roomData]);
 
-  function for indication of room creation...
+  // function for indication of room creation...
   const setTeamCreated = (indication) => {
     teamCreated = indication;
     console.log(teamCreated);
