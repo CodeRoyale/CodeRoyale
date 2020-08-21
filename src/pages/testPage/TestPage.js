@@ -1,27 +1,14 @@
 import React from 'react';
-import { Select } from 'antd';
-
-const { Option } = Select;
-
-function handleChange(value) {
-  console.log(`selected ${value}`);
-}
+import './TestPage.css';
+import { FacebookFilled } from '@ant-design/icons';
 
 export default function SpringPopper() {
   return (
     <div>
-      <Select
-        defaultValue='lucy'
-        style={{ width: 120 }}
-        onChange={handleChange}
-      >
-        <Option value='jack'>Jack</Option>
-        <Option value='lucy'>Lucy</Option>
-        <Option value='disabled' disabled>
-          Disabled
-        </Option>
-        <Option value='Yiminghe'>yiminghe</Option>
-      </Select>
+      <button className='facebook-test'>
+        <FacebookFilled className='google-icon' />
+        Login with Google
+      </button>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import './LoginMain.css';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import GoogleAuth from '../../components/googleAuth/GoogleAuth';
+import FacebookAuth from '../../components/facebookAuth/FacebookAuth';
 
 const LoginSec = (props) => {
   const ANT_LOADING_ICON = (
@@ -24,6 +25,7 @@ const LoginSec = (props) => {
             text='Login with Google'
             getGoogleData={handleGoogleData}
           />
+          <FacebookAuth text='Login with Facebook' />
           <p className='login-section-sign-up'>
             Not a member?{' '}
             <Link to='signup' style={{ textDecoration: 'none' }}>
@@ -45,6 +47,7 @@ const LoginSec = (props) => {
               text='Login with Google'
               getGoogleData={handleGoogleData}
             />
+            <FacebookAuth text='Login with Facebook' />
             <p className='login-section-sign-up'>
               Not a member?{' '}
               <Link to='signup' style={{ textDecoration: 'none' }}>

@@ -1,0 +1,27 @@
+.facebook-test {
+  border: none;
+  color: #ffffff;
+  background-color: #4285f4;
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 16px 35px;
+  text-align: center;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19);
+  transition-duration: 0.2s;
+}
+
+.facebook-test:focus {
+  outline: 0;
+}
+
+.facebook-test:active {
+  box-shadow: none;
+}
+
+.google-icon {
+  vertical-align: middle;
+  font-size: 24px;
+  margin-right: 10px;
+}

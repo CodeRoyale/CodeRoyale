@@ -1,5 +1,7 @@
 import React from 'react';
-import FacebookLogin from 'react-facebook-login';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import { FacebookFilled } from '@ant-design/icons';
+import './FacebookAuth.css';
 
 const FacebookAuth = (props) => {
   const facebookAppID = process.env.REACT_APP_APP_ID;
@@ -13,10 +15,16 @@ const FacebookAuth = (props) => {
       <FacebookLogin
         appId={facebookAppID}
         autoLoad={true}
-        size='small'
-        textButton={props.text}
         fields='name,email,picture'
         callback={responseSuccess}
+        render={(renderProps) => (
+          <button
+            onClick={renderProps.onClick}
+            className='facebook-custom-button'
+          >
+            <FacebookFilled className='facebook-icon' /> {props.text}
+          </button>
+        )}
       />
     </div>
   );
