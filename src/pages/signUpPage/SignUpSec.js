@@ -4,6 +4,7 @@ import './SignUpMain.css';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import GoogleAuth from '../../components/googleAuth/GoogleAuth';
+import FacebookAuth from '../../components/facebookAuth/FacebookAuth';
 
 const SignUpSec = (props) => {
   const ANT_LOADING_ICON = (
@@ -24,6 +25,8 @@ const SignUpSec = (props) => {
             text='Sign up with Google'
             getGoogleData={handleGoogleData}
           />
+          <div className='signup-auth-separator'></div>
+          <FacebookAuth text='Sign up with Facebook' />
           <p className='signup-section-sign-up'>
             Already a member?{' '}
             <Link to='/login' style={{ textDecoration: 'none' }}>
@@ -45,6 +48,8 @@ const SignUpSec = (props) => {
               text='Sign up with Google'
               getGoogleData={handleGoogleData}
             />
+            <div className='signup-auth-separator'></div>
+            <FacebookAuth text='Sign up with Facebook' />
             <p className='signup-section-sign-up'>
               Already a member?{' '}
               <Link to='/signin' style={{ textDecoration: 'none' }}>

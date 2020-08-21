@@ -25,6 +25,7 @@ const LoginSec = (props) => {
             text='Login with Google'
             getGoogleData={handleGoogleData}
           />
+          <div className='login-auth-separator'></div>
           <FacebookAuth text='Login with Facebook' />
           <p className='login-section-sign-up'>
             Not a member?{' '}
@@ -47,6 +48,7 @@ const LoginSec = (props) => {
               text='Login with Google'
               getGoogleData={handleGoogleData}
             />
+            <div className='login-auth-separator'></div>
             <FacebookAuth text='Login with Facebook' />
             <p className='login-section-sign-up'>
               Not a member?{' '}

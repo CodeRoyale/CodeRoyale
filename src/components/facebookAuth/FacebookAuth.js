@@ -4,6 +4,7 @@ import { FacebookFilled } from '@ant-design/icons';
 import './FacebookAuth.css';
 
 const FacebookAuth = (props) => {
+  // Facebook app ID from .env file
   const facebookAppID = process.env.REACT_APP_APP_ID;
   // Successful login from facebook...
   const responseSuccess = (response) => {

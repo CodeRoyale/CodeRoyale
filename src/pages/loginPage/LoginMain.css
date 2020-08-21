@@ -48,6 +48,10 @@
   font-size: 14px;
 }
 
+.login-auth-separator {
+  padding: 5px;
+}
+
 .span-text {
   font-weight: bold;
   cursor: pointer;
