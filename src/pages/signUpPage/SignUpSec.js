@@ -43,19 +43,7 @@ const SignUpSec = (props) => {
       <div className='signup-section-container'>
         <div className='signup-section-content'>
           <center>
-            <p className='signup-section-title'>Sign up for CodeRoyale</p>
-            <GoogleAuth
-              text='Sign up with Google'
-              getGoogleData={handleGoogleData}
-            />
-            <div className='signup-auth-separator'></div>
-            <FacebookAuth text='Sign up with Facebook' />
-            <p className='signup-section-sign-up'>
-              Already a member?{' '}
-              <Link to='/signin' style={{ textDecoration: 'none' }}>
-                <span className='span-text'>Sign in now</span>
-              </Link>
-            </p>
+            <p className='signup-section-title'>Signing you up...</p>
             <Spin indicator={ANT_LOADING_ICON} />
           </center>
         </div>
