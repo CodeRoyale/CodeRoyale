@@ -16,9 +16,11 @@ const RoomMain = (props) => {
   let config = null;
   let state = null;
   let teams = null;
+  let teamCreated = false;
+  // const [teamCreated, setTeamCreated] = useState(false);
   const [roomData, setRoomData] = useState(null);
 
-  // Getting Room Datas...
+  // Getting Room Data...
   useEffect(() => {
     if (socket !== null) {
       socket.emit('GET_ROOM', { room_id }, (data) => {
@@ -26,8 +28,21 @@ const RoomMain = (props) => {
           setRoomData(data);
         }
       });
+    } else if (teamCreated) {
+      // socket.emit('GET_ROOM', { room_id }, (data) => {
+      //   if (data !== ERROR_MSG && roomData === null) {
+      //     setRoomData(data);
+      //   }
+      // });
+      console.log('teamCreated');
     }
-  });
+  }, [teamCreated, socket, room_id, roomData]);
+
+  function for indication of room creation...
+  const setTeamCreated = (indication) => {
+    teamCreated = indication;
+    console.log(teamCreated);
+  };
 
   // Setting up config for display in room details....
   if (roomData !== null) {
@@ -76,7 +91,11 @@ const RoomMain = (props) => {
           </div>
 
           <div className='room-create-team'>
-            <CreateTeamView socket={socket} room_id={room_id} />
+            <CreateTeamView
+              socket={socket}
+              room_id={room_id}
+              setTeamCreated={setTeamCreated}
+            />
           </div>
 
           <div className='room-details-container'>

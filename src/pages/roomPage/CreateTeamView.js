@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../../components/button/Button';
+import ERROR_MSG from '../../utils/constants';
 
-function CreateTeamView({ socket, room_id }) {
+function CreateTeamView({ socket, room_id, setTeamCreated }) {
   const [team_name, setCreateTeamInput] = useState('');
   const [state, setState] = useState({
     createTeamClicked: false,
@@ -14,13 +15,19 @@ function CreateTeamView({ socket, room_id }) {
   useEffect(() => {
     if (state.createTeamClicked && team_name) {
       socket.emit('CREATE_TEAM', { team_name }, (data) => {
-        if (data !== null) {
-          console.log(data);
+        if (data !== null && data !== ERROR_MSG) {
           setState({ ...state, createTeamClicked: false, teams: data });
+        } else {
+          console.log(data);
         }
       });
     }
   });
+
+  // Passing indication to parent...
+  if (state.teams !== null) {
+    setTeamCreated(true);
+  }
 
   return (
     <div className='create-team-container'>
