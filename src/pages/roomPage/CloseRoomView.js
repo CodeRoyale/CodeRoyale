@@ -1,35 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
 import Button from '../../components/button/Button';
-import { Redirect } from 'react-router';
-import ERROR_MSG from '../../utils/constants';
-import SocketContext from '../../utils/SocketContext';
 
-function CloseRoomView() {
+function CloseRoomView({ setState }) {
   //TODO: Check if the room is closing by admin or not...
   //TODO: Give an indication of room closed...
   //TODO: Ask again in an alert box to close room...
-
-  const socket = useContext(SocketContext);
-  const [state, setState] = useState({
-    closeRoomClicked: false,
-    roomClosed: false,
-  });
-  useEffect(() => {
-    if (state.closeRoomClicked && socket !== null) {
-      socket.emit('CLOSE_ROOM', {}, (data) => {
-        if (data !== ERROR_MSG && data) {
-          setState({ ...state, closeRoomClicked: false, roomClosed: true });
-        } else {
-          console.log(data);
-        }
-      });
-      setState({ ...state, closeRoomClicked: false });
-    }
-  }, [state, socket]);
-
-  if (state.roomClosed) {
-    return <Redirect to='/dashboard' />;
-  }
 
   return (
     <div className='close-room-view'>
@@ -39,7 +14,7 @@ function CloseRoomView() {
       <div className='close-room-view-button'>
         <Button
           type='button'
-          onClick={() => setState({ ...state, closeRoomClicked: true })}
+          onClick={() => setState({ action: 'CLOSE_ROOM' })}
           buttonStyle='btn--primary--normal'
           buttonSize='btn--medium'
         >

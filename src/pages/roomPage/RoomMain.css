@@ -96,20 +96,6 @@
   display: flex;
   align-items: center;
 }
-.team-member-card-leave-button-container-row {
-  width: 100%;
-}
-.team-member-card-leave-button {
-  opacity: 0;
-  height: 15%;
-  width: 15%;
-  float: right;
-  transition-duration: 0.4s;
-  cursor: pointer;
-}
-.team-member-card:hover .team-member-card-leave-button {
-  opacity: 1;
-}
 
 /*TeamCard.css*/
 .team-card {

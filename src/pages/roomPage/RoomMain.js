@@ -19,7 +19,7 @@ const RoomMain = (props) => {
 
   // const [teamCreated, setTeamCreated] = useState(false);
   const [state, setState] = useState({
-    createTeamClicked: false,
+    action: null,
     team_name: null,
     actionDone: false,
     roomData: null,
@@ -27,13 +27,21 @@ const RoomMain = (props) => {
 
   // Actions in the room...
   useEffect(() => {
-    if (state.createTeamClicked) {
-      const team_name = state.team_name;
-      socket.emit('CREATE_TEAM', { team_name }, (data) => {
+    if (state.action !== null) {
+      let team_name = null;
+      if (state.action === 'CREATE_TEAM' || state.action === 'JOIN_TEAM') {
+        team_name = state.team_name;
+      } else if (
+        state.action === 'CLOSE_ROOM' ||
+        state.action === 'LEAVE_TEAM'
+      ) {
+        team_name = null;
+      }
+      socket.emit(state.action, { team_name }, (data) => {
         if (data !== ERROR_MSG && data !== null) {
           setState({
             ...state,
-            createTeamClicked: false,
+            action: null,
             team_name: null,
             actionDone: true,
           });
@@ -82,6 +90,7 @@ const RoomMain = (props) => {
   for (var team_name in roomTeams) {
     team_cards.push(
       <TeamCard
+        setState={setState}
         key={team_name}
         team_name={team_name}
         team={roomTeams[team_name]}
@@ -112,7 +121,7 @@ const RoomMain = (props) => {
             />
           </div>
           <div className='room-details-close-room-container'>
-            <CloseRoomView />
+            <CloseRoomView setState={setState} />
           </div>
         </div>
         <div className='room-right-section'>{team_cards}</div>

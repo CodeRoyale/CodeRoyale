@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Button from '../../components/button/Button';
 
 function CreateTeamView({ setState }) {
+  //TODO:  Clean up input after click of button...
   const [team_name, setCreateTeamInput] = useState('');
-
   return (
     <div className='create-team-container'>
       <div>
@@ -23,7 +23,7 @@ function CreateTeamView({ setState }) {
           <Button
             type='button'
             onClick={() =>
-              setState({ createTeamClicked: true, team_name: team_name })
+              setState({ action: 'CREATE_TEAM', team_name: team_name })
             }
             buttonStyle='btn--primary--normal'
             buttonSize='btn--medium'
