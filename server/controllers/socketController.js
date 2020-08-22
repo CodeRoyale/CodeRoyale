@@ -26,6 +26,7 @@ const {
   leaveTeam,
   closeRoom,
   roomEligible,
+  startCompetition,
   forwardMsg,
 } = require("../controllers/roomController");
 
@@ -76,13 +77,13 @@ const authUser = (socket, next) => {
 
 const genericActionCreater = (
   actionResponder,
-  socket,
+  dataFromServer,
   failReply = "Some error occured !",
   ACTION = ""
 ) => (dataFromClient, cb) => {
   // only passes userName
   dataFromClient.userName = socket.userDetails.userName;
-  let data = actionResponder(dataFromClient, socket) || failReply;
+  let data = actionResponder(dataFromClient, dataFromServer) || failReply;
   if (data != failReply) {
     console.log(`${ACTION} succesfull !`);
   }
@@ -102,49 +103,18 @@ const handleUserEvents = (socket) => {
   //   )
   // );
   // but below approach is shorter
-  socket.on(CREATE_ROOM, genericActionCreater(createRoom, socket));
-  socket.on(JOIN_ROOM, genericActionCreater(joinRoom, socket));
-  socket.on(CREATE_TEAM, genericActionCreater(createTeam, socket));
-  socket.on(JOIN_TEAM, genericActionCreater(joinTeam, socket));
-  socket.on(CLOSE_ROOM, genericActionCreater(closeRoom, socket));
-  socket.on(SEND_MSG, genericActionCreater(forwardMsg, socket));
-  socket.on(LEAVE_TEAM, genericActionCreater(leaveTeam, socket));
-  socket.on(GET_ROOM, genericActionCreater(getRoomData, socket));
-  // admin wants to start the competition
-  socket.on(START_COMPETITION, async (dataFromClient, cb) => {
-    // check if room is eligible
-    let { userDetails } = socket;
-    // user is allowed to start, and room meets requirement
-    let eligibleRoom = roomEligible(userDetails.userName);
-    if (eligibleRoom) {
-      // add event listeners and remove for veto
-
-      // start question selection
-      // get numberOfTeams+numberQuestion ques from api
-      // start selection process
-
-      let allQuestions = await getQuestions();
-
-      // veto process
-      let selectedQuestions = await setQuestions(allQuestions);
-      // end of selection
-
-      // add event listeners for code submit
-      // this is just prototype
-      socket.on("CODE_SUBMIT", ({ code, lang }, cb) => {
-        // call codeExec api
-        //wait for result
-        // check output
-        // send back result in cb
-        // update score based on result
-        // call other events if required
-      });
-    }
-  });
-
-  socket.on("disconnect", () => {
-    removeUser(socket.userDetails.userName);
-  });
+  socket.on(CREATE_ROOM, genericActionCreater(createRoom, { socket }));
+  socket.on(JOIN_ROOM, genericActionCreater(joinRoom, { socket }));
+  socket.on(CREATE_TEAM, genericActionCreater(createTeam, { socket }));
+  socket.on(JOIN_TEAM, genericActionCreater(joinTeam, { socket }));
+  socket.on(CLOSE_ROOM, genericActionCreater(closeRoom, { socket }));
+  socket.on(SEND_MSG, genericActionCreater(forwardMsg, { socket }));
+  socket.on(LEAVE_TEAM, genericActionCreater(leaveTeam, { socket }));
+  socket.on(GET_ROOM, genericActionCreater(getRoomData, { socket }));
+  socket.on(
+    START_COMPETITION,
+    genericActionCreater(startCompetition, { socket, io })
+  );
 };
 
 const setQuestions = async () => {
