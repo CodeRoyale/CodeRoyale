@@ -1,6 +1,6 @@
 const getQuestions = async (n) => {
   // return n random questions
-  return [{ q: "awd aw " }, { q: "vawd aw " }, { q: "awasdawd aw z" }];
+  return ["23", "434", "1235", "3"];
 };
 
 module.exports = { getQuestions };
