@@ -6,7 +6,7 @@ import ProfileSettingsMain from './pages/profileSettingsPage/ProfileSettingsMain
 import LobbyMain from './pages/lobbyPage/LobbyMain';
 import DashboardMain from './pages/dashboardPage/DashboardMain';
 import SignUpMain from './pages/signUpPage/SignUpMain';
-import SignInMain from './pages/signInPage/SignInMain';
+import LoginMain from './pages/loginPage/LoginMain';
 import Arena from './pages/arenaPage/ArenaMain';
 import OutroMain from './pages/outroPage/OutroMain';
 import Testing from './pages/testPage/TestPage';
@@ -30,10 +30,10 @@ function App() {
             component={DashboardMain}
           />
           <Route
-            data-testid='route-signin'
+            data-testid='route-login'
             exact
-            path='/signin'
-            component={SignInMain}
+            path='/login'
+            component={LoginMain}
           />
           <Route
             data-testid='route-signup'
