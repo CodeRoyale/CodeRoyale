@@ -1,5 +1,6 @@
 const { encryptData } = require("../utils/auth");
 const { setRoom, getUser, setTeam } = require("./userController");
+const { getQuestions } = require("../utils/qapiConn");
 const {
   ROOM_UPDATED,
   RCV_MSG,
@@ -15,7 +16,7 @@ rooms = {};
 
 // room_id will be admin name
 
-const createRoom = (config, socket) => {
+const createRoom = (config, { socket }) => {
   const user = getUser(config.userName);
   if (user.room_id) {
     // please leave current room
@@ -75,7 +76,7 @@ const createRoom = (config, socket) => {
 };
 
 // users connecting to room
-const joinRoom = ({ userName, room_id, team_name }, socket) => {
+const joinRoom = ({ userName, room_id, team_name }, { socket }) => {
   if (
     rooms[room_id] &&
     (!rooms[room_id].config.privateRoom ||
@@ -174,7 +175,7 @@ const removeUserFromRoom = ({ userName }) => {
   return true;
 };
 
-const createTeam = ({ userName, team_name }, socket) => {
+const createTeam = ({ userName, team_name }, { socket }) => {
   // if more teams are allowed
   //if team_name is not already used
   // and user is admin
@@ -201,7 +202,7 @@ const createTeam = ({ userName, team_name }, socket) => {
   return false;
 };
 
-const joinTeam = ({ userName, team_name }, socket) => {
+const joinTeam = ({ userName, team_name }, { socket }) => {
   const user = getUser(userName),
     room = rooms[user.room_id];
   // only run if user and room exits and user is in that room
@@ -239,7 +240,7 @@ const joinTeam = ({ userName, team_name }, socket) => {
   return false;
 };
 
-const leaveTeam = ({ userName }, socket) => {
+const leaveTeam = ({ userName }, { socket }) => {
   const { room_id, team_name } = getUser(userName);
   // check if in a room and in a team
   if (room_id && team_name) {
@@ -304,7 +305,7 @@ const roomEligible = ({ userName }) => {
   // if room exists user also exists
   if (
     room &&
-    room.admin === user.userName &&
+    room.config.admin === user.userName &&
     Object.keys(room.teams).length > 1
   ) {
     return room;
@@ -316,7 +317,7 @@ const handleUserDisconnect = (userName) => {
   // need to fill this
 };
 
-const forwardMsg = ({ userName, content, toTeam }, socket) => {
+const forwardMsg = ({ userName, content, toTeam }, { socket }) => {
   const { room_id, team_name } = getUser(userName);
 
   // not in a room
@@ -327,6 +328,39 @@ const forwardMsg = ({ userName, content, toTeam }, socket) => {
     rcvrs += `/${team_name}`;
   }
   socket.to(rcvrs).broadcast.emit(RCV_MSG, { userName, content, toTeam });
+  return true;
+};
+
+const startCompetition = async ({ userName }, { socket, io }) => {
+  // check if user is admin of a room
+  const user = getUser(userName),
+    room = rooms[user.room_id];
+
+  // room exists
+  // user is admin
+  // 2 or more members are there
+  // 2 or more teams required
+  // each team should hav atleast member
+  if (
+    !room ||
+    room.config.admin !== userName ||
+    room.state.cur_memCount < 2 ||
+    Object.keys(room.teams).length < 2 ||
+    !atLeastPerTeam(room_id)
+  ) {
+    return false;
+  }
+
+  // start veto now
+  //const allQuestions = await getQuestions(10);
+  return true;
+};
+
+// @util function to check if all teams have atleast min_size member
+const atLeastPerTeam = (room_id, min_size = 1) => {
+  for (const [name, memList] of Object.entries(rooms[room_id].teams)) {
+    if (memList.length < min_size) return false;
+  }
   return true;
 };
 
@@ -346,4 +380,5 @@ module.exports = {
   removeUserFromRoom,
   forwardMsg,
   handleUserDisconnect,
+  startCompetition,
 };
