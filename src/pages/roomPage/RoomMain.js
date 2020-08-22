@@ -11,12 +11,13 @@ import ERROR_MSG from '../../utils/constants';
 
 const RoomMain = (props) => {
   // TODO: Have to implement, what happens if the user goes to create page again....
-  let socket = null;
   let room_id = null;
   let config = null;
   let state = null;
   let teams = null;
   let teamCreated = false;
+  let socket = null;
+
   // const [teamCreated, setTeamCreated] = useState(false);
   const [roomData, setRoomData] = useState(null);
 
@@ -36,12 +37,11 @@ const RoomMain = (props) => {
       // });
       console.log('teamCreated');
     }
-  }, [teamCreated, socket, room_id, roomData]);
+  }, [socket, room_id, roomData, teamCreated]);
 
   // function for indication of room creation...
   const setTeamCreated = (indication) => {
     teamCreated = indication;
-    console.log(teamCreated);
   };
 
   // Setting up config for display in room details....
@@ -57,8 +57,8 @@ const RoomMain = (props) => {
   }
 
   // Initializations....
-  socket = props.location.props.socket;
   room_id = props.location.props.room_id;
+  socket = props.location.props.socket;
 
   // Checking if the user is logged-in...
   const accessToken = localStorage.getItem('access-token');
@@ -104,6 +104,7 @@ const RoomMain = (props) => {
           <div className='room-details-close-room-container'>
             <CloseRoomView socket={socket} />
           </div>
+          <div>{teamCreated ? 'yes' : 'no'}</div>
         </div>
         <div className='room-right-section'>{team_cards}</div>
       </div>

@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Button from '../../components/button/Button';
 import ERROR_MSG from '../../utils/constants';
+import SocketContext from '../../utils/SocketContext';
 
-function CreateTeamView({ socket, room_id, setTeamCreated }) {
+function CreateTeamView({ setTeamCreated }) {
   const [team_name, setCreateTeamInput] = useState('');
+  const socket = useContext(SocketContext);
   const [state, setState] = useState({
     createTeamClicked: false,
     closeRoomClicked: false,

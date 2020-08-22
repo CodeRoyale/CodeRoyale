@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './LobbyMain.css';
 import { Redirect } from 'react-router';
 import Button from '../../components/button/Button';
 import ERROR_MSG from '../../utils/constants';
+import SocketContext from '../../utils/SocketContext';
 
-function JoinRoomView({ socket }) {
+function JoinRoomView() {
   const [joinInputValue, setJoinInputValue] = useState('');
+  const socket = useContext(SocketContext);
   const [state, setState] = useState({
     roomJoined: false,
     joinButtonClicked: false,

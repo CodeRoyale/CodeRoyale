@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ERROR_MSG from '../../utils/constants';
+import SocketContext from '../../utils/SocketContext';
 
-function JoinTeamView({ socket, team_name }) {
+function JoinTeamView({ team_name }) {
   const [state, setState] = useState({ joinTeamClicked: false, data: null });
+  const socket = useContext(SocketContext);
 
   useEffect(() => {
     if (state.joinTeamClicked && socket !== null && team_name !== null) {

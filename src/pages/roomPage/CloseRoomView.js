@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Button from '../../components/button/Button';
 import { Redirect } from 'react-router';
 import ERROR_MSG from '../../utils/constants';
+import SocketContext from '../../utils/SocketContext';
 
-function CloseRoomView({ socket }) {
+function CloseRoomView() {
   //TODO: Check if the room is closing by admin or not...
   //TODO: Give an indication of room closed...
   //TODO: Ask again in an alert box to close room...
 
+  const socket = useContext(SocketContext);
   const [state, setState] = useState({
     closeRoomClicked: false,
     roomClosed: false,

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function CloseTeamView({ socket }) {
+function CloseTeamView() {
   const onClickCloseTeam = () => {
     //TODO: Delete team...
   };
