@@ -115,6 +115,9 @@ const handleUserEvents = (socket, io) => {
     START_COMPETITION,
     genericActionCreater(startCompetition, { socket, io })
   );
+  socket.on("disconnect", () => {
+    removeUser(socket.userDetails.userName);
+  });
 };
 
 const setQuestions = async () => {
