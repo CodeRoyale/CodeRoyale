@@ -25,10 +25,14 @@ const FrontPageNavBar = () => {
         <nav>
           <ul className='frontpage-navlinks'>
             <li>
-              <a href='https://www.karunya.edu/'>About</a>
+              <a href='https://github.com/CodeRoyale/codeRoyale-frontend/'>
+                About
+              </a>
             </li>
             <li>
-              <a href='https://www.karunya.edu/'>FAQ</a>
+              <a href='https://github.com/CodeRoyale/codeRoyale-frontend/'>
+                FAQ
+              </a>
             </li>
           </ul>
         </nav>
