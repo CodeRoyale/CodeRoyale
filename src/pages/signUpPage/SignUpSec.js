@@ -5,6 +5,7 @@ import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import GoogleAuth from '../../components/googleAuth/GoogleAuth';
 import FacebookAuth from '../../components/facebookAuth/FacebookAuth';
+import LogoContainer from '../../components/logoContainer/LogoContainer';
 
 const SignUpSec = (props) => {
   const ANT_LOADING_ICON = (
@@ -20,7 +21,9 @@ const SignUpSec = (props) => {
     <div className='signup-section-container'>
       <div className='signup-section-content'>
         <center>
-          <p className='signup-section-title'>Sign up for CodeRoyale</p>
+          <p className='signup-section-title'>
+            Sign up for <LogoContainer />{' '}
+          </p>
           <GoogleAuth
             text='Sign up with Google'
             getGoogleData={handleGoogleData}

@@ -13,18 +13,16 @@
 }
 
 .left-signup-content {
-  padding-top: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }
 
-.left-signup-title {
-  font-weight: bold;
-  font-size: 40px;
-  color: #6b554f;
-}
-
-.left-signup-text {
-  font-size: 20px;
-  color: #6b554f;
+.left-signup-image {
+  height: 100%;
+  width: 500px;
 }
 
 /* Sign up section */
@@ -56,4 +54,13 @@
   font-weight: bold;
   cursor: pointer;
   color: brown;
+}
+
+/* Close button for left signup section */
+.left-signup-close {
+  color: brown;
+  cursor: pointer;
+  margin-left: 16px;
+  margin-top: 16px;
+  font-size: 24px;
 }

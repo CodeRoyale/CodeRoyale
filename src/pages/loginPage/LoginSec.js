@@ -5,6 +5,7 @@ import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import GoogleAuth from '../../components/googleAuth/GoogleAuth';
 import FacebookAuth from '../../components/facebookAuth/FacebookAuth';
+import LogoContainer from '../../components/logoContainer/LogoContainer';
 
 const LoginSec = (props) => {
   const ANT_LOADING_ICON = (
@@ -20,7 +21,9 @@ const LoginSec = (props) => {
     <div className='login-section-container'>
       <div className='login-section-content'>
         <center>
-          <p className='login-section-title'>Sign into CodeRoyale</p>
+          <p className='login-section-title'>
+            Sign into <LogoContainer />{' '}
+          </p>
           <GoogleAuth
             text='Login with Google'
             getGoogleData={handleGoogleData}
