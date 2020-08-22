@@ -82,7 +82,7 @@ const genericActionCreater = (
   ACTION = ""
 ) => (dataFromClient, cb) => {
   // only passes userName
-  dataFromClient.userName = socket.userDetails.userName;
+  dataFromClient.userName = dataFromServer.socket.userDetails.userName;
   let data = actionResponder(dataFromClient, dataFromServer) || failReply;
   if (data != failReply) {
     console.log(`${ACTION} succesfull !`);
@@ -90,7 +90,7 @@ const genericActionCreater = (
   cb(data);
 };
 
-const handleUserEvents = (socket) => {
+const handleUserEvents = (socket, io) => {
   // auth middle ware will set this based on jwt payload
   // ideal
   // socket.on(

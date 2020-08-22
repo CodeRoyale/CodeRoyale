@@ -63,7 +63,7 @@ const io = socketio(server, {
 });
 
 try {
-  io.use(authUser).on("connection", handleUserEvents);
+  io.use(authUser).on("connection", (socket) => handleUserEvents(socket, io));
 } catch (err) {
   console.log(err.message);
 }
@@ -75,4 +75,5 @@ server.listen(PORT, () => {
 
 module.exports = {
   server,
+  io,
 };

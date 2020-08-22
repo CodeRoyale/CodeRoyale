@@ -62,6 +62,7 @@ const createRoom = (config, { socket }) => {
           voted: [],
           vetoOngoing: false,
         },
+        scoreboard: {},
       },
       teams: {},
     };
@@ -352,7 +353,11 @@ const startCompetition = async ({ userName }, { socket, io }) => {
   }
 
   // start veto now
-  //const allQuestions = await getQuestions(10);
+  const allQuestions = await getQuestions(10);
+
+  const members = io.sockets.clients(room_id);
+  console.log("startCompetition -> members", members);
+
   return true;
 };
 
