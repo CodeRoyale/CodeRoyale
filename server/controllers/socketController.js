@@ -79,10 +79,10 @@ const genericActionCreater = (
   socket,
   failReply = "Some error occured !",
   ACTION = ""
-) => (config, cb) => {
+) => (dataFromClient, cb) => {
   // only passes userName
-  config.userName = socket.userDetails.userName;
-  let data = actionResponder(config, socket) || failReply;
+  dataFromClient.userName = socket.userDetails.userName;
+  let data = actionResponder(dataFromClient, socket) || failReply;
   if (data != failReply) {
     console.log(`${ACTION} succesfull !`);
   }

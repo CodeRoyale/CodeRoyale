@@ -19,6 +19,7 @@ const LEFT_TEAM = "LEFT_TEAM";
 const LEFT_ROOM = "LEFT_ROOM";
 // 5. create a team
 const TEAM_CREATED = "TEAM_CREATED";
+
 // to forward sent message
 const RCV_MSG = "RCV_MSG";
 
