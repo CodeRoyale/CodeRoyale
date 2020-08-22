@@ -55,12 +55,3 @@
   cursor: pointer;
   color: brown;
 }
-
-/* Close button for left login section */
-.left-login-close {
-  color: brown;
-  cursor: pointer;
-  margin-left: 16px;
-  margin-top: 16px;
-  font-size: 24px;
-}

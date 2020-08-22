@@ -25,15 +25,15 @@ const FrontPageNavBar = () => {
         <nav>
           <ul className='frontpage-navlinks'>
             <li>
-              <a href='https://www.google.com/'>About</a>
+              <a href='https://www.karunya.edu/'>About</a>
             </li>
             <li>
-              <a href='https://www.google.com/'>FAQ</a>
+              <a href='https://www.karunya.edu/'>FAQ</a>
             </li>
           </ul>
         </nav>
         <div>
-          <a className='frontpage-nav-signup' href='https://www.google.com/'>
+          <a className='frontpage-nav-signup' href='/signup'>
             Sign up
           </a>
           <Button
