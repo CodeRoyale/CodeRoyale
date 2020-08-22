@@ -2,30 +2,25 @@ import React from 'react';
 
 function RoomDetails({ config, state, teams }) {
   let admin = null;
-  // let createdAt = null;
-  // let id = null;
-  let max_perRoom = 0;
-  let max_perTeam = 0;
-  let max_teams = 0;
-  let privateRoom = 0;
   let playersRoom = 0;
+  let max_perRoom = 0;
   let playersTeam = 0;
+  let max_perTeam = 0;
   let teamsNumber = 0;
-  console.log(teams);
+  let max_teams = 0;
+  let privateRoom = false;
 
   if (config !== null && state !== null && teams !== null) {
     admin = config.admin;
-    // createdAt = config.createdAt;
-    // id = config.id;
     max_perRoom = config.max_perRoom;
     max_perTeam = config.max_perTeam;
-    privateRoom = config.privateRoom;
     max_teams = config.max_teams;
+    privateRoom = config.privateRoom;
     teamsNumber = Object.keys(teams).length;
-    for (let key in teams) {
-      playersTeam += teams[key].length;
+    for (let team_name in teams) {
+      playersTeam += teams[team_name].length;
     }
-    playersRoom = state.bench.length + playersTeam;
+    playersRoom = playersTeam + state.bench.length;
   }
   return (
     <div className='room-details'>

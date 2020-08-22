@@ -12,43 +12,54 @@ import ERROR_MSG from '../../utils/constants';
 const RoomMain = (props) => {
   // TODO: Have to implement, what happens if the user goes to create page again....
   let room_id = null;
-  let config = null;
-  let state = null;
-  let teams = null;
-  let teamCreated = false;
+  let roomTeams = null;
+  let roomConfig = null;
+  let roomState = null;
   let socket = null;
 
   // const [teamCreated, setTeamCreated] = useState(false);
-  const [roomData, setRoomData] = useState(null);
+  const [state, setState] = useState({
+    createTeamClicked: false,
+    team_name: null,
+    actionDone: false,
+    roomData: null,
+  });
 
-  // Getting Room Data...
+  // Actions in the room...
   useEffect(() => {
-    if (socket !== null) {
-      socket.emit('GET_ROOM', { room_id }, (data) => {
-        if (data !== ERROR_MSG && roomData === null) {
-          setRoomData(data);
+    if (state.createTeamClicked) {
+      const team_name = state.team_name;
+      socket.emit('CREATE_TEAM', { team_name }, (data) => {
+        if (data !== ERROR_MSG && data !== null) {
+          setState({
+            ...state,
+            createTeamClicked: false,
+            team_name: null,
+            actionDone: true,
+          });
         }
+        console.log(data);
       });
-    } else if (teamCreated) {
-      // socket.emit('GET_ROOM', { room_id }, (data) => {
-      //   if (data !== ERROR_MSG && roomData === null) {
-      //     setRoomData(data);
-      //   }
-      // });
-      console.log('teamCreated');
     }
-  }, [socket, room_id, roomData, teamCreated]);
+  });
 
-  // function for indication of room creation...
-  const setTeamCreated = (indication) => {
-    teamCreated = indication;
-  };
+  // Getting roomData....
+  useEffect(() => {
+    if (socket !== null && (state.actionDone || state.roomData === null)) {
+      socket.emit('GET_ROOM', { room_id }, (data) => {
+        if (data !== ERROR_MSG && data !== null) {
+          setState({ ...data, actionDone: false, roomData: data });
+        }
+        console.log('getRoom', data);
+      });
+    }
+  });
 
-  // Setting up config for display in room details....
-  if (roomData !== null) {
-    config = roomData.config;
-    state = roomData.state;
-    teams = roomData.teams;
+  // Setting all the retrieved data into variables to use...
+  if (state.roomData !== null && state.roomData !== undefined) {
+    roomConfig = state.roomData.config;
+    roomTeams = state.roomData.teams;
+    roomState = state.roomData.state;
   }
 
   // Checking if the socket and room_id are not null...
@@ -68,13 +79,12 @@ const RoomMain = (props) => {
 
   // Setting Team Cards...
   let team_cards = [];
-  for (var team_name in teams) {
+  for (var team_name in roomTeams) {
     team_cards.push(
       <TeamCard
         key={team_name}
         team_name={team_name}
-        team={teams[team_name]}
-        socket={socket}
+        team={roomTeams[team_name]}
       />
     );
   }
@@ -91,20 +101,19 @@ const RoomMain = (props) => {
           </div>
 
           <div className='room-create-team'>
-            <CreateTeamView
-              socket={socket}
-              room_id={room_id}
-              setTeamCreated={setTeamCreated}
-            />
+            <CreateTeamView setState={setState} />
           </div>
 
           <div className='room-details-container'>
-            <RoomDetails config={config} state={state} teams={teams} />
+            <RoomDetails
+              config={roomConfig}
+              state={roomState}
+              teams={roomTeams}
+            />
           </div>
           <div className='room-details-close-room-container'>
-            <CloseRoomView socket={socket} />
+            <CloseRoomView />
           </div>
-          <div>{teamCreated ? 'yes' : 'no'}</div>
         </div>
         <div className='room-right-section'>{team_cards}</div>
       </div>
