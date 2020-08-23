@@ -9,9 +9,8 @@ const addUser = (userName, socket_id) => {
   if (!users[userName]) {
     console.log(userName + " added");
     users[userName] = { socket_id, room_id: "", team_name: "" };
-    return true;
   }
-  return false;
+  return true;
 };
 
 const removeUser = (userName) => {
