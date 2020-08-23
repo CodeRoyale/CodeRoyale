@@ -54,6 +54,16 @@ function RoomDetails({ config, state, teams }) {
             </tr>
             <tr>
               <td>
+                <div className='room-details-left-section'>Bench : </div>
+              </td>
+              <td>
+                <div className='room-details-right-section'>
+                  <b>{playersRoom - playersTeam}</b>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
                 <div className='room-details-left-section'>
                   Max players in room:{' '}
                 </div>
