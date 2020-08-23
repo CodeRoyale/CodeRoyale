@@ -7,10 +7,15 @@ users = {};
 
 const addUser = (userName, socket_id) => {
   if (!users[userName]) {
+    // new connection
     console.log(userName + " added");
     users[userName] = { socket_id, room_id: "", team_name: "" };
+  } else {
+    // reconnecting
+    console.log(userName + " reconnected");
+    users[userName].socket_id = socket_id;
   }
-  return true;
+  return users[userName];
 };
 
 const removeUser = (userName) => {
