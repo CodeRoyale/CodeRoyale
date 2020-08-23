@@ -1,25 +1,16 @@
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
 
-const getQuestions = async () => {
+QAPI_URL = "http://localhost:3000/questions/random";
 
-Url = 'http://localhost:3000/questions/random?noIds=3';
-
-async function getQuestions(url = '') {
-  const response = await fetch(url, {
-    method: 'GET',
+const getQuestions = async (noIds) => {
+  const response = await fetch(`${QAPI_URL}?noIds=${noIds}`, {
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
       useQueryString: true,
-      accept: 'application/json',
+      accept: "application/json",
     },
   });
   return await response.json();
-}
-// (async () => {
-//   let data = await getQuestions(Url);
-//   return data;
-// })();
-  
 };
 
 module.exports = { getQuestions };
