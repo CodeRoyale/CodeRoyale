@@ -47,7 +47,7 @@ function Chat({ socket }) {
   return (
     <div className='chat-body'>
       <div className='chat-header'>CHAT</div>
-      <div className='chat-container'>
+      <div className='chat-container' id='chat-container'>
         <ul>
           {messageList.map((item) => (
             <li key={item.id}>

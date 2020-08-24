@@ -44,6 +44,8 @@
   height: 137px;
   overflow: auto;
   margin: 10px;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .chat-body {
