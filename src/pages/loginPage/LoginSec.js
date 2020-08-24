@@ -21,9 +21,9 @@ const LoginSec = (props) => {
     <div className='login-section-container'>
       <div className='login-section-content'>
         <center>
-          <p className='login-section-title'>
+          <div className='login-section-title'>
             Sign into <LogoContainer />{' '}
-          </p>
+          </div>
           <GoogleAuth
             text='Login with Google'
             getGoogleData={handleGoogleData}
