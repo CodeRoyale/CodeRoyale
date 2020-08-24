@@ -17,6 +17,7 @@ rooms = {};
 // room_id will be admin name
 
 const createRoom = (config, { socket }) => {
+  try{
   const user = getUser(config.userName);
   if (user.room_id) {
     // please leave current room
@@ -74,10 +75,15 @@ const createRoom = (config, { socket }) => {
   }
   // user already has an active room
   return rooms[room_id];
+ }
+ catch(err){
+  return err.message || false;
+ }
 };
 
 // users connecting to room
 const joinRoom = ({ userName, room_id, team_name }, { socket }) => {
+  try{
   if (
     rooms[room_id] &&
     (!rooms[room_id].config.privateRoom ||
@@ -129,9 +135,15 @@ const joinRoom = ({ userName, room_id, team_name }, { socket }) => {
     return rooms[room_id];
   }
   return false;
+ }
+ catch(err)
+ {
+  return err.message || false;
+ }
 };
 
 const removeUserFromRoom = ({ userName }) => {
+  try{
   // remove from room
   const { room_id, team_name } = getUser(userName);
 
@@ -174,9 +186,15 @@ const removeUserFromRoom = ({ userName }) => {
   socket.leave(room_id);
 
   return true;
+  }
+  catch(err)
+  {
+    return err.message || false;
+  }
 };
 
 const createTeam = ({ userName, team_name }, { socket }) => {
+  try{
   // if more teams are allowed
   //if team_name is not already used
   // and user is admin
@@ -201,9 +219,15 @@ const createTeam = ({ userName, team_name }, { socket }) => {
     return rooms[room_id].teams;
   }
   return false;
+  }
+  catch(err)
+  {
+    return err.message || false;
+  }
 };
 
 const joinTeam = ({ userName, team_name }, { socket }) => {
+  try{
   const user = getUser(userName),
     room = rooms[user.room_id];
   // only run if user and room exits and user is in that room
@@ -239,9 +263,15 @@ const joinTeam = ({ userName, team_name }, { socket }) => {
     return rooms[user.room_id].teams[team_name];
   }
   return false;
+  }
+  catch(err)
+  {
+    return err.message || false;
+  }
 };
 
 const leaveTeam = ({ userName }, { socket }) => {
+  try{
   const { room_id, team_name } = getUser(userName);
   // check if in a room and in a team
   if (room_id && team_name) {
@@ -262,9 +292,15 @@ const leaveTeam = ({ userName }, { socket }) => {
     return true;
   }
   return false;
+  }
+  catch(err)
+  {
+    return err.message || false;
+  }
 };
 
 const closeRoom = ({ userName }) => {
+  try{
   const { room_id } = getUser(userName);
   if (rooms[room_id]) {
     // everyone from room bench
@@ -288,17 +324,38 @@ const closeRoom = ({ userName }) => {
     return true;
   }
   return false;
+  }
+  catch(err)
+  {
+    return err.message || false;
+  }
 };
 
 //TODO --> DELETE TEAM
 
-const banMember = ({ room_id }) => {};
+const banMember = ({ room_id }) => {
+  try{
+
+  }
+  catch(err)
+  {
+    return err.message || false;
+  }
+};
 
 const addPrivateList = ({ room_id }) => {
-  // only private rooms can have rivate lists
+  // only private rooms can have private lists
+  try{
+
+  }
+  catch(err)
+  {
+    return err.message || false;
+  }
 };
 
 const roomEligible = ({ userName }) => {
+  try{
   // user is the one who requested
   let user = getUser(userName);
   room = rooms[user.userName];
@@ -312,13 +369,26 @@ const roomEligible = ({ userName }) => {
     return room;
   }
   return false;
+  }
+  catch(err)
+  {
+    return err.message || false;
+  }
 };
 
 const handleUserDisconnect = (userName) => {
   // need to fill this
+  try{
+
+  }
+  catch(err)
+  {
+    return err.message || false;
+  }
 };
 
 const forwardMsg = ({ userName, content, toTeam }, { socket }) => {
+  try{
   const { room_id, team_name } = getUser(userName);
 
   // not in a room
@@ -330,9 +400,15 @@ const forwardMsg = ({ userName, content, toTeam }, { socket }) => {
   }
   socket.to(rcvrs).broadcast.emit(RCV_MSG, { userName, content, toTeam });
   return true;
+  }
+  catch(err)
+  {
+    return err.message || false;
+  }
 };
 
 const startCompetition = async ({ userName }, { socket, io }) => {
+  try{
   // check if user is admin of a room
   const user = getUser(userName),
     room = rooms[user.room_id];
@@ -359,18 +435,46 @@ const startCompetition = async ({ userName }, { socket, io }) => {
   console.log("startCompetition -> members", members);
 
   return true;
+  }
+  catch(err)
+  {
+    return err.message || false;
+  }
 };
 
 // @util function to check if all teams have atleast min_size member
 const atLeastPerTeam = (room_id, min_size = 1) => {
+  try{
   for (const [name, memList] of Object.entries(rooms[room_id].teams)) {
     if (memList.length < min_size) return false;
   }
   return true;
+  }
+  catch(err)
+  {
+    return err.message || false;
+  }
 };
 
-const getRoomData = (room_id) => rooms[room_id];
-const getRoomsData = () => rooms;
+const getRoomData = (room_id) => {
+  try{
+    rooms[room_id]
+  }
+  catch(err)
+  {
+    return err.message || false;
+  }
+};
+
+const getRoomsData = () => {
+  try{
+    rooms
+  }
+  catch(err)
+  {
+    return err.message || false;
+  }
+};
 
 module.exports = {
   createRoom,
