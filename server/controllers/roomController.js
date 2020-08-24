@@ -1,5 +1,5 @@
 const { encryptData } = require("../utils/auth");
-const { setRoom, getUser, setTeam } = require("./userController");
+const { setRoom, getUser, setTeam, mapNameToId } = require("./userController");
 const { getQuestions } = require("../utils/qapiConn");
 const {
   ROOM_UPDATED,
@@ -9,7 +9,13 @@ const {
   LEFT_TEAM,
   LEFT_ROOM,
   TEAM_CREATED,
+  VETO_START,
+  VETO_STOP,
+  COMPETITION_STARTED,
+  COMPETITION_STOPPED,
 } = require("../socketActions/serverActions");
+
+const { io } = require("../server");
 
 // this is my db for now
 rooms = {};
@@ -50,17 +56,18 @@ const createRoom = (config, { socket }) => {
         bench: [config.admin],
       },
       competition: {
-        questions: {},
+        questions: [],
         max_questions: config.max_questions || 4,
         contestStartedAt: null,
         contnetEndedAt: null,
-        contestOngoing: false,
+        contestOn: false,
         timeLimit: config.timeLimit || 2700000,
         veto: {
           allQuestions: {},
           votes: {},
           voted: [],
-          vetoOngoing: false,
+          max_vote: config.max_votes || 1,
+          vetoOn: false,
         },
         scoreboard: {},
       },
@@ -314,7 +321,7 @@ const roomEligible = ({ userName }) => {
   return false;
 };
 
-const handleUserDisconnect = (userName) => {
+const handleUserDisconnect = ({ userName }) => {
   // need to fill this
 };
 
@@ -332,33 +339,126 @@ const forwardMsg = ({ userName, content, toTeam }, { socket }) => {
   return true;
 };
 
-const startCompetition = async ({ userName }, { socket, io }) => {
-  // check if user is admin of a room
-  const user = getUser(userName),
-    room = rooms[user.room_id];
+const registerVotes = ({ userName, votes }, { socket }) => {
+  try {
+    const { room_id, team_name } = getUser(userName),
+      room = rooms[room_id],
+      { vetoOn, voted, allQuestions, max_vote } = room.competition.veto;
 
-  // room exists
-  // user is admin
-  // 2 or more members are there
-  // 2 or more teams required
-  // each team should hav atleast member
-  if (
-    !room ||
-    room.config.admin !== userName ||
-    room.state.cur_memCount < 2 ||
-    Object.keys(room.teams).length < 2 ||
-    !atLeastPerTeam(room_id)
-  ) {
-    return false;
+    // should be in a team
+    // veto should be on
+    // should not have already voted
+    if (!team_name || !vetoOn || voted.includes(userName)) {
+      throw new Error("Not in a team or voting stopped or already voted");
+    }
+
+    votes = votes.filter((id) => allQuestions.includes(id));
+    // votes should be unique
+    votes = [...new Set(votes)];
+    // should not excede max_votes allowed
+    if (votes.length > max_vote) votes = votes.slice(0, max_vote);
+    // note votes
+    votes.forEach((id) => {
+      rooms[room_id].competition.veto.votes[id] += 1;
+    });
+    rooms[room_id].competition.veto.voted.push(userName);
+    return rooms[room_id].competition.veto;
+  } catch (err) {
+    return err.message;
   }
+};
 
-  // start veto now
-  const allQuestions = await getQuestions(10);
+const doVeto = async (quesIds, room_id, count, socket) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const room = rooms[room_id];
+      if (
+        rooms[room_id].competition.contestOn ||
+        rooms[room_id].competition.veto.vetoOn
+      ) {
+        throw new Error("Veto not allowed now");
+      }
 
-  const members = io.sockets.clients(room_id);
-  console.log("startCompetition -> members", members);
+      // set the room state
+      rooms[room_id].competition.veto.vetoOn = true;
+      rooms[room_id].competition.veto.allQuestions = quesIds;
 
-  return true;
+      // iitailize votes with 0
+      rooms[room_id].competition.veto.votes = {};
+      rooms[room_id].competition.veto.voted = [];
+      quesIds.forEach((id) => {
+        rooms[room_id].competition.veto.votes[id] = 0;
+      });
+
+      // tell every1 voting started
+      socket.to(room_id).emit(VETO_START, quesIds);
+
+      setTimeout(() => {
+        // no need to remove listeners
+        // all of them are volatile listners
+        // calculate veto results
+
+        rooms[room_id].competition.veto.vetoOn = false;
+        const results = Object.entries(rooms[room_id].competition.veto.votes);
+        results = results.sort((a, b) => b[1] - a[1]).slice(0, count);
+        // take only qids
+        results = results.map((ele) => ele[0]);
+        rooms[room_id].competition.questions = results;
+
+        socket.to(room_id).emit(VETO_STOP, results);
+        resolve(results);
+      }, 300000);
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+
+const startCompetition = async ({ userName }, { socket }) => {
+  try {
+    console.log("Starting competition");
+
+    const user = getUser(userName),
+      room = rooms[user.room_id];
+
+    // room exists
+    // user is admin
+    // 2 or more members are there
+    // 2 or more teams required
+    // each team should hav atleast member
+    // and no ongoing contest
+    if (
+      !room ||
+      room.config.admin !== userName ||
+      room.state.cur_memCount < 2 ||
+      Object.keys(room.teams).length < 2 ||
+      !atLeastPerTeam(room_id) ||
+      rooms[room_id].competition.contestOn ||
+      rooms[room_id].competition.veto.vetoOn
+    ) {
+      return false;
+    }
+
+    // start veto now
+    const allQuestions = await getQuestions(10);
+    await doVeto(allQuestions, room_id, 3, socket);
+
+    // start competition now
+    room[room_id].competition.contestOn = true;
+    room[room_id].competition.contestStartedAt = Data.now();
+    socket.to(room_id).emit(COMPETITION_STARTED, room[room_id].competition);
+
+    // code for stopping competition
+    setTimeout(() => {
+      room[room_id].competition.contestOn = false;
+      room[room_id].competition.contnetEndedAt = Date.now();
+      socket.to(room_id).emit(COMPETITION_STOPPED, room[room_id].competition);
+    }, room.competition.timeLimit);
+
+    return room[room_id].competition;
+  } catch (err) {
+    return err.message;
+  }
 };
 
 // @util function to check if all teams have atleast min_size member
@@ -386,4 +486,5 @@ module.exports = {
   forwardMsg,
   handleUserDisconnect,
   startCompetition,
+  registerVotes,
 };

@@ -46,6 +46,10 @@ const setTeam = (userName, team_name) => {
   return false;
 };
 
+const mapNameToId = (ids) => {
+  return ids.map((id) => user[id].socket_id);
+};
+
 const getUser = (userName) => users[userName];
 
 const getUserData = () => users;
@@ -57,4 +61,5 @@ module.exports = {
   getUser,
   removeUser,
   setTeam,
+  mapNameToId,
 };

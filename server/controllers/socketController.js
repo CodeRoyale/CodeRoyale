@@ -9,6 +9,7 @@ const {
   SEND_MSG,
   LEAVE_TEAM,
   GET_ROOM,
+  VETO_VOTES,
 } = require("../socketActions/userActions");
 const {
   CONNECTION_ACK,
@@ -25,7 +26,7 @@ const {
   getRoomData,
   leaveTeam,
   closeRoom,
-  roomEligible,
+  registerVotes,
   startCompetition,
   forwardMsg,
 } = require("../controllers/roomController");
@@ -81,16 +82,18 @@ const genericActionCreater = (
   failReply = "Some error occured !",
   ACTION = ""
 ) => (dataFromClient, cb) => {
-  // only passes userName
+  // if user didnt pass anything
+  if (!dataFromClient) dataFromClient = {};
   dataFromClient.userName = dataFromServer.socket.userDetails.userName;
   let data = actionResponder(dataFromClient, dataFromServer) || failReply;
   if (data != failReply) {
     console.log(`${ACTION} succesfull !`);
   }
-  cb(data);
+  // if user has passed a callback
+  if (cb) cb(data);
 };
 
-const handleUserEvents = (socket, io) => {
+const handleUserEvents = (socket) => {
   // auth middle ware will set this based on jwt payload
   // ideal
   // socket.on(
@@ -111,9 +114,10 @@ const handleUserEvents = (socket, io) => {
   socket.on(SEND_MSG, genericActionCreater(forwardMsg, { socket }));
   socket.on(LEAVE_TEAM, genericActionCreater(leaveTeam, { socket }));
   socket.on(GET_ROOM, genericActionCreater(getRoomData, { socket }));
+  socket.on(VETO_VOTES, genericActionCreater(registerVotes, { socket }));
   socket.on(
     START_COMPETITION,
-    genericActionCreater(startCompetition, { socket, io })
+    genericActionCreater(startCompetition, { socket })
   );
   socket.on("disconnect", () => {
     // removeUser(socket.userDetails.userName);
