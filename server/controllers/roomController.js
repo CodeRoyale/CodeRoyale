@@ -490,7 +490,7 @@ const startCompetition = async ({ userName }, { socket }) => {
       return false;
     }
 
-    // start veto now
+    // start veto now and wait for it to end
     const allQuestions = await getQuestions(10);
     await doVeto(allQuestions, room_id, 3, socket);
 
@@ -526,7 +526,7 @@ const atLeastPerTeam = (room_id, min_size = 1) => {
 
 const getRoomData = (room_id) => {
   try {
-    rooms[room_id];
+    return rooms[room_id];
   } catch (err) {
     return err.message;
   }
@@ -534,7 +534,7 @@ const getRoomData = (room_id) => {
 
 const getRoomsData = () => {
   try {
-    rooms;
+    return rooms;
   } catch (err) {
     return err.message;
   }

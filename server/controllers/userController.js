@@ -65,7 +65,7 @@ const setTeam = (userName, team_name) => {
 
 const getUser = (userName) => {
   try {
-    users[userName];
+    return users[userName];
   } catch (err) {
     return err.message || false;
   }
@@ -73,7 +73,7 @@ const getUser = (userName) => {
 
 const getUserData = () => {
   try {
-    users;
+    return users;
   } catch (err) {
     return err.message || false;
   }
@@ -86,5 +86,4 @@ module.exports = {
   getUser,
   removeUser,
   setTeam,
-  mapNameToId,
 };
