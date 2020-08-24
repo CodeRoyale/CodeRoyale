@@ -63,7 +63,7 @@ const io = socketio(server, {
 });
 
 try {
-  io.use(authUser).on("connection", (socket) => handleUserEvents(socket, io));
+  io.use(authUser).on("connection", handleUserEvents);
 } catch (err) {
   console.log(err.message);
 }
