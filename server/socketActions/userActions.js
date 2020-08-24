@@ -32,6 +32,9 @@ const LEAVE_TEAM = "LEAVE_TEAM";
 // send msg to team or room
 const SEND_MSG = "SEND_MSG";
 
+// client's votes
+const VETO_VOTES = "VETO_VOTES";
+
 module.exports = {
   CONNECTION,
   CREATE_ROOM,
@@ -44,4 +47,5 @@ module.exports = {
   SEND_MSG,
   LEAVE_TEAM,
   GET_ROOM,
+  VETO_VOTES,
 };

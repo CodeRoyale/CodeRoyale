@@ -23,6 +23,17 @@ const TEAM_CREATED = "TEAM_CREATED";
 // to forward sent message
 const RCV_MSG = "RCV_MSG";
 
+// veto has started
+const VETO_START = "VETO_START";
+// veto has stopeed
+const VETO_STOP = "VETO_STOP";
+
+// competiion has started
+const COMPETITION_STARTED = "COMPETITION_STARTED";
+
+// competiion has started
+const COMPETITION_STOPPED = "COMPETITION_STOPPED";
+
 module.exports = {
   CONNECTION_ACK,
   CONNECTION_DENY,
@@ -33,4 +44,8 @@ module.exports = {
   LEFT_ROOM,
   RCV_MSG,
   TEAM_CREATED,
+  VETO_START,
+  VETO_STOP,
+  COMPETITION_STARTED,
+  COMPETITION_STOPPED,
 };
