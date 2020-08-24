@@ -5,7 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 function Chat({ socket }) {
   const [state, setState] = useState({ message: '', name: 'userName' });
-  const [messageList, setList] = useState([]);
+  const [messageList, setMsgList] = useState([]);
+  const [userList, setUserList] = useState([]);
 
   const handleMessageChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
@@ -13,14 +14,13 @@ function Chat({ socket }) {
 
   useEffect(() => {
     socket.on('RCV_MSG', (data) => {
-      console.log(data);
-      console.log(data.content);
       const newList = messageList.concat({
         id: uuidv4(),
-        source: data.userName + ': ',
+        source: data.userName + ':  ',
         msg: data.content,
+        color: 'red',
       });
-      setList(newList);
+      setMsgList(newList);
     });
   }, [socket, messageList]);
 
@@ -31,10 +31,11 @@ function Chat({ socket }) {
 
     const newList = messageList.concat({
       id: uuidv4(),
-      source: 'You: ',
+      source: 'You:  ',
       msg: message,
+      color: 'green',
     });
-    setList(newList);
+    setMsgList(newList);
 
     console.log(message);
     console.log(socket);
@@ -51,8 +52,11 @@ function Chat({ socket }) {
         <ul>
           {messageList.map((item) => (
             <li key={item.id}>
-              {item.source}
-              {item.msg}
+              <div className='chat-row'>
+                <div style={{ color: item.color }}>{item.source}</div>
+                <div className='chat-spacing'></div>
+                {item.msg}
+              </div>
             </li>
           ))}
         </ul>

@@ -31,6 +31,10 @@
 .chat-input {
   display: flex;
 }
+
+.chat-spacing {
+  width: 10px;
+}
 .chat-header {
   background-color: #dd2c00;
   color: white;
@@ -46,6 +50,10 @@
   margin: 10px;
   display: flex;
   flex-direction: column-reverse;
+}
+
+.chat-row {
+  display: flex;
 }
 
 .chat-body {
