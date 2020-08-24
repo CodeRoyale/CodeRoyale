@@ -68,6 +68,7 @@ const createRoom = (config, { socket }) => {
             votes: {},
             voted: [],
             vetoOngoing: false,
+	    max_vote :  config.max_vote || 1
           },
           scoreboard: {},
         },
