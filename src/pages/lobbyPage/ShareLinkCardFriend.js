@@ -4,6 +4,7 @@ import CreateRoomView from './CreateRoomView';
 import JoinRoomView from './JoinRoomView';
 import ChooseRoomView from './ChooseRoomView';
 import io from 'socket.io-client';
+import SocketContext from '../../utils/SocketContext';
 
 function ShareLinkCardFriend(props) {
   const profileData = props.profileData;
@@ -21,10 +22,18 @@ function ShareLinkCardFriend(props) {
   if (connectionResponse === CONNECTION_ACK) {
     switch (chooseOption) {
       case 'CREATE_ROOM':
-        chosenView = <CreateRoomView socket={socket} />;
+        chosenView = (
+          <SocketContext.Provider value={socket}>
+            <CreateRoomView />
+          </SocketContext.Provider>
+        );
         break;
       case 'JOIN_ROOM':
-        chosenView = <JoinRoomView socket={socket} />;
+        chosenView = (
+          <SocketContext.Provider value={socket}>
+            <JoinRoomView />
+          </SocketContext.Provider>
+        );
         break;
       default:
         chosenView = (
