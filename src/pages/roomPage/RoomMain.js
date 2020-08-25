@@ -7,6 +7,7 @@ import TeamCard from './TeamCard';
 import CopyRoomCodeView from './CopyRoomCodeView';
 import RoomDetails from './RoomDetails';
 import CloseRoomView from './CloseRoomView';
+import StartCompetitionButton from './StartCompetitionButton';
 import ERROR_MSG from '../../utils/constants';
 
 const RoomMain = (props) => {
@@ -122,6 +123,9 @@ const RoomMain = (props) => {
           </div>
           <div className='room-details-close-room-container'>
             <CloseRoomView setState={setState} />
+          </div>
+          <div className='room-details-start-competitions-container'>
+            <StartCompetitionButton socket={socket} />
           </div>
         </div>
         <div className='room-right-section'>{team_cards}</div>
