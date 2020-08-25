@@ -86,26 +86,14 @@ const genericActionCreater = (
   if (!dataFromClient) dataFromClient = {};
   dataFromClient.userName = dataFromServer.socket.userDetails.userName;
   let data = actionResponder(dataFromClient, dataFromServer) || failReply;
-  if (data != failReply) {
-    console.log(`${ACTION} succesfull !`);
-  }
+
+  console.log(data);
+
   // if user has passed a callback
   if (cb) cb(data);
 };
 
 const handleUserEvents = (socket) => {
-  // auth middle ware will set this based on jwt payload
-  // ideal
-  // socket.on(
-  //   CREATE_ROOM,
-  //   genericActionCreater(
-  //     createRoom,
-  //     getRoomData,
-  //     "Could'nt create room !",
-  //     CREATE_ROOM
-  //   )
-  // );
-  // but below approach is shorter
   socket.on(CREATE_ROOM, genericActionCreater(createRoom, { socket }));
   socket.on(JOIN_ROOM, genericActionCreater(joinRoom, { socket }));
   socket.on(CREATE_TEAM, genericActionCreater(createTeam, { socket }));

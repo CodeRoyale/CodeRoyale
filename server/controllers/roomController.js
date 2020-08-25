@@ -83,11 +83,12 @@ const createRoom = (config, { socket }) => {
     // user already has an active room
     return rooms[room_id];
   } catch (err) {
-    return err.message;
+    return { error: err.message };
   }
 };
 
 // users connecting to room
+// TODO -> refactor this fn if should return error
 const joinRoom = ({ userName, room_id, team_name }, { socket }) => {
   try {
     if (
@@ -102,7 +103,7 @@ const joinRoom = ({ userName, room_id, team_name }, { socket }) => {
       let user = getUser(userName);
       if (user.room_id) {
         // already in a grp dont allow
-        return false;
+        throw new Error("User already in room");
       }
 
       // succesfull (user will now be added)
@@ -143,7 +144,7 @@ const joinRoom = ({ userName, room_id, team_name }, { socket }) => {
     }
     return false;
   } catch (err) {
-    return err.message;
+    return { error: err.message };
   }
 };
 
@@ -194,7 +195,7 @@ const removeUserFromRoom = ({ userName }) => {
 
     return true;
   } catch (err) {
-    return err.message;
+    return { error: err.message };
   }
 };
 
@@ -206,7 +207,7 @@ const createTeam = ({ userName, team_name }, { socket }) => {
     const { room_id } = getUser(userName);
     // if user not in room or not admin of the room
     if (!room_id || rooms[room_id].config.admin !== userName) {
-      return false;
+      throw new Error("Only admin can do this");
     }
 
     if (
@@ -225,7 +226,7 @@ const createTeam = ({ userName, team_name }, { socket }) => {
     }
     return false;
   } catch (err) {
-    return err.message;
+    return { error: err.message };
   }
 };
 
@@ -242,7 +243,7 @@ const joinTeam = ({ userName, team_name }, { socket }) => {
     ) {
       if (user.team_name) {
         //ditch prev team
-        return false;
+        throw new Error("Already in a team");
       }
 
       // remove from bench
@@ -267,7 +268,7 @@ const joinTeam = ({ userName, team_name }, { socket }) => {
     }
     return false;
   } catch (err) {
-    return err.message;
+    return { error: err.message };
   }
 };
 
@@ -294,7 +295,7 @@ const leaveTeam = ({ userName }, { socket }) => {
     }
     return false;
   } catch (err) {
-    return err.message;
+    return { error: err.message };
   }
 };
 
@@ -324,7 +325,7 @@ const closeRoom = ({ userName }) => {
     }
     return false;
   } catch (err) {
-    return err.message;
+    return { error: err.message };
   }
 };
 
@@ -333,7 +334,7 @@ const closeRoom = ({ userName }) => {
 const banMember = ({ room_id }) => {
   try {
   } catch (err) {
-    return err.message;
+    return { error: err.message };
   }
 };
 
@@ -341,7 +342,7 @@ const addPrivateList = ({ room_id }) => {
   // only private rooms can have private lists
   try {
   } catch (err) {
-    return err.message;
+    return { error: err.message };
   }
 };
 
@@ -361,7 +362,7 @@ const roomEligible = ({ userName }) => {
     }
     return false;
   } catch (err) {
-    return err.message;
+    return { error: err.message };
   }
 };
 
@@ -369,7 +370,7 @@ const handleUserDisconnect = ({ userName }) => {
   // need to fill this
   try {
   } catch (err) {
-    return err.message;
+    return { error: err.message };
   }
 };
 
@@ -387,7 +388,7 @@ const forwardMsg = ({ userName, content, toTeam }, { socket }) => {
     socket.to(rcvrs).broadcast.emit(RCV_MSG, { userName, content, toTeam });
     return true;
   } catch (err) {
-    return err.message;
+    return { error: err.message };
   }
 };
 
@@ -416,7 +417,7 @@ const registerVotes = ({ userName, votes }, { socket }) => {
     rooms[room_id].competition.veto.voted.push(userName);
     return rooms[room_id].competition.veto;
   } catch (err) {
-    return err.message;
+    return { error: err.message };
   }
 };
 
@@ -468,8 +469,6 @@ const doVeto = async (quesIds, room_id, count, socket) => {
 
 const startCompetition = async ({ userName }, { socket }) => {
   try {
-    console.log("Starting competition");
-
     const user = getUser(userName),
       room = rooms[user.room_id];
 
@@ -488,9 +487,10 @@ const startCompetition = async ({ userName }, { socket }) => {
       rooms[room_id].competition.contestOn ||
       rooms[room_id].competition.veto.vetoOn
     ) {
-      return false;
+      throw new Error("Room does not meet requirements");
     }
 
+    console.log("Starting competition", userName);
     // start veto now and wait for it to end
     const allQuestions = await getQuestions(10);
     await doVeto(allQuestions, room_id, 3, socket);
@@ -509,7 +509,7 @@ const startCompetition = async ({ userName }, { socket }) => {
 
     return room[room_id].competition;
   } catch (err) {
-    return err.message;
+    return { error: err.message };
   }
 };
 
@@ -521,7 +521,7 @@ const atLeastPerTeam = (room_id, min_size = 1) => {
     }
     return true;
   } catch (err) {
-    return err.message;
+    return { error: err.message };
   }
 };
 
@@ -529,7 +529,7 @@ const getRoomData = ({ room_id }) => {
   try {
     return rooms[room_id];
   } catch (err) {
-    return err.message;
+    return { error: err.message };
   }
 };
 
@@ -537,7 +537,7 @@ const getRoomsData = () => {
   try {
     return rooms;
   } catch (err) {
-    return err.message;
+    return { error: err.message };
   }
 };
 
