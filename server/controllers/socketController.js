@@ -79,18 +79,29 @@ const authUser = (socket, next) => {
 const genericActionCreater = (
   actionResponder,
   dataFromServer,
+  asynFunc = false,
   failReply = "Some error occured !",
   ACTION = ""
 ) => (dataFromClient, cb) => {
   // if user didnt pass anything
   if (!dataFromClient) dataFromClient = {};
   dataFromClient.userName = dataFromServer.socket.userDetails.userName;
-  let data = actionResponder(dataFromClient, dataFromServer) || failReply;
-
-  console.log(data);
-
-  // if user has passed a callback
-  if (cb) cb(data);
+  let data;
+  if (!asynFunc) {
+    data = actionResponder(dataFromClient, dataFromServer) || failReply;
+    console.log(data);
+    if (cb) cb(data);
+  } else {
+    actionResponder(dataFromClient, dataFromServer)
+      .then((data) => {
+        console.log(data);
+        if (cb) cb(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        if (cb) cb(err.message);
+      });
+  }
 };
 
 const handleUserEvents = (socket) => {
@@ -105,7 +116,7 @@ const handleUserEvents = (socket) => {
   socket.on(VETO_VOTES, genericActionCreater(registerVotes, { socket }));
   socket.on(
     START_COMPETITION,
-    genericActionCreater(startCompetition, { socket })
+    genericActionCreater(startCompetition, { socket }, true)
   );
   socket.on("disconnect", () => {
     // removeUser(socket.userDetails.userName);
