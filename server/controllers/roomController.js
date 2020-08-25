@@ -68,7 +68,7 @@ const createRoom = (config, { socket }) => {
             votes: {},
             voted: [],
             vetoOngoing: false,
-	    max_vote :  config.max_vote || 1
+            max_vote: config.max_vote || 1,
           },
           scoreboard: {},
         },
@@ -525,7 +525,7 @@ const atLeastPerTeam = (room_id, min_size = 1) => {
   }
 };
 
-const getRoomData = (room_id) => {
+const getRoomData = ({ room_id }) => {
   try {
     return rooms[room_id];
   } catch (err) {
