@@ -7,10 +7,15 @@ const GoogleAuth = (props) => {
   // Google Client ID from .env file
   const googleClientID = process.env.REACT_APP_CLIENT_ID;
 
-  // This function is called on successful login from google...
+  // This function is called on successful auth from google...
   const responseSuccess = (response) => {
+    const authData = {
+      access_token: response.wc.id_token,
+      issuer: 'google',
+      signUpType: 'OAuth',
+    };
     // Send back data to called function
-    props.getGoogleData(response);
+    props.getAuthData(authData);
   };
 
   return (

@@ -12,24 +12,24 @@ const SignUpSec = (props) => {
     <LoadingOutlined style={{ fontSize: 30, color: '#dd2c00' }} spin />
   );
 
-  // Send back successful Google Data to SignUpMain
-  const handleGoogleData = (data) => {
-    props.getGoogleData(data);
+  // Send back successful auth data to SignUpMain
+  const handleAuthData = (data) => {
+    props.getAuthData(data);
   };
 
   let content = (
     <div className='signup-section-container'>
       <div className='signup-section-content'>
         <center>
-          <p className='signup-section-title'>
+          <div className='signup-section-title'>
             Sign up for <LogoContainer />{' '}
-          </p>
-          <GoogleAuth
-            text='Sign up with Google'
-            getGoogleData={handleGoogleData}
-          />
+          </div>
+          <GoogleAuth text='Sign up with Google' getAuthData={handleAuthData} />
           <div className='signup-auth-separator'></div>
-          <FacebookAuth text='Sign up with Facebook' />
+          <FacebookAuth
+            text='Sign up with Facebook'
+            getAuthData={handleAuthData}
+          />
           <p className='signup-section-sign-up'>
             Already a member?{' '}
             <Link to='/login' style={{ textDecoration: 'none' }}>

@@ -6,7 +6,7 @@ import { message } from 'antd';
 import { Redirect } from 'react-router';
 
 const SignUpMain = () => {
-  const [googleData, setGoogleData] = useState(null);
+  const [authData, setAuthData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSignedUp, setIsSignedUp] = useState(false);
   const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
@@ -22,13 +22,13 @@ const SignUpMain = () => {
     message.success(msg);
   };
 
-  const handleGoogleData = (data) => {
-    setGoogleData(data);
+  const handleAuthData = (data) => {
+    setAuthData(data);
   };
 
   // API call to signup API
   useEffect(() => {
-    if (googleData != null) {
+    if (authData != null) {
       setIsLoading(true);
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
@@ -36,9 +36,9 @@ const SignUpMain = () => {
       headers.append('Access-Control-Allow-Credentials', 'true');
       // Data to be sent to API
       const thirdPartyData = {
-        issuer: 'google',
+        issuer: authData.issuer,
         signUpType: 'native',
-        idToken: googleData.wc.id_token,
+        idToken: authData.access_token,
       };
       fetch(SIGNUP_API, {
         method: 'POST',
@@ -49,7 +49,6 @@ const SignUpMain = () => {
         .then((jsonRes) => {
           // Success response from server
           setIsLoading(false);
-          setGoogleData(null);
           // Alerts based on response
           if (jsonRes.message === 'User Account Created') {
             signUpSuccess(
@@ -73,13 +72,13 @@ const SignUpMain = () => {
           signUpError('Sorry, couldnt sign up. Please try again later!');
         });
     }
-  }, [googleData, CLIENT_URL, SIGNUP_API]);
+  }, [authData, CLIENT_URL, SIGNUP_API]);
 
   // Default content
   let content = (
     <div className='signup-page'>
       <LeftSecSignUp />
-      <SignUpSec isLoading={isLoading} getGoogleData={handleGoogleData} />
+      <SignUpSec isLoading={isLoading} getAuthData={handleAuthData} />
     </div>
   );
 

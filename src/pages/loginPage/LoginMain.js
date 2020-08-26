@@ -6,7 +6,7 @@ import { message } from 'antd';
 import { Redirect } from 'react-router';
 
 const LoginMain = () => {
-  const [googleData, setGoogleData] = useState(null);
+  const [authData, setAuthData] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
@@ -22,13 +22,13 @@ const LoginMain = () => {
     message.success(msg);
   };
 
-  const handleGoogleData = (data) => {
-    setGoogleData(data);
+  const handleAuthData = (data) => {
+    setAuthData(data);
   };
 
   // API call to login API
   useEffect(() => {
-    if (googleData != null) {
+    if (authData != null) {
       setIsLoading(true);
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
@@ -36,8 +36,8 @@ const LoginMain = () => {
       headers.append('Access-Control-Allow-Credentials', 'true');
       // Data to be sent to API
       const thirdPartyData = {
-        issuer: 'google',
-        idToken: googleData.wc.id_token,
+        issuer: authData.issuer,
+        idToken: authData.access_token,
       };
       fetch(LOGIN_API, {
         method: 'POST',
@@ -69,13 +69,13 @@ const LoginMain = () => {
           loginError("Sorry, couldn't login please try again later!");
         });
     }
-  }, [googleData, CLIENT_URL, LOGIN_API]);
+  }, [authData, CLIENT_URL, LOGIN_API]);
 
   // Default content
   let content = (
     <div className='login-page'>
       <LeftSecLogin />
-      <LoginSec isLoading={isLoading} getGoogleData={handleGoogleData} />
+      <LoginSec isLoading={isLoading} getAuthData={handleAuthData} />
     </div>
   );
 

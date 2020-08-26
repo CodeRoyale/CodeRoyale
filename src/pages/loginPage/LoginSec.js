@@ -12,9 +12,9 @@ const LoginSec = (props) => {
     <LoadingOutlined style={{ fontSize: 30, color: '#dd2c00' }} spin />
   );
 
-  // Send back successful Google Data to LoginMain
-  const handleGoogleData = (data) => {
-    props.getGoogleData(data);
+  // Send back successful auth data to LoginMain
+  const handleAuthData = (data) => {
+    props.getAuthData(data);
   };
 
   let content = (
@@ -24,12 +24,12 @@ const LoginSec = (props) => {
           <div className='login-section-title'>
             Sign into <LogoContainer />{' '}
           </div>
-          <GoogleAuth
-            text='Login with Google'
-            getGoogleData={handleGoogleData}
-          />
+          <GoogleAuth text='Login with Google' getAuthData={handleAuthData} />
           <div className='login-auth-separator'></div>
-          <FacebookAuth text='Login with Facebook' />
+          <FacebookAuth
+            text='Login with Facebook'
+            getAuthData={handleAuthData}
+          />
           <p className='login-section-sign-up'>
             Not a member?{' '}
             <Link to='signup' style={{ textDecoration: 'none' }}>
