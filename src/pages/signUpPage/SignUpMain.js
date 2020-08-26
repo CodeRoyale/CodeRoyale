@@ -4,6 +4,7 @@ import LeftSecSignUp from './LeftSecSignUp';
 import SignUpSec from './SignUpSec';
 import { message } from 'antd';
 import { Redirect } from 'react-router';
+import { SIGNUP_SUCCESS, SIGNUP_USER_EXISTS } from '../../utils/constants';
 
 const SignUpMain = () => {
   const [authData, setAuthData] = useState(null);
@@ -50,12 +51,12 @@ const SignUpMain = () => {
           // Success response from server
           setIsLoading(false);
           // Alerts based on response
-          if (jsonRes.message === 'User Account Created') {
+          if (jsonRes.message === SIGNUP_SUCCESS) {
             signUpSuccess(
               'User account has been created successfully. Please login to use CodeRoyale!'
             );
             setIsSignedUp(true);
-          } else if (jsonRes.message === 'User Already Exists') {
+          } else if (jsonRes.message === SIGNUP_USER_EXISTS) {
             signUpError(
               'Sorry, email already exists please sign up with a different email!'
             );

@@ -4,6 +4,7 @@ import LoginSec from './LoginSec';
 import './LoginMain.css';
 import { message } from 'antd';
 import { Redirect } from 'react-router';
+import { LOGIN_SUCCESS, LOGIN_USER_DOESNT_EXIST } from '../../utils/constants';
 
 const LoginMain = () => {
   const [authData, setAuthData] = useState(null);
@@ -48,12 +49,12 @@ const LoginMain = () => {
         .then((jsonRes) => {
           // Success response from server
           setIsLoading(false);
-          if (jsonRes.message === 'Login successful') {
+          if (jsonRes.message === LOGIN_SUCCESS) {
             localStorage.setItem('user-data', JSON.stringify(jsonRes));
             localStorage.setItem('access-token', jsonRes.accessToken);
             setIsLoggedIn(true);
             loginSuccess('Welcome back!');
-          } else if (jsonRes.message === "User Doesn't Exists") {
+          } else if (jsonRes.message === LOGIN_USER_DOESNT_EXIST) {
             setIsLoggedIn(false);
             loginError(
               'Sorry, you will need to sign up first to use CodeRoyale'
