@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './LobbyMain.css';
 import { Redirect } from 'react-router';
 import Button from '../../components/button/Button';
+import ERROR_MSG from '../../utils/constants';
+import SocketContext from '../../utils/SocketContext';
 
-function JoinRoomView({ socket }) {
-  const errorMessage = 'Some error occured !';
+function JoinRoomView() {
   const [joinInputValue, setJoinInputValue] = useState('');
+  const socket = useContext(SocketContext);
   const [state, setState] = useState({
     roomJoined: false,
     joinButtonClicked: false,
@@ -21,7 +23,7 @@ function JoinRoomView({ socket }) {
     if (joinButtonClicked) {
       room_id = joinInputValue.toString().trim();
       socket.emit('JOIN_ROOM', { room_id }, (data) => {
-        if (data !== errorMessage) {
+        if (data !== ERROR_MSG) {
           setState({
             ...state,
             roomJoined: true,
