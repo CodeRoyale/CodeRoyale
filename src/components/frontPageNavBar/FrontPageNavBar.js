@@ -20,21 +20,24 @@ const FrontPageNavBar = () => {
 
   return (
     <div className='frontpage-navbar'>
-      <header>
-        {/* <h2 className='frontpage-logo'>CodeRoyale</h2> */}
+      <header className='frontpage-navbar-header'>
         <LogoContainer />
         <nav>
           <ul className='frontpage-navlinks'>
             <li>
-              <a href='https://www.google.com/'>About</a>
+              <a href='https://github.com/CodeRoyale/codeRoyale-frontend/'>
+                About
+              </a>
             </li>
             <li>
-              <a href='https://www.google.com/'>FAQ</a>
+              <a href='https://github.com/CodeRoyale/codeRoyale-frontend/'>
+                FAQ
+              </a>
             </li>
           </ul>
         </nav>
         <div>
-          <a className='frontpage-nav-signup' href='https://www.google.com/'>
+          <a className='frontpage-nav-signup' href='/signup'>
             Sign up
           </a>
           <Button
