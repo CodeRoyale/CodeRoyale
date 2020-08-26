@@ -5,7 +5,7 @@ import './FacebookAuth.css';
 
 const FacebookAuth = (props) => {
   // Facebook app ID from .env file
-  const facebookAppID = process.env.REACT_APP_APP_ID;
+  const facebookAppID = process.env.REACT_APP_FACEBOOK_APP_ID;
   // Successful auth from facebook...
   const responseSuccess = (response) => {
     const authData = {

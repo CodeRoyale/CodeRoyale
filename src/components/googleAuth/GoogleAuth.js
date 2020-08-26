@@ -5,7 +5,7 @@ import './GoogleAuth.css';
 
 const GoogleAuth = (props) => {
   // Google Client ID from .env file
-  const googleClientID = process.env.REACT_APP_CLIENT_ID;
+  const googleClientID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
   // This function is called on successful auth from google...
   const responseSuccess = (response) => {

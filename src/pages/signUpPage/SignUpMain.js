@@ -11,7 +11,7 @@ const SignUpMain = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSignedUp, setIsSignedUp] = useState(false);
   const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
-  const SIGNUP_API = `${process.env.REACT_APP_SERVER_URL}/users/signup`;
+  const SIGNUP_API = `${process.env.REACT_APP_USER_API_URL}/users/signup`;
 
   // Message to user for signup error
   const signUpError = (msg) => {
@@ -38,8 +38,8 @@ const SignUpMain = () => {
       // Data to be sent to API
       const thirdPartyData = {
         issuer: authData.issuer,
-        signUpType: 'native',
-        idToken: authData.access_token,
+        signUpType: authData.signUpType,
+        access_token: authData.access_token,
       };
       fetch(SIGNUP_API, {
         method: 'POST',

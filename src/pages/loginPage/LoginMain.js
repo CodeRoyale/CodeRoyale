@@ -11,7 +11,7 @@ const LoginMain = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
-  const LOGIN_API = `${process.env.REACT_APP_SERVER_URL}/users/login`;
+  const LOGIN_API = `${process.env.REACT_APP_USER_API_URL}/users/login`;
 
   // Message to user for login error
   const loginError = (msg) => {
@@ -38,7 +38,7 @@ const LoginMain = () => {
       // Data to be sent to API
       const thirdPartyData = {
         issuer: authData.issuer,
-        idToken: authData.access_token,
+        access_token: authData.access_token,
       };
       fetch(LOGIN_API, {
         method: 'POST',
