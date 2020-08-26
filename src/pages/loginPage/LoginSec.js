@@ -19,24 +19,20 @@ const LoginSec = (props) => {
 
   let content = (
     <div className='login-section-container'>
-      <div className='login-section-content'>
-        <center>
-          <div className='login-section-title'>
-            Sign into <LogoContainer />{' '}
-          </div>
-          <GoogleAuth text='Login with Google' getAuthData={handleAuthData} />
-          <div className='login-auth-separator'></div>
-          <FacebookAuth
-            text='Login with Facebook'
-            getAuthData={handleAuthData}
-          />
-          <p className='login-section-sign-up'>
-            Not a member?{' '}
-            <Link to='signup' style={{ textDecoration: 'none' }}>
-              <span className='span-text'>Sign up now</span>
-            </Link>
-          </p>
-        </center>
+      <div className='login-section-title'>
+        Sign into <LogoContainer />{' '}
+      </div>
+      <div>
+        <div className='login-auth-separator'></div>
+        <GoogleAuth text='Login with Google' getAuthData={handleAuthData} />
+        <div className='login-auth-separator'></div>
+        <FacebookAuth text='Login with Facebook' getAuthData={handleAuthData} />
+        <p className='login-section-sign-up'>
+          Not a member?{' '}
+          <Link to='signup' style={{ textDecoration: 'none' }}>
+            <span className='span-text'>Sign up now</span>
+          </Link>
+        </p>
       </div>
     </div>
   );
@@ -44,12 +40,9 @@ const LoginSec = (props) => {
   if (props.isLoading) {
     content = (
       <div className='login-section-container'>
-        <div className='login-section-content'>
-          <center>
-            <p className='login-section-title'>Signing you in...</p>
-            <Spin indicator={ANT_LOADING_ICON} />
-          </center>
-        </div>
+        <p className='login-section-title'>Signing you in...</p>
+        <div className='login-auth-separator'></div>
+        <Spin indicator={ANT_LOADING_ICON} />
       </div>
     );
   }

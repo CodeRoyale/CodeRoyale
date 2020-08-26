@@ -1,47 +1,36 @@
 .login-page {
   display: flex;
-  margin: auto;
-  height: 100%;
   background-color: #f5f8f8;
 }
 
 /* Left section css for login */
 .left-login-container {
-  height: 100%;
-  width: 50%;
+  height: 100vh;
+  width: 100vh;
   background-color: #edb3a4;
-}
-
-.left-login-content {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  width: 100%;
-}
-
-.left-login-image {
-  height: 100%;
-  width: 500px;
 }
 
 /* login secton */
 .login-section-container {
-  height: 100%;
-  width: 50%;
-}
-
-.login-section-content {
-  padding-top: 40%;
+  height: 100vh;
+  width: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .login-section-title {
+  text-align: center;
   font-weight: bold;
   font-size: 24px;
-  margin-bottom: 20px;
 }
 
 .login-section-sign-up {
+  text-align: center;
   margin-top: 15px;
   font-size: 14px;
 }
