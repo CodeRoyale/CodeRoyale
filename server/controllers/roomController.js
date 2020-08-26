@@ -346,26 +346,6 @@ const addPrivateList = ({ room_id }) => {
   }
 };
 
-const roomEligible = ({ userName }) => {
-  try {
-    // user is the one who requested
-    let user = getUser(userName);
-    room = rooms[user.userName];
-
-    // if room exists user also exists
-    if (
-      room &&
-      room.config.admin === user.userName &&
-      Object.keys(room.teams).length > 1
-    ) {
-      return room;
-    }
-    return false;
-  } catch (err) {
-    return { error: err.message };
-  }
-};
-
 const handleUserDisconnect = ({ userName }) => {
   // need to fill this
   try {
@@ -469,8 +449,8 @@ const doVeto = async (quesIds, room_id, count, socket) => {
 
 const startCompetition = async ({ userName }, { socket }) => {
   try {
-    const user = getUser(userName),
-      room = rooms[user.room_id];
+    const { room_id } = getUser(userName),
+      room = rooms[room_id];
 
     // room exists
     // user is admin
@@ -550,7 +530,6 @@ module.exports = {
   getRoomData,
   getRoomsData,
   leaveTeam,
-  roomEligible,
   removeUserFromRoom,
   forwardMsg,
   handleUserDisconnect,
