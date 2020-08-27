@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Animation } from 'rsuite';
 
 function RoomDetails({ config, state, teams }) {
-  let admin = null;
   let playersRoom = 0;
   let max_perRoom = 0;
   let playersTeam = 0;
@@ -10,8 +10,37 @@ function RoomDetails({ config, state, teams }) {
   let max_teams = 0;
   let privateRoom = false;
 
+  let classNameDropDownImage = '';
+  const [moreDetailsClicked, setMoreDetailsClicked] = useState(false);
+  const { Collapse } = Animation;
+  const panel = (
+    <div>
+      <div className='room-details-divider'></div>
+      <div className='room-details-panel-container'>
+        <div className='room-details-panel-data-label'>Max Users</div>
+        <div>{max_perRoom}</div>
+      </div>
+      <div className='room-details-panel-container'>
+        <div className='room-details-panel-data-label'>Max Users per Team</div>
+        <div>{max_perTeam}</div>
+      </div>
+      <div className='room-details-panel-container'>
+        <div className='room-details-panel-data-label'>Max Teams</div>
+        <div>{max_teams}</div>
+      </div>
+      <div className='room-details-panel-container'>
+        <div className='room-details-panel-data-label'>Private Room</div>
+        <div>{privateRoom ? 'Yes' : 'No'}</div>
+      </div>
+    </div>
+  );
+
+  if (moreDetailsClicked) {
+    classNameDropDownImage = 'room-details-more-image-clicked';
+  } else {
+    classNameDropDownImage = 'room-details-more-image';
+  }
   if (config !== null && state !== null && teams !== null) {
-    admin = config.admin;
     max_perRoom = config.max_perRoom;
     max_perTeam = config.max_perTeam;
     max_teams = config.max_teams;
@@ -24,126 +53,38 @@ function RoomDetails({ config, state, teams }) {
   }
   return (
     <div className='room-details'>
-      <div className='room-details-heading'>
-        <b>Room Details</b>
+      <div className='room-details-main-container'>
+        <div className='room-details-main-users'>
+          <div>
+            <b>Users</b>
+          </div>
+          <div className='room-details-main-number'>{playersRoom}</div>
+        </div>
+        <div className='room-details-divider'></div>
+        <div className='room-details-main-teams'>
+          <div>
+            <b>Teams</b>
+          </div>
+          <div className='room-details-main-number'>{teamsNumber}</div>
+        </div>
       </div>
-      <div className='room-details-section'>
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <div className='room-details-left-section'>Room Admin:</div>
-              </td>
-              <td>
-                <div className='room-details-right-section'>
-                  <b>{admin}</b>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div className='room-details-left-section'>
-                  No. of players in room:{' '}
-                </div>
-              </td>
-              <td>
-                <div className='room-details-right-section'>
-                  <b>{playersRoom}</b>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div className='room-details-left-section'>Bench : </div>
-              </td>
-              <td>
-                <div className='room-details-right-section'>
-                  <b>{playersRoom - playersTeam}</b>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div className='room-details-left-section'>
-                  Max players in room:{' '}
-                </div>
-              </td>
-              <td>
-                <div className='room-details-right-section'>
-                  <b>{max_perRoom}</b>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div className='room-details-left-section'>
-                  No. of players in teams:{' '}
-                </div>
-              </td>
-              <td>
-                <div className='room-details-right-section'>
-                  <b>{playersTeam}</b>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div className='room-details-left-section'>
-                  Max players per team:{' '}
-                </div>
-              </td>
-              <td>
-                <div className='room-details-right-section'>
-                  <b>{max_perTeam}</b>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div className='room-details-left-section'>
-                  No. of players left to join team:
-                </div>
-              </td>
-              <td>
-                <div className='room-details-right-section'>
-                  <b>{playersRoom - playersTeam}</b>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div className='room-details-left-section'>No. of teams: </div>
-              </td>
-              <td>
-                <div className='room-details-right-section'>
-                  <b>{teamsNumber}</b>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div className='room-details-left-section'>
-                  Max no. of teams:{' '}
-                </div>
-              </td>
-              <td>
-                <div className='room-details-right-section'>
-                  <b>{max_teams}</b>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div className='room-details-left-section'>Private Room: </div>
-              </td>
-              <td>
-                <div className='room-details-right-section'>
-                  <b>{privateRoom ? 'Yes' : 'No'}</b>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div className='room-details-more-container'>
+        <div
+          className='room-details-more-button'
+          onClick={() => setMoreDetailsClicked((data) => !data)}
+        >
+          <div className='room-details-more-text'>More Details</div>
+          <div className='room-details-more-image-container'>
+            <img
+              className={classNameDropDownImage}
+              src='/images/down-arrow.svg'
+              alt=''
+            />
+          </div>
+        </div>
+        <div>
+          <Collapse in={moreDetailsClicked}>{panel}</Collapse>
+        </div>
       </div>
     </div>
   );

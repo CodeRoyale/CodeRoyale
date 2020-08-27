@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import 'rsuite/lib/styles/index.less';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import FrontPage from './pages/frontPage/FrontPageMain';
 import ProfileSettingsMain from './pages/profileSettingsPage/ProfileSettingsMain';
