@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from 'uuid';
 function Chat({ socket }) {
   const [state, setState] = useState({ message: '', name: 'userName' });
   const [messageList, setMsgList] = useState([]);
-  const [userList, setUserList] = useState([]);
 
   const handleMessageChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
