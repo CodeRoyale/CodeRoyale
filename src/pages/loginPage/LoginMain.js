@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import LeftSecLogin from './LeftSecLogin';
 import LoginSec from './LoginSec';
 import './LoginMain.css';
-import { message } from 'antd';
+import { Alert } from 'rsuite';
 import { Redirect } from 'react-router';
 import { LOGIN_SUCCESS, LOGIN_USER_DOESNT_EXIST } from '../../utils/constants';
 
@@ -15,12 +15,7 @@ const LoginMain = () => {
 
   // Message to user for login error
   const loginError = (msg) => {
-    message.error(msg);
-  };
-
-  // Message to user for login success
-  const loginSuccess = (msg) => {
-    message.success(msg);
+    Alert.error(msg);
   };
 
   const handleAuthData = (data) => {
@@ -53,7 +48,6 @@ const LoginMain = () => {
             localStorage.setItem('user-data', JSON.stringify(jsonRes));
             localStorage.setItem('access-token', jsonRes.accessToken);
             setIsLoggedIn(true);
-            loginSuccess('Welcome back!');
           } else if (jsonRes.message === LOGIN_USER_DOESNT_EXIST) {
             setIsLoggedIn(false);
             loginError(

@@ -1,17 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './SignUpMain.css';
-import { Spin } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
+import { Loader } from 'rsuite';
 import GoogleAuth from '../../components/googleAuth/GoogleAuth';
 import FacebookAuth from '../../components/facebookAuth/FacebookAuth';
 import LogoContainer from '../../components/logoContainer/LogoContainer';
 
 const SignUpSec = (props) => {
-  const ANT_LOADING_ICON = (
-    <LoadingOutlined style={{ fontSize: 30, color: '#dd2c00' }} spin />
-  );
-
   // Send back successful auth data to SignUpMain
   const handleAuthData = (data) => {
     props.getAuthData(data);
@@ -43,9 +38,7 @@ const SignUpSec = (props) => {
   if (props.isLoading) {
     content = (
       <div className='signup-section-container'>
-        <p className='signup-section-title'>Signing you up...</p>
-        <div className='signup-auth-separator'></div>
-        <Spin indicator={ANT_LOADING_ICON} />
+        <Loader size='md' content='Signing you up...' />
       </div>
     );
   }

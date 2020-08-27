@@ -11,6 +11,7 @@ import Arena from './pages/arenaPage/ArenaMain';
 import OutroMain from './pages/outroPage/OutroMain';
 import Testing from './pages/testPage/TestPage';
 import RoomMain from './pages/roomPage/RoomMain';
+import 'rsuite/lib/styles/index.less';
 
 function App() {
   return (
