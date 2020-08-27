@@ -1,10 +1,10 @@
-.signup-page {
+.login-page {
   display: flex;
   background-color: #f5f8f8;
 }
 
-/* Left section for sign up */
-.left-signup-container {
+/* Left section css for login */
+.left-login-container {
   height: 100vh;
   width: 100vh;
   background-color: #edb3a4;
@@ -13,8 +13,8 @@
   align-items: center;
 }
 
-/* Sign up section */
-.signup-section-container {
+/* login secton */
+.login-section-container {
   height: 100vh;
   width: 100vh;
   display: flex;
@@ -23,19 +23,19 @@
   align-items: center;
 }
 
-.signup-section-title {
+.login-section-title {
   text-align: center;
   font-weight: bold;
   font-size: 24px;
 }
 
-.signup-section-sign-up {
+.login-section-sign-up {
   text-align: center;
   margin-top: 15px;
   font-size: 14px;
 }
 
-.signup-auth-separator {
+.login-auth-separator {
   padding: 5px;
 }
 

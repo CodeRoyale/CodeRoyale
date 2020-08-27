@@ -1,0 +1,46 @@
+.footer-container {
+  padding: 120px 380px;
+  background-color: #fcede8;
+}
+
+.footer-links li a {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  text-decoration: none;
+  color: black;
+}
+
+.footer-links {
+  list-style: none;
+}
+
+.footer-links li {
+  display: inline-block;
+  padding: 0px 15px;
+}
+
+.footer-made-with {
+  font-family: 'Roboto', sans-serif;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.footer-social-section {
+  margin-bottom: 20px;
+}
+
+.footer-social {
+  list-style: none;
+}
+
+.footer-social li {
+  display: inline-block;
+  padding: 0px 15px;
+}
+
+.footer-social li a {
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+}

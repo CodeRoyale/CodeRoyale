@@ -1,16 +1,75 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './RoomMain.css';
 import { Redirect } from 'react-router';
 import NavBar from '../../components/navBar/NavBar';
 import CreateTeamView from './CreateTeamView';
 import TeamCard from './TeamCard';
-import Button from '../../components/button/Button';
+import CopyRoomCodeView from './CopyRoomCodeView';
+import RoomDetails from './RoomDetails';
+import CloseRoomView from './CloseRoomView';
+import StartCompetitionButton from './StartCompetitionButton';
+import ERROR_MSG from '../../utils/constants';
 
 const RoomMain = (props) => {
-  const [arenaTestClicked, setArenaTestClicked] = useState(false);
-  // TODO: pass the data object from CreatTeamView.js....
   // TODO: Have to implement, what happens if the user goes to create page again....
-  // TODO: Create Copy-to-clipboard...
+  let room_id = null;
+  let roomTeams = null;
+  let roomConfig = null;
+  let roomState = null;
+  let socket = null;
+
+  // const [teamCreated, setTeamCreated] = useState(false);
+  const [state, setState] = useState({
+    action: null,
+    team_name: null,
+    actionDone: false,
+    roomData: null,
+  });
+
+  // Actions in the room...
+  useEffect(() => {
+    if (state.action !== null) {
+      let team_name = null;
+      if (state.action === 'CREATE_TEAM' || state.action === 'JOIN_TEAM') {
+        team_name = state.team_name;
+      } else if (
+        state.action === 'CLOSE_ROOM' ||
+        state.action === 'LEAVE_TEAM'
+      ) {
+        team_name = null;
+      }
+      socket.emit(state.action, { team_name }, (data) => {
+        if (data !== ERROR_MSG && data !== null) {
+          setState({
+            ...state,
+            action: null,
+            team_name: null,
+            actionDone: true,
+          });
+        }
+        console.log(data);
+      });
+    }
+  });
+
+  // Getting roomData....
+  useEffect(() => {
+    if (socket !== null && (state.actionDone || state.roomData === null)) {
+      socket.emit('GET_ROOM', { room_id }, (data) => {
+        if (data !== ERROR_MSG && data !== null) {
+          setState({ ...data, actionDone: false, roomData: data });
+        }
+        console.log('getRoom', data);
+      });
+    }
+  });
+
+  // Setting all the retrieved data into variables to use...
+  if (state.roomData !== null && state.roomData !== undefined) {
+    roomConfig = state.roomData.config;
+    roomTeams = state.roomData.teams;
+    roomState = state.roomData.state;
+  }
 
   // Checking if the socket and room_id are not null...
   if (props.location.props === undefined) {
@@ -18,9 +77,8 @@ const RoomMain = (props) => {
   }
 
   // Initializations....
-  const socket = props.location.props.socket;
-  const room_id = props.location.props.room_id;
-  console.log('Room Created with room id: ' + room_id);
+  room_id = props.location.props.room_id;
+  socket = props.location.props.socket;
 
   // Checking if the user is logged-in...
   const accessToken = localStorage.getItem('access-token');
@@ -28,22 +86,16 @@ const RoomMain = (props) => {
     return <Redirect to='/' />;
   }
 
-  //Example data....
-  // const socket = null;
-  // const room_id = null;
-  const data = {
-    team1: ['Mayur', 'Anugya'],
-    team2: ['Alan', 'joel'],
-    team3: ['Justin'],
-    team4: ['Donald', 'Chirag', 'Sachin', 'Sanith'],
-    team5: ['Sawarni', 'Swaroop'],
-  };
-
   // Setting Team Cards...
   let team_cards = [];
-  for (var team_name in data) {
+  for (var team_name in roomTeams) {
     team_cards.push(
-      <TeamCard key={team_name} team_name={team_name} team={data[team_name]} />
+      <TeamCard
+        setState={setState}
+        key={team_name}
+        team_name={team_name}
+        team={roomTeams[team_name]}
+      />
     );
   }
 
@@ -78,10 +130,30 @@ const RoomMain = (props) => {
         /********************************/
       }
       <div className='room-body'>
-        <div className='room-create-team-container'>
-          <CreateTeamView socket={socket} room_id={room_id} />
+        <div className='room-left-section'>
+          <div className='room-copy-code'>
+            <CopyRoomCodeView room_id={room_id} />
+          </div>
+
+          <div className='room-create-team'>
+            <CreateTeamView setState={setState} />
+          </div>
+
+          <div className='room-details-container'>
+            <RoomDetails
+              config={roomConfig}
+              state={roomState}
+              teams={roomTeams}
+            />
+          </div>
+          <div className='room-details-close-room-container'>
+            <CloseRoomView setState={setState} />
+          </div>
+          <div className='room-details-start-competitions-container'>
+            <StartCompetitionButton socket={socket} />
+          </div>
         </div>
-        <div className='room-team-display-container'>{team_cards}</div>
+        <div className='room-right-section'>{team_cards}</div>
       </div>
     </div>
   );

@@ -2,9 +2,9 @@
 .btn {
   border: none;
   color: whitesmoke;
-  border-radius: 5px;
-  font-size: 15px;
   cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19);
   transition-duration: 0.2s;
 }
@@ -25,15 +25,27 @@
 /* Button styles options */
 
 .btn--primary--normal {
+  border-radius: 5px;
+  font-size: 15px;
   background-color: var(--primary-color);
 }
 
 .btn--primary--logout {
+  border-radius: 5px;
+  font-size: 15px;
   background-color: var(--log-out);
 }
 
 .btn--primary--signin {
-  background-color: var(--sign-in);
+  border-radius: 50px;
+  font-size: 15px;
+  background-color: var(--primary-color);
+}
+
+.btn--primary--circle {
+  border-radius: 50px;
+  font-size: 20px;
+  background-color: var(--primary-color);
 }
 
 /* Button size options */
@@ -50,4 +62,9 @@
 .btn--large {
   width: 290px;
   height: 30px;
+}
+
+.btn--extra--large {
+  width: 200px;
+  height: 60px;
 }

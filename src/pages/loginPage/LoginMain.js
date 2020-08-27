@@ -1,35 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import LeftSecSignIn from './LeftSecSignIn';
-import SignInSec from './SignInSec';
-import './SignInMain.css';
+import LeftSecLogin from './LeftSecLogin';
+import LoginSec from './LoginSec';
+import './LoginMain.css';
 import { message } from 'antd';
-import 'antd/dist/antd.css';
 import { Redirect } from 'react-router';
+import { LOGIN_SUCCESS, LOGIN_USER_DOESNT_EXIST } from '../../utils/constants';
 
-const SignInMain = () => {
-  const [googleData, setGoogleData] = useState(null);
+const LoginMain = () => {
+  const [authData, setAuthData] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
-  const SIGNIN_API = `${process.env.REACT_APP_SERVER_URL}/users/login`;
+  const LOGIN_API = `${process.env.REACT_APP_USER_API_URL}/users/login`;
 
-  // Message to user for sign in error
-  const signInError = (msg) => {
+  // Message to user for login error
+  const loginError = (msg) => {
     message.error(msg);
   };
 
-  // Message to user for sign in success
-  const signInSuccess = (msg) => {
+  // Message to user for login success
+  const loginSuccess = (msg) => {
     message.success(msg);
   };
 
-  const handleGoogleData = (data) => {
-    setGoogleData(data);
+  const handleAuthData = (data) => {
+    setAuthData(data);
   };
 
-  // API call to signin API
+  // API call to login API
   useEffect(() => {
-    if (googleData != null) {
+    if (authData != null) {
       setIsLoading(true);
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
@@ -37,10 +37,10 @@ const SignInMain = () => {
       headers.append('Access-Control-Allow-Credentials', 'true');
       // Data to be sent to API
       const thirdPartyData = {
-        issuer: 'google',
-        idToken: googleData.wc.id_token,
+        issuer: authData.issuer,
+        access_token: authData.access_token,
       };
-      fetch(SIGNIN_API, {
+      fetch(LOGIN_API, {
         method: 'POST',
         headers,
         body: JSON.stringify(thirdPartyData),
@@ -49,34 +49,34 @@ const SignInMain = () => {
         .then((jsonRes) => {
           // Success response from server
           setIsLoading(false);
-          if (jsonRes.message === 'Login successful') {
+          if (jsonRes.message === LOGIN_SUCCESS) {
             localStorage.setItem('user-data', JSON.stringify(jsonRes));
             localStorage.setItem('access-token', jsonRes.accessToken);
             setIsLoggedIn(true);
-            signInSuccess('Welcome back!');
-          } else if (jsonRes.message === "User Doesn't Exists") {
+            loginSuccess('Welcome back!');
+          } else if (jsonRes.message === LOGIN_USER_DOESNT_EXIST) {
             setIsLoggedIn(false);
-            signInError(
+            loginError(
               'Sorry, you will need to sign up first to use CodeRoyale'
             );
           } else {
             setIsLoggedIn(false);
-            signInError("Sorry, couldn't login please try again later!");
+            loginError("Sorry, couldn't login please try again later!");
           }
         })
         .catch((err) => {
           // Error response from server
           setIsLoggedIn(false);
-          signInError("Sorry, couldn't login please try again later!");
+          loginError("Sorry, couldn't login please try again later!");
         });
     }
-  }, [googleData, CLIENT_URL, SIGNIN_API]);
+  }, [authData, CLIENT_URL, LOGIN_API]);
 
   // Default content
   let content = (
-    <div className='signin-page'>
-      <LeftSecSignIn />
-      <SignInSec isLoading={isLoading} getGoogleData={handleGoogleData} />
+    <div className='login-page'>
+      <LeftSecLogin />
+      <LoginSec isLoading={isLoading} getAuthData={handleAuthData} />
     </div>
   );
 
@@ -88,4 +88,4 @@ const SignInMain = () => {
   return content;
 };
 
-export default SignInMain;
+export default LoginMain;
