@@ -3,16 +3,38 @@ import './ProfileSettingsMain.css';
 import SettingsField from '../../components/settingsField/SettingsField';
 import Button from '../../components/button/Button';
 
-function SettingsBody() {
+const SettingsBody = () => {
+  const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
+  const DELETE_API = `${process.env.REACT_APP_SERVER_URL}/users/delete`;
   let profileData = localStorage.getItem('user-data');
   profileData = JSON.parse(profileData);
   const [firstName, setFirstName] = useState(profileData.firstName);
   const [lastName, setLastName] = useState(profileData.lastName);
   const email = profileData.email;
 
-  // Function to deactivate account
-  const deactivateAccount = () => {
-    // TODO: Call to delete api
+  // Function to delete account
+  const deleteAccount = () => {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Origin', CLIENT_URL);
+    headers.append('Access-Control-Allow-Credentials', 'true');
+    headers.append(
+      'Authorization',
+      `Bearer ${localStorage.getItem('access-token')}`
+    );
+
+    fetch(DELETE_API, {
+      method: 'DELETE',
+      headers,
+    })
+      .then((res) => res.json())
+      .then((jsonRes) => {
+        if (jsonRes.message === 'Account deleted successfully') {
+          localStorage.removeItem('access-token');
+          localStorage.removeItem('user-data');
+        }
+        console.log(jsonRes);
+      });
   };
 
   return (
@@ -47,9 +69,9 @@ function SettingsBody() {
             type='button'
             buttonStyle='btn--primary--logout'
             buttonSize='btn--large'
-            onClick={deactivateAccount}
+            onClick={deleteAccount}
           >
-            Deactivate my Account
+            Delete my Account
           </Button>
         </div>
       </div>
@@ -63,6 +85,6 @@ function SettingsBody() {
       />
     </div>
   );
-}
+};
 
 export default SettingsBody;

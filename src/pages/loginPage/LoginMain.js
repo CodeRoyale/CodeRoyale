@@ -4,13 +4,14 @@ import LoginSec from './LoginSec';
 import './LoginMain.css';
 import { message } from 'antd';
 import { Redirect } from 'react-router';
+import { LOGIN_SUCCESS, LOGIN_USER_DOESNT_EXIST } from '../../utils/constants';
 
 const LoginMain = () => {
-  const [googleData, setGoogleData] = useState(null);
+  const [authData, setAuthData] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
-  const LOGIN_API = `${process.env.REACT_APP_SERVER_URL}/users/login`;
+  const LOGIN_API = `${process.env.REACT_APP_USER_API_URL}/users/login`;
 
   // Message to user for login error
   const loginError = (msg) => {
@@ -22,13 +23,13 @@ const LoginMain = () => {
     message.success(msg);
   };
 
-  const handleGoogleData = (data) => {
-    setGoogleData(data);
+  const handleAuthData = (data) => {
+    setAuthData(data);
   };
 
   // API call to login API
   useEffect(() => {
-    if (googleData != null) {
+    if (authData != null) {
       setIsLoading(true);
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
@@ -36,8 +37,8 @@ const LoginMain = () => {
       headers.append('Access-Control-Allow-Credentials', 'true');
       // Data to be sent to API
       const thirdPartyData = {
-        issuer: 'google',
-        idToken: googleData.wc.id_token,
+        issuer: authData.issuer,
+        access_token: authData.access_token,
       };
       fetch(LOGIN_API, {
         method: 'POST',
@@ -48,12 +49,12 @@ const LoginMain = () => {
         .then((jsonRes) => {
           // Success response from server
           setIsLoading(false);
-          if (jsonRes.message === 'Login successful') {
+          if (jsonRes.message === LOGIN_SUCCESS) {
             localStorage.setItem('user-data', JSON.stringify(jsonRes));
             localStorage.setItem('access-token', jsonRes.accessToken);
             setIsLoggedIn(true);
             loginSuccess('Welcome back!');
-          } else if (jsonRes.message === "User Doesn't Exists") {
+          } else if (jsonRes.message === LOGIN_USER_DOESNT_EXIST) {
             setIsLoggedIn(false);
             loginError(
               'Sorry, you will need to sign up first to use CodeRoyale'
@@ -69,13 +70,13 @@ const LoginMain = () => {
           loginError("Sorry, couldn't login please try again later!");
         });
     }
-  }, [googleData, CLIENT_URL, LOGIN_API]);
+  }, [authData, CLIENT_URL, LOGIN_API]);
 
   // Default content
   let content = (
     <div className='login-page'>
       <LeftSecLogin />
-      <LoginSec isLoading={isLoading} getGoogleData={handleGoogleData} />
+      <LoginSec isLoading={isLoading} getAuthData={handleAuthData} />
     </div>
   );
 
