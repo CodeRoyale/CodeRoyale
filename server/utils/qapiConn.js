@@ -10,7 +10,8 @@ const getQuestions = async (noIds) => {
       accept: "application/json",
     },
   });
-  return await response.json();
+  response = await response.json();
+  return response.message;
 };
 
 module.exports = { getQuestions };
