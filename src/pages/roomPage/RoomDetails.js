@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Animation } from 'rsuite';
+import React from 'react';
 
 function RoomDetails({ config, state, teams }) {
   let playersRoom = 0;
@@ -10,14 +9,21 @@ function RoomDetails({ config, state, teams }) {
   let max_teams = 0;
   let privateRoom = false;
 
-  let classNameDropDownImage = '';
-  const [moreDetailsClicked, setMoreDetailsClicked] = useState(false);
-  const { Collapse } = Animation;
+  if (config !== null && state !== null && teams !== null) {
+    max_perRoom = config.max_perRoom;
+    max_perTeam = config.max_perTeam;
+    max_teams = config.max_teams;
+    privateRoom = config.privateRoom;
+    teamsNumber = Object.keys(teams).length;
+    for (let team_name in teams) {
+      playersTeam += teams[team_name].length;
+    }
+    playersRoom = playersTeam + state.bench.length;
+  }
   const panel = (
     <div>
-      <div className='room-details-divider'></div>
       <div className='room-details-panel-container'>
-        <div className='room-details-panel-data-label'>Max Users</div>
+        <div className='room-details-panel-data-label'>Max Users in room</div>
         <div>{max_perRoom}</div>
       </div>
       <div className='room-details-panel-container'>
@@ -34,23 +40,6 @@ function RoomDetails({ config, state, teams }) {
       </div>
     </div>
   );
-
-  if (moreDetailsClicked) {
-    classNameDropDownImage = 'room-details-more-image-clicked';
-  } else {
-    classNameDropDownImage = 'room-details-more-image';
-  }
-  if (config !== null && state !== null && teams !== null) {
-    max_perRoom = config.max_perRoom;
-    max_perTeam = config.max_perTeam;
-    max_teams = config.max_teams;
-    privateRoom = config.privateRoom;
-    teamsNumber = Object.keys(teams).length;
-    for (let team_name in teams) {
-      playersTeam += teams[team_name].length;
-    }
-    playersRoom = playersTeam + state.bench.length;
-  }
   return (
     <div className='room-details'>
       <div className='room-details-main-container'>
@@ -69,22 +58,8 @@ function RoomDetails({ config, state, teams }) {
         </div>
       </div>
       <div className='room-details-more-container'>
-        <div
-          className='room-details-more-button'
-          onClick={() => setMoreDetailsClicked((data) => !data)}
-        >
-          <div className='room-details-more-text'>More Details</div>
-          <div className='room-details-more-image-container'>
-            <img
-              className={classNameDropDownImage}
-              src='/images/down-arrow.svg'
-              alt=''
-            />
-          </div>
-        </div>
-        <div>
-          <Collapse in={moreDetailsClicked}>{panel}</Collapse>
-        </div>
+        <div className='room-details-more-button'></div>
+        {panel}
       </div>
     </div>
   );

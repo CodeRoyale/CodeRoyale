@@ -1,12 +1,7 @@
 import React, { useRef } from 'react';
 import { Whisper, Tooltip } from 'rsuite';
 
-function CopyRoomCodeView({ /*room_id*/ config }) {
-  let admin = 'Mayur';
-  let room_id = 'Xp4Er13r79WfvDNQQt5';
-  if (config !== null) {
-    admin = config.admin;
-  }
+function CopyRoomCodeView({ room_id, admin }) {
   const copyTextRef = useRef(null);
   const onClickCopyToClipboard = () => {
     var range = document.createRange();

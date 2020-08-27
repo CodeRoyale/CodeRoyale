@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import Button from '../../components/button/Button';
 import { InputGroup, Input, Icon } from 'rsuite';
 
 function CreateTeamView({ setState }) {
@@ -36,8 +35,8 @@ function CreateTeamView({ setState }) {
             }}
             onClick={() => {
               console.log(team_name);
-              setCreateTeamInput('');
-              // setState({ action: 'CREATE_TEAM', team_name: team_name });
+              //setCreateTeamInput('');
+              setState({ action: 'CREATE_TEAM', team_name: team_name });
             }}
           >
             <Icon icon='plus-circle' size='lg' />

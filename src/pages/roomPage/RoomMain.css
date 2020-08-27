@@ -5,7 +5,7 @@
   --width-team-card: calc(
     var(--width-team-member-card) + 3 * var(--margin-team-member-card)
   );
-  --width-left-section: 27%;
+  --width-left-section: 25%;
   --border-shadow-card: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -22,7 +22,7 @@
 
 .room-left-section {
   background-color: #222831;
-  box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.6);
   width: var(--width-left-section);
   color: white;
 }
@@ -35,9 +35,7 @@
 
 /*CreateTeamView.css*/
 .create-team {
-  margin: 60px 50px 20px 60px;
-  display: flex;
-  justify-content: center;
+  margin: 40px 20px 20px 20px;
 }
 
 /*CopyRoomCodeView.css*/
@@ -97,32 +95,15 @@
 .room-details-more-container {
   margin: 30px 5px 20px 5px;
   background: rgba(255, 255, 255, 0.123);
-  padding: 3px;
+  padding: 4px;
   border-radius: 2px;
-}
-.room-details-more-button {
-  cursor: pointer;
-  display: flex;
-  flex: 2;
-}
-.room-details-more-text {
-  width: 95%;
-}
-.room-details-more-image {
-  height: 10px;
-  width: 10px;
-}
-.room-details-more-image-clicked {
-  height: 10px;
-  width: 10px;
-  transform: rotate(180deg);
 }
 .room-details-panel-container {
   display: flex;
   flex: 2;
 }
 .room-details-panel-data-label {
-  width: 95%;
+  width: 90%;
 }
 
 /*TeamMemberCard.css*/
