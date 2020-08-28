@@ -9,6 +9,7 @@ import RoomDetails from './RoomDetails';
 import CloseRoomView from './CloseRoomView';
 import StartCompetitionButton from './StartCompetitionButton';
 import ERROR_MSG from '../../utils/constants';
+import Arena from './Arena';
 
 const RoomMain = (props) => {
   // TODO: Have to implement, what happens if the user goes to create page again....
@@ -151,6 +152,9 @@ const RoomMain = (props) => {
           </div>
           <div className='room-details-start-competitions-container'>
             <StartCompetitionButton socket={socket} />
+          </div>
+          <div>
+            <Arena socket={socket} />
           </div>
         </div>
         <div className='room-right-section'>{team_cards}</div>
