@@ -432,7 +432,7 @@ const doVeto = async (quesIds, room_id, count, socket) => {
         // calculate veto results
 
         rooms[room_id].competition.veto.vetoOn = false;
-        const results = Object.entries(rooms[room_id].competition.veto.votes);
+        let results = Object.entries(rooms[room_id].competition.veto.votes);
         results = results.sort((a, b) => b[1] - a[1]).slice(0, count);
         // take only qids
         results = results.map((ele) => ele[0]);
