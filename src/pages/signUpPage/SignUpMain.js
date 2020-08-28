@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './SignUpMain.css';
 import LeftSecSignUp from './LeftSecSignUp';
 import SignUpSec from './SignUpSec';
-import { message } from 'antd';
+import { Alert } from 'rsuite';
 import { Redirect } from 'react-router';
 import { SIGNUP_SUCCESS, SIGNUP_USER_EXISTS } from '../../utils/constants';
 
@@ -15,12 +15,12 @@ const SignUpMain = () => {
 
   // Message to user for signup error
   const signUpError = (msg) => {
-    message.error(msg);
+    Alert.error(msg);
   };
 
   // Message to user for signup successs
   const signUpSuccess = (msg) => {
-    message.success(msg);
+    Alert.success(msg);
   };
 
   const handleAuthData = (data) => {
