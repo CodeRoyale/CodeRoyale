@@ -12,6 +12,7 @@ import OutroMain from './pages/outroPage/OutroMain';
 import Testing from './pages/testPage/TestPage';
 import RoomMain from './pages/roomPage/RoomMain';
 import 'rsuite/lib/styles/index.less';
+import VetoMain from './pages/vetoPage/VetoMain';
 
 function App() {
   return (
@@ -59,6 +60,12 @@ function App() {
             exact
             path='/room'
             component={(props) => <RoomMain {...props} />}
+          />
+          <Route
+            data-testid='route-veto'
+            exact
+            path='/veto'
+            component={VetoMain}
           />
           <Route data-testid='test' exact path='/test' component={Testing} />
           <Route
