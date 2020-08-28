@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 
 const getQuestions = async (noIds) => {
-  const response = await fetch(`${process.env.QAPI_URL}?noIds=${noIds}`, {
+  let response = await fetch(`${process.env.QAPI_URL}?noIds=${noIds}`, {
     method: "GET",
     headers: {
       useQueryString: true,
