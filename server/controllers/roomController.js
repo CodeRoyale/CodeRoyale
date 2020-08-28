@@ -118,7 +118,7 @@ const joinRoom = ({ userName, room_id, team_name }, { socket }) => {
         rooms[room_id].teams[team_name].push(userName);
         // tell team-mates
         socket.join(`${room_id}/${team_name}`);
-        socket.to(room_id).broadcast.emit(ROOM_UPDATED, {
+        socket.to(room_id).emit(ROOM_UPDATED, {
           type: JOINED_TEAM,
           data: { userName, team_name },
         });
@@ -135,7 +135,7 @@ const joinRoom = ({ userName, room_id, team_name }, { socket }) => {
 
       // tell others , notify others ROOM_UPDATED
       socket.join(room_id);
-      socket.to(room_id).broadcast.emit(ROOM_UPDATED, {
+      socket.to(room_id).emit(ROOM_UPDATED, {
         type: JOINED_ROOM,
         data: { userName },
       });
@@ -169,7 +169,7 @@ const removeUserFromRoom = ({ userName }) => {
       // no need to send team_name as this will only be sent to
       // ppl in "same team"
       socket.leave(`${room_id}/${team_name}`);
-      socket.to(room_id).broadcast.emit(ROOM_UPDATED, {
+      socket.to(room_id).emit(ROOM_UPDATED, {
         type: LEFT_TEAM,
         data: { userName, team_name },
       });
@@ -187,7 +187,7 @@ const removeUserFromRoom = ({ userName }) => {
     // tell others
     console.log(userName, " removed from ", room_id);
     setRoom(userName, "");
-    socket.to(room_id).broadcast.emit(ROOM_UPDATED, {
+    socket.to(room_id).emit(ROOM_UPDATED, {
       type: LEFT_ROOM,
       data: { userName },
     });
@@ -218,7 +218,7 @@ const createTeam = ({ userName, team_name }, { socket }) => {
       rooms[room_id].teams[team_name] = [];
 
       // tell everyone
-      socket.to(room_id).broadcast.emit(ROOM_UPDATED, {
+      socket.to(room_id).emit(ROOM_UPDATED, {
         type: TEAM_CREATED,
         data: { team_name },
       });
@@ -259,7 +259,7 @@ const joinTeam = ({ userName, team_name }, { socket }) => {
       // tell team-mates
       // tell team-mates
       socket.join(`${user.room_id}/${team_name}`);
-      socket.to(user.room_id).broadcast.emit(ROOM_UPDATED, {
+      socket.to(user.room_id).emit(ROOM_UPDATED, {
         type: JOINED_TEAM,
         data: { userName, team_name },
       });
@@ -286,7 +286,7 @@ const leaveTeam = ({ userName }, { socket }) => {
 
       // tell eveyone
       socket.leave(`${room_id}/${team_name}`);
-      socket.to(room_id).broadcast.emit(ROOM_UPDATED, {
+      socket.to(room_id).emit(ROOM_UPDATED, {
         type: LEFT_TEAM,
         data: { userName, team_name },
       });
@@ -365,7 +365,7 @@ const forwardMsg = ({ userName, content, toTeam }, { socket }) => {
     if (toTeam && team_name) {
       rcvrs += `/${team_name}`;
     }
-    socket.to(rcvrs).broadcast.emit(RCV_MSG, { userName, content, toTeam });
+    socket.to(rcvrs).emit(RCV_MSG, { userName, content, toTeam });
     return true;
   } catch (err) {
     return { error: err.message };
@@ -425,6 +425,7 @@ const doVeto = async (quesIds, room_id, count, socket) => {
 
       // tell every1 voting started
       socket.to(room_id).emit(VETO_START, quesIds);
+      socket.emit(VETO_START, quesIds);
 
       setTimeout(() => {
         // no need to remove listeners
@@ -439,6 +440,8 @@ const doVeto = async (quesIds, room_id, count, socket) => {
         rooms[room_id].competition.questions = results;
 
         socket.to(room_id).emit(VETO_STOP, results);
+        socket.emit(VETO_STOP, results);
+
         resolve(results);
       }, 300000);
     } catch (err) {
@@ -479,12 +482,14 @@ const startCompetition = async ({ userName }, { socket }) => {
     room[room_id].competition.contestOn = true;
     room[room_id].competition.contestStartedAt = Data.now();
     socket.to(room_id).emit(COMPETITION_STARTED, room[room_id].competition);
+    socket.emit(COMPETITION_STARTED, room[room_id].competition);
 
     // code for stopping competition
     setTimeout(() => {
       room[room_id].competition.contestOn = false;
       room[room_id].competition.contnetEndedAt = Date.now();
       socket.to(room_id).emit(COMPETITION_STOPPED, room[room_id].competition);
+      socket.emit(COMPETITION_STOPPED, room[room_id].competition);
     }, room.competition.timeLimit);
 
     return room[room_id].competition;
