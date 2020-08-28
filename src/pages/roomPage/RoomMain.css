@@ -27,6 +27,19 @@
   color: white;
 }
 
+.room-create-team-text-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.room-create-team-text {
+  text-align: center;
+  color: var(--primary-color);
+  font-size: 250%;
+  opacity: 0.7;
+}
+
 .room-right-section {
   display: flex;
   flex-wrap: wrap;
@@ -193,15 +206,10 @@
 
 /*CloseRoomView.css*/
 .close-room-view {
+  position: absolute;
   margin: 15px;
-}
-.close-room-view-text {
-  font-size: medium;
-  text-align: center;
-}
-.close-room-view-button {
-  margin: 10px;
-  text-align: center;
+  right: 0;
+  cursor: pointer;
 }
 
 /*joinTeamView.css*/

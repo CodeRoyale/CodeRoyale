@@ -1,5 +1,6 @@
 import React from 'react';
-import Button from '../../components/button/Button';
+import { Icon, Whisper, Tooltip } from 'rsuite';
+// import Button from '../../components/button/Button';
 
 function CloseRoomView({ setState }) {
   //TODO: Check if the room is closing by admin or not...
@@ -8,18 +9,20 @@ function CloseRoomView({ setState }) {
 
   return (
     <div className='close-room-view'>
-      <div className='close-room-view-text'>
-        <b>Close Room</b>
-      </div>
-      <div className='close-room-view-button'>
-        <Button
-          type='button'
-          onClick={() => setState({ action: 'CLOSE_ROOM' })}
-          buttonStyle='btn--primary--normal'
-          buttonSize='btn--medium'
+      <div>
+        <Whisper
+          trigger='hover'
+          placement='left'
+          speaker={<Tooltip>Close Room</Tooltip>}
         >
-          Close Room
-        </Button>
+          <Icon
+            icon='close'
+            size='lg'
+            onClick={() => {
+              setState({ action: 'CLOSE_ROOM' });
+            }}
+          />
+        </Whisper>
       </div>
     </div>
   );
