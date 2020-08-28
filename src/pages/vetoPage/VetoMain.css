@@ -1,0 +1,12 @@
+/* VetoMain */
+.veto-page {
+  margin: auto;
+  height: 100%;
+}
+
+/* VetoBody */
+.veto-body-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
