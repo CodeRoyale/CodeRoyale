@@ -101,12 +101,12 @@ const RoomMain = (props) => {
 
   // Testing Arena....
   //**************************************//
-  const onClickTestArena = () => {
-    setArenaTestClicked(true);
-  };
-  if (arenaTestClicked) {
-    return <Redirect to={{ pathname: '/arena', props: { socket: socket } }} />;
-  }
+  // const onClickTestArena = () => {
+  //   setArenaTestClicked(true);
+  // };
+  // if (arenaTestClicked) {
+  //   return <Redirect to={{ pathname: '/arena', props: { socket: socket } }} />;
+  // }
   //**************************************//
 
   return (
@@ -117,16 +117,16 @@ const RoomMain = (props) => {
       {
         /********************************/
         /*This is only for test...*/
-        <div className='create-room-button-container'>
-          <Button
-            type='button'
-            onClick={onClickTestArena}
-            buttonStyle='btn--primary--normal'
-            buttonSize='btn--medium'
-          >
-            Test Arena
-          </Button>
-        </div>
+        // <div className='create-room-button-container'>
+        //   <Button
+        //     type='button'
+        //     onClick={onClickTestArena}
+        //     buttonStyle='btn--primary--normal'
+        //     buttonSize='btn--medium'
+        //   >
+        //     Test Arena
+        //   </Button>
+        // </div>
         /********************************/
       }
       <div className='room-body'>
