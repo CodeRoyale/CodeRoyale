@@ -5,8 +5,20 @@
 }
 
 /* VetoBody */
+.veto-body {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center;
+  align-items: center; */
+  padding: 5px;
+}
+
 .veto-body-loading {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.veto-body-questions {
+  display: flex;
 }
