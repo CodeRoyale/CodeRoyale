@@ -1,6 +1,5 @@
 import React from 'react';
 import { Whisper, Tooltip } from 'rsuite';
-// import Button from '../../components/button/Button';
 
 function CloseRoomView({ setState }) {
   //TODO: Check if the room is closing by admin or not...
@@ -20,7 +19,7 @@ function CloseRoomView({ setState }) {
           alt=''
           onClick={() => {
             console.log('Clicked Close room');
-            // setState({ action: 'CLOSE_ROOM' })
+            setState({ action: 'CLOSE_ROOM' });
           }}
         />
       </Whisper>

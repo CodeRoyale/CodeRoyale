@@ -9,7 +9,12 @@ function RoomDetails({ config, state, teams }) {
   let max_teams = 0;
   let privateRoom = false;
 
-  if (config !== null && state !== null && teams !== null) {
+  if (
+    config !== undefined &&
+    config !== null &&
+    state !== null &&
+    teams !== null
+  ) {
     max_perRoom = config.max_perRoom;
     max_perTeam = config.max_perTeam;
     max_teams = config.max_teams;

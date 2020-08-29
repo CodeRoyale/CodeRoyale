@@ -11,8 +11,6 @@ function ChatWindow({ title, socket }) {
   const { inputChat, sendClicked, messageList } = state;
   let messages = null;
 
-  console.log(state);
-
   // Receiving Message...
   useEffect(() => {
     if (socket !== null) {

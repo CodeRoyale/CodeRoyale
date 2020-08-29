@@ -16,8 +16,8 @@ function CopyRoomCodeView({ room_id, admin }) {
     <div className='copy-room-code'>
       <div className='copy-room-code-admin-container'>
         {
-          //admin
-          'Mayur'
+          admin
+          //'Mayur'
         }
       </div>
       <div
@@ -32,8 +32,8 @@ function CopyRoomCodeView({ room_id, admin }) {
         >
           <div>
             {
-              //room_id
-              'dasaca768fasc'
+              room_id
+              //'dasaca768fasc'
             }
           </div>
         </Whisper>
