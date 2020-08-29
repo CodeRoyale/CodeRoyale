@@ -21,8 +21,8 @@
 }
 
 .room-left-section {
-  background-color: #222831;
-  box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.6);
+  background-color: white;
+  box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.05);
   width: var(--width-left-section);
   color: white;
 }
@@ -53,11 +53,11 @@
 
 /*CopyRoomCodeView.css*/
 .copy-room-code {
-  margin-top: 60px;
+  margin-top: 30px;
 }
 .copy-room-code-admin-container {
   text-align: right;
-  background: rgba(var(--primary-color-rgb), 1);
+  background: rgba(var(--primary-color-rgb), 0.95);
   width: 80%;
   padding: 7px 25px 10px 7px;
   font-size: large;
@@ -65,7 +65,7 @@
 }
 
 .copy-room-code-room_id-container {
-  background: #f0990d;
+  background: rgba(240, 153, 13);
   width: 72%;
   border-radius: 0 50px 50px 0;
   text-align: right;
@@ -101,10 +101,12 @@
 }
 
 .room-details-more-container {
-  margin: 30px 5px 20px 5px;
-  background: rgba(255, 255, 255, 0.123);
+  margin: 30px 7px 20px 7px;
+  border-left: solid rgba(var(--primary-color-rgb), 1) 5px;
+  background: #e5e5e5c7;
   padding: 4px;
   border-radius: 2px;
+  color: black;
 }
 .room-details-panel-container {
   display: flex;
@@ -201,10 +203,14 @@
 
 /*CloseRoomView.css*/
 .close-room-view {
-  position: absolute;
-  margin: 15px;
+  margin: 10px;
   right: 0;
   cursor: pointer;
+  text-align: right;
+}
+.close-room-button {
+  width: 27px;
+  height: 27px;
 }
 
 /*joinTeamView.css*/

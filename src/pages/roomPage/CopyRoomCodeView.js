@@ -14,7 +14,12 @@ function CopyRoomCodeView({ room_id, admin }) {
 
   return (
     <div className='copy-room-code'>
-      <div className='copy-room-code-admin-container'>{admin}</div>
+      <div className='copy-room-code-admin-container'>
+        {
+          //admin
+          'Mayur'
+        }
+      </div>
       <div
         className='copy-room-code-room_id-container'
         ref={copyTextRef}
@@ -25,7 +30,12 @@ function CopyRoomCodeView({ room_id, admin }) {
           placement='bottom'
           speaker={<Tooltip>Copy Room ID to Clipboard</Tooltip>}
         >
-          <div>{room_id}</div>
+          <div>
+            {
+              //room_id
+              'dasaca768fasc'
+            }
+          </div>
         </Whisper>
       </div>
     </div>

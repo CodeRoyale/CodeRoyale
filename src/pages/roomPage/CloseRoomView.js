@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Whisper, Tooltip } from 'rsuite';
+import { Whisper, Tooltip } from 'rsuite';
 // import Button from '../../components/button/Button';
 
 function CloseRoomView({ setState }) {
@@ -9,22 +9,21 @@ function CloseRoomView({ setState }) {
 
   return (
     <div className='close-room-view'>
-      <div>
-        <Whisper
-          trigger='hover'
-          placement='left'
-          speaker={<Tooltip>Close Room</Tooltip>}
-        >
-          <Icon
-            icon='close'
-            size='lg'
-            onClick={() => {
-              console.log('Room Close Clicked');
-              // setState({ action: 'CLOSE_ROOM' });
-            }}
-          />
-        </Whisper>
-      </div>
+      <Whisper
+        trigger='hover'
+        placement='right'
+        speaker={<Tooltip>Close Room</Tooltip>}
+      >
+        <img
+          className='close-room-button'
+          src='/images/close_button_black.svg'
+          alt=''
+          onClick={() => {
+            console.log('Clicked Close room');
+            // setState({ action: 'CLOSE_ROOM' })
+          }}
+        />
+      </Whisper>
     </div>
   );
 }

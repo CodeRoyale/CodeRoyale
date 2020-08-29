@@ -6,7 +6,7 @@ import CreateTeamView from './CreateTeamView';
 import TeamCard from './TeamCard';
 import CopyRoomCodeView from './CopyRoomCodeView';
 import RoomDetails from './RoomDetails';
-// import CloseRoomView from './CloseRoomView';
+import CloseRoomView from './CloseRoomView';
 import RoomChat from './RoomChat';
 //import StartCompetitionButton from './StartCompetitionButton';
 import ERROR_MSG from '../../utils/constants';
@@ -135,6 +135,7 @@ const RoomMain = (props) => {
       </div>
       <div className='room-body'>
         <div className='room-left-section'>
+          <CloseRoomView setState={setState} />
           <div className='room-copy-code'>
             <CopyRoomCodeView room_id={room_id} admin={admin} />
           </div>
@@ -154,10 +155,7 @@ const RoomMain = (props) => {
             {/*<StartCompetitionButton socket={socket} />*/}
           </div>
         </div>
-        <div className='room-right-section'>
-          {/*<CloseRoomView setState={setState} />*/}
-          {team_cards}
-        </div>
+        <div className='room-right-section'>{team_cards}</div>
         <div>
           <RoomChat socket={socket} />
         </div>
