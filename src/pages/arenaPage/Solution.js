@@ -18,7 +18,7 @@ import { Popover } from 'antd';
 import { Row, Col } from 'antd';
 import { SettingFilled } from '@ant-design/icons';
 
-function Solution() {
+function Solution({ socket }) {
   const [ideLanguage, setLanguage] = useState('c_cpp');
   const [ideFontSize, setFontSize] = useState('12');
   const [ideTheme, setTheme] = useState('terminal');
@@ -67,7 +67,13 @@ function Solution() {
   }
 
   const SendCode = () => {
+    console.log(ideLanguage);
+    console.log(typeof ideCode);
     console.log(ideCode);
+
+    socket.emit('SEND_MSG', { content: ideCode, ideLanguage }, (data) => {
+      console.log(data);
+    });
   };
 
   return (
