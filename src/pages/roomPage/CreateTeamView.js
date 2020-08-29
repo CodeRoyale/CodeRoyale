@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { InputGroup, Input, Icon } from 'rsuite';
 
 function CreateTeamView({ setState }) {
-  //TODO:  Clean up input after click of button...
   const [team_name, setCreateTeamInput] = useState('');
 
   //Styling constants...
@@ -35,7 +34,7 @@ function CreateTeamView({ setState }) {
             }}
             onClick={() => {
               console.log(team_name);
-              //setCreateTeamInput('');
+              setCreateTeamInput('');
               setState({ action: 'CREATE_TEAM', team_name: team_name });
             }}
           >

@@ -21,7 +21,6 @@ const RoomMain = (props) => {
   let socket = null;
   let admin = '';
 
-  // const [teamCreated, setTeamCreated] = useState(false);
   const [state, setState] = useState({
     action: null,
     team_name: null,
@@ -41,8 +40,6 @@ const RoomMain = (props) => {
       }
       socket.emit(state.action, { team_name }, (data) => {
         if (data !== null) {
-          console.log(data);
-
           // Giving Alert for every action...
           if (data === ERROR_MSG) {
             Alert.error(ERROR_MSG);
@@ -83,7 +80,6 @@ const RoomMain = (props) => {
   useEffect(() => {
     if (socket !== null) {
       socket.on('ROOM_UPDATED', (data) => {
-        console.log(data);
         if (data !== null) {
           setState({ ...state, actionDone: true });
         }
