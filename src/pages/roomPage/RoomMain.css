@@ -263,7 +263,7 @@
   font-size: medium;
   padding: 2px 2px 2px 10px;
   color: white;
-  background: rgba(var(--primary-color-rgb));
+  background: rgba(var(--secondary-color-rgb));
 }
 .chat-window-chats-container {
   height: 35vh;

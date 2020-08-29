@@ -2,7 +2,8 @@
 
 :root {
   --primary-color: #dd2c00; /* Harley Davidson Orange */
-  --primary-color-rgb: 221, 72, 20; /* Harley Davidson Orange */
+  --primary-color-rgb: 221, 50, 20; /* Harley Davidson Orange */
+  --secondary-color-rgb: 221, 70, 20; /* Harley Davidson Orange */
   --log-out: rgb(202, 0, 0); /* Red for logout */
   --sign-in: #b12300; /* Darker primary for sign in */
   --frontpage-bg-light: #fcede8; /* Background color for front page */
