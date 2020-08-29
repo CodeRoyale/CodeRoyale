@@ -4,10 +4,29 @@ const swaggerJSDoc = require('swagger-jsdoc');
 const os = require('os');
 const path = require('path');
 const connectDB = require('./controllers/connectionDB');
+const cors = require('cors');
 
 const app = express();
 
 connectDB();
+
+const whitelist = ['http://localhost:3000', 'https://coderoyale-questionapi-develop.herokuapp.com'];
+const corsOptions = {
+  origin: function (origin, callback) {
+    // add !origin for services like postman
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      // i dont like this it logs the shit
+      // -can use customErrorHandler
+      callback(new Error('Not allowed by CORS.'));
+    }
+  },
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
 
 app.use(bodyParser.json());
 app.use('/questions', require('./routes/question'));
