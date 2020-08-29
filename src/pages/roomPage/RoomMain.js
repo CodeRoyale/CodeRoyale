@@ -101,7 +101,7 @@ const RoomMain = (props) => {
   });
 
   // Setting all the retrieved data into variables to use...
-  if (roomData !== null) {
+  if (roomData !== null && roomData !== undefined) {
     roomConfig = roomData.config;
     roomTeams = roomData.teams;
     roomState = roomData.state;
