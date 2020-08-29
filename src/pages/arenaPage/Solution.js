@@ -14,8 +14,8 @@ import 'ace-builds/src-noconflict/snippets/java';
 
 import 'ace-builds/src-noconflict/ext-language_tools';
 import Button from '../../components/button/Button';
-import { Popover } from 'antd';
-import { Row, Col } from 'antd';
+import { Popover, Whisper } from 'rsuite';
+import { Grid, Row, Col } from 'rsuite';
 import { SettingFilled } from '@ant-design/icons';
 
 function Solution({ socket }) {
@@ -26,39 +26,41 @@ function Solution({ socket }) {
 
   const settings_popup_content = (
     <div className='ide-options-popup'>
-      <Row className='ide-options-row'>
-        <Col span={20}>
-          <div>FontSize:</div>
-        </Col>
-        <Col span={20}>
-          <div>
-            <select onChange={(e) => setFontSize(Number(e.target.value))}>
-              <option value='10'>10</option>
-              <option value='12'>12</option>
-              <option value='14'>14</option>
-              <option value='16'>16</option>
-              <option value='18'>18</option>
-              <option value='20'>20</option>
-              <option value='22'>22</option>
-              <option value='24'>24</option>
-            </select>
-          </div>
-        </Col>
-      </Row>
-      <Row className='ide-options-row'>
-        <Col span={20}>
-          <div>Theme:</div>
-        </Col>
-        <Col span={20}>
-          <div>
-            <select onChange={(e) => setTheme(e.target.value)}>
-              <option value='tomorrow'>tomorrow</option>
-              <option value='terminal'>terminal</option>
-              <option value='monokai'>monokai</option>
-            </select>
-          </div>
-        </Col>
-      </Row>
+      <Grid fluid>
+        <Row className='ide-options-row'>
+          <Col span={20}>
+            <div>FontSize:</div>
+          </Col>
+          <Col span={20}>
+            <div>
+              <select onChange={(e) => setFontSize(Number(e.target.value))}>
+                <option value='10'>10</option>
+                <option value='12'>12</option>
+                <option value='14'>14</option>
+                <option value='16'>16</option>
+                <option value='18'>18</option>
+                <option value='20'>20</option>
+                <option value='22'>22</option>
+                <option value='24'>24</option>
+              </select>
+            </div>
+          </Col>
+        </Row>
+        <Row className='ide-options-row'>
+          <Col span={20}>
+            <div>Theme:</div>
+          </Col>
+          <Col span={20}>
+            <div>
+              <select onChange={(e) => setTheme(e.target.value)}>
+                <option value='tomorrow'>tomorrow</option>
+                <option value='terminal'>terminal</option>
+                <option value='monokai'>monokai</option>
+              </select>
+            </div>
+          </Col>
+        </Row>
+      </Grid>
     </div>
   );
 
@@ -93,13 +95,15 @@ function Solution({ socket }) {
 
             <div className='ide-options'>
               <div>
-                <Popover
-                  content={settings_popup_content}
+                <Whisper
                   trigger='click'
-                  placement='bottomRight'
+                  placement='bottomEnd'
+                  speaker={
+                    <Popover title='Settings'>{settings_popup_content}</Popover>
+                  }
                 >
                   <SettingFilled />
-                </Popover>
+                </Whisper>
               </div>
             </div>
           </div>
