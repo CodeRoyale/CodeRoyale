@@ -5,7 +5,7 @@
   --width-team-card: calc(
     var(--width-team-member-card) + 3 * var(--margin-team-member-card)
   );
-  --width-left-section: 25%;
+  --width-left-section: 33%;
   --border-shadow-card: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -16,7 +16,7 @@
 
 .room-body {
   display: flex;
-  flex: 2;
+  flex: 3;
   height: 100vh;
 }
 
@@ -98,11 +98,6 @@
 }
 .room-details-main-number {
   font-size: x-large;
-}
-.room-details-divider {
-  border: solid rgba(129, 129, 129, 0.87);
-  border-width: 0 0 1px 1px;
-  margin: 5px 0 5px 0;
 }
 
 .room-details-more-container {
@@ -245,4 +240,35 @@
 .start-competition-view-button {
   margin: 10px;
   text-align: center;
+}
+
+/*RoomChat.css*/
+.room-chat {
+  height: 100%;
+  padding: 5px;
+  width: 270px;
+  box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.3);
+  background: white;
+}
+
+/*ChatWindow.css*/
+.chat-window {
+  margin-bottom: 5px;
+  background: rgba(var(--primary-color-rgb), 0.1);
+  border-radius: 3px;
+  box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.1);
+  border: solid rgba(var(--primary-color-rgb), 0.5) 2px;
+}
+.chat-title {
+  font-size: medium;
+  padding: 2px 2px 2px 10px;
+  color: white;
+  background: rgba(var(--primary-color-rgb));
+}
+.chat-window-chats-container {
+  height: 35vh;
+  overflow: auto;
+}
+.chat-window-input-container {
+  padding: 5px;
 }

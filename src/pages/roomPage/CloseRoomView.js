@@ -19,7 +19,8 @@ function CloseRoomView({ setState }) {
             icon='close'
             size='lg'
             onClick={() => {
-              setState({ action: 'CLOSE_ROOM' });
+              console.log('Room Close Clicked');
+              // setState({ action: 'CLOSE_ROOM' });
             }}
           />
         </Whisper>

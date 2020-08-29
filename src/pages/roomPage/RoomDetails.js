@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Divider from '../../components/divider/Divider';
 function RoomDetails({ config, state, teams }) {
   let playersRoom = 0;
   let max_perRoom = 0;
@@ -49,7 +49,7 @@ function RoomDetails({ config, state, teams }) {
           </div>
           <div className='room-details-main-number'>{playersRoom}</div>
         </div>
-        <div className='room-details-divider'></div>
+        <Divider />
         <div className='room-details-main-teams'>
           <div>
             <b>Teams</b>
