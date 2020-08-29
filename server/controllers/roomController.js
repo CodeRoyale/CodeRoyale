@@ -479,20 +479,20 @@ const startCompetition = async ({ userName }, { socket }) => {
     await doVeto(allQuestions, room_id, 3, socket);
 
     // start competition now
-    room[room_id].competition.contestOn = true;
-    room[room_id].competition.contestStartedAt = Data.now();
-    socket.to(room_id).emit(COMPETITION_STARTED, room[room_id].competition);
-    socket.emit(COMPETITION_STARTED, room[room_id].competition);
+    rooms[room_id].competition.contestOn = true;
+    rooms[room_id].competition.contestStartedAt = Data.now();
+    socket.to(room_id).emit(COMPETITION_STARTED, rooms[room_id].competition);
+    socket.emit(COMPETITION_STARTED, rooms[room_id].competition);
 
     // code for stopping competition
     setTimeout(() => {
-      room[room_id].competition.contestOn = false;
-      room[room_id].competition.contnetEndedAt = Date.now();
-      socket.to(room_id).emit(COMPETITION_STOPPED, room[room_id].competition);
-      socket.emit(COMPETITION_STOPPED, room[room_id].competition);
+      rooms[room_id].competition.contestOn = false;
+      rooms[room_id].competition.contnetEndedAt = Date.now();
+      socket.to(room_id).emit(COMPETITION_STOPPED, rooms[room_id].competition);
+      socket.emit(COMPETITION_STOPPED, rooms[room_id].competition);
     }, room.competition.timeLimit);
 
-    return room[room_id].competition;
+    return rooms[room_id].competition;
   } catch (err) {
     return { error: err.message };
   }
