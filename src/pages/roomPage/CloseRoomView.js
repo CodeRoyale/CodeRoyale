@@ -1,10 +1,11 @@
-import React from 'react';
-import { Whisper, Tooltip } from 'rsuite';
+import React, { useState } from 'react';
+import { Whisper, Tooltip, Modal, Button } from 'rsuite';
 
 function CloseRoomView({ setState }) {
   //TODO: Check if the room is closing by admin or not...
-  //TODO: Give an indication of room closed...
   //TODO: Ask again in an alert box to close room...
+
+  const [showPrompt, setShowPrompt] = useState(false);
 
   return (
     <div className='close-room-view'>
@@ -17,12 +18,32 @@ function CloseRoomView({ setState }) {
           className='close-room-button'
           src='/images/close_button_black.svg'
           alt=''
-          onClick={() => {
-            console.log('Clicked Close room');
-            setState({ action: 'CLOSE_ROOM' });
-          }}
+          onClick={() => setShowPrompt(true)}
         />
       </Whisper>
+
+      <Modal
+        backdrop
+        show={showPrompt}
+        onHide={() => setShowPrompt(false)}
+        size='xs'
+      >
+        <Modal.Header>
+          <Modal.Title>Close Room</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this room..</Modal.Body>
+        <Modal.Footer>
+          <Button
+            onClick={() => setState({ action: 'CLOSE_ROOM' })}
+            appearance='primary'
+          >
+            Ok
+          </Button>
+          <Button onClick={() => setShowPrompt(false)} appearance='subtle'>
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
