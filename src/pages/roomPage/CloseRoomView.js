@@ -3,7 +3,6 @@ import { Whisper, Tooltip, Modal, Button } from 'rsuite';
 
 function CloseRoomView({ setState }) {
   //TODO: Check if the room is closing by admin or not...
-  //TODO: Ask again in an alert box to close room...
 
   const [showPrompt, setShowPrompt] = useState(false);
 

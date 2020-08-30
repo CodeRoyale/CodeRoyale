@@ -34,7 +34,7 @@ function CreateTeamView({ setState }) {
             }}
             onClick={() => {
               console.log(team_name);
-              setCreateTeamInput('');
+              // setCreateTeamInput('');
               setState({ action: 'CREATE_TEAM', team_name: team_name });
             }}
           >

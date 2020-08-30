@@ -24,7 +24,6 @@ const RoomMain = (props) => {
 
   // Get this data from API...
   const userName = profileData.username.toString();
-
   const [state, setState] = useState({
     action: null,
     team_name: null,
@@ -33,6 +32,7 @@ const RoomMain = (props) => {
     roomClosed: false,
   });
   const { action, actionDone, roomData, roomClosed } = state;
+  const [expandRoomChat, setExpandRoomChat] = useState(false);
 
   // Actions in the room...
   useEffect(() => {
@@ -43,9 +43,12 @@ const RoomMain = (props) => {
       } else if (action === 'CLOSE_ROOM' || action === 'LEAVE_TEAM') {
         team_name = null;
       }
+
       socket.emit(state.action, { team_name }, (data) => {
+        //console.log('emitted', data);
         // Checking if close room is clicked...
         if (action === 'CLOSE_ROOM' && data) {
+          const abortController = new AbortController();
           setState({
             ...state,
             action: null,
@@ -53,6 +56,9 @@ const RoomMain = (props) => {
             actionDone: true,
             roomClosed: true,
           });
+          return function cleanup() {
+            abortController.abort();
+          };
         }
 
         if (data !== null) {
@@ -97,6 +103,7 @@ const RoomMain = (props) => {
     if (socket !== null) {
       socket.on('ROOM_UPDATED', (data) => {
         if (data !== null) {
+          //console.log('roomUpdate', data);
           setState({ ...state, actionDone: true });
         }
       });
@@ -195,9 +202,15 @@ const RoomMain = (props) => {
             {/*<StartCompetitionButton socket={socket} />*/}
           </div>
         </div>
-        <div className='room-right-section'>{team_cards}</div>
-        <div>
-          <RoomChat socket={socket} />
+        <div className='room-right-section'>
+          <div className='room-right-section-body'>{team_cards}</div>
+          <div className='room-right-section-chat'>
+            <RoomChat
+              socket={socket}
+              expand={expandRoomChat}
+              setExpand={setExpandRoomChat}
+            />
+          </div>
         </div>
       </div>
     </div>

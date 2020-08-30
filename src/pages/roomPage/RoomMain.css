@@ -5,8 +5,8 @@
   --width-team-card: calc(
     var(--width-team-member-card) + 3 * var(--margin-team-member-card)
   );
-  --width-left-section: 33%;
   --border-shadow-card: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+  --width-room-right-section-body: 70%;
 }
 
 .room {
@@ -16,14 +16,14 @@
 
 .room-body {
   display: flex;
-  flex: 3;
+  flex: 2;
   height: 100vh;
 }
 
 .room-left-section {
   background-color: white;
   box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.05);
-  width: var(--width-left-section);
+  width: 25%;
   color: white;
 }
 
@@ -42,8 +42,12 @@
 
 .room-right-section {
   display: flex;
+  flex: 2;
+}
+.room-right-section-body {
+  display: flex;
   flex-wrap: wrap;
-  width: calc(100% - var(--width-left-section));
+  width: 100%;
 }
 
 /*CreateTeamView.css*/
@@ -251,15 +255,39 @@
 
 /*RoomChat.css*/
 .room-chat {
-  height: 100%;
   padding: 5px;
   width: 270px;
   box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.1);
   background: white;
+  position: fixed;
+  right: 0;
+  bottom: 0;
 }
-
+.room-chat-close-chat {
+  padding: 5px;
+  width: 100%;
+  border-radius: 2px;
+  text-align: right;
+}
+.room-chat-shrink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+  width: 35px;
+  height: 35px;
+  box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.05);
+  background: white;
+  background: rgba(var(--secondary-color-rgb), 0.2);
+  cursor: pointer;
+  border-radius: 5px 0 0 5px;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+}
 /*ChatWindow.css*/
 .chat-window {
+  margin-top: 10px;
   margin-bottom: 5px;
   background: rgba(var(--primary-color-rgb), 0.1);
   border-radius: 3px;
