@@ -54,6 +54,7 @@
 /*CopyRoomCodeView.css*/
 .copy-room-code {
   margin-top: 30px;
+  margin-bottom: 30px;
 }
 .copy-room-code-admin-container {
   text-align: right;

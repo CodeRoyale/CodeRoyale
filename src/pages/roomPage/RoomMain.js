@@ -9,6 +9,7 @@ import CopyRoomCodeView from './CopyRoomCodeView';
 import RoomDetails from './RoomDetails';
 import CloseRoomView from './CloseRoomView';
 import RoomChat from './RoomChat';
+import profileData from '../../utils/examples';
 //import StartCompetitionButton from './StartCompetitionButton';
 import ERROR_MSG from '../../utils/constants';
 
@@ -20,6 +21,9 @@ const RoomMain = (props) => {
   let roomState = null;
   let socket = null;
   let admin = '';
+
+  // Get this data from API...
+  const userName = profileData.username.toString();
 
   const [state, setState] = useState({
     action: null,
@@ -93,7 +97,6 @@ const RoomMain = (props) => {
     if (socket !== null) {
       socket.on('ROOM_UPDATED', (data) => {
         if (data !== null) {
-          console.log(data);
           setState({ ...state, actionDone: true });
         }
       });
@@ -178,7 +181,7 @@ const RoomMain = (props) => {
           </div>
 
           <div className='room-create-team'>
-            <CreateTeamView setState={setState} />
+            {userName === admin ? <CreateTeamView setState={setState} /> : null}
           </div>
 
           <div className='room-details-container'>
