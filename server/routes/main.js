@@ -1,9 +1,9 @@
 const express = require('express');
 
-const router = express.Router();
+const route = express.Router();
 
-router.get('/', (req, res) =>
+route.get('/', (req, res) =>
   res.send('CodeRoyale Question API Server is up and running')
 );
 
-module.exports = router;
+module.exports = route;
