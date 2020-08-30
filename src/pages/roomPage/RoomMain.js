@@ -26,8 +26,9 @@ const RoomMain = (props) => {
     team_name: null,
     actionDone: false,
     roomData: null,
+    roomClosed: false,
   });
-  const { action, actionDone, roomData } = state;
+  const { action, actionDone, roomData, roomClosed } = state;
 
   // Actions in the room...
   useEffect(() => {
@@ -39,6 +40,17 @@ const RoomMain = (props) => {
         team_name = null;
       }
       socket.emit(state.action, { team_name }, (data) => {
+        // Checking if close room is clicked...
+        if (action === 'CLOSE_ROOM' && data) {
+          setState({
+            ...state,
+            action: null,
+            team_name: null,
+            actionDone: true,
+            roomClosed: true,
+          });
+        }
+
         if (data !== null) {
           // Giving Alert for every action...
           if (data === ERROR_MSG) {
@@ -81,6 +93,7 @@ const RoomMain = (props) => {
     if (socket !== null) {
       socket.on('ROOM_UPDATED', (data) => {
         if (data !== null) {
+          console.log(data);
           setState({ ...state, actionDone: true });
         }
       });
@@ -95,6 +108,11 @@ const RoomMain = (props) => {
       });
     }
   });
+
+  // If roomClosed then redirect to dashboard...
+  if (roomClosed) {
+    return <Redirect to='/lobby' />;
+  }
 
   // Setting all the retrieved data into variables to use...
   if (roomData !== null && roomData !== undefined) {
