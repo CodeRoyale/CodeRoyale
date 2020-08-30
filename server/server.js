@@ -29,6 +29,7 @@ app.use(cors(corsOptions));
 
 
 app.use(bodyParser.json());
+app.use('/', require('./routes/main'));
 app.use('/questions', require('./routes/question'));
 
 const server = app.listen(process.env.PORT || 5000, () => {
