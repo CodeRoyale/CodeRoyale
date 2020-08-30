@@ -58,7 +58,7 @@ const createRoom = (config, { socket }) => {
         },
         competition: {
           questions: {},
-          max_questions: config.max_questions || 4,
+          max_questions: config.max_questions || 3,
           contestStartedAt: null,
           contnetEndedAt: null,
           contestOngoing: false,
@@ -69,6 +69,8 @@ const createRoom = (config, { socket }) => {
             voted: [],
             vetoOngoing: false,
             max_vote: config.max_vote || 1,
+            timeLimit: config.veto_timeLimit || 300000,
+            quesCount: config.veto_quesCount || 10,
           },
           scoreboard: {},
         },
@@ -443,7 +445,7 @@ const doVeto = async (quesIds, room_id, count, socket) => {
         socket.emit(VETO_STOP, results);
 
         resolve(results);
-      }, 300000);
+      }, room.competition.veto.timeLimit);
     } catch (err) {
       reject(err);
     }
@@ -467,16 +469,16 @@ const startCompetition = async ({ userName }, { socket }) => {
       room.state.cur_memCount < 2 ||
       Object.keys(room.teams).length < 2 ||
       !atLeastPerTeam(room_id) ||
-      rooms[room_id].competition.contestOn ||
-      rooms[room_id].competition.veto.vetoOn
+      room.competition.contestOn ||
+      room.competition.veto.vetoOn
     ) {
       throw new Error("Room does not meet requirements");
     }
 
     console.log("Starting competition", userName);
     // start veto now and wait for it to end
-    const allQuestions = await getQuestions(10);
-    await doVeto(allQuestions, room_id, 3, socket);
+    const allQuestions = await getQuestions(room.competition.veto.quesCount);
+    await doVeto(allQuestions, room_id, room.competition.max_questions, socket);
 
     // start competition now
     rooms[room_id].competition.contestOn = true;
