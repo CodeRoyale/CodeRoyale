@@ -3,6 +3,8 @@ process.env.NODE_ENV = 'test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const Question = require('../server/models/questionModel');
+const Testcase = require('../server/models/testCase');
+
 const { server } = require('../server/server');
 
 const should = chai.should();
@@ -36,6 +38,7 @@ const questionDetails1 = {
   difficulty: 7,
 };
 
+// 3rd question for testing
 const questionDetails2 = {
   questionTitle: 'Prime Numbers',
   dateAdded: '29-07-20',
@@ -44,6 +47,7 @@ const questionDetails2 = {
   difficulty: 7,
 };
 
+// 4th question for testing
 const questionDetails3 = {
   questionTitle: 'Prime Numbers',
   problemCode: 'PMNRS',
@@ -55,6 +59,7 @@ const questionDetails3 = {
   sourceLimit: 'sdadsad',
   difficulty: 7,
 };
+
 // questions for patch testing
 const beforeQuestion = {
   questionTitle: 'Array of Strings',
@@ -182,7 +187,7 @@ describe('Question test suit', () => {
     it('it should get question', (done) => {
       chai
         .request(server)
-        .get('/questions?tags=Linear Data Structure')
+        .get('/questions/question?tags=Linear Data Structure')
         .end((err, res) => {
           res.should.have.status(200);
           res.body.message[0].should.be.an('Object');
@@ -212,7 +217,7 @@ describe('Question test suit', () => {
     it('It gets the first question poseted if tags is not given as parameter', (done) => {
       chai
         .request(server)
-        .get('/questions')
+        .get('/questions/question')
         .end((err, res) => {
           res.should.have.status(200);
           res.body.message.should.be.an('Object');
@@ -349,7 +354,7 @@ describe('Question test suit', () => {
     it('it should change the values', (done) => {
       chai
         .request(server)
-        .get(`/questions/?tags=Graph&tags=Strings`)
+        .get(`/questions/question?tags=Graph&tags=Strings`)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
@@ -579,6 +584,96 @@ describe('Question test suit', () => {
           const qidsset = new Set(qids);
 
           qidsset.should.have.length(qids.length);
+          done();
+        });
+    });
+  });
+});
+
+// 1st testcase for testing
+const testcaseDetails = { 
+  qid: "5f4b9e61a024f595fd3b4468",  
+  testcases:[
+    {
+      input : "0 3 4 2",
+      output : "YES"
+    },
+    {
+      input : "0 2 5 3",
+      output : "NO"
+    },
+    {
+      input : "14 4 98 2",
+      output : "YES"
+    },
+    {
+      input : "21 6 47 3",
+      output : "NO"
+    }
+  ]
+}
+  
+// 2nd testcase for testing
+const testcaseDetails2 = {  
+  testcases:[
+    {
+      input : "SOSSPSSQSSOR",
+      output : "3"
+    },
+    {
+      input : "SOSSOT",
+      output : "1"
+    },
+    {
+      input : "SOSSOSSOSSOSSOSSOSSOSSOSSOSSOSSOSSOSSOSSOSSOSSOS",
+      output : "0"
+    },
+    {
+      input : "SOSOOSOSOSOSOSSOSOSOSOSOSOS",
+      output : "12"
+    }
+  ]
+}
+
+let questionidTestcase = '';
+describe('TestCase test suit', () => {
+  before((done) => {
+    // Before each test we empty the database
+    Testcase.deleteMany({}, () => {
+      done();
+    });
+  });
+
+  describe('/POST testcase', () => {
+    // ADD testcase
+    it('it should post testcase', (done) => {
+      chai
+        .request(server)
+        .post('/questions/testcase')
+        .send(testcaseDetails)
+        .end((err, res) => {
+          res.should.have.status(201);
+          res.body.message.should.be.an('Object');
+          res.body.message.should.have
+            .property('qid')
+            .eql('5f4b9e61a024f595fd3b4468');
+          questionidTestcase = res.body.message.qid;
+          done();
+        });
+    });
+
+    it('it should give error when keys which are not having default values are not given values', (done) => {
+      chai
+        .request(server)
+        .post('/questions/testcase')
+        .send(testcaseDetails2)
+        .end((err, res) => {
+          res.should.have.status(401);
+          res.body.should.have
+            .property('message')
+            .eql(
+              'testcase validation failed: qid: Path `qid` is required.'
+            );
           done();
         });
     });
