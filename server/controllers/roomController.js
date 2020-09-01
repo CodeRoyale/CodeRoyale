@@ -482,7 +482,7 @@ const startCompetition = async ({ userName }, { socket }) => {
 
     // start competition now
     rooms[room_id].competition.contestOn = true;
-    rooms[room_id].competition.contestStartedAt = Data.now();
+    rooms[room_id].competition.contestStartedAt = Date.now();
     socket.to(room_id).emit(COMPETITION_STARTED, rooms[room_id].competition);
     socket.emit(COMPETITION_STARTED, rooms[room_id].competition);
 
