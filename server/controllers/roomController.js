@@ -303,7 +303,7 @@ const leaveTeam = ({ userName }, { socket }) => {
   }
 };
 
-const closeRoom = ({ userName }) => {
+const closeRoom = ({ userName }, { socket }) => {
   try {
     const { room_id } = getUser(userName);
     if (rooms[room_id]) {
@@ -324,9 +324,12 @@ const closeRoom = ({ userName }) => {
       });
 
       // delete the stupid room
-      delete rooms[room_id];
-      socket.to(room_id).emit(ROOM_CLOSED);
+      const dataToEmit = 'Room Closed';
+      socket.to(room_id).emit(ROOM_CLOSED, {
+        data: { dataToEmit },
+      });
       socket.emit(CLOSE_ROOM);
+      delete rooms[room_id];
       return true;
     }
     return false;
