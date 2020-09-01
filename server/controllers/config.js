@@ -1,18 +1,8 @@
-const config = {
+const ROOM_LIMITS_CONFIG = {
     "max_teams": 5,
     "max_perTeam": 5,
-    "privateRoom": false,
     "max_perRoom": 8,
 };
 
-const configNew = () => {
-    try{
-        return config;
-    }
-    catch(err)
-    {
-       return err.message;
-    }
-}
 
-module.exports = {configNew};
+module.exports = {ROOM_DEFAULT_CONFIG};
