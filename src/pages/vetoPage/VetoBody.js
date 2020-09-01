@@ -1,35 +1,43 @@
 import React from 'react';
 import { Loader } from 'rsuite';
 import QuestionCard from '../../components/questionCard/QuestionCard';
-import Button from '../../components/button/Button';
 import './VetoMain.css';
 
-const VetoBody = ({ isLoading, questions }) => {
+const VetoBody = (props) => {
   let questionCards = null;
+  const { isLoading, questions } = props;
   const questionsArray = questions.message;
 
+  // Send selected question in props
+  const handleQuestionVoted = (value) => {
+    props.getVotedQuestion(value);
+  };
+
+  // const sendVotes = () => {
+  //   socket.emit('VETO_VOTES')
+  // }
+
+  // Mapping questions in QuestionCard
   if (questionsArray !== undefined) {
     questionCards = questionsArray.map((item, index) => {
       return (
         <QuestionCard
+          key={item._id}
           questionNumber={index}
           questionTitle={item.questionTitle}
           questionDesc={item.description}
+          questionID={item._id}
+          questionTags={item.tags}
+          getVotedQuestion={handleQuestionVoted}
         />
       );
     });
   }
 
+  // Default content
   let content = (
     <div className='veto-body'>
       <div className='veto-body-question'>{questionCards}</div>
-      <Button
-        type='button'
-        buttonStyle='btn--primary--normal'
-        buttonSize='btn--medium'
-      >
-        Start
-      </Button>
     </div>
   );
 

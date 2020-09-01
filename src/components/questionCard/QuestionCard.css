@@ -7,6 +7,7 @@
 }
 
 .question-card-number {
+  color: #6e6e6e;
   font-size: 30px;
   font-weight: bold;
 }
@@ -16,6 +17,23 @@
   font-weight: bold;
 }
 
+.question-card-desc-head {
+  font-size: 20px;
+  font-weight: bold;
+  color: #6e6e6e;
+}
+
 .question-card-desc {
-  font-size: 18px;
+  font-size: 16px;
+  white-space: pre-line;
+}
+
+.question-card-tags-head {
+  font-size: 20px;
+  font-weight: bold;
+  color: #6e6e6e;
+}
+
+.question-card-tags {
+  font-size: 16px;
 }

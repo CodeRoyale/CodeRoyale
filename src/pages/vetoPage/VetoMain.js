@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/navBar/NavBar';
 import { Redirect } from 'react-router';
 import VetoBody from './VetoBody';
+import Button from '../../components/button/Button';
 import './VetoMain.css';
 
 const VetoMain = (props) => {
@@ -12,6 +13,7 @@ const VetoMain = (props) => {
   const accessToken = localStorage.getItem('access-token');
   const [questions, setQuestions] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [vottedQuestions, setVottedQuestions] = useState([]);
   let [tempSocket, setTempSocket] = useState(null);
 
   useEffect(() => {
@@ -44,6 +46,10 @@ const VetoMain = (props) => {
             setQuestions(jsonRes);
           });
       });
+      socket.on('VETO_STOP', (data) => {
+        // TODO: after getting results move to arena for contest
+        console.log('results' + data);
+      });
     }
   }, [tempSocket, socket, CLIENT_URL, QUES_API]);
 
@@ -62,10 +68,49 @@ const VetoMain = (props) => {
   // Setting a temp socket so that START_COMPETITION is emitted only once
   tempSocket = socket;
 
+  const handleQuestionVoted = (data) => {
+    if (vottedQuestions.length < 3) {
+      setVottedQuestions((oldVottedQuestions) => [...oldVottedQuestions, data]);
+    } else {
+      alert('Only 3 questions allowed');
+    }
+  };
+
+  const handleClick = () => {
+    console.log(vottedQuestions);
+    console.log(vottedQuestions.length);
+    socket.emit('VETO_VOTES', { votes: vottedQuestions }, (data) => {
+      console.log(data);
+    });
+  };
+
+  // Display confirm veto button only once loading is complete
+  const displayConfirmVeto = () => {
+    if (!isLoading) {
+      return (
+        <div className='veto-confirm-vote-container'>
+          <Button
+            type='button'
+            buttonStyle='btn--primary--normal'
+            buttonSize='btn--medium'
+            onClick={handleClick}
+          >
+            Confirm Veto
+          </Button>
+        </div>
+      );
+    }
+  };
+
   return (
     <div className='veto-page'>
       <Navbar />
-      <VetoBody isLoading={isLoading} questions={questions} />
+      <VetoBody
+        isLoading={isLoading}
+        questions={questions}
+        getVotedQuestion={handleQuestionVoted}
+      />
+      {displayConfirmVeto()}
     </div>
   );
 };
