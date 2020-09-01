@@ -1,6 +1,9 @@
 const { encryptData } = require("../utils/auth");
 const { setRoom, getUser, setTeam, mapNameToId } = require("./userController");
 const { getQuestions } = require("../utils/qapiConn");
+const { configNew } = require("../controllers/config");
+
+
 const {
   ROOM_UPDATED,
   RCV_MSG,
@@ -44,10 +47,10 @@ const createRoom = (config, { socket }) => {
         config: {
           id: room_id,
           admin: config.admin,
-          max_teams: config.max_teams || 2,
-          max_perTeam: config.max_perTeam || 3,
+          max_teams: (config.max_teams>configNew().max_teams)?5:config.max_teams,
+          max_perTeam: (config.max_perTeam>configNew().max_perTeam)?5:config.max_perTeam,
           privateRoom: config.privateRoom === false,
-          max_perRoom: config.max_perRoom || 10,
+          max_perRoom: (config.max_perRoom>configNew().max_perRoom)?10:config.max_perRoom,
           createdAt: Date.now(),
         },
         state: {
@@ -387,6 +390,7 @@ const registerVotes = ({ userName, votes }, { socket }) => {
       throw new Error("Not in a team or voting stopped or already voted");
     }
 
+    // valid votes only
     votes = votes.filter((id) => allQuestions.includes(id));
     // votes should be unique
     votes = [...new Set(votes)];
@@ -482,7 +486,7 @@ const startCompetition = async ({ userName }, { socket }) => {
 
     // start competition now
     rooms[room_id].competition.contestOn = true;
-    rooms[room_id].competition.contestStartedAt = Data.now();
+    rooms[room_id].competition.contestStartedAt = Date.now();
     socket.to(room_id).emit(COMPETITION_STARTED, rooms[room_id].competition);
     socket.emit(COMPETITION_STARTED, rooms[room_id].competition);
 
