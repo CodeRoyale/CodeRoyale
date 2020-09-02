@@ -60,7 +60,7 @@ function App() {
             data-testid='route-room'
             exact
             path='/room'
-            component={(props) => <RoomMain {...props} />}
+            component={RoomMain}
           />
           <Route
             data-testid='route-veto'

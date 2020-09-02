@@ -12,6 +12,7 @@ import RoomChat from './RoomChat';
 import profileData from '../../utils/examples';
 import StartCompetitionButton from './StartCompetitionButton';
 import ERROR_MSG from '../../utils/constants';
+import Arena from './Arena';
 
 const RoomMain = (props) => {
   // TODO: Have to implement, what happens if the user goes to create page again....
@@ -158,7 +159,7 @@ const RoomMain = (props) => {
       />
     );
   }
-
+  
   if (team_cards.length === 0) {
     team_cards = (
       <div className='room-create-team-text-container'>
@@ -178,6 +179,21 @@ const RoomMain = (props) => {
       <div className='room-header'>
         <NavBar />
       </div>
+      {
+        /********************************/
+        /*This is only for test...*/
+        // <div className='create-room-button-container'>
+        //   <Button
+        //     type='button'
+        //     onClick={onClickTestArena}
+        //     buttonStyle='btn--primary--normal'
+        //     buttonSize='btn--medium'
+        //   >
+        //     Test Arena
+        //   </Button>
+        // </div>
+        /********************************/
+      }
       <div className='room-body'>
         <div className='room-left-section'>
           <CloseRoomView setState={setState} />
@@ -199,6 +215,9 @@ const RoomMain = (props) => {
           </div>
           <div className='room-details-start-competitions-container'>
             <StartCompetitionButton socket={socket} />
+          </div>
+          <div>
+            <Arena socket={socket} />
           </div>
         </div>
         <div className='room-right-section'>
