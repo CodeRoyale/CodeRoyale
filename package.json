@@ -17,12 +17,14 @@
     "react-dom": "^16.13.1",
     "react-facebook-login": "^4.1.1",
     "react-google-login": "^5.1.21",
+    "react-redux": "^7.2.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "uuid": "^8.3.0",
+    "redux": "^4.0.5",
     "rsuite": "^4.8.1",
-    "socket.io-client": "^2.3.0"
+    "socket.io-client": "^2.3.0",
+    "uuid": "^8.3.0"
   },
   "scripts": {
     "start": "env-cmd -f .env.development react-app-rewired start",
