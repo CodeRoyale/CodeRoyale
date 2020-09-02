@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './ArenaMain.css';
-import { Input } from 'antd';
+import { Input } from 'rsuite';
 import { v4 as uuidv4 } from 'uuid';
 
 function Chat({ socket }) {
   const [state, setState] = useState({ message: '', name: 'userName' });
   const [messageList, setMsgList] = useState([]);
-
-  const handleMessageChange = (e) => {
-    setState({ ...state, [e.target.name]: e.target.value });
-  };
 
   useEffect(() => {
     socket.on('RCV_MSG', (data) => {
@@ -63,9 +59,10 @@ function Chat({ socket }) {
       <form onSubmit={onMessageSubmit}>
         <div className='chat-input'>
           <Input
-            name='message'
             value={state.message}
-            onChange={handleMessageChange}
+            onChange={(value) => {
+              setState({ ...state, message: value });
+            }}
             placeholder='Type here'
           ></Input>
           <button>Send</button>
