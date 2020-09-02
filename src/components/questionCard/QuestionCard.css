@@ -1,0 +1,39 @@
+.question-card-container {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  margin: 16px;
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
+}
+
+.question-card-number {
+  color: #6e6e6e;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.question-card-title {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.question-card-desc-head {
+  font-size: 20px;
+  font-weight: bold;
+  color: #6e6e6e;
+}
+
+.question-card-desc {
+  font-size: 16px;
+  white-space: pre-line;
+}
+
+.question-card-tags-head {
+  font-size: 20px;
+  font-weight: bold;
+  color: #6e6e6e;
+}
+
+.question-card-tags {
+  font-size: 16px;
+}

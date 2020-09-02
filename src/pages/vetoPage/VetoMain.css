@@ -1,0 +1,32 @@
+/* VetoMain */
+.veto-page {
+  margin: auto;
+  height: 100%;
+}
+
+.veto-confirm-vote-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 25px;
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(250, 250, 242);
+}
+
+/* VetoBody */
+.veto-body {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.veto-body-loading {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.veto-body-questions {
+  display: flex;
+}

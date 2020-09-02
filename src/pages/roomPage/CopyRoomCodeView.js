@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
-import { Menu, Dropdown } from 'antd';
+import { Whisper, Tooltip } from 'rsuite';
 
-function CopyRoomCodeView({ room_id }) {
+function CopyRoomCodeView({ room_id, admin }) {
   const copyTextRef = useRef(null);
   const onClickCopyToClipboard = () => {
     var range = document.createRange();
@@ -11,27 +11,33 @@ function CopyRoomCodeView({ room_id }) {
     document.execCommand('copy');
     window.getSelection().removeAllRanges();
   };
-  const menu = (
-    <Menu className='copy-room-code-menu'>
-      <Menu.Item className='copy-room-code-menu-item'>
-        <div onClick={onClickCopyToClipboard}>Copy to Clipboard</div>
-      </Menu.Item>
-    </Menu>
-  );
+
   return (
     <div className='copy-room-code'>
-      <div className='copy-room-code-text'>
-        <b>Room Code</b>
+      <div className='copy-room-code-admin-container'>
+        {
+          admin
+          //'Mayur'
+        }
       </div>
-      <Dropdown overlay={menu} placement='bottomCenter'>
-        <div
-          onClick={onClickCopyToClipboard}
-          ref={copyTextRef}
-          className='copy-room-code-room_id'
+      <div
+        className='copy-room-code-room_id-container'
+        ref={copyTextRef}
+        onClick={onClickCopyToClipboard}
+      >
+        <Whisper
+          trigger='hover'
+          placement='bottom'
+          speaker={<Tooltip>Copy Room ID to Clipboard</Tooltip>}
         >
-          {room_id}
-        </div>
-      </Dropdown>
+          <div>
+            {
+              room_id
+              //'dasaca768fasc'
+            }
+          </div>
+        </Whisper>
+      </div>
     </div>
   );
 }
