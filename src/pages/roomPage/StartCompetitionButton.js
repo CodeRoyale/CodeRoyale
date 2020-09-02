@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '../../components/button/Button';
+import { Redirect } from 'react-router';
 
 function StartCompetitionButton({ socket }) {
+  const [startCompClicked, setStartCompClicked] = useState(false);
   const onClickStartCompetition = () => {
-    //TODO: Do your work here....
+    setStartCompClicked(true);
   };
+
+  if (startCompClicked) {
+    return <Redirect to={{ pathname: '/veto', props: { socket: socket } }} />;
+  }
+
   return (
     <div className='start-competition-view'>
       <div className='start-competition-view-text'>
