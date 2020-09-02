@@ -5,60 +5,121 @@
   --width-team-card: calc(
     var(--width-team-member-card) + 3 * var(--margin-team-member-card)
   );
-  --width-left-section: 23%;
   --border-shadow-card: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+  --width-room-right-section-body: 70%;
 }
 
 .room {
   margin: auto;
-  height: 100%;
   background-color: #f5f8f8;
 }
 
 .room-body {
   display: flex;
   flex: 2;
+  /*TODO: Change this height later*/
+  height: 87.5vh;
 }
 
 .room-left-section {
   background-color: white;
-  box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.2);
-  width: var(--width-left-section);
+  box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.05);
+  width: 25%;
+  color: white;
 }
 
-.room-line {
-  border: solid gray 0.5px;
-  opacity: 0.3;
-  margin-right: 2.5px;
-  margin-left: 2.5px;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.7);
+.room-create-team-text-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.room-create-team-text {
+  text-align: center;
+  color: var(--primary-color);
+  font-size: 250%;
+  opacity: 0.7;
 }
 
 .room-right-section {
   display: flex;
+  flex: 2;
+}
+.room-right-section-body {
+  display: flex;
   flex-wrap: wrap;
-  width: calc(100% - var(--width-left-section));
+  width: 100%;
 }
 
 /*CreateTeamView.css*/
-.create-team-container {
-  margin: 10px;
+.create-team {
+  margin: 40px 20px 20px 20px;
+}
+
+/*CopyRoomCodeView.css*/
+.copy-room-code {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.copy-room-code-admin-container {
+  text-align: right;
+  background: rgba(var(--primary-color-rgb), 0.95);
+  width: 80%;
+  padding: 7px 25px 10px 7px;
+  font-size: large;
+  border-radius: 0 50px 50px 0;
+}
+
+.copy-room-code-room_id-container {
+  background: rgba(240, 153, 13);
+  width: 72%;
+  border-radius: 0 50px 50px 0;
+  text-align: right;
+  cursor: pointer;
+  padding: 1px 10px 1px 1px;
+  margin-top: 5px;
+}
+
+/*RoomDetails.css*/
+.room-details {
+  margin: 0px;
+}
+.room-details-main-container {
+  margin: 0 20px 0 20px;
+  display: flex;
+  flex: 2;
+  justify-items: center;
+  font-size: medium;
+  background: #e5e5e5c7;
+  border-radius: 5px;
+  color: black;
+}
+.room-details-main-users {
+  width: 50%;
   text-align: center;
 }
-.create-team-text {
-  font-size: medium;
+.room-details-main-teams {
+  width: 50%;
+  text-align: center;
 }
-.create-team-input {
-  border: black solid 1px;
+.room-details-main-number {
+  font-size: x-large;
+}
+
+.room-details-more-container {
+  margin: 30px 7px 20px 7px;
+  border-left: solid rgba(var(--primary-color-rgb), 1) 5px;
+  background: #e5e5e5c7;
+  padding: 4px;
   border-radius: 2px;
-  width: 100%;
-  height: 28px;
+  color: black;
 }
-.create-team-input:focus {
-  outline: none;
+.room-details-panel-container {
+  display: flex;
+  flex: 2;
 }
-.create-team-submit-container {
-  margin: 10px;
+.room-details-panel-data-label {
+  width: 90%;
 }
 
 /*TeamMemberCard.css*/
@@ -146,59 +207,16 @@
   opacity: 1;
 }
 
-/*CopyRoomCodeView.css*/
-.copy-room-code {
-  text-align: center;
-  margin: 10px;
-}
-.copy-room-code-text {
-  font-size: medium;
-}
-.copy-room-code-room_id {
-  font-size: wrap;
-  background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 2px;
-  cursor: pointer;
-}
-.copy-room-code-menu-item {
-  color: white;
-  background: rgba(0, 0, 0, 0.85);
-  text-align: center;
-}
-
-.copy-room-code-menu-item:hover {
-  background-color: black;
-}
-
-/*RoomDetails.css*/
-.room-details {
-  margin: 10px;
-  font-size: 14.5px;
-}
-.room-details-heading {
-  text-align: center;
-  font-size: medium;
-}
-.room-details-section {
-  display: flex;
-  flex: 2;
-}
-
-.room-details-right-section {
-  text-align: center;
-}
-
 /*CloseRoomView.css*/
 .close-room-view {
-  margin: 15px;
-}
-.close-room-view-text {
-  font-size: medium;
-  text-align: center;
-}
-.close-room-view-button {
   margin: 10px;
-  text-align: center;
+  right: 0;
+  cursor: pointer;
+  text-align: right;
+}
+.close-room-button {
+  width: 27px;
+  height: 27px;
 }
 
 /*joinTeamView.css*/
@@ -234,4 +252,32 @@
 .start-competition-view-button {
   margin: 10px;
   text-align: center;
+}
+
+/*RoomChat.css*/
+.room-chat {
+  width: 270px;
+  box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.1);
+  background: white;
+  border-left: solid yellowgreen 7px;
+  padding: 5px;
+  height: 100%;
+}
+.room-chat-title {
+  font-size: medium;
+  color: black;
+  background: white;
+  padding: 5px;
+  text-align: center;
+  height: 7%;
+}
+.room-chat-chats {
+  height: 83%;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 5px;
+  padding: 5px;
+}
+.room-chat-input {
+  padding: 5px;
+  height: 10%;
 }

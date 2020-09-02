@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './RoomMain.css';
 import { Redirect } from 'react-router';
+import { Alert } from 'rsuite';
 import NavBar from '../../components/navBar/NavBar';
 import CreateTeamView from './CreateTeamView';
 import TeamCard from './TeamCard';
 import CopyRoomCodeView from './CopyRoomCodeView';
 import RoomDetails from './RoomDetails';
 import CloseRoomView from './CloseRoomView';
+import RoomChat from './RoomChat';
+import profileData from '../../utils/examples';
 import StartCompetitionButton from './StartCompetitionButton';
 import ERROR_MSG from '../../utils/constants';
 
@@ -17,29 +20,84 @@ const RoomMain = (props) => {
   let roomConfig = null;
   let roomState = null;
   let socket = null;
+  let admin = '';
 
-  // const [teamCreated, setTeamCreated] = useState(false);
+  // Get this data from API...
+  const userName = profileData.username.toString();
   const [state, setState] = useState({
     action: null,
     team_name: null,
     actionDone: false,
     roomData: null,
+    roomClosed: false,
+    roomUpdated: false,
+    roomClosedListener: false,
+  });
+  const { action, actionDone, roomData, roomClosed, roomUpdated } = state;
+
+  // Set room dynamically...
+  useEffect(() => {
+    if (socket !== null && !roomUpdated) {
+      socket.on('ROOM_UPDATED', (data) => {
+        if (data !== null) {
+          setState({ ...state, actionDone: true, roomUpdated: true });
+        }
+      });
+    }
   });
 
   // Actions in the room...
   useEffect(() => {
-    if (state.action !== null) {
+    if (action !== null) {
       let team_name = null;
-      if (state.action === 'CREATE_TEAM' || state.action === 'JOIN_TEAM') {
+      if (action === 'CREATE_TEAM' || action === 'JOIN_TEAM') {
         team_name = state.team_name;
-      } else if (
-        state.action === 'CLOSE_ROOM' ||
-        state.action === 'LEAVE_TEAM'
-      ) {
+      } else if (action === 'CLOSE_ROOM' || action === 'LEAVE_TEAM') {
         team_name = null;
       }
+
       socket.emit(state.action, { team_name }, (data) => {
-        if (data !== ERROR_MSG && data !== null) {
+        // Checking if close room is clicked...
+        if (action === 'CLOSE_ROOM' && data) {
+          const abortController = new AbortController();
+          setState({
+            ...state,
+            action: null,
+            team_name: null,
+            actionDone: true,
+            roomClosed: true,
+          });
+          return function cleanup() {
+            abortController.abort();
+          };
+        }
+
+        if (data !== null) {
+          // Giving Alert for every action...
+          if (data === ERROR_MSG) {
+            Alert.error(ERROR_MSG);
+          } else if (data['error'] !== undefined) {
+            Alert.error(data.error);
+          } else {
+            let successMsg = '';
+            switch (action) {
+              case 'CREATE_TEAM':
+                successMsg = 'Team Created Successfully';
+                break;
+              case 'JOIN_TEAM':
+                successMsg = 'You have joined a team';
+                break;
+              case 'CLOSE_ROOM':
+                successMsg = 'Room Closed';
+                break;
+              case 'LEAVE_TEAM':
+                successMsg = 'You have left a team';
+                break;
+              default:
+                successMsg = '';
+            }
+            Alert.success(successMsg);
+          }
           setState({
             ...state,
             action: null,
@@ -47,28 +105,30 @@ const RoomMain = (props) => {
             actionDone: true,
           });
         }
-        console.log(data);
       });
     }
   });
 
   // Getting roomData....
   useEffect(() => {
-    if (socket !== null && (state.actionDone || state.roomData === null)) {
+    if (socket !== null && (actionDone || roomData === null)) {
       socket.emit('GET_ROOM', { room_id }, (data) => {
-        if (data !== ERROR_MSG && data !== null) {
-          setState({ ...data, actionDone: false, roomData: data });
-        }
-        console.log('getRoom', data);
+        setState({ ...state, actionDone: false, roomData: data });
       });
     }
   });
 
+  // If roomClosed then redirect to dashboard...
+  if (roomClosed) {
+    return <Redirect to='/lobby' />;
+  }
+
   // Setting all the retrieved data into variables to use...
-  if (state.roomData !== null && state.roomData !== undefined) {
-    roomConfig = state.roomData.config;
-    roomTeams = state.roomData.teams;
-    roomState = state.roomData.state;
+  if (roomData !== null && roomData !== undefined) {
+    roomConfig = roomData.config;
+    roomTeams = roomData.teams;
+    roomState = roomData.state;
+    if (roomConfig !== undefined) admin = roomConfig.admin;
   }
 
   // Checking if the socket and room_id are not null...
@@ -88,14 +148,28 @@ const RoomMain = (props) => {
 
   // Setting Team Cards...
   let team_cards = [];
-  for (var team_name in roomTeams) {
+  for (var teamName in roomTeams) {
     team_cards.push(
       <TeamCard
         setState={setState}
-        key={team_name}
-        team_name={team_name}
-        team={roomTeams[team_name]}
+        key={teamName}
+        team_name={teamName}
+        team={roomTeams[teamName]}
       />
+    );
+  }
+
+  if (team_cards.length === 0) {
+    team_cards = (
+      <div className='room-create-team-text-container'>
+        <div className='room-create-team-text'>
+          <b>
+            EMPTY ROOM
+            <br />
+            CREATE A TEAM
+          </b>
+        </div>
+      </div>
     );
   }
 
@@ -106,12 +180,14 @@ const RoomMain = (props) => {
       </div>
       <div className='room-body'>
         <div className='room-left-section'>
+          <CloseRoomView setState={setState} />
+
           <div className='room-copy-code'>
-            <CopyRoomCodeView room_id={room_id} />
+            <CopyRoomCodeView room_id={room_id} admin={admin} />
           </div>
 
           <div className='room-create-team'>
-            <CreateTeamView setState={setState} />
+            {userName === admin ? <CreateTeamView setState={setState} /> : null}
           </div>
 
           <div className='room-details-container'>
@@ -121,14 +197,16 @@ const RoomMain = (props) => {
               teams={roomTeams}
             />
           </div>
-          <div className='room-details-close-room-container'>
-            <CloseRoomView setState={setState} />
-          </div>
           <div className='room-details-start-competitions-container'>
             <StartCompetitionButton socket={socket} />
           </div>
         </div>
-        <div className='room-right-section'>{team_cards}</div>
+        <div className='room-right-section'>
+          <div className='room-right-section-body'>{team_cards}</div>
+          <div className='room-right-section-chat'>
+            <RoomChat socket={socket} />
+          </div>
+        </div>
       </div>
     </div>
   );
