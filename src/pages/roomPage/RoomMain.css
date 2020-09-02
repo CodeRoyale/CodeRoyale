@@ -17,7 +17,8 @@
 .room-body {
   display: flex;
   flex: 2;
-  height: 100vh;
+  /*TODO: Change this height later*/
+  height: 87.5vh;
 }
 
 .room-left-section {
@@ -255,55 +256,28 @@
 
 /*RoomChat.css*/
 .room-chat {
-  padding: 5px;
   width: 270px;
   box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.1);
   background: white;
-  position: fixed;
-  right: 0;
-  bottom: 0;
-}
-.room-chat-close-chat {
+  border-left: solid yellowgreen 7px;
   padding: 5px;
-  width: 100%;
-  border-radius: 2px;
-  text-align: right;
+  height: 100%;
 }
-.room-chat-shrink {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 50px;
-  width: 35px;
-  height: 35px;
-  box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.05);
-  background: white;
-  background: rgba(var(--secondary-color-rgb), 0.2);
-  cursor: pointer;
-  border-radius: 5px 0 0 5px;
-  position: fixed;
-  right: 0;
-  bottom: 0;
-}
-/*ChatWindow.css*/
-.chat-window {
-  margin-top: 10px;
-  margin-bottom: 5px;
-  background: rgba(var(--primary-color-rgb), 0.1);
-  border-radius: 3px;
-  box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.1);
-  border: solid rgba(var(--primary-color-rgb), 0.5) 2px;
-}
-.chat-title {
+.room-chat-title {
   font-size: medium;
-  padding: 2px 2px 2px 10px;
-  color: white;
-  background: rgba(var(--secondary-color-rgb));
-}
-.chat-window-chats-container {
-  height: 35vh;
-  overflow: auto;
-}
-.chat-window-input-container {
+  color: black;
+  background: white;
   padding: 5px;
+  text-align: center;
+  height: 7%;
+}
+.room-chat-chats {
+  height: 83%;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 5px;
+  padding: 5px;
+}
+.room-chat-input {
+  padding: 5px;
+  height: 10%;
 }

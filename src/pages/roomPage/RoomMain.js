@@ -10,7 +10,7 @@ import RoomDetails from './RoomDetails';
 import CloseRoomView from './CloseRoomView';
 import RoomChat from './RoomChat';
 import profileData from '../../utils/examples';
-//import StartCompetitionButton from './StartCompetitionButton';
+import StartCompetitionButton from './StartCompetitionButton';
 import ERROR_MSG from '../../utils/constants';
 
 const RoomMain = (props) => {
@@ -30,9 +30,21 @@ const RoomMain = (props) => {
     actionDone: false,
     roomData: null,
     roomClosed: false,
+    roomUpdated: false,
+    roomClosedListener: false,
   });
-  const { action, actionDone, roomData, roomClosed } = state;
-  const [expandRoomChat, setExpandRoomChat] = useState(false);
+  const { action, actionDone, roomData, roomClosed, roomUpdated } = state;
+
+  // Set room dynamically...
+  useEffect(() => {
+    if (socket !== null && !roomUpdated) {
+      socket.on('ROOM_UPDATED', (data) => {
+        if (data !== null) {
+          setState({ ...state, actionDone: true, roomUpdated: true });
+        }
+      });
+    }
+  });
 
   // Actions in the room...
   useEffect(() => {
@@ -45,7 +57,6 @@ const RoomMain = (props) => {
       }
 
       socket.emit(state.action, { team_name }, (data) => {
-        //console.log('emitted', data);
         // Checking if close room is clicked...
         if (action === 'CLOSE_ROOM' && data) {
           const abortController = new AbortController();
@@ -93,18 +104,6 @@ const RoomMain = (props) => {
             team_name: null,
             actionDone: true,
           });
-        }
-      });
-    }
-  });
-
-  // Set room dynamically...
-  useEffect(() => {
-    if (socket !== null) {
-      socket.on('ROOM_UPDATED', (data) => {
-        if (data !== null) {
-          //console.log('roomUpdate', data);
-          setState({ ...state, actionDone: true });
         }
       });
     }
@@ -199,17 +198,13 @@ const RoomMain = (props) => {
             />
           </div>
           <div className='room-details-start-competitions-container'>
-            {/*<StartCompetitionButton socket={socket} />*/}
+            <StartCompetitionButton socket={socket} />
           </div>
         </div>
         <div className='room-right-section'>
           <div className='room-right-section-body'>{team_cards}</div>
           <div className='room-right-section-chat'>
-            <RoomChat
-              socket={socket}
-              expand={expandRoomChat}
-              setExpand={setExpandRoomChat}
-            />
+            <RoomChat socket={socket} />
           </div>
         </div>
       </div>
