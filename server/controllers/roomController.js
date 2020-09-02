@@ -1,7 +1,9 @@
 const { encryptData } = require('../utils/auth');
 const { setRoom, getUser, setTeam, mapNameToId } = require('./userController');
 const { getQuestions } = require('../utils/qapiConn');
-const { ROOM_LIMITS_CONFIG } = require('./config');
+const { ROOM_DEFAULTS, ROOM_LIMITS } = require('./config');
+
+console.log(ROOM_DEFAULTS, ROOM_LIMITS);
 
 const {
   ROOM_UPDATED,
@@ -46,19 +48,19 @@ const createRoom = (config, { socket }) => {
         config: {
           id: room_id,
           admin: config.admin,
-          max_teams:
-            config.max_teams > ROOM_LIMITS_CONFIG.max_teams
-              ? 5
-              : config.max_teams,
-          max_perTeam:
-            config.max_perTeam > ROOM_LIMITS_CONFIG.max_perTeam
-              ? 5
-              : config.max_perTeam,
+          max_teams: Math.min(
+            ROOM_LIMITS.max_teams,
+            config.max_teams || ROOM_DEFAULTS.max_teams
+          ),
+          max_perTeam: Math.min(
+            ROOM_LIMITS.max_perTeam,
+            config.max_perTeam || ROOM_DEFAULTS.max_perTeam
+          ),
           privateRoom: config.privateRoom === false,
-          max_perRoom:
-            config.max_perRoom > ROOM_LIMITS_CONFIG.max_perRoom
-              ? 10
-              : config.max_perRoom,
+          max_perRoom: Math.min(
+            ROOM_LIMITS.max_perRoom,
+            config.max_perRoom || ROOM_DEFAULTS.max_perRoom
+          ),
           createdAt: Date.now(),
         },
         state: {
