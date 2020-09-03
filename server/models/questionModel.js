@@ -1,5 +1,20 @@
 const mongoose = require('mongoose');
 
+const subschema = new mongoose.Schema(
+  {
+    input: {
+      type: String,
+    },
+    output: {
+      type: String,
+    },
+    explanation: {
+      type: String,
+    },
+  },
+  { _id: false }
+);
+
 const questionSchema = new mongoose.Schema({
   questionTitle: {
     type: String,
@@ -11,6 +26,14 @@ const questionSchema = new mongoose.Schema({
   },
   description: {
     type: String,
+    required: true,
+  },
+  format: {
+    type: String,
+    required: true,
+  },
+  io: {
+    type: [subschema],
     required: true,
   },
   author: {

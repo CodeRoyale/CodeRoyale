@@ -13,7 +13,7 @@ const subschema = new mongoose.Schema(
 );
 
 const testcaseSchema = new mongoose.Schema({
-  qid: {
+  problemCode: {
     type: String,
     required: true,
   },

@@ -23,7 +23,7 @@ const getTestcase = async (req, res) => {
     for (i = 0; i < n; i++) {
       // eslint-disable-next-line no-await-in-loop
       const testcase = await Testcase.findOne({
-        qid: {
+        problemCode: {
           $in: req.query.id,
         },
       });
