@@ -1,13 +1,16 @@
 const mongoose = require('mongoose');
 
-const subschema = new mongoose.Schema({
-  input:{
-    type:String,
+const subschema = new mongoose.Schema(
+  {
+    input: {
+      type: String,
+    },
+    output: {
+      type: String,
+    },
   },
-  output:{
-    type:String,
-  }
-},{ _id : false });
+  { _id: false }
+);
 
 const testcaseSchema = new mongoose.Schema({
   qid: {

@@ -61,6 +61,22 @@
  *           author: "admin"
  *           dateAdded: "23-02-2009"
  *           difficulty: 3
+ *
+ *      Testcase:
+ *        type: object
+ *        required:
+ *          - qid
+ *          - testcases
+ *        properties:
+ *          qid:
+ *            type: string
+ *            description: Question ID
+ *          testcases:
+ *            type: Array of Object
+ *            description: Testcases for that question
+ *        example:
+ *           qid: 872354872349826
+ *           testcase : [{"input" : "10 /n.X..XXXX /n9 1 9 6","output" : "3" }]
  */
 
 // User components used in the responses
@@ -160,6 +176,29 @@
  *            description: Error client made a mistake
  *        example:
  *           message: Error message
+ *
+ *      putTestcase:
+ *        type: object
+ *        properties:
+ *          message:
+ *            type: object
+ *            description: to post a testcase of a question
+ *        example:
+ *           message: [
+ *           "5f32a127c5e5b2da2163957c":
+ *           {
+ *              "input": "1 \n1",
+ *              "output": "1"
+ *           }
+ *           ]
+ *      getTestcase:
+ *        type: object
+ *        properties:
+ *          message:
+ *            type: array
+ *            description: Takes an input of array of questionID's and return an object with question ID's and their testcases.
+ *        example:
+ *           message: "5f32a127c5e5b2da2163957c"
  */
 
 //  paths with their method and responses
@@ -272,6 +311,52 @@
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/getRandom'
+ *        "401":
+ *          description: Client mistake
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
+ *  /testcase/:
+ *    post:
+ *      summary: put a new testcase
+ *      tags: [Testcase]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Testcase'
+ *      responses:
+ *        "201":
+ *          description: Create a new testcase
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/putTestcase'
+ *        "401":
+ *          description: Client mistake
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
+ *  /getTestcase/:
+ *    get:
+ *      summary: Get testcase
+ *      tags: [Testcase]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Testcase'
+ *      responses:
+ *        "200":
+ *          description: Get an array of testcases of qid's
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/getTestcase'
  *        "401":
  *          description: Client mistake
  *          content:
