@@ -1,85 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import { loginUser } from '../../actions/loginActions';
 import LeftSecLogin from './LeftSecLogin';
 import LoginSec from './LoginSec';
-import './LoginMain.css';
-import { Alert } from 'rsuite';
 import { Redirect } from 'react-router';
-import { LOGIN_SUCCESS, LOGIN_USER_DOESNT_EXIST } from '../../utils/constants';
+import './LoginMain.css';
 
-const LoginMain = () => {
-  const [authData, setAuthData] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
-  const LOGIN_API = `${process.env.REACT_APP_USER_API_URL}/users/login`;
-
-  // Message to user for login error
-  const loginError = (msg) => {
-    Alert.error(msg);
-  };
-
+const LoginMain = (props) => {
   const handleAuthData = (data) => {
-    setAuthData(data);
+    props.loginUser(data);
   };
-
-  // API call to login API
-  useEffect(() => {
-    if (authData != null) {
-      setIsLoading(true);
-      let headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      headers.append('Origin', CLIENT_URL);
-      headers.append('Access-Control-Allow-Credentials', 'true');
-      // Data to be sent to API
-      const thirdPartyData = {
-        issuer: authData.issuer,
-        access_token: authData.access_token,
-      };
-      fetch(LOGIN_API, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(thirdPartyData),
-      })
-        .then((res) => res.json())
-        .then((jsonRes) => {
-          // Success response from server
-          setIsLoading(false);
-          if (jsonRes.message === LOGIN_SUCCESS) {
-            localStorage.setItem('user-data', JSON.stringify(jsonRes));
-            localStorage.setItem('access-token', jsonRes.accessToken);
-            setIsLoggedIn(true);
-          } else if (jsonRes.message === LOGIN_USER_DOESNT_EXIST) {
-            setIsLoggedIn(false);
-            loginError(
-              'Sorry, you will need to sign up first to use CodeRoyale'
-            );
-          } else {
-            setIsLoggedIn(false);
-            loginError("Sorry, couldn't login please try again later!");
-          }
-        })
-        .catch((err) => {
-          // Error response from server
-          setIsLoggedIn(false);
-          loginError("Sorry, couldn't login please try again later!");
-        });
-    }
-  }, [authData, CLIENT_URL, LOGIN_API]);
 
   // Default content
   let content = (
     <div className='login-page'>
       <LeftSecLogin />
-      <LoginSec isLoading={isLoading} getAuthData={handleAuthData} />
+      <LoginSec
+        isLoading={props.loginData.isLoading}
+        getAuthData={handleAuthData}
+      />
     </div>
   );
 
-  // Check if user if logged in
-  if (isLoggedIn) {
+  if (props.loginData.isLoggedIn) {
     content = <Redirect to='/dashboard' />;
   }
-
   return content;
 };
 
-export default LoginMain;
+const mapStateToProps = (state) => ({
+  loginData: state.loginData,
+});
+
+export default connect(mapStateToProps, { loginUser })(LoginMain);

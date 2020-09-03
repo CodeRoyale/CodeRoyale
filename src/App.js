@@ -14,77 +14,86 @@ import Testing from './pages/testPage/TestPage';
 import RoomMain from './pages/roomPage/RoomMain';
 import 'rsuite/lib/styles/index.less';
 import VetoMain from './pages/vetoPage/VetoMain';
+import { Provider } from 'react-redux';
+import store from './store';
 
 function App() {
   return (
-    <Router>
-      <div data-testid='App' className='App'>
-        <Switch>
-          <Route
-            data-testid='route-sorry'
-            exact
-            path='/sorry'
-            component={OutroMain}
-          />
-          <Route
-            data-testid='route-dashboard'
-            exact
-            path='/dashboard'
-            component={DashboardMain}
-          />
-          <Route
-            data-testid='route-login'
-            exact
-            path='/login'
-            component={LoginMain}
-          />
-          <Route
-            data-testid='route-signup'
-            exact
-            path='/signup'
-            component={SignUpMain}
-          />
-          <Route
-            data-testid='route-arena'
-            exact
-            path='/arena'
-            component={Arena}
-          />
-          <Route
-            data-testid='route-lobby'
-            exact
-            path='/lobby'
-            component={LobbyMain}
-          />
-          <Route
-            data-testid='route-room'
-            exact
-            path='/room'
-            component={RoomMain}
-          />
-          <Route
-            data-testid='route-veto'
-            exact
-            path='/veto'
-            component={VetoMain}
-          />
-          <Route data-testid='test' exact path='/test' component={Testing} />
-          <Route
-            data-testid='route-settings'
-            exact
-            path='/settings'
-            component={ProfileSettingsMain}
-          />
-          <Route data-testid='route-none' exact path='' component={FrontPage} />
-          <Route
-            data-testid='route-home'
-            exact
-            path='/'
-            component={FrontPage}
-          />
-        </Switch>
-      </div>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <div data-testid='App' className='App'>
+          <Switch>
+            <Route
+              data-testid='route-sorry'
+              exact
+              path='/sorry'
+              component={OutroMain}
+            />
+            <Route
+              data-testid='route-dashboard'
+              exact
+              path='/dashboard'
+              component={DashboardMain}
+            />
+            <Route
+              data-testid='route-login'
+              exact
+              path='/login'
+              component={LoginMain}
+            />
+            <Route
+              data-testid='route-signup'
+              exact
+              path='/signup'
+              component={SignUpMain}
+            />
+            <Route
+              data-testid='route-arena'
+              exact
+              path='/arena'
+              component={Arena}
+            />
+            <Route
+              data-testid='route-lobby'
+              exact
+              path='/lobby'
+              component={LobbyMain}
+            />
+            <Route
+              data-testid='route-room'
+              exact
+              path='/room'
+              component={RoomMain}
+            />
+            <Route
+              data-testid='route-veto'
+              exact
+              path='/veto'
+              component={VetoMain}
+            />
+            <Route data-testid='test' exact path='/test' component={Testing} />
+            <Route
+              data-testid='route-settings'
+              exact
+              path='/settings'
+              component={ProfileSettingsMain}
+            />
+            <Route
+              data-testid='route-none'
+              exact
+              path=''
+              component={FrontPage}
+            />
+            <Route
+              data-testid='route-home'
+              exact
+              path='/'
+              component={FrontPage}
+            />
+          </Switch>
+        </div>
+      </Router>
+    </Provider>
   );
 }
 
