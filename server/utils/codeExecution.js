@@ -1,8 +1,8 @@
 
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
 
 //POST URL
-const postUrl = 'http://ec2-34-227-73-43.compute-1.amazonaws.com/submissions/batch?base64_encoded=true';
+const postUrl = "http://ec2-34-227-73-43.compute-1.amazonaws.com/submissions/batch?base64_encoded=true";
 
 //testcases encoding to base64
 const testcasestobase64 = ( test ) => {
@@ -10,8 +10,8 @@ const testcasestobase64 = ( test ) => {
 	let testcases = [];
 	try{
 		for (i of test) {
-			encoded_input = Buffer.from(i.input).toString('base64');
-			encoded_output = Buffer.from(i.output).toString('base64');
+			encoded_input = Buffer.from(i.input).toString("base64");
+			encoded_output = Buffer.from(i.output).toString("base64");
 			var data = {"input":encoded_input,"output":encoded_output};
 			testcases.push(data);
 		}
@@ -26,7 +26,7 @@ const testcasestobase64 = ( test ) => {
 const codetobase64 = ( source ) => {
 	var encoded_source = "";
 	try {
-		encoded_source = Buffer.from(source).toString('base64');
+		encoded_source = Buffer.from(source).toString("base64");
 	} catch(err){
 		console.log(err);
 	}
@@ -59,16 +59,16 @@ const createUrl = (responseTokens) => {
 	let tokens = "";
 	for ( tok of responseTokens)
 		{
-		  tokens = tokens + ',' + tok.token;
+		  tokens = tokens + "," + tok.token;
 		};
-	const url = 'http://ec2-34-227-73-43.compute-1.amazonaws.com/submissions/batch?tokens=' + tokens.slice(1) + '&base64_encoded=false&fields=token,stdout,stderr,status_id,language_id';
+	const url = "http://ec2-34-227-73-43.compute-1.amazonaws.com/submissions/batch?tokens=" + tokens.slice(1) + "&base64_encoded=false&fields=token,stdout,stderr,status_id,language_id";
 	return url;
 };
 
 // function for creating a post submissionn
-async function postData(url = '', data = {}) {
+async function postData(url = "", data = {}) {
 	const response = await fetch(url ,{
-	  method: 'POST',
+	  method: "POST",
 	  headers: {
 	    "Content-Type": "application/json",
 	    "accept": "application/json",
@@ -80,9 +80,9 @@ async function postData(url = '', data = {}) {
 }
 
 // function for getting a get submissionn
-async function getData(url = '') {
+async function getData(url = "") {
 	const response = await fetch(url, {
-	  method: 'GET',
+	  method: "GET",
 	  headers: {
 	    "useQueryString": true,
 	  },

@@ -16,10 +16,10 @@ const {
 const {
   CONNECTION_ACK,
   CONNECTION_DENY,
-} = require('../socketActions/serverActions');
+} = require("../socketActions/serverActions");
 
 //import controllers
-const { addUser, removeUser } = require('../controllers/userController');
+const { addUser, removeUser } = require("../controllers/userController");
 const {
   createRoom,
   createTeam,
@@ -32,14 +32,14 @@ const {
   startCompetition,
   forwardMsg,
   addPrivateList,
-} = require('../controllers/roomController');
+} = require("../controllers/roomController");
 
 // import utils
-const { getQuestions } = require('../utils/qapiConn');
+const { getQuestions } = require("../utils/qapiConn");
 
 const checkToken = (token) => {
   //just for testing will change later
-  if (token[0] !== 'z') {
+  if (token[0] !== "z") {
     return {
       userName: token,
     };
@@ -52,7 +52,7 @@ const authUser = (socket, next) => {
   try {
     // check the token
     // token format "Bearer Token"
-    const token = socket.handshake.headers.authorization.split(' ')[1];
+    const token = socket.handshake.headers.authorization.split(" ")[1];
     const payload = checkToken(token);
 
     //if sucessfull
@@ -64,12 +64,12 @@ const authUser = (socket, next) => {
         socket.userDetails = payload;
         next();
       } else {
-        throw new Error('Already Conected');
+        throw new Error("Already Conected");
       }
     } else {
-      console.log('Invalid token');
+      console.log("Invalid token");
       socket.emit(CONNECTION_DENY);
-      throw new Error('Auth failed');
+      throw new Error("Auth failed");
     }
   } catch (err) {
     socket.emit();
