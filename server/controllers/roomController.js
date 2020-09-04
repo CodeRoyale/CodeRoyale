@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 const { encryptData } = require('../utils/auth');
 const { setRoom, getUser, setTeam, mapNameToId } = require('./userController');
 const { getQuestions } = require('../utils/qapiConn');
+=======
+const { encryptData } = require("../utils/auth");
+const { setRoom, getUser, setTeam, mapNameToId } = require("./userController");
+const { getQuestions } = require("../utils/qapiConn");
+const { ROOM_DEFAULTS, ROOM_LIMITS } = require("./config");
+
+console.log(ROOM_DEFAULTS, ROOM_LIMITS);
+>>>>>>> 8c9d2508b2f1f396485c7242c802b17b4b0ce324
 const {
   ROOM_UPDATED,
   RCV_MSG,
@@ -9,6 +18,7 @@ const {
   LEFT_TEAM,
   LEFT_ROOM,
   TEAM_CREATED,
+  ADDED_PRIVATE_MEMBER,
   VETO_START,
   VETO_STOP,
   COMPETITION_STARTED,
@@ -46,10 +56,19 @@ const createRoom = (config, { socket }) => {
         config: {
           id: room_id,
           admin: config.admin,
-          max_teams: config.max_teams || 2,
-          max_perTeam: config.max_perTeam || 3,
+          max_teams: Math.min(
+            ROOM_LIMITS.max_teams,
+            config.max_teams || ROOM_DEFAULTS.max_teams
+          ),
+          max_perTeam: Math.min(
+            ROOM_LIMITS.max_perTeam,
+            config.max_perTeam || ROOM_DEFAULTS.max_perTeam
+          ),
           privateRoom: config.privateRoom === false,
-          max_perRoom: config.max_perRoom || 10,
+          max_perRoom: Math.min(
+            ROOM_LIMITS.max_perRoom,
+            config.max_perRoom || ROOM_DEFAULTS.max_perRoom
+          ),
           createdAt: Date.now(),
         },
         state: {
@@ -347,11 +366,24 @@ const banMember = ({ room_id }) => {
   }
 };
 
-const addPrivateList = ({ room_id }) => {
+const addPrivateList = ({ userName, privateList }, socket) => {
   // only private rooms can have private lists
-  try {
-  } catch (err) {
-    return { error: err.message };
+  let user = getUser(userName);
+  room = rooms[user.room_id];
+  room_id = user.room_id;
+
+  if (room && room.admin === user.userName && room.config.privateRoom) {
+    privateList.forEach((ele) => {
+      if (!room.state.privateList.includes(ele)) {
+        rooms[room_id].state.privateList.push(ele);
+      }
+    });
+    socket.to(room_id).broadcast.emit(ROOM_UPDATED, {
+      type: ADDED_PRIVATE_MEMBER,
+      data: { privateList: rooms[room_id].state.privateList },
+    });
+  } else {
+    return false;
   }
 };
 
@@ -394,6 +426,7 @@ const registerVotes = ({ userName, votes }, { socket }) => {
       throw new Error('Not in a team or voting stopped or already voted');
     }
 
+    // valid votes only
     votes = votes.filter((id) => allQuestions.includes(id));
     // votes should be unique
     votes = [...new Set(votes)];
@@ -547,6 +580,7 @@ module.exports = {
   removeUserFromRoom,
   forwardMsg,
   handleUserDisconnect,
+  addPrivateList,
   startCompetition,
   registerVotes,
 };

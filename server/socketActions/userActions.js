@@ -32,7 +32,10 @@ const LEAVE_TEAM = "LEAVE_TEAM";
 // send msg to team or room
 const SEND_MSG = "SEND_MSG";
 
-// client's votes
+// add private list
+const ADD_PRIVATE_LIST = "ADD_PRIVATE_LIST";
+
+// client"s votes
 const VETO_VOTES = "VETO_VOTES";
 
 module.exports = {
@@ -47,5 +50,6 @@ module.exports = {
   SEND_MSG,
   LEAVE_TEAM,
   GET_ROOM,
+  ADD_PRIVATE_LIST,
   VETO_VOTES,
 };

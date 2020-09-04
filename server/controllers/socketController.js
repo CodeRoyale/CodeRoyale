@@ -9,8 +9,10 @@ const {
   SEND_MSG,
   LEAVE_TEAM,
   GET_ROOM,
+  ADD_PRIVATE_LIST,
   VETO_VOTES,
 } = require("../socketActions/userActions");
+
 const {
   CONNECTION_ACK,
   CONNECTION_DENY,
@@ -29,6 +31,7 @@ const {
   registerVotes,
   startCompetition,
   forwardMsg,
+  addPrivateList,
 } = require("../controllers/roomController");
 
 // import utils
@@ -118,6 +121,7 @@ const handleUserEvents = (socket) => {
     START_COMPETITION,
     genericActionCreater(startCompetition, { socket }, true)
   );
+  socket.on(ADD_PRIVATE_LIST, genericActionCreater(addPrivateList, socket));
   socket.on("disconnect", () => {
     // removeUser(socket.userDetails.userName);
   });

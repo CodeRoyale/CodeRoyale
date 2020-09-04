@@ -20,6 +20,9 @@ const LEFT_ROOM = 'LEFT_ROOM';
 // 5. create a team
 const TEAM_CREATED = 'TEAM_CREATED';
 
+// 6. added private member
+const ADDED_PRIVATE_MEMBER = "ADDED_PRIVATE_MEMBER";
+
 // to forward sent message
 const RCV_MSG = 'RCV_MSG';
 
@@ -47,6 +50,7 @@ module.exports = {
   LEFT_ROOM,
   RCV_MSG,
   TEAM_CREATED,
+  ADDED_PRIVATE_MEMBER,
   VETO_START,
   VETO_STOP,
   COMPETITION_STARTED,
