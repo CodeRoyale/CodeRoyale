@@ -10,7 +10,9 @@ const {
   LEAVE_TEAM,
   GET_ROOM,
   ADD_PRIVATE_LIST,
-} = require('../socketActions/userActions');
+  VETO_VOTES,
+} = require("../socketActions/userActions");
+
 const {
   CONNECTION_ACK,
   CONNECTION_DENY,
@@ -26,7 +28,8 @@ const {
   getRoomData,
   leaveTeam,
   closeRoom,
-  roomEligible,
+  registerVotes,
+  startCompetition,
   forwardMsg,
   addPrivateList,
 } = require('../controllers/roomController');
@@ -78,75 +81,49 @@ const authUser = (socket, next) => {
 
 const genericActionCreater = (
   actionResponder,
-  socket,
-  failReply = 'Some error occured !',
-  ACTION = ''
-) => (config, cb) => {
-  // only passes userName
-  config.userName = socket.userDetails.userName;
-  let data = actionResponder(config, socket) || failReply;
-  if (data != failReply) {
-    console.log(`${ACTION} succesfull !`);
+  dataFromServer,
+  asynFunc = false,
+  failReply = "Some error occured !",
+  ACTION = ""
+) => (dataFromClient, cb) => {
+  // if user didnt pass anything
+  if (!dataFromClient) dataFromClient = {};
+  dataFromClient.userName = dataFromServer.socket.userDetails.userName;
+  let data;
+  if (!asynFunc) {
+    data = actionResponder(dataFromClient, dataFromServer) || failReply;
+    console.log(data);
+    if (cb) cb(data);
+  } else {
+    actionResponder(dataFromClient, dataFromServer)
+      .then((data) => {
+        console.log(data);
+        if (cb) cb(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        if (cb) cb(err.message);
+      });
   }
-  cb(data);
 };
 
 const handleUserEvents = (socket) => {
-  // auth middle ware will set this based on jwt payload
-  // ideal
-  // socket.on(
-  //   CREATE_ROOM,
-  //   genericActionCreater(
-  //     createRoom,
-  //     getRoomData,
-  //     "Could'nt create room !",
-  //     CREATE_ROOM
-  //   )
-  // );
-  // but below approach is shorter
-  socket.on(CREATE_ROOM, genericActionCreater(createRoom, socket));
-  socket.on(JOIN_ROOM, genericActionCreater(joinRoom, socket));
-  socket.on(CREATE_TEAM, genericActionCreater(createTeam, socket));
-  socket.on(JOIN_TEAM, genericActionCreater(joinTeam, socket));
-  socket.on(CLOSE_ROOM, genericActionCreater(closeRoom, socket));
-  socket.on(SEND_MSG, genericActionCreater(forwardMsg, socket));
-  socket.on(LEAVE_TEAM, genericActionCreater(leaveTeam, socket));
-  socket.on(GET_ROOM, genericActionCreater(getRoomData, socket));
+  socket.on(CREATE_ROOM, genericActionCreater(createRoom, { socket }));
+  socket.on(JOIN_ROOM, genericActionCreater(joinRoom, { socket }));
+  socket.on(CREATE_TEAM, genericActionCreater(createTeam, { socket }));
+  socket.on(JOIN_TEAM, genericActionCreater(joinTeam, { socket }));
+  socket.on(CLOSE_ROOM, genericActionCreater(closeRoom, { socket }));
+  socket.on(SEND_MSG, genericActionCreater(forwardMsg, { socket }));
+  socket.on(LEAVE_TEAM, genericActionCreater(leaveTeam, { socket }));
+  socket.on(GET_ROOM, genericActionCreater(getRoomData, { socket }));
+  socket.on(VETO_VOTES, genericActionCreater(registerVotes, { socket }));
+  socket.on(
+    START_COMPETITION,
+    genericActionCreater(startCompetition, { socket }, true)
+  );
   socket.on(ADD_PRIVATE_LIST, genericActionCreater(addPrivateList, socket));
-  // admin wants to start the competition
-  socket.on(START_COMPETITION, async (dataFromClient, cb) => {
-    // check if room is eligible
-    let { userDetails } = socket;
-    // user is allowed to start, and room meets requirement
-    let eligibleRoom = roomEligible(userDetails.userName);
-    if (eligibleRoom) {
-      // add event listeners and remove for veto
-
-      // start question selection
-      // get numberOfTeams+numberQuestion ques from api
-      // start selection process
-
-      let allQuestions = await getQuestions();
-
-      // veto process
-      let selectedQuestions = await setQuestions(allQuestions);
-      // end of selection
-
-      // add event listeners for code submit
-      // this is just prototype
-      socket.on('CODE_SUBMIT', ({ code, lang }, cb) => {
-        // call codeExec api
-        //wait for result
-        // check output
-        // send back result in cb
-        // update score based on result
-        // call other events if required
-      });
-    }
-  });
-
-  socket.on('disconnect', () => {
-    removeUser(socket.userDetails.userName);
+  socket.on("disconnect", () => {
+    // removeUser(socket.userDetails.userName);
   });
 };
 

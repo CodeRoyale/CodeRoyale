@@ -1,6 +1,15 @@
-const getQuestions = async (n) => {
-  // return n random questions
-  return [{ q: "awd aw " }, { q: "vawd aw " }, { q: "awasdawd aw z" }];
+const fetch = require("node-fetch");
+
+const getQuestions = async (noIds) => {
+  let response = await fetch(`${process.env.QAPI_URL}?noIds=${noIds}`, {
+    method: "GET",
+    headers: {
+      useQueryString: true,
+      accept: "application/json",
+    },
+  });
+  response = await response.json();
+  return response.message;
 };
 
 module.exports = { getQuestions };

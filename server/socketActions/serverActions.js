@@ -26,6 +26,17 @@ const ADDED_PRIVATE_MEMBER = 'ADDED_PRIVATE_MEMBER';
 // to forward sent message
 const RCV_MSG = 'RCV_MSG';
 
+// veto has started
+const VETO_START = "VETO_START";
+// veto has stopeed
+const VETO_STOP = "VETO_STOP";
+
+// competiion has started
+const COMPETITION_STARTED = "COMPETITION_STARTED";
+
+// competiion has started
+const COMPETITION_STOPPED = "COMPETITION_STOPPED";
+
 module.exports = {
   CONNECTION_ACK,
   CONNECTION_DENY,
@@ -37,4 +48,8 @@ module.exports = {
   RCV_MSG,
   TEAM_CREATED,
   ADDED_PRIVATE_MEMBER,
+  VETO_START,
+  VETO_STOP,
+  COMPETITION_STARTED,
+  COMPETITION_STOPPED,
 };
