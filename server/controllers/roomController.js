@@ -1,10 +1,9 @@
-const { encryptData } = require('../utils/auth');
-const { setRoom, getUser, setTeam, mapNameToId } = require('./userController');
-const { getQuestions } = require('../utils/qapiConn');
-const { ROOM_DEFAULTS, ROOM_LIMITS } = require('./config');
+const { encryptData } = require("../utils/auth");
+const { setRoom, getUser, setTeam, mapNameToId } = require("./userController");
+const { getQuestions } = require("../utils/qapiConn");
+const { ROOM_DEFAULTS, ROOM_LIMITS } = require("./config");
 
 console.log(ROOM_DEFAULTS, ROOM_LIMITS);
-
 const {
   ROOM_UPDATED,
   RCV_MSG,
@@ -13,13 +12,16 @@ const {
   LEFT_TEAM,
   LEFT_ROOM,
   TEAM_CREATED,
+  ADDED_PRIVATE_MEMBER,
   VETO_START,
   VETO_STOP,
   COMPETITION_STARTED,
   COMPETITION_STOPPED,
-} = require('../socketActions/serverActions');
+  ROOM_CLOSED,
+} = require("../socketActions/serverActions");
 
-const { io } = require('../server');
+const { io } = require("../server");
+const { CLOSE_ROOM } = require("../socketActions/userActions");
 
 // this is my db for now
 rooms = {};
@@ -118,7 +120,7 @@ const joinRoom = ({ userName, room_id, team_name }, { socket }) => {
       let user = getUser(userName);
       if (user.room_id) {
         // already in a grp dont allow
-        throw new Error('User already in room');
+        throw new Error("User already in room");
       }
 
       // succesfull (user will now be added)
@@ -139,7 +141,7 @@ const joinRoom = ({ userName, room_id, team_name }, { socket }) => {
         });
       } else {
         // else bench the user
-        team_name = '';
+        team_name = "";
         rooms[room_id].state.bench.push(userName);
       }
 
@@ -154,7 +156,7 @@ const joinRoom = ({ userName, room_id, team_name }, { socket }) => {
         type: JOINED_ROOM,
         data: { userName },
       });
-      console.log(userName, ' joined from ', room_id);
+      console.log(userName, " joined from ", room_id);
       return rooms[room_id];
     }
     return false;
@@ -200,8 +202,8 @@ const removeUserFromRoom = ({ userName }) => {
     rooms[room_id].state.cur_memCount -= 1;
 
     // tell others
-    console.log(userName, ' removed from ', room_id);
-    setRoom(userName, '');
+    console.log(userName, " removed from ", room_id);
+    setRoom(userName, "");
     socket.to(room_id).emit(ROOM_UPDATED, {
       type: LEFT_ROOM,
       data: { userName },
@@ -222,7 +224,7 @@ const createTeam = ({ userName, team_name }, { socket }) => {
     const { room_id } = getUser(userName);
     // if user not in room or not admin of the room
     if (!room_id || rooms[room_id].config.admin !== userName) {
-      throw new Error('Only admin can do this');
+      throw new Error("Only admin can do this");
     }
 
     if (
@@ -258,7 +260,7 @@ const joinTeam = ({ userName, team_name }, { socket }) => {
     ) {
       if (user.team_name) {
         //ditch prev team
-        throw new Error('Already in a team');
+        throw new Error("Already in a team");
       }
 
       // remove from bench
@@ -297,7 +299,7 @@ const leaveTeam = ({ userName }, { socket }) => {
       );
       rooms[room_id].teams[team_name] = newTeam;
       rooms[room_id].state.bench.push(userName);
-      setTeam(userName, '');
+      setTeam(userName, "");
 
       // tell eveyone
       socket.leave(`${room_id}/${team_name}`);
@@ -314,7 +316,7 @@ const leaveTeam = ({ userName }, { socket }) => {
   }
 };
 
-const closeRoom = ({ userName }) => {
+const closeRoom = ({ userName }, { socket }) => {
   try {
     const { room_id } = getUser(userName);
     if (rooms[room_id]) {
@@ -331,10 +333,15 @@ const closeRoom = ({ userName }) => {
       allMembers.forEach((userName) => {
         // this is a server action notify all
         // TODO --> add kick all and remove functions for sockets
-        setRoom(userName, '');
+        setRoom(userName, "");
       });
 
       // delete the stupid room
+      const dataToEmit = "Room Closed";
+      socket.to(room_id).emit(ROOM_CLOSED, {
+        data: { dataToEmit },
+      });
+      socket.emit(CLOSE_ROOM);
       delete rooms[room_id];
       return true;
     }
@@ -353,11 +360,24 @@ const banMember = ({ room_id }) => {
   }
 };
 
-const addPrivateList = ({ room_id }) => {
+const addPrivateList = ({ userName, privateList }, socket) => {
   // only private rooms can have private lists
-  try {
-  } catch (err) {
-    return { error: err.message };
+  let user = getUser(userName);
+  room = rooms[user.room_id];
+  room_id = user.room_id;
+
+  if (room && room.admin === user.userName && room.config.privateRoom) {
+    privateList.forEach((ele) => {
+      if (!room.state.privateList.includes(ele)) {
+        rooms[room_id].state.privateList.push(ele);
+      }
+    });
+    socket.to(room_id).broadcast.emit(ROOM_UPDATED, {
+      type: ADDED_PRIVATE_MEMBER,
+      data: { privateList: rooms[room_id].state.privateList },
+    });
+  } else {
+    return false;
   }
 };
 
@@ -397,7 +417,7 @@ const registerVotes = ({ userName, votes }, { socket }) => {
     // veto should be on
     // should not have already voted
     if (!team_name || !vetoOn || voted.includes(userName)) {
-      throw new Error('Not in a team or voting stopped or already voted');
+      throw new Error("Not in a team or voting stopped or already voted");
     }
 
     // valid votes only
@@ -425,7 +445,7 @@ const doVeto = async (quesIds, room_id, count, socket) => {
         rooms[room_id].competition.contestOn ||
         rooms[room_id].competition.veto.vetoOn
       ) {
-        throw new Error('Veto not allowed now');
+        throw new Error("Veto not allowed now");
       }
 
       // set the room state
@@ -486,10 +506,10 @@ const startCompetition = async ({ userName }, { socket }) => {
       room.competition.contestOn ||
       room.competition.veto.vetoOn
     ) {
-      throw new Error('Room does not meet requirements');
+      throw new Error("Room does not meet requirements");
     }
 
-    console.log('Starting competition', userName);
+    console.log("Starting competition", userName);
     // start veto now and wait for it to end
     const allQuestions = await getQuestions(room.competition.veto.quesCount);
     await doVeto(allQuestions, room_id, room.competition.max_questions, socket);
@@ -554,6 +574,7 @@ module.exports = {
   removeUserFromRoom,
   forwardMsg,
   handleUserDisconnect,
+  addPrivateList,
   startCompetition,
   registerVotes,
 };
