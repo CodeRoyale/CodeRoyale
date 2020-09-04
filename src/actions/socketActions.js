@@ -44,9 +44,11 @@ export const connectSocket = () => {
     };
     let socket = io.connect(ENDPOINT, options);
     socket.on(CONNECTION_ACK, () => {
+      console.log(CONNECTION_ACK);
       dispatch(socketConnectionSuccess(socket));
     });
     socket.on(CONNECTION_DENY, () => {
+      console.log(CONNECTION_DENY);
       dispatch(socketConnectionFailure(CONNECTION_DENY));
     });
   };

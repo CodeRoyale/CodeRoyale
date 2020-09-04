@@ -15,17 +15,12 @@ function ShareLinkCardFriend({ profileData, connectSocket, socket }) {
     connectSocket();
   }, [connectSocket]);
 
-  // TODO: Give alert if socket is not connected...
   // OnClickChoose...
   let chosenView = null;
-  if (socket.error === '') {
+  if (socket.error !== 'CONNECTION_DENY') {
     switch (chooseOption) {
       case 'CREATE_ROOM':
-        chosenView = (
-          <SocketContext.Provider value={socket.socket}>
-            <CreateRoomView />
-          </SocketContext.Provider>
-        );
+        chosenView = <CreateRoomView />;
         break;
       case 'JOIN_ROOM':
         chosenView = (
@@ -39,6 +34,8 @@ function ShareLinkCardFriend({ profileData, connectSocket, socket }) {
           <ChooseRoomView onClickChoose={(option) => setChooseOption(option)} />
         );
     }
+  } else {
+    //TODO: Give Alert message here...
   }
 
   // Main Render...

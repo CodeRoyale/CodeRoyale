@@ -23,6 +23,7 @@ const socketReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        socket: null,
         error: action.payload,
       };
     default:

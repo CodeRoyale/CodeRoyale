@@ -11,7 +11,7 @@ import CloseRoomView from './CloseRoomView';
 import RoomChat from './RoomChat';
 import profileData from '../../utils/examples';
 import StartCompetitionButton from './StartCompetitionButton';
-import ERROR_MSG from '../../utils/constants';
+import { ERROR_MSG } from '../../utils/constants';
 import Arena from './Arena';
 
 const RoomMain = (props) => {
@@ -132,14 +132,14 @@ const RoomMain = (props) => {
     if (roomConfig !== undefined) admin = roomConfig.admin;
   }
 
-  // Checking if the socket and room_id are not null...
-  if (props.location.props === undefined) {
-    return <Redirect to='/lobby' />;
-  }
+  // // Checking if the socket and room_id are not null...
+  // if (props.location.props === undefined) {
+  //   return <Redirect to='/lobby' />;
+  // }
 
-  // Initializations....
-  room_id = props.location.props.room_id;
-  socket = props.location.props.socket;
+  // // Initializations....
+  // room_id = props.location.props.room_id;
+  // socket = props.location.props.socket;
 
   // Checking if the user is logged-in...
   const accessToken = localStorage.getItem('access-token');
@@ -159,7 +159,7 @@ const RoomMain = (props) => {
       />
     );
   }
-  
+
   if (team_cards.length === 0) {
     team_cards = (
       <div className='room-create-team-text-container'>
