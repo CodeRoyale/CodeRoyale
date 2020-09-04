@@ -1,50 +1,31 @@
-import React, { useState, useEffect, useContext } from 'react';
-import './LobbyMain.css';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
+import { ROOM_JOINED } from '../../utils/constants';
+import { mapStateToProps } from '../../utils/mapStateToProps';
+import { connect } from 'react-redux';
+import { joinRoom } from '../../actions/joinRoomAction';
 import Button from '../../components/button/Button';
-import { ERROR_MSG } from '../../utils/constants';
-import SocketContext from '../../utils/SocketContext';
 
-function JoinRoomView() {
-  const [joinInputValue, setJoinInputValue] = useState('');
-  const socket = useContext(SocketContext);
-  const [state, setState] = useState({
-    roomJoined: false,
-    joinButtonClicked: false,
-    room_id: '',
-  });
-  const { roomJoined, room_id, joinButtonClicked } = state;
-
+function JoinRoomView({ socketData, roomData, joinRoom }) {
   // TODO: Have to include code for what happens if false....
   // TODO: Have to include code for indicating the joining of room...
+
+  const [joinInputValue, setJoinInputValue] = useState('');
+  const [joinButtonClicked, setJoinButtonClicked] = useState(false);
+  const socket = socketData.socket;
+  const room_id = joinInputValue.toString().trim();
+
   // Join Room...
   useEffect(() => {
-    let room_id;
     if (joinButtonClicked) {
-      room_id = joinInputValue.toString().trim();
-      socket.emit('JOIN_ROOM', { room_id }, (data) => {
-        if (data !== ERROR_MSG) {
-          setState({
-            ...state,
-            roomJoined: true,
-            room_id: data.config.id,
-            joinButtonClicked: false,
-          });
-        } else {
-          setState({ ...state, joinButtonClicked: false });
-        }
-        console.log(data);
-      });
+      joinRoom(socket, { room_id });
+      setJoinButtonClicked(false);
     }
-  });
+  }, [joinButtonClicked, setJoinButtonClicked, socket, room_id, joinRoom]);
 
   // After successful joining...
-  if (roomJoined) {
-    return (
-      <Redirect
-        to={{ pathname: '/room', props: { room_id: room_id, socket: socket } }}
-      />
-    );
+  if (roomData.type === ROOM_JOINED) {
+    return <Redirect to={{ pathname: '/room' }} />;
   }
 
   // Main Render...
@@ -62,7 +43,7 @@ function JoinRoomView() {
       <div className='join-room-join-button-container'>
         <Button
           type='button'
-          onClick={() => setState({ ...state, joinButtonClicked: true })}
+          onClick={() => setJoinButtonClicked(true)}
           buttonStyle='btn--primary--normal'
           buttonSize='btn--medium'
         >
@@ -73,4 +54,9 @@ function JoinRoomView() {
   );
 }
 
-export default JoinRoomView;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    joinRoom: (socket, { room_id }) => dispatch(joinRoom(socket, { room_id })),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(JoinRoomView);

@@ -5,6 +5,7 @@ import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { createRoom } from '../../actions/createRoomActions';
 import { ROOM_CREATED } from '../../utils/constants';
+import { mapStateToProps } from '../../utils/mapStateToProps';
 
 function CreateRoomView({ roomData, socketData, createRoom }) {
   // TODO: Have to include code for indicating the creation of room...
@@ -217,12 +218,6 @@ function CreateRoomView({ roomData, socketData, createRoom }) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    socketData: state.socketData,
-    roomData: state.roomData,
-  };
-};
 const mapDispatchToProps = (dispatch) => {
   return {
     createRoom: (socket, state) => dispatch(createRoom(socket, state)),

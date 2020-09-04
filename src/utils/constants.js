@@ -11,3 +11,4 @@ export const ERROR_MSG = 'Some error occured !';
 
 // Room Responses...
 export const ROOM_CREATED = 'ROOM_CREATED';
+export const ROOM_JOINED = 'ROOM_JOINED';

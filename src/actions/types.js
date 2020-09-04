@@ -22,3 +22,6 @@ export const ROOM_FAIL = 'ROOM_FAIL';
 
 // Create room
 export const CREATE_ROOM = 'CREATE_ROOM';
+
+// Join Room
+export const JOIN_ROOM = 'JOIN_ROOM';
