@@ -15,7 +15,7 @@ const CREATE_TEAM = "CREATE_TEAM";
 const JOIN_TEAM = "JOIN_TEAM";
 
 // user submits code
-const SUBMIT_CODE = "SUBMIT_CODE";
+const CODE_SUBMISSION = "CODE_SUBMISSION";
 
 // user starts the competition
 const START_COMPETITION = "START_COMPETITION";
@@ -44,7 +44,7 @@ module.exports = {
   JOIN_ROOM,
   CREATE_TEAM,
   JOIN_TEAM,
-  SUBMIT_CODE,
+  CODE_SUBMISSION,
   START_COMPETITION,
   CLOSE_ROOM,
   SEND_MSG,
