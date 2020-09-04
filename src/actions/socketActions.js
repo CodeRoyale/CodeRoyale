@@ -1,0 +1,53 @@
+import io from 'socket.io-client';
+import profileData from '../utils/examples';
+import {
+  SOCKET_LOADING,
+  SOCKET_SUCCESS,
+  SOCKET_FAIL,
+  CONNECTION_ACK,
+  CONNECTION_DENY,
+} from './types';
+const ENDPOINT = process.env.REACT_APP_LOBBY_SERVER;
+const userName = profileData.username;
+
+const requestSocketConnection = () => {
+  return {
+    type: SOCKET_LOADING,
+  };
+};
+const socketConnectionSuccess = (socket) => {
+  return {
+    type: SOCKET_SUCCESS,
+    payload: socket,
+  };
+};
+
+const socketConnectionFailure = (error) => {
+  return {
+    type: SOCKET_FAIL,
+    payload: error,
+  };
+};
+
+// Async Action to connect to socket...
+export const connectSocket = () => {
+  return (dispatch) => {
+    dispatch(requestSocketConnection());
+    const options = {
+      transportOptions: {
+        polling: {
+          extraHeaders: {
+            Authorization: `Bearer ${userName}`,
+          },
+        },
+      },
+    };
+    let socket = io.connect(ENDPOINT, options);
+    socket.on(CONNECTION_ACK, () => {
+      dispatch(socketConnectionSuccess(socket));
+    });
+    socket.on(CONNECTION_DENY, () => {
+      dispatch(socketConnectionFailure(CONNECTION_DENY));
+    });
+  };
+};
