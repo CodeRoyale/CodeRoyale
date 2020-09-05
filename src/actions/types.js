@@ -20,8 +20,16 @@ export const ROOM_LOADING = 'ROOM_LOADING';
 export const ROOM_SUCCESS = 'ROOM_SUCCESS';
 export const ROOM_FAIL = 'ROOM_FAIL';
 
+//Team Actions...
+export const TEAM_LOADING = 'TEAM_LOADING';
+export const TEAM_SUCCESS = 'TEAM_SUCCESS';
+export const TEAM_FAIL = 'TEAM_FAIL';
+
 // Create room
 export const CREATE_ROOM = 'CREATE_ROOM';
 
 // Join Room
 export const JOIN_ROOM = 'JOIN_ROOM';
+
+// Create Team
+export const CREATE_TEAM = 'CREATE_TEAM';

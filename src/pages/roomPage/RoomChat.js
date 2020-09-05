@@ -6,81 +6,79 @@ import { InputGroup, Input, Icon } from 'rsuite';
 function RoomChat({ socket }) {
   const [state, setState] = useState({
     inputChat: '',
-    sendClicked: false,
-    messageList: [],
-    msgReceivedListener: false,
   });
   const messagesEndRef = useRef(null);
-  const { inputChat, sendClicked, messageList } = state;
+  const { inputChat } = state;
   let messages = null;
-  // // Sample...
-  // const messageList = [
-  //   { id: 0, source: 'You', message: 'hii', color: 'green' },
-  //   {
-  //     id: 1,
-  //     source: 'Mayur',
-  //     message: 'hello, How are you ? ',
-  //     color: 'green',
-  //   },
-  //   {
-  //     id: 2,
-  //     source: 'Anugya',
-  //     message: 'I am fine.',
-  //     color: 'green',
-  //   },
-  //   {
-  //     id: 3,
-  //     source: 'You',
-  //     message: 'Wow... Nice !!!',
-  //     color: 'green',
-  //   },
-  // ];
 
-  // Receiving Message...
-  useEffect(() => {
-    if (socket !== null) {
-      socket.on('RCV_MSG', (data) => {
-        if (data !== null) {
-          let message = {
-            id: messageList.length,
-            source: data.userName,
-            message: data.content,
-            color: 'red',
-          };
-          const newList = state.messageList.concat(message);
-          setState({
-            ...state,
-            messageList: newList,
-            sendClicked: false,
-            msgReceivedListener: true,
-          });
-        }
-      });
-    }
-  });
+  // Sample...
+  const messageList = [
+    { id: 0, source: 'You', message: 'hii', color: 'green' },
+    {
+      id: 1,
+      source: 'Mayur',
+      message: 'hello, How are you ? ',
+      color: 'green',
+    },
+    {
+      id: 2,
+      source: 'Anugya',
+      message: 'I am fine.',
+      color: 'green',
+    },
+    {
+      id: 3,
+      source: 'You',
+      message: 'Wow... Nice !!!',
+      color: 'green',
+    },
+  ];
 
-  // Sending message....
-  useEffect(() => {
-    if (sendClicked && inputChat !== '' && socket !== null) {
-      socket.emit('SEND_MSG', { content: inputChat }, (data) => {
-        if (data) {
-          let message = {
-            id: messageList.length,
-            source: 'You',
-            message: inputChat,
-            color: 'green',
-          };
-          const newList = messageList.concat(message);
-          setState({
-            ...state,
-            sendClicked: false,
-            inputChat: '',
-            messageList: newList,
-          });
-        }
-      });
-    }
-  });
+  // // Receiving Message...
+  // useEffect(() => {
+  //   if (socket !== null) {
+  //     socket.on('RCV_MSG', (data) => {
+  //       if (data !== null) {
+  //         let message = {
+  //           id: messageList.length,
+  //           source: data.userName,
+  //           message: data.content,
+  //           color: 'red',
+  //         };
+  //         const newList = state.messageList.concat(message);
+  //         setState({
+  //           ...state,
+  //           messageList: newList,
+  //           sendClicked: false,
+  //           msgReceivedListener: true,
+  //         });
+  //       }
+  //     });
+  //   }
+  // });
+
+  // // Sending message....
+  // useEffect(() => {
+  //   if (sendClicked && inputChat !== '' && socket !== null) {
+  //     socket.emit('SEND_MSG', { content: inputChat }, (data) => {
+  //       if (data) {
+  //         let message = {
+  //           id: messageList.length,
+  //           source: 'You',
+  //           message: inputChat,
+  //           color: 'green',
+  //         };
+  //         const newList = messageList.concat(message);
+  //         setState({
+  //           ...state,
+  //           sendClicked: false,
+  //           inputChat: '',
+  //           messageList: newList,
+  //         });
+  //       }
+  //     });
+  //   }
+  // });
 
   // Making scrollbar to point to latest message....
   useEffect(() => {
