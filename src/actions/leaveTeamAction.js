@@ -1,14 +1,14 @@
-import { ERROR_MSG, TEAM_JOINED } from '../utils/constants';
+import { ERROR_MSG, TEAM_LEFT } from '../utils/constants';
 import { teamRequest, teamSuccess, teamFailure } from './teamActions';
 
-export const joinTeam = (socket, { team_name }) => {
+export const leaveTeam = (socket) => {
   return (dispatch) => {
     if (socket !== null) {
       dispatch(teamRequest());
-      socket.emit('JOIN_TEAM', { team_name }, (data) => {
+      socket.emit('LEAVE_TEAM', {}, (data) => {
         if (data !== null) {
           if (data !== ERROR_MSG && data.error === undefined) {
-            dispatch(teamSuccess(data, TEAM_JOINED));
+            dispatch(teamSuccess(data, TEAM_LEFT));
           } else if (data.error !== undefined) {
             dispatch(teamFailure(data.error));
           } else {
@@ -17,7 +17,7 @@ export const joinTeam = (socket, { team_name }) => {
         } else {
           dispatch(teamFailure('No data Received'));
         }
-        console.log('Join Team', data);
+        console.log('Leave Team', data);
       });
     } else {
       dispatch(teamFailure('Server not connected...'));
