@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './RoomMain.css';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../utils/mapStateToProps';
+import { getRoom } from '../../actions/getRoomAction';
 import NavBar from '../../components/navBar/NavBar';
 import CreateTeamView from './CreateTeamView';
 import TeamCard from './TeamCard';
@@ -14,12 +15,29 @@ import profileData from '../../utils/examples';
 import StartCompetitionButton from './StartCompetitionButton';
 import Arena from './Arena';
 
-const RoomMain = ({ roomData, socketData }) => {
+const RoomMain = ({ teamData, roomData, socketData, getRoom }) => {
   // TODO: Have to implement, what happens if the user goes to create page again....
 
   // Initializations...
   const socket = socketData.socket;
   const accessToken = localStorage.getItem('access-token');
+
+  // Initialization of variables...
+  let roomTeams, roomConfig, roomState, room_id, admin, userName;
+  if (roomData.data !== null) {
+    roomTeams = roomData.data.teams;
+    roomConfig = roomData.data.config;
+    roomState = roomData.data.state;
+    room_id = roomConfig.id;
+    admin = roomConfig.admin;
+    userName = profileData.username.toString();
+  }
+
+  useEffect(() => {
+    if (socket !== null && room_id !== undefined) {
+      getRoom(socket, { room_id });
+    }
+  }, [room_id, socket, getRoom, teamData.type]);
 
   // Checking all the conditions to be in the room...
   if (socket === null) {
@@ -27,14 +45,6 @@ const RoomMain = ({ roomData, socketData }) => {
   } else if (accessToken === null) {
     return <Redirect to='/' />;
   }
-
-  // Initialization after checking authorization...
-  const roomTeams = roomData.data.teams;
-  const roomConfig = roomData.data.config;
-  const roomState = roomData.data.state;
-  const admin = roomConfig.admin;
-  const userName = profileData.username.toString();
-  let room_id = null;
 
   // Setting Team Cards...
   let team_cards = [];
@@ -105,4 +115,10 @@ const RoomMain = ({ roomData, socketData }) => {
   );
 };
 
-export default connect(mapStateToProps, null)(RoomMain);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getRoom: (socket, { room_id }) => dispatch(getRoom(socket, { room_id })),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RoomMain);
