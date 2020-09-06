@@ -1,5 +1,6 @@
 import io from 'socket.io-client';
 import profileData from '../utils/examples';
+
 import {
   SOCKET_LOADING,
   SOCKET_SUCCESS,
