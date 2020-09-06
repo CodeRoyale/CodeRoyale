@@ -21,16 +21,18 @@ const RoomMain = ({ teamData, roomData, socketData, getRoom }) => {
   // Initializations...
   const socket = socketData.socket;
   const accessToken = localStorage.getItem('access-token');
+  const userName = profileData.username.toString();
 
   // Initialization of variables...
-  let roomTeams, roomConfig, roomState, room_id, admin, userName;
+  let roomTeams, roomConfig, roomState, room_id, admin;
   if (roomData.data !== null) {
     roomTeams = roomData.data.teams;
     roomConfig = roomData.data.config;
     roomState = roomData.data.state;
-    room_id = roomConfig.id;
-    admin = roomConfig.admin;
-    userName = profileData.username.toString();
+    if (roomConfig !== undefined) {
+      room_id = roomConfig.id;
+      admin = roomConfig.admin;
+    }
   }
 
   // Get room...

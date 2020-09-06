@@ -1,10 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Whisper, Tooltip, Modal, Button } from 'rsuite';
+import { connect } from 'react-redux';
+import { mapStateToProps } from '../../utils/mapStateToProps';
+import { ROOM_CLOSED } from '../../utils/constants';
+import { closeRoom } from '../../actions/closeRoomAction';
+import { Redirect } from 'react-router';
 
-function CloseRoomView({ setState }) {
+function CloseRoomView({ roomData, socketData, closeRoom }) {
   //TODO: Check if the room is closing by admin or not...
 
   const [showPrompt, setShowPrompt] = useState(false);
+  const socket = socketData.socket;
+  const [state, setState] = useState({
+    closeRoomClicked: false,
+    actionDone: false,
+  });
+  const { closeRoomClicked, actionDone } = state;
+
+  //Close Room...
+  useEffect(() => {
+    if (closeRoomClicked) {
+      closeRoom(socket);
+      setState({ ...state, closeRoomClicked: false, actionDone: true });
+    }
+  }, [closeRoomClicked, closeRoom, socket, state]);
+
+  if (actionDone) {
+    //TODO: Alert message here...
+    setState({ ...state, actionDone: false });
+  }
+
+  if (roomData.type === ROOM_CLOSED) {
+    return <Redirect to='/lobby' />;
+  }
 
   return (
     <div className='close-room-view'>
@@ -33,7 +61,7 @@ function CloseRoomView({ setState }) {
         <Modal.Body>Are you sure you want to delete this room..</Modal.Body>
         <Modal.Footer>
           <Button
-            onClick={() => setState({ action: 'CLOSE_ROOM' })}
+            onClick={() => setState({ ...state, closeRoomClicked: true })}
             appearance='primary'
           >
             Ok
@@ -46,5 +74,10 @@ function CloseRoomView({ setState }) {
     </div>
   );
 }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    closeRoom: (socket) => dispatch(closeRoom(socket)),
+  };
+};
 
-export default CloseRoomView;
+export default connect(mapStateToProps, mapDispatchToProps)(CloseRoomView);
