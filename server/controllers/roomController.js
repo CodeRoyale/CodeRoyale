@@ -360,22 +360,23 @@ const banMember = ({ room_id }) => {
   }
 };
 
-const addPrivateList = ({ userName, privateList }, socket) => {
+const addPrivateList = ({ userName, privateList }, { socket }) => {
   // only private rooms can have private lists
   let user = getUser(userName);
   room = rooms[user.room_id];
   room_id = user.room_id;
 
-  if (room && room.admin === user.userName && room.config.privateRoom) {
+  if (room && room.config.admin === userName && room.config.privateRoom) {
     privateList.forEach((ele) => {
       if (!room.state.privateList.includes(ele)) {
         rooms[room_id].state.privateList.push(ele);
       }
     });
-    socket.to(room_id).broadcast.emit(ROOM_UPDATED, {
+    socket.to(room_id).emit(ROOM_UPDATED, {
       type: ADDED_PRIVATE_MEMBER,
       data: { privateList: rooms[room_id].state.privateList },
     });
+    return rooms[room_id].state.privateList;
   } else {
     return false;
   }
