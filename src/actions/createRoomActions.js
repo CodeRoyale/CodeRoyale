@@ -1,4 +1,3 @@
-import { CREATE_ROOM } from './types';
 import { ERROR_MSG, ROOM_CREATED } from '../utils/constants';
 import { roomRequest, roomSuccess, roomFailure } from './roomActions';
 import { getRoom } from './getRoomAction';
@@ -20,7 +19,7 @@ export const createRoom = (
   return (dispatch) => {
     dispatch(roomRequest());
     socket.emit(
-      CREATE_ROOM,
+      'CREATE_ROOM',
       {
         max_teams,
         max_perTeam,

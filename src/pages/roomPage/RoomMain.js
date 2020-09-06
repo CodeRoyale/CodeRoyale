@@ -33,6 +33,7 @@ const RoomMain = ({ teamData, roomData, socketData, getRoom }) => {
     userName = profileData.username.toString();
   }
 
+  // Get room...
   useEffect(() => {
     if (socket !== null && room_id !== undefined) {
       getRoom(socket, { room_id });
@@ -42,7 +43,8 @@ const RoomMain = ({ teamData, roomData, socketData, getRoom }) => {
   // Checking all the conditions to be in the room...
   if (socket === null) {
     return <Redirect to='/lobby' />;
-  } else if (accessToken === null) {
+  }
+  if (accessToken === null) {
     return <Redirect to='/' />;
   }
 

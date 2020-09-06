@@ -1,4 +1,3 @@
-import { JOIN_ROOM } from './types';
 import { ERROR_MSG, ROOM_JOINED } from '../utils/constants';
 import { roomRequest, roomSuccess, roomFailure } from './roomActions';
 import { getRoom } from './getRoomAction';
@@ -7,7 +6,7 @@ export const joinRoom = (socket, { room_id }) => {
   return (dispatch) => {
     if (socket !== null) {
       dispatch(roomRequest());
-      socket.emit(JOIN_ROOM, { room_id }, (data) => {
+      socket.emit('JOIN_ROOM', { room_id }, (data) => {
         if (data !== null) {
           if (data !== ERROR_MSG) {
             dispatch(roomSuccess(data, ROOM_JOINED));

@@ -14,3 +14,4 @@ export const ROOM_CREATED = 'ROOM_CREATED';
 export const ROOM_JOINED = 'ROOM_JOINED';
 export const TEAM_CREATED = 'TEAM_CREATED';
 export const ROOM_UPDATED = 'ROOM_UPDATED';
+export const TEAM_JOINED = 'TEAM_JOINED';
