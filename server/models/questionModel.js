@@ -23,6 +23,7 @@ const questionSchema = new mongoose.Schema({
   problemCode: {
     type: String,
     required: true,
+    unique: true,
   },
   description: {
     type: String,

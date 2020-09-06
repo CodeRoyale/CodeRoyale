@@ -16,6 +16,7 @@ const testcaseSchema = new mongoose.Schema({
   problemCode: {
     type: String,
     required: true,
+    unique: true,
   },
   testcases: {
     type: [subschema],
