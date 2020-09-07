@@ -1,5 +1,6 @@
 import io from 'socket.io-client';
 import profileData from '../utils/examples';
+import { chatSuccess, chatFailure } from './chatActions';
 
 import {
   SOCKET_LOADING,
@@ -51,6 +52,20 @@ export const connectSocket = () => {
     socket.on(CONNECTION_DENY, () => {
       console.log(CONNECTION_DENY);
       dispatch(socketConnectionFailure(CONNECTION_DENY));
+    });
+    socket.on('RCV_MSG', (data) => {
+      if (data !== null && data.content !== undefined) {
+        dispatch(
+          chatSuccess({
+            message: data.content,
+            color: 'red',
+            source: data.userName,
+          })
+        );
+      } else {
+        dispatch(chatFailure('No chat Came'));
+      }
+      console.log('chat data', data);
     });
   };
 };

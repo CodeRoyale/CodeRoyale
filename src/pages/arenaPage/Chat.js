@@ -5,24 +5,13 @@ import { connect } from 'react-redux';
 import { mapStateToProps } from '../../utils/mapStateToProps';
 import { sendMsg } from '../../actions/chatActions';
 
-function Chat({ sendMsg, socket }) {
+function Chat({ sendMsg, socket, chatData }) {
   const [state, setState] = useState({
     message: '',
     sendMsgClick: false,
   });
   const { message, sendMsgClick } = state;
-
-  // useEffect(() => {
-  //   socket.on('RCV_MSG', (data) => {
-  //     const newList = messageList.concat({
-  //       id: uuidv4(),
-  //       source: data.userName + ':  ',
-  //       msg: data.content,
-  //       color: 'red',
-  //     });
-  //     setMsgList(newList);
-  //   });
-  // }, [socket, messageList]);
+  const messageList = chatData.msgList;
 
   useEffect(() => {
     if (sendMsgClick) {
@@ -35,17 +24,20 @@ function Chat({ sendMsg, socket }) {
     <div className='chat-body'>
       <div className='chat-header'>CHAT</div>
       <div className='chat-container' id='chat-container'>
-        {/* <ul>
+        <ul>
           {messageList.map((item) => (
             <li key={item.id}>
               <div className='chat-row'>
-                <div style={{ color: item.color }}>{item.source}</div>
+                <div style={{ color: item.color }}>
+                  {item.source}
+                  {' : '}
+                </div>
                 <div className='chat-spacing'></div>
-                {item.msg}
+                {item.message}
               </div>
             </li>
           ))}
-        </ul> */}
+        </ul>
       </div>
       <div className='chat-input'>
         <Input

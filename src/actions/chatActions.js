@@ -1,13 +1,13 @@
 import { CHAT_SUCCESS, CHAT_FAIL } from './types';
 
-const chatSuccess = (data) => {
+export const chatSuccess = (data) => {
   return {
     type: CHAT_SUCCESS,
     payload: data,
   };
 };
 
-const chatFailure = (error) => {
+export const chatFailure = (error) => {
   return {
     type: CHAT_FAIL,
     payload: error,

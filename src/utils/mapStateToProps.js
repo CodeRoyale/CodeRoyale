@@ -3,5 +3,6 @@ export const mapStateToProps = (state) => {
     socketData: state.socketData,
     roomData: state.roomData,
     teamData: state.teamData,
+    chatData: state.chatData,
   };
 };
