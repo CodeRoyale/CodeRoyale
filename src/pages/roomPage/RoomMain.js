@@ -3,7 +3,7 @@ import './RoomMain.css';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../utils/mapStateToProps';
-import { getRoom } from '../../actions/getRoomAction';
+import { getRoom } from '../../actions/roomActions';
 import NavBar from '../../components/navBar/NavBar';
 import CreateTeamView from './CreateTeamView';
 import TeamCard from './TeamCard';

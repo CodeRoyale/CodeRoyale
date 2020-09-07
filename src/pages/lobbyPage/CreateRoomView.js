@@ -3,7 +3,7 @@ import './LobbyMain.css';
 import Button from '../../components/button/Button';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import { createRoom } from '../../actions/createRoomActions';
+import { createRoom } from '../../actions/roomActions';
 import { ROOM_CREATED } from '../../utils/constants';
 import { mapStateToProps } from '../../utils/mapStateToProps';
 

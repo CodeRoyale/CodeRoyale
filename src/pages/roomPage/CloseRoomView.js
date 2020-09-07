@@ -3,7 +3,7 @@ import { Whisper, Tooltip, Modal, Button } from 'rsuite';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../utils/mapStateToProps';
 import { ROOM_CLOSED } from '../../utils/constants';
-import { closeRoom } from '../../actions/closeRoomAction';
+import { closeRoom } from '../../actions/roomActions';
 import { Redirect } from 'react-router';
 
 function CloseRoomView({ roomData, socketData, closeRoom }) {

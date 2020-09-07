@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../utils/mapStateToProps';
-import { leaveTeam } from '../../actions/leaveTeamAction';
+import { leaveTeam } from '../../actions/teamActions';
 
 function LeaveTeamView({ socketData, leaveTeam }) {
   const socket = socketData.socket;

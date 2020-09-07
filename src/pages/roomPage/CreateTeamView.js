@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { InputGroup, Input, Icon } from 'rsuite';
-import { createTeam } from '../../actions/createTeamAction';
+import { createTeam } from '../../actions/teamActions';
 import { mapStateToProps } from '../../utils/mapStateToProps';
 import { connect } from 'react-redux';
 

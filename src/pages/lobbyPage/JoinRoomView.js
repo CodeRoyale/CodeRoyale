@@ -3,7 +3,7 @@ import { Redirect } from 'react-router';
 import { ROOM_JOINED } from '../../utils/constants';
 import { mapStateToProps } from '../../utils/mapStateToProps';
 import { connect } from 'react-redux';
-import { joinRoom } from '../../actions/joinRoomAction';
+import { joinRoom } from '../../actions/roomActions';
 import Button from '../../components/button/Button';
 
 function JoinRoomView({ socketData, roomData, joinRoom }) {
