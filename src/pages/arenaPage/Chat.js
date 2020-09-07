@@ -1,50 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import './ArenaMain.css';
 import { Input } from 'rsuite';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
+import { connect } from 'react-redux';
+import { mapStateToProps } from '../../utils/mapStateToProps';
+import { sendMsg } from '../../actions/chatActions';
 
-function Chat({ socket }) {
-  const [state, setState] = useState({ message: '', name: 'userName' });
-  const [messageList, setMsgList] = useState([]);
+function Chat({ sendMsg, socket }) {
+  const [state, setState] = useState({
+    message: '',
+    sendMsgClick: false,
+  });
+  const { message, sendMsgClick } = state;
+
+  // useEffect(() => {
+  //   socket.on('RCV_MSG', (data) => {
+  //     const newList = messageList.concat({
+  //       id: uuidv4(),
+  //       source: data.userName + ':  ',
+  //       msg: data.content,
+  //       color: 'red',
+  //     });
+  //     setMsgList(newList);
+  //   });
+  // }, [socket, messageList]);
 
   useEffect(() => {
-    socket.on('RCV_MSG', (data) => {
-      const newList = messageList.concat({
-        id: uuidv4(),
-        source: data.userName + ':  ',
-        msg: data.content,
-        color: 'red',
-      });
-      setMsgList(newList);
-    });
-  }, [socket, messageList]);
-
-  // When message is submitted to server
-  const onMessageSubmit = (e) => {
-    e.preventDefault();
-    const { name, message } = state;
-
-    const newList = messageList.concat({
-      id: uuidv4(),
-      source: 'You:  ',
-      msg: message,
-      color: 'green',
-    });
-    setMsgList(newList);
-
-    console.log(message);
-    console.log(socket);
-    socket.emit('SEND_MSG', { content: message }, (data) => {
-      console.log(data);
-    });
-    setState({ message: '', name });
-  };
+    if (sendMsgClick) {
+      sendMsg(socket, { message });
+      setState({ ...state, message: '', sendMsgClick: false });
+    }
+  }, [socket, message, sendMsg, sendMsgClick, state]);
 
   return (
     <div className='chat-body'>
       <div className='chat-header'>CHAT</div>
       <div className='chat-container' id='chat-container'>
-        <ul>
+        {/* <ul>
           {messageList.map((item) => (
             <li key={item.id}>
               <div className='chat-row'>
@@ -54,9 +46,13 @@ function Chat({ socket }) {
               </div>
             </li>
           ))}
-        </ul>
+        </ul> */}
       </div>
-      <form onSubmit={onMessageSubmit}>
+      <form
+        onSubmit={() => {
+          setState({ ...state, sendMsgClick: true });
+        }}
+      >
         <div className='chat-input'>
           <Input
             value={state.message}
@@ -72,4 +68,12 @@ function Chat({ socket }) {
   );
 }
 
-export default Chat;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    sendMsg: (socket, { message }) => {
+      dispatch(sendMsg(socket, { message }));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Chat);
