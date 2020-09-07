@@ -10,7 +10,7 @@ const app = express();
 
 connectDB();
 
-const whitelist = ['http://localhost:3000', 'https://coderoyale-questionapi-develop.herokuapp.com', 'https://putquestionmaster.herokuapp.com'];
+const whitelist = ['http://localhost:3000', 'https://coderoyale-questionapi-develop.herokuapp.com/questions', 'https://putquestionmaster.herokuapp.com'];
 const corsOptions = {
   origin: function (origin, callback) {
     // add !origin for services like postman
