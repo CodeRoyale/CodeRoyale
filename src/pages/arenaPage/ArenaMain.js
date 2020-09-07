@@ -11,10 +11,9 @@ import { mapStateToProps } from '../../utils/mapStateToProps';
 const ArenaMain = ({ socketData }) => {
   const socket = socketData.socket;
 
-  // Checking if the socket and room_id are not null...
-  // if (socket === null) {
-  //   return <Redirect to='/lobby' />;
-  // }
+  if (socket === null) {
+    return <Redirect to='/lobby' />;
+  }
 
   const accessToken = localStorage.getItem('access-token');
   if (accessToken === null) {

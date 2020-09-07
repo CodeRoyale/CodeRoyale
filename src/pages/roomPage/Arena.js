@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import Button from '../../components/button/Button';
 
-function Arena({ socket }) {
+function Arena() {
   const [arenaClicked, setArenaClicked] = useState(false);
   const onClickArena = () => {
     setArenaClicked(true);
   };
   if (arenaClicked) {
-    return <Redirect to={{ pathname: '/arena', props: { socket: socket } }} />;
+    return <Redirect to='/arena' />;
   }
   return (
     <div>

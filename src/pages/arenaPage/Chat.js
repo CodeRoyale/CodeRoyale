@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './ArenaMain.css';
 import { Input } from 'rsuite';
-// import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../utils/mapStateToProps';
 import { sendMsg } from '../../actions/chatActions';
@@ -48,22 +47,22 @@ function Chat({ sendMsg, socket }) {
           ))}
         </ul> */}
       </div>
-      <form
-        onSubmit={() => {
-          setState({ ...state, sendMsgClick: true });
-        }}
-      >
-        <div className='chat-input'>
-          <Input
-            value={state.message}
-            onChange={(value) => {
-              setState({ ...state, message: value });
-            }}
-            placeholder='Type here'
-          ></Input>
-          <button>Send</button>
-        </div>
-      </form>
+      <div className='chat-input'>
+        <Input
+          value={state.message}
+          onChange={(value) => {
+            setState({ ...state, message: value });
+          }}
+          placeholder='Type here'
+        ></Input>
+        <button
+          onClick={() => {
+            setState({ ...state, sendMsgClick: true });
+          }}
+        >
+          Send
+        </button>
+      </div>
     </div>
   );
 }
