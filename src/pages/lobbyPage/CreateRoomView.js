@@ -6,13 +6,17 @@ import { connect } from 'react-redux';
 import { createRoom } from '../../actions/roomActions';
 import { ROOM_CREATED } from '../../utils/constants';
 import { mapStateToProps } from '../../utils/mapStateToProps';
+import { Alert } from 'rsuite';
 
 function CreateRoomView({ roomData, socketData, createRoom }) {
   // TODO: Have to include code for indicating the creation of room...
   // TODO: Have to show error if there is any...
   // TODO: Make UI good...
-  const [createRoomClicked, setCreateRoomClicked] = useState(false);
   const [state, setState] = useState({
+    createRoomClicked: false,
+    actionDone: false,
+  });
+  const [team_data, setTeamData] = useState({
     max_teams: 2,
     max_perTeam: 1,
     max_perRoom: 2,
@@ -22,6 +26,7 @@ function CreateRoomView({ roomData, socketData, createRoom }) {
     veto_quesCount: 3,
     privateRoom: true,
   });
+  const { createRoomClicked, actionDone } = state;
   const {
     max_teams,
     max_perTeam,
@@ -31,7 +36,7 @@ function CreateRoomView({ roomData, socketData, createRoom }) {
     max_questions,
     max_vote,
     veto_quesCount,
-  } = state;
+  } = team_data;
   const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const times = [0.5, 1, 3, 6, 12, 24, 48];
   const socket = socketData.socket;
@@ -39,14 +44,30 @@ function CreateRoomView({ roomData, socketData, createRoom }) {
   // Create room...
   useEffect(() => {
     if (createRoomClicked) {
-      createRoom(socket, state);
-      setCreateRoomClicked(false);
+      createRoom(socket, team_data);
+      setState({ ...state, createRoomClicked: false, actionDone: true });
     }
-  }, [createRoomClicked, createRoom, setCreateRoomClicked, socket, state]);
+  }, [
+    createRoomClicked,
+    createRoom,
+    socket,
+    team_data,
+    setState,
+    state,
+    actionDone,
+  ]);
 
   // If room created successfully....
-  if (roomData.type === ROOM_CREATED) {
+  if (actionDone && roomData.type === ROOM_CREATED) {
+    Alert.success('Room Created Successfully');
     return <Redirect to='/room' />;
+  } else if (
+    actionDone &&
+    !roomData.loading &&
+    roomData.type !== ROOM_CREATED
+  ) {
+    Alert.error(roomData.error);
+    setState({ ...state, actionDone: false });
   }
 
   // options for creating room....
@@ -62,7 +83,7 @@ function CreateRoomView({ roomData, socketData, createRoom }) {
         <select
           value={max_teams}
           onChange={(e) =>
-            setState({ ...state, max_teams: parseInt(e.target.value) })
+            setTeamData({ ...team_data, max_teams: parseInt(e.target.value) })
           }
         >
           {optionNumbers}
@@ -78,7 +99,7 @@ function CreateRoomView({ roomData, socketData, createRoom }) {
         <select
           value={max_perRoom}
           onChange={(e) =>
-            setState({ ...state, max_perRoom: parseInt(e.target.value) })
+            setTeamData({ ...team_data, max_perRoom: parseInt(e.target.value) })
           }
         >
           {optionNumbers}
@@ -94,7 +115,7 @@ function CreateRoomView({ roomData, socketData, createRoom }) {
         <select
           value={max_perTeam}
           onChange={(e) =>
-            setState({ ...state, max_perTeam: parseInt(e.target.value) })
+            setTeamData({ ...team_data, max_perTeam: parseInt(e.target.value) })
           }
         >
           {optionNumbers}
@@ -110,8 +131,8 @@ function CreateRoomView({ roomData, socketData, createRoom }) {
         <select
           value={timeLimit}
           onChange={(e) =>
-            setState({
-              ...state,
+            setTeamData({
+              ...team_data,
               timeLimit: parseInt(e.target.value) * 60 * 60 * 60,
             })
           }
@@ -139,7 +160,10 @@ function CreateRoomView({ roomData, socketData, createRoom }) {
         <select
           value={max_questions}
           onChange={(e) =>
-            setState({ ...state, max_questions: parseInt(e.target.value) })
+            setTeamData({
+              ...team_data,
+              max_questions: parseInt(e.target.value),
+            })
           }
         >
           {optionNumbers}
@@ -155,7 +179,7 @@ function CreateRoomView({ roomData, socketData, createRoom }) {
         <select
           value={max_vote}
           onChange={(e) =>
-            setState({ ...state, max_vote: parseInt(e.target.value) })
+            setTeamData({ ...team_data, max_vote: parseInt(e.target.value) })
           }
         >
           {optionNumbers}
@@ -170,7 +194,10 @@ function CreateRoomView({ roomData, socketData, createRoom }) {
         <select
           value={veto_quesCount}
           onChange={(e) =>
-            setState({ ...state, veto_quesCount: parseInt(e.target.value) })
+            setTeamData({
+              ...team_data,
+              veto_quesCount: parseInt(e.target.value),
+            })
           }
         >
           {optionNumbers}
@@ -184,7 +211,9 @@ function CreateRoomView({ roomData, socketData, createRoom }) {
         <input
           type='checkbox'
           value={privateRoom}
-          onChange={() => setState({ ...state, privateRoom: !privateRoom })}
+          onChange={() =>
+            setTeamData({ ...team_data, privateRoom: !privateRoom })
+          }
         />{' '}
         Private Room
       </div>
@@ -207,7 +236,7 @@ function CreateRoomView({ roomData, socketData, createRoom }) {
       <div className='create-room-button-container'>
         <Button
           type='button'
-          onClick={() => setCreateRoomClicked(true)}
+          onClick={() => setState({ ...state, createRoomClicked: true })}
           buttonStyle='btn--primary--normal'
           buttonSize='btn--medium'
         >
