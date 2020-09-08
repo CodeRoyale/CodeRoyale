@@ -1,16 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { mapStateToProps } from '../../utils/mapStateToProps';
+import { joinTeam } from '../../actions/teamActions';
+import { connect } from 'react-redux';
 
-function JoinTeamView({ setState, team_name }) {
+function JoinTeamView({ team_name, socketData, joinTeam }) {
+  const socket = socketData.socket;
+  const [state, setState] = useState({
+    joinTeamClicked: false,
+    actionDone: false,
+  });
+  const { joinTeamClicked, actionDone } = state;
+
+  // joinTeam...
+  useEffect(() => {
+    if (joinTeamClicked) {
+      joinTeam(socket, { team_name });
+      setState({ ...state, joinTeamClicked: false, actionDone: true });
+    }
+  }, [joinTeamClicked, joinTeam, socket, team_name, state]);
+
+  // Alert Message...
+  if (actionDone) {
+    // TODO: Alert message for the response from server...
+    setState({ ...state, actionDone: false });
+  }
+
   return (
     <div>
       <img
         src='/images/add_button_white.svg'
         alt=''
         className='join-team-add-button'
-        onClick={() => setState({ action: 'JOIN_TEAM', team_name: team_name })}
+        onClick={() => setState({ ...state, joinTeamClicked: true })}
       />
     </div>
   );
 }
 
-export default JoinTeamView;
+export default connect(mapStateToProps, { joinTeam })(JoinTeamView);

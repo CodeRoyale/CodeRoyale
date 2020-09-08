@@ -1,8 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { InputGroup, Input, Icon } from 'rsuite';
+import { createTeam } from '../../actions/teamActions';
+import { mapStateToProps } from '../../utils/mapStateToProps';
+import { connect } from 'react-redux';
 
-function CreateTeamView({ setState }) {
-  const [team_name, setCreateTeamInput] = useState('');
+function CreateTeamView({ socketData, createTeam, teamData }) {
+  const [state, setState] = useState({
+    team_name: '',
+    createTeamClicked: false,
+    actionDone: false,
+  });
+  const { team_name, createTeamClicked, actionDone } = state;
+  const socket = socketData.socket;
+
+  //Create Team...
+  useEffect(() => {
+    if (createTeamClicked) {
+      createTeam(socket, { team_name });
+      setState({
+        ...state,
+        team_name: '',
+        actionDone: true,
+        createTeamClicked: false,
+      });
+    }
+  }, [createTeamClicked, setState, state, socket, team_name, createTeam]);
+
+  // Alert Message...
+  useEffect(() => {
+    console.log('hello');
+    if (actionDone) {
+      //TODO: Put alert messages here according to data...
+    }
+  }, [actionDone]);
+
+  // onClick button...
+  const onClickCreateButton = () => {
+    setState({
+      ...state,
+      createTeamClicked: true,
+    });
+  };
 
   //Styling constants...
   const inputBorderRadius = 50;
@@ -23,20 +61,16 @@ function CreateTeamView({ setState }) {
             }}
             placeholder='Create Team...'
             value={team_name}
-            onChange={(value, event) => {
-              setCreateTeamInput(value);
-            }}
+            onChange={(value, event) =>
+              setState({ ...state, team_name: value })
+            }
           />
           <InputGroup.Button
             style={{
               borderTopRightRadius: inputBorderRadius,
               borderBottomRightRadius: inputBorderRadius,
             }}
-            onClick={() => {
-              console.log(team_name);
-              // setCreateTeamInput('');
-              setState({ action: 'CREATE_TEAM', team_name: team_name });
-            }}
+            onClick={onClickCreateButton}
           >
             <Icon icon='plus-circle' size='lg' />
           </InputGroup.Button>
@@ -46,4 +80,4 @@ function CreateTeamView({ setState }) {
   );
 }
 
-export default CreateTeamView;
+export default connect(mapStateToProps, { createTeam })(CreateTeamView);

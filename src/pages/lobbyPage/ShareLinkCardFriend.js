@@ -1,84 +1,37 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import './LobbyMain.css';
 import CreateRoomView from './CreateRoomView';
 import JoinRoomView from './JoinRoomView';
 import ChooseRoomView from './ChooseRoomView';
-import io from 'socket.io-client';
-import SocketContext from '../../utils/SocketContext';
+import { connectSocket } from '../../actions/socketActions';
 
-function ShareLinkCardFriend(props) {
-  const profileData = props.profileData;
-  const userName = profileData.username;
-  const CONNECTION_ACK = 'CONNECTION_ACK';
-  const CONNECTION_DENY = 'CONNECTION_DENY';
-  const ENDPOINT = process.env.REACT_APP_LOBBY_SERVER;
-  const [connectionResponse, setConnectionResponse] = useState('');
-  const [socket, setSocket] = useState(null);
+function ShareLinkCardFriend({ profileData, connectSocket, socket }) {
   const [chooseOption, setChooseOption] = useState(null);
 
+  // Connect to socket...
+  useEffect(() => {
+    connectSocket();
+  }, [connectSocket]);
+
   // OnClickChoose...
-  // TODO: Have to implement what happens if server is down....
-  let chosenView;
-  if (connectionResponse === CONNECTION_ACK) {
+  let chosenView = null;
+  if (socket.error !== 'CONNECTION_DENY') {
     switch (chooseOption) {
       case 'CREATE_ROOM':
-        chosenView = (
-          <SocketContext.Provider value={socket}>
-            <CreateRoomView />
-          </SocketContext.Provider>
-        );
+        chosenView = <CreateRoomView />;
         break;
       case 'JOIN_ROOM':
-        chosenView = (
-          <SocketContext.Provider value={socket}>
-            <JoinRoomView />
-          </SocketContext.Provider>
-        );
+        chosenView = <JoinRoomView />;
         break;
       default:
         chosenView = (
           <ChooseRoomView onClickChoose={(option) => setChooseOption(option)} />
         );
     }
-  } else if (connectionResponse === CONNECTION_DENY) {
-    alert('Connection to server failed...');
+  } else {
+    //TODO: Give Alert message here...
   }
-
-  // Connection to server...
-  useEffect(() => {
-    const options = {
-      transportOptions: {
-        polling: {
-          extraHeaders: {
-            Authorization: `Bearer ${userName}`,
-          },
-        },
-      },
-    };
-    console.log('sending req');
-    let socket = io.connect(ENDPOINT, options);
-    setSocket(socket);
-    socket.on(CONNECTION_ACK, () => {
-      setConnectionResponse(CONNECTION_ACK);
-    });
-    socket.on(CONNECTION_DENY, () => {
-      setConnectionResponse(CONNECTION_DENY);
-    });
-    socket.on('RCV_MSG', (data) => {
-      console.log(data);
-    });
-  }, [userName, ENDPOINT]);
-
-  // After connection response comes...
-  useEffect(() => {
-    if (connectionResponse === CONNECTION_ACK) {
-      console.log(CONNECTION_ACK);
-    } else if (connectionResponse === CONNECTION_DENY) {
-      console.log(CONNECTION_DENY);
-    } else {
-      console.log('No Connection yet...');
-    }
-  }, [connectionResponse]);
 
   // Main Render...
   return (
@@ -104,4 +57,9 @@ function ShareLinkCardFriend(props) {
   );
 }
 
-export default ShareLinkCardFriend;
+const mapStateToProps = (state) => {
+  return {
+    socket: state.socketData,
+  };
+};
+export default connect(mapStateToProps, { connectSocket })(ShareLinkCardFriend);

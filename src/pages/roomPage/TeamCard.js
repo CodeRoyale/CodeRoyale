@@ -1,7 +1,7 @@
 import React from 'react';
 import TeamMemberCard from './TeamMemberCard';
 import JoinTeamView from './JoinTeamView';
-import CloseTeamView from './CloseTeamView';
+import LeaveTeamView from './LeaveTeamView';
 
 function TeamCard({ team_name, team, setState }) {
   // Setting team members cards...
@@ -14,7 +14,7 @@ function TeamCard({ team_name, team, setState }) {
         <div className='team-card-team-name-text'>{team_name}</div>
         <div className='team-card-team-name-button-container'>
           <div className='team-card-team-name-button-container-row'>
-            <CloseTeamView setState={setState} />
+            <LeaveTeamView setState={setState} />
             <JoinTeamView team_name={team_name} setState={setState} />
           </div>
         </div>
