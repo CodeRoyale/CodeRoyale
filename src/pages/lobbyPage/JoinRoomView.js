@@ -4,14 +4,19 @@ import { ROOM_JOINED } from '../../utils/constants';
 import { mapStateToProps } from '../../utils/mapStateToProps';
 import { connect } from 'react-redux';
 import { joinRoom } from '../../actions/roomActions';
+import { Alert } from 'rsuite';
 import Button from '../../components/button/Button';
 
 function JoinRoomView({ socketData, roomData, joinRoom }) {
   // TODO: Have to include code for what happens if false....
   // TODO: Have to include code for indicating the joining of room...
 
-  const [joinInputValue, setJoinInputValue] = useState('');
-  const [joinButtonClicked, setJoinButtonClicked] = useState(false);
+  const [state, setState] = useState({
+    joinButtonClicked: false,
+    actionDone: false,
+    joinInputValue: '',
+  });
+  const { joinButtonClicked, actionDone, joinInputValue } = state;
   const socket = socketData.socket;
   const room_id = joinInputValue.toString().trim();
 
@@ -19,13 +24,17 @@ function JoinRoomView({ socketData, roomData, joinRoom }) {
   useEffect(() => {
     if (joinButtonClicked) {
       joinRoom(socket, { room_id });
-      setJoinButtonClicked(false);
+      setState({ ...state, joinButtonClicked: false, actionDone: true });
     }
-  }, [joinButtonClicked, setJoinButtonClicked, socket, room_id, joinRoom]);
+  }, [joinButtonClicked, setState, socket, room_id, joinRoom, state]);
 
   // After successful joining...
-  if (roomData.type === ROOM_JOINED) {
+  if (actionDone && roomData.type === ROOM_JOINED) {
+    Alert.success('Joined a room');
     return <Redirect to={{ pathname: '/room' }} />;
+  } else if (actionDone && roomData.type !== ROOM_JOINED && !roomData.loading) {
+    Alert.error(roomData.error);
+    setState({ ...state, actionDone: false });
   }
 
   // Main Render...
@@ -35,7 +44,9 @@ function JoinRoomView({ socketData, roomData, joinRoom }) {
         <input
           type='text'
           className='join-room-join-input'
-          onChange={(event) => setJoinInputValue(event.target.value)}
+          onChange={(event) =>
+            setState({ ...state, joinInputValue: event.target.value })
+          }
           value={joinInputValue}
           placeholder='Enter Room ID...'
         />
@@ -43,7 +54,7 @@ function JoinRoomView({ socketData, roomData, joinRoom }) {
       <div className='join-room-join-button-container'>
         <Button
           type='button'
-          onClick={() => setJoinButtonClicked(true)}
+          onClick={() => setState({ ...state, joinButtonClicked: true })}
           buttonStyle='btn--primary--normal'
           buttonSize='btn--medium'
         >

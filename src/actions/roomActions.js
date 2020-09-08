@@ -83,7 +83,7 @@ export const joinRoom = (socket, { room_id }) => {
       dispatch(roomRequest());
       socket.emit('JOIN_ROOM', { room_id }, (data) => {
         if (data !== null) {
-          if (data !== ERROR_MSG) {
+          if (data !== ERROR_MSG && data.error === undefined) {
             dispatch(roomSuccess(data, ROOM_JOINED));
             socket.on('ROOM_UPDATED', (data) => {
               if (data !== null && data.type !== undefined) {
@@ -91,6 +91,8 @@ export const joinRoom = (socket, { room_id }) => {
                 dispatch(getRoom(socket, { room_id }));
               }
             });
+          } else if (data.error !== undefined) {
+            dispatch(roomFailure(data.error));
           } else {
             dispatch(roomFailure(data));
           }
