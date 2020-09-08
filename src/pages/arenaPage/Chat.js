@@ -59,12 +59,4 @@ function Chat({ sendMsg, socket, chatData }) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    sendMsg: (socket, { message }) => {
-      dispatch(sendMsg(socket, { message }));
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Chat);
+export default connect(mapStateToProps, { sendMsg })(Chat);

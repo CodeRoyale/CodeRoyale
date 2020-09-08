@@ -53,10 +53,4 @@ function JoinRoomView({ socketData, roomData, joinRoom }) {
     </div>
   );
 }
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    joinRoom: (socket, { room_id }) => dispatch(joinRoom(socket, { room_id })),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(JoinRoomView);
+export default connect(mapStateToProps, { joinRoom })(JoinRoomView);

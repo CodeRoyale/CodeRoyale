@@ -74,10 +74,5 @@ function CloseRoomView({ roomData, socketData, closeRoom }) {
     </div>
   );
 }
-const mapDispatchToProps = (dispatch) => {
-  return {
-    closeRoom: (socket) => dispatch(closeRoom(socket)),
-  };
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(CloseRoomView);
+export default connect(mapStateToProps, { closeRoom })(CloseRoomView);

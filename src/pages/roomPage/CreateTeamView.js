@@ -80,10 +80,4 @@ function CreateTeamView({ socketData, createTeam, teamData }) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    createTeam: (socket, { team_name }) =>
-      dispatch(createTeam(socket, { team_name })),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(CreateTeamView);
+export default connect(mapStateToProps, { createTeam })(CreateTeamView);

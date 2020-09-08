@@ -38,10 +38,4 @@ function LeaveTeamView({ socketData, leaveTeam }) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    leaveTeam: (socket) => dispatch(leaveTeam(socket)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LeaveTeamView);
+export default connect(mapStateToProps, { leaveTeam })(LeaveTeamView);

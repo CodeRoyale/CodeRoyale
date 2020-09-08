@@ -119,10 +119,4 @@ const RoomMain = ({ teamData, roomData, socketData, getRoom }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getRoom: (socket, { room_id }) => dispatch(getRoom(socket, { room_id })),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(RoomMain);
+export default connect(mapStateToProps, { getRoom })(RoomMain);

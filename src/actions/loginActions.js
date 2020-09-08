@@ -3,10 +3,28 @@ import { LOGIN_LOADING, LOGIN_FAIL, LOGIN_SUCCESS } from './types';
 const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
 const LOGIN_API = `${process.env.REACT_APP_USER_API_URL}/users/login`;
 
-export const loginUser = (authData) => (dispatch) => {
-  dispatch({
+const loginRequest = () => {
+  return {
     type: LOGIN_LOADING,
-  });
+  };
+};
+
+const loginSuccess = (data) => {
+  return {
+    type: LOGIN_SUCCESS,
+    payload: data,
+  };
+};
+
+const loginFail = (data) => {
+  return {
+    type: LOGIN_FAIL,
+    payload: data.message,
+  };
+};
+
+export const loginUser = (authData) => (dispatch) => {
+  dispatch(loginRequest());
   let headers = new Headers();
   headers.append('Content-Type', 'application/json');
   headers.append('Origin', CLIENT_URL);
@@ -27,15 +45,9 @@ export const loginUser = (authData) => (dispatch) => {
       // Temporary storing in localStorage in actions will change
       localStorage.setItem('user-data', JSON.stringify(jsonRes));
       localStorage.setItem('access-token', jsonRes.accessToken);
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: jsonRes,
-      });
+      dispatch(loginSuccess(jsonRes));
     })
     .catch((err) => {
-      dispatch({
-        type: LOGIN_FAIL,
-        payload: err.message,
-      });
+      dispatch(loginFail(err));
     });
 };

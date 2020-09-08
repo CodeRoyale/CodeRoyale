@@ -37,11 +37,4 @@ function JoinTeamView({ team_name, socketData, joinTeam }) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    joinTeam: (socket, { team_name }) =>
-      dispatch(joinTeam(socket, { team_name })),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(JoinTeamView);
+export default connect(mapStateToProps, { joinTeam })(JoinTeamView);

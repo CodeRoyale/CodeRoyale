@@ -218,9 +218,4 @@ function CreateRoomView({ roomData, socketData, createRoom }) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    createRoom: (socket, state) => dispatch(createRoom(socket, state)),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(CreateRoomView);
+export default connect(mapStateToProps, { createRoom })(CreateRoomView);

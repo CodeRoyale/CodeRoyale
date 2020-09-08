@@ -62,14 +62,4 @@ const mapStateToProps = (state) => {
     socket: state.socketData,
   };
 };
-const mapDispatchToProps = (dispatch) => {
-  return {
-    connectSocket: () => {
-      dispatch(connectSocket());
-    },
-  };
-};
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ShareLinkCardFriend);
+export default connect(mapStateToProps, { connectSocket })(ShareLinkCardFriend);
