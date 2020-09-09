@@ -19,6 +19,7 @@ const {
   COMPETITION_STARTED,
   COMPETITION_STOPPED,
   ROOM_CLOSED,
+  CODE_SUBMITTED,
 } = require("../socketActions/serverActions");
 
 const { io } = require("../server");
@@ -563,22 +564,25 @@ const getRoomsData = () => {
   }
 };
 
-const codeSubmission = ({ userName, testcase, code, langId}, { socket }) => {
+const codeSubmission = ({ userName, testcase, code, langId }, { socket }) => {
   try {
     const { room_id, team_name } = getUser(userName);
-    
-    if (rooms[room_id] &&
-       rooms[room_id].teams[team_name] &&
-       rooms[room_id].competition.contestOngoing &&
-       testcase!==null &&
-       langId!==null
-    ){
-    const data = submitCode(testcase, code, langId); 
-    }
-    else{
+
+    if (
+      rooms[room_id] &&
+      rooms[room_id].teams[team_name] &&
+      rooms[room_id].competition.contestOngoing &&
+      testcase !== null &&
+      langId !== null
+    ) {
+      const dataFromSubmitCode = submitCode(testcase, code, langId);
+      socket.to(room_id).broadcast.emit(CODE_SUBMITTED, {
+        data: { dataFromSubmitCode },
+      });
+      return dataFromSubmitCode;
+    } else {
       return false;
     }
-
   } catch (err) {
     return { error: err.message };
   }
