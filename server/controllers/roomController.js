@@ -567,7 +567,7 @@ const getRoomsData = () => {
 const codeSubmission = ({ userName, testcase, code, langId }, { socket }) => {
   try {
     const { room_id, team_name } = getUser(userName);
-    
+    let dataFromSubmitCode;
     if (
       rooms[room_id] &&
       rooms[room_id].teams[team_name] &&
@@ -575,7 +575,6 @@ const codeSubmission = ({ userName, testcase, code, langId }, { socket }) => {
       testcase !== null &&
       langId !== null
     ) {
-      const dataFromSubmitCode;
       submitCode(testcase, code, langId, (data) => {
         console.log(data);
         dataFromSubmitCode = data;
