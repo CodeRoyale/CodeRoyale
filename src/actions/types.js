@@ -24,6 +24,7 @@ export const ROOM_FAIL = 'ROOM_FAIL';
 export const TEAM_LOADING = 'TEAM_LOADING';
 export const TEAM_SUCCESS = 'TEAM_SUCCESS';
 export const TEAM_FAIL = 'TEAM_FAIL';
+export const ACTION_RESET = 'ACTION_RESET';
 
 //Chat Actions...
 export const CHAT_SUCCESS = 'CHAT_SUCCESS';

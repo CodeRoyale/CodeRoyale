@@ -87,7 +87,6 @@ export const joinRoom = (socket, { room_id }) => {
             dispatch(roomSuccess(data, ROOM_JOINED));
             socket.on('ROOM_UPDATED', (data) => {
               if (data !== null && data.type !== undefined) {
-                //console.log('getRoom', data);
                 dispatch(getRoom(socket, { room_id }));
               }
             });

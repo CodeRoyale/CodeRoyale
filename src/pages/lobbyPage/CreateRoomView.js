@@ -9,13 +9,11 @@ import { mapStateToProps } from '../../utils/mapStateToProps';
 import { Alert } from 'rsuite';
 
 function CreateRoomView({ roomData, socketData, createRoom }) {
-  // TODO: Have to include code for indicating the creation of room...
-  // TODO: Have to show error if there is any...
-  // TODO: Make UI good...
   const [state, setState] = useState({
     createRoomClicked: false,
     actionDone: false,
   });
+  const [redirect, setRedirect] = useState(false);
   const [team_data, setTeamData] = useState({
     max_teams: 2,
     max_perTeam: 1,
@@ -58,16 +56,30 @@ function CreateRoomView({ roomData, socketData, createRoom }) {
   ]);
 
   // If room created successfully....
-  if (actionDone && roomData.type === ROOM_CREATED) {
-    Alert.success('Room Created Successfully');
+  useEffect(() => {
+    if (actionDone && roomData.type === ROOM_CREATED) {
+      Alert.success('Room Created Successfully');
+      setRedirect(true);
+    } else if (
+      actionDone &&
+      !roomData.loading &&
+      roomData.type !== ROOM_CREATED
+    ) {
+      Alert.error(roomData.error);
+      setState({ ...state, actionDone: false });
+    }
+  }, [
+    actionDone,
+    roomData.type,
+    roomData.loading,
+    roomData.error,
+    state,
+    roomData,
+  ]);
+
+  // Redirect to room...
+  if (redirect) {
     return <Redirect to='/room' />;
-  } else if (
-    actionDone &&
-    !roomData.loading &&
-    roomData.type !== ROOM_CREATED
-  ) {
-    Alert.error(roomData.error);
-    setState({ ...state, actionDone: false });
   }
 
   // options for creating room....

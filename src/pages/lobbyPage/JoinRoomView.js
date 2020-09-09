@@ -8,14 +8,12 @@ import { Alert } from 'rsuite';
 import Button from '../../components/button/Button';
 
 function JoinRoomView({ socketData, roomData, joinRoom }) {
-  // TODO: Have to include code for what happens if false....
-  // TODO: Have to include code for indicating the joining of room...
-
   const [state, setState] = useState({
     joinButtonClicked: false,
     actionDone: false,
     joinInputValue: '',
   });
+  const [redirect, setRedirect] = useState(false);
   const { joinButtonClicked, actionDone, joinInputValue } = state;
   const socket = socketData.socket;
   const room_id = joinInputValue.toString().trim();
@@ -29,12 +27,23 @@ function JoinRoomView({ socketData, roomData, joinRoom }) {
   }, [joinButtonClicked, setState, socket, room_id, joinRoom, state]);
 
   // After successful joining...
-  if (actionDone && roomData.type === ROOM_JOINED) {
-    Alert.success('Joined a room');
-    return <Redirect to={{ pathname: '/room' }} />;
-  } else if (actionDone && roomData.type !== ROOM_JOINED && !roomData.loading) {
-    Alert.error(roomData.error);
-    setState({ ...state, actionDone: false });
+  useEffect(() => {
+    if (actionDone && roomData.type === ROOM_JOINED) {
+      Alert.success('Joined a room');
+      setRedirect(true);
+    } else if (
+      actionDone &&
+      roomData.type !== ROOM_JOINED &&
+      !roomData.loading
+    ) {
+      Alert.error(roomData.error);
+      setState({ ...state, actionDone: false });
+    }
+  }, [actionDone, roomData.type, roomData.loading, roomData.error, state]);
+
+  // Redirect to room..
+  if (redirect) {
+    return <Redirect to='/room' />;
   }
 
   // Main Render...

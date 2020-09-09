@@ -7,23 +7,16 @@ function JoinTeamView({ team_name, socketData, joinTeam }) {
   const socket = socketData.socket;
   const [state, setState] = useState({
     joinTeamClicked: false,
-    actionDone: false,
   });
-  const { joinTeamClicked, actionDone } = state;
+  const { joinTeamClicked } = state;
 
   // joinTeam...
   useEffect(() => {
     if (joinTeamClicked) {
       joinTeam(socket, { team_name });
-      setState({ ...state, joinTeamClicked: false, actionDone: true });
+      setState({ ...state, joinTeamClicked: false });
     }
   }, [joinTeamClicked, joinTeam, socket, team_name, state]);
-
-  // Alert Message...
-  if (actionDone) {
-    // TODO: Alert message for the response from server...
-    setState({ ...state, actionDone: false });
-  }
 
   return (
     <div>

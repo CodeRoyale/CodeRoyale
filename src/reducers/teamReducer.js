@@ -1,4 +1,10 @@
-import { TEAM_LOADING, TEAM_SUCCESS, TEAM_FAIL } from '../actions/types';
+import {
+  TEAM_LOADING,
+  TEAM_SUCCESS,
+  TEAM_FAIL,
+  ACTION_RESET,
+} from '../actions/types';
+
 const initialState = {
   type: '',
   loading: false,
@@ -28,6 +34,12 @@ const teamReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
         type: '',
+      };
+    case ACTION_RESET:
+      return {
+        ...state,
+        type: action.action,
+        error: null,
       };
     default:
       return state;
