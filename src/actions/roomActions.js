@@ -7,12 +7,12 @@ import {
   ROOM_UPDATED,
 } from '../utils/constants';
 
-const roomRequest = () => {
+export const roomRequest = () => {
   return {
     type: ROOM_LOADING,
   };
 };
-const roomSuccess = (data, action) => {
+export const roomSuccess = (data, action) => {
   return {
     type: ROOM_SUCCESS,
     payload: data,
@@ -20,7 +20,7 @@ const roomSuccess = (data, action) => {
   };
 };
 
-const roomFailure = (error) => {
+export const roomFailure = (error) => {
   return {
     type: ROOM_FAIL,
     payload: error,
@@ -113,7 +113,7 @@ export const closeRoom = (socket) => {
       socket.emit('CLOSE_ROOM', {}, (data) => {
         if (data !== null) {
           if (data !== ERROR_MSG && data.error === undefined) {
-            dispatch(roomSuccess(data, ROOM_CLOSED));
+            dispatch(roomSuccess(null, ROOM_CLOSED));
           } else if (data.error !== undefined) {
             dispatch(roomFailure(data.error));
           } else {

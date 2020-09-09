@@ -13,24 +13,25 @@ function CloseRoomView({ roomData, socketData, closeRoom }) {
   const socket = socketData.socket;
   const [state, setState] = useState({
     closeRoomClicked: false,
-    actionDone: false,
   });
-  const { closeRoomClicked, actionDone } = state;
+  const { closeRoomClicked } = state;
+  const [redirect, setRedirect] = useState(false);
 
   //Close Room...
   useEffect(() => {
     if (closeRoomClicked) {
       closeRoom(socket);
-      setState({ ...state, closeRoomClicked: false, actionDone: true });
+      setState({ ...state, closeRoomClicked: false });
     }
   }, [closeRoomClicked, closeRoom, socket, state]);
 
-  if (actionDone) {
-    //TODO: Alert message here...
-    setState({ ...state, actionDone: false });
-  }
+  useEffect(() => {
+    if (roomData.type === ROOM_CLOSED) {
+      setRedirect(true);
+    }
+  });
 
-  if (roomData.type === ROOM_CLOSED) {
+  if (redirect) {
     return <Redirect to='/lobby' />;
   }
 
