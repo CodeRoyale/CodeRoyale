@@ -17,6 +17,16 @@ const questionDetails = {
   problemCode: 'STFOOD',
   description:
     'Chef wants to maximise his daily profit. Help Chef choose which type of food to offer and find the maximum daily profit he can make.',
+  format:
+    'kangaroo has the following parameter(s):\nx1, v1: integers, starting position and jump distance for kangaroo 1\nx2, v2: integers, starting position and jump distance for kangaroo 2\nInput Format\nA single line of four space-separated integers denoting the respective values of X1,V1,X2 and V2.\nOutput Format\nPrint YES',
+  io: [
+    {
+      input: 'Sample Input 1\n0 2 5 3',
+      output: 'Sample Output 1\nNO',
+      explanation:
+        "Explanation 1\nThe second kangaroo has a starting location that is ahead (further to the right) of the first kangaroo's starting location (i.e., X2 > X1 ). Because the second kangaroo moves at a faster rate (meaning V2 > V1 ) and is already ahead of the first kangaroo, the first kangaroo will never be able to catch up. Thus, we print NO.",
+    },
+  ],
   author: 'kingofnumbers',
   tags: 'Linear Data Structure',
   dateAdded: '12-13-11',
@@ -30,6 +40,16 @@ const questionDetails1 = {
   questionTitle: 'Prime Numbers',
   problemCode: 'PMNRS',
   description: 'FIND PRIME NUMBERS',
+  format:
+    'kangaroo has the following parameter(s):\nx1, v1: integers, starting position and jump distance for kangaroo 1\nx2, v2: integers, starting position and jump distance for kangaroo 2\nInput Format\nA single line of four space-separated integers denoting the respective values of X1,V1,X2 and V2.\nOutput Format\nPrint YES',
+  io: [
+    {
+      input: 'Sample Input 1\n0 2 5 3',
+      output: 'Sample Output 1\nNO',
+      explanation:
+        "Explanation 1\nThe second kangaroo has a starting location that is ahead (further to the right) of the first kangaroo's starting location (i.e., X2 > X1 ). Because the second kangaroo moves at a faster rate (meaning V2 > V1 ) and is already ahead of the first kangaroo, the first kangaroo will never be able to catch up. Thus, we print NO.",
+    },
+  ],
   author: 'naveen',
   tags: 'Mathematics',
   dateAdded: '29-07-20',
@@ -41,6 +61,16 @@ const questionDetails1 = {
 // 3rd question for testing
 const questionDetails2 = {
   questionTitle: 'Prime Numbers',
+  format:
+    'kangaroo has the following parameter(s):\nx1, v1: integers, starting position and jump distance for kangaroo 1\nx2, v2: integers, starting position and jump distance for kangaroo 2\nInput Format\nA single line of four space-separated integers denoting the respective values of X1,V1,X2 and V2.\nOutput Format\nPrint YES',
+  io: [
+    {
+      input: 'Sample Input 1\n0 2 5 3',
+      output: 'Sample Output 1\nNO',
+      explanation:
+        "Explanation 1\nThe second kangaroo has a starting location that is ahead (further to the right) of the first kangaroo's starting location (i.e., X2 > X1 ). Because the second kangaroo moves at a faster rate (meaning V2 > V1 ) and is already ahead of the first kangaroo, the first kangaroo will never be able to catch up. Thus, we print NO.",
+    },
+  ],
   dateAdded: '29-07-20',
   timeLimit: 3,
   sourceLimit: 4,
@@ -52,6 +82,16 @@ const questionDetails3 = {
   questionTitle: 'Prime Numbers',
   problemCode: 'PMNRS',
   description: 'FIND PRIME NUMBERS',
+  format:
+    'kangaroo has the following parameter(s):\nx1, v1: integers, starting position and jump distance for kangaroo 1\nx2, v2: integers, starting position and jump distance for kangaroo 2\nInput Format\nA single line of four space-separated integers denoting the respective values of X1,V1,X2 and V2.\nOutput Format\nPrint YES',
+  io: [
+    {
+      input: 'Sample Input 1\n0 2 5 3',
+      output: 'Sample Output 1\nNO',
+      explanation:
+        "Explanation 1\nThe second kangaroo has a starting location that is ahead (further to the right) of the first kangaroo's starting location (i.e., X2 > X1 ). Because the second kangaroo moves at a faster rate (meaning V2 > V1 ) and is already ahead of the first kangaroo, the first kangaroo will never be able to catch up. Thus, we print NO.",
+    },
+  ],
   author: 'naveen',
   tags: 'Mathematics',
   dateAdded: '29-07-20',
@@ -66,6 +106,16 @@ const beforeQuestion = {
   problemCode: 'ARRSTR',
   description:
     'There is a array which is made up of strings and you have to do what you have to do.',
+  format:
+    'kangaroo has the following parameter(s):\nx1, v1: integers, starting position and jump distance for kangaroo 1\nx2, v2: integers, starting position and jump distance for kangaroo 2\nInput Format\nA single line of four space-separated integers denoting the respective values of X1,V1,X2 and V2.\nOutput Format\nPrint YES',
+  io: [
+    {
+      input: 'Samble Input 1\n0 2 5 3',
+      output: 'Samble Output 1\nNO',
+      explanation:
+        "Xplanation 1\nThe second kangaroo has a starting location that is ahead (further to the right) of the first kangaroo's starting location (i.e., X2 > X1 ). Because the second kangaroo moves at a faster rate (meaning V2 > V1 ) and is already ahead of the first kangaroo, the first kangaroo will never be able to catch up. Thus, we print NO.",
+    },
+  ],
   author: 'Sanidh',
   tags: ['Array', 'Strings'],
   dateAdded: '12-13-12',
@@ -79,6 +129,16 @@ const afterQuestion = {
   problemCode: 'STRARR',
   description:
     'There is a array which is made up of strings and you have to do what you have to do.',
+  format:
+    'kangaroo has the following parameter(s):\nx1, v1: integers, starting position and jump distance for kangaroo 1\nx2, v2: integers, starting position and jump distance for kangaroo 2\nInput Format\nA single line of four space-separated integers denoting the respective values of X1,V1,X2 and V2.\nOutput Format\nPrint YES',
+  io: [
+    {
+      input: 'Sample Input 1\n0 2 5 3',
+      output: 'Sample Output 1\nNO',
+      explanation:
+        "Explanation 1\nThe second kangaroo has a starting location that is ahead (further to the right) of the first kangaroo's starting location (i.e., X2 > X1 ). Because the second kangaroo moves at a faster rate (meaning V2 > V1 ) and is already ahead of the first kangaroo, the first kangaroo will never be able to catch up. Thus, we print NO.",
+    },
+  ],
   author: 'Sanith',
   tags: ['Graph', 'Strings'],
   dateAdded: '12-13-13',
@@ -134,6 +194,26 @@ describe('Question test suit', () => {
             .eql(
               'Chef wants to maximise his daily profit. Help Chef choose which type of food to offer and find the maximum daily profit he can make.'
             );
+          res.body.message.should.have
+            .property('format')
+            .eql(
+              'kangaroo has the following parameter(s):\nx1, v1: integers, starting position and jump distance for kangaroo 1\nx2, v2: integers, starting position and jump distance for kangaroo 2\nInput Format\nA single line of four space-separated integers denoting the respective values of X1,V1,X2 and V2.\nOutput Format\nPrint YES'
+            );
+
+          res.body.message.io[0].should.have
+            .property('input')
+            .eql('Sample Input 1\n0 2 5 3');
+
+          res.body.message.io[0].should.have
+            .property('output')
+            .eql('Sample Output 1\nNO');
+
+          res.body.message.io[0].should.have
+            .property('explanation')
+            .eql(
+              `Explanation 1\nThe second kangaroo has a starting location that is ahead (further to the right) of the first kangaroo's starting location (i.e., X2 > X1 ). Because the second kangaroo moves at a faster rate (meaning V2 > V1 ) and is already ahead of the first kangaroo, the first kangaroo will never be able to catch up. Thus, we print NO.`
+            );
+
           res.body.message.should.have.property('author').eql('kingofnumbers');
           res.body.message.should.have
             .property('tags')
@@ -201,6 +281,26 @@ describe('Question test suit', () => {
               'Chef wants to maximise his daily profit. Help Chef choose which type of food to offer and find the maximum daily profit he can make.'
             );
           res.body.message[0].should.have
+            .property('format')
+            .eql(
+              'kangaroo has the following parameter(s):\nx1, v1: integers, starting position and jump distance for kangaroo 1\nx2, v2: integers, starting position and jump distance for kangaroo 2\nInput Format\nA single line of four space-separated integers denoting the respective values of X1,V1,X2 and V2.\nOutput Format\nPrint YES'
+            );
+
+          res.body.message[0].io[0].should.have
+            .property('input')
+            .eql('Sample Input 1\n0 2 5 3');
+
+          res.body.message[0].io[0].should.have
+            .property('output')
+            .eql('Sample Output 1\nNO');
+
+          res.body.message[0].io[0].should.have
+            .property('explanation')
+            .eql(
+              `Explanation 1\nThe second kangaroo has a starting location that is ahead (further to the right) of the first kangaroo's starting location (i.e., X2 > X1 ). Because the second kangaroo moves at a faster rate (meaning V2 > V1 ) and is already ahead of the first kangaroo, the first kangaroo will never be able to catch up. Thus, we print NO.`
+            );
+
+          res.body.message[0].should.have
             .property('author')
             .eql('kingofnumbers');
           res.body.message[0].should.have
@@ -234,6 +334,26 @@ describe('Question test suit', () => {
           res.body.message.should.have
             .property('tags')
             .eql(['Linear Data Structure']);
+          res.body.message.should.have
+            .property('format')
+            .eql(
+              'kangaroo has the following parameter(s):\nx1, v1: integers, starting position and jump distance for kangaroo 1\nx2, v2: integers, starting position and jump distance for kangaroo 2\nInput Format\nA single line of four space-separated integers denoting the respective values of X1,V1,X2 and V2.\nOutput Format\nPrint YES'
+            );
+
+          res.body.message.io[0].should.have
+            .property('input')
+            .eql('Sample Input 1\n0 2 5 3');
+
+          res.body.message.io[0].should.have
+            .property('output')
+            .eql('Sample Output 1\nNO');
+
+          res.body.message.io[0].should.have
+            .property('explanation')
+            .eql(
+              `Explanation 1\nThe second kangaroo has a starting location that is ahead (further to the right) of the first kangaroo's starting location (i.e., X2 > X1 ). Because the second kangaroo moves at a faster rate (meaning V2 > V1 ) and is already ahead of the first kangaroo, the first kangaroo will never be able to catch up. Thus, we print NO.`
+            );
+
           res.body.message.should.have.property('dateAdded').eql('12-13-11');
           res.body.message.should.have.property('timeLimit').eql(1);
           res.body.message.should.have.property('sourceLimit').eql(3);
@@ -325,6 +445,26 @@ describe('Question test suit', () => {
             .eql(
               'There is a array which is made up of strings and you have to do what you have to do.'
             );
+
+          res.body.message.should.have
+            .property('format')
+            .eql(
+              'kangaroo has the following parameter(s):\nx1, v1: integers, starting position and jump distance for kangaroo 1\nx2, v2: integers, starting position and jump distance for kangaroo 2\nInput Format\nA single line of four space-separated integers denoting the respective values of X1,V1,X2 and V2.\nOutput Format\nPrint YES'
+            );
+
+          res.body.message.io[0].should.have
+            .property('input')
+            .eql('Samble Input 1\n0 2 5 3');
+
+          res.body.message.io[0].should.have
+            .property('output')
+            .eql('Samble Output 1\nNO');
+
+          res.body.message.io[0].should.have
+            .property('explanation')
+            .eql(
+              `Xplanation 1\nThe second kangaroo has a starting location that is ahead (further to the right) of the first kangaroo's starting location (i.e., X2 > X1 ). Because the second kangaroo moves at a faster rate (meaning V2 > V1 ) and is already ahead of the first kangaroo, the first kangaroo will never be able to catch up. Thus, we print NO.`
+            );
           res.body.message.should.have.property('author').eql('Sanidh');
           res.body.message.should.have.property('dateAdded').eql('12-13-12');
           res.body.message.should.have.property('timeLimit').eql(2);
@@ -369,6 +509,26 @@ describe('Question test suit', () => {
             .eql(
               'There is a array which is made up of strings and you have to do what you have to do.'
             );
+          res.body.message[0].should.have
+            .property('format')
+            .eql(
+              'kangaroo has the following parameter(s):\nx1, v1: integers, starting position and jump distance for kangaroo 1\nx2, v2: integers, starting position and jump distance for kangaroo 2\nInput Format\nA single line of four space-separated integers denoting the respective values of X1,V1,X2 and V2.\nOutput Format\nPrint YES'
+            );
+
+          res.body.message[0].io[0].should.have
+            .property('input')
+            .eql('Sample Input 1\n0 2 5 3');
+
+          res.body.message[0].io[0].should.have
+            .property('output')
+            .eql('Sample Output 1\nNO');
+
+          res.body.message[0].io[0].should.have
+            .property('explanation')
+            .eql(
+              `Explanation 1\nThe second kangaroo has a starting location that is ahead (further to the right) of the first kangaroo's starting location (i.e., X2 > X1 ). Because the second kangaroo moves at a faster rate (meaning V2 > V1 ) and is already ahead of the first kangaroo, the first kangaroo will never be able to catch up. Thus, we print NO.`
+            );
+
           res.body.message[0].should.have.property('author').eql('Sanith');
           res.body.message[0].should.have.property('dateAdded').eql('12-13-13');
           res.body.message[0].should.have.property('timeLimit').eql(3);
@@ -480,6 +640,25 @@ describe('Question test suit', () => {
           res.body.message[0].should.have
             .property('tags')
             .eql(['Linear Data Structure']);
+          res.body.message[0].should.have
+            .property('format')
+            .eql(
+              'kangaroo has the following parameter(s):\nx1, v1: integers, starting position and jump distance for kangaroo 1\nx2, v2: integers, starting position and jump distance for kangaroo 2\nInput Format\nA single line of four space-separated integers denoting the respective values of X1,V1,X2 and V2.\nOutput Format\nPrint YES'
+            );
+
+          res.body.message[0].io[0].should.have
+            .property('input')
+            .eql('Sample Input 1\n0 2 5 3');
+
+          res.body.message[0].io[0].should.have
+            .property('output')
+            .eql('Sample Output 1\nNO');
+
+          res.body.message[0].io[0].should.have
+            .property('explanation')
+            .eql(
+              `Explanation 1\nThe second kangaroo has a starting location that is ahead (further to the right) of the first kangaroo's starting location (i.e., X2 > X1 ). Because the second kangaroo moves at a faster rate (meaning V2 > V1 ) and is already ahead of the first kangaroo, the first kangaroo will never be able to catch up. Thus, we print NO.`
+            );
           res.body.message[0].should.have.property('dateAdded').eql('12-13-11');
           res.body.message[0].should.have.property('timeLimit').eql(1);
           res.body.message[0].should.have.property('sourceLimit').eql(3);
@@ -491,6 +670,25 @@ describe('Question test suit', () => {
           res.body.message[1].should.have
             .property('description')
             .eql('FIND PRIME NUMBERS');
+          res.body.message[1].should.have
+            .property('format')
+            .eql(
+              'kangaroo has the following parameter(s):\nx1, v1: integers, starting position and jump distance for kangaroo 1\nx2, v2: integers, starting position and jump distance for kangaroo 2\nInput Format\nA single line of four space-separated integers denoting the respective values of X1,V1,X2 and V2.\nOutput Format\nPrint YES'
+            );
+
+          res.body.message[1].io[0].should.have
+            .property('input')
+            .eql('Sample Input 1\n0 2 5 3');
+
+          res.body.message[1].io[0].should.have
+            .property('output')
+            .eql('Sample Output 1\nNO');
+
+          res.body.message[1].io[0].should.have
+            .property('explanation')
+            .eql(
+              `Explanation 1\nThe second kangaroo has a starting location that is ahead (further to the right) of the first kangaroo's starting location (i.e., X2 > X1 ). Because the second kangaroo moves at a faster rate (meaning V2 > V1 ) and is already ahead of the first kangaroo, the first kangaroo will never be able to catch up. Thus, we print NO.`
+            );
           res.body.message[1].should.have.property('author').eql('naveen');
           res.body.message[1].should.have.property('tags').eql(['Mathematics']);
           res.body.message[1].should.have.property('dateAdded').eql('29-07-20');
@@ -591,49 +789,49 @@ describe('Question test suit', () => {
 });
 
 // 1st testcase for testing
-const testcaseDetails = { 
-  qid: "5f4b9e61a024f595fd3b4468",  
-  testcases:[
+const testcaseDetails = {
+  problemCode: '123',
+  testcases: [
     {
-      input : "0 3 4 2",
-      output : "YES"
+      input: '0 3 4 2',
+      output: 'YES',
     },
     {
-      input : "0 2 5 3",
-      output : "NO"
+      input: '0 2 5 3',
+      output: 'NO',
     },
     {
-      input : "14 4 98 2",
-      output : "YES"
+      input: '14 4 98 2',
+      output: 'YES',
     },
     {
-      input : "21 6 47 3",
-      output : "NO"
-    }
-  ]
-}
-  
+      input: '21 6 47 3',
+      output: 'NO',
+    },
+  ],
+};
+
 // 2nd testcase for testing
-const testcaseDetails2 = {  
-  testcases:[
+const testcaseDetails2 = {
+  testcases: [
     {
-      input : "SOSSPSSQSSOR",
-      output : "3"
+      input: 'SOSSPSSQSSOR',
+      output: '3',
     },
     {
-      input : "SOSSOT",
-      output : "1"
+      input: 'SOSSOT',
+      output: '1',
     },
     {
-      input : "SOSSOSSOSSOSSOSSOSSOSSOSSOSSOSSOSSOSSOSSOSSOSSOS",
-      output : "0"
+      input: 'SOSSOSSOSSOSSOSSOSSOSSOSSOSSOSSOSSOSSOSSOSSOSSOS',
+      output: '0',
     },
     {
-      input : "SOSOOSOSOSOSOSSOSOSOSOSOSOS",
-      output : "12"
-    }
-  ]
-}
+      input: 'SOSOOSOSOSOSOSSOSOSOSOSOSOS',
+      output: '12',
+    },
+  ],
+};
 
 let questionidTestcase = '';
 describe('TestCase test suit', () => {
@@ -654,9 +852,7 @@ describe('TestCase test suit', () => {
         .end((err, res) => {
           res.should.have.status(201);
           res.body.message.should.be.an('Object');
-          res.body.message.should.have
-            .property('qid')
-            .eql('5f4b9e61a024f595fd3b4468');
+          res.body.message.should.have.property('problemCode').eql('123');
           questionidTestcase = res.body.message.qid;
           done();
         });
@@ -672,7 +868,7 @@ describe('TestCase test suit', () => {
           res.body.should.have
             .property('message')
             .eql(
-              'testcase validation failed: qid: Path `qid` is required.'
+              'testcase validation failed: problemCode: Path `problemCode` is required.'
             );
           done();
         });
