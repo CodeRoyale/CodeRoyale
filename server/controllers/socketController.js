@@ -124,7 +124,7 @@ const handleUserEvents = (socket) => {
     genericActionCreater(startCompetition, { socket }, true)
   );
   socket.on(ADD_PRIVATE_LIST, genericActionCreater(addPrivateList, socket));
-  socket.on(CODE_SUBMISSION, genericActionCreater(codeSubmission, socket));
+  socket.on(CODE_SUBMISSION, genericActionCreater(codeSubmission, { socket }));
   socket.on("disconnect", () => {
     // removeUser(socket.userDetails.userName);
   });
