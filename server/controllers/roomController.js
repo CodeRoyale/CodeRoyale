@@ -78,7 +78,7 @@ const createRoom = (config, { socket }) => {
           max_questions: config.max_questions || 3,
           contestStartedAt: null,
           contnetEndedAt: null,
-          contestOngoing: false,
+          contestOngoing: true,
           timeLimit: config.timeLimit || 2700000,
           veto: {
             allQuestions: {},
@@ -567,7 +567,6 @@ const getRoomsData = () => {
 const codeSubmission = ({ userName, testcase, code, langId }, { socket }) => {
   try {
     const { room_id, team_name } = getUser(userName);
-    let dataFromSubmitCode;
     if (
       rooms[room_id] &&
       rooms[room_id].teams[team_name] &&
@@ -575,14 +574,13 @@ const codeSubmission = ({ userName, testcase, code, langId }, { socket }) => {
       testcase !== null &&
       langId !== null
     ) {
-      submitCode(testcase, code, langId, (data) => {
-        console.log(data);
-        dataFromSubmitCode = data;
+      submitCode(testcase, code, langId, (dataFromSubmitCode) => {
+        console.log(dataFromSubmitCode);
+        socket.to(room_id).broadcast.emit(CODE_SUBMITTED, {
+          data: { dataFromSubmitCode },
+        });
       });
-      socket.to(room_id).broadcast.emit(CODE_SUBMITTED, {
-        data: { dataFromSubmitCode },
-      });
-      return dataFromSubmitCode;
+      return true;
     } else {
       return false;
     }
