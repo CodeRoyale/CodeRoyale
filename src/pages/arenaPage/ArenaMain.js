@@ -33,7 +33,7 @@ const ArenaMain = ({ socketData }) => {
         </div>
 
         <div className='right-container'>
-          <Solution />
+          <Solution socket={socket} />
         </div>
       </div>
     </div>

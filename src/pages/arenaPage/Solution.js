@@ -24,6 +24,27 @@ function Solution({ socket }) {
   const [ideTheme, setTheme] = useState('terminal');
   const [ideCode, setCode] = useState('');
 
+  const testcases = [
+    {
+      input: '0 3 4 2',
+      output: 'YES',
+    },
+    {
+      input: '0 2 5 3',
+      output: 'NO',
+    },
+    {
+      input: '14 4 98 2',
+      output: 'YES',
+    },
+    {
+      input: '21 6 47 3',
+      output: 'NO',
+    },
+  ];
+
+  const LanguageCode = 70;
+
   const settings_popup_content = (
     <div className='ide-options-popup'>
       <Grid fluid>
@@ -69,13 +90,17 @@ function Solution({ socket }) {
   }
 
   const SendCode = () => {
-    console.log(ideLanguage);
-    console.log(typeof ideCode);
+    // console.log(ideLanguage);
+    // console.log(typeof ideCode);
     console.log(ideCode);
 
-    socket.emit('SEND_MSG', { content: ideCode, ideLanguage }, (data) => {
-      console.log(data);
-    });
+    socket.emit(
+      'CODE_SUBMISSION',
+      { testcase: testcases, code: ideCode, langId: LanguageCode },
+      (data) => {
+        console.log(data);
+      }
+    );
   };
 
   return (
@@ -83,7 +108,6 @@ function Solution({ socket }) {
       <div className='solution-body'>
         <div className='solution-header'>
           <div className='solution-title'>SOLUTION</div>
-
           <div className='solution-heading-right'>
             <div className='language-options'>
               <select onChange={(e) => setLanguage(e.target.value)}>
