@@ -11,6 +11,7 @@ const {
   GET_ROOM,
   ADD_PRIVATE_LIST,
   VETO_VOTES,
+  CODE_SUBMISSION,
 } = require("../socketActions/userActions");
 
 const {
@@ -32,6 +33,7 @@ const {
   startCompetition,
   forwardMsg,
   addPrivateList,
+  codeSubmission,
 } = require("../controllers/roomController");
 
 // import utils
@@ -121,6 +123,7 @@ const handleUserEvents = (socket) => {
     START_COMPETITION,
     genericActionCreater(startCompetition, { socket }, true)
   );
+  socket.on(CODE_SUBMISSION, genericActionCreater(codeSubmission, { socket }));
   socket.on(ADD_PRIVATE_LIST, genericActionCreater(addPrivateList, { socket }));
   socket.on("disconnect", () => {
     // removeUser(socket.userDetails.userName);

@@ -2,6 +2,7 @@ const { encryptData } = require("../utils/auth");
 const { setRoom, getUser, setTeam, mapNameToId } = require("./userController");
 const { getQuestions } = require("../utils/qapiConn");
 const { ROOM_DEFAULTS, ROOM_LIMITS } = require("./config");
+const { submitCode } = require("../utils/codeExecution");
 
 console.log(ROOM_DEFAULTS, ROOM_LIMITS);
 const {
@@ -18,6 +19,7 @@ const {
   COMPETITION_STARTED,
   COMPETITION_STOPPED,
   ROOM_CLOSED,
+  CODE_SUBMITTED,
 } = require("../socketActions/serverActions");
 
 const { io } = require("../server");
@@ -563,6 +565,31 @@ const getRoomsData = () => {
   }
 };
 
+const codeSubmission = ({ userName, testcase, code, langId }, { socket }) => {
+  try {
+    const { room_id, team_name } = getUser(userName);
+    if (
+      rooms[room_id] &&
+      rooms[room_id].teams[team_name] &&
+      rooms[room_id].competition.contestOngoing &&
+      testcase !== null &&
+      langId !== null
+    ) {
+      submitCode(testcase, code, langId, (dataFromSubmitCode) => {
+        console.log(dataFromSubmitCode);
+        socket.emit(CODE_SUBMITTED, {
+          data: dataFromSubmitCode,
+        });
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    return { error: err.message };
+  }
+};
+
 module.exports = {
   createRoom,
   joinRoom,
@@ -578,4 +605,5 @@ module.exports = {
   addPrivateList,
   startCompetition,
   registerVotes,
+  codeSubmission,
 };

@@ -91,12 +91,12 @@ async function getData(url = "") {
 }
 
 // send test cases in array and source code in string all should be base64 encoded and language ID
-const submitCode = (testCase, code, langId) => {
+const submitCode = (testCase, code, langId, callback) => {
   // body data
   const bodyData = createBody(testCase, code, langId);
 
   // do a batch submission with url and submission data
-  postData(postUrl, bodyData)
+   postData(postUrl, bodyData)
   	// response data is send in data write with then and it contains all tokens
     .then(data => {
     	// parsing all data to get tokens using createUrl
@@ -104,11 +104,13 @@ const submitCode = (testCase, code, langId) => {
         // time out is set to give time for server to load the answer properly to send response
         setTimeout(() => {
           // getData called to get submission results
-          getData(getUrl)
+          getData(getUrl)	
             .then(data => {
-              return data;
+              callback(data);
+
             });
          }, 2000);
+
         
   });
 };

@@ -40,6 +40,9 @@ const COMPETITION_STOPPED = "COMPETITION_STOPPED";
 // close room
 const ROOM_CLOSED = "ROOM_CLOSED";
 
+// code submitted
+const CODE_SUBMITTED = "CODE_SUBMITTED";
+
 module.exports = {
   CONNECTION_ACK,
   CONNECTION_DENY,
@@ -56,4 +59,5 @@ module.exports = {
   COMPETITION_STARTED,
   COMPETITION_STOPPED,
   ROOM_CLOSED,
+  CODE_SUBMITTED,
 };
