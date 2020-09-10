@@ -78,7 +78,7 @@ const createRoom = (config, { socket }) => {
           max_questions: config.max_questions || 3,
           contestStartedAt: null,
           contnetEndedAt: null,
-          contestOngoing: true,
+          contestOngoing: false,
           timeLimit: config.timeLimit || 2700000,
           veto: {
             allQuestions: {},
