@@ -1,5 +1,5 @@
 import React from 'react';
-import ShareLinkCardFriend from './ShareLinkCardFriend';
+import ChooseRoomCard from './ChooseRoomCard';
 import './LobbyMain.css';
 import NavBar from '../../components/navBar/NavBar';
 import { Redirect } from 'react-router';
@@ -17,7 +17,7 @@ const LobbyMain = () => {
         <NavBar />
       </div>
       <div className='lobby-body'>
-        <ShareLinkCardFriend
+        <ChooseRoomCard
           profileData={profileData}
           sharableLink='Share this link'
         />

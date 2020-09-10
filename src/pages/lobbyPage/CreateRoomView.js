@@ -6,9 +6,11 @@ import { connect } from 'react-redux';
 import { createRoom } from '../../actions/roomActions';
 import { ROOM_CREATED } from '../../utils/constants';
 import { mapStateToProps } from '../../utils/mapStateToProps';
-import { Alert } from 'rsuite';
+import { Alert, Modal, SelectPicker, Checkbox } from 'rsuite';
+import Divider from '../../components/divider/Divider';
 
-function CreateRoomView({ roomData, socketData, createRoom }) {
+function CreateRoomView({ roomData, socketData, createRoom, show, onClose }) {
+  const socket = socketData.socket;
   const [state, setState] = useState({
     createRoomClicked: false,
     actionDone: false,
@@ -29,15 +31,11 @@ function CreateRoomView({ roomData, socketData, createRoom }) {
     max_teams,
     max_perTeam,
     max_perRoom,
-    timeLimit,
     privateRoom,
     max_questions,
     max_vote,
     veto_quesCount,
   } = team_data;
-  const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const times = [0.5, 1, 3, 6, 12, 24, 48];
-  const socket = socketData.socket;
 
   // Create room...
   useEffect(() => {
@@ -82,179 +80,139 @@ function CreateRoomView({ roomData, socketData, createRoom }) {
     return <Redirect to='/room' />;
   }
 
-  // options for creating room....
-  const optionNumbers = numbers.map((number) => (
-    <option key={number} value={number}>
-      {number}
-    </option>
-  ));
-  const maxTeamView = (
-    <>
-      <div>Maximum team</div>
-      <div>
-        <select
-          value={max_teams}
-          onChange={(e) =>
-            setTeamData({ ...team_data, max_teams: parseInt(e.target.value) })
-          }
-        >
-          {optionNumbers}
-        </select>
+  const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  let times = [0.5, 1, 3, 6, 12, 24, 48];
+  for (let i = 0; i < numbers.length; i++) {
+    const number = numbers[i];
+    numbers[i] = { label: number, value: number };
+  }
+  for (let i = 0; i < times.length; i++) {
+    const time = times[i];
+    times[i] = {
+      label:
+        time < 1
+          ? (time * 60).toString() + ' Minutes'
+          : time < 24
+          ? time.toString() + ' Hours'
+          : (time / 24).toString() + ' Day',
+      value: time * 60 * 60 * 60,
+    };
+  }
+  const DropdownNumbers = (title, data, key, value) => {
+    return (
+      <div className='create-room-drop-item'>
+        <div>{title}</div>
+        <SelectPicker
+          style={{ width: '130px' }}
+          data={data}
+          placement='autoVerticalStart'
+          searchable={false}
+          placeholder={value}
+          onChange={(value) => {
+            let newTeamData = { ...team_data };
+            newTeamData[key] = value;
+            setTeamData(newTeamData);
+          }}
+        />
       </div>
-    </>
+    );
+  };
+  const maxTeamView = DropdownNumbers(
+    'Maximum Teams',
+    numbers,
+    'max_teams',
+    max_teams
   );
-
-  const maxPerRoomView = (
-    <>
-      <div>Maximum players in the room</div>
-      <div>
-        <select
-          value={max_perRoom}
-          onChange={(e) =>
-            setTeamData({ ...team_data, max_perRoom: parseInt(e.target.value) })
-          }
-        >
-          {optionNumbers}
-        </select>
-      </div>
-    </>
+  const maxPerRoomView = DropdownNumbers(
+    'Maximum players in the room',
+    numbers,
+    'max_perRoom',
+    max_perRoom
   );
-
-  const maxPerTeamView = (
-    <>
-      <div>Maximum players per team</div>
-      <div>
-        <select
-          value={max_perTeam}
-          onChange={(e) =>
-            setTeamData({ ...team_data, max_perTeam: parseInt(e.target.value) })
-          }
-        >
-          {optionNumbers}
-        </select>
-      </div>
-    </>
+  const maxPerTeamView = DropdownNumbers(
+    'Maximum players per team',
+    numbers,
+    'max_perTeam',
+    max_perTeam
   );
-
-  const timeLimitView = (
-    <>
-      <div>Time Limit</div>
-      <div>
-        <select
-          value={timeLimit}
-          onChange={(e) =>
-            setTeamData({
-              ...team_data,
-              timeLimit: parseInt(e.target.value) * 60 * 60 * 60,
-            })
-          }
-        >
-          {times.map((time) => (
-            <option key={time} value={time}>
-              {
-                // Converting time to strings...
-                time < 1
-                  ? (time * 60).toString() + ' Minutes'
-                  : time < 24
-                  ? time.toString() + ' Hours'
-                  : (time / 24).toString() + ' Day'
-              }
-            </option>
-          ))}
-        </select>
-      </div>
-    </>
+  const maxQuestionsView = DropdownNumbers(
+    'Maximum Question',
+    numbers,
+    'max_questions',
+    max_questions
   );
-  const maxQuestionsView = (
-    <>
-      <div>Maximum Questions</div>
-      <div>
-        <select
-          value={max_questions}
-          onChange={(e) =>
-            setTeamData({
-              ...team_data,
-              max_questions: parseInt(e.target.value),
-            })
-          }
-        >
-          {optionNumbers}
-        </select>
-      </div>
-    </>
+  const maxVoteView = DropdownNumbers(
+    'Maximum Votes',
+    numbers,
+    'max_vote',
+    max_vote
   );
-
-  const maxVoteView = (
-    <>
-      <div>Maximum Votes</div>
-      <div>
-        <select
-          value={max_vote}
-          onChange={(e) =>
-            setTeamData({ ...team_data, max_vote: parseInt(e.target.value) })
-          }
-        >
-          {optionNumbers}
-        </select>
-      </div>
-    </>
+  const vetoQuestionCountView = DropdownNumbers(
+    'Veto Question Count',
+    numbers,
+    'veto_quesCount',
+    veto_quesCount
   );
-  const vetoQuestionCountView = (
-    <>
-      <div>Veto Question Count</div>
-      <div>
-        <select
-          value={veto_quesCount}
-          onChange={(e) =>
-            setTeamData({
-              ...team_data,
-              veto_quesCount: parseInt(e.target.value),
-            })
-          }
-        >
-          {optionNumbers}
-        </select>
-      </div>
-    </>
+  const timeLimitView = DropdownNumbers(
+    'Time Limit',
+    times,
+    'timeLimit',
+    '30 Minutes'
   );
   const privateRoomView = (
     <>
-      <div>
-        <input
-          type='checkbox'
-          value={privateRoom}
-          onChange={() =>
-            setTeamData({ ...team_data, privateRoom: !privateRoom })
-          }
-        />{' '}
-        Private Room
-      </div>
+      <Checkbox
+        value={privateRoom}
+        onChange={() =>
+          setTeamData({ ...team_data, privateRoom: !privateRoom })
+        }
+      >
+        private Room
+      </Checkbox>
     </>
   );
 
   // Main Render...
   return (
     <div>
-      <div className='create-room-options-choose-container'>
-        {maxTeamView}
-        {maxPerRoomView}
-        {maxPerTeamView}
-        {timeLimitView}
-        {privateRoomView}
-        {maxQuestionsView}
-        {maxVoteView}
-        {vetoQuestionCountView}
-      </div>
-      <div className='create-room-button-container'>
-        <Button
-          type='button'
-          onClick={() => setState({ ...state, createRoomClicked: true })}
-          buttonStyle='btn--primary--normal'
-          buttonSize='btn--medium'
-        >
-          Create Room
-        </Button>
-      </div>
+      <Modal overflow={true} show={show} onHide={() => onClose(false)}>
+        <Modal.Header>
+          <Modal.Title>Create Room</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className='create-room'>
+            <div className='create-room-left'>
+              <div>
+                {maxTeamView}
+                {maxPerRoomView}
+                {maxPerTeamView}
+                {privateRoomView}
+              </div>
+            </div>
+            <Divider />
+            <div className='create-room-right'>
+              <div>
+                {maxQuestionsView}
+                {maxVoteView}
+                {vetoQuestionCountView}
+                {timeLimitView}
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <div style={{ textAlign: 'center' }}>
+            <Button
+              type='button'
+              onClick={() => setState({ ...state, createRoomClicked: true })}
+              buttonStyle='btn--primary--normal'
+              buttonSize='btn--medium'
+            >
+              Create Room
+            </Button>
+          </div>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
