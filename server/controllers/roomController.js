@@ -576,8 +576,8 @@ const codeSubmission = ({ userName, testcase, code, langId }, { socket }) => {
     ) {
       submitCode(testcase, code, langId, (dataFromSubmitCode) => {
         console.log(dataFromSubmitCode);
-        socket.to(room_id).broadcast.emit(CODE_SUBMITTED, {
-          data: { dataFromSubmitCode },
+        socket.emit(CODE_SUBMITTED, {
+          data: dataFromSubmitCode,
         });
       });
       return true;
