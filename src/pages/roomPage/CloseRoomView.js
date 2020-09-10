@@ -29,7 +29,7 @@ function CloseRoomView({ roomData, socketData, closeRoom }) {
     if (roomData.type === ROOM_CLOSED) {
       setRedirect(true);
     }
-  });
+  }, [setRedirect, roomData.type]);
 
   if (redirect) {
     return <Redirect to='/lobby' />;
