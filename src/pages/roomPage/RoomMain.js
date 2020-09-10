@@ -102,7 +102,7 @@ const RoomMain = ({ teamData, roomData, socketData, getRoom }) => {
             />
           </div>
           <div className='room-details-start-competitions-container'>
-            <StartCompetitionButton />
+            {userName === admin ? <StartCompetitionButton /> : null}
           </div>
           <div>
             <Arena />

@@ -1,22 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Button from '../../components/button/Button';
+import { connect } from 'react-redux';
+import { veto } from '../../actions/vetoActions';
 import { Redirect } from 'react-router';
+import { Loader } from 'rsuite';
 
-function StartCompetitionButton({ socket }) {
-  const [startCompClicked, setStartCompClicked] = useState(false);
+const StartCompetitionButton = (props) => {
   const onClickStartCompetition = () => {
-    setStartCompClicked(true);
+    props.veto(props.socketData.socket);
   };
 
-  if (startCompClicked) {
-    return <Redirect to={{ pathname: '/veto', props: { socket: socket } }} />;
-  }
+  useEffect(() => {
+    if (props.vetoData.vetoStarted) {
+      return <Redirect to='/veto' />;
+    }
+  }, [props.vetoData.vetoStarted]);
 
-  return (
+  let content = (
     <div className='start-competition-view'>
-      <div className='start-competition-view-text'>
-        <b>Start Competition</b>
-      </div>
       <div className='start-competition-view-button'>
         <Button
           type='button'
@@ -24,11 +25,26 @@ function StartCompetitionButton({ socket }) {
           buttonStyle='btn--primary--normal'
           buttonSize='btn--medium'
         >
-          Start
+          Start Competition
         </Button>
       </div>
     </div>
   );
-}
 
-export default StartCompetitionButton;
+  if (props.vetoData.vetoRequested) {
+    content = (
+      <div className='start-competition-view'>
+        <Loader size='md' content='Waiting for veto to start' />
+      </div>
+    );
+  }
+
+  return content;
+};
+
+const mapStateToProps = (state) => ({
+  socketData: state.socketData,
+  vetoData: state.vetoData,
+});
+
+export default connect(mapStateToProps, { veto })(StartCompetitionButton);
