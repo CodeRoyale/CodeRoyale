@@ -61,7 +61,15 @@ const vetoUserVoted = (data) => {
 export const veto = (socket) => (dispatch) => {
   dispatch(vetoStartAdmin());
   socket.emit('START_COMPETITION', {}, (data) => {});
+
+  dispatch(vetoStart(socket));
+
+  dispatch(vetoStop(socket));
+};
+
+export const vetoStart = (socket) => (dispatch) => {
   socket.on('VETO_START', (data) => {
+    dispatch(vetoStartServer(data));
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Origin', CLIENT_URL);
@@ -84,15 +92,17 @@ export const veto = (socket) => (dispatch) => {
       .catch((err) => {
         dispatch(vetoQuestionsFail(err));
       });
-    dispatch(vetoStartServer(data));
-  });
-  socket.on('VETO_STOP', (data) => {
-    dispatch(vetoStopServer(data));
   });
 };
 
 export const vetoVoting = (socket, votes) => (dispatch) => {
   socket.emit('VETO_VOTES', { votes }, (data) => {
     dispatch(vetoUserVoted(data));
+  });
+};
+
+export const vetoStop = (socket) => (dispatch) => {
+  socket.on('VETO_STOP', (data) => {
+    dispatch(vetoStopServer(data));
   });
 };

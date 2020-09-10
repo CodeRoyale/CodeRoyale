@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/navBar/NavBar';
 import { Redirect } from 'react-router';
 import VetoBody from './VetoBody';
 import { Loader } from 'rsuite';
 import Button from '../../components/button/Button';
 import { connect } from 'react-redux';
-import { veto, vetoVoting } from '../../actions/vetoActions';
+import { vetoStop, vetoVoting } from '../../actions/vetoActions';
 import './VetoMain.css';
 
-const VetoMain = (props) => {
+const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
   const accessToken = localStorage.getItem('access-token');
   const [vottedQuestions, setVottedQuestions] = useState([]);
+  const socket = socketData.socket;
+
+  useEffect(() => {
+    if (socket !== null) {
+      vetoStop(socket);
+    }
+  }, [socket, vetoStop]);
 
   // Checking if user is logged in
   if (accessToken === null) {
@@ -18,46 +25,44 @@ const VetoMain = (props) => {
   }
 
   // // Checking if the socket and room_id are not null...
-  if (props.socketData.socket === null) {
+  if (socket === null) {
     return <Redirect to='/lobby' />;
   }
 
-  if (props.vetoData.vetoEnded) {
+  if (vetoData.vetoEnded) {
     return <Redirect to='/arena' />;
   }
 
   const handleQuestionVoted = (data) => {
-    if (
-      vottedQuestions.length < props.roomData.data.competition.veto.max_vote
-    ) {
+    if (vottedQuestions.length < roomData.data.competition.veto.max_vote) {
       setVottedQuestions((oldVottedQuestions) => [...oldVottedQuestions, data]);
     } else {
-      alert(`Only ${props.roomData.data.competition.veto.max_vote} is allowed`);
+      alert(`Only ${roomData.data.competition.veto.max_vote} is allowed`);
     }
   };
 
   const handleClick = () => {
-    props.vetoVoting(props.socketData.socket, vottedQuestions);
+    vetoVoting(socket, vottedQuestions);
   };
 
   let content = (
     <div className='veto-page'>
       <Navbar />
       <VetoBody
-        isLoading={props.vetoData.quesApiLoading}
-        questions={props.vetoData.questions}
+        isLoading={vetoData.quesApiLoading}
+        questions={vetoData.questions}
         getVotedQuestion={handleQuestionVoted}
       />
     </div>
   );
 
-  if (!props.vetoData.quesApiLoading) {
+  if (!vetoData.quesApiLoading) {
     content = (
       <div className='veto-page'>
         <Navbar />
         <VetoBody
-          isLoading={props.vetoData.quesApiLoading}
-          questions={props.vetoData.questions}
+          isLoading={vetoData.quesApiLoading}
+          questions={vetoData.questions}
           getVotedQuestion={handleQuestionVoted}
         />
         <div className='veto-confirm-vote-container'>
@@ -74,7 +79,7 @@ const VetoMain = (props) => {
     );
   }
 
-  if (props.vetoData.userVoted) {
+  if (vetoData.userVoted) {
     content = (
       <div className='veto-page'>
         <Navbar />
@@ -94,4 +99,4 @@ const mapStateToProps = (state) => ({
   roomData: state.roomData,
 });
 
-export default connect(mapStateToProps, { veto, vetoVoting })(VetoMain);
+export default connect(mapStateToProps, { vetoStop, vetoVoting })(VetoMain);
