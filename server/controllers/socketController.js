@@ -4,21 +4,40 @@ const {
   JOIN_ROOM,
   CREATE_TEAM,
   JOIN_TEAM,
+  START_COMPETITION,
+  CLOSE_ROOM,
+  SEND_MSG,
+  LEAVE_TEAM,
+  GET_ROOM,
+  ADD_PRIVATE_LIST,
+  VETO_VOTES,
+  CODE_SUBMISSION,
 } = require("../socketActions/userActions");
+
 const {
   CONNECTION_ACK,
   CONNECTION_DENY,
 } = require("../socketActions/serverActions");
 
 //import controllers
-const { addUser } = require("../controllers/userController");
+const { addUser, removeUser } = require("../controllers/userController");
 const {
   createRoom,
   createTeam,
   joinTeam,
   joinRoom,
   getRoomData,
+  leaveTeam,
+  closeRoom,
+  registerVotes,
+  startCompetition,
+  forwardMsg,
+  addPrivateList,
+  codeSubmission,
 } = require("../controllers/roomController");
+
+// import utils
+const { getQuestions } = require("../utils/qapiConn");
 
 const checkToken = (token) => {
   //just for testing will change later
@@ -42,7 +61,7 @@ const authUser = (socket, next) => {
     if (payload) {
       // connection accepted
       // now check if user is already connected or not
-      if (!addUser(payload.userName, socket.id)) {
+      if (addUser(payload.userName, socket.id)) {
         socket.emit(CONNECTION_ACK);
         socket.userDetails = payload;
         next();
@@ -60,55 +79,59 @@ const authUser = (socket, next) => {
   }
 };
 
+// we can move this inside handleuserevnets
+
 const genericActionCreater = (
   actionResponder,
-  actionReply,
-  userDetails,
+  dataFromServer,
+  asynFunc = false,
   failReply = "Some error occured !",
   ACTION = ""
-) => (config, cb) => {
-  // only passes userName
-  console.log(config);
-  console.log(`Got ${ACTION}`);
-  config.userName = userDetails.userName;
-  let data = failReply;
-  if (actionResponder(config)) {
-    console.log(`${ACTION} succesfull !`);
-    data = actionReply(userDetails.userName);
+) => (dataFromClient, cb) => {
+  // if user didnt pass anything
+  if (!dataFromClient) dataFromClient = {};
+  dataFromClient.userName = dataFromServer.socket.userDetails.userName;
+  let data;
+  if (!asynFunc) {
+    data = actionResponder(dataFromClient, dataFromServer) || failReply;
+    console.log(data);
+    if (cb) cb(data);
+  } else {
+    actionResponder(dataFromClient, dataFromServer)
+      .then((data) => {
+        console.log(data);
+        if (cb) cb(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        if (cb) cb(err.message);
+      });
   }
-  cb(data);
 };
 
 const handleUserEvents = (socket) => {
-  // auth middle ware will set this based on jwt payload
-  console.log(socket.userDetails.userName);
-  // ideal
-  // socket.on(
-  //   CREATE_ROOM,
-  //   genericActionCreater(
-  //     createRoom,
-  //     getRoomData,
-  //     "Could'nt create room !",
-  //     CREATE_ROOM
-  //   )
-  // );
-  // shorter
+  socket.on(CREATE_ROOM, genericActionCreater(createRoom, { socket }));
+  socket.on(JOIN_ROOM, genericActionCreater(joinRoom, { socket }));
+  socket.on(CREATE_TEAM, genericActionCreater(createTeam, { socket }));
+  socket.on(JOIN_TEAM, genericActionCreater(joinTeam, { socket }));
+  socket.on(CLOSE_ROOM, genericActionCreater(closeRoom, { socket }));
+  socket.on(SEND_MSG, genericActionCreater(forwardMsg, { socket }));
+  socket.on(LEAVE_TEAM, genericActionCreater(leaveTeam, { socket }));
+  socket.on(GET_ROOM, genericActionCreater(getRoomData, { socket }));
+  socket.on(VETO_VOTES, genericActionCreater(registerVotes, { socket }));
   socket.on(
-    CREATE_ROOM,
-    genericActionCreater(createRoom, getRoomData, socket.userDetails)
+    START_COMPETITION,
+    genericActionCreater(startCompetition, { socket }, true)
   );
-  socket.on(
-    JOIN_ROOM,
-    genericActionCreater(joinRoom, getRoomData, socket.userDetails)
-  );
-  socket.on(
-    CREATE_TEAM,
-    genericActionCreater(createTeam, getRoomData, socket.userDetails)
-  );
-  socket.on(
-    JOIN_TEAM,
-    genericActionCreater(joinTeam, getRoomData, socket.userDetails)
-  );
+  socket.on(CODE_SUBMISSION, genericActionCreater(codeSubmission, { socket }));
+  socket.on(ADD_PRIVATE_LIST, genericActionCreater(addPrivateList, { socket }));
+  socket.on("disconnect", () => {
+    // removeUser(socket.userDetails.userName);
+  });
+};
+
+const setQuestions = async () => {
+  // veto proceess here
 };
 
 module.exports = {

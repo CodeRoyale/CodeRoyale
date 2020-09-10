@@ -12,10 +12,31 @@ const JOIN_ROOM = "JOIN_ROOM";
 const CREATE_TEAM = "CREATE_TEAM";
 
 // user tries to join a room
-const JOIN_TEAM = "CREATE_TEAM";
+const JOIN_TEAM = "JOIN_TEAM";
 
 // user submits code
-const SUBMIT_CODE = "SUBMIT_CODE";
+const CODE_SUBMISSION = "CODE_SUBMISSION";
+
+// user starts the competition
+const START_COMPETITION = "START_COMPETITION";
+
+// user starts the competition
+const CLOSE_ROOM = "CLOSE_ROOM";
+
+// uesr can request for a room
+const GET_ROOM = "GET_ROOM";
+
+// leave team
+const LEAVE_TEAM = "LEAVE_TEAM";
+
+// send msg to team or room
+const SEND_MSG = "SEND_MSG";
+
+// add private list
+const ADD_PRIVATE_LIST = "ADD_PRIVATE_LIST";
+
+// client"s votes
+const VETO_VOTES = "VETO_VOTES";
 
 module.exports = {
   CONNECTION,
@@ -23,5 +44,12 @@ module.exports = {
   JOIN_ROOM,
   CREATE_TEAM,
   JOIN_TEAM,
-  SUBMIT_CODE,
+  CODE_SUBMISSION,
+  START_COMPETITION,
+  CLOSE_ROOM,
+  SEND_MSG,
+  LEAVE_TEAM,
+  GET_ROOM,
+  ADD_PRIVATE_LIST,
+  VETO_VOTES,
 };

@@ -3,10 +3,15 @@ const router = express.Router();
 
 const { getUserData } = require("../controllers/userController");
 
-router.get("/", (req, res) =>
+router.get("/", (req, res) => {
+  res.header("Content-Type", "application/json");
   res.send(
-    `CodeRoyae Lobby Server is up and running. ${JSON.stringify(getUserData())}`
-  )
-);
+    `CodeRoyale Lobby Server is up and running. ${JSON.stringify(
+      getUserData(),
+      null,
+      4
+    )}`
+  );
+});
 
 module.exports = router;
