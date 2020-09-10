@@ -5,7 +5,11 @@ import {
   VETO_QUESTIONS_LOADING,
   VETO_QUESTIONS_SUCCESS,
   VETO_QUESTIONS_FAIL,
+  VETO_USER_VOTED,
 } from './types';
+
+const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
+const QUES_API = `${process.env.REACT_APP_DEV_SERVER}/questions/getQById`;
 
 const vetoStartAdmin = () => {
   return {
@@ -47,27 +51,48 @@ const vetoStopServer = (data) => {
   };
 };
 
+const vetoUserVoted = (data) => {
+  return {
+    type: VETO_USER_VOTED,
+    payload: data,
+  };
+};
+
 export const veto = (socket) => (dispatch) => {
   dispatch(vetoStartAdmin());
-  socket.emit('START_COMPETITION', {}, (data) => {
-    if (!data.error) {
-      console.log('works err');
-      socket.on('VETO_START', (data) => {
-        console.log(data);
-        dispatch(vetoStartServer(data));
+  socket.emit('START_COMPETITION', {}, (data) => {});
+  socket.on('VETO_START', (data) => {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Origin', CLIENT_URL);
+    headers.append('Access-Control-Allow-Credentials', 'true');
+
+    const quesIds = {
+      id: data,
+    };
+
+    dispatch(vetoQuestionsLoading());
+    fetch(QUES_API, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(quesIds),
+    })
+      .then((res) => res.json())
+      .then((jsonRes) => {
+        dispatch(vetoQuestionsSuccess(jsonRes));
+      })
+      .catch((err) => {
+        dispatch(vetoQuestionsFail(err));
       });
-      socket.on('VETO_STOP', (data) => {
-        dispatch(vetoStopServer(data));
-        console.log(data);
-      });
-    } else {
-      console.log('error');
-    }
+    dispatch(vetoStartServer(data));
+  });
+  socket.on('VETO_STOP', (data) => {
+    dispatch(vetoStopServer(data));
   });
 };
 
 export const vetoVoting = (socket, votes) => (dispatch) => {
   socket.emit('VETO_VOTES', { votes }, (data) => {
-    console.log(data);
+    dispatch(vetoUserVoted(data));
   });
 };

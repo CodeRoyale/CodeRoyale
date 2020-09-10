@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Button from '../../components/button/Button';
 import { connect } from 'react-redux';
 import { veto } from '../../actions/vetoActions';
@@ -10,11 +10,9 @@ const StartCompetitionButton = (props) => {
     props.veto(props.socketData.socket);
   };
 
-  useEffect(() => {
-    if (props.vetoData.vetoStarted) {
-      return <Redirect to='/veto' />;
-    }
-  }, [props.vetoData.vetoStarted]);
+  if (props.vetoData.vetoStarted) {
+    return <Redirect to='/veto' />;
+  }
 
   let content = (
     <div className='start-competition-view'>
@@ -34,7 +32,7 @@ const StartCompetitionButton = (props) => {
   if (props.vetoData.vetoRequested) {
     content = (
       <div className='start-competition-view'>
-        <Loader size='md' content='Waiting for veto to start' />
+        <Loader size='md' content='Waiting for veto to start..' />
       </div>
     );
   }

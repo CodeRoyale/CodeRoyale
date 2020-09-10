@@ -2,14 +2,17 @@ import {
   VETO_START_ADMIN,
   VETO_START_SERVER,
   VETO_STOP_SERVER,
+  VETO_USER_VOTED,
   VETO_QUESTIONS_LOADING,
   VETO_QUESTIONS_SUCCESS,
   VETO_QUESTIONS_FAIL,
 } from '../actions/types';
 
 const initialState = {
+  quesApiLoading: false,
   vetoRequested: false,
   vetoStarted: false,
+  userVoted: false,
 };
 
 const vetoReducer = (state = initialState, action) => {
@@ -25,11 +28,34 @@ const vetoReducer = (state = initialState, action) => {
         vetoStarted: true,
         vetoQuestionIDs: action.payload,
       };
+    case VETO_QUESTIONS_LOADING:
+      return {
+        ...state,
+        quesApiLoading: true,
+      };
+    case VETO_QUESTIONS_SUCCESS:
+      return {
+        ...state,
+        quesApiLoading: false,
+        questions: action.payload,
+      };
+    case VETO_QUESTIONS_FAIL:
+      return {
+        ...state,
+        quesApiLoading: false,
+        error: action.payload,
+      };
+    case VETO_USER_VOTED:
+      return {
+        ...state,
+        userVoted: true,
+      };
     case VETO_STOP_SERVER:
       return {
         ...state,
         vetoStarted: false,
         resultQuestionsIDs: action.payload,
+        vetoEnded: true,
       };
     default:
       return state;

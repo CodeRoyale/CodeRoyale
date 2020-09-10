@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Navbar from '../../components/navBar/NavBar';
 import { Redirect } from 'react-router';
 import VetoBody from './VetoBody';
+import { Loader } from 'rsuite';
 import Button from '../../components/button/Button';
 import { connect } from 'react-redux';
-import { veto } from '../../actions/vetoActions';
+import { veto, vetoVoting } from '../../actions/vetoActions';
 import './VetoMain.css';
 
 const VetoMain = (props) => {
   const accessToken = localStorage.getItem('access-token');
-  const [questions, setQuestions] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
   const [vottedQuestions, setVottedQuestions] = useState([]);
-
-  useEffect(() => {
-    //props.veto(props.socketData.socket);
-  });
 
   // Checking if user is logged in
   if (accessToken === null) {
@@ -27,55 +22,76 @@ const VetoMain = (props) => {
     return <Redirect to='/lobby' />;
   }
 
+  if (props.vetoData.vetoEnded) {
+    return <Redirect to='/arena' />;
+  }
+
   const handleQuestionVoted = (data) => {
-    if (vottedQuestions.length < 3) {
+    if (
+      vottedQuestions.length < props.roomData.data.competition.veto.max_vote
+    ) {
       setVottedQuestions((oldVottedQuestions) => [...oldVottedQuestions, data]);
     } else {
-      alert('Only 3 questions allowed');
+      alert(`Only ${props.roomData.data.competition.veto.max_vote} is allowed`);
     }
   };
 
-  // const handleClick = () => {
-  //   console.log(vottedQuestions);
-  //   console.log(vottedQuestions.length);
-  //   socket.emit('VETO_VOTES', { votes: vottedQuestions }, (data) => {
-  //     console.log(data);
-  //   });
-  // };
+  const handleClick = () => {
+    props.vetoVoting(props.socketData.socket, vottedQuestions);
+  };
 
-  // Display confirm veto button only once loading is complete
-  // const displayConfirmVeto = () => {
-  //   if (!isLoading) {
-  //     return (
-  //       <div className='veto-confirm-vote-container'>
-  //         <Button
-  //           type='button'
-  //           buttonStyle='btn--primary--normal'
-  //           buttonSize='btn--medium'
-  //         >
-  //           Confirm Veto
-  //         </Button>
-  //       </div>
-  //     );
-  //   }
-  // };
-
-  return (
+  let content = (
     <div className='veto-page'>
       <Navbar />
       <VetoBody
-        isLoading={isLoading}
-        questions={questions}
+        isLoading={props.vetoData.quesApiLoading}
+        questions={props.vetoData.questions}
         getVotedQuestion={handleQuestionVoted}
       />
-      {/* {displayConfirmVeto()} */}
     </div>
   );
+
+  if (!props.vetoData.quesApiLoading) {
+    content = (
+      <div className='veto-page'>
+        <Navbar />
+        <VetoBody
+          isLoading={props.vetoData.quesApiLoading}
+          questions={props.vetoData.questions}
+          getVotedQuestion={handleQuestionVoted}
+        />
+        <div className='veto-confirm-vote-container'>
+          <Button
+            type='button'
+            buttonStyle='btn--primary--normal'
+            buttonSize='btn--medium'
+            onClick={handleClick}
+          >
+            Confirm Veto
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  if (props.vetoData.userVoted) {
+    content = (
+      <div className='veto-page'>
+        <Navbar />
+        <div className='veto-page-loading'>
+          <Loader size='md' content='Waiting for others to vote...' />
+        </div>
+      </div>
+    );
+  }
+
+  return content;
 };
 
 const mapStateToProps = (state) => ({
   vetoData: state.vetoData,
   socketData: state.socketData,
+  roomData: state.roomData,
 });
 
-export default connect(mapStateToProps, { veto })(VetoMain);
+export default connect(mapStateToProps, { veto, vetoVoting })(VetoMain);
