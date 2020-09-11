@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ArenaMain.css';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-java';
@@ -16,6 +16,7 @@ import 'ace-builds/src-noconflict/ext-language_tools';
 import Button from '../../components/button/Button';
 import { Popover, Whisper } from 'rsuite';
 import { Grid, Row, Col } from 'rsuite';
+import { Drawer } from 'rsuite';
 import { SettingFilled } from '@ant-design/icons';
 
 function Solution({ socket }) {
@@ -23,6 +24,9 @@ function Solution({ socket }) {
   const [ideFontSize, setFontSize] = useState('12');
   const [ideTheme, setTheme] = useState('terminal');
   const [ideCode, setCode] = useState('');
+  const [drawerStatus, showDrawer] = useState(false);
+
+  //const response= {"data":{"submissions":[{"language_id":70,"stdout":"YES\n","status_id":3,"stderr":null,"token":"8d787b3d-6f5b-457d-bc41-cc22b0e9b4a9"},{"language_id":70,"stdout":"NO\n","status_id":3,"stderr":null,"token":"6f92c14e-3294-4afc-84b0-937ba00b2726"},{"language_id":70,"stdout":"YES\n","status_id":3,"stderr":null,"token":"a7da4b63-31bf-495b-b2fc-73c9881c482b"},{"language_id":70,"stdout":"NO\n","status_id":3,"stderr":null,"token":"87b7c616-0197-4eb8-a536-f787870c34da"}]}}
 
   const testcases = [
     {
@@ -94,14 +98,21 @@ function Solution({ socket }) {
     // console.log(typeof ideCode);
     console.log(ideCode);
 
-    socket.emit(
-      'CODE_SUBMISSION',
-      { testcase: testcases, code: ideCode, langId: LanguageCode },
-      (data) => {
-        console.log(data);
-      }
-    );
+    // socket.emit(
+    //   'CODE_SUBMISSION',
+    //   { testcase: testcases, code: ideCode, langId: LanguageCode },
+    //   (data) => {
+    //     console.log(data);
+    //   }
+    // );
   };
+
+  useEffect(() => {
+    socket.on('CODE_SUBMITTED', (data) => {
+      console.log('code res:', data);
+      console.log(JSON.stringify(data));
+    });
+  }, [socket]);
 
   return (
     <div>
@@ -162,6 +173,45 @@ function Solution({ socket }) {
         >
           SUBMIT
         </Button>
+
+        <Button
+          type='button'
+          buttonStyle='btn--primary--normal'
+          buttonSize='btn--medium'
+          onClick={() => {
+            showDrawer(true);
+          }}
+        >
+          STATUS
+        </Button>
+      </div>
+
+      <div className='submissions-drawer'>
+        <Drawer
+          size='xs'
+          placement='right'
+          show={drawerStatus}
+          onHide={() => {
+            showDrawer(false);
+          }}
+        >
+          <Drawer.Header>
+            <Drawer.Title>Drawer Title</Drawer.Title>
+          </Drawer.Header>
+          <Drawer.Body>Status here</Drawer.Body>
+          <Drawer.Footer>
+            <Button
+              type='button'
+              buttonStyle='btn--primary--normal'
+              buttonSize='btn--medium'
+              onClick={() => {
+                showDrawer(false);
+              }}
+            >
+              Cancel
+            </Button>
+          </Drawer.Footer>
+        </Drawer>
       </div>
     </div>
   );
