@@ -4,10 +4,10 @@ import { ROOM_JOINED } from '../../utils/constants';
 import { mapStateToProps } from '../../utils/mapStateToProps';
 import { connect } from 'react-redux';
 import { joinRoom } from '../../actions/roomActions';
-import { Alert } from 'rsuite';
+import { Alert, Modal, Input } from 'rsuite';
 import Button from '../../components/button/Button';
 
-function JoinRoomView({ socketData, roomData, joinRoom }) {
+function JoinRoomView({ socketData, roomData, joinRoom, show, onClose }) {
   const [state, setState] = useState({
     joinButtonClicked: false,
     actionDone: false,
@@ -49,27 +49,35 @@ function JoinRoomView({ socketData, roomData, joinRoom }) {
   // Main Render...
   return (
     <div>
-      <div className='join-room-join-input-container'>
-        <input
-          type='text'
-          className='join-room-join-input'
-          onChange={(event) =>
-            setState({ ...state, joinInputValue: event.target.value })
-          }
-          value={joinInputValue}
-          placeholder='Enter Room ID...'
-        />
-      </div>
-      <div className='join-room-join-button-container'>
-        <Button
-          type='button'
-          onClick={() => setState({ ...state, joinButtonClicked: true })}
-          buttonStyle='btn--primary--normal'
-          buttonSize='btn--medium'
-        >
-          Join
-        </Button>
-      </div>
+      <Modal overflow={true} show={show} onHide={() => onClose(false)}>
+        <Modal.Header>
+          <Modal.Title>Join Room</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className='join-room-join-input-container'>
+            <Input
+              style={{ width: '250px' }}
+              onChange={(value) =>
+                setState({ ...state, joinInputValue: value })
+              }
+              value={joinInputValue}
+              placeholder='Enter Room ID...'
+            />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <div className='join-room-join-button-container'>
+            <Button
+              type='button'
+              onClick={() => setState({ ...state, joinButtonClicked: true })}
+              buttonStyle='btn--primary--normal'
+              buttonSize='btn--medium'
+            >
+              Join
+            </Button>
+          </div>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

@@ -2,28 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import './LobbyMain.css';
 import CreateRoomView from './CreateRoomView';
-// import JoinRoomView from './JoinRoomView';
+import JoinRoomView from './JoinRoomView';
 import { connectSocket } from '../../actions/socketActions';
 import Button from '../../components/button/Button';
 
 function ChooseRoomCard({ profileData, connectSocket, socketData }) {
   const [createRoomShow, setCreateRoomShow] = useState(false);
+  const [joinRoomShow, setJoinRoomShow] = useState(false);
 
   // Connect to socket...
   useEffect(() => {
     connectSocket();
   }, [connectSocket]);
-
-  // OnClickChoose...
-  if (socketData.error !== 'CONNECTION_DENY') {
-    //TODO: Create room and join room...
-  } else {
-    //TODO: Give Alert message here...
-  }
-
-  const onClickJoinRoom = () => {
-    console.log('Join room');
-  };
 
   // Main Render...
   return (
@@ -55,7 +45,7 @@ function ChooseRoomCard({ profileData, connectSocket, socketData }) {
           <div className='choose-join-room-button'>
             <Button
               type='button'
-              onClick={onClickJoinRoom}
+              onClick={() => setJoinRoomShow(true)}
               buttonStyle='btn--primary--normal'
               buttonSize='btn--medium'
             >
@@ -65,6 +55,7 @@ function ChooseRoomCard({ profileData, connectSocket, socketData }) {
         </div>
       </div>
       <CreateRoomView show={createRoomShow} onClose={setCreateRoomShow} />
+      <JoinRoomView show={joinRoomShow} onClose={setJoinRoomShow} />
     </div>
   );
 }
