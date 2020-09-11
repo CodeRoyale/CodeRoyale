@@ -81,7 +81,8 @@ function CreateRoomView({ roomData, socketData, createRoom, show, onClose }) {
   }
 
   const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  let times = [0.5, 1, 3, 6, 12, 24, 48];
+  let numberVotes = [];
+  const times = [0.5, 1, 3, 6, 12, 24, 48];
   for (let i = 0; i < numbers.length; i++) {
     const number = numbers[i];
     numbers[i] = { label: number, value: number };
@@ -97,6 +98,9 @@ function CreateRoomView({ roomData, socketData, createRoom, show, onClose }) {
           : (time / 24).toString() + ' Day',
       value: time * 60 * 60 * 60,
     };
+  }
+  for (let i = 1; i < veto_quesCount; i++) {
+    numberVotes.push({ label: i, value: i });
   }
   const DropdownNumbers = (title, data, key, value) => {
     return (
@@ -143,7 +147,7 @@ function CreateRoomView({ roomData, socketData, createRoom, show, onClose }) {
   );
   const maxVoteView = DropdownNumbers(
     'Maximum Votes',
-    numbers,
+    numberVotes,
     'max_vote',
     max_vote
   );
