@@ -321,7 +321,7 @@ const leaveTeam = ({ userName }, { socket }) => {
 const closeRoom = ({ userName }, { socket }) => {
   try {
     const { room_id } = getUser(userName);
-    if (rooms[room_id]) {
+    if (rooms[room_id] && rooms[room_id].config.admin === userName ) {
       // everyone from room bench
       let allMembers = rooms[room_id].state.bench;
       // from all teams
@@ -343,7 +343,7 @@ const closeRoom = ({ userName }, { socket }) => {
       socket.to(room_id).emit(ROOM_CLOSED, {
         data: { dataToEmit },
       });
-      socket.emit(CLOSE_ROOM);
+      socket.emit(ROOM_CLOSED);
       delete rooms[room_id];
       return true;
     }
