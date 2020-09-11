@@ -17,3 +17,7 @@ export const ROOM_UPDATED = 'ROOM_UPDATED';
 export const TEAM_JOINED = 'TEAM_JOINED';
 export const TEAM_LEFT = 'TEAM_LEFT';
 export const ROOM_CLOSED = 'ROOM_CLOSED';
+
+// result response...
+export const WON = 'WON';
+export const LOST = 'LOST';
