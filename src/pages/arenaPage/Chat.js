@@ -13,21 +13,12 @@ function Chat({ sendMsg, socket, chatData }) {
   const { message, sendMsgClick } = state;
   const messageList = chatData.msgList;
 
-  //const response= {"data":{"submissions":[{"language_id":70,"stdout":"YES\n","status_id":3,"stderr":null,"token":"8d787b3d-6f5b-457d-bc41-cc22b0e9b4a9"},{"language_id":70,"stdout":"NO\n","status_id":3,"stderr":null,"token":"6f92c14e-3294-4afc-84b0-937ba00b2726"},{"language_id":70,"stdout":"YES\n","status_id":3,"stderr":null,"token":"a7da4b63-31bf-495b-b2fc-73c9881c482b"},{"language_id":70,"stdout":"NO\n","status_id":3,"stderr":null,"token":"87b7c616-0197-4eb8-a536-f787870c34da"}]}}
-
-  // useEffect(() => {
-  //   if (sendMsgClick) {
-  //     sendMsg(socket, { message });
-  //     setState({ ...state, message: '', sendMsgClick: false });
-  //   }
-  // }, [socket, message, sendMsg, sendMsgClick, state]);
-
   useEffect(() => {
-    socket.on('CODE_SUBMITTED', (data) => {
-      console.log('code res:', data);
-      console.log(JSON.stringify(data));
-    });
-  }, [socket]);
+    if (sendMsgClick) {
+      sendMsg(socket, { message });
+      setState({ ...state, message: '', sendMsgClick: false });
+    }
+  }, [socket, message, sendMsg, sendMsgClick, state]);
 
   return (
     <div className='chat-body'>
