@@ -5,6 +5,7 @@ import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { createRoom } from '../../actions/roomActions';
 import { ROOM_CREATED } from '../../utils/constants';
+import { timeToString } from '../../utils/timeToString';
 import { mapStateToProps } from '../../utils/mapStateToProps';
 import { Alert, Modal, SelectPicker, Checkbox } from 'rsuite';
 import Divider from '../../components/divider/Divider';
@@ -35,6 +36,7 @@ function CreateRoomView({ roomData, socketData, createRoom, show, onClose }) {
     max_questions,
     max_vote,
     veto_quesCount,
+    timeLimit,
   } = team_data;
 
   // Create room...
@@ -80,28 +82,28 @@ function CreateRoomView({ roomData, socketData, createRoom, show, onClose }) {
     return <Redirect to='/room' />;
   }
 
+  // intitializations for menu...
   const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   let numberVotes = [];
   const times = [0.5, 1, 3, 6, 12, 24, 48];
+
   for (let i = 0; i < numbers.length; i++) {
     const number = numbers[i];
     numbers[i] = { label: number, value: number };
   }
+
   for (let i = 0; i < times.length; i++) {
     const time = times[i];
     times[i] = {
-      label:
-        time < 1
-          ? (time * 60).toString() + ' Minutes'
-          : time < 24
-          ? time.toString() + ' Hours'
-          : (time / 24).toString() + ' Day',
+      label: timeToString(time),
       value: time * 60 * 60 * 60,
     };
   }
+
   for (let i = 1; i < veto_quesCount; i++) {
     numberVotes.push({ label: i, value: i });
   }
+
   const DropdownNumbers = (title, data, key, value) => {
     return (
       <div className='create-room-drop-item'>
@@ -112,6 +114,11 @@ function CreateRoomView({ roomData, socketData, createRoom, show, onClose }) {
           placement='autoVerticalStart'
           searchable={false}
           placeholder={value}
+          preventOverflow
+          appearance='subtle'
+          onClean={() => {
+            setTeamData({ ...team_data });
+          }}
           onChange={(value) => {
             let newTeamData = { ...team_data };
             newTeamData[key] = value;
@@ -161,7 +168,7 @@ function CreateRoomView({ roomData, socketData, createRoom, show, onClose }) {
     'Time Limit',
     times,
     'timeLimit',
-    '30 Minutes'
+    timeToString(timeLimit / (60 * 60 * 60))
   );
   const privateRoomView = (
     <>
