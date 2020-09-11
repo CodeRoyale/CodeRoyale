@@ -117,7 +117,7 @@ const RoomMain = ({
       </div>
       <div className='room-body'>
         <div className='room-left-section'>
-          <CloseRoomView />
+          {userName === admin ? <CloseRoomView /> : null}
 
           <div className='room-copy-code'>
             <CopyRoomCodeView room_id={room_id} admin={admin} />
