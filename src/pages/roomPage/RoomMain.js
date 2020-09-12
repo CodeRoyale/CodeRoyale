@@ -16,13 +16,16 @@ import CloseRoomView from './CloseRoomView';
 import RoomChat from './RoomChat';
 import profileData from '../../utils/examples';
 import StartCompetitionButton from './StartCompetitionButton';
+import { vetoStart } from '../../actions/vetoActions';
 import Arena from './Arena';
 
 const RoomMain = ({
   teamData,
   roomData,
   socketData,
+  vetoData,
   getRoom,
+  vetoStart,
   resetTeamAction,
 }) => {
   // TODO: Have to implement, what happens if the user goes to create page again....
@@ -44,12 +47,16 @@ const RoomMain = ({
     }
   }
 
-  // Get room...
+  // Get room & check if veto started
   useEffect(() => {
     if (socket !== null && teamData.type !== '' && room_id !== undefined) {
       getRoom(socket, { room_id });
     }
-  }, [room_id, socket, getRoom, teamData.type]);
+
+    if (socket !== null) {
+      vetoStart(socket);
+    }
+  }, [room_id, socket, getRoom, vetoStart, teamData.type]);
 
   // Display Alert on every action...
   useEffect(() => {
@@ -81,6 +88,11 @@ const RoomMain = ({
   }
   if (accessToken === null) {
     return <Redirect to='/' />;
+  }
+
+  // If veto started then move to veto page...
+  if (vetoData.vetoStarted) {
+    return <Redirect to='/veto' />;
   }
 
   // Setting Team Cards...
@@ -135,7 +147,7 @@ const RoomMain = ({
             />
           </div>
           <div className='room-details-start-competitions-container'>
-            <StartCompetitionButton />
+            {userName === admin ? <StartCompetitionButton /> : null}
           </div>
           <div>
             <Arena />
@@ -152,4 +164,8 @@ const RoomMain = ({
   );
 };
 
-export default connect(mapStateToProps, { getRoom, resetTeamAction })(RoomMain);
+export default connect(mapStateToProps, {
+  getRoom,
+  vetoStart,
+  resetTeamAction,
+})(RoomMain);
