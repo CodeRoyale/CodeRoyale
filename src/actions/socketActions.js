@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 import profileData from '../utils/examples';
 import { chatSuccess, chatFailure } from './chatActions';
-
+import { roomSuccess, roomFailure } from './roomActions';
 import {
   SOCKET_LOADING,
   SOCKET_SUCCESS,
@@ -9,6 +9,7 @@ import {
   CONNECTION_ACK,
   CONNECTION_DENY,
 } from './types';
+import { ROOM_CLOSED } from '../utils/constants';
 const ENDPOINT = process.env.REACT_APP_LOBBY_SERVER;
 const userName = profileData.username;
 
@@ -66,6 +67,13 @@ export const connectSocket = () => {
         dispatch(chatFailure('No chat Came'));
       }
       console.log('chat data', data);
+    });
+    socket.on('ROOM_CLOSED', (data) => {
+      if (data !== null) {
+        dispatch(roomSuccess(null, ROOM_CLOSED));
+      } else {
+        dispatch(roomFailure(data));
+      }
     });
   };
 };
