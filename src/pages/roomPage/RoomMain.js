@@ -26,7 +26,6 @@ const RoomMain = ({
   vetoData,
   getRoom,
   vetoStart,
-  getRoom,
   resetTeamAction,
 }) => {
   // TODO: Have to implement, what happens if the user goes to create page again....
@@ -165,4 +164,8 @@ const RoomMain = ({
   );
 };
 
-export default connect(mapStateToProps, { getRoom, vetoStart, resetTeamAction })(RoomMain);
+export default connect(mapStateToProps, {
+  getRoom,
+  vetoStart,
+  resetTeamAction,
+})(RoomMain);
