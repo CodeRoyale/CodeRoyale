@@ -24,7 +24,6 @@ export const ROOM_FAIL = 'ROOM_FAIL';
 export const TEAM_LOADING = 'TEAM_LOADING';
 export const TEAM_SUCCESS = 'TEAM_SUCCESS';
 export const TEAM_FAIL = 'TEAM_FAIL';
-export const ACTION_RESET = 'ACTION_RESET';
 
 // Chat Actions
 export const CHAT_SUCCESS = 'CHAT_SUCCESS';
@@ -39,4 +38,6 @@ export const VETO_FAIL = 'VETO_FAIL';
 export const VETO_QUESTIONS_LOADING = 'VETO_QUESTIONS_LOADING';
 export const VETO_QUESTIONS_SUCCESS = 'VETO_QUESTIONS_SUCCESS';
 export const VETO_QUESTIONS_FAIL = 'VETO_QUESTIONS_FAIL';
-export const VETO_ACTION_RESET = 'VETO_ACTION_RESET';
+
+// Reset action
+export const ACTION_RESET = 'ACTION_RESET';

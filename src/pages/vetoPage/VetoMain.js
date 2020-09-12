@@ -54,7 +54,7 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
       <Navbar />
       <VetoBody
         isLoading={vetoData.quesApiLoading}
-        questions={vetoData.questions}
+        questions={vetoData.vetoQuestions}
         getVotedQuestion={handleQuestionVoted}
       />
     </div>
@@ -67,7 +67,7 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
         <Navbar />
         <VetoBody
           isLoading={vetoData.quesApiLoading}
-          questions={vetoData.questions}
+          questions={vetoData.vetoQuestions}
           getVotedQuestion={handleQuestionVoted}
         />
         <div className='veto-confirm-vote-container'>

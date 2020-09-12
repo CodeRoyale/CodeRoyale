@@ -39,7 +39,7 @@ const vetoReducer = (state = initialState, action) => {
       return {
         ...state,
         quesApiLoading: false,
-        questions: action.payload,
+        vetoQuestions: action.payload,
       };
     case VETO_QUESTIONS_FAIL:
       return {
@@ -56,7 +56,7 @@ const vetoReducer = (state = initialState, action) => {
       return {
         ...state,
         vetoStarted: false,
-        resultQuestionsIDs: action.payload,
+        contestQuestionIDs: action.payload,
         vetoEnded: true,
       };
     case VETO_FAIL:
