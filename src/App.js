@@ -14,6 +14,7 @@ import Testing from './pages/testPage/TestPage';
 import RoomMain from './pages/roomPage/RoomMain';
 import 'rsuite/lib/styles/index.less';
 import VetoMain from './pages/vetoPage/VetoMain';
+import WinLoseMain from './pages/winLosePage/WinLoseMain';
 import { Provider } from 'react-redux';
 import store from './store';
 
@@ -58,6 +59,12 @@ function App() {
               exact
               path='/lobby'
               component={LobbyMain}
+            />
+            <Route
+              data-testid='route-winLose'
+              exact
+              path='/results'
+              component={WinLoseMain}
             />
             <Route
               data-testid='route-room'

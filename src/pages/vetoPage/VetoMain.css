@@ -4,6 +4,13 @@
   height: 100%;
 }
 
+.veto-page-loading {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
 .veto-confirm-vote-container {
   display: flex;
   justify-content: center;
