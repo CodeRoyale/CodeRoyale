@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Whisper, Tooltip, Modal, Button } from 'rsuite';
+import { Whisper, Tooltip, Modal, Button, Alert } from 'rsuite';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../utils/mapStateToProps';
 import { ROOM_CLOSED } from '../../utils/constants';
@@ -7,8 +7,6 @@ import { closeRoom } from '../../actions/roomActions';
 import { Redirect } from 'react-router';
 
 function CloseRoomView({ roomData, socketData, closeRoom }) {
-  //TODO: Check if the room is closing by admin or not...
-
   const [showPrompt, setShowPrompt] = useState(false);
   const socket = socketData.socket;
   const [state, setState] = useState({
@@ -16,6 +14,7 @@ function CloseRoomView({ roomData, socketData, closeRoom }) {
     actionDone: false,
   });
   const { closeRoomClicked, actionDone } = state;
+  const [redirect, setRedirect] = useState(false);
 
   //Close Room...
   useEffect(() => {
@@ -25,12 +24,23 @@ function CloseRoomView({ roomData, socketData, closeRoom }) {
     }
   }, [closeRoomClicked, closeRoom, socket, state]);
 
-  if (actionDone) {
-    //TODO: Alert message here...
-    setState({ ...state, actionDone: false });
-  }
+  useEffect(() => {
+    if (actionDone && roomData.type === ROOM_CLOSED) {
+      setRedirect(true);
+    } else if (actionDone && roomData.error !== null && !roomData.loading) {
+      Alert.error(roomData.error);
+      setState({ ...state, actionDone: false });
+    }
+  }, [
+    setRedirect,
+    roomData.type,
+    roomData.error,
+    roomData.loading,
+    state,
+    actionDone,
+  ]);
 
-  if (roomData.type === ROOM_CLOSED) {
+  if (redirect) {
     return <Redirect to='/lobby' />;
   }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './DashboardMain.css';
 import Button from '../../components/button/Button';
 import NavBar from '../../components/navBar/NavBar';
@@ -6,14 +6,15 @@ import { Redirect } from 'react-router';
 
 const DashboardMain = () => {
   const accessToken = localStorage.getItem('access-token');
+  const [playButtonClicked, setPlayButtonClicked] = useState(false);
+
   if (accessToken === null) {
     return <Redirect to='/' />;
   }
 
-  // TODO: Redirect to lobbby
-  const lobbyRedirect = () => {
-    console.log('NEED TO FIX');
-  };
+  if (playButtonClicked) {
+    return <Redirect to='/lobby' />;
+  }
 
   return (
     <div className='dashboard'>
@@ -39,7 +40,7 @@ const DashboardMain = () => {
               <div className='dashboard-play-button'>
                 <Button
                   type='button'
-                  onClick={lobbyRedirect}
+                  onClick={() => setPlayButtonClicked(true)}
                   buttonStyle='btn--primary--normal'
                   buttonSize='btn--large'
                 >
@@ -58,7 +59,7 @@ const DashboardMain = () => {
               <div className='dashboard-play-button'>
                 <Button
                   type='button'
-                  onClick={lobbyRedirect}
+                  onClick={() => setPlayButtonClicked(true)}
                   buttonStyle='btn--primary--normal'
                   buttonSize='btn--large'
                 >

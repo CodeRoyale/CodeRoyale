@@ -3,22 +3,18 @@ import { Loader } from 'rsuite';
 import QuestionCard from '../../components/questionCard/QuestionCard';
 import './VetoMain.css';
 
-const VetoBody = (props) => {
+const VetoBody = ({ isLoading, questions, getVotedQuestion }) => {
+  let questionsArray = null;
   let questionCards = null;
-  const { isLoading, questions } = props;
-  const questionsArray = questions.message;
 
   // Send selected question in props
   const handleQuestionVoted = (value) => {
-    props.getVotedQuestion(value);
+    getVotedQuestion(value);
   };
 
-  // const sendVotes = () => {
-  //   socket.emit('VETO_VOTES')
-  // }
-
   // Mapping questions in QuestionCard
-  if (questionsArray !== undefined) {
+  if (questions !== undefined) {
+    questionsArray = questions.message;
     questionCards = questionsArray.map((item, index) => {
       return (
         <QuestionCard
@@ -41,6 +37,7 @@ const VetoBody = (props) => {
     </div>
   );
 
+  // Loading while fetching questions
   if (isLoading) {
     content = (
       <div className='veto-body-loading'>

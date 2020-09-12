@@ -1,22 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Button from '../../components/button/Button';
-import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
+import { veto, resetVetoAction } from '../../actions/vetoActions';
+import { Loader, Alert } from 'rsuite';
 
-function StartCompetitionButton({ socket }) {
-  const [startCompClicked, setStartCompClicked] = useState(false);
+const StartCompetitionButton = ({
+  socketData,
+  vetoData,
+  veto,
+  resetVetoAction,
+}) => {
+  const socket = socketData.socket;
+
   const onClickStartCompetition = () => {
-    setStartCompClicked(true);
+    veto(socket);
   };
 
-  if (startCompClicked) {
-    return <Redirect to={{ pathname: '/veto', props: { socket: socket } }} />;
-  }
+  // To show alerts for errors
+  useEffect(() => {
+    if (vetoData.type === 'VETO_FAIL') {
+      Alert.error(vetoData.error);
+      resetVetoAction();
+    }
+  }, [vetoData.type, vetoData.error, resetVetoAction]);
 
-  return (
+  let content = (
     <div className='start-competition-view'>
-      <div className='start-competition-view-text'>
-        <b>Start Competition</b>
-      </div>
       <div className='start-competition-view-button'>
         <Button
           type='button'
@@ -24,11 +33,29 @@ function StartCompetitionButton({ socket }) {
           buttonStyle='btn--primary--normal'
           buttonSize='btn--medium'
         >
-          Start
+          Start Competition
         </Button>
       </div>
     </div>
   );
-}
 
-export default StartCompetitionButton;
+  // Show loading if veto is requested by admin
+  if (vetoData.vetoRequested) {
+    content = (
+      <div className='start-competition-view'>
+        <Loader size='md' content='Waiting for veto to start..' />
+      </div>
+    );
+  }
+
+  return content;
+};
+
+const mapStateToProps = (state) => ({
+  socketData: state.socketData,
+  vetoData: state.vetoData,
+});
+
+export default connect(mapStateToProps, { veto, resetVetoAction })(
+  StartCompetitionButton
+);

@@ -1,92 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { InputGroup, Input, Icon } from 'rsuite';
-//import ChatMessageDisplay from '../../components/chatMessageDisplay/ChatMessageDisplay';
-// import Divider from '../../components/divider/Divider';
+import { connect } from 'react-redux';
+import { mapStateToProps } from '../../utils/mapStateToProps';
+import { sendMsg } from '../../actions/chatActions';
 
-function RoomChat({ socket }) {
+function RoomChat({ socketData, chatData, sendMsg }) {
+  const socket = socketData.socket;
+  const messageList = chatData.msgList;
+  const messagesEndRef = useRef(null);
   const [state, setState] = useState({
     inputChat: '',
+    sendClicked: false,
   });
-  const messagesEndRef = useRef(null);
-  const { inputChat } = state;
-  let messages = null;
+  const { inputChat, sendClicked } = state;
 
-  // Sample...
-  const messageList = [
-    { id: 0, source: 'You', message: 'hii', color: 'green' },
-    {
-      id: 1,
-      source: 'Mayur',
-      message: 'hello, How are you ? ',
-      color: 'green',
-    },
-    {
-      id: 2,
-      source: 'Anugya',
-      message: 'I am fine.',
-      color: 'green',
-    },
-    {
-      id: 3,
-      source: 'You',
-      message: 'Wow... Nice !!!',
-      color: 'green',
-    },
-  ];
-
-  // // Receiving Message...
-  // useEffect(() => {
-  //   if (socket !== null) {
-  //     socket.on('RCV_MSG', (data) => {
-  //       if (data !== null) {
-  //         let message = {
-  //           id: messageList.length,
-  //           source: data.userName,
-  //           message: data.content,
-  //           color: 'red',
-  //         };
-  //         const newList = state.messageList.concat(message);
-  //         setState({
-  //           ...state,
-  //           messageList: newList,
-  //           sendClicked: false,
-  //           msgReceivedListener: true,
-  //         });
-  //       }
-  //     });
-  //   }
-  // });
-
-  // // Sending message....
-  // useEffect(() => {
-  //   if (sendClicked && inputChat !== '' && socket !== null) {
-  //     socket.emit('SEND_MSG', { content: inputChat }, (data) => {
-  //       if (data) {
-  //         let message = {
-  //           id: messageList.length,
-  //           source: 'You',
-  //           message: inputChat,
-  //           color: 'green',
-  //         };
-  //         const newList = messageList.concat(message);
-  //         setState({
-  //           ...state,
-  //           sendClicked: false,
-  //           inputChat: '',
-  //           messageList: newList,
-  //         });
-  //       }
-  //     });
-  //   }
-  // });
-
-  // Making scrollbar to point to latest message....
   useEffect(() => {
-    if (messageList.length > 0)
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-  }, [messageList, messagesEndRef]);
+    const message = inputChat;
+    if (sendClicked) {
+      sendMsg(socket, { message });
+      setState({ ...state, inputChat: '', sendClicked: false });
+    }
+  }, [inputChat, sendClicked, sendMsg, socket, state]);
 
+  // Display chats...
+  let messages = null;
   if (messageList.length > 0) {
+    // messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     messages = (
       <div>
         {messageList.map((data) => (
@@ -134,4 +73,4 @@ function RoomChat({ socket }) {
   );
 }
 
-export default RoomChat;
+export default connect(mapStateToProps, { sendMsg })(RoomChat);

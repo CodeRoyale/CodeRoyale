@@ -1,8 +1,3 @@
-:root {
-  --share-card-body-width-left: 40%;
-  --share-card-copy-button-width: 250px;
-}
-
 .lobby {
   margin: auto;
   height: 100%;
@@ -16,103 +11,75 @@
   align-items: center;
 }
 
-/*ShareLinkCard.css*/
-.share-link-card {
-  width: 470px;
+/*ChooseRoomCard.css*/
+.choose-room {
+  width: 500px;
   height: 280px;
-  background-color: white;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 3px 0 rgba(0, 0, 0, 0.19);
+  background: white;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
-  align-items: center;
 }
-.share-link-card-body {
-  height: 200px;
-  width: 400px;
-}
-.share-link-card-body-left {
-  float: left;
-  height: 100%;
-  width: var(--share-card-body-width-left);
+.choose-room-left {
+  width: 50%;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
-
-.share-link-card-image-container {
+.choose-room-user-details {
   text-align: center;
 }
-
-.share-link-card-image {
-  height: 90px;
-  width: 90px;
-  border-radius: 50%;
-}
-.share-link-card-username {
-  text-align: center;
+.choose-room-image {
   width: 100px;
-  font-size: 17px;
+  height: 100px;
+  border-radius: 50px;
+  margin: 10px;
 }
-.share-link-card-body-right {
-  float: left;
-  height: 100%;
-  width: calc(100% - var(--share-card-body-width-left));
+.choose-room-username {
+  font-size: medium;
+}
+.choose-room-right {
+  width: 50%;
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 5px;
+  justify-items: center;
 }
-
-/*ChooseRoomView.css*/
 .choose-create-room-button {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-
 .choose-join-room-button {
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
 /*CreateRoomView.css*/
-.create-room-text-heading {
-  text-align: center;
-}
-.create-room-link {
-  background-color: rgba(128, 128, 128, 0.445);
-  width: var(--share-card-copy-button-width);
-  height: 30px;
-  margin-top: 10px;
+.create-room {
   display: flex;
-  justify-content: center;
-  align-items: center;
 }
-.create-room-button-container {
-  text-align: center;
-  margin-top: 10px;
+.create-room-drop-item {
+  margin-bottom: 10px;
+  padding-left: 8px;
+}
+.create-room-left {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.create-room-right {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /*JoinRoomView.css*/
 .join-room-join-input-container {
-  margin-top: 10px;
-}
-
-.join-room-join-input {
-  border: solid black 1px;
-  height: 27px;
-  width: 230px;
-  border-radius: 2px;
-  background-color: whitesmoke;
-  border-color: gray;
-  font-size: medium;
-  padding: 5px;
-  margin-top: 7px;
-}
-.join-room-join-input:focus {
-  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .join-room-join-button-container {
   text-align: center;
-  margin-top: 10px;
 }

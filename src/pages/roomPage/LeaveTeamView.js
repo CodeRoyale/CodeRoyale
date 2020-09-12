@@ -7,22 +7,16 @@ function LeaveTeamView({ socketData, leaveTeam }) {
   const socket = socketData.socket;
   const [state, setState] = useState({
     leaveTeamClicked: false,
-    actionDone: false,
   });
-  const { leaveTeamClicked, actionDone } = state;
+  const { leaveTeamClicked } = state;
 
   // Leave Team...
   useEffect(() => {
     if (leaveTeamClicked) {
       leaveTeam(socket);
-      setState({ ...state, leaveTeamClicked: false, actionDone: true });
+      setState({ ...state, leaveTeamClicked: false });
     }
   }, [leaveTeamClicked, state, socket, leaveTeam]);
-
-  if (actionDone) {
-    //TODO: Alert message here...
-    setState({ ...state, actionDone: false });
-  }
 
   return (
     <div>
