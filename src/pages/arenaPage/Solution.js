@@ -25,6 +25,7 @@ function Solution({ socket }) {
   const [ideTheme, setTheme] = useState('terminal');
   const [ideCode, setCode] = useState('');
   const [drawerStatus, showDrawer] = useState(false);
+  const [languageID, setLanID] = useState(53);
 
   const response = {
     data: {
@@ -79,8 +80,6 @@ function Solution({ socket }) {
       output: 'NO',
     },
   ];
-
-  const LanguageCode = 70;
 
   const settings_popup_content = (
     <div className='ide-options-popup'>
@@ -146,6 +145,19 @@ function Solution({ socket }) {
       console.log(JSON.stringify(data));
     });
   }, [socket]);
+
+  useEffect(() => {
+    //should vary according to language selected c++=53, java=62, python 3.8=71
+    if (ideLanguage === 'c_cpp') {
+      setLanID(53);
+    } else if (ideLanguage === 'java') {
+      setLanID(62);
+    } else if (ideLanguage === 'python') {
+      setLanID(71);
+    }
+
+    console.log(languageID);
+  }, [ideLanguage, languageID]);
 
   return (
     <div>
