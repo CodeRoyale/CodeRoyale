@@ -4,6 +4,9 @@ import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../utils/mapStateToProps';
 import { getRoom } from '../../actions/roomActions';
+import { resetTeamAction } from '../../actions/teamActions';
+import { Alert } from 'rsuite';
+import { TEAM_CREATED, TEAM_JOINED, TEAM_LEFT } from '../../utils/constants';
 import NavBar from '../../components/navBar/NavBar';
 import CreateTeamView from './CreateTeamView';
 import TeamCard from './TeamCard';
@@ -23,6 +26,8 @@ const RoomMain = ({
   vetoData,
   getRoom,
   vetoStart,
+  getRoom,
+  resetTeamAction,
 }) => {
   // TODO: Have to implement, what happens if the user goes to create page again....
 
@@ -45,7 +50,7 @@ const RoomMain = ({
 
   // Get room & check if veto started
   useEffect(() => {
-    if (socket !== null && room_id !== undefined) {
+    if (socket !== null && teamData.type !== '' && room_id !== undefined) {
       getRoom(socket, { room_id });
     }
 
@@ -53,6 +58,30 @@ const RoomMain = ({
       vetoStart(socket);
     }
   }, [room_id, socket, getRoom, vetoStart, teamData.type]);
+
+  // Display Alert on every action...
+  useEffect(() => {
+    switch (teamData.type) {
+      case TEAM_CREATED:
+        Alert.success('Team Created');
+        resetTeamAction();
+        break;
+      case TEAM_JOINED:
+        Alert.success('You have joined a team');
+        resetTeamAction();
+        break;
+      case TEAM_LEFT:
+        Alert.success('You have left a team');
+        resetTeamAction();
+        break;
+      default:
+        break;
+    }
+    if (teamData.error !== null) {
+      Alert.error(teamData.error);
+      resetTeamAction();
+    }
+  });
 
   // Checking all the conditions to be in the room...
   if (socket === null) {
@@ -101,7 +130,7 @@ const RoomMain = ({
       </div>
       <div className='room-body'>
         <div className='room-left-section'>
-          <CloseRoomView />
+          {userName === admin ? <CloseRoomView /> : null}
 
           <div className='room-copy-code'>
             <CopyRoomCodeView room_id={room_id} admin={admin} />
@@ -136,4 +165,4 @@ const RoomMain = ({
   );
 };
 
-export default connect(mapStateToProps, { getRoom, vetoStart })(RoomMain);
+export default connect(mapStateToProps, { getRoom, vetoStart, resetTeamAction })(RoomMain);

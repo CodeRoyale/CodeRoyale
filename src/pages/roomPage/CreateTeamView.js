@@ -4,13 +4,12 @@ import { createTeam } from '../../actions/teamActions';
 import { mapStateToProps } from '../../utils/mapStateToProps';
 import { connect } from 'react-redux';
 
-function CreateTeamView({ socketData, createTeam, teamData }) {
+function CreateTeamView({ socketData, createTeam }) {
   const [state, setState] = useState({
     team_name: '',
     createTeamClicked: false,
-    actionDone: false,
   });
-  const { team_name, createTeamClicked, actionDone } = state;
+  const { team_name, createTeamClicked } = state;
   const socket = socketData.socket;
 
   //Create Team...
@@ -20,19 +19,10 @@ function CreateTeamView({ socketData, createTeam, teamData }) {
       setState({
         ...state,
         team_name: '',
-        actionDone: true,
         createTeamClicked: false,
       });
     }
   }, [createTeamClicked, setState, state, socket, team_name, createTeam]);
-
-  // Alert Message...
-  useEffect(() => {
-    console.log('hello');
-    if (actionDone) {
-      //TODO: Put alert messages here according to data...
-    }
-  }, [actionDone]);
 
   // onClick button...
   const onClickCreateButton = () => {

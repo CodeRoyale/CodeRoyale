@@ -1,4 +1,4 @@
-import { TEAM_LOADING, TEAM_SUCCESS, TEAM_FAIL } from './types';
+import { TEAM_LOADING, TEAM_SUCCESS, TEAM_FAIL, ACTION_RESET } from './types';
 import {
   ERROR_MSG,
   TEAM_CREATED,
@@ -15,14 +15,21 @@ const teamSuccess = (data, action) => {
   return {
     type: TEAM_SUCCESS,
     payload: data,
-    action,
+    action: action,
   };
 };
 
-const teamFailure = (error) => {
+const teamFailure = (error, action) => {
   return {
     type: TEAM_FAIL,
     payload: error,
+  };
+};
+
+export const resetTeamAction = () => {
+  return {
+    type: ACTION_RESET,
+    action: '',
   };
 };
 
