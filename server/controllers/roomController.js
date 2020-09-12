@@ -321,7 +321,7 @@ const leaveTeam = ({ userName }, { socket }) => {
 const closeRoom = ({ userName }, { socket }) => {
   try {
     const { room_id } = getUser(userName);
-    if (rooms[room_id] && rooms[room_id].config.admin === userName ) {
+    if (rooms[room_id] && rooms[room_id].config.admin === userName) {
       // everyone from room bench
       let allMembers = rooms[room_id].state.bench;
       // from all teams
@@ -520,6 +520,9 @@ const startCompetition = async ({ userName }, { socket }) => {
     // start competition now
     rooms[room_id].competition.contestOn = true;
     rooms[room_id].competition.contestStartedAt = Date.now();
+    Object.keys(rooms[room_id].teams).forEach((ele) => {
+      rooms[room_id].competition.scoreboard[ele] = [];
+    });
     socket.to(room_id).emit(COMPETITION_STARTED, rooms[room_id].competition);
     socket.emit(COMPETITION_STARTED, rooms[room_id].competition);
 
@@ -565,7 +568,10 @@ const getRoomsData = () => {
   }
 };
 
-const codeSubmission = ({ userName, testcase, code, langId }, { socket }) => {
+const codeSubmission = (
+  { userName, testcase, code, langId, quest_id },
+  { socket }
+) => {
   try {
     const { room_id, team_name } = getUser(userName);
     if (
@@ -577,6 +583,12 @@ const codeSubmission = ({ userName, testcase, code, langId }, { socket }) => {
     ) {
       submitCode(testcase, code, langId, (dataFromSubmitCode) => {
         console.log(dataFromSubmitCode);
+        // 1. create server action succesful
+        // 2. if(code barabar submit hua ki nai)
+        // 3. scorebord privateList.forEach((ele) => {
+        // if (!room.state.privateList.includes(ele)) {
+
+        // socket.emit server action succesful
         socket.emit(CODE_SUBMITTED, {
           data: dataFromSubmitCode,
         });
