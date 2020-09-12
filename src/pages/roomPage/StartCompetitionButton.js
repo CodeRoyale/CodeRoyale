@@ -1,15 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from '../../components/button/Button';
 import { connect } from 'react-redux';
-import { veto } from '../../actions/vetoActions';
-import { Loader } from 'rsuite';
+import { veto, resetVetoAction } from '../../actions/vetoActions';
+import { Loader, Alert } from 'rsuite';
 
-const StartCompetitionButton = ({ socketData, vetoData, veto }) => {
+const StartCompetitionButton = ({
+  socketData,
+  vetoData,
+  veto,
+  resetVetoAction,
+}) => {
   const socket = socketData.socket;
 
   const onClickStartCompetition = () => {
     veto(socket);
   };
+
+  // To show alerts for errors
+  useEffect(() => {
+    if (vetoData.type === 'VETO_FAIL') {
+      Alert.error(vetoData.error);
+      resetVetoAction();
+    }
+  }, [vetoData.type, vetoData.error, resetVetoAction]);
 
   let content = (
     <div className='start-competition-view'>
@@ -26,6 +39,7 @@ const StartCompetitionButton = ({ socketData, vetoData, veto }) => {
     </div>
   );
 
+  // Show loading if veto is requested by admin
   if (vetoData.vetoRequested) {
     content = (
       <div className='start-competition-view'>
@@ -42,4 +56,6 @@ const mapStateToProps = (state) => ({
   vetoData: state.vetoData,
 });
 
-export default connect(mapStateToProps, { veto })(StartCompetitionButton);
+export default connect(mapStateToProps, { veto, resetVetoAction })(
+  StartCompetitionButton
+);

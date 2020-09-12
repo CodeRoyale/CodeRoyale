@@ -6,6 +6,8 @@ import {
   VETO_QUESTIONS_SUCCESS,
   VETO_QUESTIONS_FAIL,
   VETO_USER_VOTED,
+  VETO_FAIL,
+  ACTION_RESET,
 } from './types';
 
 const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
@@ -58,9 +60,26 @@ const vetoUserVoted = (data) => {
   };
 };
 
+const vetoFail = (err) => {
+  return {
+    type: VETO_FAIL,
+    payload: err,
+  };
+};
+
+export const resetVetoAction = () => {
+  return {
+    type: ACTION_RESET,
+  };
+};
+
 export const veto = (socket) => (dispatch) => {
   dispatch(vetoStartAdmin());
-  socket.emit('START_COMPETITION', {}, (data) => {});
+  socket.emit('START_COMPETITION', {}, (data) => {
+    if (data.error !== undefined) {
+      dispatch(vetoFail(data.error));
+    }
+  });
 
   dispatch(vetoStart(socket));
 

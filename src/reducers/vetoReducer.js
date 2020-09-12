@@ -6,6 +6,8 @@ import {
   VETO_QUESTIONS_LOADING,
   VETO_QUESTIONS_SUCCESS,
   VETO_QUESTIONS_FAIL,
+  VETO_FAIL,
+  ACTION_RESET,
 } from '../actions/types';
 
 const initialState = {
@@ -56,6 +58,21 @@ const vetoReducer = (state = initialState, action) => {
         vetoStarted: false,
         resultQuestionsIDs: action.payload,
         vetoEnded: true,
+      };
+    case VETO_FAIL:
+      return {
+        ...state,
+        vetoRequested: false,
+        vetoStarted: false,
+        userVoted: false,
+        type: action.type,
+        error: action.payload,
+      };
+    case ACTION_RESET:
+      return {
+        ...state,
+        type: action.type,
+        error: '',
       };
     default:
       return state;

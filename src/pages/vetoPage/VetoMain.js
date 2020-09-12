@@ -13,6 +13,7 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
   const [vottedQuestions, setVottedQuestions] = useState([]);
   const socket = socketData.socket;
 
+  // To check if veto has ended
   useEffect(() => {
     if (socket !== null) {
       vetoStop(socket);
@@ -24,7 +25,7 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
     return <Redirect to='/' />;
   }
 
-  // // Checking if the socket and room_id are not null...
+  // Checking if the socket is null
   if (socket === null) {
     return <Redirect to='/lobby' />;
   }
@@ -33,6 +34,7 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
     return <Redirect to='/arena' />;
   }
 
+  // Allow only set number of votes
   const handleQuestionVoted = (data) => {
     if (vottedQuestions.length < roomData.data.competition.veto.max_vote) {
       setVottedQuestions((oldVottedQuestions) => [...oldVottedQuestions, data]);
@@ -41,10 +43,12 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
     }
   };
 
-  const handleClick = () => {
+  // Send votes to server
+  const handleVotesConfirm = () => {
     vetoVoting(socket, vottedQuestions);
   };
 
+  // Default content
   let content = (
     <div className='veto-page'>
       <Navbar />
@@ -56,6 +60,7 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
     </div>
   );
 
+  // Loading while fetching questions
   if (!vetoData.quesApiLoading) {
     content = (
       <div className='veto-page'>
@@ -70,7 +75,7 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
             type='button'
             buttonStyle='btn--primary--normal'
             buttonSize='btn--medium'
-            onClick={handleClick}
+            onClick={handleVotesConfirm}
           >
             Confirm Veto
           </Button>
@@ -79,6 +84,7 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
     );
   }
 
+  // Loading after user voted
   if (vetoData.userVoted) {
     content = (
       <div className='veto-page'>

@@ -37,6 +37,7 @@ const VetoBody = ({ isLoading, questions, getVotedQuestion }) => {
     </div>
   );
 
+  // Loading while fetching questions
   if (isLoading) {
     content = (
       <div className='veto-body-loading'>
