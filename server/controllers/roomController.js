@@ -20,6 +20,7 @@ const {
   COMPETITION_STOPPED,
   ROOM_CLOSED,
   CODE_SUBMITTED,
+  SUCCESSFULLY_SUBMITTED,
 } = require("../socketActions/serverActions");
 
 const { io } = require("../server");
@@ -511,7 +512,7 @@ const startCompetition = async ({ userName }, { socket }) => {
     ) {
       throw new Error("Room does not meet requirements");
     }
-
+    console.log("LOL")
     console.log("Starting competition", userName);
     // start veto now and wait for it to end
     const allQuestions = await getQuestions(room.competition.veto.quesCount);
@@ -520,9 +521,15 @@ const startCompetition = async ({ userName }, { socket }) => {
     // start competition now
     rooms[room_id].competition.contestOn = true;
     rooms[room_id].competition.contestStartedAt = Date.now();
+    console.log('LOL1')
     Object.keys(rooms[room_id].teams).forEach((ele) => {
       rooms[room_id].competition.scoreboard[ele] = [];
     });
+    console.log('LOL2');
+    console.log(rooms[room_id]);
+    console.log(rooms[room_id].competition);
+    console.log(rooms[room_id].competition.scoreboard);
+     
     socket.to(room_id).emit(COMPETITION_STARTED, rooms[room_id].competition);
     socket.emit(COMPETITION_STARTED, rooms[room_id].competition);
 
@@ -584,11 +591,32 @@ const codeSubmission = (
       submitCode(testcase, code, langId, (dataFromSubmitCode) => {
         console.log(dataFromSubmitCode);
         // 1. create server action succesful
+        
+        const c = 0;
+        for (i of dataFromSubmitCode) {
+          if(i.status_id === 3)
+          c = c+1;
+        }
+
+        if(c===dataFromSubmitCode.length)
+        {
+          if(!rooms[room_id].competition.scoreboard[team_name].includes(quest_id)) {
+            rooms[room_id].competition.scoreboard[team_name].push(quest_id);
+          }
+        }        
+        
         // 2. if(code barabar submit hua ki nai)
         // 3. scorebord privateList.forEach((ele) => {
         // if (!room.state.privateList.includes(ele)) {
 
         // socket.emit server action succesful
+
+        const dataToEmit = `Code Successfully submitted by the team : ${team_name}`;
+        socket.to(room_id).emit(SUCCESSFULLY_SUBMITTED, {
+          data: { dataToEmit },
+        });
+        socket.emit(SUCCESSFULLY_SUBMITTED);
+
         socket.emit(CODE_SUBMITTED, {
           data: dataFromSubmitCode,
         });
