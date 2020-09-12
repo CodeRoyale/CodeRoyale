@@ -87,7 +87,7 @@ const createRoom = (config, { socket }) => {
             voted: [],
             vetoOngoing: false,
             max_vote: config.max_vote || 1,
-            timeLimit: config.veto_timeLimit || 300000,
+            timeLimit: config.veto_timeLimit || 30000,
             quesCount: config.veto_quesCount || 10,
           },
           scoreboard: {},
@@ -512,7 +512,7 @@ const startCompetition = async ({ userName }, { socket }) => {
     ) {
       throw new Error("Room does not meet requirements");
     }
-    console.log("LOL")
+  
     console.log("Starting competition", userName);
     // start veto now and wait for it to end
     const allQuestions = await getQuestions(room.competition.veto.quesCount);
@@ -521,15 +521,10 @@ const startCompetition = async ({ userName }, { socket }) => {
     // start competition now
     rooms[room_id].competition.contestOn = true;
     rooms[room_id].competition.contestStartedAt = Date.now();
-    console.log('LOL1')
     Object.keys(rooms[room_id].teams).forEach((ele) => {
       rooms[room_id].competition.scoreboard[ele] = [];
     });
-    console.log('LOL2');
-    console.log(rooms[room_id]);
-    console.log(rooms[room_id].competition);
-    console.log(rooms[room_id].competition.scoreboard);
-     
+  
     socket.to(room_id).emit(COMPETITION_STARTED, rooms[room_id].competition);
     socket.emit(COMPETITION_STARTED, rooms[room_id].competition);
 
@@ -588,29 +583,23 @@ const codeSubmission = (
       testcase !== null &&
       langId !== null
     ) {
+    
       submitCode(testcase, code, langId, (dataFromSubmitCode) => {
-        console.log(dataFromSubmitCode);
-        // 1. create server action succesful
-        
-        const c = 0;
-        for (i of dataFromSubmitCode) {
-          if(i.status_id === 3)
-          c = c+1;
+      console.log(dataFromSubmitCode)
+    
+      let count = 0;
+      for(i=0;i<dataFromSubmitCode.data.submissions.length;i++)
+      {
+        if(dataFromSubmitCode.data.submissions[i].status_id === 3);
+        count = count+1;
+      }
+
+      if(count===dataFromSubmitCode.data.submissions.length) // Checking if the no of testcases passed is equal to the no of testcases in the question
+      {
+        if(!rooms[room_id].competition.scoreboard[team_name].includes(quest_id)) {
+          rooms[room_id].competition.scoreboard[team_name].push(quest_id);
         }
-
-        if(c===dataFromSubmitCode.length)
-        {
-          if(!rooms[room_id].competition.scoreboard[team_name].includes(quest_id)) {
-            rooms[room_id].competition.scoreboard[team_name].push(quest_id);
-          }
-        }        
-        
-        // 2. if(code barabar submit hua ki nai)
-        // 3. scorebord privateList.forEach((ele) => {
-        // if (!room.state.privateList.includes(ele)) {
-
-        // socket.emit server action succesful
-
+      }        
         const dataToEmit = `Code Successfully submitted by the team : ${team_name}`;
         socket.to(room_id).emit(SUCCESSFULLY_SUBMITTED, {
           data: { dataToEmit },
@@ -625,9 +614,11 @@ const codeSubmission = (
     } else {
       return false;
     }
-  } catch (err) {
+  
+} catch (err) {
     return { error: err.message };
   }
+
 };
 
 module.exports = {
