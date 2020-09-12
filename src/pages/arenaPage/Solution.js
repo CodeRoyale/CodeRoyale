@@ -27,6 +27,8 @@ function Solution({ socket }) {
   const [drawerStatus, showDrawer] = useState(false);
   const [languageID, setLanID] = useState(53);
 
+  const LanguageCode = 70;
+
   const response = {
     data: {
       submissions: [
@@ -130,13 +132,13 @@ function Solution({ socket }) {
     // console.log(typeof ideCode);
     console.log(ideCode);
 
-    // socket.emit(
-    //   'CODE_SUBMISSION',
-    //   { testcase: testcases, code: ideCode, langId: LanguageCode },
-    //   (data) => {
-    //     console.log(data);
-    //   }
-    // );
+    socket.emit(
+      'CODE_SUBMISSION',
+      { testcase: testcases, code: ideCode, langId: LanguageCode },
+      (data) => {
+        console.log(data);
+      }
+    );
   };
 
   useEffect(() => {
