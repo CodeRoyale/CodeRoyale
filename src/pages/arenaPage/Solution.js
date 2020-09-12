@@ -26,7 +26,40 @@ function Solution({ socket }) {
   const [ideCode, setCode] = useState('');
   const [drawerStatus, showDrawer] = useState(false);
 
-  //const response= {"data":{"submissions":[{"language_id":70,"stdout":"YES\n","status_id":3,"stderr":null,"token":"8d787b3d-6f5b-457d-bc41-cc22b0e9b4a9"},{"language_id":70,"stdout":"NO\n","status_id":3,"stderr":null,"token":"6f92c14e-3294-4afc-84b0-937ba00b2726"},{"language_id":70,"stdout":"YES\n","status_id":3,"stderr":null,"token":"a7da4b63-31bf-495b-b2fc-73c9881c482b"},{"language_id":70,"stdout":"NO\n","status_id":3,"stderr":null,"token":"87b7c616-0197-4eb8-a536-f787870c34da"}]}}
+  const response = {
+    data: {
+      submissions: [
+        {
+          language_id: 70,
+          stdout: 'YES\n',
+          status_id: 3,
+          stderr: null,
+          token: '8d787b3d-6f5b-457d-bc41-cc22b0e9b4a9',
+        },
+        {
+          language_id: 70,
+          stdout: 'NO\n',
+          status_id: 3,
+          stderr: null,
+          token: '6f92c14e-3294-4afc-84b0-937ba00b2726',
+        },
+        {
+          language_id: 70,
+          stdout: 'YES\n',
+          status_id: 3,
+          stderr: null,
+          token: 'a7da4b63-31bf-495b-b2fc-73c9881c482b',
+        },
+        {
+          language_id: 70,
+          stdout: 'NO\n',
+          status_id: 3,
+          stderr: null,
+          token: '87b7c616-0197-4eb8-a536-f787870c34da',
+        },
+      ],
+    },
+  };
 
   const testcases = [
     {
@@ -196,9 +229,9 @@ function Solution({ socket }) {
           }}
         >
           <Drawer.Header>
-            <Drawer.Title>Drawer Title</Drawer.Title>
+            <Drawer.Title>CODE SUBMISSION STATUS</Drawer.Title>
           </Drawer.Header>
-          <Drawer.Body>Status here</Drawer.Body>
+          <Drawer.Body>{JSON.stringify(response)}</Drawer.Body>
           <Drawer.Footer>
             <Button
               type='button'

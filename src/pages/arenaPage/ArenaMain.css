@@ -71,6 +71,7 @@
   height: 30px;
   padding: 3px;
   padding-left: 4px;
+  display: flex;
 }
 
 .problem-content {
