@@ -26,8 +26,6 @@ function Solution({ socket, currentQuestion }) {
   const [drawerStatus, showDrawer] = useState(false);
   const [languageID, setLanID] = useState(53);
 
-  const LanguageCode = 70;
-
   console.log('From solution', currentQuestion);
 
   function onChangeIDE(newValue) {
@@ -39,13 +37,18 @@ function Solution({ socket, currentQuestion }) {
     // console.log(typeof ideCode);
     console.log(ideCode);
 
-    // socket.emit(
-    //   'CODE_SUBMISSION',
-    //   { problemCode: code: ideCode, langId: LanguageCode, ques_id: },
-    //   (data) => {
-    //     console.log(data);
-    //   }
-    // );
+    socket.emit(
+      'CODE_SUBMISSION',
+      {
+        problemCode: currentQuestion.problemCode,
+        code: ideCode,
+        langId: languageID,
+        ques_id: currentQuestion._id,
+      },
+      (data) => {
+        console.log(data);
+      }
+    );
   };
 
   useEffect(() => {
