@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import './ArenaMain.css';
 import { Pagination } from 'rsuite';
 
-function Problem() {
-  const QuestionsList = [
+function Problem(props) {
+  console.log(props.questions);
+  const questionsList = [
     'The dog is a pet animal. A dog has sharp teeth so that it can eat flesh very easily, it has four legs, two ears, two eyes, a tail, a mouth, and a nose. ... A dog saves the life of the master from danger. One can find dogs everywhere in the world. Dogs are a very faithful animal.',
     'Cat is a very adorable and a cute animal. It is a domestic animal and is kept as a pet. It has very sharp claws and keen eyes that help it in seeing during the night. That means that it has a very good nocturnal vision that is much better than humans.',
     'The horse is a four-footed animal. Its legs are slender but strong enough to run few miles at a stretch without any break. The horse may be of different sizes and colours. They may be white, red, brown, grey, black or a mixture of such colours. The horse lives on grass, straw, grams and leaves of trees.',
   ];
 
-  const [noOfPages, setPages] = useState(QuestionsList.length);
+  const [noOfPages, setPages] = useState(questionsList.length);
   const [activePage, setActivePage] = useState(1);
 
   const [CurrentQuestion, setCurrentQuestion] = useState('');
@@ -20,8 +21,8 @@ function Problem() {
   };
 
   useEffect(() => {
-    setCurrentQuestion(QuestionsList[activePage - 1]);
-    console.log(QuestionsList[activePage - 1]);
+    setCurrentQuestion(questionsList[activePage - 1]);
+    console.log(questionsList[activePage - 1]);
   }, [activePage]);
 
   return (
