@@ -43,6 +43,9 @@ const ROOM_CLOSED = "ROOM_CLOSED";
 // code submitted
 const CODE_SUBMITTED = "CODE_SUBMITTED";
 
+// Successful Submission
+const SUCCESSFULLY_SUBMITTED = "SUCCESSFULLY_SUBMITTED"; 
+
 module.exports = {
   CONNECTION_ACK,
   CONNECTION_DENY,
@@ -60,4 +63,5 @@ module.exports = {
   COMPETITION_STOPPED,
   ROOM_CLOSED,
   CODE_SUBMITTED,
+  SUCCESSFULLY_SUBMITTED,
 };

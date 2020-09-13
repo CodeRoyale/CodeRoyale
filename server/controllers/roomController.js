@@ -1,6 +1,6 @@
 const { encryptData } = require("../utils/auth");
 const { setRoom, getUser, setTeam, mapNameToId } = require("./userController");
-const { getQuestions } = require("../utils/qapiConn");
+const { getQuestions, getTestcase } = require("../utils/qapiConn");
 const { ROOM_DEFAULTS, ROOM_LIMITS } = require("./config");
 const { submitCode } = require("../utils/codeExecution");
 
@@ -20,6 +20,7 @@ const {
   COMPETITION_STOPPED,
   ROOM_CLOSED,
   CODE_SUBMITTED,
+  SUCCESSFULLY_SUBMITTED,
 } = require("../socketActions/serverActions");
 
 const { io } = require("../server");
@@ -90,6 +91,7 @@ const createRoom = (config, { socket }) => {
             quesCount: config.veto_quesCount || 10,
           },
           scoreboard: {},
+          stopTimer: null,
         },
         teams: {},
       };
@@ -520,11 +522,15 @@ const startCompetition = async ({ userName }, { socket }) => {
     // start competition now
     rooms[room_id].competition.contestOn = true;
     rooms[room_id].competition.contestStartedAt = Date.now();
+    Object.keys(rooms[room_id].teams).forEach((ele) => {
+      rooms[room_id].competition.scoreboard[ele] = [];
+    });
+
     socket.to(room_id).emit(COMPETITION_STARTED, rooms[room_id].competition);
     socket.emit(COMPETITION_STARTED, rooms[room_id].competition);
 
     // code for stopping competition
-    setTimeout(() => {
+    rooms[room_id].competition.stopTimer = setTimeout(() => {
       rooms[room_id].competition.contestOn = false;
       rooms[room_id].competition.contnetEndedAt = Date.now();
       socket.to(room_id).emit(COMPETITION_STOPPED, rooms[room_id].competition);
@@ -565,9 +571,15 @@ const getRoomsData = () => {
   }
 };
 
-const codeSubmission = ({ userName, testcase, code, langId }, { socket }) => {
+const codeSubmission = async (
+  { userName, problemCode, code, langId },
+  { socket }
+) => {
   try {
+    const quesId = problemCode;
     const { room_id, team_name } = getUser(userName);
+    const testcase = await getTestcase(problemCode);
+
     if (
       rooms[room_id] &&
       rooms[room_id].teams[team_name] &&
@@ -576,11 +588,50 @@ const codeSubmission = ({ userName, testcase, code, langId }, { socket }) => {
       langId !== null
     ) {
       submitCode(testcase, code, langId, (dataFromSubmitCode) => {
-        console.log(dataFromSubmitCode);
+        let allPass = true;
+
+        dataFromSubmitCode.submissions.forEach((result) => {
+          if (result.status_id !== 3) {
+            allPass = false;
+            return;
+          }
+        });
+
+        // code submitted
         socket.emit(CODE_SUBMITTED, {
           data: dataFromSubmitCode,
+          sucess: allPass,
         });
+
+        if (allPass) {
+          // tell everyone except user
+          if (
+            !rooms[room_id].competition.scoreboard[team_name].includes(quesId)
+          )
+            rooms[room_id].competition.scoreboard[team_name].push(quesId);
+
+          socket
+            .to(room_id)
+            .emit(SUCCESSFULLY_SUBMITTED, { quesId, team_name });
+
+          // if user's team solved all questions
+          // can also use Object.keys(rms.cpms.questions) and maybe <=
+          if (
+            rooms[room_id].competition.max_questions ===
+            rooms[room_id].competition.scoreboard[team_name].length
+          ) {
+            clearTimeout(rooms[room_id].competition.stopTimer);
+            rooms[room_id].competition.contestOn = false;
+            rooms[room_id].competition.contnetEndedAt = Date.now();
+            socket
+              .to(room_id)
+              .emit(COMPETITION_STOPPED, rooms[room_id].competition);
+            socket.emit(COMPETITION_STOPPED, rooms[room_id].competition);
+          }
+        }
       });
+
+      // code has been sent
       return true;
     } else {
       return false;
