@@ -1,6 +1,6 @@
 const { encryptData } = require("../utils/auth");
 const { setRoom, getUser, setTeam, mapNameToId } = require("./userController");
-const { getQuestions } = require("../utils/qapiConn");
+const { getQuestions, getTestcase } = require("../utils/qapiConn");
 const { ROOM_DEFAULTS, ROOM_LIMITS } = require("./config");
 const { submitCode } = require("../utils/codeExecution");
 
@@ -79,13 +79,13 @@ const createRoom = (config, { socket }) => {
           max_questions: config.max_questions || 3,
           contestStartedAt: null,
           contnetEndedAt: null,
-          contestOn: false,
+          contestOngoing: false,
           timeLimit: config.timeLimit || 2700000,
           veto: {
             allQuestions: {},
             votes: {},
             voted: [],
-            vetoOn: false,
+            vetoOngoing: false,
             max_vote: config.max_vote || 1,
             timeLimit: config.veto_timeLimit || 30000,
             quesCount: config.veto_quesCount || 10,
@@ -572,25 +572,27 @@ const getRoomsData = () => {
 };
 
 const codeSubmission = (
-  { userName, testcase, code, langId, ques_id },
+  { userName, problemCode, code, langId, ques_id },
   { socket }
 ) => {
   try {
     const { room_id, team_name } = getUser(userName);
+    const testcase = await getTestcase(problemCode);
+    console.log(testcase);
     if (
       rooms[room_id] &&
       rooms[room_id].teams[team_name] &&
-      rooms[room_id].competition.contestOn &&
+      rooms[room_id].competition.contestOngoing &&
       testcase !== null &&
       langId !== null
     ) {
       submitCode(testcase, code, langId, (dataFromSubmitCode) => {
         const allPass = true;
-        
-        dataFromSubmitCode.submissions.forEach((result) => {
+
+        dataFromSubmitCode.forEach((result) => {
           if (result.status_id !== 3) {
             allPass = false;
-            return
+            break;
           }
         });
 
@@ -606,14 +608,13 @@ const codeSubmission = (
             !rooms[room_id].competition.scoreboard[team_name].includes(ques_id)
           )
             rooms[room_id].competition.scoreboard[team_name].push(ques_id);
-          
+
           socket
             .to(room_id)
             .emit(SUCCESSFULLY_SUBMITTED, { ques_id, team_name });
 
           // if user's team solved all questions
           // can also use Object.keys(rms.cpms.questions) and maybe <=
-          
           if (
             rooms[room_id].competition.max_questions ===
             rooms[room_id].competition.scoreboard[team_name].length
