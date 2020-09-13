@@ -79,13 +79,13 @@ const createRoom = (config, { socket }) => {
           max_questions: config.max_questions || 3,
           contestStartedAt: null,
           contnetEndedAt: null,
-          contestOngoing: false,
+          contestOn: false,
           timeLimit: config.timeLimit || 2700000,
           veto: {
             allQuestions: {},
             votes: {},
             voted: [],
-            vetoOngoing: false,
+            vetoOn: false,
             max_vote: config.max_vote || 1,
             timeLimit: config.veto_timeLimit || 30000,
             quesCount: config.veto_quesCount || 10,
@@ -580,17 +580,17 @@ const codeSubmission = (
     if (
       rooms[room_id] &&
       rooms[room_id].teams[team_name] &&
-      rooms[room_id].competition.contestOngoing &&
+      rooms[room_id].competition.contestOn &&
       testcase !== null &&
       langId !== null
     ) {
       submitCode(testcase, code, langId, (dataFromSubmitCode) => {
         const allPass = true;
-
-        dataFromSubmitCode.forEach((result) => {
+        
+        dataFromSubmitCode.submissions.forEach((result) => {
           if (result.status_id !== 3) {
             allPass = false;
-            break;
+            return
           }
         });
 
@@ -606,13 +606,14 @@ const codeSubmission = (
             !rooms[room_id].competition.scoreboard[team_name].includes(ques_id)
           )
             rooms[room_id].competition.scoreboard[team_name].push(ques_id);
-
+          
           socket
             .to(room_id)
             .emit(SUCCESSFULLY_SUBMITTED, { ques_id, team_name });
 
           // if user's team solved all questions
           // can also use Object.keys(rms.cpms.questions) and maybe <=
+          
           if (
             rooms[room_id].competition.max_questions ===
             rooms[room_id].competition.scoreboard[team_name].length
