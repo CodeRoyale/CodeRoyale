@@ -40,7 +40,7 @@ const ArenaMain = ({ socketData, arenaData, vetoData, getQuestion }) => {
         </div>
 
         <div className='right-container'>
-          <Solution socket={socket} />
+          <Solution socket={socket} questions={arenaData.questions} />
         </div>
       </div>
     </div>

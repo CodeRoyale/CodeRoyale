@@ -29,59 +29,43 @@ function Solution({ socket }) {
 
   const LanguageCode = 70;
 
-  const response = {
-    data: {
-      submissions: [
-        {
-          language_id: 70,
-          stdout: 'YES\n',
-          status_id: 3,
-          stderr: null,
-          token: '8d787b3d-6f5b-457d-bc41-cc22b0e9b4a9',
-        },
-        {
-          language_id: 70,
-          stdout: 'NO\n',
-          status_id: 3,
-          stderr: null,
-          token: '6f92c14e-3294-4afc-84b0-937ba00b2726',
-        },
-        {
-          language_id: 70,
-          stdout: 'YES\n',
-          status_id: 3,
-          stderr: null,
-          token: 'a7da4b63-31bf-495b-b2fc-73c9881c482b',
-        },
-        {
-          language_id: 70,
-          stdout: 'NO\n',
-          status_id: 3,
-          stderr: null,
-          token: '87b7c616-0197-4eb8-a536-f787870c34da',
-        },
-      ],
-    },
+  function onChangeIDE(newValue) {
+    setCode(newValue);
+  }
+
+  const SendCode = () => {
+    // console.log(ideLanguage);
+    // console.log(typeof ideCode);
+    console.log(ideCode);
+
+    socket.emit(
+      'CODE_SUBMISSION',
+      { problemCode:, code: ideCode, langId: LanguageCode, ques_id: },
+      (data) => {
+        console.log(data);
+      }
+    );
   };
 
-  const testcases = [
-    {
-      input: '0 3 4 2',
-      output: 'YES',
-    },
-    {
-      input: '0 2 5 3',
-      output: 'NO',
-    },
-    {
-      input: '14 4 98 2',
-      output: 'YES',
-    },
-    {
-      input: '21 6 47 3',
-      output: 'NO',
-    },
-  ];
+  useEffect(() => {
+    socket.on('CODE_SUBMITTED', (data) => {
+      console.log('code res:', data);
+      console.log(JSON.stringify(data));
+    });
+  }, [socket]);
+
+  useEffect(() => {
+    //should vary according to language selected c++=53, java=62, python 3.8=71
+    if (ideLanguage === 'c_cpp') {
+      setLanID(53);
+    } else if (ideLanguage === 'java') {
+      setLanID(62);
+    } else if (ideLanguage === 'python') {
+      setLanID(71);
+    }
+
+    console.log(languageID);
+  }, [ideLanguage, languageID]);
 
   const settings_popup_content = (
     <div className='ide-options-popup'>
@@ -122,44 +106,6 @@ function Solution({ socket }) {
       </Grid>
     </div>
   );
-
-  function onChangeIDE(newValue) {
-    setCode(newValue);
-  }
-
-  const SendCode = () => {
-    // console.log(ideLanguage);
-    // console.log(typeof ideCode);
-    console.log(ideCode);
-
-    // socket.emit(
-    //   'CODE_SUBMISSION',
-    //   { testcase: testcases, code: ideCode, langId: LanguageCode },
-    //   (data) => {
-    //     console.log(data);
-    //   }
-    // );
-  };
-
-  useEffect(() => {
-    socket.on('CODE_SUBMITTED', (data) => {
-      console.log('code res:', data);
-      console.log(JSON.stringify(data));
-    });
-  }, [socket]);
-
-  useEffect(() => {
-    //should vary according to language selected c++=53, java=62, python 3.8=71
-    if (ideLanguage === 'c_cpp') {
-      setLanID(53);
-    } else if (ideLanguage === 'java') {
-      setLanID(62);
-    } else if (ideLanguage === 'python') {
-      setLanID(71);
-    }
-
-    console.log(languageID);
-  }, [ideLanguage, languageID]);
 
   return (
     <div>
