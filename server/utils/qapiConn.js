@@ -24,6 +24,6 @@ const getTestcase = async (id) => {
     }
   );
   response = await response.json();
-  return response.message;
+  return response.message[id];
 };
 module.exports = { getQuestions, getTestcase };

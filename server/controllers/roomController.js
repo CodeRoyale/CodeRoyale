@@ -572,13 +572,14 @@ const getRoomsData = () => {
 };
 
 const codeSubmission = async (
-  { userName, problemCode, code, langId, quesId },
+  { userName, problemCode, code, langId },
   { socket }
 ) => {
   try {
+    const quesId = problemCode;
     const { room_id, team_name } = getUser(userName);
     const testcase = await getTestcase(problemCode);
-    console.log(testcase);
+
     if (
       rooms[room_id] &&
       rooms[room_id].teams[team_name] &&
@@ -587,7 +588,7 @@ const codeSubmission = async (
       langId !== null
     ) {
       submitCode(testcase, code, langId, (dataFromSubmitCode) => {
-        const allPass = true;
+        let allPass = true;
 
         dataFromSubmitCode.submissions.forEach((result) => {
           if (result.status_id !== 3) {
@@ -611,7 +612,7 @@ const codeSubmission = async (
 
           socket
             .to(room_id)
-            .emit(SUCCESSFULLY_SUBMITTED, { ques_id, team_name });
+            .emit(SUCCESSFULLY_SUBMITTED, { quesId, team_name });
 
           // if user's team solved all questions
           // can also use Object.keys(rms.cpms.questions) and maybe <=
