@@ -11,7 +11,6 @@ import 'ace-builds/src-noconflict/theme-terminal';
 import 'ace-builds/src-noconflict/snippets/c_cpp';
 import 'ace-builds/src-noconflict/snippets/python';
 import 'ace-builds/src-noconflict/snippets/java';
-
 import 'ace-builds/src-noconflict/ext-language_tools';
 import Button from '../../components/button/Button';
 import { Popover, Whisper } from 'rsuite';
@@ -19,7 +18,7 @@ import { Grid, Row, Col } from 'rsuite';
 import { Drawer } from 'rsuite';
 import { SettingFilled } from '@ant-design/icons';
 
-function Solution({ socket }) {
+function Solution({ socket, currentQuestion }) {
   const [ideLanguage, setLanguage] = useState('c_cpp');
   const [ideFontSize, setFontSize] = useState('12');
   const [ideTheme, setTheme] = useState('terminal');
@@ -28,6 +27,8 @@ function Solution({ socket }) {
   const [languageID, setLanID] = useState(53);
 
   const LanguageCode = 70;
+
+  console.log('From solution', currentQuestion);
 
   function onChangeIDE(newValue) {
     setCode(newValue);
@@ -38,13 +39,13 @@ function Solution({ socket }) {
     // console.log(typeof ideCode);
     console.log(ideCode);
 
-    socket.emit(
-      'CODE_SUBMISSION',
-      { problemCode:, code: ideCode, langId: LanguageCode, ques_id: },
-      (data) => {
-        console.log(data);
-      }
-    );
+    // socket.emit(
+    //   'CODE_SUBMISSION',
+    //   { problemCode: code: ideCode, langId: LanguageCode, ques_id: },
+    //   (data) => {
+    //     console.log(data);
+    //   }
+    // );
   };
 
   useEffect(() => {
@@ -191,7 +192,7 @@ function Solution({ socket }) {
           <Drawer.Header>
             <Drawer.Title>CODE SUBMISSION STATUS</Drawer.Title>
           </Drawer.Header>
-          <Drawer.Body>{JSON.stringify(response)}</Drawer.Body>
+          <Drawer.Body>{JSON.stringify('response')}</Drawer.Body>
           <Drawer.Footer>
             <Button
               type='button'

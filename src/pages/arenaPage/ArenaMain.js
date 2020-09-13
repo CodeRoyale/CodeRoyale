@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar from '../../components/navBar/NavBar';
 import './ArenaMain.css';
 import Problem from './Problem';
@@ -11,6 +11,7 @@ import { getQuestion } from '../../actions/arenaActions';
 
 const ArenaMain = ({ socketData, arenaData, vetoData, getQuestion }) => {
   const socket = socketData.socket;
+  const [currentQuestion, setCurrentQuestion] = useState();
 
   useEffect(() => {
     if (vetoData.contestQuestionIDs !== null) {
@@ -27,6 +28,10 @@ const ArenaMain = ({ socketData, arenaData, vetoData, getQuestion }) => {
     return <Redirect to='/' />;
   }
 
+  const handleGetCurrQuestion = (data) => {
+    setCurrentQuestion(data);
+  };
+
   let content = (
     <div className='arena-page'>
       <div>
@@ -35,12 +40,19 @@ const ArenaMain = ({ socketData, arenaData, vetoData, getQuestion }) => {
 
       <div className='arena-body'>
         <div className='left-container'>
-          <Problem questions={arenaData.questions} />
+          <Problem
+            questions={arenaData.questions}
+            getCurrentQuestion={handleGetCurrQuestion}
+          />
           <Chat socket={socket} />
         </div>
 
         <div className='right-container'>
-          <Solution socket={socket} questions={arenaData.questions} />
+          <Solution
+            socket={socket}
+            questions={arenaData.questions}
+            currentQuestion={currentQuestion}
+          />
         </div>
       </div>
     </div>

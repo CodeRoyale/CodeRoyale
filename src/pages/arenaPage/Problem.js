@@ -34,9 +34,13 @@ function Problem(props) {
   };
 
   useEffect(() => {
-    setCurrentQuestion(quesList[activePage - 1]);
-    console.log(quesList[activePage - 1]);
-  }, [activePage]);
+    if (quesList !== null) {
+      setCurrentQuestion(quesList[activePage - 1]);
+      console.log('From problem', CurrentQuestion);
+      props.getCurrentQuestion(CurrentQuestion);
+    }
+    //console.log(quesList[activePage - 1]);
+  }, [activePage, CurrentQuestion, quesList, props]);
 
   if (CurrentQuestion !== null && CurrentQuestion.io !== undefined) {
     questionTitle = (
