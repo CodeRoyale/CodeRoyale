@@ -571,7 +571,7 @@ const getRoomsData = () => {
   }
 };
 
-const codeSubmission = (
+const codeSubmission = async (
   { userName, problemCode, code, langId, quesId },
   { socket }
 ) => {
@@ -592,7 +592,7 @@ const codeSubmission = (
         dataFromSubmitCode.submissions.forEach((result) => {
           if (result.status_id !== 3) {
             allPass = false;
-            return
+            return;
           }
         });
 
