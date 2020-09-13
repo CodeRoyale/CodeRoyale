@@ -78,13 +78,13 @@ const createRoom = (config, { socket }) => {
           max_questions: config.max_questions || 3,
           contestStartedAt: null,
           contnetEndedAt: null,
-          contestOngoing: false,
+          contestOn: false,
           timeLimit: config.timeLimit || 2700000,
           veto: {
             allQuestions: {},
             votes: {},
             voted: [],
-            vetoOngoing: false,
+            vetoOn: false,
             max_vote: config.max_vote || 1,
             timeLimit: config.veto_timeLimit || 300000,
             quesCount: config.veto_quesCount || 10,
@@ -321,7 +321,7 @@ const leaveTeam = ({ userName }, { socket }) => {
 const closeRoom = ({ userName }, { socket }) => {
   try {
     const { room_id } = getUser(userName);
-    if (rooms[room_id] && rooms[room_id].config.admin === userName ) {
+    if (rooms[room_id] && rooms[room_id].config.admin === userName) {
       // everyone from room bench
       let allMembers = rooms[room_id].state.bench;
       // from all teams
@@ -571,7 +571,7 @@ const codeSubmission = ({ userName, testcase, code, langId }, { socket }) => {
     if (
       rooms[room_id] &&
       rooms[room_id].teams[team_name] &&
-      rooms[room_id].competition.contestOngoing &&
+      rooms[room_id].competition.contestOn &&
       testcase !== null &&
       langId !== null
     ) {
