@@ -132,13 +132,13 @@ function Solution({ socket }) {
     // console.log(typeof ideCode);
     console.log(ideCode);
 
-    socket.emit(
-      'CODE_SUBMISSION',
-      { testcase: testcases, code: ideCode, langId: LanguageCode },
-      (data) => {
-        console.log(data);
-      }
-    );
+    // socket.emit(
+    //   'CODE_SUBMISSION',
+    //   { testcase: testcases, code: ideCode, langId: LanguageCode },
+    //   (data) => {
+    //     console.log(data);
+    //   }
+    // );
   };
 
   useEffect(() => {
