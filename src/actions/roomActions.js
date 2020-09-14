@@ -61,9 +61,21 @@ export const createRoom = (
             const room_id = data.config.id;
             socket.on('ROOM_UPDATED', (data) => {
               if (data !== null && data.type !== undefined) {
-                //console.log('getRoom', data);
                 dispatch(getRoom(socket, { room_id }));
               }
+            });
+            // On Submitting code...
+            // This is not the right way... we have to make a reducer to keep track of all the submissions...
+            socket.on('CODE_SUBMITTED', (data) => {
+              console.log('code res:', data);
+              dispatch(getRoom(socket, { room_id }));
+            });
+
+            //On Successful submission of code...
+            //This is not the right way... we have to make a reducer to keep track of all the submissions...
+            socket.on('SUCCESSFULLY_SUBMITTED', (data) => {
+              console.log('TestCase passed', data);
+              dispatch(getRoom(socket, { room_id }));
             });
           } else {
             dispatch(roomFailure(data));
@@ -89,6 +101,20 @@ export const joinRoom = (socket, { room_id }) => {
               if (data !== null && data.type !== undefined) {
                 dispatch(getRoom(socket, { room_id }));
               }
+            });
+
+            // On Submitting code...
+            // This is not the right way... we have to make a reducer to keep track of all the submissions...
+            socket.on('CODE_SUBMITTED', (data) => {
+              console.log('code res:', data);
+              dispatch(getRoom(socket, { room_id }));
+            });
+
+            //On Successful submission of code...
+            //This is not the right way... we have to make a reducer to keep track of all the submissions...
+            socket.on('SUCCESSFULLY_SUBMITTED', (data) => {
+              console.log('TestCase passed', data);
+              dispatch(getRoom(socket, { room_id }));
             });
           } else if (data.error !== undefined) {
             dispatch(roomFailure(data.error));

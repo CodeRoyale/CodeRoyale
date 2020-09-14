@@ -14,7 +14,7 @@ function Problem(props) {
   if (props.questions !== undefined) {
     quesList = props.questions.message;
     quesListLength = quesList.length;
-    console.log('mayut', quesList);
+    // console.log('mayut', quesList);
   }
 
   // const questionsList = [

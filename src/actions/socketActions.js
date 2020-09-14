@@ -54,6 +54,8 @@ export const connectSocket = () => {
       console.log(CONNECTION_DENY);
       dispatch(socketConnectionFailure(CONNECTION_DENY));
     });
+
+    // On Message receive...
     socket.on('RCV_MSG', (data) => {
       if (data !== null && data.content !== undefined) {
         dispatch(
@@ -68,6 +70,8 @@ export const connectSocket = () => {
       }
       console.log('chat data', data);
     });
+
+    // On Close room
     socket.on('ROOM_CLOSED', (data) => {
       if (data !== null) {
         dispatch(roomSuccess(null, ROOM_CLOSED));

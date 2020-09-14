@@ -7,6 +7,7 @@ import teamReducer from './teamReducer';
 import chatReducer from './chatReducer';
 import vetoReducer from './vetoReducer';
 import arenaReducer from './arenaReducer';
+import codeSubmitReducer from './codeSubmitReducer';
 
 export default combineReducers({
   loginData: loginReducer,
@@ -17,4 +18,5 @@ export default combineReducers({
   vetoData: vetoReducer,
   chatData: chatReducer,
   arenaData: arenaReducer,
+  codeSubmitData: codeSubmitReducer,
 });
