@@ -28,6 +28,8 @@ const { CLOSE_ROOM } = require("../socketActions/userActions");
 
 // this is my db for now
 rooms = {};
+// to stop comepetition
+stopTimers = {};
 
 // room_id will be admin name
 
@@ -91,7 +93,6 @@ const createRoom = (config, { socket }) => {
             quesCount: config.veto_quesCount || 10,
           },
           scoreboard: {},
-          stopTimer: null,
         },
         teams: {},
       };
@@ -530,7 +531,7 @@ const startCompetition = async ({ userName }, { socket }) => {
     socket.emit(COMPETITION_STARTED, rooms[room_id].competition);
 
     // code for stopping competition
-    rooms[room_id].competition.stopTimer = setTimeout(() => {
+    stopTimers[room_id] = setTimeout(() => {
       rooms[room_id].competition.contestOn = false;
       rooms[room_id].competition.contnetEndedAt = Date.now();
       socket.to(room_id).emit(COMPETITION_STOPPED, rooms[room_id].competition);
@@ -620,7 +621,7 @@ const codeSubmission = async (
             rooms[room_id].competition.max_questions ===
             rooms[room_id].competition.scoreboard[team_name].length
           ) {
-            clearTimeout(rooms[room_id].competition.stopTimer);
+            if (stopTimers[room_id]) clearTimeout(stopTimers[room_id]);
             rooms[room_id].competition.contestOn = false;
             rooms[room_id].competition.contnetEndedAt = Date.now();
             socket
