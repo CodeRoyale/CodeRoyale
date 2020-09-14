@@ -21,7 +21,10 @@ const app = express();
 const server = http.createServer(app);
 
 // HACKER BOII
-var whitelist = ["http://localhost:3000", "https://codeRoyale.herokuapp.com"];
+var whitelist = [
+  "http://localhost:3000",
+  "https://coderoyaleclient.herokuapp.com",
+];
 var corsOptions = {
   origin: function (origin, callback) {
     //the !origin is for services like postman
@@ -54,7 +57,7 @@ const io = socketio(server, {
       "Access-Control-Allow-Origin":
         process.env.NODE_ENV === "development"
           ? "http://localhost:3000"
-          : "https://codeRoyale.herokuapp.com", //or the specific origin you want to give access to,
+          : "https://coderoyaleclient.herokuapp.com", //or the specific origin you want to give access to,
       "Access-Control-Allow-Credentials": true,
     };
     res.writeHead(200, headers);
