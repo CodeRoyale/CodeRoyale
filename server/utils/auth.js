@@ -1,4 +1,5 @@
 //- Please fill these
+const uuid = require("uuid");
 
 const encryptData = (data) => {
   // encrypt data
@@ -7,7 +8,7 @@ const encryptData = (data) => {
   // one way encrption is fine
 
   // Note : Remove binod encrpytion, it is too secure
-  return "binodbinodbinod" + data + "binodbinodbinod";
+  return uuid.v4();
 };
 
 module.exports = {
