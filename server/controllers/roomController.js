@@ -51,6 +51,8 @@ const createRoom = (config, { socket }) => {
       // -TODO --> add score for teams
 
       // a room has 4 parts -> config, state, competition, teams
+
+      // TODO - change default limit
       const room_obj = {
         config: {
           id: room_id,
@@ -78,7 +80,7 @@ const createRoom = (config, { socket }) => {
         },
         competition: {
           questions: {},
-          max_questions: config.max_questions || 3,
+          max_questions: config.max_questions || 1,
           contestStartedAt: null,
           contnetEndedAt: null,
           contestOn: false,
@@ -89,7 +91,7 @@ const createRoom = (config, { socket }) => {
             voted: [],
             vetoOn: false,
             max_vote: config.max_vote || 1,
-            timeLimit: config.veto_timeLimit || 300000,
+            timeLimit: config.veto_timeLimit || 120000,
             quesCount: config.veto_quesCount || 10,
           },
           scoreboard: {},
