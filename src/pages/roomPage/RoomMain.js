@@ -17,7 +17,6 @@ import RoomChat from './RoomChat';
 import profileData from '../../utils/examples';
 import StartCompetitionButton from './StartCompetitionButton';
 import { vetoStart } from '../../actions/vetoActions';
-import Arena from './Arena';
 
 const RoomMain = ({
   teamData,
@@ -148,9 +147,6 @@ const RoomMain = ({
           </div>
           <div className='room-details-start-competitions-container'>
             {userName === admin ? <StartCompetitionButton /> : null}
-          </div>
-          <div>
-            <Arena />
           </div>
         </div>
         <div className='room-right-section'>
