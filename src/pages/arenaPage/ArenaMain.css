@@ -10,6 +10,13 @@
   height: 100%;
 }
 
+.arena-page-loading {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
 .left-container {
   flex: 2;
 }
@@ -71,6 +78,7 @@
   height: 30px;
   padding: 3px;
   padding-left: 4px;
+  display: flex;
 }
 
 .problem-content {

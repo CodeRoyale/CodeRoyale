@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ArenaMain.css';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-java';
@@ -11,18 +11,100 @@ import 'ace-builds/src-noconflict/theme-terminal';
 import 'ace-builds/src-noconflict/snippets/c_cpp';
 import 'ace-builds/src-noconflict/snippets/python';
 import 'ace-builds/src-noconflict/snippets/java';
-
 import 'ace-builds/src-noconflict/ext-language_tools';
 import Button from '../../components/button/Button';
 import { Popover, Whisper } from 'rsuite';
 import { Grid, Row, Col } from 'rsuite';
+import { Drawer } from 'rsuite';
 import { SettingFilled } from '@ant-design/icons';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 
-function Solution({ socket }) {
+function Solution({ socket, currentQuestion, roomData }) {
   const [ideLanguage, setLanguage] = useState('c_cpp');
   const [ideFontSize, setFontSize] = useState('12');
   const [ideTheme, setTheme] = useState('terminal');
   const [ideCode, setCode] = useState('');
+  const [drawerStatus, showDrawer] = useState(false);
+  const [sendCodeClicked, setSendCodeClicked] = useState(false);
+  const [languageID, setLanID] = useState(53);
+  const [winTeamName, setWinTeamName] = useState(false);
+  let problemCode = null;
+  let _id = null;
+
+  if (currentQuestion !== undefined && currentQuestion !== null) {
+    problemCode = currentQuestion.problemCode;
+    _id = currentQuestion._id;
+  }
+
+  function onChangeIDE(newValue) {
+    setCode(newValue);
+  }
+
+  // Getting winner...
+  useEffect(() => {
+    socket.on('COMPETITION_STOPPED', (data) => {
+      setWinTeamName(true);
+    });
+  }, [socket]);
+
+  useEffect(() => {
+    if (sendCodeClicked) {
+      console.log(ideCode);
+      socket.emit(
+        'CODE_SUBMISSION',
+        {
+          problemCode: problemCode,
+          code: ideCode,
+          langId: languageID,
+          ques_id: _id,
+        },
+        (data) => {
+          console.log(data);
+        }
+      );
+      setSendCodeClicked(false);
+    }
+  }, [sendCodeClicked, ideCode, socket, problemCode, languageID, _id]);
+
+  useEffect(() => {
+    //should vary according to language selected c++=53, java=62, python 3.8=71
+    if (ideLanguage === 'c_cpp') {
+      setLanID(53);
+    } else if (ideLanguage === 'java') {
+      setLanID(62);
+    } else if (ideLanguage === 'python') {
+      setLanID(71);
+    }
+
+    console.log(languageID);
+  }, [ideLanguage, languageID]);
+
+  if (winTeamName) {
+    return <Redirect to='/results' />;
+  }
+
+  const scoreCard = roomData.data.competition.scoreboard;
+  console.log(scoreCard);
+  let scoreCardViews = [];
+  for (let teamName in scoreCard) {
+    console.log(teamName);
+    const view = (
+      <div>
+        <div>
+          <b>Team Name</b> {teamName}
+        </div>
+        <div>
+          <b>Completed</b>
+        </div>
+        {scoreCard[teamName].map((score) => (
+          <div>{score}</div>
+        ))}
+        <br />
+      </div>
+    );
+    scoreCardViews.push(view);
+  }
 
   const settings_popup_content = (
     <div className='ide-options-popup'>
@@ -64,26 +146,11 @@ function Solution({ socket }) {
     </div>
   );
 
-  function onChangeIDE(newValue) {
-    setCode(newValue);
-  }
-
-  const SendCode = () => {
-    console.log(ideLanguage);
-    console.log(typeof ideCode);
-    console.log(ideCode);
-
-    socket.emit('SEND_MSG', { content: ideCode, ideLanguage }, (data) => {
-      console.log(data);
-    });
-  };
-
   return (
     <div>
       <div className='solution-body'>
         <div className='solution-header'>
           <div className='solution-title'>SOLUTION</div>
-
           <div className='solution-heading-right'>
             <div className='language-options'>
               <select onChange={(e) => setLanguage(e.target.value)}>
@@ -134,13 +201,56 @@ function Solution({ socket }) {
           type='button'
           buttonStyle='btn--primary--normal'
           buttonSize='btn--medium'
-          onClick={SendCode}
+          onClick={() => setSendCodeClicked(true)}
         >
           SUBMIT
         </Button>
+
+        <Button
+          type='button'
+          buttonStyle='btn--primary--normal'
+          buttonSize='btn--medium'
+          onClick={() => {
+            showDrawer(true);
+          }}
+        >
+          STATUS
+        </Button>
+      </div>
+
+      <div className='submissions-drawer'>
+        <Drawer
+          size='xs'
+          placement='right'
+          show={drawerStatus}
+          onHide={() => {
+            showDrawer(false);
+          }}
+        >
+          <Drawer.Header>
+            <Drawer.Title>CODE SUBMISSION STATUS</Drawer.Title>
+          </Drawer.Header>
+          <Drawer.Body>{scoreCardViews}</Drawer.Body>
+          <Drawer.Footer>
+            <Button
+              type='button'
+              buttonStyle='btn--primary--normal'
+              buttonSize='btn--medium'
+              onClick={() => {
+                showDrawer(false);
+              }}
+            >
+              Cancel
+            </Button>
+          </Drawer.Footer>
+        </Drawer>
       </div>
     </div>
   );
 }
 
-export default Solution;
+const mapStateToProps = (state) => ({
+  roomData: state.roomData,
+});
+
+export default connect(mapStateToProps, null)(Solution);

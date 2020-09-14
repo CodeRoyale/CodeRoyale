@@ -40,6 +40,12 @@ export const loginUser = (authData) => (dispatch) => {
     headers,
     body: JSON.stringify(thirdPartyData),
   })
+    .then((res) => {
+      if (!res.ok) {
+        throw Error(res.statusText);
+      }
+      return res;
+    })
     .then((res) => res.json())
     .then((jsonRes) => {
       // Temporary storing in localStorage in actions will change

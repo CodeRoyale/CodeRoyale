@@ -35,6 +35,12 @@ export const signUpUser = (authData) => (dispatch) => {
     headers,
     body: JSON.stringify(authData),
   })
+    .then((res) => {
+      if (!res.ok) {
+        throw Error(res.statusText);
+      }
+      return res;
+    })
     .then((res) => res.json())
     .then((jsonRes) => {
       dispatch(signUpSuccess(jsonRes));
