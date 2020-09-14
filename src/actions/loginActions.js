@@ -54,7 +54,6 @@ export const loginUser = (authData) => (dispatch) => {
       dispatch(loginSuccess(jsonRes));
     })
     .catch((err) => {
-      console.log(err);
       dispatch(loginFail(err));
     });
 };
