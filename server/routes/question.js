@@ -3,20 +3,35 @@ const express = require('express');
 const route = express.Router();
 
 const {
-  getQuestion,
   putQuestion,
+  getRandom,
+  getQuestion,
+  getQuestionById,
   deleteQuestion,
   deleteQuestionById,
   patchQuestionById,
 } = require('../controllers/questionController');
 
+const {
+  putTestcase,
+  getTestcase,
+} = require('../controllers/testcaseController');
+
 route.post('/', putQuestion);
 
-route.get('/', getQuestion);
+route.post('/testcase', putTestcase);
 
-route.delete('/', deleteQuestion);
+route.get('/getTestcase', getTestcase);
 
-route.delete('/:questionId', deleteQuestionById);
+route.get('/random', getRandom);
+
+route.get('/question', getQuestion);
+
+route.post('/getQById', getQuestionById);
+
+route.delete('/deleteAll', deleteQuestion);
+
+route.delete('/deleteById/:questionId', deleteQuestionById);
 
 route.patch('/:questionId', patchQuestionById);
 
