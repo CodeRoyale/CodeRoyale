@@ -1,67 +1,44 @@
 .dashboard {
   margin: auto;
-  height: 100%;
-  background-color: #f5f8f8;
 }
-
-/************************************/
-/*********** Body CSS ***************/
-/************************************/
 .dashboard-body {
-  padding: 50px;
-  height: 460px;
+  /*TODO: Change this height later*/
+  height: 87.6vh;
   width: 100%;
 }
-.dashboard-body-left {
-  float: left;
-}
-.dashboard-body-right {
-  float: right;
-}
 
-.dashboard-play-button {
-  margin-top: 15px;
-}
-
-.dashboard-text-heading {
-  margin-top: 50px;
-  color: rgba(128, 128, 128, 0.877);
-  font-size: 45px;
-}
-.dashboard-play-body {
+.dashboard-left {
+  position: absolute;
   display: flex;
-  flex: wrap;
-  width: auto;
-  margin-top: 20px;
-  font-size: 18px;
-}
-.dashboard-play-friends {
-  margin-right: 10px;
-  float: left;
-  width: 320px;
-}
-
-.dashboard-play-random {
-  margin-right: 10px;
-  float: right;
-  width: 320px;
-}
-
-.dashboard-image {
-  width: 420px;
-  height: 400px;
-}
-
-.dashboard-link-share-card {
-  height: 100%;
-  display: flex;
-  justify-content: center;
+  height: 87.6vh;
+  width: 50%;
   align-items: center;
+  justify-content: center;
+  z-index: 3;
 }
-/************************************/
-/*********** Footer CSS *************/
-/************************************/
-.dashboard-footer {
-  text-align: center;
-  height: 50px;
+
+.dashboard-left-input-container {
+  display: flex;
+  margin-top: 20px;
+}
+
+.dashboard-background {
+  position: absolute;
+  height: 86.6vh;
+  width: 100%;
+  background: rgba(var(--primary-color-rgb), 0.15);
+  z-index: 0;
+}
+.dashboard-background svg {
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+}
+.dashboard-background img {
+  position: absolute;
+  height: 550px;
+  width: 550px;
+  z-index: 2;
+  right: 0;
+  bottom: 10px;
 }

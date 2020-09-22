@@ -1,11 +1,12 @@
 import React from 'react';
 import LogoContainer from '../../components/logoContainer/LogoContainer';
 import ProfileButton from '../../components/profileButton/ProfileButton';
+import profileData from '../../utils/examples';
 import './NavBar.css';
 
 function NavBar() {
-  let profileData = localStorage.getItem('user-data');
-  profileData = JSON.parse(profileData);
+  // let profileData = localStorage.getItem('user-data');
+  // profileData = JSON.parse(profileData);
   return (
     <div className='nav-bar'>
       <div className='nav-bar-logo'>

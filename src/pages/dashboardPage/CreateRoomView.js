@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './LobbyMain.css';
 import Button from '../../components/button/Button';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';

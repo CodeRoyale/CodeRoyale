@@ -4,10 +4,9 @@ import { ROOM_JOINED } from '../../utils/constants';
 import { mapStateToProps } from '../../utils/mapStateToProps';
 import { connect } from 'react-redux';
 import { joinRoom } from '../../actions/roomActions';
-import { Alert, Modal, Input } from 'rsuite';
-import Button from '../../components/button/Button';
+import { Alert, Input, InputGroup, Icon } from 'rsuite';
 
-function JoinRoomView({ socketData, roomData, joinRoom, show, onClose }) {
+function JoinRoomView({ socketData, roomData, joinRoom }) {
   const [state, setState] = useState({
     joinButtonClicked: false,
     actionDone: false,
@@ -46,38 +45,26 @@ function JoinRoomView({ socketData, roomData, joinRoom, show, onClose }) {
     return <Redirect to='/room' />;
   }
 
+  const onClickJoinRoom = (event) => {
+    event.preventDefault();
+    setState({ ...state, joinButtonClicked: true });
+  };
+
   // Main Render...
   return (
     <div>
-      <Modal overflow={true} show={show} onHide={() => onClose(false)}>
-        <Modal.Header>
-          <Modal.Title>Join Room</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className='join-room-join-input-container'>
-            <Input
-              style={{ width: '250px' }}
-              onChange={(value) =>
-                setState({ ...state, joinInputValue: value })
-              }
-              value={joinInputValue}
-              placeholder='Enter Room ID...'
-            />
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <div className='join-room-join-button-container'>
-            <Button
-              type='button'
-              onClick={() => setState({ ...state, joinButtonClicked: true })}
-              buttonStyle='btn--primary--normal'
-              buttonSize='btn--medium'
-            >
-              Join
-            </Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
+      <form onSubmit={onClickJoinRoom}>
+        <InputGroup style={{ marginLeft: '15px' }}>
+          <Input
+            onChange={(value) => setState({ ...state, joinInputValue: value })}
+            value={joinInputValue}
+            placeholder='Enter Room ID'
+          />
+          <InputGroup.Button onClick={onClickJoinRoom}>
+            <Icon icon='arrow-down2' rotate={270} />
+          </InputGroup.Button>
+        </InputGroup>
+      </form>
     </div>
   );
 }
