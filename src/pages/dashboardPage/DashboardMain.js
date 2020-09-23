@@ -1,19 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './DashboardMain.css';
+import { connect } from 'react-redux';
+import { connectSocket } from '../../actions/socketActions';
 import Button from '../../components/button/Button';
 import NavBar from '../../components/navBar/NavBar';
 import JoinRoomView from './JoinRoomView';
 import CreateRoomView from './CreateRoomView';
-// import { Redirect } from 'react-router';
+import { Redirect } from 'react-router';
 
-const DashboardMain = () => {
-  // TODO: Connect to socket...
-  // const accessToken = localStorage.getItem('access-token');
+const DashboardMain = ({ connectSocket }) => {
+  const accessToken = localStorage.getItem('access-token');
   const [createRoomShow, setCreateRoomShow] = useState(false);
 
-  // if (accessToken === null) {
-  //   return <Redirect to='/' />;
-  // }
+  useEffect(() => {
+    connectSocket();
+  }, [connectSocket]);
+
+  if (accessToken === null) {
+    return <Redirect to='/' />;
+  }
 
   return (
     <div className='dashboard'>
@@ -59,7 +64,6 @@ const DashboardMain = () => {
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'>
             <path
               fill='#ffffff'
-              fill-opacity='1'
               d='M0,320L48,309.3C96,299,192,277,288,256C384,235,480,213,576,176C672,139,768,85,864,58.7C960,32,1056,32,1152,58.7C1248,85,1344,139,1392,165.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'
             ></path>
           </svg>
@@ -70,4 +74,10 @@ const DashboardMain = () => {
   );
 };
 
-export default DashboardMain;
+const mapStateToProps = (state) => {
+  return {
+    socketData: state.socketData,
+  };
+};
+
+export default connect(mapStateToProps, { connectSocket })(DashboardMain);

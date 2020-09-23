@@ -41,51 +41,55 @@ export const createRoom = (
   }
 ) => {
   return (dispatch) => {
-    dispatch(roomRequest());
-    socket.emit(
-      'CREATE_ROOM',
-      {
-        max_teams,
-        max_perTeam,
-        max_perRoom,
-        timeLimit,
-        privateRoom,
-        max_questions,
-        max_vote,
-        veto_quesCount,
-      },
-      (data) => {
-        if (data !== null) {
-          if (data !== ERROR_MSG) {
-            dispatch(roomSuccess(data, ROOM_CREATED));
-            const room_id = data.config.id;
-            socket.on('ROOM_UPDATED', (data) => {
-              if (data !== null && data.type !== undefined) {
+    if (socket !== null) {
+      dispatch(roomRequest());
+      socket.emit(
+        'CREATE_ROOM',
+        {
+          max_teams,
+          max_perTeam,
+          max_perRoom,
+          timeLimit,
+          privateRoom,
+          max_questions,
+          max_vote,
+          veto_quesCount,
+        },
+        (data) => {
+          if (data !== null) {
+            if (data !== ERROR_MSG) {
+              dispatch(roomSuccess(data, ROOM_CREATED));
+              const room_id = data.config.id;
+              socket.on('ROOM_UPDATED', (data) => {
+                if (data !== null && data.type !== undefined) {
+                  dispatch(getRoom(socket, { room_id }));
+                }
+              });
+              // On Submitting code...
+              // This is not the right way... we have to make a reducer to keep track of all the submissions...
+              socket.on('CODE_SUBMITTED', (data) => {
+                console.log('code res:', data);
                 dispatch(getRoom(socket, { room_id }));
-              }
-            });
-            // On Submitting code...
-            // This is not the right way... we have to make a reducer to keep track of all the submissions...
-            socket.on('CODE_SUBMITTED', (data) => {
-              console.log('code res:', data);
-              dispatch(getRoom(socket, { room_id }));
-            });
+              });
 
-            //On Successful submission of code...
-            //This is not the right way... we have to make a reducer to keep track of all the submissions...
-            socket.on('SUCCESSFULLY_SUBMITTED', (data) => {
-              console.log('TestCase passed', data);
-              dispatch(getRoom(socket, { room_id }));
-            });
+              //On Successful submission of code...
+              //This is not the right way... we have to make a reducer to keep track of all the submissions...
+              socket.on('SUCCESSFULLY_SUBMITTED', (data) => {
+                console.log('TestCase passed', data);
+                dispatch(getRoom(socket, { room_id }));
+              });
+            } else {
+              dispatch(roomFailure(data));
+            }
           } else {
-            dispatch(roomFailure(data));
+            dispatch(roomFailure('No data Received'));
           }
-        } else {
-          dispatch(roomFailure('No data Received'));
+          console.log('Create Room', data);
         }
-        console.log('Create Room', data);
-      }
-    );
+      );
+    } else {
+      dispatch(roomFailure('Server not connected...'));
+    }
   };
 };
 

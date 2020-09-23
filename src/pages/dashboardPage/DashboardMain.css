@@ -1,16 +1,20 @@
+:root {
+  /*TODO: Change this height later*/
+  --height-body: 87.6vh;
+}
+
 .dashboard {
   margin: auto;
 }
 .dashboard-body {
-  /*TODO: Change this height later*/
-  height: 87.6vh;
+  height: var(--height-body);
   width: 100%;
 }
 
 .dashboard-left {
   position: absolute;
   display: flex;
-  height: 87.6vh;
+  height: var(--height-body);
   width: 50%;
   align-items: center;
   justify-content: center;
@@ -24,7 +28,7 @@
 
 .dashboard-background {
   position: absolute;
-  height: 86.6vh;
+  height: var(--height-body);
   width: 100%;
   background: rgba(var(--primary-color-rgb), 0.15);
   z-index: 0;
@@ -41,4 +45,56 @@
   z-index: 2;
   right: 0;
   bottom: 10px;
+}
+
+/*Create Room View*/
+.create-room {
+  z-index: 5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.create-room-modal {
+  outline: solid var(--primary-color) 5px;
+  background-color: whitesmoke;
+  display: flex;
+  height: 450px;
+  width: 800px;
+}
+.create-room-modal-left {
+  background: rgba(var(--primary-color-rgb), 0.9);
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+.create-room-modal-right {
+  width: 50%;
+}
+.create-room-modal-header {
+  width: 100%;
+  text-align: right;
+  padding: 20px 20px 10px 0;
+}
+.create-room-modal-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.create-room-modal-body-left {
+  margin-right: 30px;
+}
+.create-room-modal-body-right {
+  margin-top: 30px;
+}
+.create-room-modal-footer {
+  margin: 40px;
+  text-align: center;
 }

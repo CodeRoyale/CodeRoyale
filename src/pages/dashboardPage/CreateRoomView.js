@@ -6,8 +6,7 @@ import { createRoom } from '../../actions/roomActions';
 import { ROOM_CREATED } from '../../utils/constants';
 import { timeToString } from '../../utils/timeToString';
 import { mapStateToProps } from '../../utils/mapStateToProps';
-import { Alert, Modal, SelectPicker, Checkbox } from 'rsuite';
-import Divider from '../../components/divider/Divider';
+import { Alert, Icon, SelectPicker, Checkbox, Animation } from 'rsuite';
 
 function CreateRoomView({ roomData, socketData, createRoom, show, onClose }) {
   const socket = socketData.socket;
@@ -15,12 +14,13 @@ function CreateRoomView({ roomData, socketData, createRoom, show, onClose }) {
     createRoomClicked: false,
     actionDone: false,
   });
+  const milliseconds = 60 * 60 * 1000;
   const [redirect, setRedirect] = useState(false);
   const [team_data, setTeamData] = useState({
     max_teams: 2,
     max_perTeam: 1,
     max_perRoom: 2,
-    timeLimit: 0.5 * 60 * 60 * 60,
+    timeLimit: 0.5 * milliseconds,
     max_questions: 3,
     max_vote: 1,
     veto_quesCount: 3,
@@ -95,7 +95,7 @@ function CreateRoomView({ roomData, socketData, createRoom, show, onClose }) {
     const time = times[i];
     times[i] = {
       label: timeToString(time),
-      value: time * 60 * 60 * 60,
+      value: time * milliseconds,
     };
   }
 
@@ -134,31 +134,31 @@ function CreateRoomView({ roomData, socketData, createRoom, show, onClose }) {
     max_teams
   );
   const maxPerRoomView = DropdownNumbers(
-    'Maximum players in the room',
+    'Max players in room',
     numbers,
     'max_perRoom',
     max_perRoom
   );
   const maxPerTeamView = DropdownNumbers(
-    'Maximum players per team',
+    'Max players per team',
     numbers,
     'max_perTeam',
     max_perTeam
   );
   const maxQuestionsView = DropdownNumbers(
-    'Maximum Question',
+    'Max Question',
     numbers,
     'max_questions',
     max_questions
   );
   const maxVoteView = DropdownNumbers(
-    'Maximum Votes',
+    'Max Votes',
     numberVotes,
     'max_vote',
     max_vote
   );
   const vetoQuestionCountView = DropdownNumbers(
-    'Veto Question Count',
+    'Veto Questions',
     numbers,
     'veto_quesCount',
     veto_quesCount
@@ -167,7 +167,7 @@ function CreateRoomView({ roomData, socketData, createRoom, show, onClose }) {
     'Time Limit',
     times,
     'timeLimit',
-    timeToString(timeLimit / (60 * 60 * 60))
+    timeToString(timeLimit / milliseconds)
   );
   const privateRoomView = (
     <>
@@ -183,48 +183,57 @@ function CreateRoomView({ roomData, socketData, createRoom, show, onClose }) {
   );
 
   // Main Render...
-  return (
-    <div>
-      <Modal overflow={true} show={show} onHide={() => onClose(false)}>
-        <Modal.Header>
-          <Modal.Title>Create Room</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className='create-room'>
-            <div className='create-room-left'>
-              <div>
+  return show ? (
+    <div className='create-room'>
+      <Animation.Bounce in={show}>
+        <div className='create-room-modal'>
+          <div className='create-room-modal-left'>
+            <div>
+              <h1>Create Room</h1>
+              <p style={{ fontSize: '20px' }}>
+                Invite Your Friends to <br /> join into the arena
+                <br /> of Code !
+              </p>
+            </div>
+          </div>
+          <div className='create-room-modal-right'>
+            <div className='create-room-modal-header'>
+              <Icon
+                style={{ cursor: 'pointer' }}
+                icon='close'
+                size='lg'
+                onClick={() => onClose(false)}
+              />
+            </div>
+            <div className='create-room-modal-body'>
+              <div className='create-room-modal-body-left'>
                 {maxTeamView}
                 {maxPerRoomView}
                 {maxPerTeamView}
                 {privateRoomView}
               </div>
-            </div>
-            <Divider />
-            <div className='create-room-right'>
-              <div>
+              <div className='create-room-modal-body-right'>
                 {maxQuestionsView}
                 {maxVoteView}
                 {vetoQuestionCountView}
                 {timeLimitView}
               </div>
             </div>
+            <div className='create-room-modal-footer'>
+              <Button
+                type='button'
+                onClick={() => setState({ ...state, createRoomClicked: true })}
+                buttonStyle='btn--primary--normal'
+                buttonSize='btn--medium'
+              >
+                Create Room
+              </Button>
+            </div>
           </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <div style={{ textAlign: 'center' }}>
-            <Button
-              type='button'
-              onClick={() => setState({ ...state, createRoomClicked: true })}
-              buttonStyle='btn--primary--normal'
-              buttonSize='btn--medium'
-            >
-              Create Room
-            </Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
+        </div>
+      </Animation.Bounce>
     </div>
-  );
+  ) : null;
 }
 
 export default connect(mapStateToProps, { createRoom })(CreateRoomView);
