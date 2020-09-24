@@ -1,4 +1,5 @@
 import { LOGIN_LOADING, LOGIN_FAIL, LOGIN_SUCCESS } from './types';
+import jwt from 'jsonwebtoken';
 
 const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
 const LOGIN_API = `${process.env.REACT_APP_USER_API_URL}/users/login`;
@@ -48,8 +49,12 @@ export const loginUser = (authData) => (dispatch) => {
     })
     .then((res) => res.json())
     .then((jsonRes) => {
+      console.log(jwt.decode(jsonRes.payload.accessToken));
       // Temporary storing in localStorage in actions will change
-      localStorage.setItem('user-data', JSON.stringify(jsonRes));
+      localStorage.setItem(
+        'user-data',
+        JSON.stringify(jwt.decode(jsonRes.payload.accessToken))
+      );
       localStorage.setItem('access-token', jsonRes.accessToken);
       dispatch(loginSuccess(jsonRes));
     })
