@@ -33,12 +33,12 @@
     - 📗 Documenting source code
     - 💡 Improve code logic
     - 🐎 Performance
-    - 💄 Cosmetic
+    - 🎨 Cosmetic
     - 🚨 Tests
     - ✅ Adding a test
     - ✔️ Make a test pass
     - ⚡ General update
-    - 🎨 Improve format/structure
+    - 📐 Improve format/structure
     - 🔨 Refactor code
     - 🔥 Removing code/files
     - 💚 Continuous Integration
