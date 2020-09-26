@@ -1,7 +1,7 @@
 :root {
   --room-body-height: 87.6vh;
   --room-left-width: 78%;
-  --room-left-height: 25%;
+  --room-left-height: 130px;
 }
 
 .room-body {
@@ -11,19 +11,22 @@
 }
 .room-body-left {
   width: var(--room-left-width);
-  background-color: whitesmoke;
 }
-.room-body-right {
-  position: fixed;
-  right: 0;
-  height: 100%;
-  width: calc(100% - var(--room-left-width));
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
-}
+
 .room-body-header {
   height: var(--room-left-height);
   background-color: white;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  display: flex;
+}
+.room-body-header-left {
+  width: 50%;
+}
+.room-body-header-right {
+  width: 50%;
+  text-align: right;
+  padding: 20px;
 }
 .room-body-header-extra {
   position: absolute;
@@ -33,5 +36,17 @@
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
   opacity: 0;
 }
+.room-body-right {
+  position: fixed;
+  right: 0;
+  height: 100%;
+  width: calc(100% - var(--room-left-width));
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+}
+.room-right-header {
+  height: var(--room-left-height);
+  padding: 10px;
+}
 .room-left-body {
+  background-color: whitesmoke;
 }

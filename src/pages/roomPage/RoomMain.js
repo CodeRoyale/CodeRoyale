@@ -1,8 +1,13 @@
 import React from 'react';
 import './RoomMain.css';
 import NavBar from '../../components/navBar/NavBar';
+import CountBar from '../../components/countBar/CountBar';
+import Divider from '../../components/divider/Divider';
 
 const RoomMain = () => {
+  // Styles...
+  const textMarginLeft = '20px';
+  const textFontSize = 'medium';
   return (
     <div className='room'>
       <div className='room-header'>
@@ -10,11 +15,48 @@ const RoomMain = () => {
       </div>
       <div className='room-body'>
         <div className='room-body-left'>
-          <div className='room-body-header'></div>
+          <div className='room-body-header'>
+            <div className='room-body-header-left'>
+              <div>
+                <p
+                  style={{
+                    marginLeft: textMarginLeft,
+                    fontSize: textFontSize,
+                  }}
+                >
+                  Number of Users
+                </p>
+                <CountBar count={1} total={5} width={'100%'} />
+              </div>
+              <div>
+                <p
+                  style={{
+                    marginLeft: textMarginLeft,
+                    fontSize: textFontSize,
+                  }}
+                >
+                  Number of Teams
+                </p>
+                <CountBar count={1} total={5} width={'100%'} />
+              </div>
+            </div>
+            <div className='room-body-header-right'>
+              <div>Start</div>
+              <div>Close Room</div>
+            </div>
+          </div>
           <div className='room-body-header-extra'></div>
           <div className='room-left-body'></div>
         </div>
-        <div className='room-body-right'></div>
+        <div className='room-body-right'>
+          <div className='room-right-header'>
+            <span style={{ fontSize: '25px' }}>sawarni99</span>
+            <br />
+            <span style={{ fontSize: '14px' }}>Team Name</span>
+            <div>qwrr-adas-asfv-xfrw</div>
+          </div>
+          <Divider />
+        </div>
       </div>
     </div>
   );
