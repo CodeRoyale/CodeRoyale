@@ -31,7 +31,7 @@
     - 📇 Metadata
     - 📚 Documentation
     - 📗 Documenting source code
-    - 💡 Improve code logic
+    - 💡 Improve logic
     - 🐎 Performance
     - 🎨 Cosmetic
     - 🚨 Tests
