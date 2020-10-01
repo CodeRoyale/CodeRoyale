@@ -40,6 +40,7 @@ export const loginUser = (authData) => (dispatch) => {
         JSON.stringify(jwt.decode(jsonRes.data.payload.accessToken))
       );
       localStorage.setItem('access-token', jsonRes.data.payload.accessToken);
+      localStorage.token = jsonRes.data.payload.accessToken;
       dispatch(loginSuccess(jsonRes));
     })
     .catch((err) => {
