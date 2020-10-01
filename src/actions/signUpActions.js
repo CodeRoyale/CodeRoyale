@@ -1,7 +1,5 @@
 import { SIGNUP_LOADING, SIGNUP_SUCCESS, SIGNUP_FAIL } from './types';
-
-const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
-const SIGNUP_API = `${process.env.REACT_APP_USER_API_URL}/users/signup`;
+import axiosInstance from '../helpers/userAPIHelper';
 
 const signUpRequest = () => {
   return {
@@ -25,27 +23,15 @@ const signUpFail = (data) => {
 
 export const signUpUser = (authData) => (dispatch) => {
   dispatch(signUpRequest());
-  let headers = new Headers();
-  headers.append('Content-Type', 'application/json');
-  headers.append('Origin', CLIENT_URL);
-  headers.append('Access-Control-Allow-Credentials', 'true');
 
-  fetch(SIGNUP_API, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify(authData),
-  })
-    .then((res) => {
-      if (!res.ok) {
-        throw Error(res.statusText);
-      }
-      return res;
-    })
-    .then((res) => res.json())
+  axiosInstance
+    .post('/users/signup', authData)
     .then((jsonRes) => {
+      console.log(jsonRes);
       dispatch(signUpSuccess(jsonRes));
     })
     .catch((err) => {
+      console.log(err);
       dispatch(signUpFail(err));
     });
 };
