@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './RoomMain.css';
 import NavBar from '../../components/navBar/NavBar';
+import FloatingButton from '../../components/floatingButton/FloatingButton';
 import CountBar from '../../components/countBar/CountBar';
 import Divider from '../../components/divider/Divider';
 import TeamCard from '../../components/teamCard/TeamCard';
+import CreateTeamView from './CreateTeamView';
 
 const RoomMain = () => {
+  const [createTeamShow, setCreateTeamShow] = useState(false);
   // Styles...
   const textMarginLeft = '20px';
   const textFontSize = 'medium';
@@ -65,6 +68,11 @@ const RoomMain = () => {
           <Divider />
         </div>
       </div>
+      <FloatingButton onClick={() => setCreateTeamShow(true)}>+</FloatingButton>
+      <CreateTeamView
+        show={createTeamShow}
+        onClose={() => setCreateTeamShow(false)}
+      />
     </div>
   );
 };
