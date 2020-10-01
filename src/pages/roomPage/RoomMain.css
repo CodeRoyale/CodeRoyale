@@ -11,6 +11,7 @@
 }
 .room-body-left {
   width: var(--room-left-width);
+  background-color: whitesmoke;
 }
 
 .room-body-header {
@@ -46,7 +47,4 @@
 .room-right-header {
   height: var(--room-left-height);
   padding: 10px;
-}
-.room-left-body {
-  background-color: whitesmoke;
 }

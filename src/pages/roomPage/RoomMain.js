@@ -3,6 +3,7 @@ import './RoomMain.css';
 import NavBar from '../../components/navBar/NavBar';
 import CountBar from '../../components/countBar/CountBar';
 import Divider from '../../components/divider/Divider';
+import TeamCard from '../../components/teamCard/TeamCard';
 
 const RoomMain = () => {
   // Styles...
@@ -46,7 +47,13 @@ const RoomMain = () => {
             </div>
           </div>
           <div className='room-body-header-extra'></div>
-          <div className='room-left-body'></div>
+          <div className='room-left-body'>
+            <TeamCard
+              team_name='Team1'
+              totalTeam={5}
+              users={['Alan', 'Joel']}
+            />
+          </div>
         </div>
         <div className='room-body-right'>
           <div className='room-right-header'>
