@@ -1,17 +1,90 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './RoomMain.css';
 import NavBar from '../../components/navBar/NavBar';
+import RoomHeader from './RoomHeader';
+import RoomRight from './RoomRight';
 import FloatingButton from '../../components/floatingButton/FloatingButton';
-import CountBar from '../../components/countBar/CountBar';
-import Divider from '../../components/divider/Divider';
 import TeamCard from '../../components/teamCard/TeamCard';
 import CreateTeamView from './CreateTeamView';
+import { getRoom } from '../../actions/roomActions';
+import { resetTeamAction } from '../../actions/teamActions';
+import { TEAM_CREATED, TEAM_JOINED, TEAM_LEFT } from '../../utils/constants';
+import { Alert } from 'rsuite';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 
-const RoomMain = () => {
+const RoomMain = ({
+  roomData,
+  socketData,
+  teamData,
+  getRoom,
+  resetTeamAction,
+}) => {
   const [createTeamShow, setCreateTeamShow] = useState(false);
-  // Styles...
-  const textMarginLeft = '20px';
-  const textFontSize = 'medium';
+  const socket = socketData.socket;
+
+  // Room Details...
+  let roomTeams, roomConfig, roomState, roomCompetition, room_id, admin;
+  if (roomData.data !== null) {
+    roomTeams = roomData.data.teams;
+    roomConfig = roomData.data.config;
+    roomState = roomData.data.state;
+    roomCompetition = roomData.data.competition;
+    if (roomConfig !== undefined) {
+      room_id = roomConfig.id;
+      admin = roomConfig.admin;
+    }
+  }
+
+  // Get room & check if veto started
+  useEffect(() => {
+    if (socket !== null && teamData.type !== '' && room_id !== undefined) {
+      getRoom(socket, { room_id });
+    }
+  }, [room_id, socket, getRoom, teamData.type]);
+
+  // Display Alert on every action...
+  useEffect(() => {
+    switch (teamData.type) {
+      case TEAM_CREATED:
+        Alert.success('Team Created');
+        resetTeamAction();
+        break;
+      case TEAM_JOINED:
+        Alert.success('You have joined a team');
+        resetTeamAction();
+        break;
+      case TEAM_LEFT:
+        Alert.success('You have left a team');
+        resetTeamAction();
+        break;
+      default:
+        break;
+    }
+    if (teamData.error !== null) {
+      Alert.error(teamData.error);
+      resetTeamAction();
+    }
+  });
+
+  // Checking all the conditions to be in the room...
+  if (socket === null) {
+    return <Redirect to='/dashboard' />;
+  }
+
+  // Setting Team Cards...
+  let team_cards = [];
+  for (var teamName in roomTeams) {
+    team_cards.push(
+      <TeamCard
+        key={teamName}
+        team_name={teamName}
+        totalUsers={roomConfig['max_perTeam']}
+        users={roomTeams[teamName]}
+      />
+    );
+  }
+
   return (
     <div className='room'>
       <div className='room-header'>
@@ -19,53 +92,18 @@ const RoomMain = () => {
       </div>
       <div className='room-body'>
         <div className='room-body-left'>
-          <div className='room-body-header'>
-            <div className='room-body-header-left'>
-              <div>
-                <p
-                  style={{
-                    marginLeft: textMarginLeft,
-                    fontSize: textFontSize,
-                  }}
-                >
-                  Number of Users
-                </p>
-                <CountBar count={1} total={5} width={'100%'} />
-              </div>
-              <div>
-                <p
-                  style={{
-                    marginLeft: textMarginLeft,
-                    fontSize: textFontSize,
-                  }}
-                >
-                  Number of Teams
-                </p>
-                <CountBar count={1} total={5} width={'100%'} />
-              </div>
-            </div>
-            <div className='room-body-header-right'>
-              <div>Start</div>
-              <div>Close Room</div>
-            </div>
-          </div>
-          <div className='room-body-header-extra'></div>
-          <div className='room-left-body'>
-            <TeamCard
-              team_name='Team1'
-              totalTeam={5}
-              users={['Alan', 'Joel']}
+          <div>
+            <RoomHeader
+              config={roomConfig}
+              state={roomState}
+              teams={roomTeams}
+              competition={roomCompetition}
             />
           </div>
+          <div className='room-left-body'>{team_cards}</div>
         </div>
         <div className='room-body-right'>
-          <div className='room-right-header'>
-            <span style={{ fontSize: '25px' }}>sawarni99</span>
-            <br />
-            <span style={{ fontSize: '14px' }}>Team Name</span>
-            <div>qwrr-adas-asfv-xfrw</div>
-          </div>
-          <Divider />
+          <RoomRight admin={admin} room_id={room_id} />
         </div>
       </div>
       <FloatingButton onClick={() => setCreateTeamShow(true)}>+</FloatingButton>
@@ -76,7 +114,15 @@ const RoomMain = () => {
     </div>
   );
 };
-export default RoomMain;
+
+export const mapStateToProps = (state) => {
+  return {
+    roomData: state.roomData,
+    teamData: state.teamData,
+    socketData: state.socketData,
+  };
+};
+export default connect(mapStateToProps, { getRoom, resetTeamAction })(RoomMain);
 
 // import React, { useEffect } from 'react';
 // import './RoomMain.css';

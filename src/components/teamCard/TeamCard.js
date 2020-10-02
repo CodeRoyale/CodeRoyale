@@ -5,19 +5,18 @@ import profileData from '../../utils/examples';
 import { joinTeam } from '../../actions/teamActions';
 import { connect } from 'react-redux';
 
-function TeamCard({
-  team_name,
-  totalTeam,
-  users,
-  roomData,
-  socketData,
-  joinTeam,
-}) {
+function TeamCard({ team_name, totalUsers, users, socketData, joinTeam }) {
   const [teamButtonClicked, setTeamButtonClicked] = useState(false);
+  const userName = profileData.username; // Get this from API...
   const imageUrl = profileData.imageUrl; // Get this from API...
   const socket = socketData.socket;
   const userCount = users.length;
   let buttonText = '+';
+
+  // Checking if user is in the team or not...
+  if (users.includes(userName)) {
+    buttonText = '-';
+  }
 
   //Join or leave team...
   useEffect(() => {
@@ -40,19 +39,21 @@ function TeamCard({
   ));
 
   return (
-    <div className='team-card'>
-      <div className='team-card-name'>{team_name}</div>
-      <div className='team-card-progress'>
-        <CountBar count={userCount} total={totalTeam} />
-      </div>
-      <div className='team-card-users'>{userCards}</div>
-      <div className='team-card-button-container'>
-        <button
-          className='team-card-button'
-          onClick={() => setTeamButtonClicked(true)}
-        >
-          <b>{buttonText}</b>
-        </button>
+    <div>
+      <div className='team-card'>
+        <div className='team-card-name'>{team_name}</div>
+        <div className='team-card-progress'>
+          <CountBar count={userCount} total={totalUsers} />
+        </div>
+        <div className='team-card-users'>{userCards}</div>
+        <div className='team-card-button-container'>
+          <button
+            className='team-card-button'
+            onClick={() => setTeamButtonClicked(true)}
+          >
+            <b>{buttonText}</b>
+          </button>
+        </div>
       </div>
     </div>
   );
