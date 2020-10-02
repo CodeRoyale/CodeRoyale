@@ -31,7 +31,6 @@ const RoomMain = ({
 
   // Initializations...
   const socket = socketData.socket;
-  const accessToken = localStorage.getItem('access-token');
   const userName = profileData.username.toString();
 
   // Initialization of variables...
@@ -84,9 +83,6 @@ const RoomMain = ({
   // Checking all the conditions to be in the room...
   if (socket === null) {
     return <Redirect to='/lobby' />;
-  }
-  if (accessToken === null) {
-    return <Redirect to='/' />;
   }
 
   // If veto started then move to veto page...

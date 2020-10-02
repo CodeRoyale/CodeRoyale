@@ -1,5 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useHistory,
+} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
 import routes from './routes';
@@ -14,6 +19,7 @@ import Arena from './pages/arenaPage/ArenaMain';
 import RoomMain from './pages/roomPage/RoomMain';
 import VetoMain from './pages/vetoPage/VetoMain';
 import WinLoseMain from './pages/winLosePage/WinLoseMain';
+import isAuthenticated from './utils/isAuthenticated';
 import 'rsuite/lib/styles/index.less';
 import './App.css';
 
@@ -31,6 +37,20 @@ const componentRegistry = {
   FrontPageMain: FrontPageMain,
 };
 
+const RenderRoute = (route) => {
+  const history = useHistory();
+  if (route.needsAuth && !isAuthenticated()) {
+    history.push('/login');
+  }
+  return (
+    <Route
+      exact
+      path={route.path}
+      component={componentRegistry[route.component]}
+    />
+  );
+};
+
 const App = () => {
   return (
     <Provider store={store}>
@@ -38,12 +58,7 @@ const App = () => {
         <Router>
           <Switch>
             {routes.map((route, index) => (
-              <Route
-                key={index}
-                exact
-                path={route.path}
-                component={componentRegistry[route.component]}
-              />
+              <RenderRoute {...route} key={index} />
             ))}
           </Switch>
         </Router>

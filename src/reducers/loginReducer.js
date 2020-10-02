@@ -9,6 +9,7 @@ export default function (state = initialState, action) {
     case LOGIN_LOADING:
       return {
         ...state,
+        error: false,
         isLoading: true,
       };
     case LOGIN_SUCCESS:
@@ -22,7 +23,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoading: false,
-        data: action.payload,
+        error: action.payload,
         isLoggedIn: false,
       };
     default:

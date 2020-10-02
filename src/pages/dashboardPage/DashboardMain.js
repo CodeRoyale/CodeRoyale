@@ -5,12 +5,7 @@ import NavBar from '../../components/navBar/NavBar';
 import { Redirect } from 'react-router';
 
 const DashboardMain = () => {
-  const accessToken = localStorage.getItem('access-token');
   const [playButtonClicked, setPlayButtonClicked] = useState(false);
-
-  if (accessToken === null) {
-    return <Redirect to='/' />;
-  }
 
   if (playButtonClicked) {
     return <Redirect to='/lobby' />;

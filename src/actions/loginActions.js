@@ -11,14 +11,14 @@ const loginRequest = () => {
 const loginSuccess = (data) => {
   return {
     type: LOGIN_SUCCESS,
-    payload: data,
+    payload: data.data,
   };
 };
 
-const loginFail = (data) => {
+const loginFail = (error) => {
   return {
     type: LOGIN_FAIL,
-    payload: data.message,
+    payload: error.response.data,
   };
 };
 
@@ -33,18 +33,18 @@ export const loginUser = (authData) => (dispatch) => {
   axiosInstance
     .post('/users/login', thirdPartyData)
     .then((jsonRes) => {
+      console.log(jsonRes);
       console.log(jwt.decode(jsonRes.data.payload.accessToken));
       // Temporary storing in localStorage in actions will change
       localStorage.setItem(
         'user-data',
         JSON.stringify(jwt.decode(jsonRes.data.payload.accessToken))
       );
-      localStorage.setItem('access-token', jsonRes.data.payload.accessToken);
       localStorage.token = jsonRes.data.payload.accessToken;
       dispatch(loginSuccess(jsonRes));
     })
-    .catch((err) => {
-      console.log(err);
-      dispatch(loginFail(err));
+    .catch((error) => {
+      console.log(error);
+      dispatch(loginFail(error));
     });
 };

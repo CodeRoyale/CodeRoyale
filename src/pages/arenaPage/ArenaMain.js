@@ -23,11 +23,6 @@ const ArenaMain = ({ socketData, arenaData, vetoData, getQuestion }) => {
     return <Redirect to='/lobby' />;
   }
 
-  const accessToken = localStorage.getItem('access-token');
-  if (accessToken === null) {
-    return <Redirect to='/' />;
-  }
-
   const handleGetCurrQuestion = (data) => {
     setCurrentQuestion(data);
   };
