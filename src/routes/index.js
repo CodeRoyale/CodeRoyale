@@ -60,6 +60,12 @@ const routes = [
     needsAuth: true,
   },
   {
+    path: '/test',
+    component: 'TestPage',
+    title: 'Test',
+    needsAuth: true,
+  },
+  {
     path: '',
     component: 'FrontPageMain',
     title: 'CodeRoyale',

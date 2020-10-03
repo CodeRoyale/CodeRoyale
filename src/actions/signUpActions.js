@@ -1,5 +1,5 @@
 import { SIGNUP_LOADING, SIGNUP_SUCCESS, SIGNUP_FAIL } from './types';
-import axiosInstance from '../helpers/userAPIHelper';
+import axiosInstance from '../helpers/axiosInstance';
 
 const signUpRequest = () => {
   return {
@@ -24,7 +24,7 @@ const signUpFail = (data) => {
 export const signUpUser = (authData) => (dispatch) => {
   dispatch(signUpRequest());
 
-  axiosInstance
+  axiosInstance()
     .post('/users/signup', authData)
     .then((jsonRes) => {
       console.log(jsonRes);

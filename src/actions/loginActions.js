@@ -1,6 +1,6 @@
 import { LOGIN_LOADING, LOGIN_FAIL, LOGIN_SUCCESS } from './types';
 import jwt from 'jsonwebtoken';
-import axiosInstance from '../helpers/userAPIHelper';
+import axiosInstance from '../helpers/axiosInstance';
 
 const loginRequest = () => {
   return {
@@ -30,7 +30,7 @@ export const loginUser = (authData) => (dispatch) => {
     access_token: authData.access_token,
   };
 
-  axiosInstance
+  axiosInstance()
     .post('/users/login', thirdPartyData)
     .then((jsonRes) => {
       console.log(jsonRes);

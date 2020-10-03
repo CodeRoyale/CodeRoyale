@@ -19,6 +19,7 @@ import Arena from './pages/arenaPage/ArenaMain';
 import RoomMain from './pages/roomPage/RoomMain';
 import VetoMain from './pages/vetoPage/VetoMain';
 import WinLoseMain from './pages/winLosePage/WinLoseMain';
+import TestPage from './pages/testPage/TestPage';
 import isAuthenticated from './utils/isAuthenticated';
 import 'rsuite/lib/styles/index.less';
 import './App.css';
@@ -35,6 +36,7 @@ const componentRegistry = {
   VetoMain: VetoMain,
   ProfileSettingsMain: ProfileSettingsMain,
   FrontPageMain: FrontPageMain,
+  TestPage: TestPage,
 };
 
 const RenderRoute = (route) => {
