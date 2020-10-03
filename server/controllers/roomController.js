@@ -644,6 +644,15 @@ const codeSubmission = async (
   }
 };
 
+const findSoloMatch = ({ userName }, { socket }) => {
+  try {
+    insertInWaitQueue(socket);
+    return true;
+  } catch (err) {
+    return { error: err.message };
+  }
+};
+
 module.exports = {
   createRoom,
   joinRoom,
@@ -660,4 +669,5 @@ module.exports = {
   startCompetition,
   registerVotes,
   codeSubmission,
+  findSoloMatch,
 };

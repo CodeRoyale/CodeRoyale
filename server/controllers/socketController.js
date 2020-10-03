@@ -12,6 +12,7 @@ const {
   ADD_PRIVATE_LIST,
   VETO_VOTES,
   CODE_SUBMISSION,
+  FIND_SOLO_MATCH,
 } = require("../socketActions/userActions");
 
 const {
@@ -34,6 +35,7 @@ const {
   forwardMsg,
   addPrivateList,
   codeSubmission,
+  findSoloMatch,
 } = require("../controllers/roomController");
 
 // import utils
@@ -128,6 +130,7 @@ const handleUserEvents = (socket) => {
     genericActionCreater(codeSubmission, { socket }, true)
   );
   socket.on(ADD_PRIVATE_LIST, genericActionCreater(addPrivateList, { socket }));
+  socket.on(FIND_SOLO_MATCH, genericActionCreater(findSoloMatch, { socket }));
   socket.on("disconnect", () => {
     // removeUser(socket.userDetails.userName);
   });
