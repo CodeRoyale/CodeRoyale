@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import Button from '../../components/button/Button';
+
 import { connect } from 'react-redux';
 import { veto, resetVetoAction } from '../../actions/vetoActions';
-import { Loader, Alert } from 'rsuite';
+import { Loader, Alert, Button } from 'rsuite';
 
 const StartCompetitionButton = ({
   socketData,
@@ -27,12 +27,7 @@ const StartCompetitionButton = ({
   let content = (
     <div className='start-competition-view'>
       <div className='start-competition-view-button'>
-        <Button
-          type='button'
-          onClick={onClickStartCompetition}
-          buttonStyle='btn--primary--normal'
-          buttonSize='btn--medium'
-        >
+        <Button onClick={onClickStartCompetition} appearance='primary'>
           Start Competition
         </Button>
       </div>

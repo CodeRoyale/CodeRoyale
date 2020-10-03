@@ -32,6 +32,9 @@
   text-align: right;
   padding: 20px;
 }
+.room-body-header-right div {
+  margin-bottom: 15px;
+}
 .room-body-header-extra {
   position: absolute;
   height: 100px;
@@ -56,6 +59,14 @@
   height: 100%;
   width: calc(100% - var(--room-left-width));
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+}
+.room-right-roomId {
+  margin-top: 15px;
+  display: flex;
+}
+.room-right-roomId div {
+  margin-left: 10px;
+  cursor: pointer;
 }
 .room-right-header {
   height: var(--room-left-height);

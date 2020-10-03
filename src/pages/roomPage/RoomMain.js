@@ -11,7 +11,7 @@ import { resetTeamAction } from '../../actions/teamActions';
 import { TEAM_CREATED, TEAM_JOINED, TEAM_LEFT } from '../../utils/constants';
 import { Alert } from 'rsuite';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
+// import { Redirect } from 'react-router';
 
 const RoomMain = ({
   roomData,
@@ -67,10 +67,10 @@ const RoomMain = ({
     }
   });
 
-  // Checking all the conditions to be in the room...
-  if (socket === null) {
-    return <Redirect to='/dashboard' />;
-  }
+  // // Checking all the conditions to be in the room...
+  // if (socket === null) {
+  //   return <Redirect to='/dashboard' />;
+  // }
 
   // Setting Team Cards...
   let team_cards = [];
@@ -103,7 +103,7 @@ const RoomMain = ({
           <div className='room-left-body'>{team_cards}</div>
         </div>
         <div className='room-body-right'>
-          <RoomRight admin={admin} room_id={room_id} />
+          <RoomRight admin={admin} room_id='dsafgagfqfq' />
         </div>
       </div>
       <FloatingButton onClick={() => setCreateTeamShow(true)}>+</FloatingButton>

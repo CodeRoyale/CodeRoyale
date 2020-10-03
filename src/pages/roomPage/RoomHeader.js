@@ -1,6 +1,8 @@
 import React from 'react';
 import CountBar from '../../components/countBar/CountBar';
 import { millisecondsToString } from '../../utils/timeToString';
+import CloseRoomView from './CloseRoomView';
+import StartCompetitionButton from './StartCompetitionButton';
 
 function RoomHeader({ config, state, teams, competition }) {
   let playersRoom = 0;
@@ -69,8 +71,12 @@ function RoomHeader({ config, state, teams, competition }) {
           </div>
         </div>
         <div className='room-body-header-right'>
-          <div>Start</div>
-          <div>Close Room</div>
+          <div>
+            <StartCompetitionButton />
+          </div>
+          <div>
+            <CloseRoomView />
+          </div>
         </div>
       </div>
       <div className='room-body-header-extra'>
