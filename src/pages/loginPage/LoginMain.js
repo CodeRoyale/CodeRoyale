@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { loginUser } from '../../actions/loginActions';
+import { loginUser, actionReset } from '../../actions/userActions';
 import LeftSecLogin from './LeftSecLogin';
 import LoginSec from './LoginSec';
 import { useHistory } from 'react-router-dom';
@@ -14,7 +14,7 @@ import {
 } from '../../utils/constants';
 import './LoginMain.css';
 
-const LoginMain = ({ loginData, loginUser }) => {
+const LoginMain = ({ userData, loginUser, actionReset }) => {
   const history = useHistory();
 
   const handleAuthData = (data) => {
@@ -31,31 +31,35 @@ const LoginMain = ({ loginData, loginUser }) => {
 
   // Login error handling
   useEffect(() => {
-    if (loginData.error) {
-      switch (loginData.error.payload.message) {
+    if (userData.loginData.error) {
+      switch (userData.loginData.error.payload.message) {
         case REGISTER:
           alert(
             'Error on Login',
             'You will have to Sign Up first to use CodeRoyale!'
           );
+          actionReset();
           break;
         case AUTHERROR:
           alert(
             'Error on Login',
             'Some error occurred, please try again later'
           );
+          actionReset();
           break;
         case ERROR:
           alert(
             'Error on Login',
             'Some error occurred, we are working to fix it'
           );
+          actionReset();
           break;
         case INVALID:
           alert(
             'Error on Login',
             'Some error occurred, please try again later'
           );
+          actionReset();
           break;
         default:
           alert(
@@ -65,22 +69,25 @@ const LoginMain = ({ loginData, loginUser }) => {
           break;
       }
     }
-  }, [loginData.error]);
+  }, [userData.loginData.error, actionReset]);
 
   // Checking if user logged in successfully
   useEffect(() => {
-    if (loginData.data) {
-      if (loginData.data.payload.message === LOGIN) {
+    if (userData.loginData.data) {
+      if (userData.loginData.data.payload.message === LOGIN) {
         history.push('/dashboard');
       }
     }
-  }, [loginData.data, history]);
+  }, [userData.loginData.data, history]);
 
   // Default content
   let content = (
     <div className='login-page'>
       <LeftSecLogin />
-      <LoginSec isLoading={loginData.isLoading} getAuthData={handleAuthData} />
+      <LoginSec
+        isLoading={userData.loginData.isLoading}
+        getAuthData={handleAuthData}
+      />
     </div>
   );
 
@@ -88,7 +95,7 @@ const LoginMain = ({ loginData, loginUser }) => {
 };
 
 const mapStateToProps = (state) => ({
-  loginData: state.loginData,
+  userData: state.userData,
 });
 
-export default connect(mapStateToProps, { loginUser })(LoginMain);
+export default connect(mapStateToProps, { loginUser, actionReset })(LoginMain);
