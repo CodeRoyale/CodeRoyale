@@ -12,7 +12,7 @@ import OutroMain from './pages/outroPage/OutroMain';
 import DashboardMain from './pages/dashboardPage/DashboardMain';
 import LoginMain from './pages/loginPage/LoginMain';
 import FrontPageMain from './pages/frontPage/FrontPageMain';
-import ProfileSettingsMain from './pages/profileSettingsPage/ProfileSettingsMain';
+import SettingsMain from './pages/settingsPage/SettingsMain';
 import LobbyMain from './pages/lobbyPage/LobbyMain';
 import SignUpMain from './pages/signUpPage/SignUpMain';
 import Arena from './pages/arenaPage/ArenaMain';
@@ -34,7 +34,7 @@ const componentRegistry = {
   WinLoseMain: WinLoseMain,
   RoomMain: RoomMain,
   VetoMain: VetoMain,
-  ProfileSettingsMain: ProfileSettingsMain,
+  SettingsMain: SettingsMain,
   FrontPageMain: FrontPageMain,
   TestPage: TestPage,
 };

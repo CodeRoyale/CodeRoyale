@@ -1,9 +1,9 @@
-.settings-body-container {
+.settings-body {
   margin-left: 80px;
   margin-right: 80px;
 }
 
-.profile-settings {
+.settings {
   height: 100%;
   background-color: #f5f8f8;
 }
@@ -38,6 +38,6 @@
   margin-top: 30px;
 }
 
-.settings-deactivate-profile-button {
+.settings-delete-profile-button {
   margin-top: 16px;
 }

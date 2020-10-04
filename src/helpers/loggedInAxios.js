@@ -1,3 +1,8 @@
+/*
+    - Axios instance if user IS logged in
+    - Every request contains token in request headers
+*/
+
 import axios from 'axios';
 
 export default (history = null) => {
@@ -17,12 +22,12 @@ export default (history = null) => {
     headers['Access-Control-Allow-Credentials'] = true;
   }
 
-  const axiosInstance = axios.create({
+  const loggedInAxios = axios.create({
     baseURL: baseURL,
     headers,
   });
 
-  axiosInstance.interceptors.response.use(
+  loggedInAxios.interceptors.response.use(
     (response) =>
       new Promise((resolve, reject) => {
         resolve(response);
@@ -50,5 +55,5 @@ export default (history = null) => {
     }
   );
 
-  return axiosInstance;
+  return loggedInAxios;
 };

@@ -5,10 +5,14 @@ import {
   SIGNUP_LOADING,
   SIGNUP_SUCCESS,
   SIGNUP_FAIL,
+  DELETE_ACCOUNT_LOADING,
+  DELETE_ACCOUNT_SUCCESS,
+  DELETE_ACCOUNT_FAIL,
   ACTION_RESET,
 } from './types';
 import jwt from 'jsonwebtoken';
-import axiosInstance from '../helpers/authAxios';
+import loggedInAxios from '../helpers/loggedInAxios';
+import loggedOutAxios from '../helpers/loggedOutAxios';
 
 const loginRequest = () => {
   return {
@@ -50,6 +54,26 @@ const signUpFail = (error) => {
   };
 };
 
+const deleteAccountRequest = () => {
+  return {
+    type: DELETE_ACCOUNT_LOADING,
+  };
+};
+
+const deleteAccountSuccess = (data) => {
+  return {
+    type: DELETE_ACCOUNT_SUCCESS,
+    payload: data.data,
+  };
+};
+
+const deleteAccountFail = (error) => {
+  return {
+    type: DELETE_ACCOUNT_FAIL,
+    payload: error.response.data,
+  };
+};
+
 export const actionReset = () => {
   return {
     type: ACTION_RESET,
@@ -64,7 +88,7 @@ export const loginUser = (authData) => (dispatch) => {
     access_token: authData.access_token,
   };
 
-  axiosInstance
+  loggedOutAxios
     .post('/users/login', thirdPartyData)
     .then((response) => {
       console.log(response);
@@ -86,7 +110,7 @@ export const loginUser = (authData) => (dispatch) => {
 export const signUpUser = (authData) => (dispatch) => {
   dispatch(signUpRequest());
 
-  axiosInstance
+  loggedOutAxios
     .post('/users/signup', authData)
     .then((response) => {
       console.log(response);
@@ -95,5 +119,20 @@ export const signUpUser = (authData) => (dispatch) => {
     .catch((error) => {
       console.log(error);
       dispatch(signUpFail(error));
+    });
+};
+
+export const deleteAccount = (history) => (dispatch) => {
+  dispatch(deleteAccountRequest());
+
+  loggedInAxios(history)
+    .delete('/users/delete')
+    .then((response) => {
+      console.log(response);
+      dispatch(deleteAccountSuccess(response));
+    })
+    .catch((error) => {
+      console.log(error);
+      dispatch(deleteAccountFail(error));
     });
 };

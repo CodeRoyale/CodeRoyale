@@ -55,7 +55,7 @@ const routes = [
   },
   {
     path: '/settings',
-    component: 'ProfileSettingsMain',
+    component: 'SettingsMain',
     title: 'Profile Settings',
     needsAuth: true,
   },

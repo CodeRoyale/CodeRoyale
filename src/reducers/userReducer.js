@@ -5,6 +5,9 @@ import {
   SIGNUP_LOADING,
   SIGNUP_SUCCESS,
   SIGNUP_FAIL,
+  DELETE_ACCOUNT_LOADING,
+  DELETE_ACCOUNT_SUCCESS,
+  DELETE_ACCOUNT_FAIL,
   ACTION_RESET,
 } from '../actions/types';
 
@@ -13,6 +16,9 @@ const initialState = {
     isLoading: false,
   },
   signUpData: {
+    isLoading: false,
+  },
+  deleteAccountData: {
     isLoading: false,
   },
 };
@@ -69,6 +75,30 @@ export default function (state = initialState, action) {
           error: action.payload,
         },
       };
+    case DELETE_ACCOUNT_LOADING:
+      return {
+        ...state,
+        deleteAccountData: {
+          isLoading: true,
+          error: false,
+        },
+      };
+    case DELETE_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        deleteAccountData: {
+          isLoading: false,
+          data: action.payload,
+        },
+      };
+    case DELETE_ACCOUNT_FAIL:
+      return {
+        ...state,
+        deleteAccountData: {
+          isLoading: false,
+          error: action.payload,
+        },
+      };
     case ACTION_RESET:
       return {
         ...state,
@@ -77,6 +107,10 @@ export default function (state = initialState, action) {
           data: false,
         },
         signUpData: {
+          error: false,
+          data: false,
+        },
+        deleteAccountData: {
           error: false,
           data: false,
         },
