@@ -646,7 +646,7 @@ const codeSubmission = async (
 
 const findSoloMatch = ({ userName }, { socket }) => {
   try {
-    insertInWaitQueue(socket);
+    insertInQueue({ socket });
     return true;
   } catch (err) {
     return { error: err.message };

@@ -1,6 +1,15 @@
 // use a balances binary tree here
 const waitQueue = [];
 
+const {
+  createRoom,
+  createTeam,
+  joinTeam,
+  joinRoom,
+  startCompetition,
+  g,
+} = require("../controllers/roomController");
+
 // change to const
 const getPos = (ele, l, r) => {
   // binary search
@@ -26,21 +35,35 @@ const getMatch = (user) => {
     : { matchedUser, matchPos };
 };
 
-const insertInQueue = (user) => {
+const insertInQueue = (user, { socket }) => {
   // find if anyone matches
   const match = getMatch(user);
   if (match) {
     const { matchedUser, matchPos } = match;
     waitQueue.splice(matchPos, 1);
-    matchUp(user, matchedUser);
+    matchUp(user, matchedUser, { socket });
   } else {
     let newPos = getPos(user.rank, 0, waitQueue.len);
     waitQueue.splice(newPos, 0, user);
   }
 };
 
-const matchUp = (userA, userB) => {
+const matchUp = (userA, userB, { socket }) => {
   // create room
-  // join room
+  const room = createRoom({ userName: userA.userName }, { socket });
+  room_id = room.config.id;
+
+  //create team1 and team2
+  const team1 = "Team 1";
+  const team2 = "Team 2";
+  createTeam({ userName: userA.userName, team1 }, { socket });
+  createTeam({ userName: userA.userName, team2 }, { socket });
+
+  //join team for userA
+  joinTeam({ userName: userA.userName, team1 }, { socket });
+
+  // join room and team for userB
+  joinRoom({ userName: userB.userName, room_id, team2 }, { socket });
+
   // send user A and B FOUND_MATCH
 };
