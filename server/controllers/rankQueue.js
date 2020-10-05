@@ -7,7 +7,6 @@ const {
   joinTeam,
   joinRoom,
   startCompetition,
-  g,
 } = require("../controllers/roomController");
 
 // change to const
@@ -35,20 +34,20 @@ const getMatch = (user) => {
     : { matchedUser, matchPos };
 };
 
-const insertInQueue = (user, { socket }) => {
+const insertInQueue = (user, { socket, io }) => {
   // find if anyone matches
   const match = getMatch(user);
   if (match) {
     const { matchedUser, matchPos } = match;
     waitQueue.splice(matchPos, 1);
-    matchUp(user, matchedUser, { socket });
+    matchUp(user, matchedUser, { socket, io });
   } else {
     let newPos = getPos(user.rank, 0, waitQueue.len);
     waitQueue.splice(newPos, 0, user);
   }
 };
 
-const matchUp = (userA, userB, { socket }) => {
+const matchUp = (userA, userB, { socket, io }) => {
   // create room
   const room = createRoom({ userName: userA.userName }, { socket });
   room_id = room.config.id;
@@ -66,4 +65,6 @@ const matchUp = (userA, userB, { socket }) => {
   joinRoom({ userName: userB.userName, room_id, team2 }, { socket });
 
   // send user A and B FOUND_MATCH
+  io.to(userA.socket_id).emit("MATCH_FOUND", room);
+  io.to(userB.socket_id).emit("MATCH_FOUND", room);
 };

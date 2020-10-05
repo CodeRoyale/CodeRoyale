@@ -111,7 +111,7 @@ const genericActionCreater = (
   }
 };
 
-const handleUserEvents = (socket) => {
+const handleUserEvents = ({ socket, io }) => {
   socket.on(CREATE_ROOM, genericActionCreater(createRoom, { socket }));
   socket.on(JOIN_ROOM, genericActionCreater(joinRoom, { socket }));
   socket.on(CREATE_TEAM, genericActionCreater(createTeam, { socket }));
@@ -130,14 +130,14 @@ const handleUserEvents = (socket) => {
     genericActionCreater(codeSubmission, { socket }, true)
   );
   socket.on(ADD_PRIVATE_LIST, genericActionCreater(addPrivateList, { socket }));
-  socket.on(FIND_SOLO_MATCH, genericActionCreater(findSoloMatch, { socket }));
+  socket.on(
+    FIND_SOLO_MATCH,
+    // needs io to contact specific users
+    genericActionCreater(findSoloMatch, { socket, io })
+  );
   socket.on("disconnect", () => {
     // removeUser(socket.userDetails.userName);
   });
-};
-
-const setQuestions = async () => {
-  // veto proceess here
 };
 
 module.exports = {

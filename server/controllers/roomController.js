@@ -644,9 +644,10 @@ const codeSubmission = async (
   }
 };
 
-const findSoloMatch = ({ userName }, { socket }) => {
+const findSoloMatch = ({ userName }, { socket, io }) => {
   try {
-    insertInQueue({ socket });
+    const user = getUser(userName);
+    insertInQueue(user, { socket, io });
     return true;
   } catch (err) {
     return { error: err.message };

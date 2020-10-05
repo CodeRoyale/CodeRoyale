@@ -66,7 +66,10 @@ const io = socketio(server, {
 });
 
 try {
-  io.use(authUser).on("connection", handleUserEvents);
+  // passing io(for 1v1 we need this) and socket(for general purpose)
+  io.use(authUser).on("connection", (socket) =>
+    handleUserEvents({ socket, io })
+  );
 } catch (err) {
   console.log(err.message);
 }
