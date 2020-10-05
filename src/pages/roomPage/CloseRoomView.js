@@ -41,7 +41,7 @@ function CloseRoomView({ roomData, socketData, closeRoom }) {
   ]);
 
   if (redirect) {
-    return <Redirect to='/lobby' />;
+    return <Redirect to='/dashboard' />;
   }
 
   return (
