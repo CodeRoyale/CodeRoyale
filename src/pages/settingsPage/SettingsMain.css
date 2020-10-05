@@ -1,43 +1,41 @@
-.settings-body {
-  margin-left: 80px;
-  margin-right: 80px;
-}
-
-.settings {
+.settings-page {
   height: 100%;
   background-color: #f5f8f8;
 }
 
 /* Settings body css */
-.settings-title {
-  font-size: 30px;
-  font-weight: 700;
-  margin-bottom: 40px;
-}
-
-.settings-image {
-  float: right;
-  margin-top: 20px;
-  width: 400px;
-  height: 400px;
-}
-
-.settings-separator {
-  flex: 2;
-}
-
-.settings-forms {
-  margin-top: 50px;
-  float: left;
-}
 .settings-container {
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.settings-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.settings-profile {
+  margin-top: 50px;
+  float: left;
 }
 
 .settings-save-button {
   margin-top: 30px;
 }
 
-.settings-delete-profile-button {
+.settings-delete-account-button {
   margin-top: 16px;
+}
+
+.settings-image {
+  margin-top: 20px;
+  width: 400px;
+  height: 400px;
+}
+
+.settings-separator {
+  padding: 100px;
 }

@@ -1,14 +1,22 @@
 .options-header {
-  font-size: 20px;
-  margin-top: 20px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
   margin-bottom: 5px;
+  margin-top: 15px;
 }
 
 .options-input {
-  height: 30px;
-  font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+  height: 35px;
+  font-size: 16px;
   padding: 5px;
   background-color: #eaecee;
   border-style: none;
   outline: none;
+}
+
+.options-input:focus {
+  outline: none;
+  border: 1px solid rgb(177, 175, 175);
 }

@@ -25,11 +25,12 @@ const SettingsBody = (props) => {
     props.updateAccount(newAccountData);
   };
 
-  return (
+  let content = (
     <div className='settings-container'>
-      <div className='settings-forms'>
-        <div className='settings-title'>Profile Settings</div>
+      <div className='settings-profile'>
+        <h2 className='settings-title'>Profile Settings</h2>
         <SettingsField
+          fieldSize={50}
           heading='Username'
           value={userName}
           disabled={false}
@@ -39,6 +40,7 @@ const SettingsBody = (props) => {
           }}
         />
         <SettingsField
+          fieldSize={50}
           heading='First Name'
           value={firstName}
           disabled={false}
@@ -48,6 +50,7 @@ const SettingsBody = (props) => {
           }}
         />
         <SettingsField
+          fieldSize={50}
           heading='Last Name'
           value={lastName}
           disabled={false}
@@ -56,7 +59,12 @@ const SettingsBody = (props) => {
             setNewAccountData({ ...newAccountData, lastName: e.target.value });
           }}
         />
-        <SettingsField heading='Email' value={email} disabled={true} />
+        <SettingsField
+          fieldSize={50}
+          heading='Email'
+          value={email}
+          disabled={true}
+        />
         <div className='settings-save-button'>
           <Button
             type='button'
@@ -67,22 +75,16 @@ const SettingsBody = (props) => {
             Save Settings
           </Button>
         </div>
-        {!props.deleteAccountLoading ? (
-          <div className='settings-delete-profile-button'>
-            <Button
-              type='button'
-              buttonStyle='btn--primary--logout'
-              buttonSize='btn--large'
-              onClick={deleteAccount}
-            >
-              Delete my Account
-            </Button>
-          </div>
-        ) : (
-          <div className='settings-delete-profile-button'>
-            <Loader size='md' content='Deleting you account...' />
-          </div>
-        )}
+        <div className='settings-delete-account-button'>
+          <Button
+            type='button'
+            buttonStyle='btn--primary--logout'
+            buttonSize='btn--large'
+            onClick={deleteAccount}
+          >
+            Delete my Account
+          </Button>
+        </div>
       </div>
       <div className='settings-separator'></div>
       <img
@@ -92,6 +94,72 @@ const SettingsBody = (props) => {
       />
     </div>
   );
+
+  if (props.deleteAccountLoading || props.updateAccountLoading) {
+    content = (
+      <div className='settings-container'>
+        <div className='settings-profile'>
+          <h2 className='settings-title'>Profile Settings</h2>
+          <SettingsField
+            fieldSize={50}
+            heading='Username'
+            value={userName}
+            disabled={false}
+            onChange={(e) => {
+              setUserName(e.target.value);
+              setNewAccountData({
+                ...newAccountData,
+                userName: e.target.value,
+              });
+            }}
+          />
+          <SettingsField
+            fieldSize={50}
+            heading='First Name'
+            value={firstName}
+            disabled={false}
+            onChange={(e) => {
+              setFirstName(e.target.value);
+              setNewAccountData({
+                ...newAccountData,
+                firstName: e.target.value,
+              });
+            }}
+          />
+          <SettingsField
+            fieldSize={50}
+            heading='Last Name'
+            value={lastName}
+            disabled={false}
+            onChange={(e) => {
+              setLastName(e.target.value);
+              setNewAccountData({
+                ...newAccountData,
+                lastName: e.target.value,
+              });
+            }}
+          />
+          <SettingsField
+            fieldSize={50}
+            heading='Email'
+            value={email}
+            disabled={true}
+          />
+          <div className='settings-save-button'>
+            <Loader size='md' content='Loading...' />
+          </div>
+        </div>
+        <div className='settings-separator'></div>
+        <img
+          className='settings-image'
+          alt='setting illustration'
+          src='/images/settings.svg'
+        />
+      </div>
+    );
+  }
+
+  return content;
 };
 
 export default SettingsBody;

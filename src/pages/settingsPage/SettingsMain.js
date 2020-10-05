@@ -8,7 +8,7 @@ import {
 import SettingsBody from './SettingsBody';
 import NavBar from '../../components/navBar/NavBar';
 import { Alert } from 'rsuite';
-import { ERROR, DELETED } from '../../utils/constants';
+import { ERROR, DELETED, UPDATE } from '../../utils/constants';
 import { useHistory } from 'react-router-dom';
 import './SettingsMain.css';
 
@@ -39,17 +39,34 @@ const SettingsMain = ({ userData, deleteAccount, updateAccount }) => {
     if (userData.deleteAccountData.error) {
       switch (userData.deleteAccountData.error) {
         case ERROR:
-          errorAlert("Couldn't delete account, please try again later!");
+          errorAlert("Couldn't delete your account, please try again later!");
           actionReset();
           break;
         default:
-          errorAlert("Couldn't delete account, please try again later!");
+          errorAlert("Couldn't delete your account, please try again later!");
           actionReset();
           break;
       }
     }
   }, [userData.deleteAccountData.error]);
 
+  // Update account error handling
+  useEffect(() => {
+    if (userData.updateAccountData.error) {
+      switch (userData.updateAccountData.error) {
+        case ERROR:
+          errorAlert("Couldn't update your profile, please try again later!");
+          actionReset();
+          break;
+        default:
+          errorAlert("Couldn't update your profile, please try again later!");
+          actionReset();
+          break;
+      }
+    }
+  }, [userData.updateAccountData.error]);
+
+  // Message to user when account deleted
   useEffect(() => {
     if (userData.deleteAccountData.data) {
       if (userData.deleteAccountData.data.payload.message === DELETED) {
@@ -61,16 +78,25 @@ const SettingsMain = ({ userData, deleteAccount, updateAccount }) => {
     }
   }, [userData.deleteAccountData.data, history]);
 
+  // Message to user when account is updated
+  useEffect(() => {
+    if (userData.updateAccountData.data) {
+      if (userData.updateAccountData.data.payload.message === UPDATE) {
+        successAlert('Your profile has been updated!');
+        actionReset();
+      }
+    }
+  }, [userData.updateAccountData.data]);
+
   return (
-    <div className='settings'>
+    <div className='settings-page'>
       <NavBar />
-      <div className='settings-body'>
-        <SettingsBody
-          deleteAccountLoading={userData.deleteAccountData.isLoading}
-          deleteAccount={handleDeleteAccount}
-          updateAccount={handleUpdateAccount}
-        />
-      </div>
+      <SettingsBody
+        deleteAccountLoading={userData.deleteAccountData.isLoading}
+        updateAccountLoading={userData.updateAccountData.isLoading}
+        deleteAccount={handleDeleteAccount}
+        updateAccount={handleUpdateAccount}
+      />
     </div>
   );
 };

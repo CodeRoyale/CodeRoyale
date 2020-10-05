@@ -1,19 +1,18 @@
 import React from 'react';
 import './SettingsField.css';
 
-function SettingsField(props) {
-  const fieldSize = 50;
-  if (!props.disabled) {
+const SettingsField = ({ fieldSize, disabled, heading, value, onChange }) => {
+  if (!disabled) {
     return (
       <div>
-        <div className='options-header'>{props.heading}</div>
+        <div className='options-header'>{heading}</div>
         <div>
           <input
             type='text'
             size={fieldSize}
             className='options-input'
-            value={props.value}
-            onChange={props.onChange}
+            value={value}
+            onChange={onChange}
           ></input>
         </div>
       </div>
@@ -21,19 +20,19 @@ function SettingsField(props) {
   } else {
     return (
       <div>
-        <div className='options-header'>{props.heading}</div>
+        <div className='options-header'>{heading}</div>
         <div>
           <input
             type='text'
             size={fieldSize}
             disabled
             className='options-input'
-            value={props.value}
+            value={value}
           ></input>
         </div>
       </div>
     );
   }
-}
+};
 
 export default SettingsField;
