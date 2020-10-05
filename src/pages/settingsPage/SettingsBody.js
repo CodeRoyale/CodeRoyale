@@ -7,6 +7,10 @@ import './SettingsMain.css';
 const SettingsBody = (props) => {
   let profileData = localStorage.getItem('user-data');
   profileData = JSON.parse(profileData);
+
+  const [newAccountData, setNewAccountData] = useState(null);
+
+  const [userName, setUserName] = useState(profileData.userName);
   const [firstName, setFirstName] = useState(profileData.firstName);
   const [lastName, setLastName] = useState(profileData.lastName);
   const email = profileData.email;
@@ -16,21 +20,41 @@ const SettingsBody = (props) => {
     props.deleteAccount();
   };
 
+  // Function to send updated account info to SettingsMain
+  const updateAccount = () => {
+    props.updateAccount(newAccountData);
+  };
+
   return (
     <div className='settings-container'>
       <div className='settings-forms'>
         <div className='settings-title'>Profile Settings</div>
         <SettingsField
+          heading='Username'
+          value={userName}
+          disabled={false}
+          onChange={(e) => {
+            setUserName(e.target.value);
+            setNewAccountData({ ...newAccountData, userName: e.target.value });
+          }}
+        />
+        <SettingsField
           heading='First Name'
           value={firstName}
           disabled={false}
-          onChange={(e) => setFirstName(e.target.value)}
+          onChange={(e) => {
+            setFirstName(e.target.value);
+            setNewAccountData({ ...newAccountData, firstName: e.target.value });
+          }}
         />
         <SettingsField
           heading='Last Name'
           value={lastName}
           disabled={false}
-          onChange={(e) => setLastName(e.target.value)}
+          onChange={(e) => {
+            setLastName(e.target.value);
+            setNewAccountData({ ...newAccountData, lastName: e.target.value });
+          }}
         />
         <SettingsField heading='Email' value={email} disabled={true} />
         <div className='settings-save-button'>
@@ -38,6 +62,7 @@ const SettingsBody = (props) => {
             type='button'
             buttonStyle='btn--primary--normal'
             buttonSize='btn--large'
+            onClick={updateAccount}
           >
             Save Settings
           </Button>

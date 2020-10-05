@@ -8,6 +8,9 @@ import {
   DELETE_ACCOUNT_LOADING,
   DELETE_ACCOUNT_SUCCESS,
   DELETE_ACCOUNT_FAIL,
+  UPDATE_ACCOUNT_LOADING,
+  UPDATE_ACCOUNT_SUCCESS,
+  UPDATE_ACCOUNT_FAIL,
   ACTION_RESET,
 } from './types';
 import jwt from 'jsonwebtoken';
@@ -74,12 +77,33 @@ const deleteAccountFail = (error) => {
   };
 };
 
+const updateAccountRequest = () => {
+  return {
+    type: UPDATE_ACCOUNT_LOADING,
+  };
+};
+
+const updateAccountSuccess = (data) => {
+  return {
+    type: UPDATE_ACCOUNT_SUCCESS,
+    payload: data.data,
+  };
+};
+
+const updateAccountFail = (error) => {
+  return {
+    type: UPDATE_ACCOUNT_FAIL,
+    payload: error.response.data,
+  };
+};
+
 export const actionReset = () => {
   return {
     type: ACTION_RESET,
   };
 };
 
+// Login user
 export const loginUser = (authData) => (dispatch) => {
   dispatch(loginRequest());
 
@@ -107,6 +131,7 @@ export const loginUser = (authData) => (dispatch) => {
     });
 };
 
+// Sign up user
 export const signUpUser = (authData) => (dispatch) => {
   dispatch(signUpRequest());
 
@@ -122,6 +147,7 @@ export const signUpUser = (authData) => (dispatch) => {
     });
 };
 
+// Delete account
 export const deleteAccount = (history) => (dispatch) => {
   dispatch(deleteAccountRequest());
 
@@ -134,5 +160,22 @@ export const deleteAccount = (history) => (dispatch) => {
     .catch((error) => {
       console.log(error);
       dispatch(deleteAccountFail(error));
+    });
+};
+
+// Update account info
+export const updateAccount = (history, newAccountData) => (dispatch) => {
+  console.log(newAccountData);
+  dispatch(updateAccountRequest());
+
+  loggedInAxios(history)
+    .patch('/users/update', newAccountData)
+    .then((response) => {
+      console.log(response);
+      dispatch(updateAccountSuccess(response));
+    })
+    .catch((error) => {
+      console.log(error);
+      dispatch(updateAccountFail(error));
     });
 };

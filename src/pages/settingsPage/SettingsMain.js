@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { deleteAccount, actionReset } from '../../actions/userActions';
+import {
+  deleteAccount,
+  updateAccount,
+  actionReset,
+} from '../../actions/userActions';
 import SettingsBody from './SettingsBody';
 import NavBar from '../../components/navBar/NavBar';
 import { Alert } from 'rsuite';
@@ -8,11 +12,16 @@ import { ERROR, DELETED } from '../../utils/constants';
 import { useHistory } from 'react-router-dom';
 import './SettingsMain.css';
 
-const SettingsMain = ({ userData, deleteAccount }) => {
+const SettingsMain = ({ userData, deleteAccount, updateAccount }) => {
   const history = useHistory();
 
   const handleDeleteAccount = () => {
     deleteAccount(history);
+  };
+
+  const handleUpdateAccount = (data) => {
+    console.log(data);
+    updateAccount(history, data);
   };
 
   // Showing success alert
@@ -59,6 +68,7 @@ const SettingsMain = ({ userData, deleteAccount }) => {
         <SettingsBody
           deleteAccountLoading={userData.deleteAccountData.isLoading}
           deleteAccount={handleDeleteAccount}
+          updateAccount={handleUpdateAccount}
         />
       </div>
     </div>
@@ -69,6 +79,8 @@ const mapStateToProps = (state) => ({
   userData: state.userData,
 });
 
-export default connect(mapStateToProps, { deleteAccount, actionReset })(
-  SettingsMain
-);
+export default connect(mapStateToProps, {
+  deleteAccount,
+  updateAccount,
+  actionReset,
+})(SettingsMain);

@@ -8,10 +8,15 @@ export const SIGNUP_LOADING = 'SIGNUP_LOADING';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAIL = 'SIGNUP_FAIL';
 
-// Delete User Actions
+// Delete Account Actions
 export const DELETE_ACCOUNT_LOADING = 'DELETE_ACCOUNT_LOADING';
 export const DELETE_ACCOUNT_SUCCESS = 'DELETE_ACCOUNT_SUCCESS';
 export const DELETE_ACCOUNT_FAIL = 'DELETE_ACCOUNT_FAIL';
+
+// Update Account Actions
+export const UPDATE_ACCOUNT_LOADING = 'UPDATE_ACCOUNT_LOADING';
+export const UPDATE_ACCOUNT_SUCCESS = 'UPDATE_ACCOUNT_SUCCESS';
+export const UPDATE_ACCOUNT_FAIL = 'UPDATE_ACCOUNT_FAIL';
 
 // Socket Actions
 export const SOCKET_LOADING = 'SOCKET_LOADING';

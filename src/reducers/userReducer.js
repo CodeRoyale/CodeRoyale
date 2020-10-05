@@ -8,6 +8,9 @@ import {
   DELETE_ACCOUNT_LOADING,
   DELETE_ACCOUNT_SUCCESS,
   DELETE_ACCOUNT_FAIL,
+  UPDATE_ACCOUNT_LOADING,
+  UPDATE_ACCOUNT_SUCCESS,
+  UPDATE_ACCOUNT_FAIL,
   ACTION_RESET,
 } from '../actions/types';
 
@@ -19,6 +22,9 @@ const initialState = {
     isLoading: false,
   },
   deleteAccountData: {
+    isLoading: false,
+  },
+  updateAccountData: {
     isLoading: false,
   },
 };
@@ -99,6 +105,30 @@ export default function (state = initialState, action) {
           error: action.payload,
         },
       };
+    case UPDATE_ACCOUNT_LOADING:
+      return {
+        ...state,
+        updateAccountData: {
+          isLoading: true,
+          error: false,
+        },
+      };
+    case UPDATE_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        updateAccountData: {
+          isLoading: false,
+          data: action.payload,
+        },
+      };
+    case UPDATE_ACCOUNT_FAIL:
+      return {
+        ...state,
+        updateAccountData: {
+          isLoading: false,
+          error: action.payload,
+        },
+      };
     case ACTION_RESET:
       return {
         ...state,
@@ -111,6 +141,10 @@ export default function (state = initialState, action) {
           data: false,
         },
         deleteAccountData: {
+          error: false,
+          data: false,
+        },
+        updateAccountData: {
           error: false,
           data: false,
         },
