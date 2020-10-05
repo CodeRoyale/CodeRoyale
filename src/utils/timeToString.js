@@ -8,6 +8,5 @@ export const timeToString = (time) => {
 
 export const millisecondsToString = (time) => {
   time = time / 1000 / 60;
-  console.log(time);
   return timeToString(time);
 };

@@ -2,12 +2,19 @@ import React, { useState, useEffect } from 'react';
 import './TeamCard.css';
 import CountBar from '../countBar/CountBar';
 import profileData from '../../utils/examples';
-import { joinTeam } from '../../actions/teamActions';
+import { joinTeam, leaveTeam } from '../../actions/teamActions';
 import { connect } from 'react-redux';
 
-function TeamCard({ team_name, totalUsers, users, socketData, joinTeam }) {
+function TeamCard({
+  team_name,
+  totalUsers,
+  users,
+  socketData,
+  joinTeam,
+  leaveTeam,
+}) {
   const [teamButtonClicked, setTeamButtonClicked] = useState(false);
-  const userName = profileData.username; // Get this from API...
+  const userName = profileData.username.toString(); // Get this from API...
   const imageUrl = profileData.imageUrl; // Get this from API...
   const socket = socketData.socket;
   const userCount = users.length;
@@ -23,10 +30,12 @@ function TeamCard({ team_name, totalUsers, users, socketData, joinTeam }) {
     if (teamButtonClicked) {
       if (buttonText === '+') {
         joinTeam(socket, { team_name });
-        setTeamButtonClicked(false);
+      } else if (buttonText === '-') {
+        leaveTeam(socket);
       }
+      setTeamButtonClicked(false);
     }
-  }, [teamButtonClicked, buttonText, joinTeam, socket, team_name]);
+  }, [teamButtonClicked, buttonText, joinTeam, leaveTeam, socket, team_name]);
 
   // UserCard...
   const userCards = users.map((user) => (
@@ -51,7 +60,7 @@ function TeamCard({ team_name, totalUsers, users, socketData, joinTeam }) {
             className='team-card-button'
             onClick={() => setTeamButtonClicked(true)}
           >
-            <b>{buttonText}</b>
+            {buttonText}
           </button>
         </div>
       </div>
@@ -67,4 +76,4 @@ export const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { joinTeam })(TeamCard);
+export default connect(mapStateToProps, { joinTeam, leaveTeam })(TeamCard);

@@ -100,10 +100,20 @@ const RoomMain = ({
               competition={roomCompetition}
             />
           </div>
-          <div className='room-left-body'>{team_cards}</div>
+          <div className='room-left-body'>
+            {
+              // team_cards
+              <TeamCard
+                key={'1'}
+                team_name={'qwqe'}
+                totalUsers={2}
+                users={['dsa', 'ada']}
+              />
+            }
+          </div>
         </div>
         <div className='room-body-right'>
-          <RoomRight admin={admin} room_id='dsafgagfqfq' />
+          <RoomRight admin={admin} room_id={room_id} />
         </div>
       </div>
       <FloatingButton onClick={() => setCreateTeamShow(true)}>+</FloatingButton>

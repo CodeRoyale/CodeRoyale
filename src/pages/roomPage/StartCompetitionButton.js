@@ -27,7 +27,11 @@ const StartCompetitionButton = ({
   let content = (
     <div className='start-competition-view'>
       <div className='start-competition-view-button'>
-        <Button onClick={onClickStartCompetition} appearance='primary'>
+        <Button
+          size='sm'
+          onClick={onClickStartCompetition}
+          appearance='primary'
+        >
           Start Competition
         </Button>
       </div>

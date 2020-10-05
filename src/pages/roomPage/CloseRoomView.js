@@ -50,6 +50,7 @@ function CloseRoomView({ roomData, socketData, closeRoom }) {
         onClick={() => setShowPrompt(true)}
         appearance='primary'
         color='red'
+        size='sm'
       >
         Close Room
       </Button>

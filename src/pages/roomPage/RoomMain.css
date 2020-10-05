@@ -1,7 +1,7 @@
 :root {
   --room-body-height: 87.6vh;
   --room-left-width: 78%;
-  --room-left-height: 130px;
+  --room-left-height: 110px;
 }
 
 .room-body {
@@ -16,6 +16,7 @@
 .room-left-body {
   display: flex;
   flex-wrap: wrap;
+  background-color: whitesmoke;
 }
 .room-body-header {
   height: var(--room-left-height);
@@ -30,18 +31,22 @@
 .room-body-header-right {
   width: 50%;
   text-align: right;
-  padding: 20px;
+  padding: 10px;
 }
 .room-body-header-right div {
-  margin-bottom: 15px;
+  margin-bottom: 12px;
+}
+.room-body-header-drawer {
+  height: 20px;
+  background: rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  text-align: right;
+  padding-right: 10px;
 }
 .room-body-header-extra {
-  position: absolute;
   height: 100px;
-  width: var(--room-left-width);
-  background-color: white;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
-  opacity: 0;
+  background: rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.1);
   padding: 10px;
 }
 .room-body-header-extra table {

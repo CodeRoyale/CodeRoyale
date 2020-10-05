@@ -8,7 +8,12 @@ function CountBar({ count, total, width }) {
   return (
     <div style={{ width: width }} className='count-bar'>
       {count}
-      <Line strokeColor='#0083DD' percent={percent} showInfo={false} />
+      <Line
+        strokeWidth={7}
+        strokeColor='#0083DD'
+        percent={percent}
+        showInfo={false}
+      />
       {total}
     </div>
   );

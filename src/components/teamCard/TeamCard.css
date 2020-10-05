@@ -1,5 +1,5 @@
 .team-card {
-  width: 260px;
+  width: 230px;
   background-color: white;
   margin: 30px;
   box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.2);
@@ -18,7 +18,7 @@
 
 .user-card {
   margin: 15px;
-  height: 45px;
+  height: 40px;
   display: flex;
   align-items: center;
   color: var(--primary-color);

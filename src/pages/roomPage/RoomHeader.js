@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CountBar from '../../components/countBar/CountBar';
 import { millisecondsToString } from '../../utils/timeToString';
 import CloseRoomView from './CloseRoomView';
 import StartCompetitionButton from './StartCompetitionButton';
+import { Icon } from 'rsuite';
 
 function RoomHeader({ config, state, teams, competition }) {
+  const [showExtraFeatures, setShowExtraFeatures] = useState(false);
   let playersRoom = 0;
   let max_perRoom = 0;
   let playersTeam = 0;
@@ -42,7 +44,50 @@ function RoomHeader({ config, state, teams, competition }) {
 
   // Styles...
   const textMarginLeft = '20px';
-  const textFontSize = 'medium';
+  const textFontSize = 'small';
+  let icon = 'angle-down';
+
+  //Extra Features...
+  let extraFeatureView = null;
+  if (showExtraFeatures) {
+    extraFeatureView = (
+      <div className='room-body-header-extra'>
+        <table>
+          <tbody>
+            <tr>
+              <td>Maximum Questions</td>
+              <td>
+                <b>{max_questions}</b>
+              </td>
+              <td>Maximum Votes</td>
+              <td>
+                <b>{max_vote}</b>
+              </td>
+              <td>Number of Veto Questions</td>
+              <td>
+                <b>{vetoQuesCount}</b>
+              </td>
+            </tr>
+            <tr>
+              <td>Time Limit</td>
+              <td>
+                <b>{millisecondsToString(timeLimit)}</b>
+              </td>
+              <td>Private Room</td>
+              <td>
+                <b>{privateRoom ? 'True' : 'False'}</b>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+    icon = 'angle-up';
+  } else {
+    extraFeatureView = null;
+    icon = 'angle-down';
+  }
+
   return (
     <div>
       <div className='room-body-header'>
@@ -79,36 +124,13 @@ function RoomHeader({ config, state, teams, competition }) {
           </div>
         </div>
       </div>
-      <div className='room-body-header-extra'>
-        <table>
-          <tbody>
-            <tr>
-              <td>Maximum Questions</td>
-              <td>
-                <b>{max_questions}</b>
-              </td>
-              <td>Maximum Votes</td>
-              <td>
-                <b>{max_vote}</b>
-              </td>
-              <td>Number of Veto Questions</td>
-              <td>
-                <b>{vetoQuesCount}</b>
-              </td>
-            </tr>
-            <tr>
-              <td>Time Limit</td>
-              <td>
-                <b>{millisecondsToString(timeLimit)}</b>
-              </td>
-              <td>Private Room</td>
-              <td>
-                <b>{privateRoom ? 'True' : 'False'}</b>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div
+        className='room-body-header-drawer'
+        onClick={() => setShowExtraFeatures(!showExtraFeatures)}
+      >
+        <Icon icon={icon} />
       </div>
+      {extraFeatureView}
     </div>
   );
 }
