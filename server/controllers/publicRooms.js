@@ -3,6 +3,8 @@
 // use a balances binary tree here
 const waitQueue = [];
 
+const { MATCH_FOUND } = require("../socketActions/serverActions");
+
 const {
   createRoom,
   createTeam,
@@ -10,6 +12,16 @@ const {
   joinRoom,
   startCompetition,
 } = require("../controllers/roomController");
+
+const findSoloMatch = ({ userName }, { socket, io }) => {
+  try {
+    const user = getUser(userName);
+    insertInQueue(user, { socket, io });
+    return true;
+  } catch (err) {
+    return { error: err.message };
+  }
+};
 
 // change to const
 const getPos = (ele, l, r) => {
@@ -67,6 +79,10 @@ const matchUp = (userA, userB, { socket, io }) => {
   joinRoom({ userName: userB.userName, room_id, team2 }, { socket });
 
   // send user A and B FOUND_MATCH
-  io.to(userA.socket_id).emit("MATCH_FOUND", room);
-  io.to(userB.socket_id).emit("MATCH_FOUND", room);
+  io.to(userA.socket_id).emit(MATCH_FOUND, room);
+  io.to(userB.socket_id).emit(MATCH_FOUND, room);
+};
+
+module.exports = {
+  findSoloMatch,
 };

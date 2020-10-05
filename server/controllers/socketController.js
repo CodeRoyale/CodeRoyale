@@ -35,8 +35,8 @@ const {
   forwardMsg,
   addPrivateList,
   codeSubmission,
-  findSoloMatch,
 } = require("../controllers/roomController");
+const { findSoloMatch } = require("../controllers/publicRooms");
 
 // import utils
 const { getQuestions } = require("../utils/qapiConn");
