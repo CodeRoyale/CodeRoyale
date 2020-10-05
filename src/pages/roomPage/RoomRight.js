@@ -13,8 +13,6 @@ function RoomRight({ room_id }) {
     <div>
       <div className='room-right-header'>
         <span style={{ fontSize: '25px' }}>sawarni99</span>
-        <br />
-        <span style={{ fontSize: '14px' }}>Team Name</span>
         <div className='room-right-roomId'>
           <p ref={copyTextRef}>{room_id}</p>
           <div onClick={onClickCopy}>
