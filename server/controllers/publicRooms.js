@@ -25,9 +25,13 @@ const findSoloMatch = ({ userName }, { socket, io }) => {
 };
 
 // change to const
-const getPos = (ele, l, r) => {
+const getPos = (ele, l = 0, r = waitQueue.length) => {
   // binary search
   // log(n)
+
+  // empty arr
+  if (!waitQueue.length) return 0;
+
   if (r < l) return l;
   if (r === l) {
     if (ele.rank > waitQueue[r].rank) return r + 1;
@@ -44,9 +48,9 @@ const getPos = (ele, l, r) => {
 const getMatch = (user) => {
   const matchPos = getPos(user);
   const matchedUser = waitQueue[matchPos];
-  return Math.abs(matchedUser.rank - user.rank) > rankMargin
-    ? null
-    : { matchedUser, matchPos };
+  return matchedUser && Math.abs(matchedUser.rank - user.rank) <= rankMargin
+    ? { matchedUser, matchPos }
+    : null;
 };
 
 const insertInQueue = (user, { socket, io }) => {
@@ -57,7 +61,7 @@ const insertInQueue = (user, { socket, io }) => {
     waitQueue.splice(matchPos, 1);
     matchUp(user, matchedUser, { socket, io });
   } else {
-    let newPos = getPos(user.rank, 0, waitQueue.len);
+    let newPos = getPos(user.rank);
     waitQueue.splice(newPos, 0, user);
   }
 };
