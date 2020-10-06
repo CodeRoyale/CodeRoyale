@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router';
+import { useHistory } from 'react-router';
 import { ROOM_JOINED } from '../../utils/constants';
 import { mapStateToProps } from '../../utils/mapStateToProps';
 import { connect } from 'react-redux';
@@ -12,6 +12,7 @@ function JoinRoomView({ socketData, roomData, joinRoom }) {
     actionDone: false,
     joinInputValue: '',
   });
+  const history = useHistory();
   const [redirect, setRedirect] = useState(false);
   const { joinButtonClicked, actionDone, joinInputValue } = state;
   const socket = socketData.socket;
@@ -42,7 +43,7 @@ function JoinRoomView({ socketData, roomData, joinRoom }) {
 
   // Redirect to room..
   if (redirect) {
-    return <Redirect to='/room' />;
+    history.push('/room');
   }
 
   const onClickJoinRoom = (event) => {

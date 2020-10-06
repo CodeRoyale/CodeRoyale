@@ -12,7 +12,7 @@ import { TEAM_CREATED, TEAM_JOINED, TEAM_LEFT } from '../../utils/constants';
 import { Alert } from 'rsuite';
 import { connect } from 'react-redux';
 import profileData from '../../utils/examples';
-import { Redirect } from 'react-router';
+import { useHistory } from 'react-router';
 
 const RoomMain = ({
   roomData,
@@ -26,6 +26,7 @@ const RoomMain = ({
   const socket = socketData.socket;
   const userName = profileData.username.toString();
   const accessToken = localStorage.getItem('access-token');
+  const history = useHistory();
 
   // Room Details...
   let roomTeams, roomConfig, roomState, roomCompetition, room_id, admin;
@@ -73,15 +74,15 @@ const RoomMain = ({
 
   // Checking all the conditions to be in the room...
   if (socket === null) {
-    return <Redirect to='/dashboard' />;
+    history.push('/dashboard');
   }
 
   if (accessToken === null) {
-    return <Redirect to='/' />;
+    history.push('/');
   }
 
   if (vetoData.vetoStarted) {
-    return <Redirect to='/veto' />;
+    history.push('/veto');
   }
 
   // Setting Team Cards...

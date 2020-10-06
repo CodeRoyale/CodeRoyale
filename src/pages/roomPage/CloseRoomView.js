@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import { mapStateToProps } from '../../utils/mapStateToProps';
 import { ROOM_CLOSED } from '../../utils/constants';
 import { closeRoom } from '../../actions/roomActions';
-import { Redirect } from 'react-router';
+import { useHistory } from 'react-router';
 
 function CloseRoomView({ roomData, socketData, closeRoom }) {
   const [showPrompt, setShowPrompt] = useState(false);
   const socket = socketData.socket;
+  const history = useHistory();
   const [state, setState] = useState({
     closeRoomClicked: false,
     actionDone: false,
@@ -41,7 +42,7 @@ function CloseRoomView({ roomData, socketData, closeRoom }) {
   ]);
 
   if (redirect) {
-    return <Redirect to='/dashboard' />;
+    history.push('/dashboard');
   }
 
   return (

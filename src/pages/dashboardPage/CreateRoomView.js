@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../../components/button/Button';
-import { Redirect } from 'react-router';
+import { useHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { createRoom } from '../../actions/roomActions';
 import { ROOM_CREATED } from '../../utils/constants';
@@ -10,6 +10,7 @@ import { Alert, Icon, SelectPicker, Checkbox, Animation } from 'rsuite';
 
 function CreateRoomView({ roomData, socketData, createRoom, show, onClose }) {
   const socket = socketData.socket;
+  const history = useHistory();
   const [state, setState] = useState({
     createRoomClicked: false,
     actionDone: false,
@@ -78,7 +79,7 @@ function CreateRoomView({ roomData, socketData, createRoom, show, onClose }) {
 
   // Redirect to room...
   if (redirect) {
-    return <Redirect to='/room' />;
+    history.push('/room');
   }
 
   // intitializations for menu...
