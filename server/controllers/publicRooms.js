@@ -4,6 +4,7 @@
 const waitQueue = [];
 
 const { MATCH_FOUND } = require("../socketActions/serverActions");
+const { setRoom, getUser, setTeam, mapNameToId } = require("./userController");
 
 const {
   createRoom,
