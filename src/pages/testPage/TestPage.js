@@ -1,7 +1,7 @@
-import React from 'react';
-// import { useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Uploader, Alert, Loader, Icon } from 'rsuite';
-// import loggedInAxios from '../../helpers/loggedInAxios';
+import loggedInAxios from '../../helpers/loggedInAxios';
 import './TestPage.css';
 
 function previewFile(file, callback) {
@@ -20,7 +20,7 @@ const styles = {
 const TestPage = () => {
   const [uploading, setUploading] = React.useState(false);
   const [fileInfo, setFileInfo] = React.useState(null);
-  // const history = useHistory();
+  const history = useHistory();
   // useEffect(() => {
   //   loggedInAxios(history)
   //     .get('/users/info?email=joelmathewkoshy@gmail.com')
@@ -32,7 +32,6 @@ const TestPage = () => {
       <Uploader
         fileListVisible={false}
         listType='picture'
-        action='//jsonplaceholder.typicode.com/posts/'
         onUpload={(file) => {
           setUploading(true);
           previewFile(file.blobFile, (value) => {

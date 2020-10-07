@@ -34,20 +34,25 @@ export default (history = null) => {
       }),
     (error) => {
       if (!error.response) {
+        console.log('error axios 1');
         return new Promise((resolve, reject) => {
           reject(error);
         });
       }
-
       if (error.response.status === 403) {
+        console.log('error axios 2');
         localStorage.removeItem('token');
-        if (history) {
-          console.log('histroy ran');
-          history.push('/login');
-        } else {
-          window.location('/login');
-        }
+        // if (history) {
+        //   console.log('histroy ran');
+        //   history.push('/login');
+        // } else {
+        //   window.location('/login');
+        // }
+        return new Promise((resolve, reject) => {
+          reject(error);
+        });
       } else {
+        console.log('error axios 3');
         return new Promise((resolve, reject) => {
           reject(error);
         });

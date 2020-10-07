@@ -1,16 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './SignUpMain.css';
-import { Loader } from 'rsuite';
+import { Loader, Input } from 'rsuite';
+import Button from '../../components/button/Button';
 import GoogleAuth from '../../components/googleAuth/GoogleAuth';
 import FacebookAuth from '../../components/facebookAuth/FacebookAuth';
 import LogoContainer from '../../components/logoContainer/LogoContainer';
+import './SignUpMain.css';
 
 const SignUpSec = (props) => {
+  const [passwordReq, setPasswordReq] = useState(false);
+  const [password, setPassword] = useState('');
+  const [passwordRec, setPasswordRec] = useState(false);
+  const [signUpData, setSignUpData] = useState({});
+
   // Send back successful auth data to SignUpMain
   const handleAuthData = (data) => {
-    props.getAuthData(data);
+    setSignUpData(data);
+    setPasswordReq(true);
   };
+
+  useEffect(() => {
+    if (passwordRec) {
+      props.getAuthData(signUpData);
+      setPasswordRec(false);
+      setPasswordReq(false);
+    }
+  }, [passwordReq, passwordRec, props, signUpData]);
 
   let content = (
     <div className='signup-section-container'>
@@ -34,6 +49,32 @@ const SignUpSec = (props) => {
       </div>
     </div>
   );
+
+  if (passwordReq) {
+    content = (
+      <div className='signup-section-container'>
+        <Input
+          style={{ width: 300 }}
+          placeholder='Password'
+          value={password}
+          onChange={(value) => setPassword(value)}
+        />
+        <div className='signup-section-password-btn'>
+          <Button
+            type='button'
+            buttonStyle='btn--primary--normal'
+            buttonSize='btn--medium'
+            onClick={() => {
+              setSignUpData({ ...signUpData, password: password });
+              setPasswordRec(true);
+            }}
+          >
+            Sign up
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   if (props.isLoading) {
     content = (

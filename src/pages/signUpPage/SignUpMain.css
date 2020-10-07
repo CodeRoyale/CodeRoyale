@@ -35,6 +35,10 @@
   font-size: 14px;
 }
 
+.signup-section-password-btn {
+  margin-top: 10px;
+}
+
 .signup-auth-separator {
   padding: 5px;
 }

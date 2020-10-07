@@ -175,7 +175,7 @@ export const updateAccount = (history, newAccountData) => (dispatch) => {
       dispatch(updateAccountSuccess(response));
     })
     .catch((error) => {
-      console.log(error);
+      console.log(error.response.data);
       dispatch(updateAccountFail(error));
     });
 };
