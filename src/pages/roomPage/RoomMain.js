@@ -1,45 +1,40 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './RoomMain.css';
-import { Redirect } from 'react-router';
-import { connect } from 'react-redux';
-import { mapStateToProps } from '../../utils/mapStateToProps';
+import NavBar from '../../components/navBar/NavBar';
+import RoomHeader from './RoomHeader';
+import RoomRight from './RoomRight';
+import FloatingButton from '../../components/floatingButton/FloatingButton';
+import TeamCard from '../../components/teamCard/TeamCard';
+import CreateTeamView from './CreateTeamView';
 import { getRoom } from '../../actions/roomActions';
 import { resetTeamAction } from '../../actions/teamActions';
-import { Alert } from 'rsuite';
 import { TEAM_CREATED, TEAM_JOINED, TEAM_LEFT } from '../../utils/constants';
-import NavBar from '../../components/navBar/NavBar';
-import CreateTeamView from './CreateTeamView';
-import TeamCard from './TeamCard';
-import CopyRoomCodeView from './CopyRoomCodeView';
-import RoomDetails from './RoomDetails';
-import CloseRoomView from './CloseRoomView';
-import RoomChat from './RoomChat';
+import { Alert } from 'rsuite';
+import { connect } from 'react-redux';
 import profileData from '../../utils/examples';
-import StartCompetitionButton from './StartCompetitionButton';
-import { vetoStart } from '../../actions/vetoActions';
+import { useHistory } from 'react-router-dom';
 
 const RoomMain = ({
-  teamData,
   roomData,
   socketData,
-  vetoData,
+  teamData,
   getRoom,
-  vetoStart,
   resetTeamAction,
+  vetoData,
 }) => {
-  // TODO: Have to implement, what happens if the user goes to create page again....
-
-  // Initializations...
+  const [createTeamShow, setCreateTeamShow] = useState(false);
   const socket = socketData.socket;
-  const accessToken = localStorage.getItem('access-token');
   const userName = profileData.username.toString();
+  const accessToken = localStorage.getItem('access-token');
+  const history = useHistory();
 
-  // Initialization of variables...
-  let roomTeams, roomConfig, roomState, room_id, admin;
+  // Room Details...
+  let roomTeams, roomConfig, roomState, roomCompetition, room_id, admin;
   if (roomData.data !== null) {
     roomTeams = roomData.data.teams;
     roomConfig = roomData.data.config;
     roomState = roomData.data.state;
+    roomCompetition = roomData.data.competition;
     if (roomConfig !== undefined) {
       room_id = roomConfig.id;
       admin = roomConfig.admin;
@@ -51,11 +46,7 @@ const RoomMain = ({
     if (socket !== null && teamData.type !== '' && room_id !== undefined) {
       getRoom(socket, { room_id });
     }
-
-    if (socket !== null) {
-      vetoStart(socket);
-    }
-  }, [room_id, socket, getRoom, vetoStart, teamData.type]);
+  }, [room_id, socket, getRoom, teamData.type]);
 
   // Display Alert on every action...
   useEffect(() => {
@@ -83,15 +74,15 @@ const RoomMain = ({
 
   // Checking all the conditions to be in the room...
   if (socket === null) {
-    return <Redirect to='/lobby' />;
-  }
-  if (accessToken === null) {
-    return <Redirect to='/' />;
+    history.push('/dashboard');
   }
 
-  // If veto started then move to veto page...
+  if (accessToken === null) {
+    history.push('/');
+  }
+
   if (vetoData.vetoStarted) {
-    return <Redirect to='/veto' />;
+    history.push('/veto');
   }
 
   // Setting Team Cards...
@@ -101,23 +92,9 @@ const RoomMain = ({
       <TeamCard
         key={teamName}
         team_name={teamName}
-        team={roomTeams[teamName]}
+        totalUsers={roomConfig['max_perTeam']}
+        users={roomTeams[teamName]}
       />
-    );
-  }
-
-  // Displaying Empty room on the window...
-  if (team_cards.length === 0) {
-    team_cards = (
-      <div className='room-create-team-text-container'>
-        <div className='room-create-team-text'>
-          <b>
-            EMPTY ROOM
-            <br />
-            CREATE A TEAM
-          </b>
-        </div>
-      </div>
     );
   }
 
@@ -127,41 +104,42 @@ const RoomMain = ({
         <NavBar />
       </div>
       <div className='room-body'>
-        <div className='room-left-section'>
-          {userName === admin ? <CloseRoomView /> : null}
-
-          <div className='room-copy-code'>
-            <CopyRoomCodeView room_id={room_id} admin={admin} />
-          </div>
-
-          <div className='room-create-team'>
-            {userName === admin ? <CreateTeamView /> : null}
-          </div>
-
-          <div className='room-details-container'>
-            <RoomDetails
+        <div className='room-body-left'>
+          <div>
+            <RoomHeader
+              admin={admin}
               config={roomConfig}
               state={roomState}
               teams={roomTeams}
+              competition={roomCompetition}
             />
           </div>
-          <div className='room-details-start-competitions-container'>
-            {userName === admin ? <StartCompetitionButton /> : null}
-          </div>
+          <div className='room-left-body'>{team_cards}</div>
         </div>
-        <div className='room-right-section'>
-          <div className='room-right-section-body'>{team_cards}</div>
-          <div className='room-right-section-chat'>
-            <RoomChat />
-          </div>
+        <div className='room-body-right'>
+          <RoomRight admin={admin} room_id={room_id} />
         </div>
       </div>
+      {userName === admin ? (
+        <FloatingButton onClick={() => setCreateTeamShow(true)}>
+          +
+        </FloatingButton>
+      ) : null}
+
+      <CreateTeamView
+        show={createTeamShow}
+        onClose={() => setCreateTeamShow(false)}
+      />
     </div>
   );
 };
 
-export default connect(mapStateToProps, {
-  getRoom,
-  vetoStart,
-  resetTeamAction,
-})(RoomMain);
+export const mapStateToProps = (state) => {
+  return {
+    roomData: state.roomData,
+    teamData: state.teamData,
+    socketData: state.socketData,
+    vetoData: state.vetoData,
+  };
+};
+export default connect(mapStateToProps, { getRoom, resetTeamAction })(RoomMain);

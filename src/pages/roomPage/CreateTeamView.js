@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { InputGroup, Input, Icon } from 'rsuite';
+import { Modal, Input, Button } from 'rsuite';
 import { createTeam } from '../../actions/teamActions';
 import { mapStateToProps } from '../../utils/mapStateToProps';
 import { connect } from 'react-redux';
 
-function CreateTeamView({ socketData, createTeam }) {
+function CreateTeamView({ socketData, createTeam, show, onClose }) {
   const [state, setState] = useState({
     team_name: '',
     createTeamClicked: false,
@@ -24,48 +24,33 @@ function CreateTeamView({ socketData, createTeam }) {
     }
   }, [createTeamClicked, setState, state, socket, team_name, createTeam]);
 
-  // onClick button...
-  const onClickCreateButton = () => {
-    setState({
-      ...state,
-      createTeamClicked: true,
-    });
-  };
-
-  //Styling constants...
-  const inputBorderRadius = 50;
-  const inputHeight = '40px';
   return (
-    <div className='create-team'>
-      <div>
-        <InputGroup
-          style={{
-            borderRadius: inputBorderRadius,
-            height: inputHeight,
-          }}
-        >
+    <div>
+      <Modal size='xs' show={show} onHide={onClose}>
+        <Modal.Header>
+          <Modal.Title>Create Team</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
           <Input
-            style={{
-              borderTopLeftRadius: inputBorderRadius,
-              borderBottomLeftRadius: inputBorderRadius,
-            }}
-            placeholder='Create Team...'
+            style={{ width: 300 }}
             value={team_name}
-            onChange={(value, event) =>
-              setState({ ...state, team_name: value })
-            }
-          />
-          <InputGroup.Button
-            style={{
-              borderTopRightRadius: inputBorderRadius,
-              borderBottomRightRadius: inputBorderRadius,
+            onChange={(value) => {
+              setState({ ...state, team_name: value });
             }}
-            onClick={onClickCreateButton}
+            placeholder='Enter Team Name...'
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            onClick={() => {
+              setState({ ...state, createTeamClicked: true });
+            }}
+            appearance='primary'
           >
-            <Icon icon='plus-circle' size='lg' />
-          </InputGroup.Button>
-        </InputGroup>
-      </div>
+            Create Team
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

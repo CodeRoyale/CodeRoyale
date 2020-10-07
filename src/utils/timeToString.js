@@ -5,3 +5,8 @@ export const timeToString = (time) => {
     ? time.toString() + ' Hours'
     : (time / 24).toString() + ' Day';
 };
+
+export const millisecondsToString = (time) => {
+  time = time / 1000 / 60;
+  return timeToString(time);
+};
