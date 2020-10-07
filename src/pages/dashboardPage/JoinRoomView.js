@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { ROOM_JOINED } from '../../utils/constants';
 import { mapStateToProps } from '../../utils/mapStateToProps';
 import { connect } from 'react-redux';

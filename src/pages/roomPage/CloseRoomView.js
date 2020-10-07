@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { mapStateToProps } from '../../utils/mapStateToProps';
 import { ROOM_CLOSED } from '../../utils/constants';
 import { closeRoom } from '../../actions/roomActions';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 function CloseRoomView({ roomData, socketData, closeRoom }) {
   const [showPrompt, setShowPrompt] = useState(false);

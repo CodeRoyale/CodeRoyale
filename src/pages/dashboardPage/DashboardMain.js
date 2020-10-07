@@ -6,7 +6,7 @@ import Button from '../../components/button/Button';
 import NavBar from '../../components/navBar/NavBar';
 import JoinRoomView from './JoinRoomView';
 import CreateRoomView from './CreateRoomView';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 const DashboardMain = ({ connectSocket }) => {
   const accessToken = localStorage.getItem('access-token');

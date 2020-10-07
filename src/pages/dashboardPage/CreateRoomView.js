@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../../components/button/Button';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createRoom } from '../../actions/roomActions';
 import { ROOM_CREATED } from '../../utils/constants';

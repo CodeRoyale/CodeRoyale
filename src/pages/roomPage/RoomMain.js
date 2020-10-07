@@ -12,7 +12,7 @@ import { TEAM_CREATED, TEAM_JOINED, TEAM_LEFT } from '../../utils/constants';
 import { Alert } from 'rsuite';
 import { connect } from 'react-redux';
 import profileData from '../../utils/examples';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 const RoomMain = ({
   roomData,
