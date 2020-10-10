@@ -8,7 +8,7 @@ const LobbyMain = () => {
   return (
     <div className='lobby'>
       <div className='lobby-header'>
-        <NavBar />
+        <NavBar loggedIn={true} />
       </div>
       <div className='lobby-body'>
         <ChooseRoomCard

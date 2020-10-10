@@ -58,7 +58,7 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
   if (!vetoData.quesApiLoading) {
     content = (
       <div className='veto-page'>
-        <Navbar />
+        <Navbar loggedIn={true} />
         <VetoBody
           isLoading={vetoData.quesApiLoading}
           questions={vetoData.vetoQuestions}

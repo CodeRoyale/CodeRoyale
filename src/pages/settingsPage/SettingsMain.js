@@ -90,7 +90,7 @@ const SettingsMain = ({ userData, deleteAccount, updateAccount }) => {
 
   return (
     <div className='settings-page'>
-      <NavBar />
+      <NavBar loggedIn={true} />
       <SettingsBody
         deleteAccountLoading={userData.deleteAccountData.isLoading}
         updateAccountLoading={userData.updateAccountData.isLoading}

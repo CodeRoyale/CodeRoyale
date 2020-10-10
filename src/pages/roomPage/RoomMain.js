@@ -120,7 +120,7 @@ const RoomMain = ({
   return (
     <div className='room'>
       <div className='room-header'>
-        <NavBar />
+        <NavBar loggedIn={true} />
       </div>
       <div className='room-body'>
         <div className='room-left-section'>

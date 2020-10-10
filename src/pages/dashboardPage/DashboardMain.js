@@ -14,7 +14,7 @@ const DashboardMain = () => {
   return (
     <div className='dashboard'>
       <div className='dashboard-header'>
-        <NavBar />
+        <NavBar loggedIn={true} />
       </div>
       <div className='dashboard-body'>
         <div className='dashboard-body-left'>

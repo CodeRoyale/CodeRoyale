@@ -1,19 +1,17 @@
-.profile-button {
+.navbar-profile-button {
+  cursor: pointer;
   float: right;
   text-align: right;
 }
 
-.profile-image {
-  height: 50px;
-  width: 50px;
+.navbar-profile-image {
+  height: 40px;
+  width: 40px;
   border-radius: 50%;
 }
 
-.profile-image:hover {
-  cursor: pointer;
-}
-
-.profile-menu-bar {
+/* Profile menu bar css */
+.profile-menubar {
   z-index: 5;
   width: 270px;
   padding: 10px;
@@ -22,18 +20,43 @@
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
 }
 
-.profile-menu-bar-line {
+.profile-menubar-line {
   border: solid black 1px;
   margin-top: 15px;
   margin-bottom: 15px;
   border-color: rgba(128, 128, 128, 0.425);
   opacity: 0.8;
 }
-.profile-menu-bar-settings-button {
+
+.profile-menubar-settings-button {
   margin-top: 10px;
   text-align: center;
 }
-.profile-menu-bar-signout-button {
+
+.profile-menubar-logout-button {
   margin-top: 10px;
   text-align: center;
+}
+
+.profile-menubar-profile-picture {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  margin-bottom: 5px;
+}
+
+.profile-menubar-name {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.profile-menubar-username {
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+}
+
+.profile-menubar-email {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
 }

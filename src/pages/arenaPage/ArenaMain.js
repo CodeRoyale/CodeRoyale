@@ -30,7 +30,7 @@ const ArenaMain = ({ socketData, arenaData, vetoData, getQuestion }) => {
   let content = (
     <div className='arena-page'>
       <div>
-        <NavBar />
+        <NavBar loggedIn={true} />
       </div>
 
       <div className='arena-body'>
