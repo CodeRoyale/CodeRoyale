@@ -11,6 +11,9 @@ import {
   UPDATE_ACCOUNT_LOADING,
   UPDATE_ACCOUNT_SUCCESS,
   UPDATE_ACCOUNT_FAIL,
+  LOGOUT_LOADING,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
   ACTION_RESET,
 } from '../actions/types';
 
@@ -25,6 +28,9 @@ const initialState = {
     isLoading: false,
   },
   updateAccountData: {
+    isLoading: false,
+  },
+  logoutData: {
     isLoading: false,
   },
 };
@@ -129,6 +135,30 @@ export default function (state = initialState, action) {
           error: action.payload,
         },
       };
+    case LOGOUT_LOADING:
+      return {
+        ...state,
+        logoutData: {
+          isLoading: true,
+          error: false,
+        },
+      };
+    case LOGOUT_SUCCESS:
+      return {
+        ...state,
+        logoutData: {
+          isLoading: false,
+          data: action.payload,
+        },
+      };
+    case LOGOUT_FAIL:
+      return {
+        ...state,
+        logoutData: {
+          isLoading: false,
+          error: action.payload,
+        },
+      };
     case ACTION_RESET:
       return {
         ...state,
@@ -145,6 +175,10 @@ export default function (state = initialState, action) {
           data: false,
         },
         updateAccountData: {
+          error: false,
+          data: false,
+        },
+        logoutData: {
           error: false,
           data: false,
         },

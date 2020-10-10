@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
-import './ProfileButton.css';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logoutUser, actionReset } from '../../actions/userActions';
+import { LOGOUT, ERROR } from '../../utils/constants';
+import { Alert } from 'rsuite';
 import Button from '../button/Button';
+import './ProfileButton.css';
 
-const ProfileButton = ({ profileData }) => {
+const ProfileButton = ({ userData, profileData, logoutUser }) => {
   const history = useHistory();
 
   const imageUrl = profileData.picture;
@@ -18,9 +22,40 @@ const ProfileButton = ({ profileData }) => {
   };
   let profileMenuBar;
 
-  const logoutUser = () => {
-    console.log('user logout');
+  // Showing error alert
+  const errorAlert = (message) => {
+    Alert.error(message);
   };
+
+  const handleLogoutUser = () => {
+    logoutUser();
+  };
+
+  // Message to user when logout unsuccessfull
+  useEffect(() => {
+    if (userData.logoutData.error) {
+      switch (userData.logoutData.error) {
+        case ERROR:
+          errorAlert("Couldn't logout, please try again later!");
+          actionReset();
+          break;
+        default:
+          errorAlert("Couldn't logout, please try again later!");
+          actionReset();
+          break;
+      }
+    }
+  }, [userData.logoutData.error]);
+
+  // Message to user when logout successfull
+  useEffect(() => {
+    if (userData.logoutData.data) {
+      if (userData.logoutData.data.payload.message === LOGOUT) {
+        actionReset();
+        history.push('/');
+      }
+    }
+  }, [userData.logoutData.data, history]);
 
   if (profileClicked) {
     profileMenuBar = (
@@ -56,7 +91,7 @@ const ProfileButton = ({ profileData }) => {
             type='button'
             buttonStyle='btn--primary--logout'
             buttonSize='btn--medium'
-            onClick={logoutUser}
+            onClick={handleLogoutUser}
           >
             Log out
           </Button>
@@ -79,4 +114,11 @@ const ProfileButton = ({ profileData }) => {
   );
 };
 
-export default ProfileButton;
+const mapStateToProps = (state) => ({
+  userData: state.userData,
+});
+
+export default connect(mapStateToProps, {
+  logoutUser,
+  actionReset,
+})(ProfileButton);
