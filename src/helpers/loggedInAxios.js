@@ -5,7 +5,7 @@
 
 import axios from 'axios';
 
-export default (history = null) => {
+export default () => {
   const clientURL = process.env.REACT_APP_CLIENT_URL;
   const baseURL = process.env.REACT_APP_USER_API_URL;
 
@@ -25,6 +25,7 @@ export default (history = null) => {
   const loggedInAxios = axios.create({
     baseURL: baseURL,
     headers,
+    withCredentials: true,
   });
 
   loggedInAxios.interceptors.response.use(
@@ -34,25 +35,18 @@ export default (history = null) => {
       }),
     (error) => {
       if (!error.response) {
-        console.log('error axios 1');
         return new Promise((resolve, reject) => {
           reject(error);
         });
       }
-      if (error.response.status === 403) {
-        console.log('error axios 2');
+
+      // User is not authenticated or refresh token expired
+      if (error.response.status === 401) {
         localStorage.removeItem('token');
-        // if (history) {
-        //   console.log('histroy ran');
-        //   history.push('/login');
-        // } else {
-        //   window.location('/login');
-        // }
         return new Promise((resolve, reject) => {
           reject(error);
         });
       } else {
-        console.log('error axios 3');
         return new Promise((resolve, reject) => {
           reject(error);
         });

@@ -11,6 +11,9 @@ import {
   UPDATE_ACCOUNT_LOADING,
   UPDATE_ACCOUNT_SUCCESS,
   UPDATE_ACCOUNT_FAIL,
+  LOGOUT_LOADING,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
   ACTION_RESET,
 } from './types';
 import jwt from 'jsonwebtoken';
@@ -97,6 +100,26 @@ const updateAccountFail = (error) => {
   };
 };
 
+const logoutRequest = () => {
+  return {
+    type: LOGOUT_LOADING,
+  };
+};
+
+const logoutSuccess = (data) => {
+  return {
+    type: LOGOUT_SUCCESS,
+    payload: data.data,
+  };
+};
+
+const logoutFail = (error) => {
+  return {
+    type: LOGOUT_FAIL,
+    payload: error.response.data,
+  };
+};
+
 export const actionReset = () => {
   return {
     type: ACTION_RESET,
@@ -148,10 +171,10 @@ export const signUpUser = (authData) => (dispatch) => {
 };
 
 // Delete account
-export const deleteAccount = (history) => (dispatch) => {
+export const deleteAccount = () => (dispatch) => {
   dispatch(deleteAccountRequest());
 
-  loggedInAxios(history)
+  loggedInAxios()
     .delete('/users/delete')
     .then((response) => {
       console.log(response);
@@ -164,11 +187,11 @@ export const deleteAccount = (history) => (dispatch) => {
 };
 
 // Update account info
-export const updateAccount = (history, newAccountData) => (dispatch) => {
+export const updateAccount = (newAccountData) => (dispatch) => {
   console.log(newAccountData);
   dispatch(updateAccountRequest());
 
-  loggedInAxios(history)
+  loggedInAxios()
     .patch('/users/update', newAccountData)
     .then((response) => {
       console.log(response);
@@ -177,5 +200,21 @@ export const updateAccount = (history, newAccountData) => (dispatch) => {
     .catch((error) => {
       console.log(error.response.data);
       dispatch(updateAccountFail(error));
+    });
+};
+
+// Logout user
+export const logoutUser = () => (dispatch) => {
+  dispatch(logoutRequest());
+
+  loggedInAxios()
+    .get('/users/logout')
+    .then((response) => {
+      console.log(response);
+      dispatch(logoutSuccess(response));
+    })
+    .catch((error) => {
+      console.log(error);
+      dispatch(logoutFail(error));
     });
 };

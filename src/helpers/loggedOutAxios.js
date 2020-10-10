@@ -13,9 +13,10 @@ headers.append('Content-Type', 'application/json');
 headers.append('Origin', clientURL);
 headers.append('Access-Control-Allow-Credentials', 'true');
 
-const outsideAxios = axios.create({
+const loggedOutAxios = axios.create({
   baseURL: baseURL,
   headers,
+  withCredentials: true,
 });
 
-export default outsideAxios;
+export default loggedOutAxios;

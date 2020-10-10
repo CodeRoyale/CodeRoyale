@@ -16,12 +16,12 @@ const SettingsMain = ({ userData, deleteAccount, updateAccount }) => {
   const history = useHistory();
 
   const handleDeleteAccount = () => {
-    deleteAccount(history);
+    deleteAccount();
   };
 
   const handleUpdateAccount = (data) => {
     console.log(data);
-    updateAccount(history, data);
+    updateAccount(data);
   };
 
   // Showing success alert
@@ -76,7 +76,7 @@ const SettingsMain = ({ userData, deleteAccount, updateAccount }) => {
         // history.push('/login');
       }
     }
-  }, [userData.deleteAccountData.data, history]);
+  }, [userData.deleteAccountData.data]);
 
   // Message to user when account is updated
   useEffect(() => {
