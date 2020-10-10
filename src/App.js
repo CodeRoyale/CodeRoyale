@@ -11,7 +11,7 @@ import routes from './routes';
 import OutroMain from './pages/outroPage/OutroMain';
 import DashboardMain from './pages/dashboardPage/DashboardMain';
 import LoginMain from './pages/loginPage/LoginMain';
-import FrontPageMain from './pages/frontPage/FrontPageMain';
+import HomeMain from './pages/homePage/HomeMain';
 import SettingsMain from './pages/settingsPage/SettingsMain';
 import LobbyMain from './pages/lobbyPage/LobbyMain';
 import SignUpMain from './pages/signUpPage/SignUpMain';
@@ -35,7 +35,7 @@ const componentRegistry = {
   RoomMain: RoomMain,
   VetoMain: VetoMain,
   SettingsMain: SettingsMain,
-  FrontPageMain: FrontPageMain,
+  HomeMain: HomeMain,
   TestPage: TestPage,
 };
 

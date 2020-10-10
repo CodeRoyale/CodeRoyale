@@ -67,15 +67,15 @@ const routes = [
   },
   {
     path: '',
-    component: 'FrontPageMain',
+    component: 'HomeMain',
     title: 'CodeRoyale',
-    needsAuth: true,
+    needsAuth: false,
   },
   {
     path: '/',
-    component: 'FrontPageMain',
+    component: 'HomeMain',
     title: 'CodeRoyale',
-    needsAuth: true,
+    needsAuth: false,
   },
 ];
 

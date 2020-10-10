@@ -1,10 +1,10 @@
-.front-page {
+.home-page {
   margin: auto;
   height: 100%;
 }
 
-/* Description container head css */
-.desc-container-head {
+/* Home Body container head css */
+.home-body-container-head {
   display: flex;
   padding-top: 120px;
   padding-bottom: 80px;
@@ -14,47 +14,47 @@
   margin: auto;
 }
 
-.desc-separator {
+.home-body-separator {
   flex: 2;
 }
 
-.desc-image {
+.home-body-image {
   width: 600px;
   height: 600px;
   margin: auto;
 }
 
-.desc-text-container {
+.home-body-text-container {
   margin: auto;
 }
 
-.desc-heading {
+.home-body-heading {
   font-family: 'Roboto', sans-serif;
   margin-bottom: 16px;
   font-size: 60px;
   font-weight: bold;
 }
 
-.desc-text {
+.home-body-text {
   font-family: 'Roboto', sans-serif;
   margin-bottom: 20px;
   font-size: 22px;
   font-weight: 500;
 }
 
-/* Description container what is coderoyale css */
-.desc-container-what {
+/* Home Body container what is coderoyale css */
+.home-body-container-what {
   padding: 120px 380px;
 }
 
-.desc-what {
+.home-body-what {
   font-family: 'Roboto', sans-serif;
   font-weight: bold;
   font-size: 40px;
   text-align: center;
 }
 
-.desc-what-text {
+.home-body-what-text {
   margin-top: 25px;
   font-family: 'Roboto', sans-serif;
   font-size: 20px;
@@ -63,7 +63,7 @@
   font-weight: 500;
 }
 
-.desc-what-image {
+.home-body-what-image {
   width: 350px;
   height: 350px;
   display: block;
@@ -72,28 +72,28 @@
   margin-right: auto;
 }
 
-/* Description container how does it work css */
-.desc-container-how {
+/* Home Body container how does it work css */
+.home-body-container-how {
   display: flex;
   padding: 100px 200px;
   background-color: var(--frontpage-bg-light);
   margin: auto;
 }
 
-.desc-how-image {
+.home-body-how-image {
   width: 500px;
   height: 500px;
   margin: auto;
 }
 
-.desc-how {
+.home-body-how {
   font-family: 'Roboto', sans-serif;
   margin-bottom: 16px;
   font-size: 40px;
   font-weight: bold;
 }
 
-.desc-how-text {
+.home-body-how-text {
   font-family: 'Roboto', sans-serif;
   margin-bottom: 20px;
   line-height: 2;
@@ -101,23 +101,23 @@
   font-weight: 500;
 }
 
-/* Description container sign up now css */
-.desc-container-sign-up {
+/* Home Body container sign up now css */
+.home-body-container-sign-up {
   padding: 100px 380px;
 }
 
-.desc-sign-up {
+.home-body-sign-up {
   font-family: 'Roboto', sans-serif;
   font-weight: bold;
   font-size: 50px;
   text-align: center;
 }
 
-.desc-sign-up-btn {
+.home-body-sign-up-btn {
   margin-top: 25px;
 }
 
-/* For span used in description */
-.desc-span {
+/* For span used in Home Body */
+.home-body-span {
   color: var(--primary-color);
 }
