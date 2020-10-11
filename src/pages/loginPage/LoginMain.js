@@ -40,13 +40,6 @@ const LoginMain = ({ userData, loginUser, actionReset }) => {
           );
           actionReset();
           break;
-        case AUTHERROR:
-          alert(
-            'Error on Login',
-            'Some error occurred, please try again later'
-          );
-          actionReset();
-          break;
         case ERROR:
           alert(
             'Error on Login',
@@ -54,6 +47,7 @@ const LoginMain = ({ userData, loginUser, actionReset }) => {
           );
           actionReset();
           break;
+        case AUTHERROR:
         case INVALID:
           alert(
             'Error on Login',

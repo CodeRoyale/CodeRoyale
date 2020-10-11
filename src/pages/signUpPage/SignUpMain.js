@@ -42,21 +42,7 @@ const SignUpMain = ({ userData, signUpUser, actionReset }) => {
           actionReset();
           break;
         case MISSING:
-          alert(
-            'error',
-            'Error on Signup',
-            'Some error occurred, please try again later'
-          );
-          actionReset();
-          break;
         case ERROR:
-          alert(
-            'error',
-            'Error on Signup',
-            'Some error occurred, please try again later'
-          );
-          actionReset();
-          break;
         case ERRORTOKEN:
           alert(
             'error',
