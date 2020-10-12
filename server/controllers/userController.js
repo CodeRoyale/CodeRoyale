@@ -1,5 +1,3 @@
-const { submitCode } = require("../utils/codeExecution");
-
 // this is my db for now
 users = {};
 
@@ -10,7 +8,13 @@ const addUser = (userName, socket_id, rank = 10) => {
     if (!users[userName]) {
       // new connection
       console.log(userName + " added");
-      users[userName] = { socket_id, room_id: "", team_name: "", rank , userName};
+      users[userName] = {
+        socket_id,
+        room_id: "",
+        team_name: "",
+        rank,
+        userName,
+      };
     } else {
       // reconnecting
       console.log(userName + " reconnected");
@@ -72,6 +76,7 @@ const getUser = (userName) => {
 };
 
 const getUserData = () => {
+  // need proper authorizations
   try {
     return users;
   } catch (err) {

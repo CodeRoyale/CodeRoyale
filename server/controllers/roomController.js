@@ -558,8 +558,10 @@ const atLeastPerTeam = (room_id, min_size = 1) => {
   }
 };
 
-const getRoomData = ({ room_id }) => {
+const getRoomData = ({ userName, room_id }) => {
   try {
+    const user = getUser(userName);
+    if (user.room_id !== room_id) throw new Error("User not in room");
     return rooms[room_id];
   } catch (err) {
     return { error: err.message };

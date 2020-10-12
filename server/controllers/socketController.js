@@ -13,6 +13,7 @@ const {
   VETO_VOTES,
   CODE_SUBMISSION,
   FIND_SOLO_MATCH,
+  GET_USER,
 } = require("../socketActions/userActions");
 
 const {
@@ -21,7 +22,7 @@ const {
 } = require("../socketActions/serverActions");
 
 //import controllers
-const { addUser, removeUser } = require("../controllers/userController");
+const { addUser, getUser } = require("../controllers/userController");
 const {
   createRoom,
   createTeam,
@@ -119,7 +120,8 @@ const handleUserEvents = ({ socket, io }) => {
   socket.on(CLOSE_ROOM, genericActionCreater(closeRoom, { socket }));
   socket.on(SEND_MSG, genericActionCreater(forwardMsg, { socket }));
   socket.on(LEAVE_TEAM, genericActionCreater(leaveTeam, { socket }));
-  socket.on(GET_ROOM, genericActionCreater(getRoomData, { socket }));
+  socket.on(GET_ROOM, genericActionCreater(getRoomData));
+  socket.on(GET_USER, genericActionCreater(getUser));
   socket.on(VETO_VOTES, genericActionCreater(registerVotes, { socket }));
   socket.on(
     START_COMPETITION,
