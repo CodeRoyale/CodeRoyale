@@ -10,7 +10,7 @@ const addUser = (userName, socket_id, rank = 10) => {
     if (!users[userName]) {
       // new connection
       console.log(userName + " added");
-      users[userName] = { socket_id, room_id: "", team_name: "", rank };
+      users[userName] = { socket_id, room_id: "", team_name: "", rank , userName};
     } else {
       // reconnecting
       console.log(userName + " reconnected");
