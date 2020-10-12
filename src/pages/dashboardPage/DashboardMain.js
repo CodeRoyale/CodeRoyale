@@ -12,7 +12,6 @@ const DashboardMain = ({ connectSocket }) => {
   const accessToken = localStorage.getItem('access-token');
   const [createRoomShow, setCreateRoomShow] = useState(false);
   const history = useHistory();
-
   useEffect(() => {
     connectSocket();
   }, [connectSocket]);
@@ -20,6 +19,7 @@ const DashboardMain = ({ connectSocket }) => {
   if (accessToken === null) {
     history.push('/');
   }
+
 
   return (
     <div className='dashboard'>

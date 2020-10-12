@@ -65,6 +65,10 @@ export const createRoom = (
                   dispatch(getRoom(socket, { room_id }));
                 }
               });
+              
+              // Saving room_id in localStorage...
+              localStorage.setItem('room_id', room_id);
+
               // On Submitting code...
               // This is not the right way... we have to make a reducer to keep track of all the submissions...
               socket.on('CODE_SUBMITTED', (data) => {
@@ -106,6 +110,8 @@ export const joinRoom = (socket, { room_id }) => {
                 dispatch(getRoom(socket, { room_id }));
               }
             });
+            // Saving room_id in localStorage...
+            localStorage.setItem('room_id', room_id);
 
             // On Submitting code...
             // This is not the right way... we have to make a reducer to keep track of all the submissions...
@@ -144,6 +150,7 @@ export const closeRoom = (socket) => {
         if (data !== null) {
           if (data !== ERROR_MSG && data.error === undefined) {
             dispatch(roomSuccess(null, ROOM_CLOSED));
+            localStorage.removeItem('room_id');
           } else if (data.error !== undefined) {
             dispatch(roomFailure(data.error));
           } else {
