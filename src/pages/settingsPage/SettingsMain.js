@@ -44,7 +44,10 @@ const SettingsMain = ({
 
   // Delete account error handling
   useEffect(() => {
-    if (userData.deleteAccountData.error) {
+    if (
+      userData.deleteAccountData.error &&
+      userData.deleteAccountData.error.payload !== undefined
+    ) {
       switch (userData.deleteAccountData.error.payload.message) {
         case ERROR:
           errorAlert("Couldn't delete your account, please try again later!");
@@ -55,12 +58,18 @@ const SettingsMain = ({
           actionReset();
           break;
       }
+    } else if (userData.deleteAccountData.error) {
+      errorAlert(userData.deleteAccountData.error);
+      actionReset();
     }
   }, [userData.deleteAccountData.error, actionReset]);
 
   // Update account error handling
   useEffect(() => {
-    if (userData.updateAccountData.error) {
+    if (
+      userData.updateAccountData.error &&
+      userData.updateAccountData.error.payload !== undefined
+    ) {
       switch (userData.updateAccountData.error.payload.message) {
         case ERROR:
           errorAlert("Couldn't update your profile, please try again later!");
@@ -71,6 +80,9 @@ const SettingsMain = ({
           actionReset();
           break;
       }
+    } else if (userData.updateAccountData.error) {
+      errorAlert(userData.updateAccountData.error);
+      actionReset();
     }
   }, [userData.updateAccountData.error, actionReset]);
 
@@ -79,7 +91,10 @@ const SettingsMain = ({
     - userName checking error handling
   */
   useEffect(() => {
-    if (userData.userNameCheckData.error) {
+    if (
+      userData.userNameCheckData.error &&
+      userData.userNameCheckData.error.payload !== undefined
+    ) {
       switch (userData.userNameCheckData.error.payload.message) {
         case CONFLICT:
           setUserNameAvailable(false);
@@ -94,6 +109,9 @@ const SettingsMain = ({
           actionReset();
           break;
       }
+    } else if (userData.userNameCheckData.error) {
+      errorAlert(userData.userNameCheckData.error);
+      actionReset();
     }
   }, [userData.userNameCheckData.error, actionReset]);
 

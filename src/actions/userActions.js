@@ -23,126 +23,6 @@ import jwt from 'jsonwebtoken';
 import loggedInAxios from '../helpers/loggedInAxios';
 import loggedOutAxios from '../helpers/loggedOutAxios';
 
-const loginRequest = () => {
-  return {
-    type: LOGIN_LOADING,
-  };
-};
-
-const loginSuccess = (data) => {
-  return {
-    type: LOGIN_SUCCESS,
-    payload: data.data,
-  };
-};
-
-const loginFail = (error) => {
-  return {
-    type: LOGIN_FAIL,
-    payload: error.response.data,
-  };
-};
-
-const signUpRequest = () => {
-  return {
-    type: SIGNUP_LOADING,
-  };
-};
-
-const signUpSuccess = (data) => {
-  return {
-    type: SIGNUP_SUCCESS,
-    payload: data.data,
-  };
-};
-
-const signUpFail = (error) => {
-  return {
-    type: SIGNUP_FAIL,
-    payload: error.response.data,
-  };
-};
-
-const deleteAccountRequest = () => {
-  return {
-    type: DELETE_ACCOUNT_LOADING,
-  };
-};
-
-const deleteAccountSuccess = (data) => {
-  return {
-    type: DELETE_ACCOUNT_SUCCESS,
-    payload: data.data,
-  };
-};
-
-const deleteAccountFail = (error) => {
-  return {
-    type: DELETE_ACCOUNT_FAIL,
-    payload: error.response.data,
-  };
-};
-
-const updateAccountRequest = () => {
-  return {
-    type: UPDATE_ACCOUNT_LOADING,
-  };
-};
-
-const updateAccountSuccess = (data) => {
-  return {
-    type: UPDATE_ACCOUNT_SUCCESS,
-    payload: data.data,
-  };
-};
-
-const updateAccountFail = (error) => {
-  return {
-    type: UPDATE_ACCOUNT_FAIL,
-    payload: error.response.data,
-  };
-};
-
-const logoutRequest = () => {
-  return {
-    type: LOGOUT_LOADING,
-  };
-};
-
-const logoutSuccess = (data) => {
-  return {
-    type: LOGOUT_SUCCESS,
-    payload: data.data,
-  };
-};
-
-const logoutFail = (error) => {
-  return {
-    type: LOGOUT_FAIL,
-    payload: error.response.data,
-  };
-};
-
-const userNameCheckRequest = () => {
-  return {
-    type: USERNAME_CHECK_LOADING,
-  };
-};
-
-const userNameCheckSuccess = (data) => {
-  return {
-    type: USERNAME_CHECK_SUCCESS,
-    payload: data.data,
-  };
-};
-
-const userNameCheckFail = (error) => {
-  return {
-    type: USERNAME_CHECK_FAIL,
-    payload: error.response.data,
-  };
-};
-
 export const actionReset = () => {
   return {
     type: ACTION_RESET,
@@ -151,7 +31,9 @@ export const actionReset = () => {
 
 // Login user
 export const loginUser = (authData) => (dispatch) => {
-  dispatch(loginRequest());
+  dispatch({
+    type: LOGIN_LOADING,
+  });
 
   const thirdPartyData = {
     issuer: authData.issuer,
@@ -169,91 +51,149 @@ export const loginUser = (authData) => (dispatch) => {
         JSON.stringify(jwt.decode(response.data.payload.accessToken))
       );
       localStorage.token = response.data.payload.accessToken;
-      dispatch(loginSuccess(response));
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: response.data,
+      });
     })
     .catch((error) => {
-      console.log(error.response.data);
-      dispatch(loginFail(error));
+      console.log(error.response);
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: error.response
+          ? error.response.data
+          : 'Some error occurred! Please check if you have an active internet connection',
+      });
     });
 };
 
 // Sign up user
 export const signUpUser = (authData) => (dispatch) => {
-  dispatch(signUpRequest());
+  dispatch({
+    type: SIGNUP_LOADING,
+  });
 
   loggedOutAxios
     .post('/users/signup', authData)
     .then((response) => {
       console.log(response);
-      dispatch(signUpSuccess(response));
+      dispatch({
+        type: SIGNUP_SUCCESS,
+        payload: response.data,
+      });
     })
     .catch((error) => {
       console.log(error);
-      dispatch(signUpFail(error));
+      dispatch({
+        type: SIGNUP_FAIL,
+        payload: error.response
+          ? error.response.data
+          : 'Some error occurred! Please check if you have an active internet connection',
+      });
     });
 };
 
 // Delete account
 export const deleteAccount = () => (dispatch) => {
-  dispatch(deleteAccountRequest());
+  dispatch({
+    type: DELETE_ACCOUNT_LOADING,
+  });
 
   loggedInAxios()
     .delete('/users/delete')
     .then((response) => {
       console.log(response);
-      dispatch(deleteAccountSuccess(response));
+      dispatch({
+        type: DELETE_ACCOUNT_SUCCESS,
+        payload: response.data,
+      });
     })
     .catch((error) => {
       console.log(error);
-      dispatch(deleteAccountFail(error));
+      dispatch({
+        type: DELETE_ACCOUNT_FAIL,
+        payload: error.response
+          ? error.response.data
+          : 'Some error occurred! Please check if you have an active internet connection',
+      });
     });
 };
 
 // Update account info
 export const updateAccount = (newAccountData) => (dispatch) => {
   console.log(newAccountData);
-  dispatch(updateAccountRequest());
+  dispatch({
+    type: UPDATE_ACCOUNT_LOADING,
+  });
 
   loggedInAxios()
     .patch('/users/update', newAccountData)
     .then((response) => {
       console.log(response);
-      dispatch(updateAccountSuccess(response));
+      dispatch({
+        type: UPDATE_ACCOUNT_SUCCESS,
+        payload: response.data,
+      });
     })
     .catch((error) => {
-      console.log(error.response.data);
-      dispatch(updateAccountFail(error));
+      console.log(error);
+      dispatch({
+        type: UPDATE_ACCOUNT_FAIL,
+        payload: error.response
+          ? error.response.data
+          : 'Some error occurred! Please check if you have an active internet connection',
+      });
     });
 };
 
 // Logout user
 export const logoutUser = () => (dispatch) => {
-  dispatch(logoutRequest());
+  dispatch({
+    type: LOGOUT_LOADING,
+  });
 
   loggedInAxios()
     .get('/users/logout')
     .then((response) => {
       console.log(response);
-      dispatch(logoutSuccess(response));
+      dispatch({
+        type: LOGOUT_SUCCESS,
+        payload: response.data,
+      });
     })
     .catch((error) => {
       console.log(error);
-      dispatch(logoutFail(error));
+      dispatch({
+        type: LOGOUT_FAIL,
+        payload: error.response
+          ? error.response.data
+          : 'Some error occurred! Please check if you have an active internet connection',
+      });
     });
 };
 
 //  Check userName avaiability
 export const userNameCheck = (userName) => (dispatch) => {
-  dispatch(userNameCheckRequest());
+  dispatch({
+    type: USERNAME_CHECK_LOADING,
+  });
 
   loggedInAxios()
     .get(`/users/username?userName=${userName}`)
     .then((response) => {
       console.log(response);
-      dispatch(userNameCheckSuccess(response));
+      dispatch({
+        type: USERNAME_CHECK_SUCCESS,
+        payload: response.data,
+      });
     })
     .catch((error) => {
       console.log(error);
-      dispatch(userNameCheckFail(error));
+      dispatch({
+        type: USERNAME_CHECK_FAIL,
+        payload: error.response
+          ? error.response.data
+          : 'Some error occurred! Please check if you have an active internet connection',
+      });
     });
 };

@@ -27,13 +27,12 @@ const ProfileButton = ({ userData, profileData, logoutUser }) => {
     Alert.error(message);
   };
 
-  const handleLogoutUser = () => {
-    logoutUser();
-  };
-
-  // Message to user when logout unsuccessfull
+  // Logout user error handling
   useEffect(() => {
-    if (userData.logoutData.error) {
+    if (
+      userData.logoutData.error &&
+      userData.logoutData.error.payload !== undefined
+    ) {
       switch (userData.logoutData.error) {
         case ERROR:
           errorAlert("Couldn't logout, please try again later!");
@@ -44,6 +43,9 @@ const ProfileButton = ({ userData, profileData, logoutUser }) => {
           actionReset();
           break;
       }
+    } else if (userData.logoutData.error) {
+      errorAlert(userData.logoutData.error);
+      actionReset();
     }
   }, [userData.logoutData.error]);
 
@@ -91,7 +93,7 @@ const ProfileButton = ({ userData, profileData, logoutUser }) => {
             type='button'
             buttonStyle='btn--primary--logout'
             buttonSize='btn--medium'
-            onClick={handleLogoutUser}
+            onClick={() => logoutUser()}
           >
             Log out
           </Button>

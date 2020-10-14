@@ -30,7 +30,10 @@ const SignUpMain = ({ userData, signUpUser, actionReset }) => {
   };
 
   useEffect(() => {
-    if (userData.signUpData.error) {
+    if (
+      userData.signUpData.error &&
+      userData.signUpData.error.payload !== undefined
+    ) {
       switch (userData.signUpData.error.payload.message) {
         case CONFLICT:
           alert(
@@ -60,6 +63,9 @@ const SignUpMain = ({ userData, signUpUser, actionReset }) => {
           actionReset();
           break;
       }
+    } else if (userData.signUpData.error) {
+      alert('error', 'Error on Signup', userData.signUpData.error);
+      actionReset();
     }
   }, [userData.signUpData.error, actionReset, history]);
 

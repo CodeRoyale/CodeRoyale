@@ -1,3 +1,7 @@
+/* 
+  - Contains all routes
+  - Contains need auth or not for each route
+*/
 const routes = [
   {
     path: '/sorry',

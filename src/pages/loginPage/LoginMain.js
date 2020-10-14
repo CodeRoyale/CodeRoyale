@@ -31,7 +31,10 @@ const LoginMain = ({ userData, loginUser, actionReset }) => {
 
   // Login error handling
   useEffect(() => {
-    if (userData.loginData.error) {
+    if (
+      userData.loginData.error &&
+      userData.loginData.error.payload !== undefined
+    ) {
       switch (userData.loginData.error.payload.message) {
         case REGISTER:
           alert(
@@ -60,8 +63,12 @@ const LoginMain = ({ userData, loginUser, actionReset }) => {
             'Error on Login',
             'Some error occurred, please try again later'
           );
+          actionReset();
           break;
       }
+    } else if (userData.loginData.error) {
+      alert('Error on Login', userData.loginData.error);
+      actionReset();
     }
   }, [userData.loginData.error, actionReset]);
 
