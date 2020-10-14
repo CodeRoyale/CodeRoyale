@@ -4,27 +4,27 @@ import Button from '../../components/button/Button';
 import { Loader } from 'rsuite';
 import './SettingsMain.css';
 
-const SettingsBody = (props) => {
+const SettingsBody = ({
+  getDeleteAccount,
+  getUpdateAccountData,
+  getUserNameCheckData,
+  sendUserNameAvailable,
+  sendDeleteAccountLoading,
+  sendUpdateAccountLoading,
+}) => {
   let profileData = localStorage.getItem('user-data');
   profileData = JSON.parse(profileData);
 
-  const [newAccountData, setNewAccountData] = useState(null);
-
+  // User info
   const [userName, setUserName] = useState(profileData.userName);
   const [firstName, setFirstName] = useState(profileData.firstName);
   const [lastName, setLastName] = useState(profileData.lastName);
   const email = profileData.email;
 
-  // Function to delete account
-  const deleteAccount = () => {
-    props.deleteAccount();
-  };
+  // New user info for updation
+  const [newAccountData, setNewAccountData] = useState(null);
 
-  // Function to send updated account info to SettingsMain
-  const updateAccount = () => {
-    props.updateAccount(newAccountData);
-  };
-
+  // Default content
   let content = (
     <div className='settings-container'>
       <div className='settings-profile'>
@@ -34,9 +34,17 @@ const SettingsBody = (props) => {
           heading='Username'
           value={userName}
           disabled={false}
+          checkUserNameAvailability={true}
+          userNameAvailable={sendUserNameAvailable}
           onChange={(e) => {
             setUserName(e.target.value);
             setNewAccountData({ ...newAccountData, userName: e.target.value });
+          }}
+          onBlur={() => {
+            if (newAccountData != null && newAccountData.userName != null) {
+              // Sending userName in props to check if available or not to SettingsMain
+              getUserNameCheckData(newAccountData.userName);
+            }
           }}
         />
         <SettingsField
@@ -44,6 +52,7 @@ const SettingsBody = (props) => {
           heading='First Name'
           value={firstName}
           disabled={false}
+          checkAvailability={false}
           onChange={(e) => {
             setFirstName(e.target.value);
             setNewAccountData({ ...newAccountData, firstName: e.target.value });
@@ -54,6 +63,7 @@ const SettingsBody = (props) => {
           heading='Last Name'
           value={lastName}
           disabled={false}
+          checkAvailability={false}
           onChange={(e) => {
             setLastName(e.target.value);
             setNewAccountData({ ...newAccountData, lastName: e.target.value });
@@ -64,13 +74,17 @@ const SettingsBody = (props) => {
           heading='Email'
           value={email}
           disabled={true}
+          checkAvailability={false}
         />
         <div className='settings-save-button'>
           <Button
             type='button'
             buttonStyle='btn--primary--normal'
             buttonSize='btn--large'
-            onClick={updateAccount}
+            onClick={() => {
+              // Send new account data in props to SettingsMain for updating account
+              getUpdateAccountData(newAccountData);
+            }}
           >
             Save Settings
           </Button>
@@ -80,7 +94,10 @@ const SettingsBody = (props) => {
             type='button'
             buttonStyle='btn--primary--logout'
             buttonSize='btn--large'
-            onClick={deleteAccount}
+            onClick={() => {
+              // Send trigger to SettingsMain to delete account in props
+              getDeleteAccount();
+            }}
           >
             Delete my Account
           </Button>
@@ -95,7 +112,8 @@ const SettingsBody = (props) => {
     </div>
   );
 
-  if (props.deleteAccountLoading || props.updateAccountLoading) {
+  // Show loading if user deletes or updates account
+  if (sendDeleteAccountLoading || sendUpdateAccountLoading) {
     content = (
       <div className='settings-container'>
         <div className='settings-profile'>

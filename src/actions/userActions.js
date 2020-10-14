@@ -14,6 +14,9 @@ import {
   LOGOUT_LOADING,
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
+  USERNAME_CHECK_LOADING,
+  USERNAME_CHECK_SUCCESS,
+  USERNAME_CHECK_FAIL,
   ACTION_RESET,
 } from './types';
 import jwt from 'jsonwebtoken';
@@ -120,6 +123,26 @@ const logoutFail = (error) => {
   };
 };
 
+const userNameCheckRequest = () => {
+  return {
+    type: USERNAME_CHECK_LOADING,
+  };
+};
+
+const userNameCheckSuccess = (data) => {
+  return {
+    type: USERNAME_CHECK_SUCCESS,
+    payload: data.data,
+  };
+};
+
+const userNameCheckFail = (error) => {
+  return {
+    type: USERNAME_CHECK_FAIL,
+    payload: error.response.data,
+  };
+};
+
 export const actionReset = () => {
   return {
     type: ACTION_RESET,
@@ -216,5 +239,21 @@ export const logoutUser = () => (dispatch) => {
     .catch((error) => {
       console.log(error);
       dispatch(logoutFail(error));
+    });
+};
+
+//  Check userName avaiability
+export const userNameCheck = (userName) => (dispatch) => {
+  dispatch(userNameCheckRequest());
+
+  loggedInAxios()
+    .get(`/users/username?userName=${userName}`)
+    .then((response) => {
+      console.log(response);
+      dispatch(userNameCheckSuccess(response));
+    })
+    .catch((error) => {
+      console.log(error);
+      dispatch(userNameCheckFail(error));
     });
 };

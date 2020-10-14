@@ -20,3 +20,13 @@
   outline: none;
   border: 1px solid rgb(177, 175, 175);
 }
+
+.options-available {
+  margin-left: 10px;
+  color: green;
+}
+
+.options-not-available {
+  margin-left: 10px;
+  color: red;
+}

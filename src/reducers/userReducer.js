@@ -14,6 +14,9 @@ import {
   LOGOUT_LOADING,
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
+  USERNAME_CHECK_LOADING,
+  USERNAME_CHECK_SUCCESS,
+  USERNAME_CHECK_FAIL,
   ACTION_RESET,
 } from '../actions/types';
 
@@ -31,6 +34,9 @@ const initialState = {
     isLoading: false,
   },
   logoutData: {
+    isLoading: false,
+  },
+  userNameCheckData: {
     isLoading: false,
   },
 };
@@ -159,6 +165,30 @@ export default function (state = initialState, action) {
           error: action.payload,
         },
       };
+    case USERNAME_CHECK_LOADING:
+      return {
+        ...state,
+        userNameCheckData: {
+          isLoading: true,
+          error: false,
+        },
+      };
+    case USERNAME_CHECK_SUCCESS:
+      return {
+        ...state,
+        userNameCheckData: {
+          isLoading: false,
+          data: action.payload,
+        },
+      };
+    case USERNAME_CHECK_FAIL:
+      return {
+        ...state,
+        userNameCheckData: {
+          isLoading: false,
+          error: action.payload,
+        },
+      };
     case ACTION_RESET:
       return {
         ...state,
@@ -180,6 +210,10 @@ export default function (state = initialState, action) {
         },
         logoutData: {
           error: false,
+          data: false,
+        },
+        userNameCheckData: {
+          errror: false,
           data: false,
         },
       };

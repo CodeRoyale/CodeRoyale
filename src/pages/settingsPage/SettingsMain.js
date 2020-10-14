@@ -1,28 +1,36 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {
   deleteAccount,
   updateAccount,
+  userNameCheck,
   actionReset,
 } from '../../actions/userActions';
 import SettingsBody from './SettingsBody';
 import NavBar from '../../components/navBar/NavBar';
 import { Alert } from 'rsuite';
-import { ERROR, DELETED, UPDATE } from '../../utils/constants';
-import { useHistory } from 'react-router-dom';
+import {
+  ERROR,
+  DELETED,
+  UPDATE,
+  AVAILABLE,
+  CONFLICT,
+} from '../../utils/constants';
 import './SettingsMain.css';
 
-const SettingsMain = ({ userData, deleteAccount, updateAccount }) => {
-  const history = useHistory();
+const SettingsMain = ({
+  userData,
+  deleteAccount,
+  updateAccount,
+  userNameCheck,
+  actionReset,
+}) => {
+  const [userNameAvailable, setUserNameAvailable] = useState(null);
 
-  const handleDeleteAccount = () => {
-    deleteAccount();
-  };
-
-  const handleUpdateAccount = (data) => {
-    console.log(data);
-    updateAccount(data);
-  };
+  // For checking if user token is validated by server
+  useEffect(() => {
+    console.log('Running check');
+  }, []);
 
   // Showing success alert
   const successAlert = (message) => {
@@ -37,7 +45,7 @@ const SettingsMain = ({ userData, deleteAccount, updateAccount }) => {
   // Delete account error handling
   useEffect(() => {
     if (userData.deleteAccountData.error) {
-      switch (userData.deleteAccountData.error) {
+      switch (userData.deleteAccountData.error.payload.message) {
         case ERROR:
           errorAlert("Couldn't delete your account, please try again later!");
           actionReset();
@@ -48,12 +56,12 @@ const SettingsMain = ({ userData, deleteAccount, updateAccount }) => {
           break;
       }
     }
-  }, [userData.deleteAccountData.error]);
+  }, [userData.deleteAccountData.error, actionReset]);
 
   // Update account error handling
   useEffect(() => {
     if (userData.updateAccountData.error) {
-      switch (userData.updateAccountData.error) {
+      switch (userData.updateAccountData.error.payload.message) {
         case ERROR:
           errorAlert("Couldn't update your profile, please try again later!");
           actionReset();
@@ -64,7 +72,30 @@ const SettingsMain = ({ userData, deleteAccount, updateAccount }) => {
           break;
       }
     }
-  }, [userData.updateAccountData.error]);
+  }, [userData.updateAccountData.error, actionReset]);
+
+  /* 
+    - Show user if userName is not available if conflict from server
+    - userName checking error handling
+  */
+  useEffect(() => {
+    if (userData.userNameCheckData.error) {
+      switch (userData.userNameCheckData.error.payload.message) {
+        case CONFLICT:
+          setUserNameAvailable(false);
+          actionReset();
+          break;
+        case ERROR:
+          errorAlert('Some error occured! Please try again later!');
+          actionReset();
+          break;
+        default:
+          errorAlert('Some error occured! Please try again later!');
+          actionReset();
+          break;
+      }
+    }
+  }, [userData.userNameCheckData.error, actionReset]);
 
   // Message to user when account deleted
   useEffect(() => {
@@ -76,7 +107,7 @@ const SettingsMain = ({ userData, deleteAccount, updateAccount }) => {
         // history.push('/login');
       }
     }
-  }, [userData.deleteAccountData.data]);
+  }, [userData.deleteAccountData.data, actionReset]);
 
   // Message to user when account is updated
   useEffect(() => {
@@ -86,16 +117,27 @@ const SettingsMain = ({ userData, deleteAccount, updateAccount }) => {
         actionReset();
       }
     }
-  }, [userData.updateAccountData.data]);
+  }, [userData.updateAccountData.data, actionReset]);
+
+  // If userName is available
+  useEffect(() => {
+    if (userData.userNameCheckData.data) {
+      if (userData.userNameCheckData.data.payload.message === AVAILABLE) {
+        setUserNameAvailable(true);
+      }
+    }
+  }, [userData.userNameCheckData.data, actionReset]);
 
   return (
     <div className='settings-page'>
       <NavBar loggedIn={true} />
       <SettingsBody
-        deleteAccountLoading={userData.deleteAccountData.isLoading}
-        updateAccountLoading={userData.updateAccountData.isLoading}
-        deleteAccount={handleDeleteAccount}
-        updateAccount={handleUpdateAccount}
+        sendDeleteAccountLoading={userData.deleteAccountData.isLoading}
+        sendUpdateAccountLoading={userData.updateAccountData.isLoading}
+        sendUserNameAvailable={userNameAvailable}
+        getDeleteAccount={() => deleteAccount()}
+        getUpdateAccountData={(data) => updateAccount(data)}
+        getUserNameCheckData={(data) => userNameCheck(data)}
       />
     </div>
   );
@@ -108,5 +150,6 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   deleteAccount,
   updateAccount,
+  userNameCheck,
   actionReset,
 })(SettingsMain);
