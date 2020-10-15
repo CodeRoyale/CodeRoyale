@@ -17,6 +17,7 @@ import {
   AVAILABLE,
   CONFLICT,
 } from '../../utils/constants';
+import { useHistory } from 'react-router-dom';
 import './SettingsMain.css';
 
 const SettingsMain = ({
@@ -27,12 +28,13 @@ const SettingsMain = ({
   userNameCheck,
   actionReset,
 }) => {
+  const history = useHistory();
   const [userNameAvailable, setUserNameAvailable] = useState(null);
 
   // For checking if user token is validated by server
   useEffect(() => {
-    preCheckUser();
-  }, [preCheckUser]);
+    preCheckUser(history);
+  }, [preCheckUser, history]);
 
   // Showing success alert
   const successAlert = (message) => {
@@ -156,9 +158,9 @@ const SettingsMain = ({
         sendDeleteAccountLoading={userData.deleteAccountData.isLoading}
         sendUpdateAccountLoading={userData.updateAccountData.isLoading}
         sendUserNameAvailable={userNameAvailable}
-        getDeleteAccount={() => deleteAccount()}
-        getUpdateAccountData={(data) => updateAccount(data)}
-        getUserNameCheckData={(data) => userNameCheck(data)}
+        getDeleteAccount={() => deleteAccount(history)}
+        getUpdateAccountData={(data) => updateAccount(history, data)}
+        getUserNameCheckData={(data) => userNameCheck(history, data)}
       />
     </div>
   );

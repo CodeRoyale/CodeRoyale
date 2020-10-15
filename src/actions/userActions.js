@@ -33,14 +33,19 @@ export const actionReset = () => {
 };
 
 // Precheck user
-export const preCheckUser = () => (dispatch) => {
+export const preCheckUser = (history) => (dispatch) => {
   dispatch({
     type: PRECHECK_LOADING,
   });
-  loggedInAxios()
+  loggedInAxios(history)
     .get('/precheck')
     .then((response) => {
       console.log(response);
+      localStorage.setItem(
+        'user-data',
+        JSON.stringify(jwt.decode(response.data.payload.accessToken))
+      );
+      localStorage.token = response.data.payload.accessToken;
       dispatch({
         type: PRECHECK_SUCCESS,
         payload: response.data,
@@ -117,12 +122,12 @@ export const signUpUser = (authData) => (dispatch) => {
 };
 
 // Delete account
-export const deleteAccount = () => (dispatch) => {
+export const deleteAccount = (history) => (dispatch) => {
   dispatch({
     type: DELETE_ACCOUNT_LOADING,
   });
 
-  loggedInAxios()
+  loggedInAxios(history)
     .delete('/users/delete')
     .then((response) => {
       dispatch({
@@ -141,13 +146,13 @@ export const deleteAccount = () => (dispatch) => {
 };
 
 // Update account info
-export const updateAccount = (newAccountData) => (dispatch) => {
+export const updateAccount = (history, newAccountData) => (dispatch) => {
   console.log(newAccountData);
   dispatch({
     type: UPDATE_ACCOUNT_LOADING,
   });
 
-  loggedInAxios()
+  loggedInAxios(history)
     .patch('/users/update', newAccountData)
     .then((response) => {
       localStorage.setItem(
@@ -171,13 +176,13 @@ export const updateAccount = (newAccountData) => (dispatch) => {
 };
 
 // Logout user
-export const logoutUser = () => (dispatch) => {
+export const logoutUser = (history) => (dispatch) => {
   console.log('running userActions check');
   dispatch({
     type: LOGOUT_LOADING,
   });
 
-  loggedInAxios()
+  loggedInAxios(history)
     .get('/users/logout')
     .then((response) => {
       dispatch({
@@ -196,12 +201,12 @@ export const logoutUser = () => (dispatch) => {
 };
 
 //  Check userName avaiability
-export const userNameCheck = (userName) => (dispatch) => {
+export const userNameCheck = (history, userName) => (dispatch) => {
   dispatch({
     type: USERNAME_CHECK_LOADING,
   });
 
-  loggedInAxios()
+  loggedInAxios(history)
     .get(`/users/username?userName=${userName}`)
     .then((response) => {
       localStorage.setItem(

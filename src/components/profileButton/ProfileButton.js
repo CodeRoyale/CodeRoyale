@@ -96,7 +96,7 @@ const ProfileButton = ({ userData, profileData, logoutUser }) => {
             buttonSize='btn--medium'
             onClick={() => {
               console.log('navBar check');
-              logoutUser();
+              logoutUser(history);
             }}
           >
             Log out

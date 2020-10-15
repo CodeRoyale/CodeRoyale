@@ -5,7 +5,7 @@
 
 import axios from 'axios';
 
-export default () => {
+export default (history = null) => {
   const clientURL = process.env.REACT_APP_CLIENT_URL;
   const baseURL = process.env.REACT_APP_USER_API_URL;
 
@@ -43,6 +43,12 @@ export default () => {
       // User is not authenticated or refresh token expired
       if (error.response.status === 401 || error.response.status === 403) {
         localStorage.removeItem('token');
+        // Move user to /login
+        if (history) {
+          history.push('/login');
+        } else {
+          window.location = '/login';
+        }
         return new Promise((resolve, reject) => {
           reject(error);
         });
