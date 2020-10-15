@@ -5,7 +5,7 @@ import {
   deleteAccount,
   updateAccount,
   userNameCheck,
-  actionReset,
+  userActionReset,
 } from '../../actions/userActions';
 import SettingsBody from './SettingsBody';
 import NavBar from '../../components/navBar/NavBar';
@@ -26,7 +26,7 @@ const SettingsMain = ({
   deleteAccount,
   updateAccount,
   userNameCheck,
-  actionReset,
+  userActionReset,
 }) => {
   const history = useHistory();
   const [userNameAvailable, setUserNameAvailable] = useState(null);
@@ -46,6 +46,19 @@ const SettingsMain = ({
     Alert.error(message);
   };
 
+  // PreCheck error handling
+  useEffect(() => {
+    if (
+      userData.preCheckData.error &&
+      userData.preCheckData.error.payload === undefined
+    ) {
+      errorAlert(userData.preCheckData.error);
+      localStorage.removeItem('token');
+      history.push('/login');
+      userActionReset();
+    }
+  }, [userData.preCheckData.error, userActionReset, history]);
+
   // Delete account error handling
   useEffect(() => {
     if (
@@ -55,18 +68,18 @@ const SettingsMain = ({
       switch (userData.deleteAccountData.error.payload.message) {
         case ERROR:
           errorAlert("Couldn't delete your account, please try again later!");
-          actionReset();
+          userActionReset();
           break;
         default:
           errorAlert("Couldn't delete your account, please try again later!");
-          actionReset();
+          userActionReset();
           break;
       }
     } else if (userData.deleteAccountData.error) {
       errorAlert(userData.deleteAccountData.error);
-      actionReset();
+      userActionReset();
     }
-  }, [userData.deleteAccountData.error, actionReset]);
+  }, [userData.deleteAccountData.error, userActionReset]);
 
   // Update account error handling
   useEffect(() => {
@@ -77,18 +90,18 @@ const SettingsMain = ({
       switch (userData.updateAccountData.error.payload.message) {
         case ERROR:
           errorAlert("Couldn't update your profile, please try again later!");
-          actionReset();
+          userActionReset();
           break;
         default:
           errorAlert("Couldn't update your profile, please try again later!");
-          actionReset();
+          userActionReset();
           break;
       }
     } else if (userData.updateAccountData.error) {
       errorAlert(userData.updateAccountData.error);
-      actionReset();
+      userActionReset();
     }
-  }, [userData.updateAccountData.error, actionReset]);
+  }, [userData.updateAccountData.error, userActionReset]);
 
   /* 
     - Show user if userName is not available if conflict from server
@@ -102,44 +115,43 @@ const SettingsMain = ({
       switch (userData.userNameCheckData.error.payload.message) {
         case CONFLICT:
           setUserNameAvailable(false);
-          actionReset();
+          userActionReset();
           break;
         case ERROR:
           errorAlert('Some error occured! Please try again later!');
-          actionReset();
+          userActionReset();
           break;
         default:
           errorAlert('Some error occured! Please try again later!');
-          actionReset();
+          userActionReset();
           break;
       }
     } else if (userData.userNameCheckData.error) {
       errorAlert(userData.userNameCheckData.error);
-      actionReset();
+      userActionReset();
     }
-  }, [userData.userNameCheckData.error, actionReset]);
+  }, [userData.userNameCheckData.error, userActionReset]);
 
   // Message to user when account deleted
   useEffect(() => {
     if (userData.deleteAccountData.data) {
       if (userData.deleteAccountData.data.payload.message === DELETED) {
         successAlert('Account deleted successfully!');
-        localStorage.removeItem('token');
-        actionReset();
-        // history.push('/login');
+        history.push('/login');
+        userActionReset();
       }
     }
-  }, [userData.deleteAccountData.data, actionReset]);
+  }, [userData.deleteAccountData.data, history, userActionReset]);
 
   // Message to user when account is updated
   useEffect(() => {
     if (userData.updateAccountData.data) {
       if (userData.updateAccountData.data.payload.message === UPDATE) {
         successAlert('Your profile has been updated!');
-        actionReset();
+        userActionReset();
       }
     }
-  }, [userData.updateAccountData.data, actionReset]);
+  }, [userData.updateAccountData.data, userActionReset]);
 
   // If userName is available
   useEffect(() => {
@@ -148,7 +160,7 @@ const SettingsMain = ({
         setUserNameAvailable(true);
       }
     }
-  }, [userData.userNameCheckData.data, actionReset]);
+  }, [userData.userNameCheckData.data, userActionReset]);
 
   // UI if user is valid and properly authenticated
   let content = (
@@ -168,7 +180,7 @@ const SettingsMain = ({
   // Pre-check running
   if (userData.preCheckData.isLoading) {
     content = (
-      <div className='settings-page'>
+      <div className='settings-page-precheck-loading'>
         <Loader size='sm' content='Loading...' />
       </div>
     );
@@ -186,5 +198,5 @@ export default connect(mapStateToProps, {
   deleteAccount,
   updateAccount,
   userNameCheck,
-  actionReset,
+  userActionReset,
 })(SettingsMain);

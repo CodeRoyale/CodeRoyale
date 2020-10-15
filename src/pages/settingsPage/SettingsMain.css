@@ -3,6 +3,14 @@
   background-color: #f5f8f8;
 }
 
+/* Pre-check loading css */
+.settings-page-precheck-loading {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Settings body css */
 .settings-container {
   display: flex;

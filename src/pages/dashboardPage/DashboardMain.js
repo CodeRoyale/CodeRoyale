@@ -1,21 +1,53 @@
 import React, { useState, useEffect } from 'react';
-import './DashboardMain.css';
 import { connect } from 'react-redux';
 import { connectSocket } from '../../actions/socketActions';
+import { preCheckUser, userActionReset } from '../../actions/userActions';
 import Button from '../../components/button/Button';
 import NavBar from '../../components/navBar/NavBar';
 import JoinRoomView from './JoinRoomView';
 import CreateRoomView from './CreateRoomView';
+import { useHistory } from 'react-router-dom';
+import { Alert, Loader } from 'rsuite';
+import './DashboardMain.css';
 
-const DashboardMain = ({ connectSocket }) => {
+const DashboardMain = ({
+  connectSocket,
+  userData,
+  preCheckUser,
+  userActionReset,
+}) => {
+  const history = useHistory();
   const [createRoomShow, setCreateRoomShow] = useState(false);
+
+  // For checking if user token is validated by server
+  useEffect(() => {
+    preCheckUser(history);
+  }, [preCheckUser, history]);
+
+  // Showing error alert
+  const errorAlert = (message) => {
+    Alert.error(message);
+  };
+
+  // PreCheck error handling
+  useEffect(() => {
+    if (
+      userData.preCheckData.error &&
+      userData.preCheckData.error.payload === undefined
+    ) {
+      errorAlert(userData.preCheckData.error);
+      localStorage.removeItem('token');
+      history.push('/login');
+      userActionReset();
+    }
+  }, [userData.preCheckData.error, userActionReset, history]);
 
   useEffect(() => {
     connectSocket();
   }, [connectSocket]);
 
-  return (
-    <div className='dashboard'>
+  let content = (
+    <div className='dashboard-page'>
       <div className='dashboard-header'>
         <NavBar loggedIn={true} />
       </div>
@@ -66,12 +98,26 @@ const DashboardMain = ({ connectSocket }) => {
       <CreateRoomView show={createRoomShow} onClose={setCreateRoomShow} />
     </div>
   );
+
+  // Pre-check running
+  if (userData.preCheckData.isLoading) {
+    content = (
+      <div className='dashboard-page-precheck-loading'>
+        <Loader size='sm' content='Loading...' />
+      </div>
+    );
+  }
+
+  return content;
 };
 
-const mapStateToProps = (state) => {
-  return {
-    socketData: state.socketData,
-  };
-};
+const mapStateToProps = (state) => ({
+  socketData: state.socketData,
+  userData: state.userData,
+});
 
-export default connect(mapStateToProps, { connectSocket })(DashboardMain);
+export default connect(mapStateToProps, {
+  connectSocket,
+  preCheckUser,
+  userActionReset,
+})(DashboardMain);

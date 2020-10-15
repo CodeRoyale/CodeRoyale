@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { logoutUser, actionReset } from '../../actions/userActions';
+import { logoutUser, userActionReset } from '../../actions/userActions';
 import { LOGOUT, ERROR } from '../../utils/constants';
 import { Alert } from 'rsuite';
 import Button from '../button/Button';
 import './ProfileButton.css';
 
-const ProfileButton = ({ userData, profileData, logoutUser }) => {
+const ProfileButton = ({
+  userActionReset,
+  userData,
+  profileData,
+  logoutUser,
+}) => {
   const history = useHistory();
 
   const imageUrl = profileData.picture;
@@ -36,29 +41,29 @@ const ProfileButton = ({ userData, profileData, logoutUser }) => {
       switch (userData.logoutData.error) {
         case ERROR:
           errorAlert("Couldn't logout, please try again later!");
-          actionReset();
+          userActionReset();
           break;
         default:
           errorAlert("Couldn't logout, please try again later!");
-          actionReset();
+          userActionReset();
           break;
       }
     } else if (userData.logoutData.error) {
       errorAlert(userData.logoutData.error);
-      actionReset();
+      userActionReset();
     }
-  }, [userData.logoutData.error]);
+  }, [userData.logoutData.error, userActionReset]);
 
   // Message to user when logout successfull
   useEffect(() => {
     if (userData.logoutData.data) {
       if (userData.logoutData.data.payload.message === LOGOUT) {
-        actionReset();
+        userActionReset();
         localStorage.removeItem('token');
         history.push('/');
       }
     }
-  }, [userData.logoutData.data, history]);
+  }, [userData.logoutData.data, userActionReset, history]);
 
   if (profileClicked) {
     profileMenuBar = (
@@ -126,5 +131,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   logoutUser,
-  actionReset,
+  userActionReset,
 })(ProfileButton);

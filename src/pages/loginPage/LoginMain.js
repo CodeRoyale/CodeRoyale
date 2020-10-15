@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { loginUser, actionReset } from '../../actions/userActions';
+import { loginUser, userActionReset } from '../../actions/userActions';
 import LeftSecLogin from './LeftSecLogin';
 import LoginSec from './LoginSec';
 import { useHistory } from 'react-router-dom';
@@ -14,7 +14,7 @@ import {
 } from '../../utils/constants';
 import './LoginMain.css';
 
-const LoginMain = ({ userData, loginUser, actionReset }) => {
+const LoginMain = ({ userData, loginUser, userActionReset }) => {
   const history = useHistory();
 
   const handleAuthData = (data) => {
@@ -41,14 +41,14 @@ const LoginMain = ({ userData, loginUser, actionReset }) => {
             'Error on Login',
             'You will have to Sign Up first to use CodeRoyale!'
           );
-          actionReset();
+          userActionReset();
           break;
         case ERROR:
           alert(
             'Error on Login',
             'Some error occurred, we are working to fix it'
           );
-          actionReset();
+          userActionReset();
           break;
         case AUTHERROR:
         case INVALID:
@@ -56,21 +56,21 @@ const LoginMain = ({ userData, loginUser, actionReset }) => {
             'Error on Login',
             'Some error occurred, please try again later'
           );
-          actionReset();
+          userActionReset();
           break;
         default:
           alert(
             'Error on Login',
             'Some error occurred, please try again later'
           );
-          actionReset();
+          userActionReset();
           break;
       }
     } else if (userData.loginData.error) {
       alert('Error on Login', userData.loginData.error);
-      actionReset();
+      userActionReset();
     }
-  }, [userData.loginData.error, actionReset]);
+  }, [userData.loginData.error, userActionReset]);
 
   // Checking if user logged in successfully
   useEffect(() => {
@@ -99,4 +99,6 @@ const mapStateToProps = (state) => ({
   userData: state.userData,
 });
 
-export default connect(mapStateToProps, { loginUser, actionReset })(LoginMain);
+export default connect(mapStateToProps, { loginUser, userActionReset })(
+  LoginMain
+);

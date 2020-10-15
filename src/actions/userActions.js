@@ -26,7 +26,7 @@ import jwt from 'jsonwebtoken';
 import loggedInAxios from '../helpers/loggedInAxios';
 import loggedOutAxios from '../helpers/loggedOutAxios';
 
-export const actionReset = () => {
+export const userActionReset = () => {
   return {
     type: ACTION_RESET,
   };
@@ -40,7 +40,6 @@ export const preCheckUser = (history) => (dispatch) => {
   loggedInAxios(history)
     .get('/precheck')
     .then((response) => {
-      console.log(response);
       localStorage.setItem(
         'user-data',
         JSON.stringify(jwt.decode(response.data.payload.accessToken))
@@ -52,7 +51,6 @@ export const preCheckUser = (history) => (dispatch) => {
       });
     })
     .catch((error) => {
-      console.log(error.response);
       dispatch({
         type: PRECHECK_FAIL,
         payload: error.response
@@ -130,6 +128,7 @@ export const deleteAccount = (history) => (dispatch) => {
   loggedInAxios(history)
     .delete('/users/delete')
     .then((response) => {
+      localStorage.removeItem('token');
       dispatch({
         type: DELETE_ACCOUNT_SUCCESS,
         payload: response.data,

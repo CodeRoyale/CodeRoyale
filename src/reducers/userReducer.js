@@ -87,7 +87,6 @@ export default function (state = initialState, action) {
         loginData: {
           isLoading: false,
           data: action.payload,
-          isLoggedIn: true,
         },
       };
     case LOGIN_FAIL:
@@ -96,7 +95,6 @@ export default function (state = initialState, action) {
         loginData: {
           isLoading: false,
           error: action.payload,
-          isLoggedIn: false,
         },
       };
     case SIGNUP_LOADING:

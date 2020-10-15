@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { signUpUser, actionReset } from '../../actions/userActions';
+import { signUpUser, userActionReset } from '../../actions/userActions';
 import LeftSecSignUp from './LeftSecSignUp';
 import SignUpSec from './SignUpSec';
 import { useHistory } from 'react-router-dom';
@@ -14,7 +14,7 @@ import {
 } from '../../utils/constants';
 import './SignUpMain.css';
 
-const SignUpMain = ({ userData, signUpUser, actionReset }) => {
+const SignUpMain = ({ userData, signUpUser, userActionReset }) => {
   const history = useHistory();
 
   const handleAuthData = (data) => {
@@ -42,7 +42,7 @@ const SignUpMain = ({ userData, signUpUser, actionReset }) => {
             'You have already registered! Login to use CodeRoyale'
           );
           history.push('/login');
-          actionReset();
+          userActionReset();
           break;
         case MISSING:
         case ERROR:
@@ -52,7 +52,7 @@ const SignUpMain = ({ userData, signUpUser, actionReset }) => {
             'Error on Signup',
             'Some error occurred, please try again later'
           );
-          actionReset();
+          userActionReset();
           break;
         default:
           alert(
@@ -60,14 +60,14 @@ const SignUpMain = ({ userData, signUpUser, actionReset }) => {
             'Error on Signup',
             'Some error occurred, please try again later'
           );
-          actionReset();
+          userActionReset();
           break;
       }
     } else if (userData.signUpData.error) {
       alert('error', 'Error on Signup', userData.signUpData.error);
-      actionReset();
+      userActionReset();
     }
-  }, [userData.signUpData.error, actionReset, history]);
+  }, [userData.signUpData.error, userActionReset, history]);
 
   // Check if user registered successfully
   useEffect(() => {
@@ -78,11 +78,11 @@ const SignUpMain = ({ userData, signUpUser, actionReset }) => {
           'Registered successfully',
           'Welcome to CodeRoyale! Login to compete'
         );
-        actionReset();
+        userActionReset();
         history.push('/login');
       }
     }
-  }, [userData.signUpData.data, history, actionReset]);
+  }, [userData.signUpData.data, history, userActionReset]);
 
   // Default content
   let content = (
@@ -102,6 +102,6 @@ const mapStateToProps = (state) => ({
   userData: state.userData,
 });
 
-export default connect(mapStateToProps, { signUpUser, actionReset })(
+export default connect(mapStateToProps, { signUpUser, userActionReset })(
   SignUpMain
 );
