@@ -2,6 +2,7 @@
   cursor: pointer;
   float: right;
   text-align: right;
+  margin-top: 5px;
 }
 
 .navbar-profile-image {

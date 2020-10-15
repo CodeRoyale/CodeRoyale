@@ -57,6 +57,7 @@ const SignUpSec = (props) => {
           style={{ width: 300 }}
           placeholder='Password'
           value={password}
+          type='password'
           onChange={(value) => setPassword(value)}
         />
         <div className='signup-section-password-btn'>

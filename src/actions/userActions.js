@@ -130,6 +130,11 @@ export const updateAccount = (newAccountData) => (dispatch) => {
     .patch('/users/update', newAccountData)
     .then((response) => {
       console.log(response);
+      localStorage.setItem(
+        'user-data',
+        JSON.stringify(jwt.decode(response.data.payload.accessToken))
+      );
+      localStorage.token = response.data.payload.accessToken;
       dispatch({
         type: UPDATE_ACCOUNT_SUCCESS,
         payload: response.data,
@@ -148,6 +153,7 @@ export const updateAccount = (newAccountData) => (dispatch) => {
 
 // Logout user
 export const logoutUser = () => (dispatch) => {
+  console.log('running userActions check');
   dispatch({
     type: LOGOUT_LOADING,
   });
@@ -182,6 +188,11 @@ export const userNameCheck = (userName) => (dispatch) => {
     .get(`/users/username?userName=${userName}`)
     .then((response) => {
       console.log(response);
+      localStorage.setItem(
+        'user-data',
+        JSON.stringify(jwt.decode(response.data.payload.accessToken))
+      );
+      localStorage.token = response.data.payload.accessToken;
       dispatch({
         type: USERNAME_CHECK_SUCCESS,
         payload: response.data,

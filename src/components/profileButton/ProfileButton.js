@@ -54,6 +54,7 @@ const ProfileButton = ({ userData, profileData, logoutUser }) => {
     if (userData.logoutData.data) {
       if (userData.logoutData.data.payload.message === LOGOUT) {
         actionReset();
+        localStorage.removeItem('token');
         history.push('/');
       }
     }
@@ -93,7 +94,10 @@ const ProfileButton = ({ userData, profileData, logoutUser }) => {
             type='button'
             buttonStyle='btn--primary--logout'
             buttonSize='btn--medium'
-            onClick={() => logoutUser()}
+            onClick={() => {
+              console.log('navBar check');
+              logoutUser();
+            }}
           >
             Log out
           </Button>
