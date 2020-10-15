@@ -14,7 +14,6 @@ const GoogleAuth = (props) => {
       issuer: 'google',
       signUpType: 'OAuth',
     };
-    console.log(authData);
     // Send back data to called function
     props.getAuthData(authData);
   };

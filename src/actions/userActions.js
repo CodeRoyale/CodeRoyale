@@ -139,7 +139,6 @@ export const deleteAccount = (history) => (dispatch) => {
 
 // Update account info
 export const updateAccount = (history, newAccountData) => (dispatch) => {
-  console.log(newAccountData);
   dispatch({
     type: UPDATE_ACCOUNT_LOADING,
   });
@@ -167,7 +166,6 @@ export const updateAccount = (history, newAccountData) => (dispatch) => {
 
 // Logout user
 export const logoutUser = (history) => (dispatch) => {
-  console.log('running userActions check');
   dispatch({
     type: LOGOUT_LOADING,
   });
