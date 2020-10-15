@@ -41,7 +41,7 @@ export default () => {
       }
 
       // User is not authenticated or refresh token expired
-      if (error.response.status === 401) {
+      if (error.response.status === 401 || error.response.status === 403) {
         localStorage.removeItem('token');
         return new Promise((resolve, reject) => {
           reject(error);

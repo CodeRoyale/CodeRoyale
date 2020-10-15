@@ -1,4 +1,7 @@
 import {
+  PRECHECK_LOADING,
+  PRECHECK_SUCCESS,
+  PRECHECK_FAIL,
   LOGIN_LOADING,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
@@ -29,6 +32,31 @@ export const actionReset = () => {
   };
 };
 
+// Precheck user
+export const preCheckUser = () => (dispatch) => {
+  dispatch({
+    type: PRECHECK_LOADING,
+  });
+  loggedInAxios()
+    .get('/precheck')
+    .then((response) => {
+      console.log(response);
+      dispatch({
+        type: PRECHECK_SUCCESS,
+        payload: response.data,
+      });
+    })
+    .catch((error) => {
+      console.log(error.response);
+      dispatch({
+        type: PRECHECK_FAIL,
+        payload: error.response
+          ? error.response.data
+          : 'Some error occurred! Please check if you have an active internet connection',
+      });
+    });
+};
+
 // Login user
 export const loginUser = (authData) => (dispatch) => {
   dispatch({
@@ -43,8 +71,6 @@ export const loginUser = (authData) => (dispatch) => {
   loggedOutAxios
     .post('/users/login', thirdPartyData)
     .then((response) => {
-      console.log(response);
-      console.log(jwt.decode(response.data.payload.accessToken));
       // Temporary storing in localStorage in actions will change
       localStorage.setItem(
         'user-data',
@@ -57,7 +83,6 @@ export const loginUser = (authData) => (dispatch) => {
       });
     })
     .catch((error) => {
-      console.log(error.response);
       dispatch({
         type: LOGIN_FAIL,
         payload: error.response
@@ -76,14 +101,12 @@ export const signUpUser = (authData) => (dispatch) => {
   loggedOutAxios
     .post('/users/signup', authData)
     .then((response) => {
-      console.log(response);
       dispatch({
         type: SIGNUP_SUCCESS,
         payload: response.data,
       });
     })
     .catch((error) => {
-      console.log(error);
       dispatch({
         type: SIGNUP_FAIL,
         payload: error.response
@@ -102,14 +125,12 @@ export const deleteAccount = () => (dispatch) => {
   loggedInAxios()
     .delete('/users/delete')
     .then((response) => {
-      console.log(response);
       dispatch({
         type: DELETE_ACCOUNT_SUCCESS,
         payload: response.data,
       });
     })
     .catch((error) => {
-      console.log(error);
       dispatch({
         type: DELETE_ACCOUNT_FAIL,
         payload: error.response
@@ -129,7 +150,6 @@ export const updateAccount = (newAccountData) => (dispatch) => {
   loggedInAxios()
     .patch('/users/update', newAccountData)
     .then((response) => {
-      console.log(response);
       localStorage.setItem(
         'user-data',
         JSON.stringify(jwt.decode(response.data.payload.accessToken))
@@ -141,7 +161,6 @@ export const updateAccount = (newAccountData) => (dispatch) => {
       });
     })
     .catch((error) => {
-      console.log(error);
       dispatch({
         type: UPDATE_ACCOUNT_FAIL,
         payload: error.response
@@ -161,14 +180,12 @@ export const logoutUser = () => (dispatch) => {
   loggedInAxios()
     .get('/users/logout')
     .then((response) => {
-      console.log(response);
       dispatch({
         type: LOGOUT_SUCCESS,
         payload: response.data,
       });
     })
     .catch((error) => {
-      console.log(error);
       dispatch({
         type: LOGOUT_FAIL,
         payload: error.response
@@ -187,7 +204,6 @@ export const userNameCheck = (userName) => (dispatch) => {
   loggedInAxios()
     .get(`/users/username?userName=${userName}`)
     .then((response) => {
-      console.log(response);
       localStorage.setItem(
         'user-data',
         JSON.stringify(jwt.decode(response.data.payload.accessToken))
@@ -199,7 +215,6 @@ export const userNameCheck = (userName) => (dispatch) => {
       });
     })
     .catch((error) => {
-      console.log(error);
       dispatch({
         type: USERNAME_CHECK_FAIL,
         payload: error.response

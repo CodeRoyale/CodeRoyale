@@ -1,4 +1,7 @@
 import {
+  PRECHECK_LOADING,
+  PRECHECK_SUCCESS,
+  PRECHECK_FAIL,
   LOGIN_LOADING,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -21,6 +24,9 @@ import {
 } from '../actions/types';
 
 const initialState = {
+  preCheckData: {
+    isLoading: false,
+  },
   loginData: {
     isLoading: false,
   },
@@ -43,6 +49,30 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case PRECHECK_LOADING:
+      return {
+        ...state,
+        preCheckData: {
+          error: false,
+          isLoading: true,
+        },
+      };
+    case PRECHECK_SUCCESS:
+      return {
+        ...state,
+        preCheckData: {
+          isLoading: false,
+          data: action.payload,
+        },
+      };
+    case PRECHECK_FAIL:
+      return {
+        ...state,
+        preCheckData: {
+          isLoading: false,
+          error: action.payload,
+        },
+      };
     case LOGIN_LOADING:
       return {
         ...state,

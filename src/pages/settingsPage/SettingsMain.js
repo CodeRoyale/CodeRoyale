@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {
+  preCheckUser,
   deleteAccount,
   updateAccount,
   userNameCheck,
@@ -8,7 +9,7 @@ import {
 } from '../../actions/userActions';
 import SettingsBody from './SettingsBody';
 import NavBar from '../../components/navBar/NavBar';
-import { Alert } from 'rsuite';
+import { Alert, Loader } from 'rsuite';
 import {
   ERROR,
   DELETED,
@@ -20,6 +21,7 @@ import './SettingsMain.css';
 
 const SettingsMain = ({
   userData,
+  preCheckUser,
   deleteAccount,
   updateAccount,
   userNameCheck,
@@ -29,8 +31,8 @@ const SettingsMain = ({
 
   // For checking if user token is validated by server
   useEffect(() => {
-    console.log('Running check');
-  }, []);
+    preCheckUser();
+  }, [preCheckUser]);
 
   // Showing success alert
   const successAlert = (message) => {
@@ -146,7 +148,8 @@ const SettingsMain = ({
     }
   }, [userData.userNameCheckData.data, actionReset]);
 
-  return (
+  // UI if user is valid and properly authenticated
+  let content = (
     <div className='settings-page'>
       <NavBar loggedIn={true} />
       <SettingsBody
@@ -159,6 +162,17 @@ const SettingsMain = ({
       />
     </div>
   );
+
+  // Pre-check running
+  if (userData.preCheckData.isLoading) {
+    content = (
+      <div className='settings-page'>
+        <Loader size='sm' content='Loading...' />
+      </div>
+    );
+  }
+
+  return content;
 };
 
 const mapStateToProps = (state) => ({
@@ -166,6 +180,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
+  preCheckUser,
   deleteAccount,
   updateAccount,
   userNameCheck,

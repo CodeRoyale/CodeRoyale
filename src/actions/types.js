@@ -1,3 +1,8 @@
+// PreCheck actions
+export const PRECHECK_LOADING = 'PRECHECK_LOADING';
+export const PRECHECK_SUCCESS = 'PRECHECK_SUCCESS';
+export const PRECHECK_FAIL = 'PRECHECK_FAIL';
+
 // Login Actions
 export const LOGIN_LOADING = 'LOGIN_LOADING';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
