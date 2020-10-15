@@ -25,7 +25,6 @@ const RoomMain = ({
   const [createTeamShow, setCreateTeamShow] = useState(false);
   const socket = socketData.socket;
   const userName = profileData.username.toString();
-  const accessToken = localStorage.getItem('access-token');
   const history = useHistory();
 
   // Room Details...
