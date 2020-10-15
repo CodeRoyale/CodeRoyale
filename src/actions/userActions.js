@@ -22,6 +22,7 @@ import {
   USERNAME_CHECK_FAIL,
   ACTION_RESET,
 } from './types';
+import { SERVER_DOWN } from '../utils/constants';
 import jwt from 'jsonwebtoken';
 import loggedInAxios from '../helpers/loggedInAxios';
 import loggedOutAxios from '../helpers/loggedOutAxios';
@@ -53,9 +54,7 @@ export const preCheckUser = (history) => (dispatch) => {
     .catch((error) => {
       dispatch({
         type: PRECHECK_FAIL,
-        payload: error.response
-          ? error.response.data
-          : 'Some error occurred! Please check if you have an active internet connection',
+        payload: error.response ? error.response.data : SERVER_DOWN,
       });
     });
 };
@@ -88,9 +87,7 @@ export const loginUser = (authData) => (dispatch) => {
     .catch((error) => {
       dispatch({
         type: LOGIN_FAIL,
-        payload: error.response
-          ? error.response.data
-          : 'Some error occurred! Please check if you have an active internet connection',
+        payload: error.response ? error.response.data : SERVER_DOWN,
       });
     });
 };
@@ -112,9 +109,7 @@ export const signUpUser = (authData) => (dispatch) => {
     .catch((error) => {
       dispatch({
         type: SIGNUP_FAIL,
-        payload: error.response
-          ? error.response.data
-          : 'Some error occurred! Please check if you have an active internet connection',
+        payload: error.response ? error.response.data : SERVER_DOWN,
       });
     });
 };
@@ -137,9 +132,7 @@ export const deleteAccount = (history) => (dispatch) => {
     .catch((error) => {
       dispatch({
         type: DELETE_ACCOUNT_FAIL,
-        payload: error.response
-          ? error.response.data
-          : 'Some error occurred! Please check if you have an active internet connection',
+        payload: error.response ? error.response.data : SERVER_DOWN,
       });
     });
 };
@@ -167,9 +160,7 @@ export const updateAccount = (history, newAccountData) => (dispatch) => {
     .catch((error) => {
       dispatch({
         type: UPDATE_ACCOUNT_FAIL,
-        payload: error.response
-          ? error.response.data
-          : 'Some error occurred! Please check if you have an active internet connection',
+        payload: error.response ? error.response.data : SERVER_DOWN,
       });
     });
 };
@@ -192,9 +183,7 @@ export const logoutUser = (history) => (dispatch) => {
     .catch((error) => {
       dispatch({
         type: LOGOUT_FAIL,
-        payload: error.response
-          ? error.response.data
-          : 'Some error occurred! Please check if you have an active internet connection',
+        payload: error.response ? error.response.data : SERVER_DOWN,
       });
     });
 };
@@ -221,9 +210,7 @@ export const userNameCheck = (history, userName) => (dispatch) => {
     .catch((error) => {
       dispatch({
         type: USERNAME_CHECK_FAIL,
-        payload: error.response
-          ? error.response.data
-          : 'Some error occurred! Please check if you have an active internet connection',
+        payload: error.response ? error.response.data : SERVER_DOWN,
       });
     });
 };

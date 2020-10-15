@@ -16,6 +16,10 @@ export const LOGOUT = 'SUCCESSFUL LOGOUT';
 export const UPDATE = 'DATA UPDATED';
 export const AVAILABLE = 'DATA UPDATABLE';
 
+// Response handling if user-api server down
+export const SERVER_DOWN =
+  'Some error occurred, our team is in the process of fixing it!';
+
 // Responses from lobby backend
 export const ERROR_MSG = 'Some error occured !';
 
