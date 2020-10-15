@@ -41,6 +41,10 @@ const componentRegistry = {
 
 const RenderRoute = (route) => {
   const history = useHistory();
+
+  // Setting titles for all pages
+  document.title = route.title || 'CodeRoyale';
+
   if (route.needsAuth && !isAuthenticated()) {
     history.push('/login');
   }
