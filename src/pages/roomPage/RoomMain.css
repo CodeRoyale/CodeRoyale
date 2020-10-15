@@ -1,283 +1,78 @@
 :root {
-  --border-radius-card: 0px 15px 0px 15px;
-  --margin-team-member-card: 10px;
-  --width-team-member-card: 230px;
-  --width-team-card: calc(
-    var(--width-team-member-card) + 3 * var(--margin-team-member-card)
-  );
-  --border-shadow-card: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
-  --width-room-right-section-body: 70%;
-}
-
-.room {
-  margin: auto;
-  background-color: #f5f8f8;
+  --room-body-height: 87.6vh;
+  --room-left-width: 78%;
+  --room-left-height: 110px;
 }
 
 .room-body {
-  display: flex;
-  flex: 2;
-  /*TODO: Change this height later*/
-  height: 87.5vh;
-}
-
-.room-left-section {
-  background-color: white;
-  box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.05);
-  width: 25%;
-  color: white;
-}
-
-.room-create-team-text-container {
+  height: var(--room-body-height);
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
 }
-.room-create-team-text {
-  text-align: center;
-  color: var(--primary-color);
-  font-size: 250%;
-  opacity: 0.7;
+.room-body-left {
+  width: var(--room-left-width);
+  background-color: whitesmoke;
 }
-
-.room-right-section {
-  display: flex;
-  flex: 2;
-}
-.room-right-section-body {
+.room-left-body {
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
+  background-color: whitesmoke;
 }
-
-/*CreateTeamView.css*/
-.create-team {
-  margin: 40px 20px 20px 20px;
-}
-
-/*CopyRoomCodeView.css*/
-.copy-room-code {
-  margin-top: 30px;
-  margin-bottom: 30px;
-}
-.copy-room-code-admin-container {
-  text-align: right;
-  background: rgba(var(--primary-color-rgb), 0.95);
-  width: 80%;
-  padding: 7px 25px 10px 7px;
-  font-size: large;
-  border-radius: 0 50px 50px 0;
-}
-
-.copy-room-code-room_id-container {
-  background: rgba(240, 153, 13);
-  width: 72%;
-  border-radius: 0 50px 50px 0;
-  text-align: right;
-  cursor: pointer;
-  padding: 1px 10px 1px 1px;
-  margin-top: 5px;
-}
-
-/*RoomDetails.css*/
-.room-details {
-  margin: 0px;
-}
-.room-details-main-container {
-  margin: 0 20px 0 20px;
-  display: flex;
-  flex: 2;
-  justify-items: center;
-  font-size: medium;
-  background: #e5e5e5c7;
-  border-radius: 5px;
-  color: black;
-}
-.room-details-main-users {
-  width: 50%;
-  text-align: center;
-}
-.room-details-main-teams {
-  width: 50%;
-  text-align: center;
-}
-.room-details-main-number {
-  font-size: x-large;
-}
-
-.room-details-more-container {
-  margin: 30px 7px 20px 7px;
-  border-left: solid rgba(var(--primary-color-rgb), 1) 5px;
-  background: #e5e5e5c7;
-  padding: 4px;
-  border-radius: 2px;
-  color: black;
-}
-.room-details-panel-container {
-  display: flex;
-  flex: 2;
-}
-.room-details-panel-data-label {
-  width: 90%;
-}
-
-/*TeamMemberCard.css*/
-.team-member-card {
-  padding: 10px;
-  width: var(--width-team-member-card);
-  display: flex;
-  height: wrap;
+.room-body-header {
+  height: var(--room-left-height);
   background-color: white;
-  margin: var(--margin-team-member-card);
-  box-shadow: var(--border-shadow-card);
-  border-radius: var(--border-radius-card);
-}
-
-.team-member-card-image-container {
-  margin-right: 5px;
-}
-.team-member-card-image {
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-}
-.team-member-card-username-container {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+  padding: 10px;
   display: flex;
-  align-items: center;
-  margin-left: 5px;
 }
-
-.team-member-card-username {
-  font-size: large;
+.room-body-header-left {
+  width: 50%;
 }
-
-.team-member-card-leave-button-container {
-  width: 100%;
-  display: flex;
-  align-items: center;
+.room-body-header-right {
+  width: 50%;
+  text-align: right;
+  padding: 10px;
 }
-
-/*TeamCard.css*/
-.team-card {
-  margin: 15px;
-  width: var(--width-team-card);
+.room-body-header-right div {
+  margin-bottom: 12px;
 }
-.team-card-team-name-container {
-  display: flex;
-  flex: 2;
-  border: solid var(--primary-color);
+.room-body-header-drawer {
   height: 20px;
-  width: 150px;
-  font-size: medium;
-  color: white;
-  background-color: var(--primary-color);
-  padding-left: 10px;
-  padding-right: 3px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  box-shadow: var(--border-shadow-card);
-}
-.team-card-team-name-text {
-  display: flex;
-  align-items: center;
-}
-.team-card-team-name-button-container {
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-.team-card-team-name-button-container-row {
-  width: 100%;
-}
-.team-card-container {
-  display: flex;
-  border: solid var(--primary-color) 5px;
-  height: wrap;
-  box-shadow: var(--border-shadow-card);
-  border-radius: var(--border-radius-card);
-  height: 100%;
-  width: 100%;
-}
-
-.team-card-team-name-container:hover .close-team-close-button {
-  opacity: 1;
-}
-.team-card-team-name-container:hover .join-team-add-button {
-  opacity: 1;
-}
-
-/*CloseRoomView.css*/
-.close-room-view {
-  margin: 10px;
-  right: 0;
+  background: rgba(0, 0, 0, 0.15);
   cursor: pointer;
   text-align: right;
+  padding-right: 10px;
 }
-.close-room-button {
-  width: 27px;
-  height: 27px;
+.room-body-header-extra {
+  height: 100px;
+  background: rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.1);
+  padding: 10px;
 }
-
-/*joinTeamView.css*/
-.join-team-add-button {
-  height: 15px;
-  width: 15px;
-  float: right;
-  opacity: 0;
-  cursor: pointer;
-  transition-duration: 0.3s;
-  margin: 2px;
-}
-
-/*CloseTeamView.css*/
-.close-team-close-button {
-  height: 15px;
-  width: 15px;
-  float: right;
-  opacity: 0;
-  cursor: pointer;
-  transition-duration: 0.3s;
-  margin: 2px;
-}
-
-/*StartCompetitionView.css*/
-.start-competition-view {
-  margin: 15px;
-}
-.start-competition-view-text {
-  font-size: medium;
-  text-align: center;
-}
-.start-competition-view-button {
-  margin: 10px;
-  text-align: center;
-}
-
-/*RoomChat.css*/
-.room-chat {
-  width: 270px;
-  box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.1);
-  background: white;
-  border-left: solid yellowgreen 7px;
-  padding: 5px;
+.room-body-header-extra table {
+  width: 100%;
   height: 100%;
+  font-size: 15px;
 }
-.room-chat-title {
-  font-size: medium;
-  color: black;
-  background: white;
-  padding: 5px;
-  text-align: center;
-  height: 7%;
+.room-body-header-extra td {
+  padding-left: 15px;
+  text-align: left;
 }
-.room-chat-chats {
-  height: 83%;
-  background: rgba(0, 0, 0, 0.03);
-  border-radius: 5px;
-  padding: 5px;
+.room-body-right {
+  position: fixed;
+  right: 0;
+  height: 100%;
+  width: calc(100% - var(--room-left-width));
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
 }
-.room-chat-input {
-  padding: 5px;
-  height: 10%;
+.room-right-roomId {
+  display: flex;
+}
+.room-right-roomId div {
+  margin-left: 10px;
+  cursor: pointer;
+}
+.room-right-header {
+  height: var(--room-left-height);
+  padding: 10px;
 }

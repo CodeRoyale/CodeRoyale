@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Whisper, Tooltip, Modal, Button, Alert } from 'rsuite';
+import { Modal, Button, Alert } from 'rsuite';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../utils/mapStateToProps';
 import { ROOM_CLOSED } from '../../utils/constants';
 import { closeRoom } from '../../actions/roomActions';
-import { Redirect } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 function CloseRoomView({ roomData, socketData, closeRoom }) {
   const [showPrompt, setShowPrompt] = useState(false);
   const socket = socketData.socket;
+  const history = useHistory();
   const [state, setState] = useState({
     closeRoomClicked: false,
     actionDone: false,
@@ -41,24 +42,19 @@ function CloseRoomView({ roomData, socketData, closeRoom }) {
   ]);
 
   if (redirect) {
-    return <Redirect to='/lobby' />;
+    history.push('/dashboard');
   }
 
   return (
     <div className='close-room-view'>
-      <Whisper
-        trigger='hover'
-        placement='right'
-        speaker={<Tooltip>Close Room</Tooltip>}
+      <Button
+        onClick={() => setShowPrompt(true)}
+        appearance='primary'
+        color='red'
+        size='sm'
       >
-        <img
-          className='close-room-button'
-          src='/images/close_button_black.svg'
-          alt=''
-          onClick={() => setShowPrompt(true)}
-        />
-      </Whisper>
-
+        Close Room
+      </Button>
       <Modal
         backdrop
         show={showPrompt}

@@ -1,67 +1,100 @@
+:root {
+  /*TODO: Change this height later*/
+  --height-body: 87.6vh;
+}
+
 .dashboard {
   margin: auto;
-  height: 100%;
-  background-color: #f5f8f8;
 }
-
-/************************************/
-/*********** Body CSS ***************/
-/************************************/
 .dashboard-body {
-  padding: 50px;
-  height: 460px;
+  height: var(--height-body);
   width: 100%;
 }
-.dashboard-body-left {
-  float: left;
-}
-.dashboard-body-right {
-  float: right;
-}
 
-.dashboard-play-button {
-  margin-top: 15px;
-}
-
-.dashboard-text-heading {
-  margin-top: 50px;
-  color: rgba(128, 128, 128, 0.877);
-  font-size: 45px;
-}
-.dashboard-play-body {
+.dashboard-left {
+  position: absolute;
   display: flex;
-  flex: wrap;
-  width: auto;
-  margin-top: 20px;
-  font-size: 18px;
-}
-.dashboard-play-friends {
-  margin-right: 10px;
-  float: left;
-  width: 320px;
-}
-
-.dashboard-play-random {
-  margin-right: 10px;
-  float: right;
-  width: 320px;
-}
-
-.dashboard-image {
-  width: 420px;
-  height: 400px;
-}
-
-.dashboard-link-share-card {
-  height: 100%;
-  display: flex;
-  justify-content: center;
+  height: var(--height-body);
+  width: 50%;
   align-items: center;
+  justify-content: center;
+  z-index: 3;
 }
-/************************************/
-/*********** Footer CSS *************/
-/************************************/
-.dashboard-footer {
+
+.dashboard-left-input-container {
+  display: flex;
+  margin-top: 20px;
+}
+
+.dashboard-background {
+  position: absolute;
+  height: var(--height-body);
+  width: 100%;
+  background: rgba(var(--primary-color-rgb), 0.15);
+  z-index: 0;
+}
+.dashboard-background svg {
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+}
+.dashboard-background img {
+  position: absolute;
+  height: 550px;
+  width: 550px;
+  z-index: 2;
+  right: 0;
+  bottom: 10px;
+}
+
+/*Create Room View*/
+.create-room {
+  z-index: 5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.create-room-modal {
+  outline: solid var(--primary-color) 5px;
+  background-color: whitesmoke;
+  display: flex;
+  height: 450px;
+  width: 800px;
+}
+.create-room-modal-left {
+  background: rgba(var(--primary-color-rgb), 0.9);
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+.create-room-modal-right {
+  width: 50%;
+}
+.create-room-modal-header {
+  width: 100%;
+  text-align: right;
+  padding: 20px 20px 10px 0;
+}
+.create-room-modal-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.create-room-modal-body-left {
+  margin-right: 30px;
+}
+.create-room-modal-body-right {
+  margin-top: 30px;
+}
+.create-room-modal-footer {
+  margin: 40px;
   text-align: center;
-  height: 50px;
 }
