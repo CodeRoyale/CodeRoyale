@@ -3,9 +3,18 @@
   --height-body: 87.6vh;
 }
 
-.dashboard {
+.dashboard-page {
   margin: auto;
 }
+
+/* Pre-check loading css */
+.dashboard-page-precheck-loading {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .dashboard-body {
   height: var(--height-body);
   width: 100%;

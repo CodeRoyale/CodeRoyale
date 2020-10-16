@@ -9,7 +9,6 @@ import { vetoStop, vetoVoting } from '../../actions/vetoActions';
 import './VetoMain.css';
 
 const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
-  const accessToken = localStorage.getItem('access-token');
   const [vottedQuestions, setVottedQuestions] = useState([]);
   const socket = socketData.socket;
 
@@ -19,11 +18,6 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
       vetoStop(socket);
     }
   }, [socket, vetoStop]);
-
-  // Checking if user is logged in
-  if (accessToken === null) {
-    return <Redirect to='/' />;
-  }
 
   // Checking if the socket is null
   if (socket === null) {
@@ -64,7 +58,7 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
   if (!vetoData.quesApiLoading) {
     content = (
       <div className='veto-page'>
-        <Navbar />
+        <Navbar loggedIn={true} />
         <VetoBody
           isLoading={vetoData.quesApiLoading}
           questions={vetoData.vetoQuestions}

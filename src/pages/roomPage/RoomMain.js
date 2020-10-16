@@ -27,7 +27,6 @@ const RoomMain = ({
   const [createTeamShow, setCreateTeamShow] = useState(false);
   const socket = socketData.socket;
   const userName = profileData.username.toString();
-  const accessToken = localStorage.getItem('access-token');
   const history = useHistory();
   const room_id = localStorage.getItem('room_id');
 
@@ -88,10 +87,6 @@ const RoomMain = ({
   if(roomData.type === ROOM_CLOSED){
     history.push('/dashboard');
   }
-  
-  if (accessToken === null) {
-    history.push('/');
-  }
 
   if (vetoData.vetoStarted) {
     history.push('/veto');
@@ -113,7 +108,7 @@ const RoomMain = ({
   return (
     <div className='room'>
       <div className='room-header'>
-        <NavBar />
+        <NavBar loggedIn={true} />
       </div>
       <div className='room-body'>
         <div className='room-body-left'>

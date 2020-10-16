@@ -23,11 +23,6 @@ const ArenaMain = ({ socketData, arenaData, vetoData, getQuestion }) => {
     return <Redirect to='/lobby' />;
   }
 
-  const accessToken = localStorage.getItem('access-token');
-  if (accessToken === null) {
-    return <Redirect to='/' />;
-  }
-
   const handleGetCurrQuestion = (data) => {
     setCurrentQuestion(data);
   };
@@ -35,7 +30,7 @@ const ArenaMain = ({ socketData, arenaData, vetoData, getQuestion }) => {
   let content = (
     <div className='arena-page'>
       <div>
-        <NavBar />
+        <NavBar loggedIn={true} />
       </div>
 
       <div className='arena-body'>

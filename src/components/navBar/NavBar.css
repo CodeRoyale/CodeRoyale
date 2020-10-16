@@ -25,3 +25,56 @@
   height: 100%;
   align-items: center;
 }
+
+/** NavBar when user is not logged in **/
+.loggedOut-navbar {
+  padding: 20px;
+  background-color: white;
+  height: var(--height-nav-bar);
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(250, 250, 242);
+  width: 100%;
+  position: fixed;
+  top: 0;
+}
+
+.loggedOut-navlinks li a {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  text-decoration: none;
+  color: black;
+}
+
+.loggedOut-navbar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.loggedOut-navlinks {
+  list-style: none;
+}
+
+.loggedOut-navlinks li {
+  display: inline-block;
+  padding: 0px 15px;
+}
+
+.loggedOut-navlinks li a {
+  transition: all 0.3s ease 0s;
+}
+
+.loggedOut-navlinks li a:hover {
+  color: var(--primary-color);
+}
+
+.loggedOut-nav-signup {
+  margin-right: 20px;
+  text-decoration: none;
+  color: black;
+  transition: all 0.3s ease 0s;
+}
+
+.loggedOut-nav-signup:hover {
+  color: var(--primary-color);
+}
