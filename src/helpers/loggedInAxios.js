@@ -7,7 +7,7 @@ import axios from 'axios';
 
 export default (history = null) => {
   const clientURL = process.env.REACT_APP_CLIENT_URL;
-  const baseURL = process.env.REACT_APP_USER_API_URL;
+  const baseURL = process.env.REACT_APP_USER_API;
 
   let headers = {};
 
