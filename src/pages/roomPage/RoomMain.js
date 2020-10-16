@@ -8,7 +8,8 @@ import TeamCard from '../../components/teamCard/TeamCard';
 import CreateTeamView from './CreateTeamView';
 import { getRoom } from '../../actions/roomActions';
 import { resetTeamAction } from '../../actions/teamActions';
-import { TEAM_CREATED, TEAM_JOINED, TEAM_LEFT } from '../../utils/constants';
+import { connectSocket } from '../../actions/socketActions';
+import { TEAM_CREATED, TEAM_JOINED, TEAM_LEFT, ROOM_CLOSED } from '../../utils/constants';
 import { Alert } from 'rsuite';
 import { connect } from 'react-redux';
 import profileData from '../../utils/examples';
@@ -21,31 +22,38 @@ const RoomMain = ({
   getRoom,
   resetTeamAction,
   vetoData,
+  connectSocket
 }) => {
   const [createTeamShow, setCreateTeamShow] = useState(false);
   const socket = socketData.socket;
   const userName = profileData.username.toString();
   const history = useHistory();
+  const room_id = localStorage.getItem('room_id');
+
+  // Connecting Socket...
+  useEffect(() => {
+    connectSocket();
+  }, [connectSocket]);
 
   // Room Details...
-  let roomTeams, roomConfig, roomState, roomCompetition, room_id, admin;
+  let roomTeams, roomConfig, roomState, roomCompetition, admin;
   if (roomData.data !== null) {
     roomTeams = roomData.data.teams;
     roomConfig = roomData.data.config;
     roomState = roomData.data.state;
     roomCompetition = roomData.data.competition;
     if (roomConfig !== undefined) {
-      room_id = roomConfig.id;
       admin = roomConfig.admin;
     }
   }
 
+
   // Get room & check if veto started
   useEffect(() => {
-    if (socket !== null && teamData.type !== '' && room_id !== undefined) {
+    if (socket !== null && room_id !== null ) {
       getRoom(socket, { room_id });
     }
-  }, [room_id, socket, getRoom, teamData.type]);
+  }, [room_id, socket, getRoom]);
 
   // Display Alert on every action...
   useEffect(() => {
@@ -72,7 +80,11 @@ const RoomMain = ({
   });
 
   // Checking all the conditions to be in the room...
-  if (socket === null) {
+  if (room_id === null) {
+    history.push('/dashboard');
+  }
+
+  if(roomData.type === ROOM_CLOSED){
     history.push('/dashboard');
   }
 
@@ -137,4 +149,4 @@ export const mapStateToProps = (state) => {
     vetoData: state.vetoData,
   };
 };
-export default connect(mapStateToProps, { getRoom, resetTeamAction })(RoomMain);
+export default connect(mapStateToProps, { connectSocket, getRoom, resetTeamAction })(RoomMain);
