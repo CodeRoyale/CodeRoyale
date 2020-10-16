@@ -15,7 +15,7 @@ const LoginSec = (props) => {
   let content = (
     <div className='login-section-container'>
       <div className='login-section-title'>
-        Sign into <LogoContainer />{' '}
+        Login <LogoContainer />{' '}
       </div>
       <div>
         <div className='login-auth-separator'></div>

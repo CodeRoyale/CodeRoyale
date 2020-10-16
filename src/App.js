@@ -1,107 +1,76 @@
 import React from 'react';
-import './App.css';
-import 'rsuite/lib/styles/index.less';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import FrontPage from './pages/frontPage/FrontPageMain';
-import ProfileSettingsMain from './pages/profileSettingsPage/ProfileSettingsMain';
-import LobbyMain from './pages/lobbyPage/LobbyMain';
-import DashboardMain from './pages/dashboardPage/DashboardMain';
-import SignUpMain from './pages/signUpPage/SignUpMain';
-import LoginMain from './pages/loginPage/LoginMain';
-import Arena from './pages/arenaPage/ArenaMain';
-import OutroMain from './pages/outroPage/OutroMain';
-import Testing from './pages/testPage/TestPage';
-import RoomMain from './pages/roomPage/RoomMain';
-import 'rsuite/lib/styles/index.less';
-import VetoMain from './pages/vetoPage/VetoMain';
-import WinLoseMain from './pages/winLosePage/WinLoseMain';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useHistory,
+} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
+import routes from './routes';
+import OutroMain from './pages/outroPage/OutroMain';
+import DashboardMain from './pages/dashboardPage/DashboardMain';
+import LoginMain from './pages/loginPage/LoginMain';
+import HomeMain from './pages/homePage/HomeMain';
+import SettingsMain from './pages/settingsPage/SettingsMain';
+import LobbyMain from './pages/lobbyPage/LobbyMain';
+import SignUpMain from './pages/signUpPage/SignUpMain';
+import Arena from './pages/arenaPage/ArenaMain';
+import RoomMain from './pages/roomPage/RoomMain';
+import VetoMain from './pages/vetoPage/VetoMain';
+import WinLoseMain from './pages/winLosePage/WinLoseMain';
+import TestPage from './pages/testPage/TestPage';
+import isAuthenticated from './utils/isAuthenticated';
+import 'rsuite/lib/styles/index.less';
+import './App.css';
 
-function App() {
+const componentRegistry = {
+  OutroMain: OutroMain,
+  DashboardMain: DashboardMain,
+  LoginMain: LoginMain,
+  SignUpMain: SignUpMain,
+  Arena: Arena,
+  LobbyMain: LobbyMain,
+  WinLoseMain: WinLoseMain,
+  RoomMain: RoomMain,
+  VetoMain: VetoMain,
+  SettingsMain: SettingsMain,
+  HomeMain: HomeMain,
+  TestPage: TestPage,
+};
+
+const RenderRoute = (route) => {
+  const history = useHistory();
+
+  // Setting titles for all pages
+  document.title = route.title || 'CodeRoyale';
+
+  if (route.needsAuth && !isAuthenticated()) {
+    history.push('/login');
+  }
+  return (
+    <Route
+      exact
+      path={route.path}
+      component={componentRegistry[route.component]}
+    />
+  );
+};
+
+const App = () => {
   return (
     <Provider store={store}>
-      <Router>
-        <div data-testid='App' className='App'>
+      <div data-testid='App' className='App'>
+        <Router>
           <Switch>
-            <Route
-              data-testid='route-sorry'
-              exact
-              path='/sorry'
-              component={OutroMain}
-            />
-            <Route
-              data-testid='route-dashboard'
-              exact
-              path='/dashboard'
-              component={DashboardMain}
-            />
-            <Route
-              data-testid='route-login'
-              exact
-              path='/login'
-              component={LoginMain}
-            />
-            <Route
-              data-testid='route-signup'
-              exact
-              path='/signup'
-              component={SignUpMain}
-            />
-            <Route
-              data-testid='route-arena'
-              exact
-              path='/arena'
-              component={Arena}
-            />
-            <Route
-              data-testid='route-lobby'
-              exact
-              path='/lobby'
-              component={LobbyMain}
-            />
-            <Route
-              data-testid='route-winLose'
-              exact
-              path='/results'
-              component={WinLoseMain}
-            />
-            <Route
-              data-testid='route-room'
-              exact
-              path='/room'
-              component={RoomMain}
-            />
-            <Route
-              data-testid='route-veto'
-              exact
-              path='/veto'
-              component={VetoMain}
-            />
-            <Route data-testid='test' exact path='/test' component={Testing} />
-            <Route
-              data-testid='route-settings'
-              exact
-              path='/settings'
-              component={ProfileSettingsMain}
-            />
-            <Route
-              data-testid='route-none'
-              exact
-              path=''
-              component={FrontPage}
-            />
-            <Route
-              data-testid='route-home'
-              exact
-              path='/'
-              component={FrontPage}
-            />
+            {routes.map((route, index) => (
+              <RenderRoute {...route} key={index} />
+            ))}
           </Switch>
-        </div>
-      </Router>
+        </Router>
+      </div>
     </Provider>
   );
-}
+};
 
 export default App;
