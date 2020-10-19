@@ -39,19 +39,7 @@ const {
 } = require("../controllers/roomController");
 const { findSoloMatch } = require("../controllers/publicRooms");
 
-// import utils
-const { getQuestions } = require("../utils/qapiConn");
-
-const checkToken = (token) => {
-  //just for testing will change later
-  if (token[0] !== "z") {
-    return {
-      userName: token,
-    };
-  } else {
-    false;
-  }
-};
+const { checkToken } = require("../utils/auth");
 
 const authUser = (socket, next) => {
   try {

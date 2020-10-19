@@ -1,5 +1,6 @@
 //- Please fill these
 const uuid = require("uuid");
+const jwt = require("jsonwebtoken");
 
 const encryptData = (data) => {
   // encrypt data
@@ -11,6 +12,16 @@ const encryptData = (data) => {
   return uuid.v4();
 };
 
+const checkToken = (token) => {
+  try {
+    const payload = jwt.verify(token, process.env.JWT_KEY);
+    return payload;
+  } catch {
+    return false;
+  }
+};
+
 module.exports = {
   encryptData,
+  checkToken,
 };
