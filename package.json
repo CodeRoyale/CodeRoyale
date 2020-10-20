@@ -21,9 +21,9 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mocha": "^8.2.0",
+    "mocha": "^8.0.1",
     "mongoose": "^5.9.25",
-    "redoc": "^2.0.0-rc.44",
+    "redoc": "^2.0.0-rc.33",
     "supertest": "^4.0.2",
     "swagger-jsdoc": "^4.0.0"
   },
