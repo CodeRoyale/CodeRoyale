@@ -1,22 +1,14 @@
 const Testcase = require('../models/testCase');
-const RESPONSE = require('../utils/constantResponse');
 
 const putTestcase = async (req, res) => {
   try {
     const testcase = await Testcase.create(req.body);
     res.status(201).json({
-      status: true,
-      payload: {
-        message: RESPONSE.CREATED,
-        data: testcase
-      }
+      message: testcase,
     });
   } catch (err) {
     res.status(401).json({
-      status: false,
-      payload: {
-        message: RESPONSE.NOTCREATED
-      }
+      message: err.message,
     });
   }
 };
@@ -38,18 +30,11 @@ const getTestcase = async (req, res) => {
       testArray[arr[i]] = testcase.testcases;
     }
     res.status(200).json({
-      status: true,
-      payload: {
-        message: RESPONSE.RECEIVED,
-        data: testArray
-      }
+      message: testArray,
     });
   } catch (err) {
     res.status(401).json({
-      status: false,
-      payload: {
-        message: RESPONSE.NOTRECEIVED
-      }
+      message: err.message,
     });
   }
 };

@@ -1,23 +1,14 @@
 const Question = require('../models/questionModel');
-const RESPONSE = require('../utils/constantResponse');
-
 
 const putQuestion = async (req, res) => {
   try {
     const question = await Question.create(req.body);
     res.status(201).json({
-      status: true,
-      payload:{
-        message: RESPONSE.CREATED,
-        data: question
-      }
+      message: question,
     });
   } catch (err) {
     res.status(401).json({
-      status: false,
-      payload:{
-        message: RESPONSE.NOTCREATED
-      }
+      message: err.message,
     });
   }
 };
@@ -42,16 +33,11 @@ const getRandom = async (req, res) => {
     }
 
     res.status(200).json({
-      status: true,
-      payload: {
-        message: RESPONSE.RECEIVED,
-        data: qids
-      }
+      message: qids,
     });
   } catch (err) {
     res.status(401).json({
-      status: false,
-      message: RESPONSE.NOTRECEIVED
+      message: err.message,
     });
   }
 };
@@ -66,31 +52,18 @@ const getQuestion = async (req, res) => {
       });
 
       res.status(200).json({
-        status: true,
-        payload: {
-          message: RESPONSE.RECEIVED,
-          data: questions
-        }
-        
+        message: questions,
       });
     } else {
       const questions = await Question.findOne({});
 
       res.status(200).json({
-        status: true,
-        payload: {
-          message: RESPONSE.RECEIVED,
-          data: questions
-        }
-        
+        message: questions,
       });
     }
   } catch (err) {
     res.status(401).json({
-      status: false,
-      payload: {
-        message: RESPONSE.NOTRECEIVED
-      }
+      message: err.message,
     });
   }
 };
@@ -106,20 +79,11 @@ const getQuestionById = async (req, res) => {
       qids.push(question);
     }
     res.status(200).json({
-      status: true,
-      payload: {
-        message: RESPONSE.RECEIVED,
-        data: qids
-      }
+      message: qids,
     });
   } catch (err) {
     // wrong id by user
-    res.status(401).json({
-      status: false,
-      payload: {
-        message: RESPONSE.NOTRECEIVED
-      }
-    });
+    res.status(401).json({ message: err.message });
   }
 };
 
@@ -127,18 +91,11 @@ const deleteQuestion = async (req, res) => {
   try {
     const resp = await Question.remove({});
     res.status(201).json({
-      status: true,
-      payload: {
-        message: RESPONSE.DELETED,
-        data: resp
-      }
+      message: resp,
     });
   } catch (err) {
     res.status(401).json({
-      status: false,
-      payload: {
-        message: RESPONSE.NOTDELETED
-      }
+      message: err.message,
     });
   }
 };
@@ -149,18 +106,11 @@ const deleteQuestionById = async (req, res) => {
       _id: req.params.questionId,
     });
     res.status(201).json({
-      status: true,
-      payload: {
-        message: RESPONSE.DELETED,
-        data: deleteMessage
-      }
+      message: deleteMessage,
     });
   } catch (err) {
     res.status(401).json({
-      status: false,
-      payload: {
-        message: RESPONSE.NOTDELETED
-      }
+      message: err.message,
     });
   }
 };
@@ -177,18 +127,11 @@ const patchQuestionById = async (req, res) => {
     );
 
     res.status(201).json({
-      status: true,
-      payload: {
-        message: RESPONSE.UPDATE,
-        data: updateMessage
-      }
+      message: updateMessage,
     });
   } catch (err) {
     res.status(401).json({
-      status: true,
-      payload: {
-        message: RESPONSE.NOTRECEIVED
-      }
+      message: err.message,
     });
   }
 };
