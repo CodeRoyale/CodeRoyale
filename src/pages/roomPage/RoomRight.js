@@ -3,7 +3,7 @@ import Divider from '../../components/divider/Divider';
 import { copyToClipboard } from '../../utils/copyToClipboard';
 import { Icon, Alert } from 'rsuite';
 
-function RoomRight({admin, room_id }) {
+function RoomRight({ room_id }) {
   const copyTextRef = useRef(null);
   const onClickCopy = () => {
     copyToClipboard(copyTextRef);
@@ -12,7 +12,7 @@ function RoomRight({admin, room_id }) {
   return (
     <div>
       <div className='room-right-header'>
-        <span style={{ fontSize: '25px' }}>{admin}</span>
+        <span style={{ fontSize: '25px' }}>sawarni99</span>
         <div className='room-right-roomId'>
           <p ref={copyTextRef}>{room_id}</p>
           <div onClick={onClickCopy}>

@@ -2,18 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Button, Alert } from 'rsuite';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../utils/mapStateToProps';
+import { ROOM_CLOSED } from '../../utils/constants';
 import { closeRoom } from '../../actions/roomActions';
-
+import { useHistory } from 'react-router-dom';
 
 function CloseRoomView({ roomData, socketData, closeRoom }) {
   const [showPrompt, setShowPrompt] = useState(false);
   const socket = socketData.socket;
+  const history = useHistory();
   const [state, setState] = useState({
     closeRoomClicked: false,
     actionDone: false,
   });
   const { closeRoomClicked, actionDone } = state;
-  
+  const [redirect, setRedirect] = useState(false);
 
   //Close Room...
   useEffect(() => {
@@ -24,17 +26,24 @@ function CloseRoomView({ roomData, socketData, closeRoom }) {
   }, [closeRoomClicked, closeRoom, socket, state]);
 
   useEffect(() => {
-    if (actionDone && roomData.error !== null && !roomData.loading) {
+    if (actionDone && roomData.type === ROOM_CLOSED) {
+      setRedirect(true);
+    } else if (actionDone && roomData.error !== null && !roomData.loading) {
       Alert.error(roomData.error);
       setState({ ...state, actionDone: false });
     }
   }, [
+    setRedirect,
     roomData.type,
     roomData.error,
     roomData.loading,
     state,
     actionDone,
   ]);
+
+  if (redirect) {
+    history.push('/dashboard');
+  }
 
   return (
     <div className='close-room-view'>
