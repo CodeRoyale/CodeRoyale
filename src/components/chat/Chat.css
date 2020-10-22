@@ -1,0 +1,27 @@
+/* Chat bubble css */
+.chat-bubble-container {
+  display: flex;
+  padding: 10px;
+}
+
+.chat-bubble-user-profile-pic {
+  width: 40px;
+  height: 40px;
+}
+
+.chat-bubble-message-container {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.chat-bubble-sender {
+  font-weight: bold;
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.chat-bubble-chat-message {
+  font-size: 13px;
+  font-family: 'Roboto', sans-serif;
+}
