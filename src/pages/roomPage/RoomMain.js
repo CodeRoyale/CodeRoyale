@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './RoomMain.css';
 import NavBar from '../../components/navBar/NavBar';
 import RoomHeader from './RoomHeader';
 import RoomRight from './RoomRight';
@@ -8,11 +7,13 @@ import TeamCard from '../../components/teamCard/TeamCard';
 import CreateTeamView from './CreateTeamView';
 import { getRoom } from '../../actions/roomActions';
 import { resetTeamAction } from '../../actions/teamActions';
+import { vetoStart } from '../../actions/vetoActions';
 import { TEAM_CREATED, TEAM_JOINED, TEAM_LEFT } from '../../utils/constants';
 import { Alert } from 'rsuite';
 import { connect } from 'react-redux';
 import profileData from '../../utils/examples';
 import { useHistory } from 'react-router-dom';
+import './RoomMain.css';
 
 const RoomMain = ({
   roomData,
@@ -21,6 +22,7 @@ const RoomMain = ({
   getRoom,
   resetTeamAction,
   vetoData,
+  vetoStart,
 }) => {
   const [createTeamShow, setCreateTeamShow] = useState(false);
   const socket = socketData.socket;
@@ -45,7 +47,11 @@ const RoomMain = ({
     if (socket !== null && teamData.type !== '' && room_id !== undefined) {
       getRoom(socket, { room_id });
     }
-  }, [room_id, socket, getRoom, teamData.type]);
+
+    if (socket !== null) {
+      vetoStart(socket);
+    }
+  }, [room_id, socket, getRoom, vetoStart, teamData.type]);
 
   // Display Alert on every action...
   useEffect(() => {
@@ -137,4 +143,8 @@ export const mapStateToProps = (state) => {
     vetoData: state.vetoData,
   };
 };
-export default connect(mapStateToProps, { getRoom, resetTeamAction })(RoomMain);
+export default connect(mapStateToProps, {
+  getRoom,
+  vetoStart,
+  resetTeamAction,
+})(RoomMain);
