@@ -35,7 +35,7 @@
 }
 
 /* Chat css */
-.chat-input {
+/* .chat-input {
   display: flex;
 }
 
@@ -69,7 +69,7 @@
   border-width: 0.5px;
   box-shadow: 0px 0px 10px grey;
   border-color: grey;
-}
+} */
 
 /* Problem css */
 .problem-header {

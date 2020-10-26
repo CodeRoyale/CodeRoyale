@@ -8,11 +8,9 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case CHAT_SUCCESS:
-      action.payload['id'] = state.msgList.length;
-      const newList = state.msgList.concat(action.payload);
       return {
         ...state,
-        msgList: newList,
+        msgList: state.msgList.concat(action.payload),
       };
     case CHAT_FAIL:
       return {
