@@ -7,6 +7,7 @@ import Button from '../../components/button/Button';
 import { connect } from 'react-redux';
 import { vetoStop, vetoVoting } from '../../actions/vetoActions';
 import './VetoMain.css';
+import VetoRight from './VetoRight';
 
 const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
   const [vottedQuestions, setVottedQuestions] = useState([]);
@@ -20,9 +21,9 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
   }, [socket, vetoStop]);
 
   // Checking if the socket is null
-  if (socket === null) {
-    return <Redirect to='/lobby' />;
-  }
+  // if (socket === null) {
+  //   return <Redirect to='/lobby' />;
+  // }
 
   if (vetoData.vetoEnded) {
     return <Redirect to='/arena' />;
@@ -51,6 +52,9 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
         questions={vetoData.vetoQuestions}
         getVotedQuestion={handleQuestionVoted}
       />
+      <div className='veto-right'>
+        <VetoRight />
+      </div>
     </div>
   );
 
@@ -59,12 +63,15 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
     content = (
       <div className='veto-page'>
         <Navbar loggedIn={true} />
-        <VetoBody
+        {/* <VetoBody
           isLoading={vetoData.quesApiLoading}
           questions={vetoData.vetoQuestions}
           getVotedQuestion={handleQuestionVoted}
-        />
-        <div className='veto-confirm-vote-container'>
+        /> */}
+        <div className='veto-right'>
+          <VetoRight />
+        </div>
+        {/* <div className='veto-confirm-vote-container'>
           <Button
             type='button'
             buttonStyle='btn--primary--normal'
@@ -73,7 +80,7 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
           >
             Confirm Veto
           </Button>
-        </div>
+        </div> */}
       </div>
     );
   }

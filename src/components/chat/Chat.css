@@ -1,11 +1,12 @@
 /* Chat css */
-.chat-container {
-  background-color: white;
-  height: 200px;
+.chat-messages-container {
   overflow: auto;
-  margin: 10px;
   display: flex;
   flex-direction: column-reverse;
+}
+
+.chat-message-input {
+  margin: 5px;
 }
 
 /* Chat bubble css */

@@ -10,10 +10,36 @@ const Chat = ({ socketData, chatData, sendMsg }) => {
   const socket = socketData.socket;
   const [message, setMessage] = useState('');
 
-  const chatList = chatData.msgList;
+  // const chatList = chatData.msgList;
+  const chatList = [
+    {
+      source: 'you',
+      message: 'Hi theer',
+    },
+    {
+      source: 'you',
+      message: 'Hi theer',
+    },
+    {
+      source: 'you',
+      message: 'Hi theer',
+    },
+    {
+      source: 'you',
+      message: 'Hi joel mathew',
+    },
+    {
+      source: 'you',
+      message: 'Hi joel mathew',
+    },
+    {
+      source: 'you',
+      message: 'Hi joel mathew kios',
+    },
+  ];
 
-  const test = {
-    height: '158px',
+  const chatBubblesStyle = {
+    height: '300px',
   };
 
   if (chatList !== undefined) {
@@ -30,21 +56,34 @@ const Chat = ({ socketData, chatData, sendMsg }) => {
   }
 
   return (
-    <div style={test} className='chat-container'>
-      <div>{chatBubbles}</div>
-      <InputGroup inside>
-        <Input
-          value={message}
-          onChange={(value) => {
-            setMessage(value);
-          }}
-          placeholder='Type a message to your team...'
-          maxlength='50'
-        />
-        <InputGroup.Button onClick={() => sendMsg(socket, { message })}>
-          <Icon icon='send' />
-        </InputGroup.Button>
-      </InputGroup>
+    <div className='chat-container'>
+      <div style={chatBubblesStyle} className='chat-messages-container'>
+        <div>{chatBubbles}</div>
+      </div>
+      <div className='chat-message-input'>
+        <InputGroup inside>
+          <Input
+            value={message}
+            onChange={(value) => {
+              setMessage(value);
+            }}
+            onPressEnter={() => {
+              sendMsg(socket, { message });
+              setMessage('');
+            }}
+            placeholder='Type a message to your team...'
+            maxlength='50'
+          />
+          <InputGroup.Button
+            onClick={() => {
+              sendMsg(socket, { message });
+              setMessage('');
+            }}
+          >
+            <Icon icon='send' />
+          </InputGroup.Button>
+        </InputGroup>
+      </div>
     </div>
   );
 };
