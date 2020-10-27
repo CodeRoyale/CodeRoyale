@@ -6,6 +6,7 @@ import { Loader } from 'rsuite';
 import Button from '../../components/button/Button';
 import { connect } from 'react-redux';
 import { vetoStop, vetoVoting } from '../../actions/vetoActions';
+import QuestionCard from '../../components/questionCard/QuestionCard';
 import './VetoMain.css';
 import VetoRight from './VetoRight';
 
@@ -68,8 +69,21 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
           questions={vetoData.vetoQuestions}
           getVotedQuestion={handleQuestionVoted}
         /> */}
-        <div className='veto-right'>
-          <VetoRight />
+        <div className='veto-section'>
+          <div className='veto-question-cards'>
+            <QuestionCard
+              questionNumber={1}
+              questionTitle={'Decrease the Sum of Digits'}
+              questionDesc={
+                'You are given a positive integer n. In one move, you can increase n by one (i.e. make n:=n+1). Your task is to find the minimum number of moves you need to perform in order to make the sum of digits of n be less than or equal to s.You have to answer t independent test cases.'
+              }
+              questionID={'asdasdasd'}
+              questionTags={['strings', 'array']}
+            />
+          </div>
+          <div className='veto-right'>
+            <VetoRight />
+          </div>
         </div>
         {/* <div className='veto-confirm-vote-container'>
           <Button

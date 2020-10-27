@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Checkbox } from 'rsuite';
 import './QuestionCard.css';
 
@@ -10,10 +10,11 @@ const QuestionCard = (props) => {
     questionDesc,
     questionTags,
   } = props;
+  const [checkBoxChecked, setCheckBoxChecked] = useState(false);
 
   // Send selected question through props
   const handleQuestionVoted = (value) => {
-    props.getVotedQuestion(value);
+    // props.getVotedQuestion(value);
   };
 
   // Display tags from API
@@ -26,16 +27,26 @@ const QuestionCard = (props) => {
   });
 
   return (
-    <div className='question-card-container'>
-      <p className='question-card-number'># {questionNumber}</p>
+    <div
+      className='question-card-container'
+      onClick={() => setCheckBoxChecked(!checkBoxChecked)}
+    >
+      <div className='question-card-select-question'>
+        <div className='question-card-select-indicator-section'>
+          <p className='question-card-number'>#{questionNumber}</p>
+          {checkBoxChecked ? (
+            <div className='question-card-select-indicator'>Selected</div>
+          ) : null}
+        </div>
+        <Checkbox
+          value={questionID}
+          onChange={handleQuestionVoted}
+          checked={checkBoxChecked}
+        ></Checkbox>
+      </div>
       <p className='question-card-title'>{questionTitle}</p>
-      <p className='question-card-desc-head'>Description</p>
       <p className='question-card-desc'>{questionDesc}</p>
-      <p className='question-card-tags-head'>Tags</p>
       <p>{tagsText}</p>
-      <Checkbox value={questionID} onChange={handleQuestionVoted}>
-        Select this question
-      </Checkbox>
     </div>
   );
 };
