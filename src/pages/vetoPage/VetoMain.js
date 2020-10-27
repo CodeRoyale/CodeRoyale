@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Navbar from '../../components/navBar/NavBar';
 import { useHistory } from 'react-router-dom';
 import VetoBody from './VetoBody';
-import { Loader } from 'rsuite';
+import { Alert, Loader } from 'rsuite';
 import { connect } from 'react-redux';
 import { vetoStop, vetoVoting } from '../../actions/vetoActions';
 import VetoRight from './VetoRight';
@@ -33,6 +33,10 @@ const VetoMain = ({ socketData, vetoData, vetoStop, vetoVoting }) => {
     // Only send votes if the votes array is not empty
     if (vetoData.vetoVotedQuestions.length !== 0) {
       vetoVoting(socket, vetoData.vetoVotedQuestions);
+    } else {
+      Alert.error(
+        'You will need to vote for atleast 1 question to confirm veto'
+      );
     }
   };
 
@@ -78,7 +82,7 @@ const VetoMain = ({ socketData, vetoData, vetoStop, vetoVoting }) => {
   if (vetoData.userVoted) {
     content = (
       <div className='veto-page'>
-        <Navbar />
+        <Navbar loggedIn={true} />
         <div className='veto-page-loading'>
           <Loader size='sm' content='Waiting for others to vote...' />
         </div>

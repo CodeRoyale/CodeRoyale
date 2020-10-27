@@ -33,6 +33,7 @@
 
 /* VetoBody */
 .veto-body {
+  background-color: whitesmoke;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -41,8 +42,10 @@
 }
 
 .veto-body-loading {
+  background-color: whitesmoke;
   display: flex;
   height: 100vh;
+  width: 100%;
   justify-content: center;
   align-items: center;
 }

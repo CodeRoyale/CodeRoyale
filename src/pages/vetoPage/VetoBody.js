@@ -35,7 +35,7 @@ const VetoBody = ({ isLoading, questions }) => {
   if (isLoading) {
     content = (
       <div className='veto-body-loading'>
-        <Loader size='md' content='Fetching veto questions...' />
+        <Loader size='sm' content='Fetching veto questions...' />
       </div>
     );
   }
