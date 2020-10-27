@@ -35,6 +35,8 @@
 .veto-body {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 5px;
 }
 
@@ -47,6 +49,9 @@
 
 .veto-body-questions {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .veto-right {

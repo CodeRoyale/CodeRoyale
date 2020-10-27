@@ -10,7 +10,7 @@
 }
 
 .question-card-container:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .question-card-select-question {

@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/navBar/NavBar';
-import { Redirect } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import VetoBody from './VetoBody';
 import { Loader } from 'rsuite';
 import Button from '../../components/button/Button';
+import QuestionCard from '../../components/questionCard/QuestionCard';
 import { connect } from 'react-redux';
 import { vetoStop, vetoVoting } from '../../actions/vetoActions';
-import QuestionCard from '../../components/questionCard/QuestionCard';
-import './VetoMain.css';
 import VetoRight from './VetoRight';
+import './VetoMain.css';
 
 const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
   const [vottedQuestions, setVottedQuestions] = useState([]);
+  const history = useHistory();
   const socket = socketData.socket;
 
   // To check if veto has ended
@@ -27,7 +28,7 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
   // }
 
   if (vetoData.vetoEnded) {
-    return <Redirect to='/arena' />;
+    history.push('/arena');
   }
 
   // Allow only set number of votes
@@ -48,13 +49,13 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
   let content = (
     <div className='veto-page'>
       <Navbar />
-      <VetoBody
-        isLoading={vetoData.quesApiLoading}
-        questions={vetoData.vetoQuestions}
-        getVotedQuestion={handleQuestionVoted}
-      />
-      <div className='veto-right'>
-        <VetoRight />
+      <div className='veto-section'>
+        <div className='veto-question-cards'>
+          <h2>Joel</h2>
+        </div>
+        <div className='veto-right'>
+          <VetoRight />
+        </div>
       </div>
     </div>
   );
@@ -64,21 +65,12 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
     content = (
       <div className='veto-page'>
         <Navbar loggedIn={true} />
-        {/* <VetoBody
-          isLoading={vetoData.quesApiLoading}
-          questions={vetoData.vetoQuestions}
-          getVotedQuestion={handleQuestionVoted}
-        /> */}
         <div className='veto-section'>
           <div className='veto-question-cards'>
-            <QuestionCard
-              questionNumber={1}
-              questionTitle={'Decrease the Sum of Digits'}
-              questionDesc={
-                'You are given a positive integer n. In one move, you can increase n by one (i.e. make n:=n+1). Your task is to find the minimum number of moves you need to perform in order to make the sum of digits of n be less than or equal to s.You have to answer t independent test cases.'
-              }
-              questionID={'asdasdasd'}
-              questionTags={['strings', 'array']}
+            <VetoBody
+              isLoading={vetoData.quesApiLoading}
+              questions={vetoData.vetoQuestions}
+              getVotedQuestion={handleQuestionVoted}
             />
           </div>
           <div className='veto-right'>

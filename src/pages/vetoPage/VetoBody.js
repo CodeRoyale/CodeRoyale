@@ -33,7 +33,7 @@ const VetoBody = ({ isLoading, questions, getVotedQuestion }) => {
   // Default content
   let content = (
     <div className='veto-body'>
-      <div className='veto-body-question'>{questionCards}</div>
+      <div className='veto-body-questions'>{questionCards}</div>
     </div>
   );
 
