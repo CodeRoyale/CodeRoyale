@@ -3,14 +3,9 @@ import { Loader } from 'rsuite';
 import QuestionCard from '../../components/questionCard/QuestionCard';
 import './VetoMain.css';
 
-const VetoBody = ({ isLoading, questions, getVotedQuestion }) => {
+const VetoBody = ({ isLoading, questions }) => {
   let questionsArray = null;
   let questionCards = null;
-
-  // Send selected question in props
-  const handleQuestionVoted = (value) => {
-    getVotedQuestion(value);
-  };
 
   // Mapping questions in QuestionCard
   if (questions !== undefined) {
@@ -24,7 +19,6 @@ const VetoBody = ({ isLoading, questions, getVotedQuestion }) => {
           questionDesc={item.description}
           questionID={item._id}
           questionTags={item.tags}
-          getVotedQuestion={handleQuestionVoted}
         />
       );
     });

@@ -6,6 +6,8 @@ import {
   VETO_QUESTIONS_SUCCESS,
   VETO_QUESTIONS_FAIL,
   VETO_USER_VOTED,
+  VETO_ADD_VOTE_QUESTION,
+  VETO_REMOVE_VOTE_QUESTION,
   VETO_FAIL,
   ACTION_RESET,
 } from './types';
@@ -78,6 +80,20 @@ export const vetoVoting = (socket, votes) => (dispatch) => {
       type: VETO_USER_VOTED,
       payload: data,
     });
+  });
+};
+
+export const addVetoVote = (questionID) => (dispatch) => {
+  dispatch({
+    type: VETO_ADD_VOTE_QUESTION,
+    payload: questionID,
+  });
+};
+
+export const removeVetoVote = (questionID) => (dispatch) => {
+  dispatch({
+    type: VETO_REMOVE_VOTE_QUESTION,
+    payload: questionID,
   });
 };
 

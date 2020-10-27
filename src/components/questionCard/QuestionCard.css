@@ -11,6 +11,8 @@
 
 .question-card-container:hover {
   transform: scale(1.05);
+  box-shadow: 0 1px 5px 0 rgb(221, 44, 0, 0.2),
+    0 1px 1px 0 rgba(221, 44, 0, 0.19);
 }
 
 .question-card-select-question {

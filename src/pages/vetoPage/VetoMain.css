@@ -63,3 +63,10 @@
   width: 28%;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
 }
+
+.veto-right-confirm-veto-votes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}

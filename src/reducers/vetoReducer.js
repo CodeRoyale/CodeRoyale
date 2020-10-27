@@ -7,6 +7,8 @@ import {
   VETO_QUESTIONS_SUCCESS,
   VETO_QUESTIONS_FAIL,
   VETO_FAIL,
+  VETO_ADD_VOTE_QUESTION,
+  VETO_REMOVE_VOTE_QUESTION,
   ACTION_RESET,
 } from '../actions/types';
 
@@ -14,10 +16,23 @@ const initialState = {
   quesApiLoading: false,
   vetoRequested: false,
   vetoStarted: false,
+  vetoVotedQuestions: [],
   userVoted: false,
 };
 
 const vetoReducer = (state = initialState, action) => {
+  // Remove the question from array based on qid
+  const handleRemoveVoteQuestion = (questionID) => {
+    let newVetoVotedQuestions = state.vetoVotedQuestions;
+    const index = newVetoVotedQuestions.indexOf(questionID);
+    if (index > -1 && index === 0) {
+      return [];
+    } else {
+      delete newVetoVotedQuestions[index];
+      return newVetoVotedQuestions;
+    }
+  };
+
   switch (action.type) {
     case VETO_START_ADMIN:
       return {
@@ -58,6 +73,16 @@ const vetoReducer = (state = initialState, action) => {
         vetoStarted: false,
         contestQuestionIDs: action.payload,
         vetoEnded: true,
+      };
+    case VETO_ADD_VOTE_QUESTION:
+      return {
+        ...state,
+        vetoVotedQuestions: state.vetoVotedQuestions.concat(action.payload),
+      };
+    case VETO_REMOVE_VOTE_QUESTION:
+      return {
+        ...state,
+        vetoVotedQuestions: handleRemoveVoteQuestion(action.payload),
       };
     case VETO_FAIL:
       return {

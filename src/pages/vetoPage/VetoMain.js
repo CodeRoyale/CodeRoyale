@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Navbar from '../../components/navBar/NavBar';
 import { useHistory } from 'react-router-dom';
 import VetoBody from './VetoBody';
 import { Loader } from 'rsuite';
-import Button from '../../components/button/Button';
-import QuestionCard from '../../components/questionCard/QuestionCard';
 import { connect } from 'react-redux';
 import { vetoStop, vetoVoting } from '../../actions/vetoActions';
 import VetoRight from './VetoRight';
 import './VetoMain.css';
 
-const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
-  const [vottedQuestions, setVottedQuestions] = useState([]);
+const VetoMain = ({ socketData, vetoData, vetoStop, vetoVoting }) => {
   const history = useHistory();
   const socket = socketData.socket;
 
@@ -31,30 +28,27 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
     history.push('/arena');
   }
 
-  // Allow only set number of votes
-  const handleQuestionVoted = (data) => {
-    if (vottedQuestions.length < roomData.data.competition.veto.max_vote) {
-      setVottedQuestions((oldVottedQuestions) => [...oldVottedQuestions, data]);
-    } else {
-      alert(`Only ${roomData.data.competition.veto.max_vote} is allowed`);
-    }
-  };
-
   // Send votes to server
-  const handleVotesConfirm = () => {
-    vetoVoting(socket, vottedQuestions);
+  const handleConfirmVetoVotes = () => {
+    // Only send votes if the votes array is not empty
+    if (vetoData.vetoVotedQuestions.length !== 0) {
+      vetoVoting(socket, vetoData.vetoVotedQuestions);
+    }
   };
 
   // Default content
   let content = (
     <div className='veto-page'>
-      <Navbar />
+      <Navbar loggedIn={true} />
       <div className='veto-section'>
         <div className='veto-question-cards'>
-          <h2>Joel</h2>
+          <VetoBody
+            isLoading={vetoData.quesApiLoading}
+            questions={vetoData.vetoQuestions}
+          />
         </div>
         <div className='veto-right'>
-          <VetoRight />
+          <VetoRight confirmVetoVotes={handleConfirmVetoVotes} />
         </div>
       </div>
     </div>
@@ -70,23 +64,12 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
             <VetoBody
               isLoading={vetoData.quesApiLoading}
               questions={vetoData.vetoQuestions}
-              getVotedQuestion={handleQuestionVoted}
             />
           </div>
           <div className='veto-right'>
-            <VetoRight />
+            <VetoRight confirmVetoVotes={handleConfirmVetoVotes} />
           </div>
         </div>
-        {/* <div className='veto-confirm-vote-container'>
-          <Button
-            type='button'
-            buttonStyle='btn--primary--normal'
-            buttonSize='btn--medium'
-            onClick={handleVotesConfirm}
-          >
-            Confirm Veto
-          </Button>
-        </div> */}
       </div>
     );
   }
@@ -97,7 +80,7 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
       <div className='veto-page'>
         <Navbar />
         <div className='veto-page-loading'>
-          <Loader size='md' content='Waiting for others to vote...' />
+          <Loader size='sm' content='Waiting for others to vote...' />
         </div>
       </div>
     );
@@ -109,7 +92,6 @@ const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
 const mapStateToProps = (state) => ({
   vetoData: state.vetoData,
   socketData: state.socketData,
-  roomData: state.roomData,
 });
 
 export default connect(mapStateToProps, { vetoStop, vetoVoting })(VetoMain);
