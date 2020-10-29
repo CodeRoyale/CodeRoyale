@@ -21,6 +21,7 @@ const {
   ROOM_CLOSED,
   CODE_SUBMITTED,
   SUCCESSFULLY_SUBMITTED,
+  USER_VOTED,
 } = require("../socketActions/serverActions");
 
 const { io } = require("../server");
@@ -439,6 +440,7 @@ const registerVotes = ({ userName, votes }, { socket }) => {
       rooms[room_id].competition.veto.votes[id] += 1;
     });
     rooms[room_id].competition.veto.voted.push(userName);
+    socket.to(room_id).emit(USER_VOTED, { userName, votes });
     return rooms[room_id].competition.veto;
   } catch (err) {
     return { error: err.message };
