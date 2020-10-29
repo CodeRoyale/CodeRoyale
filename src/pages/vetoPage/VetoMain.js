@@ -48,7 +48,7 @@ const VetoMain = ({ socketData, vetoData, roomData, vetoStop, vetoVoting }) => {
       <Navbar loggedIn={true} />
       <div className='veto-section'>
         <div className='veto-section-interaction'>
-          <VetoTopBar />
+          {/* <VetoTopBar /> */}
           <VetoQuestions
             isLoading={vetoData.quesApiLoading}
             questions={vetoData.vetoQuestions}
@@ -66,10 +66,10 @@ const VetoMain = ({ socketData, vetoData, roomData, vetoStop, vetoVoting }) => {
         <Navbar loggedIn={true} />
         <div className='veto-section'>
           <div className='veto-section-interaction'>
-            <VetoTopBar
+            {/* <VetoTopBar
               confirmVetoVotes={handleConfirmVetoVotes}
               vetoTime={roomData.data.competition.veto.timeLimit}
-            />
+            /> */}
             <VetoQuestions
               isLoading={vetoData.quesApiLoading}
               questions={vetoData.vetoQuestions}

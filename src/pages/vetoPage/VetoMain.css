@@ -92,3 +92,24 @@
   font-size: 16px;
   font-family: 'Roboto', sans-serif;
 }
+
+/* Veto Status CSS */
+.veto-status {
+  padding: 10px;
+}
+
+.veto-status-head {
+  color: #696969;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Chat sidebar CSS */
+.chat-head {
+  color: #696969;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
