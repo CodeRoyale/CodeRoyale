@@ -3,7 +3,7 @@ import { Loader } from 'rsuite';
 import QuestionCard from '../../components/questionCard/QuestionCard';
 import './VetoMain.css';
 
-const VetoBody = ({ isLoading, questions }) => {
+const VetoQuestions = ({ isLoading, questions }) => {
   let questionsArray = null;
   let questionCards = null;
 
@@ -25,16 +25,12 @@ const VetoBody = ({ isLoading, questions }) => {
   }
 
   // Default content
-  let content = (
-    <div className='veto-body'>
-      <div className='veto-body-questions'>{questionCards}</div>
-    </div>
-  );
+  let content = <div className='veto-questions'>{questionCards}</div>;
 
   // Loading while fetching questions
   if (isLoading) {
     content = (
-      <div className='veto-body-loading'>
+      <div className='veto-questions-loading'>
         <Loader size='sm' content='Fetching veto questions...' />
       </div>
     );
@@ -43,4 +39,4 @@ const VetoBody = ({ isLoading, questions }) => {
   return content;
 };
 
-export default VetoBody;
+export default VetoQuestions;
