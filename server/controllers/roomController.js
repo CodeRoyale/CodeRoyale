@@ -94,7 +94,11 @@ const createRoom = (config, { socket }) => {
             max_vote: config.max_vote || 1,
             timeLimit: config.veto_timeLimit || 120000,
             quesCount: config.veto_quesCount || 10,
+            // veto timer
+            timer: "[TIMER]",
           },
+          // competition timer
+          timer: "[TIMER]",
           scoreboard: {},
         },
         teams: {},
@@ -441,6 +445,35 @@ const registerVotes = ({ userName, votes }, { socket }) => {
     });
     rooms[room_id].competition.veto.voted.push(userName);
     socket.to(room_id).emit(USER_VOTED, { userName, votes });
+
+    // veto.votes.length == SUM(all teams.length)
+    // TODO -->
+    // NOW -> O(n*m)
+    // store calculated in obj to make in O(n)
+    let totalRequired = 0;
+    Object.keys(rooms[room_id].teams).forEach((team_name) => {
+      totalRequired += rooms[room_id].teams[team_name].length;
+    });
+
+    if (totalRequired === rooms[room_id].competition.veto.voted.length) {
+      // stop the default timer
+      clearTimeout(rooms[room_id].competition.veto.timer);
+
+      // stoping code
+      // TODO --> needs refactoring
+      rooms[room_id].competition.veto.vetoOn = false;
+      let results = Object.entries(rooms[room_id].competition.veto.votes);
+      results = results.sort((a, b) => b[1] - a[1]).slice(0, count);
+      // take only qids
+      results = results.map((ele) => ele[0]);
+      rooms[room_id].competition.questions = results;
+
+      socket.to(room_id).emit(VETO_STOP, results);
+      socket.emit(VETO_STOP, results);
+
+      rooms[room_id].competition.veto.resolver(results);
+    }
+
     return rooms[room_id].competition.veto;
   } catch (err) {
     return { error: err.message };
@@ -473,7 +506,8 @@ const doVeto = async (quesIds, room_id, count, socket) => {
       socket.to(room_id).emit(VETO_START, quesIds);
       socket.emit(VETO_START, quesIds);
 
-      setTimeout(() => {
+      rooms[room_id].competition.veto.resolver = resolve;
+      rooms[room_id].competition.veto.timer = setTimeout(() => {
         // no need to remove listeners
         // all of them are volatile listners
         // calculate veto results
@@ -535,7 +569,7 @@ const startCompetition = async ({ userName }, { socket }) => {
     socket.emit(COMPETITION_STARTED, rooms[room_id].competition);
 
     // code for stopping competition
-    stopTimers[room_id] = setTimeout(() => {
+    rooms[room_id].competition.timer = setTimeout(() => {
       rooms[room_id].competition.contestOn = false;
       rooms[room_id].competition.contnetEndedAt = Date.now();
       socket.to(room_id).emit(COMPETITION_STOPPED, rooms[room_id].competition);
@@ -627,7 +661,8 @@ const codeSubmission = async (
             rooms[room_id].competition.max_questions ===
             rooms[room_id].competition.scoreboard[team_name].length
           ) {
-            if (stopTimers[room_id]) clearTimeout(stopTimers[room_id]);
+            if (rooms[room_id].competition.timer)
+              clearTimeout(rooms[room_id].competition.timer);
             rooms[room_id].competition.contestOn = false;
             rooms[room_id].competition.contnetEndedAt = Date.now();
             socket
