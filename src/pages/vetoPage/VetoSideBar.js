@@ -7,7 +7,10 @@ const VetoSideBar = (props) => {
   return (
     <div className='veto-side-bar'>
       <div className='veto-side-bar-status'>
-        <VetoStatus />
+        <VetoStatus
+          vetoUsers={props.vetoUsers}
+          vetoCompletedUsers={props.vetoCompletedUsers}
+        />
       </div>
       <hr />
       <div className='veto-side-bar-chat'>

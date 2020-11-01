@@ -13,7 +13,7 @@ const VetoQuestions = ({ isLoading, questions }) => {
     questionCards = questionsArray.map((item, index) => {
       return (
         <QuestionCard
-          key={item._id}
+          key={index}
           questionNumber={index}
           questionTitle={item.questionTitle}
           questionDesc={item.description}

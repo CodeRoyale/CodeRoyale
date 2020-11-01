@@ -1,5 +1,6 @@
 import {
   VETO_START_ADMIN,
+  VETO_GET_ALL_USERS,
   VETO_START_SERVER,
   VETO_STOP_SERVER,
   VETO_QUESTIONS_LOADING,
@@ -8,6 +9,7 @@ import {
   VETO_USER_VOTED,
   VETO_ADD_VOTE_QUESTION,
   VETO_REMOVE_VOTE_QUESTION,
+  VETO_USER_VOTED_STATUS,
   VETO_FAIL,
   ACTION_RESET,
 } from './types';
@@ -32,6 +34,31 @@ export const veto = (socket) => (dispatch) => {
         payload: data.error,
       });
     }
+  });
+};
+
+export const getAllVetoUsers = (teams) => (dispatch) => {
+  /* 
+    - This array contains all users (json object as one player) currently competing
+    {
+      userName: name of user
+      team: team of user
+    }  
+  */
+  let vetoUsers = [];
+  for (let team in teams) {
+    // Gives the array of players in a team
+    let teamPlayers = teams[team];
+    for (let i = 0; i < teamPlayers.length; i++) {
+      vetoUsers.push({
+        userName: teamPlayers[i],
+        team,
+      });
+    }
+  }
+  dispatch({
+    type: VETO_GET_ALL_USERS,
+    payload: vetoUsers,
   });
 };
 
@@ -101,6 +128,15 @@ export const vetoStop = (socket) => (dispatch) => {
   socket.on('VETO_STOP', (data) => {
     dispatch({
       type: VETO_STOP_SERVER,
+      payload: data,
+    });
+  });
+};
+
+export const getVetoStatus = (socket) => (dispatch) => {
+  socket.on('USER_VOTED', (data) => {
+    dispatch({
+      type: VETO_USER_VOTED_STATUS,
       payload: data,
     });
   });

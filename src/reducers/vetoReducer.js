@@ -1,5 +1,6 @@
 import {
   VETO_START_ADMIN,
+  VETO_GET_ALL_USERS,
   VETO_START_SERVER,
   VETO_STOP_SERVER,
   VETO_USER_VOTED,
@@ -9,6 +10,7 @@ import {
   VETO_FAIL,
   VETO_ADD_VOTE_QUESTION,
   VETO_REMOVE_VOTE_QUESTION,
+  VETO_USER_VOTED_STATUS,
   ACTION_RESET,
 } from '../actions/types';
 
@@ -17,6 +19,7 @@ const initialState = {
   vetoRequested: false,
   vetoStarted: false,
   vetoVotedQuestions: [],
+  vetoCompletedUsers: [],
   userVoted: false,
 };
 
@@ -38,6 +41,11 @@ const vetoReducer = (state = initialState, action) => {
       return {
         ...state,
         vetoRequested: true,
+      };
+    case VETO_GET_ALL_USERS:
+      return {
+        ...state,
+        vetoUsers: action.payload,
       };
     case VETO_START_SERVER:
       return {
@@ -83,6 +91,13 @@ const vetoReducer = (state = initialState, action) => {
       return {
         ...state,
         vetoVotedQuestions: handleRemoveVoteQuestion(action.payload),
+      };
+    case VETO_USER_VOTED_STATUS:
+      return {
+        ...state,
+        vetoCompletedUsers: state.vetoCompletedUsers.concat(
+          action.payload.userName
+        ),
       };
     case VETO_FAIL:
       return {

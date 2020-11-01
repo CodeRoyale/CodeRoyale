@@ -2,7 +2,7 @@ import React from 'react';
 import { Popover, Whisper } from 'rsuite';
 import './VetoPlayerStatusCard.css';
 
-const VetoPlayerStatusCard = ({ profilePic, userName, userVoted }) => {
+const VetoPlayerStatusCard = ({ profilePic, userName, team, userVoted }) => {
   const speaker = (
     <Popover>{userVoted ? <p>Voted!</p> : <p>Not Yet!</p>}</Popover>
   );
@@ -18,7 +18,10 @@ const VetoPlayerStatusCard = ({ profilePic, userName, userVoted }) => {
         alt='profile img'
         src='https://lh3.googleusercontent.com/a-/AOh14GgwJrwDUSd1-NB4BdMN4XLPj4b-80WgMpKxLuba2w=s96-c'
       />
-      <div className='veto-player-status-card-player-name'>{userName}</div>
+      <div>
+        <div className='veto-player-status-card-user-name'>{userName}</div>
+        <div className='veto-player-status-card-team-name'>{team}</div>
+      </div>
       <Whisper placement='top' trigger='hover' speaker={speaker}>
         <div className='veto-player-status' style={vetoStatusColor}></div>
       </Whisper>
