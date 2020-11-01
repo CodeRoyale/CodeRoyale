@@ -42,7 +42,7 @@ const QuestionCard = (props) => {
   // Display tags from API
   let tagsText = questionTags.map((item, index) => {
     return (
-      <span key={questionID} className='question-card-tags'>
+      <span key={index} className='question-card-tags'>
         {item}
         {index !== questionTags.length - 1 ? ', ' : ' '}
       </span>
