@@ -6,17 +6,13 @@ import './VetoMain.css';
 const VetoSideBar = (props) => {
   return (
     <div className='veto-side-bar'>
-      <div className='veto-side-bar-status'>
-        <VetoStatus
-          vetoUsers={props.vetoUsers}
-          vetoCompletedUsers={props.vetoCompletedUsers}
-        />
-      </div>
+      <VetoStatus
+        vetoUsers={props.vetoUsers}
+        vetoCompletedUsers={props.vetoCompletedUsers}
+      />
       <hr />
-      <div className='veto-side-bar-chat'>
-        <p className='chat-head'>Team Chat</p>
-        <Chat />
-      </div>
+      <p className='chat-head'>Team Chat</p>
+      <Chat />
     </div>
   );
 };

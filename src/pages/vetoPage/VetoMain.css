@@ -22,7 +22,6 @@
 
 .veto-section {
   display: flex;
-  margin-top: 70px;
 }
 
 .veto-section-interaction {
@@ -37,7 +36,6 @@
   justify-content: center;
   align-items: center;
   padding: 5px;
-  margin-top: 120px;
 }
 
 .veto-questions-loading {
@@ -55,7 +53,9 @@
   flex-direction: column;
   position: fixed;
   right: 0;
-  height: 100%;
+  bottom: 0;
+  height: 90.8%;
+  padding-bottom: 5px;
   width: 25%;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
 }
@@ -63,9 +63,9 @@
 /* Veto Top Bar css */
 .veto-top-bar {
   display: flex;
-  position: fixed;
+  margin-top: 70px;
   background-color: #ffffff;
-  width: 75%;
+  width: 100%;
   height: 120px;
   padding: 5px;
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
@@ -95,6 +95,7 @@
 
 /* Veto Status CSS */
 .veto-status {
+  height: 50%;
   padding: 10px;
 }
 

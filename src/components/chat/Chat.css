@@ -1,4 +1,8 @@
 /* Chat css */
+.chat-container {
+  height: 50%;
+}
+
 .chat-messages-container {
   overflow: auto;
   display: flex;

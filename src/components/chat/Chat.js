@@ -10,36 +10,10 @@ const Chat = ({ socketData, chatData, sendMsg }) => {
   const socket = socketData.socket;
   const [message, setMessage] = useState('');
 
-  // const chatList = chatData.msgList;
-  const chatList = [
-    {
-      source: 'you',
-      message: 'Hi theer',
-    },
-    {
-      source: 'you',
-      message: 'Hi theer',
-    },
-    {
-      source: 'you',
-      message: 'Hi theer',
-    },
-    {
-      source: 'you',
-      message: 'Hi joel mathew',
-    },
-    {
-      source: 'you',
-      message: 'Hi joel mathew',
-    },
-    {
-      source: 'you',
-      message: 'Hi joel mathew kios',
-    },
-  ];
+  const chatList = chatData.msgList;
 
   const chatBubblesStyle = {
-    height: '300px',
+    height: '88%',
   };
 
   if (chatList !== undefined) {

@@ -66,6 +66,10 @@ const VetoMain = ({
   let content = (
     <div className='veto-page'>
       <Navbar loggedIn={true} />
+      <VetoSideBar
+        vetoUsers={vetoData.vetoUsers}
+        vetoCompletedUsers={vetoData.vetoCompletedUsers}
+      />
       <div className='veto-section'>
         <div className='veto-section-interaction'>
           <VetoTopBar
@@ -77,10 +81,6 @@ const VetoMain = ({
             questions={vetoData.vetoQuestions}
           />
         </div>
-        <VetoSideBar
-          vetoUsers={vetoData.vetoUsers}
-          vetoCompletedUsers={vetoData.vetoCompletedUsers}
-        />
       </div>
     </div>
   );
@@ -90,6 +90,10 @@ const VetoMain = ({
     content = (
       <div className='veto-page'>
         <Navbar loggedIn={true} />
+        <VetoSideBar
+          vetoUsers={vetoData.vetoUsers}
+          vetoCompletedUsers={vetoData.vetoCompletedUsers}
+        />
         <div className='veto-section'>
           <div className='veto-section-interaction'>
             <VetoTopBar
@@ -101,10 +105,6 @@ const VetoMain = ({
               questions={vetoData.vetoQuestions}
             />
           </div>
-          <VetoSideBar
-            vetoUsers={vetoData.vetoUsers}
-            vetoCompletedUsers={vetoData.vetoCompletedUsers}
-          />
         </div>
       </div>
     );
