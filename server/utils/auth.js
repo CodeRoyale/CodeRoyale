@@ -14,7 +14,11 @@ const encryptData = (data) => {
 
 const checkToken = (token) => {
   try {
-    const payload = jwt.verify(token, process.env.JWT_KEY);
+    const decodedToken = jwt.decode(token);
+    const payload = jwt.verify(
+      token,
+      process.env.ACCESS_SECRECT_KEY + decodedToken.userName
+    );
     return payload;
   } catch {
     return false;
