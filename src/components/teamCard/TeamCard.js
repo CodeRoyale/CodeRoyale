@@ -10,12 +10,12 @@ function TeamCard({
   totalUsers,
   users,
   socketData,
+  roomData,
   joinTeam,
   leaveTeam,
 }) {
   const [teamButtonClicked, setTeamButtonClicked] = useState(false);
-  const userName = profileData.userName.toString(); // Get this from API...
-  const imageUrl = profileData.imageUrl; // Get this from API...
+  const userName = profileData.userName.toString();
   const socket = socketData.socket;
   const userCount = users.length;
   let buttonText = '+';
@@ -40,7 +40,11 @@ function TeamCard({
   // UserCard...
   const userCards = users.map((user) => (
     <div key={user} className='user-card'>
-      <img className='user-card-image' src={imageUrl} alt='' />
+      <img
+        className='user-card-image'
+        src={roomData.data.state.profilePictures[user]}
+        alt=''
+      />
       <span className='user-card-text'>
         <b>{user}</b>
       </span>
