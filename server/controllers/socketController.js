@@ -108,8 +108,8 @@ const handleUserEvents = ({ socket, io }) => {
   socket.on(CLOSE_ROOM, genericActionCreater(closeRoom, { socket }));
   socket.on(SEND_MSG, genericActionCreater(forwardMsg, { socket }));
   socket.on(LEAVE_TEAM, genericActionCreater(leaveTeam, { socket }));
-  socket.on(GET_ROOM, genericActionCreater(getRoomData));
-  socket.on(GET_USER, genericActionCreater(getUser));
+  socket.on(GET_ROOM, genericActionCreater(getRoomData, { socket }));
+  socket.on(GET_USER, genericActionCreater(getUser, { socket }));
   socket.on(VETO_VOTES, genericActionCreater(registerVotes, { socket }));
   socket.on(
     START_COMPETITION,
