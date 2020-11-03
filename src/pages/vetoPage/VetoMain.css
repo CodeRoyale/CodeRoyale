@@ -7,6 +7,9 @@
 .veto-page-loading {
   display: flex;
   height: 100vh;
+  width: 75%;
+  padding-top: 70px;
+  background-color: whitesmoke;
   justify-content: center;
   align-items: center;
 }

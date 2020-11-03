@@ -115,6 +115,10 @@ const VetoMain = ({
     content = (
       <div className='veto-page'>
         <Navbar loggedIn={true} />
+        <VetoSideBar
+          vetoUsers={vetoData.vetoUsers}
+          vetoCompletedUsers={vetoData.vetoCompletedUsers}
+        />
         <div className='veto-page-loading'>
           <Loader size='sm' content='Waiting for others to vote...' />
         </div>
