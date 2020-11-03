@@ -21,6 +21,7 @@ const initialState = {
   vetoVotedQuestions: [],
   vetoCompletedUsers: [],
   userVoted: false,
+  error: false,
 };
 
 const vetoReducer = (state = initialState, action) => {
@@ -105,14 +106,12 @@ const vetoReducer = (state = initialState, action) => {
         vetoRequested: false,
         vetoStarted: false,
         userVoted: false,
-        type: action.type,
         error: action.payload,
       };
     case ACTION_RESET:
       return {
         ...state,
-        type: action.type,
-        error: '',
+        error: false,
       };
     default:
       return state;

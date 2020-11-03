@@ -40,7 +40,7 @@ export const connectSocket = () => {
       transportOptions: {
         polling: {
           extraHeaders: {
-            Authorization: `Bearer ${userName}`,
+            Authorization: `Bearer ${localStorage.token}`,
           },
         },
       },
