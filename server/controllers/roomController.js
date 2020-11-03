@@ -78,6 +78,7 @@ const createRoom = (config, { socket }) => {
           cur_memCount: 1,
           banList: [],
           bench: [config.admin],
+          profilePictures: { [config.admin]: user.profilePicture },
         },
         competition: {
           questions: {},
@@ -168,6 +169,7 @@ const joinRoom = ({ userName, room_id, team_name }, { socket }) => {
         type: JOINED_ROOM,
         data: { userName, profilePicture: user.profilePicture },
       });
+      rooms[room_id].state.profilePictures[userName] = user.profilePicture;
       console.log(userName, " joined from ", room_id);
       return rooms[room_id];
     }
