@@ -3,7 +3,7 @@ users = {};
 
 // all details related to a user connected to socket will be stored here
 
-const addUser = (userName, socket_id, rank = 10) => {
+const addUser = (userName, socket_id, profilePicture, rank = 10) => {
   try {
     if (!users[userName]) {
       // new connection
@@ -14,6 +14,7 @@ const addUser = (userName, socket_id, rank = 10) => {
         team_name: "",
         rank,
         userName,
+        profilePicture,
       };
     } else {
       // reconnecting
