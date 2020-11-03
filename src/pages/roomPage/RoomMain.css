@@ -8,6 +8,7 @@
   height: var(--room-body-height);
   width: 100%;
   display: flex;
+  padding-top: 70px;
 }
 .room-body-left {
   width: var(--room-left-width);
