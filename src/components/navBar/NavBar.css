@@ -3,7 +3,7 @@
 }
 
 .nav-bar {
-  position: relative;
+  position: fixed;
   height: var(--height-nav-bar);
   width: 100%;
   top: 0;

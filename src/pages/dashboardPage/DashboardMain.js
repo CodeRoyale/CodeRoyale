@@ -48,9 +48,7 @@ const DashboardMain = ({
 
   let content = (
     <div className='dashboard-page'>
-      <div className='dashboard-header'>
-        <NavBar loggedIn={true} />
-      </div>
+      <NavBar loggedIn={true} />
       <div className='dashboard-body'>
         <div className='dashboard-left'>
           <div>

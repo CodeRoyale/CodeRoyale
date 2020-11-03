@@ -18,6 +18,7 @@
 .dashboard-body {
   height: var(--height-body);
   width: 100%;
+  padding-top: 70px;
 }
 
 .dashboard-left {
