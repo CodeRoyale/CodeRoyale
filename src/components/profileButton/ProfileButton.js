@@ -15,6 +15,7 @@ const ProfileButton = ({
 }) => {
   const history = useHistory();
 
+  // Extracting relevant profile data
   const imageUrl = profileData.picture;
   const firstName = profileData.firstName;
   const lastName = profileData.lastName;

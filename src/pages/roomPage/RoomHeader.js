@@ -3,12 +3,12 @@ import CountBar from '../../components/countBar/CountBar';
 import { millisecondsToString } from '../../utils/timeToString';
 import CloseRoomView from './CloseRoomView';
 import StartCompetitionButton from './StartCompetitionButton';
-import profileData from '../../utils/examples';
+import profileData from '../../utils/profileData';
 import { Icon } from 'rsuite';
 
 function RoomHeader({ config, state, teams, competition, admin }) {
   const [showExtraFeatures, setShowExtraFeatures] = useState(false);
-  const userName = profileData.username.toString();
+  const userName = profileData.userName.toString();
   let playersRoom = 0;
   let max_perRoom = 0;
   let playersTeam = 0;

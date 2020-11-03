@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import Timer from '../../components/timer/Timer';
 import VetoStatus from '../../pages/vetoPage/VetoStatus';
+import profileData from '../../utils/profileData';
 import './TestPage.css';
 
 const TestPage = () => {
   useEffect(() => {
+    console.log(profileData);
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Origin', 'http://localhost:3000');

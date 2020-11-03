@@ -11,7 +11,7 @@ import { vetoStart } from '../../actions/vetoActions';
 import { TEAM_CREATED, TEAM_JOINED, TEAM_LEFT } from '../../utils/constants';
 import { Alert } from 'rsuite';
 import { connect } from 'react-redux';
-import profileData from '../../utils/examples';
+import profileData from '../../utils/profileData';
 import { useHistory } from 'react-router-dom';
 import './RoomMain.css';
 
@@ -26,7 +26,7 @@ const RoomMain = ({
 }) => {
   const [createTeamShow, setCreateTeamShow] = useState(false);
   const socket = socketData.socket;
-  const userName = profileData.username.toString();
+  const userName = profileData.userName.toString();
   const history = useHistory();
 
   // Room Details...

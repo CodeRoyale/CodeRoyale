@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './TeamCard.css';
 import CountBar from '../countBar/CountBar';
-import profileData from '../../utils/examples';
+import profileData from '../../utils/profileData';
 import { joinTeam, leaveTeam } from '../../actions/teamActions';
 import { connect } from 'react-redux';
 
@@ -14,7 +14,7 @@ function TeamCard({
   leaveTeam,
 }) {
   const [teamButtonClicked, setTeamButtonClicked] = useState(false);
-  const userName = profileData.username.toString(); // Get this from API...
+  const userName = profileData.userName.toString(); // Get this from API...
   const imageUrl = profileData.imageUrl; // Get this from API...
   const socket = socketData.socket;
   const userCount = users.length;
