@@ -166,7 +166,7 @@ const joinRoom = ({ userName, room_id, team_name }, { socket }) => {
       socket.join(room_id);
       socket.to(room_id).emit(ROOM_UPDATED, {
         type: JOINED_ROOM,
-        data: { userName },
+        data: { userName, profilePicture: user.profilePicture },
       });
       console.log(userName, " joined from ", room_id);
       return rooms[room_id];
