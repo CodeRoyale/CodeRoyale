@@ -23,6 +23,7 @@ export const resetVetoAction = () => {
   };
 };
 
+// Send to server to start the competition (Veto is first step in the competition)
 export const veto = (socket) => (dispatch) => {
   dispatch({
     type: VETO_START_ADMIN,
@@ -37,6 +38,7 @@ export const veto = (socket) => (dispatch) => {
   });
 };
 
+// Get all the users currently in room
 export const getAllVetoUsers = (teams) => (dispatch) => {
   /* 
     - This array contains all users (json object as one player) currently competing
@@ -62,6 +64,7 @@ export const getAllVetoUsers = (teams) => (dispatch) => {
   });
 };
 
+// Listener to when server sends VETO_START
 export const vetoStart = (socket) => (dispatch) => {
   socket.on('VETO_START', (data) => {
     dispatch({
@@ -101,6 +104,7 @@ export const vetoStart = (socket) => (dispatch) => {
   });
 };
 
+// Send to server the questions user voted for in veto
 export const vetoVoting = (socket, votes) => (dispatch) => {
   socket.emit('VETO_VOTES', { votes }, (data) => {
     dispatch({
@@ -110,6 +114,7 @@ export const vetoVoting = (socket, votes) => (dispatch) => {
   });
 };
 
+// Add question to the voted questions array
 export const addVetoVote = (questionID) => (dispatch) => {
   dispatch({
     type: VETO_ADD_VOTE_QUESTION,
@@ -117,6 +122,7 @@ export const addVetoVote = (questionID) => (dispatch) => {
   });
 };
 
+// Remove question from the voted questions array
 export const removeVetoVote = (questionID) => (dispatch) => {
   dispatch({
     type: VETO_REMOVE_VOTE_QUESTION,
@@ -124,6 +130,7 @@ export const removeVetoVote = (questionID) => (dispatch) => {
   });
 };
 
+// Listener to when server sends VETO_STOP
 export const vetoStop = (socket) => (dispatch) => {
   socket.on('VETO_STOP', (data) => {
     dispatch({
@@ -133,6 +140,7 @@ export const vetoStop = (socket) => (dispatch) => {
   });
 };
 
+// Listener to when server sends veto status (which user voted in veto)
 export const getVetoStatus = (socket) => (dispatch) => {
   socket.on('USER_VOTED', (data) => {
     dispatch({

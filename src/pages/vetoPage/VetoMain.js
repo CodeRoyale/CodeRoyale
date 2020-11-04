@@ -27,12 +27,13 @@ const VetoMain = ({
   const socket = socketData.socket;
   const [getUsersFinished, setGetUsersFinished] = useState(false);
 
+  // Fetching all users from room (fetch only once)
   if (!getUsersFinished) {
     getAllVetoUsers(roomData.data.teams);
     setGetUsersFinished(true);
   }
 
-  // To check if veto has ended
+  // Starting the listeners for when server sends VETO_STOP and USER_VOTED
   useEffect(() => {
     if (socket !== null) {
       vetoStop(socket);
@@ -40,14 +41,14 @@ const VetoMain = ({
     }
   }, [socket, vetoStop, getVetoStatus]);
 
-  // Checking if the socket is null
+  // Checking if the socket is null (if null move user back to dashboard)
   // if (socket === null) {
-  //   return <Redirect to='/lobby' />;
+  //   history.push('/dashboard');
   // }
 
+  // Move the user to Arena if veto has ended
   if (vetoData.vetoEnded) {
     // history.push('/arena');
-    console.log('veto ended asabsdjbasbasdjbkabsdkjabksdb');
   }
 
   // Send votes to server
@@ -57,7 +58,7 @@ const VetoMain = ({
       vetoVoting(socket, vetoData.vetoVotedQuestions);
     } else {
       Alert.error(
-        'You will need to vote for atleast 1 question to confirm veto'
+        'You will need to vote for atleast 1 question to confirm your veto votes'
       );
     }
   };
@@ -68,6 +69,7 @@ const VetoMain = ({
       <Navbar loggedIn={true} />
       <VetoSideBar
         vetoUsers={vetoData.vetoUsers}
+        userProfilePictures={roomData.data.state.profilePictures}
         vetoCompletedUsers={vetoData.vetoCompletedUsers}
       />
       <div className='veto-section'>
@@ -85,7 +87,7 @@ const VetoMain = ({
     </div>
   );
 
-  // Loading while fetching questions
+  // Content when not fetching the questions
   if (!vetoData.quesApiLoading) {
     content = (
       <div className='veto-page'>
@@ -110,7 +112,7 @@ const VetoMain = ({
     );
   }
 
-  // Loading after user voted
+  // Loading after user has voted
   if (vetoData.userVoted) {
     content = (
       <div className='veto-page'>

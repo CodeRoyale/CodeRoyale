@@ -10,7 +10,7 @@ const ChatBubble = ({ userImage, userName, userMessage, bubbleColor }) => {
       <img
         className='chat-bubble-user-profile-pic'
         alt='profile img'
-        src='https://lh3.googleusercontent.com/a-/AOh14GgwJrwDUSd1-NB4BdMN4XLPj4b-80WgMpKxLuba2w=s96-c'
+        src={userImage}
       />
       <div className='chat-bubble-message-container'>
         <div>

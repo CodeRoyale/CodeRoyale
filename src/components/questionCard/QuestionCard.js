@@ -21,6 +21,7 @@ const QuestionCard = (props) => {
   // Handle user voting for question
   // Show alert if user exceeds question vote max limit
   const handleQuestionVoted = (qid) => {
+    // If checkbox is ticked and user clicks on questionCard then remove question from votes
     if (checkBoxChecked) {
       removeVetoVote(qid);
       setCheckBoxChecked(false);

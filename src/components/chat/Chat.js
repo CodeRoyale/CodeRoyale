@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { sendMsg } from '../../actions/chatActions';
 import './Chat.css';
 
-const Chat = ({ socketData, chatData, sendMsg }) => {
+const Chat = ({ socketData, roomData, chatData, sendMsg }) => {
   let chatBubbles = null;
   const socket = socketData.socket;
   const [message, setMessage] = useState('');
@@ -22,6 +22,7 @@ const Chat = ({ socketData, chatData, sendMsg }) => {
         <ChatBubble
           key={index}
           userName={item.source}
+          userImage={roomData.data.state.profilePictures[item.source]}
           userMessage={item.message}
           bubbleColor={index % 2 === 0 ? '#F0F0F0' : '#F9F9F9'}
         />
@@ -65,6 +66,7 @@ const Chat = ({ socketData, chatData, sendMsg }) => {
 const mapStateToProps = (state) => ({
   socketData: state.socketData,
   chatData: state.chatData,
+  roomData: state.roomData,
 });
 
 export default connect(mapStateToProps, { sendMsg })(Chat);
