@@ -27,9 +27,17 @@ const VetoMain = ({
   const socket = socketData.socket;
   const [getUsersFinished, setGetUsersFinished] = useState(false);
 
+  // Fetching the room details beforehand
+  // To make sure render does not break due to roomData.data being null
+  let roomTeams, vetoTimeLimit;
+  if (roomData.data !== null) {
+    roomTeams = roomData.data.teams;
+    vetoTimeLimit = roomData.data.competition.veto.timeLimit;
+  }
+
   // Fetching all users from room (fetch only once)
-  if (!getUsersFinished) {
-    getAllVetoUsers(roomData.data.teams);
+  if (!getUsersFinished && roomData.data) {
+    getAllVetoUsers(roomTeams);
     setGetUsersFinished(true);
   }
 
@@ -42,9 +50,9 @@ const VetoMain = ({
   }, [socket, vetoStop, getVetoStatus]);
 
   // Checking if the socket is null (if null move user back to dashboard)
-  // if (socket === null) {
-  //   history.push('/dashboard');
-  // }
+  if (socket === null) {
+    history.push('/dashboard');
+  }
 
   // Move the user to Arena if veto has ended
   if (vetoData.vetoEnded) {
@@ -75,7 +83,7 @@ const VetoMain = ({
         <div className='veto-section-interaction'>
           <VetoTopBar
             confirmVetoVotes={handleConfirmVetoVotes}
-            vetoTime={roomData.data.competition.veto.timeLimit}
+            vetoTime={vetoTimeLimit}
           />
           <VetoQuestions
             isLoading={vetoData.quesApiLoading}
@@ -99,7 +107,7 @@ const VetoMain = ({
           <div className='veto-section-interaction'>
             <VetoTopBar
               confirmVetoVotes={handleConfirmVetoVotes}
-              vetoTime={roomData.data.competition.veto.timeLimit}
+              vetoTime={vetoTimeLimit}
             />
             <VetoQuestions
               isLoading={vetoData.quesApiLoading}
