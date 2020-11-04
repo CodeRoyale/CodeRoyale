@@ -3,6 +3,7 @@ import ChatBubble from './ChatBubble';
 import { Input, InputGroup, Icon } from 'rsuite';
 import { connect } from 'react-redux';
 import { sendMsg } from '../../actions/chatActions';
+import profileData from '../../utils/profileData';
 import './Chat.css';
 
 const Chat = ({ socketData, roomData, chatData, sendMsg }) => {
@@ -22,7 +23,11 @@ const Chat = ({ socketData, roomData, chatData, sendMsg }) => {
         <ChatBubble
           key={index}
           userName={item.source}
-          userImage={roomData.data.state.profilePictures[item.source]}
+          userImage={
+            item.source === 'You'
+              ? profileData.picture
+              : roomData.data.state.profilePictures[item.source]
+          }
           userMessage={item.message}
           bubbleColor={index % 2 === 0 ? '#F0F0F0' : '#F9F9F9'}
         />

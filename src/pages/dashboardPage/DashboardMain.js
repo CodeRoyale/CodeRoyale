@@ -9,6 +9,7 @@ import CreateRoomView from './CreateRoomView';
 import { useHistory } from 'react-router-dom';
 import { Alert, Loader } from 'rsuite';
 import './DashboardMain.css';
+import { PRECHECK_SUCCESS } from '../../actions/types';
 
 const DashboardMain = ({
   connectSocket,
@@ -43,8 +44,13 @@ const DashboardMain = ({
   }, [userData.preCheckData.error, userActionReset, history]);
 
   useEffect(() => {
-    connectSocket();
-  }, [connectSocket]);
+    if (
+      userData.preCheckData.type &&
+      userData.preCheckData.type === PRECHECK_SUCCESS
+    ) {
+      connectSocket();
+    }
+  }, [connectSocket, userData]);
 
   let content = (
     <div className='dashboard-page'>

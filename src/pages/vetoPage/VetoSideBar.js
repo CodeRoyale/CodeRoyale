@@ -3,16 +3,11 @@ import Chat from '../../components/chat/Chat';
 import VetoStatus from './VetoStatus';
 import './VetoMain.css';
 
-const VetoSideBar = ({
-  vetoUsers,
-  userProfilePictures,
-  vetoCompletedUsers,
-}) => {
+const VetoSideBar = ({ vetoUsers, vetoCompletedUsers }) => {
   return (
     <div className='veto-side-bar'>
       <VetoStatus
         vetoUsers={vetoUsers}
-        userProfilePictures={userProfilePictures}
         vetoCompletedUsers={vetoCompletedUsers}
       />
       <hr />

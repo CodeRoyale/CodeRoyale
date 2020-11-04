@@ -69,7 +69,6 @@ const VetoMain = ({
       <Navbar loggedIn={true} />
       <VetoSideBar
         vetoUsers={vetoData.vetoUsers}
-        userProfilePictures={roomData.data.state.profilePictures}
         vetoCompletedUsers={vetoData.vetoCompletedUsers}
       />
       <div className='veto-section'>

@@ -9,7 +9,7 @@ const VetoQuestions = ({ isLoading, questions }) => {
 
   // Mapping questions to the QuestionCard component
   if (questions !== undefined) {
-    questionsArray = questions.message;
+    questionsArray = questions.payload.data;
     questionCards = questionsArray.map((item, index) => {
       return (
         <QuestionCard

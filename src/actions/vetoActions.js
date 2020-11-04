@@ -13,9 +13,8 @@ import {
   VETO_FAIL,
   ACTION_RESET,
 } from './types';
-
-const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
-const QUES_API = `${process.env.REACT_APP_DEV_SERVER}/questions/getQById`;
+import qapiAxios from '../helpers/qapiAxios';
+import { SERVER_DOWN } from '../utils/constants';
 
 export const resetVetoAction = () => {
   return {
@@ -71,11 +70,8 @@ export const vetoStart = (socket) => (dispatch) => {
       type: VETO_START_SERVER,
       payload: data,
     });
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Origin', CLIENT_URL);
-    headers.append('Access-Control-Allow-Credentials', 'true');
 
+    // question ids to be sent to qapi
     const quesIds = {
       id: data,
     };
@@ -83,24 +79,41 @@ export const vetoStart = (socket) => (dispatch) => {
     dispatch({
       type: VETO_QUESTIONS_LOADING,
     });
-    fetch(QUES_API, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(quesIds),
-    })
-      .then((res) => res.json())
-      .then((jsonRes) => {
+
+    qapiAxios()
+      .post('/questions/getQById', quesIds)
+      .then((response) => {
         dispatch({
           type: VETO_QUESTIONS_SUCCESS,
-          payload: jsonRes,
+          payload: response.data,
         });
       })
-      .catch((err) => {
+      .catch((error) => {
+        console.log(error.response);
         dispatch({
           type: VETO_QUESTIONS_FAIL,
-          payload: err,
+          payload: error.response ? error.response.data : SERVER_DOWN,
         });
       });
+
+    // fetch(QUES_API, {
+    //   method: 'POST',
+    //   headers,
+    //   body: JSON.stringify(quesIds),
+    // })
+    //   .then((res) => res.json())
+    //   .then((jsonRes) => {
+    //     dispatch({
+    //       type: VETO_QUESTIONS_SUCCESS,
+    //       payload: jsonRes,
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     dispatch({
+    //       type: VETO_QUESTIONS_FAIL,
+    //       payload: err,
+    //     });
+    //   });
   });
 };
 

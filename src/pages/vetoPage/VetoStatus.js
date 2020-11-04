@@ -1,8 +1,9 @@
 import React from 'react';
 import VetoPlayerStatusCard from '../../components/vetoPlayerStatusCard/VetoPlayerStatusCard';
+import { connect } from 'react-redux';
 import './VetoMain.css';
 
-const VetoStatus = ({ vetoUsers, userProfilePictures, vetoCompletedUsers }) => {
+const VetoStatus = ({ vetoUsers, roomData, vetoCompletedUsers }) => {
   let statusCards = null;
 
   // Displaying all users in the room for veto status
@@ -12,7 +13,7 @@ const VetoStatus = ({ vetoUsers, userProfilePictures, vetoCompletedUsers }) => {
         <VetoPlayerStatusCard
           key={index}
           userName={item.userName}
-          userImage={userProfilePictures[item.userName]}
+          userImage={roomData.data.state.profilePictures[item.userName]}
           team={item.team}
           userVoted={vetoCompletedUsers.includes(item.userName)}
         />
@@ -28,4 +29,8 @@ const VetoStatus = ({ vetoUsers, userProfilePictures, vetoCompletedUsers }) => {
   );
 };
 
-export default VetoStatus;
+const mapStateToProps = (state) => ({
+  roomData: state.roomData,
+});
+
+export default connect(mapStateToProps, null)(VetoStatus);
