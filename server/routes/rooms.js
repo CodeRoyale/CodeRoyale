@@ -5,7 +5,6 @@ const { getRoomsData } = require("../controllers/roomController");
 
 router.get("/", (req, res) => {
   const rooms = getRoomsData();
-
   // making it string friendly
   rooms.competition.timer = "[TIMER]";
   rooms.competition.veto.timer = "[TIMER]";

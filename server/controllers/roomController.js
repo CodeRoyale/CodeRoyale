@@ -476,7 +476,10 @@ const registerVotes = ({ userName, votes }, { socket }) => {
       rooms[room_id].competition.veto.resolver(results);
     }
 
-    return rooms[room_id].competition.veto;
+    // cant return time or resolver funtions
+    // they are self referencing soo max call stack error
+
+    return rooms[room_id].competition.veto.votes;
   } catch (err) {
     return { error: err.message };
   }
