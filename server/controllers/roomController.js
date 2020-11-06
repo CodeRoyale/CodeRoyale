@@ -564,6 +564,7 @@ const startCompetition = async ({ userName }, { socket }) => {
 
     console.log("Starting competition", userName);
     // start veto now and wait for it to end
+    stopTimers[room_id] = {};
     const allQuestions = await getQuestions(room.competition.veto.quesCount);
     await doVeto(allQuestions, room_id, room.competition.max_questions, socket);
 
