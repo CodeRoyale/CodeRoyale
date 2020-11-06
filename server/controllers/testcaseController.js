@@ -1,14 +1,22 @@
 const Testcase = require('../models/testCase');
+const RESPONSE = require('../utils/constantResponse');
 
 const putTestcase = async (req, res) => {
   try {
     const testcase = await Testcase.create(req.body);
     res.status(201).json({
-      message: testcase,
+      status: true,
+      payload: {
+        message: RESPONSE.CREATED,
+        data: testcase
+      }
     });
   } catch (err) {
-    res.status(401).json({
-      message: err.message,
+    res.status(406).json({
+      status: false,
+      payload: {
+        message: RESPONSE.MISSING
+      }
     });
   }
 };
@@ -30,11 +38,18 @@ const getTestcase = async (req, res) => {
       testArray[arr[i]] = testcase.testcases;
     }
     res.status(200).json({
-      message: testArray,
+      status: true,
+      payload: {
+        message: RESPONSE.RECEIVED,
+        data: testArray
+      }
     });
   } catch (err) {
-    res.status(401).json({
-      message: err.message,
+    res.status(406).json({
+      status: false,
+      payload: {
+        message: RESPONSE.INVALID
+      }
     });
   }
 };
