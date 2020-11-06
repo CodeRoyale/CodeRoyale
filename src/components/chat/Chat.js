@@ -25,7 +25,7 @@ const Chat = ({ socketData, roomData, chatData, sendMsg }) => {
           userName={item.source}
           userImage={
             item.source === 'You'
-              ? profileData.picture
+              ? profileData().picture
               : roomData.data.state.profilePictures[item.source]
           }
           userMessage={item.message}
