@@ -11,7 +11,19 @@ const Chat = ({ socketData, roomData, chatData, sendMsg }) => {
   const socket = socketData.socket;
   const [message, setMessage] = useState('');
 
-  const chatList = chatData.msgList;
+  // const chatList = chatData.msgList;
+
+  // just for testing
+  const chatList = [
+    {
+      source: 'joel',
+      message: 'op in the chet',
+    },
+    {
+      source: 'joel',
+      message: 'op in the chet',
+    },
+  ];
 
   const chatBubblesStyle = {
     height: '88%',
@@ -23,11 +35,12 @@ const Chat = ({ socketData, roomData, chatData, sendMsg }) => {
         <ChatBubble
           key={index}
           userName={item.source}
-          userImage={
-            item.source === 'You'
-              ? profileData().picture
-              : roomData.data.state.profilePictures[item.source]
-          }
+          // userImage={
+          //   item.source === 'You'
+          //     ? profileData().picture
+          //     : roomData.data.state.profilePictures[item.source]
+          // }
+          userImage={profileData().picture}
           userMessage={item.message}
           bubbleColor={index % 2 === 0 ? '#F0F0F0' : '#F9F9F9'}
         />
