@@ -14,10 +14,10 @@ const SettingsBody = ({
   sendUpdateAccountLoading,
 }) => {
   // User info
-  const [userName, setUserName] = useState(profileData.userName);
-  const [firstName, setFirstName] = useState(profileData.firstName);
-  const [lastName, setLastName] = useState(profileData.lastName);
-  const email = profileData.email;
+  const [userName, setUserName] = useState(profileData().userName);
+  const [firstName, setFirstName] = useState(profileData().firstName);
+  const [lastName, setLastName] = useState(profileData().lastName);
+  const email = profileData().email;
 
   // New user info for updation
   const [newAccountData, setNewAccountData] = useState(null);

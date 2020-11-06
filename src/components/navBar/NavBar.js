@@ -16,7 +16,7 @@ const NavBar = ({ loggedIn }) => {
         <LogoContainer />
       </div>
       <div className='nav-bar-profile'>
-        <ProfileButton profileData={profileData} />
+        <ProfileButton profileData={profileData()} />
       </div>
     </div>
   );

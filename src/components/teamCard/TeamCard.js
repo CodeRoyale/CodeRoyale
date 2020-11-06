@@ -15,7 +15,7 @@ function TeamCard({
   leaveTeam,
 }) {
   const [teamButtonClicked, setTeamButtonClicked] = useState(false);
-  const userName = profileData.userName.toString();
+  const userName = profileData().userName.toString();
   const socket = socketData.socket;
   const userCount = users.length;
   let buttonText = '+';

@@ -8,7 +8,7 @@ import { Icon } from 'rsuite';
 
 function RoomHeader({ config, state, teams, competition, admin }) {
   const [showExtraFeatures, setShowExtraFeatures] = useState(false);
-  const userName = profileData.userName.toString();
+  const userName = profileData().userName.toString();
   let playersRoom = 0;
   let max_perRoom = 0;
   let playersTeam = 0;

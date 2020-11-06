@@ -41,15 +41,26 @@ export default (history = null) => {
       }
 
       // User is not authenticated or refresh token expired
-      if (error.response.status === 401 || error.response.status === 403) {
-        console.log(error.response);
-        // localStorage.removeItem('token');
-        // // Move user to /login
-        // if (history) {
-        //   history.push('/login');
-        // } else {
-        //   window.location = '/login';
-        // }
+      if (error.response.status === 401) {
+        console.log('401', error.response);
+        localStorage.removeItem('token');
+        // Move user to /login
+        if (history) {
+          history.push('/login');
+        } else {
+          window.location = '/login';
+        }
+        return new Promise((resolve, reject) => {
+          reject(error);
+        });
+      } else if (error.response.status === 403) {
+        console.log('403', error.response);
+        // TODO: If 403 run preCheck and then fetch from qapi
+        if (history) {
+          history.push('/dashboard');
+        } else {
+          window.location = '/dashboard';
+        }
         return new Promise((resolve, reject) => {
           reject(error);
         });

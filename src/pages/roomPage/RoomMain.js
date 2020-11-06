@@ -26,7 +26,7 @@ const RoomMain = ({
 }) => {
   const [createTeamShow, setCreateTeamShow] = useState(false);
   const socket = socketData.socket;
-  const userName = profileData.userName.toString();
+  const userName = profileData().userName.toString();
   const history = useHistory();
 
   // Room Details...

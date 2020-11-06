@@ -13,6 +13,7 @@
 .room-body-left {
   width: var(--room-left-width);
   background-color: whitesmoke;
+  height: 100vh;
 }
 .room-left-body {
   display: flex;
