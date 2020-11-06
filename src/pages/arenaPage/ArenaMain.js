@@ -39,7 +39,7 @@ const ArenaMain = ({ socketData, arenaData, vetoData, getQuestion }) => {
             questions={arenaData.questions}
             getCurrentQuestion={handleGetCurrQuestion}
           />
-          <Chat socket={socket} />
+          {/* <Chat socket={socket} /> */}
         </div>
 
         <div className='right-container'>

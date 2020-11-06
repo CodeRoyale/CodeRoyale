@@ -6,7 +6,7 @@ import profileData from '../../utils/profileData';
 
 function RoomRight({ room_id }) {
   const copyTextRef = useRef(null);
-  const userName = profileData.userName;
+  const userName = profileData().userName;
 
   const onClickCopy = () => {
     copyToClipboard(copyTextRef);

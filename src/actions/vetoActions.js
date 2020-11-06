@@ -95,25 +95,6 @@ export const vetoStart = (socket) => (dispatch) => {
           payload: error.response ? error.response.data : SERVER_DOWN,
         });
       });
-
-    // fetch(QUES_API, {
-    //   method: 'POST',
-    //   headers,
-    //   body: JSON.stringify(quesIds),
-    // })
-    //   .then((res) => res.json())
-    //   .then((jsonRes) => {
-    //     dispatch({
-    //       type: VETO_QUESTIONS_SUCCESS,
-    //       payload: jsonRes,
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     dispatch({
-    //       type: VETO_QUESTIONS_FAIL,
-    //       payload: err,
-    //     });
-    //   });
   });
 };
 

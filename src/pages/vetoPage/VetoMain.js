@@ -56,7 +56,7 @@ const VetoMain = ({
 
   // Move the user to Arena if veto has ended
   if (vetoData.vetoEnded) {
-    // history.push('/arena');
+    history.push('/arena');
   }
 
   // Send votes to server
