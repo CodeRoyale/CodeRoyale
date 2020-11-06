@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -11,6 +12,9 @@
     "google-auth-library": "^6.0.5",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.23",
+    "node-fetch": "^2.6.0",
+    "passport": "^0.4.1",
+    "passport-facebook-token": "^4.0.0",
     "swagger-jsdoc": "^4.0.0"
   },
   "devDependencies": {
@@ -41,8 +45,7 @@
   "lint-staged": {
     "server/**/*.{js,jsx}": [
       "npm run lint",
-      "npm run pretty",
-      "git add"
+      "npm run pretty"
     ]
   },
   "husky": {

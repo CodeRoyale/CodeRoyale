@@ -1,109 +1,216 @@
-const googleAuth = require('google-auth-library');
-const jwt = require('jsonwebtoken');
+const fetch = require('node-fetch');
+const bcrypt = require('bcrypt');
 const User = require('../models/user');
+const { googleAuth } = require('../utils/googleAuth');
+const RESPONSE = require('../utils/constantResponse');
+const {
+  getAccessToken,
+  getRefreshToken,
+  getUserNameToken,
+  getCookieOptions,
+} = require('../utils/auth');
 
 // secret keys and secret times
 /* eslint-disable */
-const [
-  ACCESS_SECRECT_KEY,
-  ACCESS_SECRECT_TIME,
-  REFRESH_SECRECT_KEY,
-  REFRESH_SECRECT_TIME,
-  CLIENT_ID,
-] = [
-  process.env.ACCESS_SECRECT_KEY || secrets.ACCESS_SECRECT_KEY,
-  process.env.ACCESS_SECRECT_TIME || secrets.ACCESS_SECRECT_TIME,
-  process.env.REFRESH_SECRECT_KEY || secrets.REFRESH_SECRECT_KEY,
-  process.env.REFRESH_SECRECT_TIME || secrets.REFRESH_SECRECT_TIME,
-  process.env.CLIENT_ID || secrets.CLIENT_ID,
+const [FACEBOOK_APP_URL] = [
+  process.env.FACEBOOK_APP_URL || secrets.FACEBOOK_APP_URL,
 ];
 /* eslint-enable */
-
-// Using a Google API Client Library for verify idToken send by frontend
-const { OAuth2Client } = googleAuth;
-let thirdPartyData;
-const client = new OAuth2Client(CLIENT_ID);
-async function verify() {
-  const ticket = await client.verifyIdToken({
-    idToken: thirdPartyData.idToken,
-    audience: CLIENT_ID, // Specify the CLIENT_ID of the app that accesses the backend
-    // Or, if multiple clients access the backend:
-    // [CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
-  });
-  const payload = ticket.getPayload();
-  // uncomment userid when it's in use
-  // const userid = payload.sub;
-  // TO LOG THE ERROR
-  //   verify().catch(console.error);
-  if (payload.aud !== CLIENT_ID) {
-    throw new Error('Invalid token signature');
-  } else {
-    return payload;
-  }
-}
 
 // signup
 const signupUser = async (req, res) => {
   // more changes might come because we have to check for unique username too
   try {
-    thirdPartyData = req.body;
-    if (thirdPartyData.issuer === 'google') {
-      verify()
+    if (req.body.issuer === 'google') {
+      googleAuth(req.body.access_token)
         .then(async (data) => {
           await User.find({ email: data.email })
             .exec()
             /* eslint-disable consistent-return */
-            .then((user) => {
-              if (user.length >= 1) {
+            .then(async (user) => {
+              if (user.length === 1) {
                 return res.status(409).json({
-                  message: 'User Already Exists',
+                  status: true,
+                  payload: {
+                    message: RESPONSE.CONFLICT,
+                  },
                 });
               }
-              const newUser = new User({
-                userName: data.given_name + data.iat,
-                firstName: data.given_name,
-                lastName: data.family_name,
-                email: data.email,
-                issuer: thirdPartyData.issuer,
-                signUpType: thirdPartyData.signUpType,
-                profilePic: {
-                  public_id: data.sub,
-                  url: data.picture,
-                },
-              });
-              newUser
-                .save()
-                .then(() => {
-                  res.status(201).json({
-                    message: 'User Account Created',
-                  });
+              let username = data.email.match(/^([^@]*)@/)[1];
+              await User.find({ userName: username })
+                .exec()
+                .then((usercheck) => {
+                  if (usercheck.length !== 0) {
+                    username += usercheck.length;
+                  }
                 })
-                .catch(() => {
-                  res.status(401).json({
-                    message: 'Required field missing or Username is in use',
+                .catch((error) => {
+                  console.log(error);
+                  res.status(500).json({
+                    status: false,
+                    payload: {
+                      message: RESPONSE.ERROR,
+                    },
                   });
                 });
+              bcrypt.hash(req.body.password, 10, (err, hash) => {
+                if (err) {
+                  throw new Error('Password Encrption Failed');
+                }
+                const newUser = new User({
+                  userName: username,
+                  firstName: data.given_name,
+                  lastName: data.family_name,
+                  email: data.email,
+                  issuer: req.body.issuer,
+                  password: hash,
+                  signUpType: req.body.signUpType,
+                  profilePic: {
+                    public_id: data.sub,
+                    url: data.picture,
+                  },
+                });
+                newUser
+                  .save()
+                  .then(() => {
+                    res.status(201).json({
+                      status: true,
+                      payload: {
+                        message: RESPONSE.CREATED,
+                      },
+                    });
+                  })
+                  .catch(() => {
+                    res.status(406).json({
+                      status: false,
+                      payload: {
+                        message: RESPONSE.MISSING,
+                      },
+                    });
+                  });
+              });
             })
             /* eslint-enable consistent-return */
-            .catch((err) => {
+            .catch(() => {
               res.status(500).json({
-                error: err,
+                status: false,
+                payload: {
+                  message: RESPONSE.ERROR,
+                },
               });
             });
         })
         .catch(() => {
           res.status(401).json({
-            message: 'Invalid token signature',
+            status: false,
+            payload: {
+              message: RESPONSE.ERRORTOKEN,
+            },
+          });
+        });
+    } else if (req.body.issuer === 'facebook') {
+      const data = {
+        access_token: req.body.access_token,
+      };
+      const url = FACEBOOK_APP_URL;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          accept: 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+
+      await User.find({ email: result.user.email })
+        .exec()
+        /* eslint-disable consistent-return */
+        .then(async (user) => {
+          if (user.length >= 1) {
+            return res.status(409).json({
+              status: false,
+              payload: {
+                message: RESPONSE.CONFLICT,
+              },
+            });
+          }
+          let username = result.user.email.match(/^([^@]*)@/)[1];
+          await User.find({ userName: username })
+            .exec()
+            .then((usercheck) => {
+              if (usercheck.length !== 0) {
+                username += usercheck.length;
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+              res.status(500).json({
+                status: false,
+                payload: {
+                  message: RESPONSE.ERROR,
+                },
+              });
+            });
+          bcrypt.hash(req.body.password, 10, (err, hash) => {
+            if (err) {
+              throw new Error('Password Encrption Failed');
+            }
+            const newUser = new User({
+              userName: username,
+              firstName: result.user.first_name,
+              lastName: result.user.last_name,
+              email: result.user.email,
+              issuer: req.body.issuer,
+              password: hash,
+              signUpType: req.body.signUpType,
+              profilePic: {
+                url: result.user.picture,
+              },
+            });
+            newUser
+              .save()
+              .then(() => {
+                res.status(201).json({
+                  status: true,
+                  payload: {
+                    message: RESPONSE.CREATED,
+                  },
+                });
+              })
+              .catch(() => {
+                res.status(406).json({
+                  status: false,
+                  payload: {
+                    message: RESPONSE.MISSING,
+                  },
+                });
+              });
+          });
+        })
+        /* eslint-enable consistent-return */
+        .catch(() => {
+          res.status(500).json({
+            status: false,
+            payload: {
+              message: RESPONSE.ERROR,
+            },
           });
         });
     } else {
-      res.status(401).json({
-        message: 'Unrecognized data !',
+      res.status(406).json({
+        status: false,
+        payload: {
+          message: RESPONSE.INVALID,
+        },
       });
     }
-  } catch (err) {
-    res.status(401).json({
-      message: err.message,
+  } catch (error) {
+    res.status(500).json({
+      status: false,
+      payload: {
+        message: RESPONSE.ERROR,
+      },
     });
   }
 };
@@ -111,73 +218,122 @@ const signupUser = async (req, res) => {
 // login
 const loginUser = async (req, res) => {
   try {
-    thirdPartyData = req.body;
-
-    if (thirdPartyData.issuer === 'google') {
-      verify()
+    if (req.body.issuer === 'google') {
+      googleAuth(req.body.access_token)
         .then(async (data) => {
           await User.find({ email: data.email })
             .exec()
             .then((user) => {
               if (user.length >= 1) {
-                const accessToken = jwt.sign(
-                  {
-                    email: user[0].email,
-                    userName: user[0].userName,
-                  },
-                  ACCESS_SECRECT_KEY,
-                  {
-                    expiresIn: ACCESS_SECRECT_TIME,
-                  }
+                res.cookie(
+                  '_coderoyale_rtk',
+                  getRefreshToken(user[0]),
+                  getCookieOptions(604800000)
                 );
-                const refreshToken = jwt.sign(
-                  {
-                    email: user[0].email,
-                    userName: user[0].userName,
-                    name: user[0].name,
-                  },
-                  REFRESH_SECRECT_KEY,
-                  {
-                    expiresIn: REFRESH_SECRECT_TIME,
-                  }
+                res.cookie(
+                  '_coderoyale_un',
+                  getUserNameToken(user[0]),
+                  getCookieOptions(604800000)
                 );
-                res.cookie('token', refreshToken, { httpOnly: true });
-                res.status(201).json({
-                  message: 'Login successful',
-                  email: data.email,
-                  userName: user[0].userName,
-                  firstName: user[0].firstName,
-                  lastName: user[0].lastName,
-                  picture: data.picture,
-                  accessToken: accessToken,
+                res.status(200).json({
+                  status: true,
+                  payload: {
+                    message: RESPONSE.LOGIN,
+                    accessToken: getAccessToken(user[0]),
+                  },
                 });
               } else {
-                res.status(401).json({
-                  message: "User Doesn't Exists",
+                res.status(403).json({
+                  status: false,
+                  payload: {
+                    message: RESPONSE.REGISTER,
+                  },
                 });
               }
             })
-            .catch((err) => {
-              console.log(err);
+            .catch(() => {
               res.status(500).json({
-                error: 'Server Error',
+                status: false,
+                payload: {
+                  message: RESPONSE.ERROR,
+                },
               });
             });
         })
         .catch(() => {
           res.status(401).json({
-            message: 'Invalid token signature',
+            status: false,
+            payload: {
+              message: RESPONSE.ERRORTOKEN,
+            },
+          });
+        });
+    } else if (req.body.issuer === 'facebook') {
+      const data = {
+        access_token: req.body.access_token,
+      };
+      const url = FACEBOOK_APP_URL;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          accept: 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      await User.find({ email: result.user.email })
+        .exec()
+        .then((user) => {
+          if (user.length === 1) {
+            res.cookie(
+              '_coderoyale_rtk',
+              getRefreshToken(user[0]),
+              getCookieOptions(604800000)
+            );
+            res.cookie(
+              '_coderoyale_un',
+              getUserNameToken(user[0]),
+              getCookieOptions(604800000)
+            );
+            res.status(200).json({
+              status: true,
+              payload: {
+                message: RESPONSE.LOGIN,
+                accessToken: getAccessToken(user[0]),
+              },
+            });
+          } else {
+            res.status(403).json({
+              status: false,
+              payload: {
+                message: RESPONSE.REGISTER,
+              },
+            });
+          }
+        })
+        .catch(() => {
+          res.status(500).json({
+            status: false,
+            payload: {
+              message: RESPONSE.ERROR,
+            },
           });
         });
     } else {
-      res.status(401).json({
-        message: 'Unrecognized data !',
+      res.status(406).json({
+        status: false,
+        payload: {
+          message: RESPONSE.INVALID,
+        },
       });
     }
-  } catch (err) {
-    console.log(err);
-    res.status(401).json({
-      message: err.message,
+  } catch (error) {
+    res.status(500).json({
+      status: false,
+      payload: {
+        message: RESPONSE.ERROR,
+      },
     });
   }
 };
@@ -185,13 +341,20 @@ const loginUser = async (req, res) => {
 // signout
 const logoutUser = async (req, res) => {
   try {
-    res.clearCookie('token');
-    res.status(201).json({
-      message: 'Logout successful',
+    res.clearCookie('_coderoyale_rtk');
+    res.clearCookie('_coderoyale_un');
+    res.status(200).json({
+      status: true,
+      payload: {
+        message: RESPONSE.LOGOUT,
+      },
     });
-  } catch (err) {
+  } catch (error) {
     res.status(500).json({
-      message: 'Server Error',
+      status: false,
+      payload: {
+        message: RESPONSE.ERROR,
+      },
     });
   }
 };
@@ -199,62 +362,164 @@ const logoutUser = async (req, res) => {
 // deleteUser
 const deleteUser = async (req, res) => {
   try {
-    // get the bearer token from headers
-    const token = req.headers.authorization.split(' ')[1];
-    // decode the token to get the data
-    const decoded = jwt.decode(token, { complete: true });
-    // data is stored is in playload
-    const payloadData = decoded.payload;
+    // get data in playload from middleware
+    const payloadData = req.payload;
     User.deleteOne({ userName: payloadData.userName })
       .exec()
       .then((data) => {
-        console.log(data);
         if (data.n === 1) {
-          res.status(201).json({
-            message: 'Account deleted successfully',
+          res.clearCookie('_coderoyale_rtk');
+          res.clearCookie('_coderoyale_un');
+          res.status(200).json({
+            status: true,
+            payload: {
+              message: RESPONSE.DELETED,
+            },
           });
         } else {
-          res.status(409).json({
-            message: "Account dosen't exist",
+          res.status(404).json({
+            status: false,
+            payload: {
+              message: RESPONSE.NOUSER,
+            },
           });
         }
       })
       .catch(() => {
-        res.status(401).json({
-          message: 'Account not sound',
+        res.status(500).json({
+          status: false,
+          payload: {
+            message: RESPONSE.ERROR,
+          },
         });
       });
   } catch (err) {
     res.status(500).json({
-      message: 'Server Error',
+      status: false,
+      payload: {
+        message: RESPONSE.ERROR,
+      },
     });
   }
 };
 
 // getinfo
 const getInfo = async (req, res) => {
-  await User.find({ email: req.body.email })
+  await User.find({ email: req.query.email })
     .exec()
     .then((user) => {
-      if (user.length >= 1) {
-        res.status(201).json({
-          email: user[0].email,
-          userName: user[0].userName,
-          firstName: user[0].firstName,
-          lastName: user[0].lastName,
-          picture: user[0].profilePic.url,
+      if (user.length === 1) {
+        res.status(200).json({
+          status: true,
+          payload: {
+            message: RESPONSE.INFO,
+            accessToken: req.accessToken,
+            email: user[0].email,
+            userName: user[0].userName,
+            firstName: user[0].firstName,
+            lastName: user[0].lastName,
+            picture: user[0].profilePic.url,
+          },
         });
       } else {
-        res.status(401).json({
-          message: "User Doesn't Exists",
+        res.status(404).json({
+          status: false,
+          payload: {
+            message: RESPONSE.NOUSER,
+          },
         });
       }
     })
     .catch(() => {
       res.status(500).json({
-        message: 'Server Error',
+        status: false,
+        payload: {
+          message: RESPONSE.ERROR,
+        },
       });
     });
 };
 
-module.exports = { signupUser, loginUser, logoutUser, deleteUser, getInfo };
+const profileUpdate = async (req, res) => {
+  const updateData = {};
+  if (req.body.firstName) updateData.firstName = req.body.firstName;
+  if (req.body.lastName) updateData.lastName = req.body.lastName;
+  if (req.body.userName) updateData.userName = req.body.userName;
+  if (req.body.profilePic) updateData.profilePic.url = req.body.profilePic;
+
+  await User.findOneAndUpdate(
+    { email: req.payload.email },
+    { $set: updateData },
+    { new: true }
+  )
+    .exec()
+    .then((user) => {
+      res.cookie(
+        '_coderoyale_rtk',
+        getRefreshToken(user),
+        getCookieOptions(604800000)
+      );
+      res.cookie(
+        '_coderoyale_un',
+        getUserNameToken(user),
+        getCookieOptions(604800000)
+      );
+      res.status(200).json({
+        status: true,
+        payload: {
+          message: RESPONSE.UPDATE,
+          accessToken: getAccessToken(user),
+        },
+      });
+    })
+    .catch(() => {
+      res.status(500).json({
+        status: false,
+        payload: {
+          message: RESPONSE.ERROR,
+        },
+      });
+    });
+};
+
+const userNameAvailability = async (req, res) => {
+  await User.find({ userName: req.query.userName })
+    .exec()
+    .then((user) => {
+      if (user.length === 0) {
+        res.status(200).json({
+          status: true,
+          payload: {
+            message: RESPONSE.AVAILABLE,
+            accessToken: req.accessToken,
+          },
+        });
+      } else {
+        res.status(409).json({
+          status: false,
+          payload: {
+            message: RESPONSE.CONFLICT,
+          },
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        status: false,
+        payload: {
+          message: RESPONSE.ERROR,
+        },
+      });
+    });
+};
+
+module.exports = {
+  signupUser,
+  loginUser,
+  logoutUser,
+  deleteUser,
+  getInfo,
+  profileUpdate,
+  userNameAvailability,
+};
