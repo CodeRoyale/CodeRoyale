@@ -1,20 +1,16 @@
-import React, { useEffect } from 'react';
-import loggedInAxios from '../../helpers/loggedInAxios';
+import React from 'react';
 import './TestPage.css';
 
 const TestPage = () => {
-  useEffect(() => {
-    loggedInAxios()
-      .get('/precheck')
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
-  }, []);
-
-  return <h1>Tests</h1>;
+  // document.body.style = 'background: gray;';
+  return (
+    <div className='test-page'>
+      <div className='test-column'>
+        <div className='test-1'></div>
+        <div className='test-2'></div>
+      </div>
+    </div>
+  );
 };
 
 export default TestPage;

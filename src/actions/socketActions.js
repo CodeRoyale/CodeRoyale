@@ -1,5 +1,4 @@
 import io from 'socket.io-client';
-import profileData from '../utils/examples';
 import { chatSuccess, chatFailure } from './chatActions';
 import { roomSuccess, roomFailure } from './roomActions';
 import {
@@ -11,7 +10,6 @@ import {
 } from './types';
 import { ROOM_CLOSED } from '../utils/constants';
 const ENDPOINT = process.env.REACT_APP_LOBBY_SERVER;
-const userName = profileData.username;
 
 const requestSocketConnection = () => {
   return {
@@ -40,7 +38,7 @@ export const connectSocket = () => {
       transportOptions: {
         polling: {
           extraHeaders: {
-            Authorization: `Bearer ${userName}`,
+            Authorization: `Bearer ${localStorage.token}`,
           },
         },
       },

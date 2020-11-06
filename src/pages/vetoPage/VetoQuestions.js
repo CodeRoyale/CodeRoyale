@@ -3,45 +3,35 @@ import { Loader } from 'rsuite';
 import QuestionCard from '../../components/questionCard/QuestionCard';
 import './VetoMain.css';
 
-const VetoBody = ({ isLoading, questions, getVotedQuestion }) => {
+const VetoQuestions = ({ isLoading, questions }) => {
   let questionsArray = null;
   let questionCards = null;
 
-  // Send selected question in props
-  const handleQuestionVoted = (value) => {
-    getVotedQuestion(value);
-  };
-
-  // Mapping questions in QuestionCard
+  // Mapping questions to the QuestionCard component
   if (questions !== undefined) {
-    questionsArray = questions.message;
+    questionsArray = questions.payload.data;
     questionCards = questionsArray.map((item, index) => {
       return (
         <QuestionCard
-          key={item._id}
+          key={index}
           questionNumber={index}
           questionTitle={item.questionTitle}
           questionDesc={item.description}
           questionID={item._id}
           questionTags={item.tags}
-          getVotedQuestion={handleQuestionVoted}
         />
       );
     });
   }
 
   // Default content
-  let content = (
-    <div className='veto-body'>
-      <div className='veto-body-question'>{questionCards}</div>
-    </div>
-  );
+  let content = <div className='veto-questions'>{questionCards}</div>;
 
   // Loading while fetching questions
   if (isLoading) {
     content = (
-      <div className='veto-body-loading'>
-        <Loader size='md' content='Fetching veto questions...' />
+      <div className='veto-questions-loading'>
+        <Loader size='sm' content='Fetching veto questions...' />
       </div>
     );
   }
@@ -49,4 +39,4 @@ const VetoBody = ({ isLoading, questions, getVotedQuestion }) => {
   return content;
 };
 
-export default VetoBody;
+export default VetoQuestions;

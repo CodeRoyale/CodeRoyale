@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import NavBar from '../../components/navBar/NavBar';
 import './ArenaMain.css';
 import Problem from './Problem';
-import Chat from './Chat';
 import Solution from './Solution';
 import { Redirect } from 'react-router';
 import { Loader } from 'rsuite';
@@ -39,7 +38,7 @@ const ArenaMain = ({ socketData, arenaData, vetoData, getQuestion }) => {
             questions={arenaData.questions}
             getCurrentQuestion={handleGetCurrQuestion}
           />
-          <Chat socket={socket} />
+          {/* <Chat socket={socket} /> */}
         </div>
 
         <div className='right-container'>

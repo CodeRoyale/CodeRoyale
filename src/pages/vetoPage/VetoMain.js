@@ -1,90 +1,135 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../../components/navBar/NavBar';
-import { Redirect } from 'react-router';
-import VetoBody from './VetoBody';
-import { Loader } from 'rsuite';
-import Button from '../../components/button/Button';
+import { useHistory } from 'react-router-dom';
+import { Alert, Loader } from 'rsuite';
 import { connect } from 'react-redux';
-import { vetoStop, vetoVoting } from '../../actions/vetoActions';
+import {
+  getVetoStatus,
+  vetoStop,
+  vetoVoting,
+  getAllVetoUsers,
+} from '../../actions/vetoActions';
+import VetoQuestions from './VetoQuestions';
+import VetoSideBar from './VetoSideBar';
+import VetoTopBar from './VetoTopBar';
 import './VetoMain.css';
 
-const VetoMain = ({ socketData, roomData, vetoData, vetoStop, vetoVoting }) => {
-  const [vottedQuestions, setVottedQuestions] = useState([]);
+const VetoMain = ({
+  socketData,
+  vetoData,
+  roomData,
+  vetoStop,
+  getVetoStatus,
+  getAllVetoUsers,
+  vetoVoting,
+}) => {
+  const history = useHistory();
   const socket = socketData.socket;
+  const [getUsersFinished, setGetUsersFinished] = useState(false);
 
-  // To check if veto has ended
+  // Fetching the room details beforehand
+  // To make sure render does not break due to roomData.data being null
+  let roomTeams, vetoTimeLimit;
+  if (roomData.data !== null) {
+    roomTeams = roomData.data.teams;
+    vetoTimeLimit = roomData.data.competition.veto.timeLimit;
+  }
+
+  // Fetching all users from room (fetch only once)
+  if (!getUsersFinished && roomData.data) {
+    getAllVetoUsers(roomTeams);
+    setGetUsersFinished(true);
+  }
+
+  // Starting the listeners for when server sends VETO_STOP and USER_VOTED
   useEffect(() => {
     if (socket !== null) {
       vetoStop(socket);
+      getVetoStatus(socket);
     }
-  }, [socket, vetoStop]);
+  }, [socket, vetoStop, getVetoStatus]);
 
-  // Checking if the socket is null
+  // Checking if the socket is null (if null move user back to dashboard)
   if (socket === null) {
-    return <Redirect to='/lobby' />;
+    history.push('/dashboard');
   }
 
+  // Move the user to Arena if veto has ended
   if (vetoData.vetoEnded) {
-    return <Redirect to='/arena' />;
+    history.push('/arena');
   }
-
-  // Allow only set number of votes
-  const handleQuestionVoted = (data) => {
-    if (vottedQuestions.length < roomData.data.competition.veto.max_vote) {
-      setVottedQuestions((oldVottedQuestions) => [...oldVottedQuestions, data]);
-    } else {
-      alert(`Only ${roomData.data.competition.veto.max_vote} is allowed`);
-    }
-  };
 
   // Send votes to server
-  const handleVotesConfirm = () => {
-    vetoVoting(socket, vottedQuestions);
+  const handleConfirmVetoVotes = () => {
+    // Only send votes if the votes array is not empty
+    if (vetoData.vetoVotedQuestions.length !== 0) {
+      vetoVoting(socket, vetoData.vetoVotedQuestions);
+    } else {
+      Alert.error(
+        'You will need to vote for atleast 1 question to confirm your veto votes'
+      );
+    }
   };
 
   // Default content
   let content = (
     <div className='veto-page'>
-      <Navbar />
-      <VetoBody
-        isLoading={vetoData.quesApiLoading}
-        questions={vetoData.vetoQuestions}
-        getVotedQuestion={handleQuestionVoted}
+      <Navbar loggedIn={true} />
+      <VetoSideBar
+        vetoUsers={vetoData.vetoUsers}
+        vetoCompletedUsers={vetoData.vetoCompletedUsers}
       />
+      <div className='veto-section'>
+        <div className='veto-section-interaction'>
+          <VetoTopBar
+            confirmVetoVotes={handleConfirmVetoVotes}
+            vetoTime={vetoTimeLimit}
+          />
+          <VetoQuestions
+            isLoading={vetoData.quesApiLoading}
+            questions={vetoData.vetoQuestions}
+          />
+        </div>
+      </div>
     </div>
   );
 
-  // Loading while fetching questions
+  // Content when not fetching the questions
   if (!vetoData.quesApiLoading) {
     content = (
       <div className='veto-page'>
         <Navbar loggedIn={true} />
-        <VetoBody
-          isLoading={vetoData.quesApiLoading}
-          questions={vetoData.vetoQuestions}
-          getVotedQuestion={handleQuestionVoted}
+        <VetoSideBar
+          vetoUsers={vetoData.vetoUsers}
+          vetoCompletedUsers={vetoData.vetoCompletedUsers}
         />
-        <div className='veto-confirm-vote-container'>
-          <Button
-            type='button'
-            buttonStyle='btn--primary--normal'
-            buttonSize='btn--medium'
-            onClick={handleVotesConfirm}
-          >
-            Confirm Veto
-          </Button>
+        <div className='veto-section'>
+          <div className='veto-section-interaction'>
+            <VetoTopBar
+              confirmVetoVotes={handleConfirmVetoVotes}
+              vetoTime={vetoTimeLimit}
+            />
+            <VetoQuestions
+              isLoading={vetoData.quesApiLoading}
+              questions={vetoData.vetoQuestions}
+            />
+          </div>
         </div>
       </div>
     );
   }
 
-  // Loading after user voted
+  // Loading after user has voted
   if (vetoData.userVoted) {
     content = (
       <div className='veto-page'>
-        <Navbar />
+        <Navbar loggedIn={true} />
+        <VetoSideBar
+          vetoUsers={vetoData.vetoUsers}
+          vetoCompletedUsers={vetoData.vetoCompletedUsers}
+        />
         <div className='veto-page-loading'>
-          <Loader size='md' content='Waiting for others to vote...' />
+          <Loader size='sm' content='Waiting for others to vote...' />
         </div>
       </div>
     );
@@ -99,4 +144,9 @@ const mapStateToProps = (state) => ({
   roomData: state.roomData,
 });
 
-export default connect(mapStateToProps, { vetoStop, vetoVoting })(VetoMain);
+export default connect(mapStateToProps, {
+  vetoStop,
+  getVetoStatus,
+  vetoVoting,
+  getAllVetoUsers,
+})(VetoMain);
