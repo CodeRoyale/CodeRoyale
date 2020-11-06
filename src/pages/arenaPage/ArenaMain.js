@@ -2,6 +2,7 @@ import React from 'react';
 import './ArenaMain.css';
 import ProfileButton from '../../components/profileButton/ProfileButton';
 import profileData from '../../utils/examples';
+import Problem from './Problem';
 
 const chat_icon = 'chat-arena.svg';
 const question_icon = 'problem.svg';
@@ -20,7 +21,9 @@ const ArenaMain = () =>{
   return (
     <div className='arena'>
       <div className='arena-body'>
-        <div className='arena-left'></div>
+        <div className='arena-left'>
+          <Problem/>
+        </div>
         <div className='arena-right'>
           <div>
             <div className='arena-profile'>

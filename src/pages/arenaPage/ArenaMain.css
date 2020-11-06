@@ -17,6 +17,7 @@
 
 .arena-left {
   width: var(--arena-left-width);
+  padding: 20px;
 }
 
 .arena-right {
@@ -42,6 +43,22 @@
   margin: 5px 0px 5px 0px;
 }
 .arena-question-status {
-  border: solid black;
   height: 200px;
+}
+
+/*Problem.css*/
+
+.problem {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  background: white;
+}
+.problem-title {
+  font-size: 30px;
+}
+.problem-code {
+  font-size: 16px;
+}
+.problem-heading {
+  font-size: 18px;
 }

@@ -1,100 +1,89 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './ArenaMain.css';
-import { Pagination } from 'rsuite';
 
-function Problem(props) {
+function Problem() {
   let quesList = null;
-  let quesListLength = 1;
-  let quesIOView = null;
+  let questionIO = null;
   let questionTitle = null;
   let questionCode = null;
   let questionDescription = null;
   let questionFormat = null;
 
-  if (props.questions !== undefined) {
-    quesList = props.questions.message;
-    quesListLength = quesList.length;
-    // console.log('mayut', quesList);
+  // This is just Static data...
+  const questions = {
+    message:[
+    {
+      questionTitle: 'Joel is Pro', 
+      problemCode: 'CML', 
+      description: 'This is the Question',
+      format: 'Give your CAMEL to Joel \n and solve this problem', 
+      io: [
+        {
+          input: '1 2 3 4 5', 
+          output: '1 2 3 4 5', 
+          explanation: 'Explanation is Joel is pro and \n nothing to say.'
+        },
+        {
+          input: '1 3 4 7 78', 
+          output: '1 2 3 4 78', 
+          explanation: 'Omani Camel pro'
+        }
+      ]
+    }]
   }
 
-  // const questionsList = [
-  //   'The dog is a pet animal. A dog has sharp teeth so that it can eat flesh very easily, it has four legs, two ears, two eyes, a tail, a mouth, and a nose. ... A dog saves the life of the master from danger. One can find dogs everywhere in the world. Dogs are a very faithful animal.',
-  //   'Cat is a very adorable and a cute animal. It is a domestic animal and is kept as a pet. It has very sharp claws and keen eyes that help it in seeing during the night. That means that it has a very good nocturnal vision that is much better than humans.',
-  //   'The horse is a four-footed animal. Its legs are slender but strong enough to run few miles at a stretch without any break. The horse may be of different sizes and colours. They may be white, red, brown, grey, black or a mixture of such colours. The horse lives on grass, straw, grams and leaves of trees.',
-  // ];
+  if (questions !== undefined) {
+    quesList = questions.message;
+  }
+  
+  const currentQuestion = quesList[0];
 
-  // const [noOfPages, setPages] = useState(quesList.length);
-  const [activePage, setActivePage] = useState(1);
+  if (currentQuestion !== null && currentQuestion.io !== undefined) {
+    questionTitle = currentQuestion.questionTitle;
+    questionCode = currentQuestion.problemCode;
+    questionFormat = currentQuestion.format;
+    questionDescription = currentQuestion.description;
+    questionIO = currentQuestion.io;
+  }
 
-  const [CurrentQuestion, setCurrentQuestion] = useState(null);
-
-  const handlePageChange = (e) => {
-    setActivePage(e);
-    console.log(e);
-  };
-
-  useEffect(() => {
-    if (quesList !== null) {
-      setCurrentQuestion(quesList[activePage - 1]);
-      console.log('From problem', CurrentQuestion);
-      props.getCurrentQuestion(CurrentQuestion);
-    }
-    //console.log(quesList[activePage - 1]);
-  }, [activePage, CurrentQuestion, quesList, props]);
-
-  if (CurrentQuestion !== null && CurrentQuestion.io !== undefined) {
-    questionTitle = (
+  const questionIOView = questionIO.map(data =>
+    <>
       <div>
-        <b>{CurrentQuestion.questionTitle}</b>
+        <div className='problem-heading'><b>Input</b></div>
+        {data.input}
+        <div className='problem-heading'><b>Output</b></div>
+        {data.output}
+        <div className='problem-heading'><b>Explanation</b></div>
+        {data.explanation}
       </div>
-    );
-    questionCode = <div>{CurrentQuestion.problemCode}</div>;
-    questionDescription = <div>{CurrentQuestion.description}</div>;
-    questionFormat = <div>{CurrentQuestion.format}</div>;
-    quesIOView = (
-      <>
-        {CurrentQuestion.io.map((data) => (
-          <div>
-            <div>{data.input}</div>
-            <div>{data.output}</div>
-            <div>{data.explaination}</div>
-          </div>
-        ))}
-      </>
-    );
-  }
+      <br/>
+    </>
+  )
 
   return (
-    <div className='problem-body'>
-      <div className='problem-header'>
-        PROBLEM
-        <Pagination
-          prev
-          last
-          next
-          first
-          size='xs'
-          pages={quesListLength}
-          activePage={activePage}
-          onSelect={(e) => {
-            handlePageChange(e);
-          }}
-        ></Pagination>
+    <div className='problem'>
+      <div className='problem-title'>
+        <b>{questionTitle}</b>
       </div>
+      <div className='problem-code'>
+        {questionCode}
+      </div>
+      <br/>
 
-      <div className='problem-content'>
-        {/* {JSON.stringify(CurrentQuestion)} */}
-        <div>{questionTitle}</div>
-        <div>{questionCode}</div>
-        <hr></hr>
-        <div>{questionDescription}</div>
-        <br></br>
-        <div>{questionFormat}</div>
-        <br></br>
-        <div>{quesIOView}</div>
+      <div className='problem-heading'><b>Description</b></div>
+      <div>
+        <p>{questionDescription}</p>
       </div>
+      <br/>
+
+      <div className='problem-heading'><b>Format</b></div>
+      <div><p>{questionFormat}</p></div>
+      <br/>
+
+      {questionIOView}
     </div>
-  );
+  )
+
 }
 
 export default Problem;
