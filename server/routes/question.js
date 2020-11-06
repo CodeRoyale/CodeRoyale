@@ -1,4 +1,5 @@
 const express = require('express');
+const checkAuth = require('../middleware/checkAuth');
 
 const route = express.Router();
 
@@ -17,22 +18,22 @@ const {
   getTestcase,
 } = require('../controllers/testcaseController');
 
-route.post('/', putQuestion);
+route.post('/', checkAuth, putQuestion);
 
-route.post('/testcase', putTestcase);
+route.post('/testcase', checkAuth, putTestcase);
 
-route.get('/getTestcase', getTestcase);
+route.get('/getTestcase', checkAuth, getTestcase);
 
-route.get('/random', getRandom);
+route.get('/random', checkAuth, getRandom);
 
-route.get('/question', getQuestion);
+route.get('/question', checkAuth, getQuestion);
 
-route.post('/getQById', getQuestionById);
+route.post('/getQById', checkAuth, getQuestionById);
 
-route.delete('/deleteAll', deleteQuestion);
+route.delete('/deleteAll', checkAuth, deleteQuestion);
 
-route.delete('/deleteById/:questionId', deleteQuestionById);
+route.delete('/deleteById/:questionId', checkAuth, deleteQuestionById);
 
-route.patch('/:questionId', patchQuestionById);
+route.patch('/:questionId', checkAuth, patchQuestionById);
 
 module.exports = route;

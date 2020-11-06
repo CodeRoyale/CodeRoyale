@@ -8,15 +8,15 @@ const putTestcase = async (req, res) => {
       status: true,
       payload: {
         message: RESPONSE.CREATED,
-        data: testcase
-      }
+        data: testcase,
+      },
     });
   } catch (err) {
     res.status(406).json({
       status: false,
       payload: {
-        message: RESPONSE.MISSING
-      }
+        message: RESPONSE.MISSING,
+      },
     });
   }
 };
@@ -41,15 +41,15 @@ const getTestcase = async (req, res) => {
       status: true,
       payload: {
         message: RESPONSE.RECEIVED,
-        data: testArray
-      }
+        data: testArray,
+      },
     });
   } catch (err) {
     res.status(406).json({
       status: false,
       payload: {
-        message: RESPONSE.INVALID
-      }
+        message: RESPONSE.INVALID,
+      },
     });
   }
 };

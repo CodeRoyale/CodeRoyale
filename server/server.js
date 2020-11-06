@@ -3,14 +3,20 @@ const bodyParser = require('body-parser');
 const swaggerJSDoc = require('swagger-jsdoc');
 const os = require('os');
 const path = require('path');
-const connectDB = require('./controllers/connectionDB');
+const connectDB = require('./utils/connectionDB');
 const cors = require('cors');
 
 const app = express();
 
 connectDB();
 
-const whitelist = ['http://localhost:3000', 'https://coderoyale-questionapi-develop.herokuapp.com', 'https://putquestionmaster.herokuapp.com','https://coderoyaleclient.herokuapp.com','https://coderoyale-lobby.herokuapp.com'];
+const whitelist = [
+  'http://localhost:3000',
+  'https://coderoyale-questionapi-develop.herokuapp.com',
+  'https://putquestionmaster.herokuapp.com',
+  'https://coderoyaleclient.herokuapp.com',
+  'https://coderoyale-lobby.herokuapp.com',
+];
 const corsOptions = {
   origin: function (origin, callback) {
     // add !origin for services like postman
@@ -26,7 +32,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
 
 app.use(bodyParser.json());
 app.use('/', require('./routes/main'));
