@@ -11,7 +11,7 @@ const getQuestions = async (noIds) => {
     },
   });
   response = await response.json();
-  return response.message;
+  return response.payload.data;
 };
 
 const getTestcase = async (id) => {
@@ -28,6 +28,6 @@ const getTestcase = async (id) => {
     }
   );
   response = await response.json();
-  return response.message[id];
+  return response.payload.data[id];
 };
 module.exports = { getQuestions, getTestcase };
