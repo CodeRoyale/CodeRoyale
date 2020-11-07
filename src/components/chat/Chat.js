@@ -4,13 +4,19 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { sendEveryoneMsg } from '../../actions/chatActions';
+import { sendEveryoneMsg, sendTeamMsg } from '../../actions/chatActions';
 import Tabs from '../../components/tabs/Tabs';
 import TeamChat from './TeamChat';
 import EveryoneChat from './EveryoneChat';
 import './Chat.css';
 
-const Chat = ({ socketData, roomData, chatData, sendEveryoneMsg }) => {
+const Chat = ({
+  socketData,
+  roomData,
+  chatData,
+  sendEveryoneMsg,
+  sendTeamMsg,
+}) => {
   const socket = socketData.socket;
   const everyoneMsgList = chatData.everyoneMsgList;
   const teamMsgList = chatData.teamMsgList;
@@ -21,9 +27,9 @@ const Chat = ({ socketData, roomData, chatData, sendEveryoneMsg }) => {
     sendEveryoneMsg(socket, { message });
   };
 
+  // Send message to teammates
   const handleTeamMsg = (message) => {
-    // TODO: To team messaging
-    console.log(message);
+    sendTeamMsg(socket, { message });
   };
 
   return (
@@ -54,4 +60,4 @@ const mapStateToProps = (state) => ({
   roomData: state.roomData,
 });
 
-export default connect(mapStateToProps, { sendEveryoneMsg })(Chat);
+export default connect(mapStateToProps, { sendEveryoneMsg, sendTeamMsg })(Chat);
