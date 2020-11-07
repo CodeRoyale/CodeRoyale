@@ -56,10 +56,10 @@ export const connectSocket = () => {
     // On Message receive...
     socket.on('RCV_MSG', (data) => {
       if (data !== null && data.content !== undefined) {
+        // TODO: Differentiate between team and room message
         dispatch(
           chatSuccess({
             message: data.content,
-            color: 'red',
             source: data.userName,
           })
         );

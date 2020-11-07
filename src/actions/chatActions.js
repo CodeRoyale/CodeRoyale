@@ -32,3 +32,26 @@ export const sendMsg = (socket, { message }) => (dispatch) => {
     });
   }
 };
+
+// Send chat message to only team mates
+// export const sendTeamMsg = (socket, { message }) => (dispatch) => {
+//   if (socket !== null) {
+//     socket.emit('SEND_MSG', { content: message, toTeam: true }, (data) => {
+//       /*
+//         - data returns with true if message sent successfully
+//         - data returns with false if message fail to send successfully
+//       */
+//       if (data) {
+//         dispatch({
+//           type: CHAT_TEAM_SUCCESS,
+//           payload: { message: message, source: 'You' },
+//         });
+//       } else {
+//         dispatch({
+//           type: CHAT_TEAM_FAIL,
+//           payload: 'ERROR: DATA NULL',
+//         });
+//       }
+//     });
+//   }
+// };
