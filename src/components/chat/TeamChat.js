@@ -12,14 +12,14 @@ const TeamChat = (props) => {
   let chatBubbles = null;
   const [message, setMessage] = useState('');
 
-  const chatList = props.msgList;
+  const teamMsgList = props.teamMsgList;
 
   const chatBubblesStyle = {
     height: '88%',
   };
 
-  if (chatList !== undefined) {
-    chatBubbles = chatList.map((item, index) => {
+  if (teamMsgList !== undefined) {
+    chatBubbles = teamMsgList.map((item, index) => {
       return (
         <ChatBubble
           key={index}

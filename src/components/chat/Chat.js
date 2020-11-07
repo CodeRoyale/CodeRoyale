@@ -4,20 +4,21 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { sendMsg } from '../../actions/chatActions';
+import { sendEveryoneMsg } from '../../actions/chatActions';
 import Tabs from '../../components/tabs/Tabs';
 import TeamChat from './TeamChat';
 import EveryoneChat from './EveryoneChat';
 import './Chat.css';
 
-const Chat = ({ socketData, roomData, chatData, sendMsg }) => {
+const Chat = ({ socketData, roomData, chatData, sendEveryoneMsg }) => {
   const socket = socketData.socket;
-  const chatList = chatData.msgList;
+  const everyoneMsgList = chatData.everyoneMsgList;
+  const teamMsgList = chatData.teamMsgList;
   const userProfilePictures = roomData.data.state.profilePictures;
 
   // Send message to everyone in room
   const handleEveryoneMsg = (message) => {
-    sendMsg(socket, { message });
+    sendEveryoneMsg(socket, { message });
   };
 
   const handleTeamMsg = (message) => {
@@ -30,14 +31,14 @@ const Chat = ({ socketData, roomData, chatData, sendMsg }) => {
       <Tabs>
         <div label='Everyone'>
           <EveryoneChat
-            chatList={chatList}
+            everyoneMsgList={everyoneMsgList}
             userProfilePictures={userProfilePictures}
             sendEveryoneMsg={handleEveryoneMsg}
           />
         </div>
         <div label='Team'>
           <TeamChat
-            chatList={chatList}
+            teamMsgList={teamMsgList}
             userProfilePictures={userProfilePictures}
             sendTeamMsg={handleTeamMsg}
           />
@@ -53,4 +54,4 @@ const mapStateToProps = (state) => ({
   roomData: state.roomData,
 });
 
-export default connect(mapStateToProps, { sendMsg })(Chat);
+export default connect(mapStateToProps, { sendEveryoneMsg })(Chat);
