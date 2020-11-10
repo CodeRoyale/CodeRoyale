@@ -10,8 +10,12 @@ const VetoSideBar = ({ vetoUsers, vetoCompletedUsers }) => {
         vetoUsers={vetoUsers}
         vetoCompletedUsers={vetoCompletedUsers}
       />
-      <hr />
-      <Chat style={{ height: '50%' }} restricted={true} />
+      <div>
+        <Chat
+          style={{ height: '44%', position: 'absolute' }}
+          restricted={true}
+        />
+      </div>
     </div>
   );
 };
