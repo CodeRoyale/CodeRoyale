@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
-import Divider from '../../components/divider/Divider';
 import { copyToClipboard } from '../../utils/copyToClipboard';
 import { Icon, Alert } from 'rsuite';
 import profileData from '../../utils/profileData';
+import Chat from '../../components/chat/Chat';
 
 function RoomRight({ room_id }) {
   const copyTextRef = useRef(null);
@@ -23,7 +23,8 @@ function RoomRight({ room_id }) {
           </div>
         </div>
       </div>
-      <Divider />
+      {/* <Divider /> */}
+      <Chat style={{ height: '76.5%', position: 'absolute' }} />
     </div>
   );
 }

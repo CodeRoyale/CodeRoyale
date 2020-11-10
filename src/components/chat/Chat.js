@@ -1,71 +1,81 @@
-import React, { useState } from 'react';
-import ChatBubble from './ChatBubble';
-import { Input, InputGroup, Icon } from 'rsuite';
+/*
+ * Main Chat component
+ */
+
+import React from 'react';
 import { connect } from 'react-redux';
-import { sendMsg } from '../../actions/chatActions';
-import profileData from '../../utils/profileData';
+import { sendEveryoneMsg, sendTeamMsg } from '../../actions/chatActions';
+import Tabs from '../../components/tabs/Tabs';
+import TeamChat from './TeamChat';
+import EveryoneChat from './EveryoneChat';
 import './Chat.css';
 
-const Chat = ({ socketData, roomData, chatData, sendMsg }) => {
-  let chatBubbles = null;
+const Chat = ({
+  style,
+  restricted,
+  socketData,
+  roomData,
+  chatData,
+  sendEveryoneMsg,
+  sendTeamMsg,
+}) => {
   const socket = socketData.socket;
-  const [message, setMessage] = useState('');
+  const everyoneMsgList = chatData.everyoneMsgList;
+  const teamMsgList = chatData.teamMsgList;
 
-  const chatList = chatData.msgList;
-
-  const chatBubblesStyle = {
-    height: '88%',
-  };
-
-  if (chatList !== undefined) {
-    chatBubbles = chatList.map((item, index) => {
-      return (
-        <ChatBubble
-          key={index}
-          userName={item.source}
-          userImage={
-            item.source === 'You'
-              ? profileData().picture
-              : roomData.data.state.profilePictures[item.source]
-          }
-          userMessage={item.message}
-          bubbleColor={index % 2 === 0 ? '#F0F0F0' : '#F9F9F9'}
-        />
-      );
-    });
+  let userProfilePictures;
+  if (roomData.data !== null) {
+    userProfilePictures = roomData.data.state.profilePictures;
   }
 
-  return (
-    <div className='chat-container'>
-      <div style={chatBubblesStyle} className='chat-messages-container'>
-        <div>{chatBubbles}</div>
-      </div>
-      <div className='chat-message-input'>
-        <InputGroup inside>
-          <Input
-            value={message}
-            onChange={(value) => {
-              setMessage(value);
-            }}
-            onPressEnter={() => {
-              sendMsg(socket, { message });
-              setMessage('');
-            }}
-            placeholder='Type a message to your team...'
-            maxlength='50'
+  // Send message to everyone in room
+  const handleEveryoneMsg = (message) => {
+    sendEveryoneMsg(socket, { message });
+  };
+
+  // Send message to teammates
+  const handleTeamMsg = (message) => {
+    sendTeamMsg(socket, { message });
+  };
+
+  let content = (
+    <div style={style} className='chat-main-container'>
+      <Tabs>
+        <div label='Everyone'>
+          <EveryoneChat
+            everyoneMsgList={everyoneMsgList}
+            userProfilePictures={userProfilePictures}
+            sendEveryoneMsg={handleEveryoneMsg}
           />
-          <InputGroup.Button
-            onClick={() => {
-              sendMsg(socket, { message });
-              setMessage('');
-            }}
-          >
-            <Icon icon='send' />
-          </InputGroup.Button>
-        </InputGroup>
-      </div>
+        </div>
+        <div label='Team'>
+          <TeamChat
+            teamMsgList={teamMsgList}
+            userProfilePictures={userProfilePictures}
+            sendTeamMsg={handleTeamMsg}
+          />
+        </div>
+      </Tabs>
     </div>
   );
+
+  if (restricted) {
+    content = (
+      <div style={style} className='chat-main-container'>
+        <Tabs>
+          <div label='Team'>
+            <TeamChat
+              teamMsgList={teamMsgList}
+              userProfilePictures={userProfilePictures}
+              sendTeamMsg={handleTeamMsg}
+            />
+          </div>
+        </Tabs>
+      </div>
+    );
+  }
+
+  return content;
 };
 
 const mapStateToProps = (state) => ({
@@ -74,4 +84,4 @@ const mapStateToProps = (state) => ({
   roomData: state.roomData,
 });
 
-export default connect(mapStateToProps, { sendMsg })(Chat);
+export default connect(mapStateToProps, { sendEveryoneMsg, sendTeamMsg })(Chat);
