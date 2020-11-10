@@ -45,7 +45,7 @@ const TeamChat = (props) => {
               setMessage(value);
             }}
             onPressEnter={() => {
-              props.sendEveryoneMsg(message);
+              props.sendTeamMsg(message);
               setMessage('');
             }}
             placeholder='Type a message...'
@@ -53,7 +53,7 @@ const TeamChat = (props) => {
           />
           <InputGroup.Button
             onClick={() => {
-              props.sendEveryoneMsg(message);
+              props.sendTeamMsg(message);
               setMessage('');
             }}
           >

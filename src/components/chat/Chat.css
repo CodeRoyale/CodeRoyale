@@ -4,14 +4,18 @@
 }
 
 /* Chat css */
+.chat-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
 .chat-messages-container {
+  height: 86%;
   overflow: auto;
-  display: flex;
-  flex-direction: column-reverse;
 }
 
 .chat-input {
-  position: absolute;
   bottom: 0;
   margin: 5px 0px;
   width: 100%;
