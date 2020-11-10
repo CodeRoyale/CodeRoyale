@@ -14,10 +14,6 @@ const TeamChat = (props) => {
 
   const teamMsgList = props.teamMsgList;
 
-  const chatBubblesStyle = {
-    height: '88%',
-  };
-
   if (teamMsgList !== undefined) {
     chatBubbles = teamMsgList.map((item, index) => {
       return (
@@ -38,10 +34,10 @@ const TeamChat = (props) => {
 
   return (
     <div className='chat-container'>
-      <div style={chatBubblesStyle} className='chat-messages-container'>
+      <div className='chat-messages-container'>
         <div>{chatBubbles}</div>
       </div>
-      <div className='chat-message-input'>
+      <div className='chat-input'>
         <InputGroup inside>
           <Input
             value={message}
@@ -49,7 +45,7 @@ const TeamChat = (props) => {
               setMessage(value);
             }}
             onPressEnter={() => {
-              props.sendTeamMsg(message);
+              props.sendEveryoneMsg(message);
               setMessage('');
             }}
             placeholder='Type a message...'
@@ -57,7 +53,7 @@ const TeamChat = (props) => {
           />
           <InputGroup.Button
             onClick={() => {
-              props.sendTeamMsg(message);
+              props.sendEveryoneMsg(message);
               setMessage('');
             }}
           >

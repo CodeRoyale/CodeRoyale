@@ -11,6 +11,8 @@ import EveryoneChat from './EveryoneChat';
 import './Chat.css';
 
 const Chat = ({
+  style,
+  restricted,
   socketData,
   roomData,
   chatData,
@@ -20,7 +22,11 @@ const Chat = ({
   const socket = socketData.socket;
   const everyoneMsgList = chatData.everyoneMsgList;
   const teamMsgList = chatData.teamMsgList;
-  const userProfilePictures = roomData.data.state.profilePictures;
+
+  let userProfilePictures;
+  if (roomData.data !== null) {
+    userProfilePictures = roomData.data.state.profilePictures;
+  }
 
   // Send message to everyone in room
   const handleEveryoneMsg = (message) => {
@@ -32,8 +38,8 @@ const Chat = ({
     sendTeamMsg(socket, { message });
   };
 
-  return (
-    <div className='chat-main-container'>
+  let content = (
+    <div style={style} className='chat-main-container'>
       <Tabs>
         <div label='Everyone'>
           <EveryoneChat
@@ -52,6 +58,24 @@ const Chat = ({
       </Tabs>
     </div>
   );
+
+  if (restricted) {
+    content = (
+      <div style={style} className='chat-main-container'>
+        <Tabs>
+          <div label='Team'>
+            <TeamChat
+              teamMsgList={teamMsgList}
+              userProfilePictures={userProfilePictures}
+              sendTeamMsg={handleTeamMsg}
+            />
+          </div>
+        </Tabs>
+      </div>
+    );
+  }
+
+  return content;
 };
 
 const mapStateToProps = (state) => ({

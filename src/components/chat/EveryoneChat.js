@@ -14,10 +14,6 @@ const EveryoneChat = (props) => {
 
   const everyoneMsgList = props.everyoneMsgList;
 
-  const chatBubblesStyle = {
-    height: '88%',
-  };
-
   if (everyoneMsgList !== undefined) {
     chatBubbles = everyoneMsgList.map((item, index) => {
       return (
@@ -29,7 +25,6 @@ const EveryoneChat = (props) => {
               ? profileData().picture
               : props.userProfilePictures[item.source]
           }
-          // userImage={profileData().picture}
           userMessage={item.message}
           bubbleColor={index % 2 === 0 ? '#F0F0F0' : '#F9F9F9'}
         />
@@ -39,10 +34,10 @@ const EveryoneChat = (props) => {
 
   return (
     <div className='chat-container'>
-      <div style={chatBubblesStyle} className='chat-messages-container'>
+      <div className='chat-messages-container'>
         <div>{chatBubbles}</div>
       </div>
-      <div className='chat-message-input'>
+      <div className='chat-input'>
         <InputGroup inside>
           <Input
             value={message}

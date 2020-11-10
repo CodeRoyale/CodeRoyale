@@ -1,16 +1,10 @@
-.test-column {
-  height: 100%;
-  position: fixed;
-  width: 50%;
-  border: 2px red dotted;
+.test-parent {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-.test-1 {
-  background-color: red;
-  height: 50%;
-}
-
-.test-2 {
-  background-color: green;
-  height: 50%;
+.test-child {
+  border: 2px dotted green;
+  flex-grow: 1;
 }

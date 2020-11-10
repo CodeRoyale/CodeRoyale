@@ -11,8 +11,7 @@ const VetoSideBar = ({ vetoUsers, vetoCompletedUsers }) => {
         vetoCompletedUsers={vetoCompletedUsers}
       />
       <hr />
-      <p className='chat-head'>Team Chat</p>
-      <Chat />
+      <Chat style={{ height: '50%' }} restricted={true} />
     </div>
   );
 };
