@@ -40,8 +40,8 @@ const routes = [
     needsAuth: true,
   },
   {
-    path: '/results',
-    component: 'WinLoseMain',
+    path: '/scoreboard',
+    component: 'ScoreboardMain',
     title: 'Scoreboard | CodeRoyale',
     needsAuth: true,
   },

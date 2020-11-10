@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import './WinLoseMain.css';
+import './ScoreboardMain.css';
 import { Icon, Whisper, Tooltip } from 'rsuite';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 
-function WinLoseMain({ roomData }) {
+const ScoreboardMain = ({ roomData }) => {
   const [backClicked, setBackClicked] = useState(false);
   const greenRGB = '60, 255, 0';
   const alpha = ',0.7';
@@ -14,16 +14,16 @@ function WinLoseMain({ roomData }) {
   }
 
   let winTeam = '';
-  let scorecard = roomData.data.competition.scoreboard;
-  let max_score = 0;
-  for (let teamName in scorecard) {
-    let score = scorecard[teamName].length;
-    console.log('score', score);
-    if (score > max_score) {
-      winTeam = teamName;
-      max_score = score;
-    }
-  }
+  //   let scorecard = roomData.data.competition.scoreboard;
+  //   let max_score = 0;
+  //   for (let teamName in scorecard) {
+  //     let score = scorecard[teamName].length;
+  //     console.log('score', score);
+  //     if (score > max_score) {
+  //       winTeam = teamName;
+  //       max_score = score;
+  //     }
+  //   }
   return (
     <div className='win-lose'>
       <div className='win-lose-back'>
@@ -56,10 +56,10 @@ function WinLoseMain({ roomData }) {
       </div>
     </div>
   );
-}
+};
 const mapStateToProps = (state) => {
   return {
     roomData: state.roomData,
   };
 };
-export default connect(mapStateToProps, null)(WinLoseMain);
+export default connect(mapStateToProps, null)(ScoreboardMain);
