@@ -61,6 +61,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         preCheckData: {
+          type: action.type,
           isLoading: false,
           data: action.payload,
         },

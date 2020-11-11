@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import SettingsField from '../../components/settingsField/SettingsField';
 import Button from '../../components/button/Button';
 import { Loader } from 'rsuite';
+import profileData from '../../utils/profileData';
 import './SettingsMain.css';
 
 const SettingsBody = ({
@@ -12,14 +13,11 @@ const SettingsBody = ({
   sendDeleteAccountLoading,
   sendUpdateAccountLoading,
 }) => {
-  let profileData = localStorage.getItem('user-data');
-  profileData = JSON.parse(profileData);
-
   // User info
-  const [userName, setUserName] = useState(profileData.userName);
-  const [firstName, setFirstName] = useState(profileData.firstName);
-  const [lastName, setLastName] = useState(profileData.lastName);
-  const email = profileData.email;
+  const [userName, setUserName] = useState(profileData().userName);
+  const [firstName, setFirstName] = useState(profileData().firstName);
+  const [lastName, setLastName] = useState(profileData().lastName);
+  const email = profileData().email;
 
   // New user info for updation
   const [newAccountData, setNewAccountData] = useState(null);

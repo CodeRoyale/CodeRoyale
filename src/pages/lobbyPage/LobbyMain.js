@@ -2,7 +2,7 @@ import React from 'react';
 import ChooseRoomCard from './ChooseRoomCard';
 import './LobbyMain.css';
 import NavBar from '../../components/navBar/NavBar';
-import profileData from '../../utils/examples';
+import profileData from '../../utils/profileData';
 
 const LobbyMain = () => {
   return (

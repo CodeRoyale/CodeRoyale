@@ -1,17 +1,17 @@
-import io from 'socket.io-client';
-import profileData from '../utils/examples';
-import { chatSuccess, chatFailure } from './chatActions';
-import { roomSuccess, roomFailure } from './roomActions';
 import {
+  CHAT_EVERYONE_SUCCESS,
+  CHAT_TEAM_SUCCESS,
+  CHAT_FAIL,
   SOCKET_LOADING,
   SOCKET_SUCCESS,
   SOCKET_FAIL,
   CONNECTION_ACK,
   CONNECTION_DENY,
 } from './types';
+import io from 'socket.io-client';
+import { roomSuccess, roomFailure } from './roomActions';
 import { ROOM_CLOSED } from '../utils/constants';
 const ENDPOINT = process.env.REACT_APP_LOBBY_SERVER;
-const userName = profileData.username;
 
 const requestSocketConnection = () => {
   return {
@@ -40,7 +40,7 @@ export const connectSocket = () => {
       transportOptions: {
         polling: {
           extraHeaders: {
-            Authorization: `Bearer ${userName}`,
+            Authorization: `Bearer ${localStorage.token}`,
           },
         },
       },
@@ -58,15 +58,28 @@ export const connectSocket = () => {
     // On Message receive...
     socket.on('RCV_MSG', (data) => {
       if (data !== null && data.content !== undefined) {
-        dispatch(
-          chatSuccess({
-            message: data.content,
-            color: 'red',
-            source: data.userName,
-          })
-        );
+        if (data.toTeam) {
+          dispatch({
+            type: CHAT_TEAM_SUCCESS,
+            payload: {
+              message: data.content,
+              source: data.userName,
+            },
+          });
+        } else {
+          dispatch({
+            type: CHAT_EVERYONE_SUCCESS,
+            payload: {
+              message: data.content,
+              source: data.userName,
+            },
+          });
+        }
       } else {
-        dispatch(chatFailure('No chat Came'));
+        dispatch({
+          type: CHAT_FAIL,
+          payload: 'No chat Came',
+        });
       }
       console.log('chat data', data);
     });

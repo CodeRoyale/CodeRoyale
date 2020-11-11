@@ -3,13 +3,11 @@ import { useHistory } from 'react-router-dom';
 import LogoContainer from '../../components/logoContainer/LogoContainer';
 import ProfileButton from '../../components/profileButton/ProfileButton';
 import Button from '../button/Button';
+import profileData from '../../utils/profileData';
 import './NavBar.css';
 
 const NavBar = ({ loggedIn }) => {
   const history = useHistory();
-
-  let profileData = localStorage.getItem('user-data');
-  profileData = JSON.parse(profileData);
 
   // Default navBar (loggedIn)
   let content = (
@@ -18,7 +16,7 @@ const NavBar = ({ loggedIn }) => {
         <LogoContainer />
       </div>
       <div className='nav-bar-profile'>
-        <ProfileButton profileData={profileData} />
+        <ProfileButton profileData={profileData()} />
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-
+import { ERROR_MSG } from '../../utils/constants';
 import { connect } from 'react-redux';
 import { veto, resetVetoAction } from '../../actions/vetoActions';
 import { Loader, Alert, Button } from 'rsuite';
@@ -16,13 +16,13 @@ const StartCompetitionButton = ({
     veto(socket);
   };
 
-  // To show alerts for errors
+  // Starting veto error handling
   useEffect(() => {
-    if (vetoData.type === 'VETO_FAIL') {
-      Alert.error(vetoData.error);
+    if (vetoData.error) {
+      Alert.error(ERROR_MSG);
       resetVetoAction();
     }
-  }, [vetoData.type, vetoData.error, resetVetoAction]);
+  }, [vetoData.error, resetVetoAction]);
 
   let content = (
     <div className='start-competition-view'>

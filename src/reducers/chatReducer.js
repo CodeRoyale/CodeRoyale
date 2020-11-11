@@ -1,18 +1,26 @@
-import { CHAT_SUCCESS, CHAT_FAIL } from '../actions/types';
+import {
+  CHAT_EVERYONE_SUCCESS,
+  CHAT_TEAM_SUCCESS,
+  CHAT_FAIL,
+} from '../actions/types';
 
 const initialState = {
-  msgList: [],
+  everyoneMsgList: [],
+  teamMsgList: [],
   error: '', //id,msg,col,source
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case CHAT_SUCCESS:
-      action.payload['id'] = state.msgList.length;
-      const newList = state.msgList.concat(action.payload);
+    case CHAT_EVERYONE_SUCCESS:
       return {
         ...state,
-        msgList: newList,
+        everyoneMsgList: state.everyoneMsgList.concat(action.payload),
+      };
+    case CHAT_TEAM_SUCCESS:
+      return {
+        ...state,
+        teamMsgList: state.teamMsgList.concat(action.payload),
       };
     case CHAT_FAIL:
       return {

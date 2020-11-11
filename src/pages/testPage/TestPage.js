@@ -1,20 +1,14 @@
-import React, { useEffect } from 'react';
-import loggedInAxios from '../../helpers/loggedInAxios';
+import React from 'react';
+import Chat from '../../components/chat/Chat';
 import './TestPage.css';
 
 const TestPage = () => {
-  useEffect(() => {
-    loggedInAxios()
-      .get('/precheck')
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
-  }, []);
-
-  return <h1>Tests</h1>;
+  // document.body.style = 'background: gray;';
+  return (
+    <div className='test-page'>
+      <Chat />
+    </div>
+  );
 };
 
 export default TestPage;

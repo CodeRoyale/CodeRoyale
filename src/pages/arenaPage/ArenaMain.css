@@ -13,7 +13,6 @@
 .arena-side-bar-header {
   display: flex;
   margin: 10px;
-}
 
 .arena-left {
   width: var(--arena-left-width);
