@@ -1,49 +1,68 @@
-import React from 'react';
-import './ArenaMain.css';
+import React, { useEffect } from 'react';
 import ProfileButton from '../../components/profileButton/ProfileButton';
 import profileData from '../../utils/profileData';
 import Problem from './Problem';
-const chat_icon = 'chat-arena.svg';
-const question_icon = 'problem.svg';
+import { connect } from 'react-redux';
+import { getQuestion } from '../../actions/arenaActions';
+import './ArenaMain.css';
 
-const Header = ({name, icon}) =>{
-  const icon_path = '/images/' + icon;
-  return (
-    <div className='arena-side-bar-header'>    
-      <img style={{height:'25px', width:'25px'}} src={icon_path} alt='null' />
-      <b><p style={{fontSize: '16px', marginLeft: '4px'}}>{name}</p></b>
-    </div>
-  )
-}
+const ArenaMain = ({ vetoData, socketData, arenaData, getQuestion }) => {
+  // Fetching the questions from qapi
+  useEffect(() => {
+    if (vetoData.contestQuestionIDs !== null) {
+      getQuestion(vetoData.contestQuestionIDs);
+    }
+  }, [vetoData.contestQuestionIDs, getQuestion]);
 
-const ArenaMain = () =>{
+  const chat_icon = 'chat-arena.svg';
+  const question_icon = 'problem.svg';
+
+  const Header = ({ name, icon }) => {
+    const icon_path = '/images/' + icon;
+    return (
+      <div className='arena-side-bar-header'>
+        <img
+          style={{ height: '25px', width: '25px' }}
+          src={icon_path}
+          alt='null'
+        />
+        <b>
+          <p style={{ fontSize: '16px', marginLeft: '4px' }}>{name}</p>
+        </b>
+      </div>
+    );
+  };
+
   return (
     <div className='arena'>
       <div className='arena-body'>
         <div className='arena-left'>
-          <Problem/>
+          <Problem />
         </div>
         <div className='arena-right'>
           <div>
             <div className='arena-profile'>
-              <ProfileButton profileData={profileData}/>
+              <ProfileButton profileData={profileData} />
               <p className='arena-profile-name'>Sawarni Swaroop</p>
             </div>
-            <div className='arena-divider'/>
+            <div className='arena-divider' />
           </div>
-          <Header name='Question' icon={question_icon}/>          
-          <div className='arena-question-status'>
-
-          </div>
-          <Header name='Chat' icon={chat_icon}/>
+          <Header name='Question' icon={question_icon} />
+          <div className='arena-question-status'></div>
+          <Header name='Chat' icon={chat_icon} />
         </div>
       </div>
-      
     </div>
-  )
-}
-export default ArenaMain;
+  );
+};
 
+const mapStateToProps = (state) => ({
+  vetoData: state.vetoData,
+  socketData: state.socketData,
+  arenaData: state.arenaData,
+});
+
+export default connect(mapStateToProps, { getQuestion })(ArenaMain);
 
 // import React, { useState, useEffect } from 'react';
 // import NavBar from '../../components/navBar/NavBar';
