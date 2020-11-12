@@ -1,12 +1,12 @@
 import React from 'react';
-import Chat from '../../components/chat/Chat';
+import ScoreboardTeam from '../../pages/scoreboard/ScoreboardTeam';
 import './TestPage.css';
 
 const TestPage = () => {
   // document.body.style = 'background: gray;';
   return (
     <div className='test-page'>
-      <Chat />
+      <ScoreboardTeam />
     </div>
   );
 };
