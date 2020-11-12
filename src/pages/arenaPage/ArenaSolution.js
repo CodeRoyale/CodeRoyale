@@ -20,7 +20,7 @@ import { SettingFilled } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 
-function Solution({ socket, currentQuestion, roomData }) {
+const ArenaSolution = ({ socket, currentQuestion, roomData }) => {
   const [ideLanguage, setLanguage] = useState('c_cpp');
   const [ideFontSize, setFontSize] = useState('12');
   const [ideTheme, setTheme] = useState('terminal');
@@ -247,10 +247,10 @@ function Solution({ socket, currentQuestion, roomData }) {
       </div>
     </div>
   );
-}
+};
 
 const mapStateToProps = (state) => ({
   roomData: state.roomData,
 });
 
-export default connect(mapStateToProps, null)(Solution);
+export default connect(mapStateToProps, null)(ArenaSolution);

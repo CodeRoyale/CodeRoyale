@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import ProfileButton from '../../components/profileButton/ProfileButton';
 import profileData from '../../utils/profileData';
-import Problem from './Problem';
+import ArenaProblem from './ArenaProblem';
 import { connect } from 'react-redux';
 import { getQuestion } from '../../actions/arenaActions';
 import './ArenaMain.css';
@@ -37,7 +37,7 @@ const ArenaMain = ({ vetoData, socketData, arenaData, getQuestion }) => {
     <div className='arena'>
       <div className='arena-body'>
         <div className='arena-left'>
-          <Problem />
+          <ArenaProblem />
         </div>
         <div className='arena-right'>
           <div>
