@@ -1,5 +1,5 @@
 import React from 'react';
-import { TwitterOutlined, LinkedinOutlined } from '@ant-design/icons';
+import { Icon } from 'rsuite';
 import './Footer.css';
 
 const Footer = () => {
@@ -11,12 +11,12 @@ const Footer = () => {
             <ul className='footer-social'>
               <li>
                 <a href='https://www.google.com/'>
-                  <TwitterOutlined />
+                  <Icon icon='twitter' size='2x' />
                 </a>
               </li>
               <li>
                 <a href='https://www.google.com/'>
-                  <LinkedinOutlined />
+                  <Icon icon='linkedin-square' size='2x' />
                 </a>
               </li>
             </ul>

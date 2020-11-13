@@ -16,7 +16,7 @@ import Button from '../../components/button/Button';
 import { Popover, Whisper } from 'rsuite';
 import { Grid, Row, Col } from 'rsuite';
 import { Drawer } from 'rsuite';
-import { SettingFilled } from '@ant-design/icons';
+// import { SettingFilled } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 
@@ -169,7 +169,7 @@ function Solution({ socket, currentQuestion, roomData }) {
                     <Popover title='Settings'>{settings_popup_content}</Popover>
                   }
                 >
-                  <SettingFilled />
+                  {/* <SettingFilled /> */}
                 </Whisper>
               </div>
             </div>
