@@ -65,7 +65,7 @@ export const getAllVetoUsers = (teams) => (dispatch) => {
 
 // Listener to when server sends VETO_START
 export const vetoStart = (socket) => (dispatch) => {
-  socket.on('VETO_START', (data) => {
+  socket.off('VETO_START').on('VETO_START', (data) => {
     dispatch({
       type: VETO_START_SERVER,
       payload: data,
