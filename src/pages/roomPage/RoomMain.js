@@ -49,9 +49,9 @@ const RoomMain = ({
     }
 
     if (socket !== null) {
-      vetoStart(socket);
+      vetoStart(socket, history);
     }
-  }, [room_id, socket, getRoom, vetoStart, teamData.type]);
+  }, [room_id, socket, getRoom, vetoStart, teamData.type, history]);
 
   // Display Alert on every action...
   useEffect(() => {

@@ -18,6 +18,7 @@ const VetoMain = ({
   socketData,
   vetoData,
   roomData,
+  userData,
   vetoStop,
   getVetoStatus,
   getAllVetoUsers,
@@ -142,6 +143,7 @@ const mapStateToProps = (state) => ({
   vetoData: state.vetoData,
   socketData: state.socketData,
   roomData: state.roomData,
+  userData: state.userData,
 });
 
 export default connect(mapStateToProps, {
