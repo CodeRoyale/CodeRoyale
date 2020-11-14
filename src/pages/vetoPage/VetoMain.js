@@ -87,38 +87,14 @@ const VetoMain = ({
             vetoTime={vetoTimeLimit}
           />
           <VetoQuestions
-            isLoading={vetoData.quesApiLoading}
+            questionsLoading={vetoData.quesApiLoading}
+            preCheckLoading={userData.preCheckData.isLoading}
             questions={vetoData.vetoQuestions}
           />
         </div>
       </div>
     </div>
   );
-
-  // Content when not fetching the questions
-  if (!vetoData.quesApiLoading) {
-    content = (
-      <div className='veto-page'>
-        <Navbar loggedIn={true} />
-        <VetoSideBar
-          vetoUsers={vetoData.vetoUsers}
-          vetoCompletedUsers={vetoData.vetoCompletedUsers}
-        />
-        <div className='veto-section'>
-          <div className='veto-section-interaction'>
-            <VetoTopBar
-              confirmVetoVotes={handleConfirmVetoVotes}
-              vetoTime={vetoTimeLimit}
-            />
-            <VetoQuestions
-              isLoading={vetoData.quesApiLoading}
-              questions={vetoData.vetoQuestions}
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   // Loading after user has voted
   if (vetoData.userVoted) {
