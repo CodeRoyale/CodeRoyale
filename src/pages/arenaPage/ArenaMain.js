@@ -4,6 +4,7 @@ import profileData from '../../utils/profileData';
 import ArenaProblem from './ArenaProblem';
 import { connect } from 'react-redux';
 import { getQuestion } from '../../actions/arenaActions';
+import Chat from '../../components/chat/Chat';
 import './ArenaMain.css';
 
 const ArenaMain = ({ vetoData, socketData, arenaData, getQuestion }) => {
@@ -50,6 +51,12 @@ const ArenaMain = ({ vetoData, socketData, arenaData, getQuestion }) => {
           <Header name='Question' icon={question_icon} />
           <div className='arena-question-status'></div>
           <Header name='Chat' icon={chat_icon} />
+          <div>
+            <Chat
+              style={{ height: '52%', position: 'absolute' }}
+              restricted={true}
+            />
+          </div>
         </div>
       </div>
     </div>
