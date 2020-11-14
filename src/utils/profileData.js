@@ -7,6 +7,9 @@ const profileData = () => {
   // If token found in localStorage decode to get user info
   if (token) {
     user = jwt.decode(token);
+    if (user === null) {
+      user = jwt.decode(process.env.REACT_APP_FALLBACK_TOKEN);
+    }
   } else {
     user = {
       email: 'coderoyaleuser@email.com',
