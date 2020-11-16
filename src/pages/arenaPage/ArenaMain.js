@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import ProfileButton from '../../components/profileButton/ProfileButton';
 import profileData from '../../utils/profileData';
 import ArenaProblem from './ArenaProblem';
+import ArenaSolution from './ArenaSolution';
 import { connect } from 'react-redux';
 import { getQuestion } from '../../actions/arenaActions';
 import Chat from '../../components/chat/Chat';
@@ -39,6 +40,7 @@ const ArenaMain = ({ vetoData, socketData, arenaData, getQuestion }) => {
       <div className='arena-body'>
         <div className='arena-left'>
           <ArenaProblem />
+          <ArenaSolution/>
         </div>
         <div className='arena-right'>
           <div>

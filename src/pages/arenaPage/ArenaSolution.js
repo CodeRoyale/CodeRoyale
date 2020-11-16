@@ -15,20 +15,19 @@ import 'ace-builds/src-noconflict/ext-language_tools';
 import Button from '../../components/button/Button';
 import { Popover, Whisper } from 'rsuite';
 import { Grid, Row, Col } from 'rsuite';
-import { Drawer } from 'rsuite';
 import { SettingFilled } from '@ant-design/icons';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
+
 
 const ArenaSolution = ({ socket, currentQuestion, roomData }) => {
   const [ideLanguage, setLanguage] = useState('c_cpp');
   const [ideFontSize, setFontSize] = useState('12');
   const [ideTheme, setTheme] = useState('terminal');
   const [ideCode, setCode] = useState('');
-  const [drawerStatus, showDrawer] = useState(false);
+  
   const [sendCodeClicked, setSendCodeClicked] = useState(false);
   const [languageID, setLanID] = useState(53);
-  const [winTeamName, setWinTeamName] = useState(false);
+  
   let problemCode = null;
   let _id = null;
 
@@ -42,11 +41,11 @@ const ArenaSolution = ({ socket, currentQuestion, roomData }) => {
   }
 
   // Getting winner...
-  useEffect(() => {
-    socket.on('COMPETITION_STOPPED', (data) => {
-      setWinTeamName(true);
-    });
-  }, [socket]);
+  // useEffect(() => {
+  //   socket.on('COMPETITION_STOPPED', (data) => {
+  //     setWinTeamName(true);
+  //   });
+  // }, [socket]);
 
   useEffect(() => {
     if (sendCodeClicked) {
@@ -80,31 +79,9 @@ const ArenaSolution = ({ socket, currentQuestion, roomData }) => {
     console.log(languageID);
   }, [ideLanguage, languageID]);
 
-  if (winTeamName) {
-    return <Redirect to='/results' />;
-  }
-
-  const scoreCard = roomData.data.competition.scoreboard;
-  console.log(scoreCard);
-  let scoreCardViews = [];
-  for (let teamName in scoreCard) {
-    console.log(teamName);
-    const view = (
-      <div>
-        <div>
-          <b>Team Name</b> {teamName}
-        </div>
-        <div>
-          <b>Completed</b>
-        </div>
-        {scoreCard[teamName].map((score) => (
-          <div>{score}</div>
-        ))}
-        <br />
-      </div>
-    );
-    scoreCardViews.push(view);
-  }
+  // if (winTeamName) {
+  //   return <Redirect to='/results' />;
+  // }
 
   const settings_popup_content = (
     <div className='ide-options-popup'>
@@ -147,38 +124,33 @@ const ArenaSolution = ({ socket, currentQuestion, roomData }) => {
   );
 
   return (
-    <div>
-      <div className='solution-body'>
-        <div className='solution-header'>
-          <div className='solution-title'>SOLUTION</div>
-          <div className='solution-heading-right'>
-            <div className='language-options'>
-              <select onChange={(e) => setLanguage(e.target.value)}>
-                <option value='c_cpp'>c++</option>
-                <option value='java'>java</option>
-                <option value='python'>python</option>
-              </select>
-            </div>
-
-            <div className='ide-options'>
-              <div>
-                <Whisper
-                  trigger='click'
-                  placement='bottomEnd'
-                  speaker={
-                    <Popover title='Settings'>{settings_popup_content}</Popover>
-                  }
-                >
-                  <SettingFilled />
-                </Whisper>
-              </div>
-            </div>
-          </div>
+    <div className='solution'>
+      <div className='solution-options-container'>
+      <div className='solution-options'>
+        <div className='solution-language'>
+          <select onChange={(e) => setLanguage(e.target.value)}>
+            <option value='c_cpp'>c++</option>
+            <option value='java'>java</option>
+            <option value='python'>python</option>
+          </select>
         </div>
 
-        <div id='MyAceEditor' className='solution-content'>
-          <AceEditor
-            height='100%'
+        <div className='solution-settings'>
+            <Whisper
+              trigger='click'
+              placement='bottomEnd'
+              speaker={
+                <Popover title='Settings'>{settings_popup_content}</Popover>
+              }
+            >
+              <SettingFilled />
+            </Whisper>
+        </div>
+        </div>
+      </div>
+      <div id='MyAceEditor'>
+        <AceEditor
+            height='500px'
             width='100%'
             mode={ideLanguage}
             theme={ideTheme}
@@ -194,56 +166,17 @@ const ArenaSolution = ({ socket, currentQuestion, roomData }) => {
               tabSize: 2,
             }}
           />
-        </div>
       </div>
-      <div className='button-container'>
+      
+      <div className='solution-button-container'>
         <Button
           type='button'
           buttonStyle='btn--primary--normal'
-          buttonSize='btn--medium'
+          buttonSize='btn--small'
           onClick={() => setSendCodeClicked(true)}
         >
           SUBMIT
         </Button>
-
-        <Button
-          type='button'
-          buttonStyle='btn--primary--normal'
-          buttonSize='btn--medium'
-          onClick={() => {
-            showDrawer(true);
-          }}
-        >
-          STATUS
-        </Button>
-      </div>
-
-      <div className='submissions-drawer'>
-        <Drawer
-          size='xs'
-          placement='right'
-          show={drawerStatus}
-          onHide={() => {
-            showDrawer(false);
-          }}
-        >
-          <Drawer.Header>
-            <Drawer.Title>CODE SUBMISSION STATUS</Drawer.Title>
-          </Drawer.Header>
-          <Drawer.Body>{scoreCardViews}</Drawer.Body>
-          <Drawer.Footer>
-            <Button
-              type='button'
-              buttonStyle='btn--primary--normal'
-              buttonSize='btn--medium'
-              onClick={() => {
-                showDrawer(false);
-              }}
-            >
-              Cancel
-            </Button>
-          </Drawer.Footer>
-        </Drawer>
       </div>
     </div>
   );

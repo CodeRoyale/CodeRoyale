@@ -62,3 +62,23 @@
 .problem-heading {
   font-size: 18px;
 }
+
+/*Solutions.css*/
+.solution {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
+  margin-top: 20px;
+  background: white;
+  padding: 10px;
+}
+.solution-options-container {
+  float: right;
+  margin: 5px;
+}
+.solution-options {
+  display: flex;
+  width: 100px;
+}
+.solution-button-container {
+  text-align: right;
+  margin: 10px;
+}
