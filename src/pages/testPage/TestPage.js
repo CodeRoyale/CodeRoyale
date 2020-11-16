@@ -1,5 +1,5 @@
 import React from 'react';
-import ScoreboardTeam from '../../pages/scoreboard/ScoreboardTeam';
+import ScoreboardTeam from '../../pages/scoreboardPage/ScoreboardTeam';
 import './TestPage.css';
 
 const TestPage = () => {

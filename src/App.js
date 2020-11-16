@@ -18,7 +18,7 @@ import SignUpMain from './pages/signUpPage/SignUpMain';
 import Arena from './pages/arenaPage/ArenaMain';
 import RoomMain from './pages/roomPage/RoomMain';
 import VetoMain from './pages/vetoPage/VetoMain';
-import ScoreboardMain from './pages/scoreboard/ScoreboardMain';
+import ScoreboardMain from './pages/scoreboardPage/ScoreboardMain';
 import TestPage from './pages/testPage/TestPage';
 import isAuthenticated from './utils/isAuthenticated';
 import 'rsuite/lib/styles/index.less';
