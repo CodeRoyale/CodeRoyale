@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProfileButton from '../../components/profileButton/ProfileButton';
 import profileData from '../../utils/profileData';
 import ArenaProblem from './ArenaProblem';
@@ -6,9 +6,14 @@ import ArenaSolution from './ArenaSolution';
 import { connect } from 'react-redux';
 import { getQuestion } from '../../actions/arenaActions';
 import Chat from '../../components/chat/Chat';
+import questions from '../../utils/exampleQuestion';
+import QuestionStatus from '../../components/questionStatus/QuestionStatus';
 import './ArenaMain.css';
 
 const ArenaMain = ({ vetoData, socketData, arenaData, getQuestion }) => {
+  let quesIndex = 0;
+  let quesList = null;
+
   // Fetching the questions from qapi
   useEffect(() => {
     if (vetoData.contestQuestionIDs !== null) {
@@ -16,9 +21,38 @@ const ArenaMain = ({ vetoData, socketData, arenaData, getQuestion }) => {
     }
   }, [vetoData.contestQuestionIDs, getQuestion]);
 
+
+  // Put all the questions in quesList from redux...
+  if (questions !== undefined) {
+    quesList = questions.message;
+  }
+
+  // Setting the question to display...
+  const [quesCode, setQuesCode] = useState(quesList[0].problemCode);
+  for(let i in quesList){
+    if(quesList[i].problemCode === quesCode){
+      quesIndex = i;
+      break;
+    }
+  }
+  const currentQuestion = quesList[quesIndex];
+
+
+  // Question Status...
+  let quesCodes = [];
+  for(let i in quesList){
+    quesCodes.push(quesList[i].problemCode);
+  }
+  const quesStatusView = quesCodes.map(code => 
+    <QuestionStatus 
+      key={code} 
+      code={code} 
+      onClick = {()=>setQuesCode(code)} />
+  )
+
+  // Header...
   const chat_icon = 'chat-arena.svg';
   const question_icon = 'problem.svg';
-
   const Header = ({ name, icon }) => {
     const icon_path = '/images/' + icon;
     return (
@@ -39,7 +73,7 @@ const ArenaMain = ({ vetoData, socketData, arenaData, getQuestion }) => {
     <div className='arena'>
       <div className='arena-body'>
         <div className='arena-left'>
-          <ArenaProblem />
+          <ArenaProblem currentQuestion={currentQuestion} />
           <ArenaSolution/>
         </div>
         <div className='arena-right'>
@@ -51,7 +85,9 @@ const ArenaMain = ({ vetoData, socketData, arenaData, getQuestion }) => {
             <div className='arena-divider' />
           </div>
           <Header name='Question' icon={question_icon} />
-          <div className='arena-question-status'></div>
+          <div className='arena-question-status'>
+            {quesStatusView}
+          </div>
           <Header name='Chat' icon={chat_icon} />
           <div>
             <Chat

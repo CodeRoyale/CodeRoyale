@@ -49,7 +49,7 @@ const TeamChat = (props) => {
               setMessage('');
             }}
             placeholder='Type a message...'
-            maxlength='50'
+            maxLength='50'
           />
           <InputGroup.Button
             onClick={() => {

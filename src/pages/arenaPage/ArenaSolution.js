@@ -49,7 +49,6 @@ const ArenaSolution = ({ socket, currentQuestion, roomData }) => {
 
   useEffect(() => {
     if (sendCodeClicked) {
-      console.log(ideCode);
       socket.emit(
         'CODE_SUBMISSION',
         {
@@ -76,7 +75,7 @@ const ArenaSolution = ({ socket, currentQuestion, roomData }) => {
       setLanID(71);
     }
 
-    console.log(languageID);
+   
   }, [ideLanguage, languageID]);
 
   // if (winTeamName) {

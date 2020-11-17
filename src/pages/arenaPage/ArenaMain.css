@@ -44,6 +44,8 @@
 }
 .arena-question-status {
   height: 200px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 /*Problem.css*/
