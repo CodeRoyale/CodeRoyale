@@ -411,7 +411,7 @@ const forwardMsg = ({ userName, content, toTeam }, { socket }) => {
     // not in a room
     if (!room_id || !content) return false;
 
-    const rcvrs = room_id;
+    let rcvrs = room_id;
     if (toTeam && team_name) {
       rcvrs += `/${team_name}`;
     }
@@ -447,7 +447,7 @@ const registerVotes = ({ userName, votes }, { socket }) => {
     });
     rooms[room_id].competition.veto.voted.push(userName);
     socket.to(room_id).emit(USER_VOTED, { userName, votes });
-
+    socket.emit(USER_VOTED, { userName, votes });
     // veto.votes.length == SUM(all teams.length)
     // TODO -->
     // NOW -> O(n*m)
