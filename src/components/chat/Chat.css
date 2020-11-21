@@ -1,6 +1,7 @@
 /* Chat css */
 .chat-main-container {
   width: 100%;
+  overflow: auto;
 }
 
 /* Chat css */
@@ -11,7 +12,7 @@
 }
 
 .chat-messages-container {
-  height: 86%;
+  height: 100%;
   overflow: auto;
 }
 
