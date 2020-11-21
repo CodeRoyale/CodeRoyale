@@ -2,7 +2,15 @@
   --arena-left-width: 78%;
 }
 
-.arena {
+.arena-page {
+  background: whitesmoke;
+}
+
+.arena-page-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   background: whitesmoke;
 }
 
