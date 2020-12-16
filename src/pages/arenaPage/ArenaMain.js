@@ -10,9 +10,25 @@ import questions from '../../utils/exampleQuestion';
 import QuestionStatus from '../../components/questionStatus/QuestionStatus';
 import './ArenaMain.css';
 
-const ArenaMain = ({ vetoData, socketData, arenaData, getQuestion }) => {
+const ArenaMain = ({ vetoData, socketData, roomData, getQuestion }) => {
   let quesIndex = 0;
   let quesList = null;
+  const socket = socketData.socket;
+
+  // Change this username with real username of the user....
+  const username = 'sawarni99';
+  let teamName = null;
+  let completedQues = [];
+
+  // Getting the team name...
+  if(roomData.data !== null){
+    for(let team in roomData.data.teams){
+      if(roomData.data.teams[team].includes(username)){
+        teamName = team;
+      }
+    }
+    completedQues = roomData.data.competition.scoreboard[teamName];
+  }
 
   // Fetching the questions from qapi
   useEffect(() => {
@@ -44,9 +60,10 @@ const ArenaMain = ({ vetoData, socketData, arenaData, getQuestion }) => {
     quesCodes.push(quesList[i].problemCode);
   }
   const quesStatusView = quesCodes.map(code => 
-    <QuestionStatus 
+    <QuestionStatus
       key={code} 
-      code={code} 
+      code={code}
+      status={completedQues.includes(code) ? 1 : null}
       onClick = {()=>setQuesCode(code)} />
   )
 
@@ -74,7 +91,7 @@ const ArenaMain = ({ vetoData, socketData, arenaData, getQuestion }) => {
       <div className='arena-body'>
         <div className='arena-left'>
           <ArenaProblem currentQuestion={currentQuestion} />
-          <ArenaSolution/>
+          <ArenaSolution socket = {socket}/>
         </div>
         <div className='arena-right'>
           <div>
@@ -105,6 +122,7 @@ const mapStateToProps = (state) => ({
   vetoData: state.vetoData,
   socketData: state.socketData,
   arenaData: state.arenaData,
+  roomData: state.roomData
 });
 
 export default connect(mapStateToProps, { getQuestion })(ArenaMain);

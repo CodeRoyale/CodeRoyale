@@ -10,7 +10,7 @@ const GoogleAuth = (props) => {
   // This function is called on successful auth from google...
   const responseSuccess = (response) => {
     const authData = {
-      access_token: response.wc.id_token,
+      access_token: response.tokenObj.id_token,
       issuer: 'google',
       signUpType: 'OAuth',
     };
