@@ -13,6 +13,7 @@ import './ArenaMain.css';
 const ArenaMain = ({ vetoData, socketData, arenaData, roomData, getQuestion }) => {
   let quesIndex = 0;
   let quesList = null;
+  let currentQuestion = null;
   const socket = socketData.socket;
 
   // Change this username with real username of the user....
@@ -27,7 +28,9 @@ const ArenaMain = ({ vetoData, socketData, arenaData, roomData, getQuestion }) =
         teamName = team;
       }
     }
-    completedQues = roomData.data.competition.scoreboard[teamName];
+    if(roomData.data.competition.scoreboard[teamName] !== undefined ){
+      completedQues = roomData.data.competition.scoreboard[teamName];
+    }
   }
 
   // Fetching the questions from qapi
@@ -40,18 +43,25 @@ const ArenaMain = ({ vetoData, socketData, arenaData, roomData, getQuestion }) =
   // Put all the questions in quesList from redux...
   if (arenaData.questions !== undefined && !arenaData.isLoading) {
     quesList = arenaData.questions.payload.data;
-    console.log(quesList);
   }
 
   // Setting the question to display...
-  const [quesCode, setQuesCode] = useState(quesList[0].problemCode);
-  for (let i in quesList) {
-    if (quesList[i].problemCode === quesCode) {
-      quesIndex = i;
-      break;
-    }
+  let firstQuestion = null;
+  if(quesList !== null && quesList !== undefined){
+    firstQuestion = quesList[0].problemCode;
   }
-  const currentQuestion = quesList[quesIndex];
+  const [quesCode, setQuesCode] = useState(firstQuestion);
+
+  if(quesList !== null && quesList !== undefined){
+    for (let i in quesList) {
+      if (quesList[i].problemCode === quesCode) {
+        quesIndex = i;
+        break;
+      }
+    }
+    currentQuestion = quesList[quesIndex];
+  }
+  
 
   // Question Status...
   let quesCodes = [];
@@ -92,7 +102,7 @@ const ArenaMain = ({ vetoData, socketData, arenaData, roomData, getQuestion }) =
       <div className='arena-body'>
         <div className='arena-left'>
           <ArenaProblem currentQuestion={currentQuestion} />
-          <ArenaSolution socket = {socket}/>
+          <ArenaSolution socket = {socket} currentQuestion={currentQuestion}/>
         </div>
         <div className='arena-right'>
           <div>

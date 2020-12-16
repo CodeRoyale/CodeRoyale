@@ -27,6 +27,22 @@ export const roomFailure = (error) => {
   };
 };
 
+const codeSubmit = (socket, room_id, dispatch) =>{
+  // On Submitting code...
+  socket.on('CODE_SUBMITTED', (data) => {
+    // TODO: This data has to be shown after compilation...
+    console.log('code res:', data);
+    alert(data.sucess ? "All test case passed" : "Test cases has not passed");
+    dispatch(getRoom(socket, { room_id }));
+  });
+
+  //On Successful submission of code...
+  socket.on('SUCCESSFULLY_SUBMITTED', (data) => {
+    console.log('TestCase passed', data);
+    dispatch(getRoom(socket, { room_id }));
+  });
+}
+
 export const createRoom = (
   socket,
   {
@@ -65,19 +81,10 @@ export const createRoom = (
                   dispatch(getRoom(socket, { room_id }));
                 }
               });
-              // On Submitting code...
-              // This is not the right way... we have to make a reducer to keep track of all the submissions...
-              socket.on('CODE_SUBMITTED', (data) => {
-                console.log('code res:', data);
-                dispatch(getRoom(socket, { room_id }));
-              });
 
-              //On Successful submission of code...
-              //This is not the right way... we have to make a reducer to keep track of all the submissions...
-              socket.on('SUCCESSFULLY_SUBMITTED', (data) => {
-                console.log('TestCase passed', data);
-                dispatch(getRoom(socket, { room_id }));
-              });
+              // On submitting code...
+              codeSubmit(socket, room_id, dispatch);
+
             } else {
               dispatch(roomFailure(data));
             }
@@ -107,19 +114,9 @@ export const joinRoom = (socket, { room_id }) => {
               }
             });
 
-            // On Submitting code...
-            // This is not the right way... we have to make a reducer to keep track of all the submissions...
-            socket.on('CODE_SUBMITTED', (data) => {
-              console.log('code res:', data);
-              dispatch(getRoom(socket, { room_id }));
-            });
+            // On submitting code...
+            codeSubmit(socket, room_id, dispatch);
 
-            //On Successful submission of code...
-            //This is not the right way... we have to make a reducer to keep track of all the submissions...
-            socket.on('SUCCESSFULLY_SUBMITTED', (data) => {
-              console.log('TestCase passed', data);
-              dispatch(getRoom(socket, { room_id }));
-            });
           } else if (data.error !== undefined) {
             dispatch(roomFailure(data.error));
           } else {

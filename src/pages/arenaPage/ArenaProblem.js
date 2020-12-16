@@ -2,7 +2,7 @@ import React from 'react';
 import './ArenaMain.css';
 
 const ArenaProblem = ({currentQuestion}) => {
-  let questionIO = null;
+  let questionIO = [];
   let questionTitle = null;
   let questionCode = null;
   let questionDescription = null;

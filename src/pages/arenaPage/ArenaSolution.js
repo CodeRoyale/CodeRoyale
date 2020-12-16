@@ -19,7 +19,7 @@ import { SettingFilled } from '@ant-design/icons';
 import { connect } from 'react-redux';
 
 
-const ArenaSolution = ({ socket, currentQuestion, roomData }) => {
+const ArenaSolution = ({ socket, currentQuestion }) => {
   const [ideLanguage, setLanguage] = useState('c_cpp');
   const [ideFontSize, setFontSize] = useState('12');
   const [ideTheme, setTheme] = useState('terminal');
@@ -35,6 +35,7 @@ const ArenaSolution = ({ socket, currentQuestion, roomData }) => {
     problemCode = currentQuestion.problemCode;
     _id = currentQuestion._id;
   }
+  console.log("problemc: ", problemCode, "id: ", _id );
 
   function onChangeIDE(newValue) {
     setCode(newValue);
@@ -49,16 +50,13 @@ const ArenaSolution = ({ socket, currentQuestion, roomData }) => {
 
   useEffect(() => {
     if (sendCodeClicked) {
-
-      // These are static data.... take problem code and quesid from roomdata.
       socket.emit(
         'CODE_SUBMISSION',
         {
-          problemCode: 'JYL',
+          problemCode: problemCode,
           code: ideCode,
           langId: languageID,
-          //ques_id: _id,
-          ques_id: '5fd9e57471c7c66c63ddefc3'
+          ques_id: _id,
         },
         (data) => {
           console.log(data);
