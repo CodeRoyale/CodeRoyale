@@ -35,7 +35,6 @@ const ArenaSolution = ({ socket, currentQuestion }) => {
     problemCode = currentQuestion.problemCode;
     _id = currentQuestion._id;
   }
-  console.log("problemc: ", problemCode, "id: ", _id );
 
   function onChangeIDE(newValue) {
     setCode(newValue);

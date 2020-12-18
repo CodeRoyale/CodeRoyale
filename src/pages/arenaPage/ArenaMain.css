@@ -27,7 +27,19 @@
   width: var(--arena-left-width);
   padding: 20px;
 }
-
+.arena-left-top-sections{
+  display: flex;
+  font-size: 20px;
+}
+.arena-left-top{
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  background: white;
+}
+.arena-left-top-option{
+    cursor: pointer;
+    padding: 0px 10px 0 10px;
+}
 .arena-right {
   width: calc(100% - var(--arena-left-width));
   position: fixed;
@@ -57,12 +69,6 @@
 }
 
 /*Problem.css*/
-
-.problem {
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
-  padding: 20px;
-  background: white;
-}
 .problem-title {
   font-size: 30px;
 }
@@ -91,4 +97,18 @@
 .solution-button-container {
   text-align: right;
   margin: 10px;
+}
+
+/*ArenaScore.css*/
+.arena-score{
+  display: flex;
+  
+}
+.arena-score-table{
+  margin-bottom: 30px;
+}
+.arena-score-table td{
+  font-size: 15px;
+  padding: 10px 30px 10px 30px;
+  text-align: center
 }

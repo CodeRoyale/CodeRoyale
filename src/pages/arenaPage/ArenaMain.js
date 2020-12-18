@@ -3,6 +3,7 @@ import ProfileButton from '../../components/profileButton/ProfileButton';
 import profileData from '../../utils/profileData';
 import ArenaProblem from './ArenaProblem';
 import ArenaSolution from './ArenaSolution';
+import ArenaScore from './ArenaScore';
 import { connect } from 'react-redux';
 import { getQuestion } from '../../actions/arenaActions';
 import Chat from '../../components/chat/Chat';
@@ -15,6 +16,9 @@ const ArenaMain = ({ vetoData, socketData, arenaData, roomData, getQuestion }) =
   let quesList = null;
   let currentQuestion = null;
   const socket = socketData.socket;
+  const PROBLEM = 'Problem';
+  const SCOREBOARD = 'Scoreboard';
+  const [arenaSection, setArenaSection] = useState(PROBLEM);
 
   // Change this username with real username of the user....
   const username = 'sawarni99';
@@ -96,12 +100,50 @@ const ArenaMain = ({ vetoData, socketData, arenaData, roomData, getQuestion }) =
     );
   };
 
+  // Switching sections in arena...
+  let arenaSectionView = null;
+  if(arenaSection === PROBLEM){
+    arenaSectionView = <ArenaProblem currentQuestion={currentQuestion} />;
+  }else if(arenaSection === SCOREBOARD){
+    arenaSectionView = <ArenaScore quesCodes={quesCodes}/>;
+  }
+
+  // Style of arena section switching...
+  const styleArenaTopSection = {
+    borderBottom: 'solid #DD4814',
+    background: 'rgba(221, 70, 20, 0.05)'
+  }
+  let problemOptionStyle = null; 
+  let scoreboardOptionStyle = null;
+  if(arenaSection === PROBLEM){
+    problemOptionStyle = styleArenaTopSection;
+    scoreboardOptionStyle = null;
+  }else if(arenaSection === SCOREBOARD){
+    scoreboardOptionStyle = styleArenaTopSection;
+    problemOptionStyle = null;
+  }
+
   // Default content
   let content = (
     <div className='arena-page'>
       <div className='arena-body'>
         <div className='arena-left'>
-          <ArenaProblem currentQuestion={currentQuestion} />
+          <div className='arena-left-top'>
+            <div className='arena-left-top-sections'>
+              
+              <div style={problemOptionStyle}
+                onClick={()=>setArenaSection(PROBLEM)}
+                className='arena-left-top-option'>{PROBLEM}</div>
+
+              <div style={scoreboardOptionStyle}
+                onClick={()=>setArenaSection(SCOREBOARD)} 
+                className='arena-left-top-option'>{SCOREBOARD}</div>
+              </div>
+              
+              <div>
+                {arenaSectionView}
+              </div>     
+          </div>
           <ArenaSolution socket = {socket} currentQuestion={currentQuestion}/>
         </div>
         <div className='arena-right'>
