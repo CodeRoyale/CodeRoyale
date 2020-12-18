@@ -12,6 +12,8 @@ const {
   ADD_PRIVATE_LIST,
   VETO_VOTES,
   CODE_SUBMISSION,
+  FIND_SOLO_MATCH,
+  GET_USER,
 } = require("../socketActions/userActions");
 
 const {
@@ -20,7 +22,7 @@ const {
 } = require("../socketActions/serverActions");
 
 //import controllers
-const { addUser, removeUser } = require("../controllers/userController");
+const { addUser, getUser } = require("../controllers/userController");
 const {
   createRoom,
   createTeam,
@@ -35,20 +37,9 @@ const {
   addPrivateList,
   codeSubmission,
 } = require("../controllers/roomController");
+const { findSoloMatch } = require("../controllers/publicRooms");
 
-// import utils
-const { getQuestions } = require("../utils/qapiConn");
-
-const checkToken = (token) => {
-  //just for testing will change later
-  if (token[0] !== "z") {
-    return {
-      userName: token,
-    };
-  } else {
-    false;
-  }
-};
+const { checkToken } = require("../utils/auth");
 
 const authUser = (socket, next) => {
   try {
@@ -61,7 +52,7 @@ const authUser = (socket, next) => {
     if (payload) {
       // connection accepted
       // now check if user is already connected or not
-      if (addUser(payload.userName, socket.id)) {
+      if (addUser(payload.userName, socket.id, payload.picture)) {
         socket.emit(CONNECTION_ACK);
         socket.userDetails = payload;
         next();
@@ -109,7 +100,7 @@ const genericActionCreater = (
   }
 };
 
-const handleUserEvents = (socket) => {
+const handleUserEvents = ({ socket, io }) => {
   socket.on(CREATE_ROOM, genericActionCreater(createRoom, { socket }));
   socket.on(JOIN_ROOM, genericActionCreater(joinRoom, { socket }));
   socket.on(CREATE_TEAM, genericActionCreater(createTeam, { socket }));
@@ -118,6 +109,7 @@ const handleUserEvents = (socket) => {
   socket.on(SEND_MSG, genericActionCreater(forwardMsg, { socket }));
   socket.on(LEAVE_TEAM, genericActionCreater(leaveTeam, { socket }));
   socket.on(GET_ROOM, genericActionCreater(getRoomData, { socket }));
+  socket.on(GET_USER, genericActionCreater(getUser, { socket }));
   socket.on(VETO_VOTES, genericActionCreater(registerVotes, { socket }));
   socket.on(
     START_COMPETITION,
@@ -128,13 +120,14 @@ const handleUserEvents = (socket) => {
     genericActionCreater(codeSubmission, { socket }, true)
   );
   socket.on(ADD_PRIVATE_LIST, genericActionCreater(addPrivateList, { socket }));
+  socket.on(
+    FIND_SOLO_MATCH,
+    // needs io to contact specific users
+    genericActionCreater(findSoloMatch, { socket, io })
+  );
   socket.on("disconnect", () => {
     // removeUser(socket.userDetails.userName);
   });
-};
-
-const setQuestions = async () => {
-  // veto proceess here
 };
 
 module.exports = {

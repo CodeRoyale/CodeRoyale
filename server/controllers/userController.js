@@ -1,16 +1,21 @@
-const { submitCode } = require("../utils/codeExecution");
-
 // this is my db for now
 users = {};
 
 // all details related to a user connected to socket will be stored here
 
-const addUser = (userName, socket_id) => {
+const addUser = (userName, socket_id, profilePicture, rank = 10) => {
   try {
     if (!users[userName]) {
       // new connection
       console.log(userName + " added");
-      users[userName] = { socket_id, room_id: "", team_name: "" };
+      users[userName] = {
+        socket_id,
+        room_id: "",
+        team_name: "",
+        rank,
+        userName,
+        profilePicture,
+      };
     } else {
       // reconnecting
       console.log(userName + " reconnected");
@@ -72,6 +77,7 @@ const getUser = (userName) => {
 };
 
 const getUserData = () => {
+  // need proper authorizations
   try {
     return users;
   } catch (err) {

@@ -6,10 +6,12 @@ const getQuestions = async (noIds) => {
     headers: {
       useQueryString: true,
       accept: "application/json",
+      Authorization: `Bearer ${process.env.QAPI_BEARER}`,
+      lobbyID: `${process.env.LOBBY_ID}`,
     },
   });
   response = await response.json();
-  return response.message;
+  return response.payload.data;
 };
 
 const getTestcase = async (id) => {
@@ -20,10 +22,12 @@ const getTestcase = async (id) => {
       headers: {
         useQueryString: true,
         accept: "application/json",
+        Authorization: `Bearer ${process.env.QAPI_BEARER}`,
+        lobbyID: `${process.env.LOBBY_ID}`,
       },
     }
   );
   response = await response.json();
-  return response.message[id];
+  return response.payload.data[id];
 };
 module.exports = { getQuestions, getTestcase };

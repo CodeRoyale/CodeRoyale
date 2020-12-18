@@ -21,6 +21,7 @@ const {
   ROOM_CLOSED,
   CODE_SUBMITTED,
   SUCCESSFULLY_SUBMITTED,
+  USER_VOTED,
 } = require("../socketActions/serverActions");
 
 const { io } = require("../server");
@@ -28,8 +29,12 @@ const { CLOSE_ROOM } = require("../socketActions/userActions");
 
 // this is my db for now
 rooms = {};
+
+// cant store them in room_obj cause it causes lot of problems
 // to stop comepetition
 stopTimers = {};
+// resolvers
+resolvers = {};
 
 // room_id will be admin name
 
@@ -77,6 +82,7 @@ const createRoom = (config, { socket }) => {
           cur_memCount: 1,
           banList: [],
           bench: [config.admin],
+          profilePictures: { [config.admin]: user.profilePicture },
         },
         competition: {
           questions: {},
@@ -161,8 +167,9 @@ const joinRoom = ({ userName, room_id, team_name }, { socket }) => {
       socket.join(room_id);
       socket.to(room_id).emit(ROOM_UPDATED, {
         type: JOINED_ROOM,
-        data: { userName },
+        data: { userName, profilePicture: user.profilePicture },
       });
+      rooms[room_id].state.profilePictures[userName] = user.profilePicture;
       console.log(userName, " joined from ", room_id);
       return rooms[room_id];
     }
@@ -439,7 +446,43 @@ const registerVotes = ({ userName, votes }, { socket }) => {
       rooms[room_id].competition.veto.votes[id] += 1;
     });
     rooms[room_id].competition.veto.voted.push(userName);
-    return rooms[room_id].competition.veto;
+    socket.to(room_id).emit(USER_VOTED, { userName, votes });
+
+    // veto.votes.length == SUM(all teams.length)
+    // TODO -->
+    // NOW -> O(n*m)
+    // store calculated in obj to make in O(n)
+    let totalRequired = 0;
+    Object.keys(rooms[room_id].teams).forEach((team_name) => {
+      totalRequired += rooms[room_id].teams[team_name].length;
+    });
+
+    if (totalRequired === rooms[room_id].competition.veto.voted.length) {
+      // stop the default timer
+      clearTimeout(stopTimers[room_id].vetoTimer);
+
+      // stoping code
+      // TODO --> needs refactoring
+      rooms[room_id].competition.veto.vetoOn = false;
+      let results = Object.entries(rooms[room_id].competition.veto.votes);
+      results = results
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, rooms[room_id].competition.max_questions);
+      // take only qids
+      results = results.map((ele) => ele[0]);
+      rooms[room_id].competition.questions = results;
+
+      socket.to(room_id).emit(VETO_STOP, results);
+      socket.emit(VETO_STOP, results);
+
+      // resolvers are stored here -> example of shitty coding
+      resolvers[room_id](results);
+    }
+
+    // cant return time or resolver funtions
+    // they are self referencing soo max call stack error
+
+    return rooms[room_id].competition.veto.votes;
   } catch (err) {
     return { error: err.message };
   }
@@ -471,7 +514,9 @@ const doVeto = async (quesIds, room_id, count, socket) => {
       socket.to(room_id).emit(VETO_START, quesIds);
       socket.emit(VETO_START, quesIds);
 
-      setTimeout(() => {
+      // shitty code here
+      resolvers[room_id] = resolve;
+      stopTimers[room_id].vetoTimer = setTimeout(() => {
         // no need to remove listeners
         // all of them are volatile listners
         // calculate veto results
@@ -519,6 +564,7 @@ const startCompetition = async ({ userName }, { socket }) => {
 
     console.log("Starting competition", userName);
     // start veto now and wait for it to end
+    stopTimers[room_id] = {};
     const allQuestions = await getQuestions(room.competition.veto.quesCount);
     await doVeto(allQuestions, room_id, room.competition.max_questions, socket);
 
@@ -533,7 +579,7 @@ const startCompetition = async ({ userName }, { socket }) => {
     socket.emit(COMPETITION_STARTED, rooms[room_id].competition);
 
     // code for stopping competition
-    stopTimers[room_id] = setTimeout(() => {
+    stopTimers[room_id].competitionTimer = setTimeout(() => {
       rooms[room_id].competition.contestOn = false;
       rooms[room_id].competition.contnetEndedAt = Date.now();
       socket.to(room_id).emit(COMPETITION_STOPPED, rooms[room_id].competition);
@@ -558,8 +604,10 @@ const atLeastPerTeam = (room_id, min_size = 1) => {
   }
 };
 
-const getRoomData = ({ room_id }) => {
+const getRoomData = ({ userName, room_id }) => {
   try {
+    const user = getUser(userName);
+    if (user.room_id !== room_id) throw new Error("User not in room");
     return rooms[room_id];
   } catch (err) {
     return { error: err.message };
@@ -623,7 +671,8 @@ const codeSubmission = async (
             rooms[room_id].competition.max_questions ===
             rooms[room_id].competition.scoreboard[team_name].length
           ) {
-            if (stopTimers[room_id]) clearTimeout(stopTimers[room_id]);
+            if (stopTimers[room_id].competitionTimer)
+              clearTimeout(stopTimers[room_id].competitionTimer);
             rooms[room_id].competition.contestOn = false;
             rooms[room_id].competition.contnetEndedAt = Date.now();
             socket

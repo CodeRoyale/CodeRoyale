@@ -23,8 +23,10 @@ const START_COMPETITION = "START_COMPETITION";
 // user starts the competition
 const CLOSE_ROOM = "CLOSE_ROOM";
 
-// uesr can request for a room
+// user can request for their room
 const GET_ROOM = "GET_ROOM";
+// user can request for their current state
+const GET_USER = "GET_USER";
 
 // leave team
 const LEAVE_TEAM = "LEAVE_TEAM";
@@ -37,6 +39,9 @@ const ADD_PRIVATE_LIST = "ADD_PRIVATE_LIST";
 
 // client"s votes
 const VETO_VOTES = "VETO_VOTES";
+
+// solo match
+const FIND_SOLO_MATCH = "FIND_SOLO_MATCH";
 
 module.exports = {
   CONNECTION,
@@ -52,4 +57,6 @@ module.exports = {
   GET_ROOM,
   ADD_PRIVATE_LIST,
   VETO_VOTES,
+  FIND_SOLO_MATCH,
+  GET_USER,
 };
