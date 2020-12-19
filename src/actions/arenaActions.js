@@ -3,52 +3,33 @@ import {
   ARENA_QUESTIONS_SUCCESS,
   ARENA_QUESTIONS_FAIL,
 } from './types';
+import qapiAxios from '../helpers/qapiAxios';
+import { SERVER_DOWN } from '../utils/constants';
 
-const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
-const QUES_API = `${process.env.REACT_APP_DEV_SERVER}/questions/getQById`;
-
-const questionRequest = () => {
-  return {
-    type: ARENA_QUESTIONS_LOADING,
-  };
-};
-
-const questionSuccess = (data) => {
-  return {
-    type: ARENA_QUESTIONS_SUCCESS,
-    payload: data,
-  };
-};
-
-const questionFail = (data) => {
-  return {
-    type: ARENA_QUESTIONS_FAIL,
-    payload: data,
-  };
-};
-
+// Get question from qapi
 export const getQuestion = (questionIDs) => (dispatch) => {
-  dispatch(questionRequest());
-  let headers = new Headers();
-  headers.append('Content-Type', 'application/json');
-  headers.append('Origin', CLIENT_URL);
-  headers.append('Access-Control-Allow-Credentials', 'true');
+  dispatch({
+    type: ARENA_QUESTIONS_LOADING,
+  });
 
+  // question ids to be sent to qapi
   const quesIds = {
     id: questionIDs,
   };
 
-  dispatch(questionRequest());
-  fetch(QUES_API, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify(quesIds),
-  })
-    .then((res) => res.json())
-    .then((jsonRes) => {
-      dispatch(questionSuccess(jsonRes));
+  qapiAxios()
+    .post('/questions/getQById', quesIds)
+    .then((response) => {
+      dispatch({
+        type: ARENA_QUESTIONS_SUCCESS,
+        payload: response.data,
+      });
     })
-    .catch((err) => {
-      dispatch(questionFail(err));
+    .catch((error) => {
+      console.log(error.response);
+      dispatch({
+        type: ARENA_QUESTIONS_FAIL,
+        payload: error.response ? error.response.data : SERVER_DOWN,
+      });
     });
 };
