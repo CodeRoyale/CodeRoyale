@@ -2,6 +2,7 @@ import {
   ARENA_QUESTIONS_LOADING,
   ARENA_QUESTIONS_SUCCESS,
   ARENA_QUESTIONS_FAIL,
+  ARENA_COMPETITION_STOPPED,
 } from './types';
 import qapiAxios from '../helpers/qapiAxios';
 import { SERVER_DOWN } from '../utils/constants';
@@ -32,4 +33,15 @@ export const getQuestion = (questionIDs) => (dispatch) => {
         payload: error.response ? error.response.data : SERVER_DOWN,
       });
     });
+};
+
+// Listener to when the competition has stopped
+export const competitionStopped = (socket) => (dispatch) => {
+  socket.on('COMPETITION_STOPPED', (data) => {
+    console.log(data);
+    dispatch({
+      type: ARENA_COMPETITION_STOPPED,
+      payload: data,
+    });
+  });
 };
