@@ -13,7 +13,6 @@ import DashboardMain from './pages/dashboardPage/DashboardMain';
 import LoginMain from './pages/loginPage/LoginMain';
 import HomeMain from './pages/homePage/HomeMain';
 import SettingsMain from './pages/settingsPage/SettingsMain';
-import LobbyMain from './pages/lobbyPage/LobbyMain';
 import SignUpMain from './pages/signUpPage/SignUpMain';
 import Arena from './pages/arenaPage/ArenaMain';
 import RoomMain from './pages/roomPage/RoomMain';
