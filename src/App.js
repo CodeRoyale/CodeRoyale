@@ -29,7 +29,6 @@ const componentRegistry = {
   LoginMain: LoginMain,
   SignUpMain: SignUpMain,
   Arena: Arena,
-  LobbyMain: LobbyMain,
   ScoreboardMain: ScoreboardMain,
   RoomMain: RoomMain,
   VetoMain: VetoMain,
