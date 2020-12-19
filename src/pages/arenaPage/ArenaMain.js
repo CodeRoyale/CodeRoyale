@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import ProfileButton from '../../components/profileButton/ProfileButton';
 import profileData from '../../utils/profileData';
 import ArenaProblem from './ArenaProblem';
 import ArenaSolution from './ArenaSolution';
@@ -11,7 +10,13 @@ import QuestionStatus from '../../components/questionStatus/QuestionStatus';
 import { Loader } from 'rsuite';
 import './ArenaMain.css';
 
-const ArenaMain = ({ vetoData, socketData, arenaData, roomData, getQuestion }) => {
+const ArenaMain = ({
+  vetoData,
+  socketData,
+  arenaData,
+  roomData,
+  getQuestion,
+}) => {
   let quesIndex = 0;
   let quesList = null;
   let currentQuestion = null;
@@ -26,13 +31,13 @@ const ArenaMain = ({ vetoData, socketData, arenaData, roomData, getQuestion }) =
   let completedQues = [];
 
   // Getting the team name...
-  if(roomData.data !== null){
-    for(let team in roomData.data.teams){
-      if(roomData.data.teams[team].includes(username)){
+  if (roomData.data !== null) {
+    for (let team in roomData.data.teams) {
+      if (roomData.data.teams[team].includes(username)) {
         teamName = team;
       }
     }
-    if(roomData.data.competition.scoreboard[teamName] !== undefined ){
+    if (roomData.data.competition.scoreboard[teamName] !== undefined) {
       completedQues = roomData.data.competition.scoreboard[teamName];
     }
   }
@@ -51,12 +56,12 @@ const ArenaMain = ({ vetoData, socketData, arenaData, roomData, getQuestion }) =
 
   // Setting the question to display...
   let firstQuestion = null;
-  if(quesList !== null && quesList !== undefined){
+  if (quesList !== null && quesList !== undefined) {
     firstQuestion = quesList[0].problemCode;
   }
   const [quesCode, setQuesCode] = useState(firstQuestion);
 
-  if(quesList !== null && quesList !== undefined){
+  if (quesList !== null && quesList !== undefined) {
     for (let i in quesList) {
       if (quesList[i].problemCode === quesCode) {
         quesIndex = i;
@@ -65,7 +70,6 @@ const ArenaMain = ({ vetoData, socketData, arenaData, roomData, getQuestion }) =
     }
     currentQuestion = quesList[quesIndex];
   }
-  
 
   // Question Status...
   let quesCodes = [];
@@ -73,13 +77,14 @@ const ArenaMain = ({ vetoData, socketData, arenaData, roomData, getQuestion }) =
     quesCodes.push(quesList[i].problemCode);
   }
 
-  const quesStatusView = quesCodes.map(code => 
+  const quesStatusView = quesCodes.map((code) => (
     <QuestionStatus
-      key={code} 
+      key={code}
       code={code}
       status={completedQues.includes(code) ? 1 : null}
-      onClick = {()=>setQuesCode(code)} />
-  )
+      onClick={() => setQuesCode(code)}
+    />
+  ));
 
   // Header...
   const chat_icon = 'chat-arena.svg';
@@ -102,23 +107,23 @@ const ArenaMain = ({ vetoData, socketData, arenaData, roomData, getQuestion }) =
 
   // Switching sections in arena...
   let arenaSectionView = null;
-  if(arenaSection === PROBLEM){
+  if (arenaSection === PROBLEM) {
     arenaSectionView = <ArenaProblem currentQuestion={currentQuestion} />;
-  }else if(arenaSection === SCOREBOARD){
-    arenaSectionView = <ArenaScore quesCodes={quesCodes}/>;
+  } else if (arenaSection === SCOREBOARD) {
+    arenaSectionView = <ArenaScore quesCodes={quesCodes} />;
   }
 
   // Style of arena section switching...
   const styleArenaTopSection = {
     borderBottom: 'solid #DD4814',
-    background: 'rgba(221, 70, 20, 0.05)'
-  }
-  let problemOptionStyle = null; 
+    background: 'rgba(221, 70, 20, 0.05)',
+  };
+  let problemOptionStyle = null;
   let scoreboardOptionStyle = null;
-  if(arenaSection === PROBLEM){
+  if (arenaSection === PROBLEM) {
     problemOptionStyle = styleArenaTopSection;
     scoreboardOptionStyle = null;
-  }else if(arenaSection === SCOREBOARD){
+  } else if (arenaSection === SCOREBOARD) {
     scoreboardOptionStyle = styleArenaTopSection;
     problemOptionStyle = null;
   }
@@ -130,27 +135,32 @@ const ArenaMain = ({ vetoData, socketData, arenaData, roomData, getQuestion }) =
         <div className='arena-left'>
           <div className='arena-left-top'>
             <div className='arena-left-top-sections'>
-              
-              <div style={problemOptionStyle}
-                onClick={()=>setArenaSection(PROBLEM)}
-                className='arena-left-top-option'>{PROBLEM}</div>
-
-              <div style={scoreboardOptionStyle}
-                onClick={()=>setArenaSection(SCOREBOARD)} 
-                className='arena-left-top-option'>{SCOREBOARD}</div>
+              <div
+                style={problemOptionStyle}
+                onClick={() => setArenaSection(PROBLEM)}
+                className='arena-left-top-option'
+              >
+                {PROBLEM}
               </div>
-              
-              <div>
-                {arenaSectionView}
-              </div>     
+
+              <div
+                style={scoreboardOptionStyle}
+                onClick={() => setArenaSection(SCOREBOARD)}
+                className='arena-left-top-option'
+              >
+                {SCOREBOARD}
+              </div>
+            </div>
+
+            <div>{arenaSectionView}</div>
           </div>
-          <ArenaSolution socket = {socket} currentQuestion={currentQuestion}/>
+          <ArenaSolution socket={socket} currentQuestion={currentQuestion} />
         </div>
         <div className='arena-right'>
           <div>
             <div className='arena-profile'>
-              <ProfileButton profileData={profileData} />
-              <p className='arena-profile-name'>Sawarni Swaroop</p>
+              {/* <ProfileButton profileData={profileData} /> */}
+              <p className='arena-profile-name'>{profileData().userName}</p>
             </div>
             <div className='arena-divider' />
           </div>
@@ -183,86 +193,7 @@ const mapStateToProps = (state) => ({
   vetoData: state.vetoData,
   socketData: state.socketData,
   arenaData: state.arenaData,
-  roomData: state.roomData
+  roomData: state.roomData,
 });
 
 export default connect(mapStateToProps, { getQuestion })(ArenaMain);
-
-// import React, { useState, useEffect } from 'react';
-// import NavBar from '../../components/navBar/NavBar';
-// import './ArenaMain.css';
-// import Problem from './Problem';
-// import Chat from './Chat';
-// import Solution from './Solution';
-// import { Redirect } from 'react-router';
-// import { Loader } from 'rsuite';
-// import { connect } from 'react-redux';
-// import { getQuestion } from '../../actions/arenaActions';
-
-// const ArenaMain = ({ socketData, arenaData, vetoData, getQuestion }) => {
-//   const socket = socketData.socket;
-//   const [currentQuestion, setCurrentQuestion] = useState();
-
-//   useEffect(() => {
-//     if (vetoData.contestQuestionIDs !== null) {
-//       getQuestion(vetoData.contestQuestionIDs);
-//     }
-//   }, [vetoData.contestQuestionIDs, getQuestion]);
-
-//   if (socket === null) {
-//     return <Redirect to='/lobby' />;
-//   }
-
-//   const handleGetCurrQuestion = (data) => {
-//     setCurrentQuestion(data);
-//   };
-
-//   let content = (
-//     <div className='arena-page'>
-//       <div>
-//         <NavBar loggedIn={true} />
-//       </div>
-
-//       <div className='arena-body'>
-//         <div className='left-container'>
-//           <Problem
-//             questions={arenaData.questions}
-//             getCurrentQuestion={handleGetCurrQuestion}
-//           />
-//           <Chat socket={socket} />
-//         </div>
-
-//         <div className='right-container'>
-//           <Solution
-//             socket={socket}
-//             questions={arenaData.questions}
-//             currentQuestion={currentQuestion}
-//           />
-//         </div>
-//       </div>
-//     </div>
-//   );
-
-//   if (arenaData.isLoading) {
-//     content = (
-//       <div className='arena-page'>
-//         <div>
-//           <NavBar />
-//         </div>
-//         <div className='arena-page-loading'>
-//           <Loader size='md' content='Setting up your coding environment...' />
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   return content;
-// };
-
-// const mapStateToProps = (state) => ({
-//   socketData: state.socketData,
-//   vetoData: state.vetoData,
-//   arenaData: state.arenaData,
-// });
-
-// export default connect(mapStateToProps, { getQuestion })(ArenaMain);
