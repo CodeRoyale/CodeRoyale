@@ -4,8 +4,9 @@
 */
 
 import axios from 'axios';
+import { reRequestQapi } from '../utils/reRequestQapi';
 
-export default (history = null) => {
+export default (history = null, quesIds) => {
   const clientURL = process.env.REACT_APP_CLIENT_URL;
   const baseURL = process.env.REACT_APP_QUESTION_API;
 
@@ -42,7 +43,6 @@ export default (history = null) => {
 
       // User is not authenticated or refresh token expired
       if (error.response.status === 401) {
-        console.log('401', error.response);
         localStorage.removeItem('token');
         // Move user to /login
         if (history) {
@@ -54,13 +54,9 @@ export default (history = null) => {
           reject(error);
         });
       } else if (error.response.status === 403) {
-        console.log('403', error.response);
-        // TODO: If 403 run preCheck and then fetch from qapi
-        if (history) {
-          history.push('/dashboard');
-        } else {
-          window.location = '/dashboard';
-        }
+        // 403 means token has expired
+        // Update the token and re-request questions from qapi
+        reRequestQapi(history, quesIds);
         return new Promise((resolve, reject) => {
           reject(error);
         });

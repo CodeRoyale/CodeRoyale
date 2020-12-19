@@ -3,7 +3,7 @@ import { Loader } from 'rsuite';
 import QuestionCard from '../../components/questionCard/QuestionCard';
 import './VetoMain.css';
 
-const VetoQuestions = ({ isLoading, questions }) => {
+const VetoQuestions = ({ questionsLoading, preCheckLoading, questions }) => {
   let questionsArray = null;
   let questionCards = null;
 
@@ -28,7 +28,7 @@ const VetoQuestions = ({ isLoading, questions }) => {
   let content = <div className='veto-questions'>{questionCards}</div>;
 
   // Loading while fetching questions
-  if (isLoading) {
+  if (questionsLoading || preCheckLoading) {
     content = (
       <div className='veto-questions-loading'>
         <Loader size='sm' content='Fetching veto questions...' />

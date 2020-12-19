@@ -1,7 +1,7 @@
 import React from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import { FacebookFilled } from '@ant-design/icons';
 import './FacebookAuth.css';
+import { Icon } from 'rsuite';
 
 const FacebookAuth = (props) => {
   // Facebook app ID from .env file
@@ -23,13 +23,15 @@ const FacebookAuth = (props) => {
         fields='name,email,picture'
         callback={responseSuccess}
         render={(renderProps) => (
-          <button
+          <div
+            className='facebook-custom-button'
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
-            className='facebook-custom-button'
           >
-            <FacebookFilled className='facebook-icon' /> {props.text}
-          </button>
+            <Icon icon='facebook-official' size='2x' />
+            &nbsp; &nbsp;
+            {props.text}
+          </div>
         )}
       />
     </div>

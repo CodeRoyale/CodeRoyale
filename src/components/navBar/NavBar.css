@@ -1,5 +1,5 @@
 :root {
-  --height-nav-bar: 9%;
+  --height-nav-bar: 70px;
 }
 
 .nav-bar {
@@ -28,6 +28,9 @@
 
 /** NavBar when user is not logged in **/
 .loggedOut-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 20px;
   background-color: white;
   height: var(--height-nav-bar);
@@ -37,41 +40,18 @@
   top: 0;
 }
 
-.loggedOut-navlinks li a {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  text-decoration: none;
-  color: black;
-}
-
-.loggedOut-navbar-header {
+.loggedOut-nav-auth-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
-.loggedOut-navlinks {
-  list-style: none;
-}
-
-.loggedOut-navlinks li {
-  display: inline-block;
-  padding: 0px 15px;
-}
-
-.loggedOut-navlinks li a {
-  transition: all 0.3s ease 0s;
-}
-
-.loggedOut-navlinks li a:hover {
-  color: var(--primary-color);
-}
-
 .loggedOut-nav-signup {
+  cursor: pointer;
   margin-right: 20px;
   text-decoration: none;
   color: black;
+  font-size: 14px;
   transition: all 0.3s ease 0s;
 }
 

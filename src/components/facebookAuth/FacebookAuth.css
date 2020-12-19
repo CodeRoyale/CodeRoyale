@@ -1,6 +1,9 @@
 .facebook-custom-button {
   border: none;
   color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #5890ff;
   cursor: pointer;
   font-family: 'Roboto', sans-serif;

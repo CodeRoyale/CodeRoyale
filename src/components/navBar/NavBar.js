@@ -25,36 +25,25 @@ const NavBar = ({ loggedIn }) => {
   if (!loggedIn) {
     content = (
       <div className='loggedOut-navbar'>
-        <header className='loggedOut-navbar-header'>
-          <LogoContainer />
-          <nav>
-            <ul className='loggedOut-navlinks'>
-              <li>
-                <a href='https://github.com/CodeRoyale/codeRoyale-frontend/'>
-                  About
-                </a>
-              </li>
-              <li>
-                <a href='https://github.com/CodeRoyale/codeRoyale-frontend/'>
-                  FAQ
-                </a>
-              </li>
-            </ul>
-          </nav>
-          <div>
-            <a className='loggedOut-nav-signup' href='/signup'>
-              Sign up
-            </a>
-            <Button
-              type='button'
-              onClick={() => history.push('/login')}
-              buttonStyle='btn--primary--signin'
-              buttonSize='btn--small'
-            >
-              Login
-            </Button>
+        <LogoContainer />
+        <div className='loggedOut-nav-auth-container'>
+          <div
+            className='loggedOut-nav-signup'
+            onClick={() => {
+              history.push('/signup');
+            }}
+          >
+            Sign up
           </div>
-        </header>
+          <Button
+            type='button'
+            onClick={() => history.push('/login')}
+            buttonStyle='btn--primary--signin'
+            buttonSize='btn--small'
+          >
+            Login
+          </Button>
+        </div>
       </div>
     );
   }

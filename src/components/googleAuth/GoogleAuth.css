@@ -1,6 +1,9 @@
 .google-custom-button {
   border: none;
   color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #cd4620;
   cursor: pointer;
   font-family: 'Roboto', sans-serif;

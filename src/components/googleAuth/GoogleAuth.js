@@ -1,6 +1,6 @@
 import React from 'react';
 import GoogleLogin from 'react-google-login';
-import { GoogleCircleFilled } from '@ant-design/icons';
+import { Icon } from 'rsuite';
 import './GoogleAuth.css';
 
 const GoogleAuth = (props) => {
@@ -25,13 +25,15 @@ const GoogleAuth = (props) => {
         onSuccess={responseSuccess}
         cookiePolicy={'single_host_origin'}
         render={(renderProps) => (
-          <button
+          <div
+            className='google-custom-button'
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
-            className='google-custom-button'
           >
-            <GoogleCircleFilled className='google-icon' /> {props.text}
-          </button>
+            <Icon icon='google' size='2x' />
+            &nbsp; &nbsp;
+            {props.text}
+          </div>
         )}
       />
     </div>

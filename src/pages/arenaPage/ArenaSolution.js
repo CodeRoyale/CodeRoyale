@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './ArenaMain.css';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-java';
 import 'ace-builds/src-noconflict/mode-c_cpp';
@@ -14,20 +13,19 @@ import 'ace-builds/src-noconflict/snippets/java';
 import 'ace-builds/src-noconflict/ext-language_tools';
 import Button from '../../components/button/Button';
 import { Popover, Whisper } from 'rsuite';
-import { Grid, Row, Col } from 'rsuite';
-import { SettingFilled } from '@ant-design/icons';
+import { Grid, Row, Col, Icon } from 'rsuite';
 import { connect } from 'react-redux';
-
+import './ArenaMain.css';
 
 const ArenaSolution = ({ socket, currentQuestion }) => {
   const [ideLanguage, setLanguage] = useState('c_cpp');
   const [ideFontSize, setFontSize] = useState('12');
   const [ideTheme, setTheme] = useState('terminal');
   const [ideCode, setCode] = useState('');
-  
+
   const [sendCodeClicked, setSendCodeClicked] = useState(false);
   const [languageID, setLanID] = useState(53);
-  
+
   let problemCode = null;
   let _id = null;
 
@@ -36,16 +34,9 @@ const ArenaSolution = ({ socket, currentQuestion }) => {
     _id = currentQuestion._id;
   }
 
-  function onChangeIDE(newValue) {
+  const onChangeIDE = (newValue) => {
     setCode(newValue);
-  }
-
-  // Getting winner...
-  // useEffect(() => {
-  //   socket.on('COMPETITION_STOPPED', (data) => {
-  //     setWinTeamName(true);
-  //   });
-  // }, [socket]);
+  };
 
   useEffect(() => {
     if (sendCodeClicked) {
@@ -74,15 +65,9 @@ const ArenaSolution = ({ socket, currentQuestion }) => {
     } else if (ideLanguage === 'python') {
       setLanID(71);
     }
-
-   
   }, [ideLanguage, languageID]);
 
-  // if (winTeamName) {
-  //   return <Redirect to='/results' />;
-  // }
-
-  const settings_popup_content = (
+  const settingsPopupContent = (
     <div className='ide-options-popup'>
       <Grid fluid>
         <Row className='ide-options-row'>
@@ -125,48 +110,48 @@ const ArenaSolution = ({ socket, currentQuestion }) => {
   return (
     <div className='solution'>
       <div className='solution-options-container'>
-      <div className='solution-options'>
-        <div className='solution-language'>
-          <select onChange={(e) => setLanguage(e.target.value)}>
-            <option value='c_cpp'>c++</option>
-            <option value='java'>java</option>
-            <option value='python'>python</option>
-          </select>
-        </div>
+        <div className='solution-options'>
+          <div className='solution-language'>
+            <select onChange={(e) => setLanguage(e.target.value)}>
+              <option value='c_cpp'>c++</option>
+              <option value='java'>java</option>
+              <option value='python'>python</option>
+            </select>
+          </div>
 
-        <div className='solution-settings'>
+          <div className='solution-settings'>
             <Whisper
               trigger='click'
               placement='bottomEnd'
               speaker={
-                <Popover title='Settings'>{settings_popup_content}</Popover>
+                <Popover title='Settings'>{settingsPopupContent}</Popover>
               }
             >
-              <SettingFilled />
+              <Icon icon='cog' />
             </Whisper>
-        </div>
+          </div>
         </div>
       </div>
       <div id='MyAceEditor'>
         <AceEditor
-            height='500px'
-            width='100%'
-            mode={ideLanguage}
-            theme={ideTheme}
-            fontSize={ideFontSize}
-            showGutter={true}
-            showPrintMargin={false}
-            editorProps={{ $blockScrolling: Infinity }}
-            onChange={onChangeIDE}
-            setOptions={{
-              enableBasicAutocompletion: true,
-              enableLiveAutocompletion: false,
-              enableSnippets: true,
-              tabSize: 2,
-            }}
-          />
+          height='500px'
+          width='100%'
+          mode={ideLanguage}
+          theme={ideTheme}
+          fontSize={ideFontSize}
+          showGutter={true}
+          showPrintMargin={false}
+          editorProps={{ $blockScrolling: Infinity }}
+          onChange={onChangeIDE}
+          setOptions={{
+            enableBasicAutocompletion: true,
+            enableLiveAutocompletion: false,
+            enableSnippets: true,
+            tabSize: 2,
+          }}
+        />
       </div>
-      
+
       <div className='solution-button-container'>
         <Button
           type='button'
@@ -174,7 +159,7 @@ const ArenaSolution = ({ socket, currentQuestion }) => {
           buttonSize='btn--small'
           onClick={() => setSendCodeClicked(true)}
         >
-          SUBMIT
+          Submit
         </Button>
       </div>
     </div>

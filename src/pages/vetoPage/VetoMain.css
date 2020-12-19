@@ -100,6 +100,7 @@
 .veto-status {
   height: 50%;
   padding: 10px;
+  overflow: auto;
 }
 
 .veto-status-head {

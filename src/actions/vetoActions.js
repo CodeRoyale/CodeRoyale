@@ -64,8 +64,8 @@ export const getAllVetoUsers = (teams) => (dispatch) => {
 };
 
 // Listener to when server sends VETO_START
-export const vetoStart = (socket) => (dispatch) => {
-  socket.on('VETO_START', (data) => {
+export const vetoStart = (socket, history) => (dispatch) => {
+  socket.off('VETO_START').on('VETO_START', (data) => {
     dispatch({
       type: VETO_START_SERVER,
       payload: data,
@@ -80,7 +80,7 @@ export const vetoStart = (socket) => (dispatch) => {
       type: VETO_QUESTIONS_LOADING,
     });
 
-    qapiAxios()
+    qapiAxios(history, quesIds)
       .post('/questions/getQById', quesIds)
       .then((response) => {
         dispatch({
@@ -89,7 +89,6 @@ export const vetoStart = (socket) => (dispatch) => {
         });
       })
       .catch((error) => {
-        console.log(error.response);
         dispatch({
           type: VETO_QUESTIONS_FAIL,
           payload: error.response ? error.response.data : SERVER_DOWN,

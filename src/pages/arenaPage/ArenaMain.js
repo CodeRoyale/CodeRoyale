@@ -4,10 +4,11 @@ import ArenaProblem from './ArenaProblem';
 import ArenaSolution from './ArenaSolution';
 import ArenaScore from './ArenaScore';
 import { connect } from 'react-redux';
-import { getQuestion } from '../../actions/arenaActions';
+import { getQuestion, competitionStopped } from '../../actions/arenaActions';
 import Chat from '../../components/chat/Chat';
 import QuestionStatus from '../../components/questionStatus/QuestionStatus';
 import { Loader } from 'rsuite';
+import { useHistory } from 'react-router-dom';
 import './ArenaMain.css';
 
 const ArenaMain = ({
@@ -16,6 +17,7 @@ const ArenaMain = ({
   arenaData,
   roomData,
   getQuestion,
+  competitionStopped,
 }) => {
   let quesIndex = 0;
   let quesList = null;
@@ -25,8 +27,13 @@ const ArenaMain = ({
   const SCOREBOARD = 'Scoreboard';
   const [arenaSection, setArenaSection] = useState(PROBLEM);
   const username = profileData().username;
+  const history = useHistory();
   let teamName = null;
   let completedQues = [];
+
+  if (socket === null) {
+    history.push('/dashboard');
+  }
 
   // Getting the team name...
   if (roomData.data !== null) {
@@ -46,6 +53,18 @@ const ArenaMain = ({
       getQuestion(vetoData.contestQuestionIDs);
     }
   }, [vetoData.contestQuestionIDs, getQuestion]);
+
+  // Initializing the listener for checking is competition stopped
+  useEffect(() => {
+    if (socket !== null) {
+      competitionStopped(socket);
+    }
+  }, [competitionStopped, socket]);
+
+  // Move to /scoreboard once the competition stops
+  if (arenaData.competitionStopped) {
+    history.push('/scoreboard');
+  }
 
   // Put all the questions in quesList from redux...
   if (arenaData.questions !== undefined && !arenaData.isLoading) {
@@ -194,4 +213,6 @@ const mapStateToProps = (state) => ({
   roomData: state.roomData,
 });
 
-export default connect(mapStateToProps, { getQuestion })(ArenaMain);
+export default connect(mapStateToProps, { getQuestion, competitionStopped })(
+  ArenaMain
+);
