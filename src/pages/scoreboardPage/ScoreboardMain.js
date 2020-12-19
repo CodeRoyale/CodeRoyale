@@ -58,6 +58,7 @@ const ScoreboardMain = ({ roomData, socketData, arenaData }) => {
         <div className='scoreboard-score-container'>
           <ScoreboardTeam
             rank='gold'
+            userImages={roomData.data.state.profilePictures}
             teamName={scores[0].team}
             team={roomTeams[scores[0].team]}
           />
@@ -68,11 +69,13 @@ const ScoreboardMain = ({ roomData, socketData, arenaData }) => {
         <div className='scoreboard-score-container'>
           <ScoreboardTeam
             rank='gold'
+            userImages={roomData.data.state.profilePictures}
             teamName={scores[0].team}
             team={roomTeams[scores[0].team]}
           />
           <ScoreboardTeam
             rank='silver'
+            userImages={roomData.data.state.profilePictures}
             teamName={scores[1].team}
             team={roomTeams[scores[1].team]}
           />
@@ -83,16 +86,19 @@ const ScoreboardMain = ({ roomData, socketData, arenaData }) => {
         <div className='scoreboard-score-container'>
           <ScoreboardTeam
             rank='silver'
+            userImages={roomData.data.state.profilePictures}
             teamName={scores[1].team}
             team={roomTeams[scores[1].team]}
           />
           <ScoreboardTeam
             rank='gold'
+            userImages={roomData.data.state.profilePictures}
             teamName={scores[0].team}
             team={roomTeams[scores[0].team]}
           />
           <ScoreboardTeam
             rank='bronze'
+            userImages={roomData.data.state.profilePictures}
             teamName={scores[2].team}
             team={roomTeams[scores[2].team]}
           />

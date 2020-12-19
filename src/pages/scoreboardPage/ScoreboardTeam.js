@@ -32,7 +32,7 @@ const ScoreboardTeam = ({ rank, teamName, team, userImages }) => {
       return (
         <ScoreboardPlayer
           key={index}
-          userImage='https://www.flaticon.com/svg/static/icons/svg/21/21104.svg'
+          userImage={userImages[player]}
           userName={player}
         />
       );
