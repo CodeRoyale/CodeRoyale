@@ -31,6 +31,10 @@ const ArenaMain = ({
   let teamName = null;
   let completedQues = [];
 
+  if (socket === null) {
+    history.push('/dashboard');
+  }
+
   // Getting the team name...
   if (roomData.data !== null) {
     for (let team in roomData.data.teams) {

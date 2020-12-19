@@ -21,22 +21,24 @@ const ScoreboardMain = ({ roomData, socketData, arenaData }) => {
   // Getting the scorecard and teams from lobby
   let scoreCard;
   let roomTeams;
-  if (roomData.data != null) {
-    scoreCard = arenaData.scoreboardData; //{ asd: [], asdasd: [] }
+  if (roomData.data != null && arenaData.scoreboardData != null) {
+    scoreCard = arenaData.scoreboardData;
     roomTeams = roomData.data.teams;
   }
+
   let scores = [];
   let justScores = [];
   for (let teamName in scoreCard) {
     scores.push({ team: teamName, score: scoreCard[teamName].length });
     justScores.push(scoreCard[teamName].length);
   }
-
-  // Sorting scores in descending order
-  scores.sort(function (a, b) {
-    return a.score - b.score;
-  });
-  scores.reverse();
+  if (scores != null && justScores != null) {
+    // Sorting scores in descending order
+    scores.sort(function (a, b) {
+      return a.score - b.score;
+    });
+    scores.reverse();
+  }
 
   const allEqual = (array) => array.every((v) => v === array[0]);
 
@@ -125,7 +127,9 @@ const ScoreboardMain = ({ roomData, socketData, arenaData }) => {
           />
         </Whisper>
       </div>
-      <div className='scoreboard-score-container'>{displayScoreCards()}</div>
+      {socket != null ? (
+        <div className='scoreboard-score-container'>{displayScoreCards()}</div>
+      ) : null}
     </div>
   );
 };
