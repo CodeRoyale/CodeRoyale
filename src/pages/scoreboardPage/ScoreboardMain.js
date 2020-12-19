@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ScoreboardTeam from './ScoreboardTeam';
 
-const ScoreboardMain = ({ roomData, socketData }) => {
+const ScoreboardMain = ({ roomData, socketData, arenaData }) => {
   const history = useHistory();
   const socket = socketData.socket;
 
@@ -13,11 +13,16 @@ const ScoreboardMain = ({ roomData, socketData }) => {
     history.push('/dashboard');
   }
 
+  // After 20 secs move user to /dashboard
+  setTimeout(() => {
+    history.push('/dashboard');
+  }, 20000);
+
   // Getting the scorecard and teams from lobby
   let scoreCard;
   let roomTeams;
   if (roomData.data != null) {
-    scoreCard = roomData.data.competition.scoreboard; //{ asd: [], asdasd: [] }
+    scoreCard = arenaData.scoreboardData; //{ asd: [], asdasd: [] }
     roomTeams = roomData.data.teams;
   }
   let scores = [];
@@ -32,10 +37,6 @@ const ScoreboardMain = ({ roomData, socketData }) => {
     return a.score - b.score;
   });
   scores.reverse();
-
-  console.log(scores);
-  console.log(scoreCard);
-  console.log(roomTeams);
 
   const allEqual = (array) => array.every((v) => v === array[0]);
 
@@ -58,7 +59,7 @@ const ScoreboardMain = ({ roomData, socketData }) => {
           <ScoreboardTeam
             rank='gold'
             teamName={scores[0].team}
-            team={['joel', 'alan']}
+            team={roomTeams[scores[0].team]}
           />
         </div>
       );
@@ -68,12 +69,12 @@ const ScoreboardMain = ({ roomData, socketData }) => {
           <ScoreboardTeam
             rank='gold'
             teamName={scores[0].team}
-            team={['joel', 'alan']}
+            team={roomTeams[scores[0].team]}
           />
           <ScoreboardTeam
             rank='silver'
             teamName={scores[1].team}
-            team={['joel', 'alan']}
+            team={roomTeams[scores[1].team]}
           />
         </div>
       );
@@ -83,17 +84,17 @@ const ScoreboardMain = ({ roomData, socketData }) => {
           <ScoreboardTeam
             rank='silver'
             teamName={scores[1].team}
-            team={['alanhenry']}
+            team={roomTeams[scores[1].team]}
           />
           <ScoreboardTeam
             rank='gold'
             teamName={scores[0].team}
-            team={['sawarni69']}
+            team={roomTeams[scores[0].team]}
           />
           <ScoreboardTeam
             rank='bronze'
             teamName={scores[2].team}
-            team={['joelmathewkoshy']}
+            team={roomTeams[scores[2].team]}
           />
         </div>
       );
@@ -125,5 +126,6 @@ const ScoreboardMain = ({ roomData, socketData }) => {
 const mapStateToProps = (state) => ({
   roomData: state.roomData,
   socketData: state.socketData,
+  arenaData: state.arenaData,
 });
 export default connect(mapStateToProps, null)(ScoreboardMain);

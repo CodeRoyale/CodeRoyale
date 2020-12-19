@@ -38,10 +38,9 @@ export const getQuestion = (questionIDs) => (dispatch) => {
 // Listener to when the competition has stopped
 export const competitionStopped = (socket) => (dispatch) => {
   socket.on('COMPETITION_STOPPED', (data) => {
-    console.log(data);
     dispatch({
       type: ARENA_COMPETITION_STOPPED,
-      payload: data,
+      payload: data.scoreboard,
     });
   });
 };

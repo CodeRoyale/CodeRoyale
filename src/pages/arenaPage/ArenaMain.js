@@ -57,7 +57,7 @@ const ArenaMain = ({
     }
   }, [competitionStopped, socket]);
 
-  // Move to scoreboard once the competition stops
+  // Move to /scoreboard once the competition stops
   if (arenaData.competitionStopped) {
     history.push('/scoreboard');
   }
