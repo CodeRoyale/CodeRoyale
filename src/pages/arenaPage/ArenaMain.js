@@ -24,9 +24,7 @@ const ArenaMain = ({
   const PROBLEM = 'Problem';
   const SCOREBOARD = 'Scoreboard';
   const [arenaSection, setArenaSection] = useState(PROBLEM);
-
-  // Change this username with real username of the user....
-  const username = 'sawarni99';
+  const username = profileData().username;
   let teamName = null;
   let completedQues = [];
 
