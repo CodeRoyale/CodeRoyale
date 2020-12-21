@@ -52,8 +52,9 @@ const authUser = (socket, next) => {
     if (payload) {
       // connection accepted
       // now check if user is already connected or not
-      if (addUser(payload.userName, socket.id, payload.picture)) {
-        socket.emit(CONNECTION_ACK);
+      const userState = addUser(payload.userName, socket.id, payload.picture);
+      if (userState) {
+        socket.emit(CONNECTION_ACK, userState);
         socket.userDetails = payload;
         next();
       } else {

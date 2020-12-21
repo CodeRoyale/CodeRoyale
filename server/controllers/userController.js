@@ -4,6 +4,7 @@ users = {};
 // all details related to a user connected to socket will be stored here
 
 const addUser = (userName, socket_id, profilePicture, rank = 10) => {
+  // returns user object if we can add user else false
   try {
     if (!users[userName]) {
       // new connection
@@ -23,7 +24,8 @@ const addUser = (userName, socket_id, profilePicture, rank = 10) => {
     }
     return users[userName];
   } catch (err) {
-    return err.message || false;
+    console.log(err.message);
+    return false;
   }
 };
 
