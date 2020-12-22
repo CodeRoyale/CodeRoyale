@@ -16,7 +16,7 @@ const DashboardMain = ({
   userData,
   preCheckUser,
   userActionReset,
-  roomData
+  roomData,
 }) => {
   const history = useHistory();
   const [createRoomShow, setCreateRoomShow] = useState(false);
@@ -54,12 +54,12 @@ const DashboardMain = ({
   }, [connectSocket, userData]);
 
   // Checking for refresh...
-  if(roomData.data !== null){
-    if(roomData.data.competition.veto.vetoOn){
+  if (roomData.data !== null) {
+    if (roomData.data.competition.veto.vetoOn) {
       history.push('/veto');
-    }else if(roomData.data.competition.contestOn){
+    } else if (roomData.data.competition.contestOn) {
       history.push('/arena');
-    }else{
+    } else {
       history.push('/room');
     }
   }
@@ -130,7 +130,7 @@ const DashboardMain = ({
 const mapStateToProps = (state) => ({
   socketData: state.socketData,
   userData: state.userData,
-  roomData: state.roomData
+  roomData: state.roomData,
 });
 
 export default connect(mapStateToProps, {

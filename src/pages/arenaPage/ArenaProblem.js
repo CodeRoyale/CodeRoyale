@@ -1,7 +1,7 @@
 import React from 'react';
 import './ArenaMain.css';
 
-const ArenaProblem = ({currentQuestion}) => {
+const ArenaProblem = ({ currentQuestion }) => {
   let questionIO = [];
   let questionTitle = null;
   let questionCode = null;
@@ -14,11 +14,11 @@ const ArenaProblem = ({currentQuestion}) => {
     questionFormat = currentQuestion.format;
     questionDescription = currentQuestion.description;
     questionIO = currentQuestion.io;
-    for(let i=0; i<questionIO.length; i++){
-      questionIO[i]['key'] = i; 
+    for (let i = 0; i < questionIO.length; i++) {
+      questionIO[i]['key'] = i;
     }
   }
-  
+
   const questionIOView = questionIO.map((data) => (
     <div key={data.key}>
       <div>

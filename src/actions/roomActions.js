@@ -27,12 +27,12 @@ export const roomFailure = (error) => {
   };
 };
 
-const codeSubmit = (socket, room_id, dispatch) =>{
+const codeSubmit = (socket, room_id, dispatch) => {
   // On Submitting code...
   socket.on('CODE_SUBMITTED', (data) => {
     // TODO: This data has to be shown after compilation...
     console.log('code res:', data);
-    alert(data.sucess ? "All test case passed" : "Test cases has not passed");
+    alert(data.sucess ? 'All test case passed' : 'Test cases has not passed');
     dispatch(getRoom(socket, { room_id }));
   });
 
@@ -41,7 +41,7 @@ const codeSubmit = (socket, room_id, dispatch) =>{
     console.log('TestCase passed', data);
     dispatch(getRoom(socket, { room_id }));
   });
-}
+};
 
 export const createRoom = (
   socket,
@@ -84,7 +84,6 @@ export const createRoom = (
 
               // On submitting code...
               codeSubmit(socket, room_id, dispatch);
-
             } else {
               dispatch(roomFailure(data));
             }
@@ -109,7 +108,7 @@ export const joinRoom = (socket, { room_id }) => {
           if (data !== ERROR_MSG && data.error === undefined) {
             dispatch(roomSuccess(data, ROOM_JOINED));
             socket.on('ROOM_UPDATED', (data) => {
-              console.log("data", data);
+              console.log('data', data);
               if (data !== null && data.type !== undefined) {
                 dispatch(getRoom(socket, { room_id }));
               }
@@ -117,7 +116,6 @@ export const joinRoom = (socket, { room_id }) => {
 
             // On submitting code...
             codeSubmit(socket, room_id, dispatch);
-
           } else if (data.error !== undefined) {
             dispatch(roomFailure(data.error));
           } else {

@@ -10,7 +10,7 @@ import {
 } from './types';
 import io from 'socket.io-client';
 import { roomSuccess, roomFailure, getRoom } from './roomActions';
-import { ROOM_CLOSED} from '../utils/constants';
+import { ROOM_CLOSED } from '../utils/constants';
 const ENDPOINT = process.env.REACT_APP_LOBBY_SERVER;
 
 const requestSocketConnection = () => {
@@ -48,9 +48,9 @@ export const connectSocket = () => {
     let socket = io.connect(ENDPOINT, options);
     socket.on(CONNECTION_ACK, (userState) => {
       console.log(CONNECTION_ACK);
-      if(userState.room_id){
+      if (userState.room_id) {
         const room_id = userState.room_id;
-        dispatch(getRoom(socket, {room_id}));
+        dispatch(getRoom(socket, { room_id }));
       }
       dispatch(socketConnectionSuccess(socket));
     });

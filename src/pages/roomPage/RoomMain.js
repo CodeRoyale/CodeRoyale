@@ -8,7 +8,7 @@ import CreateTeamView from './CreateTeamView';
 import { getRoom } from '../../actions/roomActions';
 import { resetTeamAction } from '../../actions/teamActions';
 import { vetoStart } from '../../actions/vetoActions';
-import { TEAM_CREATED, TEAM_JOINED, TEAM_LEFT} from '../../utils/constants';
+import { TEAM_CREATED, TEAM_JOINED, TEAM_LEFT } from '../../utils/constants';
 import { Alert } from 'rsuite';
 import { connect } from 'react-redux';
 import profileData from '../../utils/profileData';
@@ -28,7 +28,6 @@ const RoomMain = ({
   const socket = socketData.socket;
   const userName = profileData().userName.toString();
   const history = useHistory();
-
 
   // Room Details...
   let roomTeams, roomConfig, roomState, roomCompetition, room_id, admin;
