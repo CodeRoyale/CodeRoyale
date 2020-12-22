@@ -1,9 +1,11 @@
 // this is my db for now
 users = {};
 
+// [userID] : {     }
+
 // all details related to a user connected to socket will be stored here
 
-const addUser = (userName, socket_id, profilePicture, rank = 10) => {
+const addUser = (userName, socket, profilePicture, rank = 10) => {
   // returns user object if we can add user else false
   try {
     if (!users[userName]) {
@@ -20,7 +22,15 @@ const addUser = (userName, socket_id, profilePicture, rank = 10) => {
     } else {
       // reconnecting
       console.log(userName + " reconnected");
-      users[userName].socket_id = socket_id;
+      users[userName].socket_id = socket.id;
+      if (users[userName].room_id) {
+        // user was in a room
+        socket.join(room_id);
+        if (users[userName].team_name) {
+          // user was in a team
+          socket.join(`${room_id}/${team_name}`);
+        }
+      }
     }
     return users[userName];
   } catch (err) {
