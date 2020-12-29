@@ -12,7 +12,7 @@ const addUser = (userName, socket, profilePicture, rank = 10) => {
       // new connection
       console.log(userName + " added");
       users[userName] = {
-        socket_id,
+        socket_id: socket.id,
         room_id: "",
         team_name: "",
         rank,
