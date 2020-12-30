@@ -23,7 +23,7 @@ const routes = [
   },
   {
     path: '/arena',
-    component: 'Arena',
+    component: 'ArenaMain',
     title: 'Arena | CodeRoyale',
     needsAuth: true,
   },
