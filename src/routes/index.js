@@ -4,12 +4,6 @@
 */
 const routes = [
   {
-    path: '/sorry',
-    component: 'OutroMain',
-    title: 'Sorry',
-    needsAuth: false,
-  },
-  {
     path: '/dashboard',
     component: 'DashboardMain',
     title: 'Dashboard | CodeRoyale',
@@ -31,12 +25,6 @@ const routes = [
     path: '/arena',
     component: 'Arena',
     title: 'Arena | CodeRoyale',
-    needsAuth: true,
-  },
-  {
-    path: '/lobby',
-    component: 'LobbyMain',
-    title: 'Lobby | CodeRoyale',
     needsAuth: true,
   },
   {

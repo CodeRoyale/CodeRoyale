@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { mapStateToProps } from '../../utils/mapStateToProps';
 import { leaveTeam } from '../../actions/teamActions';
 
 function LeaveTeamView({ socketData, leaveTeam }) {
@@ -31,5 +30,9 @@ function LeaveTeamView({ socketData, leaveTeam }) {
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({
+  socketData: state.socketData,
+});
 
 export default connect(mapStateToProps, { leaveTeam })(LeaveTeamView);

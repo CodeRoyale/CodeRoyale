@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { InputGroup, Input, Icon } from 'rsuite';
 import { connect } from 'react-redux';
-import { mapStateToProps } from '../../utils/mapStateToProps';
 import { sendMsg } from '../../actions/chatActions';
 
 function RoomChat({ socketData, chatData, sendMsg }) {
@@ -72,5 +71,10 @@ function RoomChat({ socketData, chatData, sendMsg }) {
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({
+  socketData: state.socketData,
+  chatData: state.chatData,
+});
 
 export default connect(mapStateToProps, { sendMsg })(RoomChat);

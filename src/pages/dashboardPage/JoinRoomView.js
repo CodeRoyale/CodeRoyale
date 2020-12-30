@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ROOM_JOINED } from '../../utils/constants';
-import { mapStateToProps } from '../../utils/mapStateToProps';
 import { connect } from 'react-redux';
 import { joinRoom } from '../../actions/roomActions';
 import { Alert, Input, InputGroup, Icon } from 'rsuite';
@@ -69,4 +68,10 @@ function JoinRoomView({ socketData, roomData, joinRoom }) {
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({
+  socketData: state.socketData,
+  roomData: state.roomData,
+});
+
 export default connect(mapStateToProps, { joinRoom })(JoinRoomView);

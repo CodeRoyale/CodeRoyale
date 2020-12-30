@@ -8,7 +8,6 @@ import {
 import { Provider } from 'react-redux';
 import store from './store';
 import routes from './routes';
-import OutroMain from './pages/outroPage/OutroMain';
 import DashboardMain from './pages/dashboardPage/DashboardMain';
 import LoginMain from './pages/loginPage/LoginMain';
 import HomeMain from './pages/homePage/HomeMain';
@@ -24,7 +23,6 @@ import 'rsuite/lib/styles/index.less';
 import './App.css';
 
 const componentRegistry = {
-  OutroMain: OutroMain,
   DashboardMain: DashboardMain,
   LoginMain: LoginMain,
   SignUpMain: SignUpMain,
