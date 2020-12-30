@@ -25,10 +25,10 @@ const addUser = (userName, socket, profilePicture, rank = 10) => {
       users[userName].socket_id = socket.id;
       if (users[userName].room_id) {
         // user was in a room
-        socket.join(room_id);
+        socket.join(users[userName].room_id);
         if (users[userName].team_name) {
           // user was in a team
-          socket.join(`${room_id}/${team_name}`);
+          socket.join(`${users[userName].room_id}/${users[userName].team_name}`);
         }
       }
     }
