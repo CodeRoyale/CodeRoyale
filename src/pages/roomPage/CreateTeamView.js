@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Input, Button } from 'rsuite';
 import { createTeam } from '../../actions/teamActions';
-import { mapStateToProps } from '../../utils/mapStateToProps';
 import { connect } from 'react-redux';
 
 function CreateTeamView({ socketData, createTeam, show, onClose }) {
@@ -54,5 +53,9 @@ function CreateTeamView({ socketData, createTeam, show, onClose }) {
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({
+  socketData: state.socketData,
+});
 
 export default connect(mapStateToProps, { createTeam })(CreateTeamView);

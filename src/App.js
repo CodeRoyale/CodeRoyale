@@ -8,13 +8,12 @@ import {
 import { Provider } from 'react-redux';
 import store from './store';
 import routes from './routes';
-import OutroMain from './pages/outroPage/OutroMain';
 import DashboardMain from './pages/dashboardPage/DashboardMain';
 import LoginMain from './pages/loginPage/LoginMain';
 import HomeMain from './pages/homePage/HomeMain';
 import SettingsMain from './pages/settingsPage/SettingsMain';
 import SignUpMain from './pages/signUpPage/SignUpMain';
-import Arena from './pages/arenaPage/ArenaMain';
+import ArenaMain from './pages/arenaPage/ArenaMain';
 import RoomMain from './pages/roomPage/RoomMain';
 import VetoMain from './pages/vetoPage/VetoMain';
 import ScoreboardMain from './pages/scoreboardPage/ScoreboardMain';
@@ -24,11 +23,10 @@ import 'rsuite/lib/styles/index.less';
 import './App.css';
 
 const componentRegistry = {
-  OutroMain: OutroMain,
   DashboardMain: DashboardMain,
   LoginMain: LoginMain,
   SignUpMain: SignUpMain,
-  Arena: Arena,
+  ArenaMain: ArenaMain,
   ScoreboardMain: ScoreboardMain,
   RoomMain: RoomMain,
   VetoMain: VetoMain,

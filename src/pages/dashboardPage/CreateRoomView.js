@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { createRoom } from '../../actions/roomActions';
 import { ROOM_CREATED } from '../../utils/constants';
 import { timeToString } from '../../utils/timeToString';
-import { mapStateToProps } from '../../utils/mapStateToProps';
 import { Alert, Icon, SelectPicker, Checkbox, Animation } from 'rsuite';
 
 function CreateRoomView({ roomData, socketData, createRoom, show, onClose }) {
@@ -236,5 +235,10 @@ function CreateRoomView({ roomData, socketData, createRoom, show, onClose }) {
     </div>
   ) : null;
 }
+
+const mapStateToProps = (state) => ({
+  socketData: state.socketData,
+  roomData: state.roomData,
+});
 
 export default connect(mapStateToProps, { createRoom })(CreateRoomView);

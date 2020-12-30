@@ -23,7 +23,6 @@ import {
   ACTION_RESET,
 } from './types';
 import { SERVER_DOWN } from '../utils/constants';
-import jwt from 'jsonwebtoken';
 import loggedInAxios from '../helpers/loggedInAxios';
 import loggedOutAxios from '../helpers/loggedOutAxios';
 
@@ -41,10 +40,6 @@ export const preCheckUser = (history) => (dispatch) => {
   loggedInAxios(history)
     .get('/precheck')
     .then((response) => {
-      localStorage.setItem(
-        'user-data',
-        JSON.stringify(jwt.decode(response.data.payload.accessToken))
-      );
       localStorage.token = response.data.payload.accessToken;
       dispatch({
         type: PRECHECK_SUCCESS,
@@ -74,10 +69,6 @@ export const loginUser = (authData) => (dispatch) => {
     .post('/users/login', thirdPartyData)
     .then((response) => {
       // Temporary storing in localStorage in actions will change
-      localStorage.setItem(
-        'user-data',
-        JSON.stringify(jwt.decode(response.data.payload.accessToken))
-      );
       localStorage.token = response.data.payload.accessToken;
       dispatch({
         type: LOGIN_SUCCESS,
@@ -146,10 +137,6 @@ export const updateAccount = (history, newAccountData) => (dispatch) => {
   loggedInAxios(history)
     .patch('/users/update', newAccountData)
     .then((response) => {
-      localStorage.setItem(
-        'user-data',
-        JSON.stringify(jwt.decode(response.data.payload.accessToken))
-      );
       localStorage.token = response.data.payload.accessToken;
       dispatch({
         type: UPDATE_ACCOUNT_SUCCESS,
@@ -195,10 +182,6 @@ export const userNameCheck = (history, userName) => (dispatch) => {
   loggedInAxios(history)
     .get(`/users/username?userName=${userName}`)
     .then((response) => {
-      localStorage.setItem(
-        'user-data',
-        JSON.stringify(jwt.decode(response.data.payload.accessToken))
-      );
       localStorage.token = response.data.payload.accessToken;
       dispatch({
         type: USERNAME_CHECK_SUCCESS,

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Alert } from 'rsuite';
 import { connect } from 'react-redux';
-import { mapStateToProps } from '../../utils/mapStateToProps';
 import { ROOM_CLOSED } from '../../utils/constants';
 import { closeRoom } from '../../actions/roomActions';
 import { useHistory } from 'react-router-dom';
@@ -80,5 +79,10 @@ function CloseRoomView({ roomData, socketData, closeRoom }) {
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({
+  socketData: state.socketData,
+  roomData: state.roomData,
+});
 
 export default connect(mapStateToProps, { closeRoom })(CloseRoomView);
