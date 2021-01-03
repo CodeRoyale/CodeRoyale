@@ -26,21 +26,21 @@ module.exports = async (req, res, next) => {
     let payload;
 
     // username is stored signed with JWT_KEY
-    userName = verifyToken(userName, ACCESS_SECRECT_KEY).userName;
-
+    try {
+      userName = verifyToken(userName, ACCESS_SECRECT_KEY).userName;
+    } catch (err) {
+      // console.log("UserToken", err);
+      throw new Error('Token Not Provided');
+    }
     // verify accessToken  with server
     try {
       payload = verifyToken(token, ACCESS_SECRECT_KEY + userName);
     } catch (err) {
-      if (err.message !== 'jwt expired') {
+      if (err !== 'jwt expired') {
+        // console.log("AccessToken", err);
         res.clearCookie('_coderoyale_rtk');
         res.clearCookie('_coderoyale_un');
-        res.status(401).json({
-          status: false,
-          payload: {
-            message: RESPONSE.AUTHERROR,
-          },
-        });
+        throw new Error('Token Man Handled');
       }
     }
 
@@ -83,6 +83,7 @@ module.exports = async (req, res, next) => {
     next();
   } catch (error) {
     // token was expired or user had made changes in the token
+    // console.log(error);
     res.status(401).json({
       status: false,
       payload: {
