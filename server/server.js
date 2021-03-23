@@ -16,6 +16,7 @@ const whitelist = [
   'https://putquestionmaster.herokuapp.com',
   'https://coderoyaleclient.herokuapp.com',
   'https://coderoyale-lobby.herokuapp.com',
+  'https://coderoyale.netlify.app',
 ];
 const corsOptions = {
   origin: function (origin, callback) {
