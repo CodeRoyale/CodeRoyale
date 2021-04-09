@@ -1,20 +1,22 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import './LogoContainer.css';
+import { Box, Text } from '@chakra-ui/react';
+import './LogoContainer.scss';
 
-function LogoContainer() {
-  // Go to CodeRoyale
+const LogoContainer = () => {
   const history = useHistory();
-  const codeRoyale = () => {
-    let path = `/`;
-    history.push(path);
-  };
 
   return (
-    <div className='header-logo' onClick={codeRoyale}>
-      <h2>CodeRoyale</h2>
-    </div>
+    <Box>
+      <Text
+        fontSize='2xl'
+        onClick={() => history.push('/')}
+        fontFamily='Kaushan Script, cursive'
+      >
+        CodeRoyale
+      </Text>
+    </Box>
   );
-}
+};
 
 export default LogoContainer;

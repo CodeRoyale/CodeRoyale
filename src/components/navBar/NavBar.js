@@ -2,8 +2,8 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import LogoContainer from '../../components/logoContainer/LogoContainer';
 import ProfileButton from '../../components/profileButton/ProfileButton';
-import Button from '../button/Button';
 import profileData from '../../utils/profileData';
+import { Flex, Button, Spacer } from '@chakra-ui/react';
 import './NavBar.css';
 
 const NavBar = ({ loggedIn }) => {
@@ -24,27 +24,30 @@ const NavBar = ({ loggedIn }) => {
   // If user is not loggedIn
   if (!loggedIn) {
     content = (
-      <div className='loggedOut-navbar'>
+      <Flex
+        as='nav'
+        height='9vh'
+        alignItems='center'
+        padding='1em'
+        boxShadow='0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(250, 250, 242)'
+      >
         <LogoContainer />
-        <div className='loggedOut-nav-auth-container'>
-          <div
-            className='loggedOut-nav-signup'
+        <Spacer />
+        <Flex alignItems='center'>
+          <Button
+            marginRight='0.8em'
+            variant='link'
             onClick={() => {
               history.push('/signup');
             }}
           >
             Sign up
-          </div>
-          <Button
-            type='button'
-            onClick={() => history.push('/login')}
-            buttonStyle='btn--primary--signin'
-            buttonSize='btn--small'
-          >
+          </Button>
+          <Button paddingX='1.3em' onClick={() => history.push('/login')}>
             Login
           </Button>
-        </div>
-      </div>
+        </Flex>
+      </Flex>
     );
   }
 
