@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { signUpUser, userActionReset } from '../../actions/userActions';
-import LeftSecSignUp from './LeftSecSignUp';
-import SignUpSec from './SignUpSec';
 import { useHistory } from 'react-router-dom';
-import { Notification } from 'rsuite';
 import {
   CONFLICT,
   CREATED,
@@ -12,21 +9,18 @@ import {
   ERROR,
   ERRORTOKEN,
 } from '../../utils/constants';
-import './SignUpMain.css';
+import { Flex, useToast } from '@chakra-ui/react';
+import SignUpLeftSection from './SignUpLeftSection';
+import SignUpRightSection from './SignUpRightSection';
 
 const SignUpMain = ({ userData, signUpUser, userActionReset }) => {
   const history = useHistory();
 
+  // For displaying toast messages based on login events
+  const toast = useToast();
+
   const handleAuthData = (data) => {
     signUpUser(data);
-  };
-
-  // Showing alert
-  const alert = (type, title, description) => {
-    Notification[type]({
-      title: title,
-      description: description,
-    });
   };
 
   useEffect(() => {
@@ -36,63 +30,82 @@ const SignUpMain = ({ userData, signUpUser, userActionReset }) => {
     ) {
       switch (userData.signUpData.error.payload.message) {
         case CONFLICT:
-          alert(
-            'error',
-            'Error on Signup',
-            'You have already registered! Login to use CodeRoyale'
-          );
+          toast({
+            title: 'Error on Sign up',
+            description: 'You have already registered! Login to use CodeRoyale',
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
           history.push('/login');
           userActionReset();
           break;
         case MISSING:
         case ERROR:
         case ERRORTOKEN:
-          alert(
-            'error',
-            'Error on Signup',
-            'Some error occurred, please try again later'
-          );
+          toast({
+            title: 'Error on Sign up',
+            description: 'Some error occurred, please try again later',
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
           userActionReset();
           break;
         default:
-          alert(
-            'error',
-            'Error on Signup',
-            'Some error occurred, please try again later'
-          );
+          toast({
+            title: 'Error on Sign up',
+            description: 'Some error occurred, please try again later',
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
           userActionReset();
           break;
       }
     } else if (userData.signUpData.error) {
-      alert('error', 'Error on Signup', userData.signUpData.error);
+      toast({
+        title: 'Error on Sign up',
+        description: userData.signUpData.error,
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
       userActionReset();
     }
-  }, [userData.signUpData.error, userActionReset, history]);
+  }, [userData.signUpData.error, userActionReset, history, toast]);
 
   // Check if user registered successfully
   useEffect(() => {
     if (userData.signUpData.data) {
       if (userData.signUpData.data.payload.message === CREATED) {
-        alert(
-          'success',
-          'Registered successfully',
-          'Welcome to CodeRoyale! Login to compete'
-        );
+        toast({
+          title: 'Registered successfully!',
+          description: 'Welcome to CodeRoyale! Login to compete',
+          status: 'success',
+          position: 'top-right',
+          duration: 4000,
+          isClosable: true,
+        });
         userActionReset();
         history.push('/login');
       }
     }
-  }, [userData.signUpData.data, history, userActionReset]);
+  }, [userData.signUpData.data, history, userActionReset, toast]);
 
   // Default content
   let content = (
-    <div className='signup-page'>
-      <LeftSecSignUp />
-      <SignUpSec
+    <Flex>
+      <SignUpLeftSection />
+      <SignUpRightSection
         isLoading={userData.signUpData.isLoading}
         getAuthData={handleAuthData}
       />
-    </div>
+    </Flex>
   );
 
   return content;
