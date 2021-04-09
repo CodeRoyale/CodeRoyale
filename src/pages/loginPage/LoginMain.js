@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { loginUser, userActionReset } from '../../actions/userActions';
-import LeftSecLogin from './LeftSecLogin';
-import LoginSec from './LoginSec';
 import { useHistory } from 'react-router-dom';
-import { Notification } from 'rsuite';
 import {
   LOGIN,
   REGISTER,
@@ -12,21 +9,18 @@ import {
   ERROR,
   INVALID,
 } from '../../utils/constants';
-import './LoginMain.css';
+import { Flex, useToast } from '@chakra-ui/react';
+import LoginLeftSection from './LoginLeftSection';
+import LoginRightSection from './LoginRightSection';
 
 const LoginMain = ({ userData, loginUser, userActionReset }) => {
   const history = useHistory();
 
+  // For displaying toast messages based on login events
+  const toast = useToast();
+
   const handleAuthData = (data) => {
     loginUser(data);
-  };
-
-  // Showing alert
-  const alert = (title, description) => {
-    Notification['error']({
-      title: title,
-      description: description,
-    });
   };
 
   // Login error handling
@@ -37,40 +31,63 @@ const LoginMain = ({ userData, loginUser, userActionReset }) => {
     ) {
       switch (userData.loginData.error.payload.message) {
         case REGISTER:
-          alert(
-            'Error on Login',
-            'You will have to Sign Up first to use CodeRoyale!'
-          );
+          toast({
+            title: 'Error on Login',
+            description: 'You will have to Sign Up first to use CodeRoyale!',
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
           userActionReset();
           break;
         case ERROR:
-          alert(
-            'Error on Login',
-            'Some error occurred, we are working to fix it'
-          );
+          toast({
+            title: 'Error on Login',
+            description: 'Some error occurred, we are working to fix it.',
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
           userActionReset();
           break;
         case AUTHERROR:
         case INVALID:
-          alert(
-            'Error on Login',
-            'Some error occurred, please try again later'
-          );
+          toast({
+            title: 'Error on Login',
+            description: 'Some error occurred, please try again later.',
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
           userActionReset();
           break;
         default:
-          alert(
-            'Error on Login',
-            'Some error occurred, please try again later'
-          );
+          toast({
+            title: 'Error on Login',
+            description: 'Some error occurred, please try again later.',
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
           userActionReset();
           break;
       }
     } else if (userData.loginData.error) {
-      alert('Error on Login', userData.loginData.error);
+      toast({
+        title: 'Error on Login',
+        description: userData.loginData.error,
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
       userActionReset();
     }
-  }, [userData.loginData.error, userActionReset]);
+  }, [toast, userData.loginData.error, userActionReset]);
 
   // Checking if user logged in successfully
   useEffect(() => {
@@ -83,13 +100,13 @@ const LoginMain = ({ userData, loginUser, userActionReset }) => {
 
   // Default content
   let content = (
-    <div className='login-page'>
-      <LeftSecLogin />
-      <LoginSec
+    <Flex>
+      <LoginLeftSection />
+      <LoginRightSection
         isLoading={userData.loginData.isLoading}
         getAuthData={handleAuthData}
       />
-    </div>
+    </Flex>
   );
 
   return content;
