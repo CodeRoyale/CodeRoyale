@@ -46,11 +46,11 @@ const RenderRoute = (route) => {
   }
 
   // If user is logged in then redirect to dashboard if home/login/signup is visited
-  if (route.component === 'HomeMain' && isAuthenticated()) {
+  if (route.component === 'Home' && isAuthenticated()) {
     history.push('/dashboard');
-  } else if (route.component === 'LoginMain' && isAuthenticated()) {
+  } else if (route.component === 'Login' && isAuthenticated()) {
     history.push('/dashboard');
-  } else if (route.component === 'SignUpMain' && isAuthenticated()) {
+  } else if (route.component === 'SignUp' && isAuthenticated()) {
     history.push('/dashboard');
   }
 
