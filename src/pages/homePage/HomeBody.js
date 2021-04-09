@@ -84,7 +84,12 @@ const HomeBody = () => {
             It takes only 1 min to sign up <br />
             and <span className='home-body-span'>it's free!</span>
           </Text>
-          <Button width='30%' marginTop='0.8em' size='lg'>
+          <Button
+            width='30%'
+            marginTop='0.8em'
+            size='lg'
+            onClick={() => history.push('/signup')}
+          >
             Sign up
           </Button>
         </Stack>
