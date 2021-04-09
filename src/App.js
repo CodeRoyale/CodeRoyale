@@ -8,11 +8,11 @@ import {
 import { Provider } from 'react-redux';
 import store from './store';
 import routes from './routes';
+import Home from './pages/home/Home';
+import Login from './pages/login/Login';
+import SignUp from './pages/signUp/SignUp';
 import DashboardMain from './pages/dashboardPage/DashboardMain';
-import LoginMain from './pages/loginPage/LoginMain';
-import HomeMain from './pages/homePage/HomeMain';
 import SettingsMain from './pages/settingsPage/SettingsMain';
-import SignUpMain from './pages/signUpPage/SignUpMain';
 import ArenaMain from './pages/arenaPage/ArenaMain';
 import RoomMain from './pages/roomPage/RoomMain';
 import VetoMain from './pages/vetoPage/VetoMain';
@@ -24,14 +24,14 @@ import './App.css';
 
 const componentRegistry = {
   DashboardMain: DashboardMain,
-  LoginMain: LoginMain,
-  SignUpMain: SignUpMain,
+  Login: Login,
+  SignUp: SignUp,
   ArenaMain: ArenaMain,
   ScoreboardMain: ScoreboardMain,
   RoomMain: RoomMain,
   VetoMain: VetoMain,
   SettingsMain: SettingsMain,
-  HomeMain: HomeMain,
+  Home: Home,
   TestPage: TestPage,
 };
 

@@ -6,7 +6,7 @@ import FacebookAuth from '../../components/facebookAuth/FacebookAuth';
 
 const LoginRightSection = ({ isLoading, getAuthData }) => {
   const history = useHistory();
-  // Send back successful auth data to LoginMain
+  // Send back successful auth data to Login
   const handleAuthData = (data) => {
     getAuthData(data);
   };

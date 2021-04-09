@@ -11,13 +11,13 @@ const routes = [
   },
   {
     path: '/login',
-    component: 'LoginMain',
+    component: 'Login',
     title: 'Login | CodeRoyale',
     needsAuth: false,
   },
   {
     path: '/signup',
-    component: 'SignUpMain',
+    component: 'SignUp',
     title: 'Signup | CodeRoyale',
     needsAuth: false,
   },
@@ -59,13 +59,13 @@ const routes = [
   },
   {
     path: '',
-    component: 'HomeMain',
+    component: 'Home',
     title: 'CodeRoyale',
     needsAuth: false,
   },
   {
     path: '/',
-    component: 'HomeMain',
+    component: 'Home',
     title: 'CodeRoyale',
     needsAuth: false,
   },

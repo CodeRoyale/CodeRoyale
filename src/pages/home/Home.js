@@ -2,9 +2,9 @@ import React from 'react';
 import NavBar from '../../components/navBar/NavBar';
 import HomeBody from './HomeBody';
 import { Flex } from '@chakra-ui/react';
-import './HomeMain.scss';
+import './Home.scss';
 
-const HomeMain = () => {
+const Home = () => {
   return (
     <Flex flexDir='column'>
       <NavBar loggedIn={false} />
@@ -13,4 +13,4 @@ const HomeMain = () => {
   );
 };
 
-export default HomeMain;
+export default Home;

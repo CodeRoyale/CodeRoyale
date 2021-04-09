@@ -13,7 +13,7 @@ import { Flex, useToast } from '@chakra-ui/react';
 import SignUpLeftSection from './SignUpLeftSection';
 import SignUpRightSection from './SignUpRightSection';
 
-const SignUpMain = ({ userData, signUpUser, userActionReset }) => {
+const SignUp = ({ userData, signUpUser, userActionReset }) => {
   const history = useHistory();
 
   // For displaying toast messages based on login events
@@ -116,5 +116,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { signUpUser, userActionReset })(
-  SignUpMain
+  SignUp
 );

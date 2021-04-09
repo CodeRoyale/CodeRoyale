@@ -4,7 +4,7 @@ import { Stack, Flex, Text, Image, Button } from '@chakra-ui/react';
 import winning from '../../assets/winning.svg';
 import laptopCoding from '../../assets/laptop-coding.svg';
 import laptop from '../../assets/laptop.svg';
-import './HomeMain.scss';
+import './Home.scss';
 
 const HomeBody = () => {
   const history = useHistory();
