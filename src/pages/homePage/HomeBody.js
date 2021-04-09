@@ -1,66 +1,66 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Button from '../../components/button/Button';
-import Footer from '../../components/footer/Footer';
-import './HomeMain.css';
+import { Stack, Flex, Text, Image, Button } from '@chakra-ui/react';
+import winning from '../../assets/winning.svg';
+import laptopCoding from '../../assets/laptop-coding.svg';
+import laptop from '../../assets/laptop.svg';
+import './HomeMain.scss';
 
 const HomeBody = () => {
-  // Redirect to /signup
   const history = useHistory();
-  const signUpRedirect = () => {
-    let path = `signup`;
-    history.push(path);
-  };
 
   return (
-    <div>
-      <div className='home-body-container-head'>
-        <div className='home-body-text-container'>
-          <p className='home-body-heading'>
+    <Stack>
+      <Flex
+        height='91vh'
+        justifyContent='center'
+        alignItems='center'
+        padding='6em'
+        bgColor='#fcede8'
+      >
+        <Stack width='100%'>
+          <Text fontSize='5xl' fontWeight='bold'>
             A new way to compete in{' '}
             <span className='home-body-span'>coding</span>
-          </p>
-          <p className='home-body-text'>
-            Challenge teams/individuals to a coding match today.
-          </p>
-          <div className='home-body-signin'>
-            <Button
-              type='button'
-              onClick={signUpRedirect}
-              buttonStyle='btn--primary--circle'
-              buttonSize='btn--extra--large'
-            >
-              Sign up now
-            </Button>
-          </div>
-        </div>
-        <div className='home-body-separator'></div>
-        <img
-          className='home-body-image'
-          alt='coder programming'
-          src='/images/winning.svg'
-        />
-      </div>
-      <div className='home-body-container-what'>
-        <p className='home-body-what'>
-          What is <span className='desc-span'>CodeRoyale?</span>
-        </p>
-        <p className='home-body-what-text'>
-          CodeRoyale is a competitive programming platform that lets coders from
-          around the World create teams/solo to compete with other coders.
-        </p>
-        <img
-          className='home-body-what-image'
-          alt='what is coderoyale'
-          src='/images/laptop-coding.svg'
-        />
-      </div>
-      <div className='home-body-container-how'>
-        <div className='home-body-text-container'>
-          <p className='home-body-how'>
+          </Text>
+          <Text fontSize='lg'>
+            Challenge teams/individuals to a coding match today for free
+          </Text>
+          <Button width='30%' size='lg' onClick={() => history.push('/signup')}>
+            Sign up now
+          </Button>
+        </Stack>
+        <Image src={winning} alt='Winning' boxSize='450px' />
+      </Flex>
+      <Flex
+        justifyContent='center'
+        alignItems='center'
+        padding='6em'
+        bgColor='white'
+      >
+        <Stack justifyContent='center' alignItems='center'>
+          <Text fontSize='4xl' fontWeight='bold'>
+            What is CodeRoyale?
+          </Text>
+          <Text fontSize='lg'>
+            CodeRoyale is a competitive programming platform that lets coders
+            from <br /> around the World create teams/solo to compete with other
+            coders.
+          </Text>
+          <Image src={laptopCoding} alt='Laptop Coding' boxSize='250px' />
+        </Stack>
+      </Flex>
+      <Flex
+        justifyContent='center'
+        alignItems='center'
+        padding='6em'
+        bgColor='#fcede8'
+      >
+        <Stack>
+          <Text fontSize='4xl' fontWeight='bold'>
             How does it <span className='home-body-span'>work?</span>
-          </p>
-          <p className='home-body-how-text'>
+          </Text>
+          <Text fontSize='lg'>
             1. Create a room
             <br />
             2. Make teams
@@ -69,35 +69,27 @@ const HomeBody = () => {
             <br />
             4. Code away!
             <br />
-          </p>
-        </div>
-        <div className='home-body-separator'></div>
-        <img
-          className='home-body-how-image'
-          alt='coder programming'
-          src='/images/laptop.svg'
-        />
-      </div>
-      <div className='home-body-container-sign-up'>
-        <p className='home-body-sign-up'>
-          It takes only 1 min to sign up <br />
-          and <span className='home-body-span'>it's free!</span>
-        </p>
-        <center>
-          <div className='home-body-sign-up-btn'>
-            <Button
-              type='button'
-              onClick={signUpRedirect}
-              buttonStyle='btn--primary--circle'
-              buttonSize='btn--extra--large'
-            >
-              Sign up
-            </Button>
-          </div>
-        </center>
-      </div>
-      <Footer />
-    </div>
+          </Text>
+        </Stack>
+        <Image src={laptop} alt='Laptop' boxSize='450px' marginLeft='2.5em' />
+      </Flex>
+      <Flex
+        justifyContent='center'
+        alignItems='center'
+        padding='6em'
+        bgColor='white'
+      >
+        <Stack justifyContent='center' alignItems='center'>
+          <Text fontSize='5xl' fontWeight='bold' textAlign='center'>
+            It takes only 1 min to sign up <br />
+            and <span className='home-body-span'>it's free!</span>
+          </Text>
+          <Button width='30%' marginTop='0.8em' size='lg'>
+            Sign up
+          </Button>
+        </Stack>
+      </Flex>
+    </Stack>
   );
 };
 

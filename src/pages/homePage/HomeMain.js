@@ -1,14 +1,15 @@
 import React from 'react';
-import HomeBody from './HomeBody';
 import NavBar from '../../components/navBar/NavBar';
-import './HomeMain.css';
+import HomeBody from './HomeBody';
+import { Flex } from '@chakra-ui/react';
+import './HomeMain.scss';
 
 const HomeMain = () => {
   return (
-    <div className='home-page'>
+    <Flex flexDir='column'>
       <NavBar loggedIn={false} />
       <HomeBody />
-    </div>
+    </Flex>
   );
 };
 
