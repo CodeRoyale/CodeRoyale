@@ -1,11 +1,13 @@
 import React from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import './FacebookAuth.css';
-import { Icon } from 'rsuite';
+import { Icon } from '@chakra-ui/react';
+import { AiFillFacebook } from 'react-icons/ai';
+import './FacebookAuth.scss';
 
-const FacebookAuth = (props) => {
+const FacebookAuth = ({ getAuthData, text }) => {
   // Facebook app ID from .env file
   const facebookAppID = process.env.REACT_APP_FACEBOOK_APP_ID;
+
   // Successful auth from facebook...
   const responseSuccess = (response) => {
     const authData = {
@@ -13,7 +15,7 @@ const FacebookAuth = (props) => {
       issuer: 'facebook',
       signUpType: 'OAuth',
     };
-    props.getAuthData(authData);
+    getAuthData(authData);
   };
 
   return (
@@ -28,9 +30,9 @@ const FacebookAuth = (props) => {
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
           >
-            <Icon icon='facebook-official' size='2x' />
+            <Icon as={AiFillFacebook} w={6} h={6} />
             &nbsp; &nbsp;
-            {props.text}
+            {text}
           </div>
         )}
       />
