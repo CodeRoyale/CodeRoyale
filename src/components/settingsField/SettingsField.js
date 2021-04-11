@@ -58,6 +58,7 @@ const SettingsField = ({
             value={value}
             onChange={onChange}
             onBlur={onBlur}
+            variant='filled'
           />
           {handleAvailability()}
         </InputGroup>
@@ -74,7 +75,12 @@ const SettingsField = ({
             fontSize='1.2em'
             children={leftElement}
           />
-          <Input placeholder={heading} value={value} disabled />
+          <Input
+            placeholder={heading}
+            value={value}
+            variant='filled'
+            disabled
+          />
         </InputGroup>
       </Flex>
     );
