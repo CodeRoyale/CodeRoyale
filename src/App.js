@@ -12,7 +12,7 @@ import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import SignUp from './pages/signUp/SignUp';
 import DashboardMain from './pages/dashboardPage/DashboardMain';
-import SettingsMain from './pages/settingsPage/SettingsMain';
+import Settings from './pages/settings/Settings';
 import ArenaMain from './pages/arenaPage/ArenaMain';
 import RoomMain from './pages/roomPage/RoomMain';
 import VetoMain from './pages/vetoPage/VetoMain';
@@ -30,7 +30,7 @@ const componentRegistry = {
   ScoreboardMain: ScoreboardMain,
   RoomMain: RoomMain,
   VetoMain: VetoMain,
-  SettingsMain: SettingsMain,
+  Settings: Settings,
   Home: Home,
   TestPage: TestPage,
 };

@@ -9,7 +9,6 @@ import {
 } from '../../actions/userActions';
 import SettingsBody from './SettingsBody';
 import NavBar from '../../components/navBar/NavBar';
-import { Alert, Loader } from 'rsuite';
 import {
   ERROR,
   DELETED,
@@ -18,9 +17,9 @@ import {
   CONFLICT,
 } from '../../utils/constants';
 import { useHistory } from 'react-router-dom';
-import './SettingsMain.css';
+import { Flex, useToast, Spinner } from '@chakra-ui/react';
 
-const SettingsMain = ({
+const Settings = ({
   userData,
   preCheckUser,
   deleteAccount,
@@ -29,6 +28,9 @@ const SettingsMain = ({
   userActionReset,
 }) => {
   const history = useHistory();
+  // For showing toast messages
+  const toast = useToast();
+
   const [userNameAvailable, setUserNameAvailable] = useState(null);
 
   // For checking if user token is validated by server
@@ -36,28 +38,25 @@ const SettingsMain = ({
     preCheckUser(history);
   }, [preCheckUser, history]);
 
-  // Showing success alert
-  const successAlert = (message) => {
-    Alert.success(message);
-  };
-
-  // Showing error alert
-  const errorAlert = (message) => {
-    Alert.error(message);
-  };
-
   // PreCheck error handling
   useEffect(() => {
     if (
       userData.preCheckData.error &&
       userData.preCheckData.error.payload === undefined
     ) {
-      errorAlert(userData.preCheckData.error);
+      toast({
+        title: 'Error on Precheck',
+        description: userData.preCheckData.error,
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
       localStorage.removeItem('token');
       history.push('/login');
       userActionReset();
     }
-  }, [userData.preCheckData.error, userActionReset, history]);
+  }, [userData.preCheckData.error, userActionReset, history, toast]);
 
   // Delete account error handling
   useEffect(() => {
@@ -67,19 +66,42 @@ const SettingsMain = ({
     ) {
       switch (userData.deleteAccountData.error.payload.message) {
         case ERROR:
-          errorAlert("Couldn't delete your account, please try again later!");
+          toast({
+            title: 'Error on deleting account',
+            description:
+              "Couldn't delete your account, please try again later!",
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
           userActionReset();
           break;
         default:
-          errorAlert("Couldn't delete your account, please try again later!");
+          toast({
+            title: 'Error on deleting account',
+            description:
+              "Couldn't delete your account, please try again later!",
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
           userActionReset();
           break;
       }
     } else if (userData.deleteAccountData.error) {
-      errorAlert(userData.deleteAccountData.error);
+      toast({
+        title: 'Error on deleting account',
+        description: userData.deleteAccountData.error,
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
       userActionReset();
     }
-  }, [userData.deleteAccountData.error, userActionReset]);
+  }, [userData.deleteAccountData.error, userActionReset, toast]);
 
   // Update account error handling
   useEffect(() => {
@@ -89,19 +111,42 @@ const SettingsMain = ({
     ) {
       switch (userData.updateAccountData.error.payload.message) {
         case ERROR:
-          errorAlert("Couldn't update your profile, please try again later!");
+          toast({
+            title: 'Error on updating account',
+            description:
+              "Couldn't update your profile, please try again later!",
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
           userActionReset();
           break;
         default:
-          errorAlert("Couldn't update your profile, please try again later!");
+          toast({
+            title: 'Error on updating account',
+            description:
+              "Couldn't update your profile, please try again later!",
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
           userActionReset();
           break;
       }
     } else if (userData.updateAccountData.error) {
-      errorAlert(userData.updateAccountData.error);
+      toast({
+        title: 'Error on updating account',
+        description: userData.updateAccountData.error,
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
       userActionReset();
     }
-  }, [userData.updateAccountData.error, userActionReset]);
+  }, [userData.updateAccountData.error, userActionReset, toast]);
 
   /* 
     - Show user if userName is not available if conflict from server
@@ -118,40 +163,76 @@ const SettingsMain = ({
           userActionReset();
           break;
         case ERROR:
-          errorAlert('Some error occured! Please try again later!');
+          toast({
+            title: 'Error on username check',
+            description: 'Some error occured! Please try again later!',
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
           userActionReset();
           break;
         default:
-          errorAlert('Some error occured! Please try again later!');
+          toast({
+            title: 'Error on username check',
+            description: 'Some error occured! Please try again later!',
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
           userActionReset();
           break;
       }
     } else if (userData.userNameCheckData.error) {
-      errorAlert(userData.userNameCheckData.error);
+      toast({
+        title: 'Error on username check',
+        description: userData.userNameCheckData.error,
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
       userActionReset();
     }
-  }, [userData.userNameCheckData.error, userActionReset]);
+  }, [userData.userNameCheckData.error, userActionReset, toast]);
 
   // Message to user when account deleted
   useEffect(() => {
     if (userData.deleteAccountData.data) {
       if (userData.deleteAccountData.data.payload.message === DELETED) {
-        successAlert('Account deleted successfully!');
+        toast({
+          title: 'Account deleted successfully!',
+          description:
+            'Your account has been deleted permanently. Sorry to see you go!',
+          status: 'success',
+          position: 'top-right',
+          duration: 4000,
+          isClosable: true,
+        });
         history.push('/login');
         userActionReset();
       }
     }
-  }, [userData.deleteAccountData.data, history, userActionReset]);
+  }, [userData.deleteAccountData.data, history, userActionReset, toast]);
 
   // Message to user when account is updated
   useEffect(() => {
     if (userData.updateAccountData.data) {
       if (userData.updateAccountData.data.payload.message === UPDATE) {
-        successAlert('Your profile has been updated!');
+        toast({
+          title: 'Profile Updated',
+          description: 'Your profile has been updated with new information',
+          status: 'success',
+          position: 'top-right',
+          duration: 4000,
+          isClosable: true,
+        });
         userActionReset();
       }
     }
-  }, [userData.updateAccountData.data, userActionReset]);
+  }, [userData.updateAccountData.data, userActionReset, toast]);
 
   // If userName is available
   useEffect(() => {
@@ -164,7 +245,7 @@ const SettingsMain = ({
 
   // UI if user is valid and properly authenticated
   let content = (
-    <div className='settings-page'>
+    <Flex flexDir='column'>
       <NavBar loggedIn={true} />
       <SettingsBody
         sendDeleteAccountLoading={userData.deleteAccountData.isLoading}
@@ -174,15 +255,20 @@ const SettingsMain = ({
         getUpdateAccountData={(data) => updateAccount(history, data)}
         getUserNameCheckData={(data) => userNameCheck(history, data)}
       />
-    </div>
+    </Flex>
   );
 
   // Pre-check running
   if (userData.preCheckData.isLoading) {
     content = (
-      <div className='settings-page-precheck-loading'>
-        <Loader size='sm' content='Loading...' />
-      </div>
+      <Flex
+        height='100vh'
+        flexDir='column'
+        justifyContent='center'
+        alignItems='center'
+      >
+        <Spinner color='#dd2c00' />
+      </Flex>
     );
   }
 
@@ -199,4 +285,4 @@ export default connect(mapStateToProps, {
   updateAccount,
   userNameCheck,
   userActionReset,
-})(SettingsMain);
+})(Settings);

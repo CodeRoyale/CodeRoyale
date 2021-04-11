@@ -1,12 +1,20 @@
 import React from 'react';
-import { Icon } from 'rsuite';
-import './SettingsField.css';
+import {
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
+  Input,
+  Icon,
+  Text,
+  Flex,
+} from '@chakra-ui/react';
+import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 
 const SettingsField = ({
-  fieldSize,
   disabled,
   heading,
   value,
+  leftElement,
   userNameAvailable,
   checkUserNameAvailability,
   onChange,
@@ -18,15 +26,15 @@ const SettingsField = ({
       return null;
     } else if (checkUserNameAvailability && userNameAvailable) {
       return (
-        <span className='options-available'>
-          <Icon icon='check-circle' /> Available
-        </span>
+        <InputRightElement
+          children={<Icon as={AiOutlineCheck} color='green.500' />}
+        />
       );
     } else if (checkUserNameAvailability && !userNameAvailable) {
       return (
-        <span className='options-not-available'>
-          <Icon icon='close-circle' /> Not Available
-        </span>
+        <InputRightElement
+          children={<Icon as={AiOutlineClose} color='red.500' />}
+        />
       );
     } else {
       return null;
@@ -36,35 +44,39 @@ const SettingsField = ({
   // Check if the input is disabled or not in props
   if (!disabled) {
     return (
-      <div>
-        <div className='options-header'>{heading}</div>
-        <div>
-          <input
-            type='text'
-            size={fieldSize}
-            className='options-input'
+      <Flex flexDirection='column'>
+        <Text mb='6px'>{heading}</Text>
+        <InputGroup>
+          <InputLeftElement
+            pointerEvents='none'
+            color='gray.300'
+            fontSize='1.2em'
+            children={leftElement}
+          />
+          <Input
+            placeholder={heading}
             value={value}
             onChange={onChange}
             onBlur={onBlur}
-          ></input>
+          />
           {handleAvailability()}
-        </div>
-      </div>
+        </InputGroup>
+      </Flex>
     );
   } else {
     return (
-      <div>
-        <div className='options-header'>{heading}</div>
-        <div>
-          <input
-            type='text'
-            size={fieldSize}
-            disabled
-            className='options-input'
-            value={value}
-          ></input>
-        </div>
-      </div>
+      <Flex flexDirection='column'>
+        <Text mb='6px'>{heading}</Text>
+        <InputGroup>
+          <InputLeftElement
+            pointerEvents='none'
+            color='gray.300'
+            fontSize='1.2em'
+            children={leftElement}
+          />
+          <Input placeholder={heading} value={value} disabled />
+        </InputGroup>
+      </Flex>
     );
   }
 };

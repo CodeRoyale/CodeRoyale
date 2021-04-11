@@ -47,7 +47,7 @@ const routes = [
   },
   {
     path: '/settings',
-    component: 'SettingsMain',
+    component: 'Settings',
     title: 'Settings | CodeRoyale',
     needsAuth: true,
   },

@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import SettingsField from '../../components/settingsField/SettingsField';
-import Button from '../../components/button/Button';
-import { Loader } from 'rsuite';
 import profileData from '../../utils/profileData';
-import './SettingsMain.css';
+import {
+  Flex,
+  Stack,
+  Text,
+  Button,
+  Image,
+  Spinner,
+  Icon,
+} from '@chakra-ui/react';
+import { AiOutlineUser, AiOutlineMail } from 'react-icons/ai';
+import settings from '../../assets/settings.svg';
 
 const SettingsBody = ({
   getDeleteAccount,
@@ -24,16 +32,24 @@ const SettingsBody = ({
 
   // Default content
   let content = (
-    <div className='settings-container'>
-      <div className='settings-profile'>
-        <h2 className='settings-title'>Profile Settings</h2>
+    <Flex
+      paddingX='150px'
+      height='91vh'
+      justifyContent='center'
+      alignItems='center'
+      bgColor='#f5f8f8'
+    >
+      <Stack width='100%' paddingRight='70px'>
+        <Text fontSize='2xl' fontWeight='bold'>
+          Profile Settings
+        </Text>
         <SettingsField
-          fieldSize={50}
           heading='Username'
           value={userName}
           disabled={false}
           checkUserNameAvailability={true}
           userNameAvailable={sendUserNameAvailable}
+          leftElement={<Icon as={AiOutlineUser} />}
           onChange={(e) => {
             setUserName(e.target.value);
             setNewAccountData({ ...newAccountData, userName: e.target.value });
@@ -46,81 +62,78 @@ const SettingsBody = ({
           }}
         />
         <SettingsField
-          fieldSize={50}
           heading='First Name'
           value={firstName}
           disabled={false}
-          checkAvailability={false}
+          checkUserNameAvailability={false}
+          leftElement={<Icon as={AiOutlineUser} />}
           onChange={(e) => {
             setFirstName(e.target.value);
             setNewAccountData({ ...newAccountData, firstName: e.target.value });
           }}
         />
         <SettingsField
-          fieldSize={50}
           heading='Last Name'
           value={lastName}
           disabled={false}
-          checkAvailability={false}
+          checkUserNameAvailability={false}
+          leftElement={<Icon as={AiOutlineUser} />}
           onChange={(e) => {
             setLastName(e.target.value);
             setNewAccountData({ ...newAccountData, lastName: e.target.value });
           }}
         />
         <SettingsField
-          fieldSize={50}
           heading='Email'
           value={email}
           disabled={true}
-          checkAvailability={false}
+          checkUserNameAvailability={false}
+          leftElement={<Icon as={AiOutlineMail} />}
         />
-        <div className='settings-save-button'>
-          <Button
-            type='button'
-            buttonStyle='btn--primary--normal'
-            buttonSize='btn--large'
-            onClick={() => {
-              // Send new account data in props to SettingsMain for updating account
-              getUpdateAccountData(newAccountData);
-            }}
-          >
-            Save Settings
-          </Button>
-        </div>
-        <div className='settings-delete-account-button'>
-          <Button
-            type='button'
-            buttonStyle='btn--primary--logout'
-            buttonSize='btn--large'
-            onClick={() => {
-              // Send trigger to SettingsMain to delete account in props
-              getDeleteAccount();
-            }}
-          >
-            Delete my Account
-          </Button>
-        </div>
-      </div>
-      <div className='settings-separator'></div>
-      <img
-        className='settings-image'
-        alt='setting illustration'
-        src='/images/settings.svg'
-      />
-    </div>
+        <Button
+          width='60%'
+          onClick={() => {
+            // Send new account data in props to Settings.js for updating account
+            getUpdateAccountData(newAccountData);
+          }}
+        >
+          Save Settings
+        </Button>
+        <Button
+          width='60%'
+          onClick={() => {
+            // Send trigger to Settings.js to delete account in props
+            getDeleteAccount();
+          }}
+        >
+          Delete my account
+        </Button>
+      </Stack>
+      <Image src={settings} alt='Settings' boxSize='400px' />
+    </Flex>
   );
 
   // Show loading if user deletes or updates account
   if (sendDeleteAccountLoading || sendUpdateAccountLoading) {
     content = (
-      <div className='settings-container'>
-        <div className='settings-profile'>
-          <h2 className='settings-title'>Profile Settings</h2>
+      <Flex
+        paddingX='150px'
+        height='91vh'
+        justifyContent='center'
+        alignItems='center'
+        bgColor='#f5f8f8'
+      >
+        <Stack width='100%' paddingRight='70px'>
+          <Text fontSize='2xl' fontWeight='bold'>
+            Profile Settings
+          </Text>
           <SettingsField
-            fieldSize={50}
             heading='Username'
             value={userName}
             disabled={false}
+            checkUserNameAvailability={true}
+            userNameAvailable={sendUserNameAvailable}
+            leftElement={<Icon as={AiOutlineUser} />}
             onChange={(e) => {
               setUserName(e.target.value);
               setNewAccountData({
@@ -128,12 +141,19 @@ const SettingsBody = ({
                 userName: e.target.value,
               });
             }}
+            onBlur={() => {
+              if (newAccountData != null && newAccountData.userName != null) {
+                // Sending userName in props to check if available or not to SettingsMain
+                getUserNameCheckData(newAccountData.userName);
+              }
+            }}
           />
           <SettingsField
-            fieldSize={50}
             heading='First Name'
             value={firstName}
             disabled={false}
+            checkUserNameAvailability={false}
+            leftElement={<Icon as={AiOutlineUser} />}
             onChange={(e) => {
               setFirstName(e.target.value);
               setNewAccountData({
@@ -143,10 +163,11 @@ const SettingsBody = ({
             }}
           />
           <SettingsField
-            fieldSize={50}
             heading='Last Name'
             value={lastName}
             disabled={false}
+            checkUserNameAvailability={false}
+            leftElement={<Icon as={AiOutlineUser} />}
             onChange={(e) => {
               setLastName(e.target.value);
               setNewAccountData({
@@ -156,22 +177,16 @@ const SettingsBody = ({
             }}
           />
           <SettingsField
-            fieldSize={50}
             heading='Email'
             value={email}
             disabled={true}
+            checkUserNameAvailability={false}
+            leftElement={<Icon as={AiOutlineMail} />}
           />
-          <div className='settings-save-button'>
-            <Loader size='md' content='Loading...' />
-          </div>
-        </div>
-        <div className='settings-separator'></div>
-        <img
-          className='settings-image'
-          alt='setting illustration'
-          src='/images/settings.svg'
-        />
-      </div>
+          <Spinner color='#dd2c00' />
+        </Stack>
+        <Image src={settings} alt='Settings' boxSize='400px' />
+      </Flex>
     );
   }
 

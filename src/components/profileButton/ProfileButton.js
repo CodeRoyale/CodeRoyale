@@ -110,7 +110,12 @@ const ProfileButton = ({
           <Flex>
             <Text>Logged in as {userName}</Text>
           </Flex>
-          <Button colorScheme='teal' variant='ghost' w='100%'>
+          <Button
+            colorScheme='teal'
+            variant='ghost'
+            w='100%'
+            onClick={() => history.push('/settings')}
+          >
             Settings
           </Button>
           <Button
