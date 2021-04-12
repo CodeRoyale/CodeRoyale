@@ -3,71 +3,76 @@ import { useHistory } from 'react-router-dom';
 import { ROOM_JOINED } from '../../utils/constants';
 import { connect } from 'react-redux';
 import { joinRoom } from '../../actions/roomActions';
-import { Alert, Input, InputGroup, Icon } from 'rsuite';
+import { Input, IconButton, Icon, Flex, useToast } from '@chakra-ui/react';
+import { AiOutlineArrowRight } from 'react-icons/ai';
 
-function JoinRoomView({ socketData, roomData, joinRoom }) {
-  const [state, setState] = useState({
-    joinButtonClicked: false,
-    actionDone: false,
-    joinInputValue: '',
-  });
+const JoinRoomView = ({ socketData, roomData, joinRoom }) => {
+  // For showing toast messages
+  const toast = useToast();
+
   const history = useHistory();
-  const [redirect, setRedirect] = useState(false);
-  const { joinButtonClicked, actionDone, joinInputValue } = state;
   const socket = socketData.socket;
-  const room_id = joinInputValue.toString().trim();
 
-  // Join Room...
-  useEffect(() => {
-    if (joinButtonClicked) {
-      joinRoom(socket, { room_id });
-      setState({ ...state, joinButtonClicked: false, actionDone: true });
-    }
-  }, [joinButtonClicked, setState, socket, room_id, joinRoom, state]);
+  const [roomId, setRoomId] = useState('');
+  const [actionDone, setActionDone] = useState(false);
 
   // After successful joining...
   useEffect(() => {
     if (actionDone && roomData.type === ROOM_JOINED) {
-      Alert.success('Joined a room');
-      setRedirect(true);
+      toast({
+        title: 'Joined Room',
+        status: 'success',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
+      history.push('/room');
     } else if (
       actionDone &&
       roomData.type !== ROOM_JOINED &&
       !roomData.loading
     ) {
-      Alert.error(roomData.error);
-      setState({ ...state, actionDone: false });
+      toast({
+        title: 'Error on trying to join room',
+        description:
+          'Some error occurred. Our team is in the process of fixing it',
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
     }
-  }, [actionDone, roomData.type, roomData.loading, roomData.error, state]);
+  }, [
+    actionDone,
+    roomData.type,
+    roomData.loading,
+    roomData.error,
+    toast,
+    history,
+  ]);
 
-  // Redirect to room..
-  if (redirect) {
-    history.push('/room');
-  }
-
-  const onClickJoinRoom = (event) => {
-    event.preventDefault();
-    setState({ ...state, joinButtonClicked: true });
+  const handleJoinRoom = () => {
+    joinRoom(socket, { room_id: roomId });
+    setActionDone(true);
+    setRoomId('');
   };
 
-  // Main Render...
   return (
-    <div>
-      <form onSubmit={onClickJoinRoom}>
-        <InputGroup style={{ marginLeft: '15px' }}>
-          <Input
-            onChange={(value) => setState({ ...state, joinInputValue: value })}
-            value={joinInputValue}
-            placeholder='Enter Room ID'
-          />
-          <InputGroup.Button onClick={onClickJoinRoom}>
-            <Icon icon='arrow-down2' rotate={270} />
-          </InputGroup.Button>
-        </InputGroup>
-      </form>
-    </div>
+    <Flex>
+      <Input
+        placeholder='Room ID'
+        variant='filled'
+        value={roomId}
+        onChange={(e) => setRoomId(e.target.value)}
+      />
+      <IconButton
+        aria-label='Join room'
+        icon={<Icon as={AiOutlineArrowRight} />}
+        onClick={handleJoinRoom}
+      />
+    </Flex>
   );
-}
+};
 
 const mapStateToProps = (state) => ({
   socketData: state.socketData,

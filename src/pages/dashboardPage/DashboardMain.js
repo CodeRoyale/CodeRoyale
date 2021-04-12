@@ -21,9 +21,9 @@ const DashboardMain = ({
   const [createRoomShow, setCreateRoomShow] = useState(false);
 
   // For checking if user token is validated by server
-  useEffect(() => {
-    preCheckUser(history);
-  }, [preCheckUser, history]);
+  // useEffect(() => {
+  //   preCheckUser(history);
+  // }, [preCheckUser, history]);
 
   // Showing error alert
   const errorAlert = (message) => {
