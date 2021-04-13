@@ -7,8 +7,8 @@ import { useHistory } from 'react-router-dom';
 import { PRECHECK_SUCCESS } from '../../actions/types';
 import { Flex, Spinner, useToast } from '@chakra-ui/react';
 import DashboardBody from './DashboardBody';
-import { createRoom } from '../../actions/roomActions';
-import { ROOM_CREATED } from '../../utils/constants';
+import { createRoom, joinRoom } from '../../actions/roomActions';
+import { ROOM_CREATED, ROOM_JOINED } from '../../utils/constants';
 
 const Dashboard = ({
   connectSocket,
@@ -17,13 +17,15 @@ const Dashboard = ({
   socketData,
   preCheckUser,
   createRoom,
+  joinRoom,
   userActionReset,
 }) => {
   const socket = socketData.socket;
   const toast = useToast();
   const history = useHistory();
 
-  const [actionDone, setActionDone] = useState(false);
+  const [createRoomActionDone, setCreateRoomActionDone] = useState(false);
+  const [joinRoomActionDone, setJoinRoomActionDone] = useState(false);
 
   // For checking if user token is validated by server
   useEffect(() => {
@@ -59,8 +61,9 @@ const Dashboard = ({
     }
   }, [connectSocket, userData]);
 
+  // Create room event messages
   useEffect(() => {
-    if (actionDone && roomData.type === ROOM_CREATED) {
+    if (createRoomActionDone && roomData.type === ROOM_CREATED) {
       toast({
         title: 'Room Created!',
         status: 'success',
@@ -68,9 +71,9 @@ const Dashboard = ({
         duration: 4000,
         isClosable: true,
       });
-      setActionDone(false);
+      setCreateRoomActionDone(false);
     } else if (
-      actionDone &&
+      createRoomActionDone &&
       !roomData.loading &&
       roomData.type !== ROOM_CREATED
     ) {
@@ -83,28 +86,74 @@ const Dashboard = ({
         duration: 4000,
         isClosable: true,
       });
-      setActionDone(false);
+      setCreateRoomActionDone(false);
     }
   }, [
     roomData.type,
     roomData.loading,
     roomData.error,
     roomData,
-    actionDone,
+    createRoomActionDone,
     toast,
+  ]);
+
+  // Join room event messages
+  useEffect(() => {
+    if (joinRoomActionDone && roomData.type === ROOM_JOINED) {
+      toast({
+        title: 'Joined Room',
+        status: 'success',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
+      history.push('/room');
+      setJoinRoomActionDone(false);
+    } else if (
+      joinRoomActionDone &&
+      roomData.type !== ROOM_JOINED &&
+      !roomData.loading
+    ) {
+      toast({
+        title: 'Error on Join Room',
+        description:
+          'Some error occurred. Our team is in the process of fixing it',
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
+      setJoinRoomActionDone(false);
+    }
+  }, [
+    joinRoomActionDone,
+    roomData.type,
+    roomData.loading,
+    roomData.error,
+    toast,
+    history,
   ]);
 
   // Create room data is received from props
   const handleCreateRoom = (data) => {
     createRoom(socket, data);
-    setActionDone(true);
+    setCreateRoomActionDone(true);
+  };
+
+  // Join room data is received from props
+  const handleJoinRoom = (data) => {
+    joinRoom(socket, data);
+    setJoinRoomActionDone(true);
   };
 
   // Default content
   let content = (
     <Flex flexDir='column'>
       <NavBar loggedIn={true} />
-      <DashboardBody getCreateRoomData={handleCreateRoom} />
+      <DashboardBody
+        getCreateRoomData={handleCreateRoom}
+        getJoinRoomData={handleJoinRoom}
+      />
     </Flex>
   );
 
@@ -135,5 +184,6 @@ export default connect(mapStateToProps, {
   connectSocket,
   preCheckUser,
   createRoom,
+  joinRoom,
   userActionReset,
 })(Dashboard);
