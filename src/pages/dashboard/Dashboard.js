@@ -72,6 +72,7 @@ const Dashboard = ({
         isClosable: true,
       });
       setCreateRoomActionDone(false);
+      history.push('/room');
     } else if (
       createRoomActionDone &&
       !roomData.loading &&
@@ -95,6 +96,7 @@ const Dashboard = ({
     roomData,
     createRoomActionDone,
     toast,
+    history,
   ]);
 
   // Join room event messages
