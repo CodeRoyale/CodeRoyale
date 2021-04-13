@@ -6,7 +6,7 @@ import { joinRoom } from '../../actions/roomActions';
 import { Input, IconButton, Icon, Flex, useToast } from '@chakra-ui/react';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 
-const JoinRoomView = ({ socketData, roomData, joinRoom }) => {
+const JoinRoom = ({ socketData, roomData, joinRoom }) => {
   // For showing toast messages
   const toast = useToast();
 
@@ -27,6 +27,7 @@ const JoinRoomView = ({ socketData, roomData, joinRoom }) => {
         isClosable: true,
       });
       history.push('/room');
+      setActionDone(false);
     } else if (
       actionDone &&
       roomData.type !== ROOM_JOINED &&
@@ -41,6 +42,7 @@ const JoinRoomView = ({ socketData, roomData, joinRoom }) => {
         duration: 4000,
         isClosable: true,
       });
+      setActionDone(false);
     }
   }, [
     actionDone,
@@ -79,4 +81,4 @@ const mapStateToProps = (state) => ({
   roomData: state.roomData,
 });
 
-export default connect(mapStateToProps, { joinRoom })(JoinRoomView);
+export default connect(mapStateToProps, { joinRoom })(JoinRoom);

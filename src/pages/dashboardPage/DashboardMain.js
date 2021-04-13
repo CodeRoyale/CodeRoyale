@@ -2,33 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { connectSocket } from '../../actions/socketActions';
 import { preCheckUser, userActionReset } from '../../actions/userActions';
-import Button from '../../components/button/Button';
 import NavBar from '../../components/navBar/NavBar';
-import JoinRoomView from './JoinRoomView';
-import CreateRoomView from './CreateRoomView';
 import { useHistory } from 'react-router-dom';
-import { Alert, Loader } from 'rsuite';
-import './DashboardMain.css';
 import { PRECHECK_SUCCESS } from '../../actions/types';
+import { Flex, Spinner, useToast } from '@chakra-ui/react';
+import DashboardBody from './DashboardBody';
+import { createRoom } from '../../actions/roomActions';
+import { ROOM_CREATED } from '../../utils/constants';
 
 const DashboardMain = ({
   connectSocket,
   userData,
+  roomData,
+  socketData,
   preCheckUser,
+  createRoom,
   userActionReset,
 }) => {
+  const socket = socketData.socket;
+  const toast = useToast();
   const history = useHistory();
-  const [createRoomShow, setCreateRoomShow] = useState(false);
+
+  const [actionDone, setActionDone] = useState(false);
 
   // For checking if user token is validated by server
-  // useEffect(() => {
-  //   preCheckUser(history);
-  // }, [preCheckUser, history]);
-
-  // Showing error alert
-  const errorAlert = (message) => {
-    Alert.error(message);
-  };
+  useEffect(() => {
+    preCheckUser(history);
+  }, [preCheckUser, history]);
 
   // PreCheck error handling
   useEffect(() => {
@@ -36,12 +36,19 @@ const DashboardMain = ({
       userData.preCheckData.error &&
       userData.preCheckData.error.payload === undefined
     ) {
-      errorAlert(userData.preCheckData.error);
+      toast({
+        title: 'Error on Precheck',
+        description: userData.preCheckData.error,
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
       localStorage.removeItem('token');
       history.push('/login');
       userActionReset();
     }
-  }, [userData.preCheckData.error, userActionReset, history]);
+  }, [userData.preCheckData.error, userActionReset, history, toast]);
 
   useEffect(() => {
     if (
@@ -52,63 +59,66 @@ const DashboardMain = ({
     }
   }, [connectSocket, userData]);
 
+  useEffect(() => {
+    if (actionDone && roomData.type === ROOM_CREATED) {
+      toast({
+        title: 'Room Created!',
+        status: 'success',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
+      setActionDone(false);
+    } else if (
+      actionDone &&
+      !roomData.loading &&
+      roomData.type !== ROOM_CREATED
+    ) {
+      toast({
+        title: 'Error on Create Room',
+        description:
+          'Some error occurred. Our team is working to fix the issue!',
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
+      setActionDone(false);
+    }
+  }, [
+    roomData.type,
+    roomData.loading,
+    roomData.error,
+    roomData,
+    actionDone,
+    toast,
+  ]);
+
+  // Create room data is received from props
+  const handleCreateRoom = (data) => {
+    createRoom(socket, data);
+    setActionDone(true);
+  };
+
+  // Default content
   let content = (
-    <div className='dashboard-page'>
+    <Flex flexDir='column'>
       <NavBar loggedIn={true} />
-      <div className='dashboard-body'>
-        <div className='dashboard-left'>
-          <div>
-            <div style={{ fontSize: '36px' }}>
-              <b>
-                Compete Your Coding Skills <br /> with Others
-              </b>
-            </div>
-
-            <div
-              style={{ fontSize: '16px', marginTop: '15px', color: '#5E5E5E' }}
-            >
-              Get mapped into a coding room with friends to <br /> battle out
-              your competitive programming skills.
-            </div>
-
-            <div className='dashboard-left-input-container'>
-              <div style={{ marginTop: '2px' }}>
-                <Button
-                  type='button'
-                  onClick={() => setCreateRoomShow(true)}
-                  buttonStyle='btn--primary--normal'
-                  buttonSize='btn--medium'
-                >
-                  Create Room
-                </Button>
-              </div>
-              <div>
-                <JoinRoomView />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className='dashboard-background'>
-          <img src='/images/lobby_image.svg' alt='' />
-          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'>
-            <path
-              fill='#ffffff'
-              d='M0,320L48,309.3C96,299,192,277,288,256C384,235,480,213,576,176C672,139,768,85,864,58.7C960,32,1056,32,1152,58.7C1248,85,1344,139,1392,165.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'
-            ></path>
-          </svg>
-        </div>
-      </div>
-      <CreateRoomView show={createRoomShow} onClose={setCreateRoomShow} />
-    </div>
+      <DashboardBody getCreateRoomData={handleCreateRoom} />
+    </Flex>
   );
 
   // Pre-check running
   if (userData.preCheckData.isLoading) {
     content = (
-      <div className='dashboard-page-precheck-loading'>
-        <Loader size='sm' content='Loading...' />
-      </div>
+      <Flex
+        height='100vh'
+        flexDir='column'
+        justifyContent='center'
+        alignItems='center'
+      >
+        <Spinner color='#dd2c00' />
+      </Flex>
     );
   }
 
@@ -117,11 +127,13 @@ const DashboardMain = ({
 
 const mapStateToProps = (state) => ({
   socketData: state.socketData,
+  roomData: state.roomData,
   userData: state.userData,
 });
 
 export default connect(mapStateToProps, {
   connectSocket,
   preCheckUser,
+  createRoom,
   userActionReset,
 })(DashboardMain);
