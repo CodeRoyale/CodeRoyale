@@ -5,7 +5,7 @@
 const routes = [
   {
     path: '/dashboard',
-    component: 'DashboardMain',
+    component: 'Dashboard',
     title: 'Dashboard | CodeRoyale',
     needsAuth: true,
   },

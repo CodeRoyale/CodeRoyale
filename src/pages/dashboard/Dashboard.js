@@ -10,7 +10,7 @@ import DashboardBody from './DashboardBody';
 import { createRoom } from '../../actions/roomActions';
 import { ROOM_CREATED } from '../../utils/constants';
 
-const DashboardMain = ({
+const Dashboard = ({
   connectSocket,
   userData,
   roomData,
@@ -77,7 +77,7 @@ const DashboardMain = ({
       toast({
         title: 'Error on Create Room',
         description:
-          'Some error occurred. Our team is working to fix the issue!',
+          'Some error occurred. Our team is in the process of fixing it',
         status: 'error',
         position: 'top-right',
         duration: 4000,
@@ -136,4 +136,4 @@ export default connect(mapStateToProps, {
   preCheckUser,
   createRoom,
   userActionReset,
-})(DashboardMain);
+})(Dashboard);

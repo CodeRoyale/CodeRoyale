@@ -11,7 +11,7 @@ import routes from './routes';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import SignUp from './pages/signUp/SignUp';
-import DashboardMain from './pages/dashboardPage/DashboardMain';
+import Dashboard from './pages/dashboard/Dashboard';
 import Settings from './pages/settings/Settings';
 import ArenaMain from './pages/arenaPage/ArenaMain';
 import RoomMain from './pages/roomPage/RoomMain';
@@ -23,7 +23,7 @@ import 'rsuite/lib/styles/index.less';
 import './App.css';
 
 const componentRegistry = {
-  DashboardMain: DashboardMain,
+  Dashboard: Dashboard,
   Login: Login,
   SignUp: SignUp,
   ArenaMain: ArenaMain,

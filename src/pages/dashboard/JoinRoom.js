@@ -34,7 +34,7 @@ const JoinRoom = ({ socketData, roomData, joinRoom }) => {
       !roomData.loading
     ) {
       toast({
-        title: 'Error on trying to join room',
+        title: 'Error on Join Room',
         description:
           'Some error occurred. Our team is in the process of fixing it',
         status: 'error',
