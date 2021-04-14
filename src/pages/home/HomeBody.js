@@ -12,7 +12,7 @@ const HomeBody = () => {
   return (
     <Stack>
       <Flex
-        height='91vh'
+        height='100vh'
         justifyContent='center'
         alignItems='center'
         padding='6em'

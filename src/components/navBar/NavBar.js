@@ -12,9 +12,12 @@ const NavBar = ({ loggedIn }) => {
   let content = (
     <Flex
       as='nav'
-      height='9vh'
+      position='fixed'
+      width='100%'
       alignItems='center'
       padding='1em'
+      bgColor='white'
+      zIndex='10'
       boxShadow='0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(250, 250, 242)'
     >
       <LogoContainer />
@@ -28,9 +31,12 @@ const NavBar = ({ loggedIn }) => {
     content = (
       <Flex
         as='nav'
-        height='9vh'
+        position='fixed'
+        width='100%'
         alignItems='center'
         padding='1em'
+        bgColor='white'
+        zIndex='10'
         boxShadow='0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(250, 250, 242)'
       >
         <LogoContainer />
