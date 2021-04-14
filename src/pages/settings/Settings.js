@@ -245,7 +245,7 @@ const Settings = ({
 
   // UI if user is valid and properly authenticated
   let content = (
-    <Flex flexDir='column'>
+    <Flex flexDir='column' height='100vh'>
       <NavBar loggedIn={true} />
       <SettingsBody
         sendDeleteAccountLoading={userData.deleteAccountData.isLoading}

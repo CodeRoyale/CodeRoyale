@@ -33,7 +33,7 @@ const SettingsBody = ({
   // Default content
   let content = (
     <Flex
-      height='100vh'
+      height='100%'
       paddingX='150px'
       justifyContent='center'
       alignItems='center'
@@ -117,7 +117,7 @@ const SettingsBody = ({
   if (sendDeleteAccountLoading || sendUpdateAccountLoading) {
     content = (
       <Flex
-        height='100vh'
+        height='100%'
         paddingX='150px'
         justifyContent='center'
         alignItems='center'
