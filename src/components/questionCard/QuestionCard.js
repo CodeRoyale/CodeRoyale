@@ -1,41 +1,53 @@
 import React, { useState } from 'react';
-import { Checkbox, Alert } from 'rsuite';
 import { connect } from 'react-redux';
 import { addVetoVote, removeVetoVote } from '../../actions/vetoActions';
-import './QuestionCard.css';
+import {
+  Flex,
+  Stack,
+  Text,
+  Spacer,
+  Checkbox,
+  useToast,
+} from '@chakra-ui/react';
 
-const QuestionCard = (props) => {
-  const {
-    questionID,
-    questionNumber,
-    questionTitle,
-    questionDesc,
-    questionTags,
-    addVetoVote,
-    removeVetoVote,
-    vetoData,
-    roomData,
-  } = props;
+const QuestionCard = ({
+  questionID,
+  questionNumber,
+  questionTitle,
+  questionDesc,
+  questionTags,
+  addVetoVote,
+  removeVetoVote,
+  vetoData,
+  roomData,
+}) => {
+  const toast = useToast();
   const [checkBoxChecked, setCheckBoxChecked] = useState(false);
 
   // Handle user voting for question
   // Show alert if user exceeds question vote max limit
-  const handleQuestionVoted = (qid) => {
+  const handleQuestionVoted = (e) => {
+    const qId = e.target.value;
+    console.log(qId);
     // If checkbox is ticked and user clicks on questionCard then remove question from votes
     if (checkBoxChecked) {
-      removeVetoVote(qid);
+      removeVetoVote(qId);
       setCheckBoxChecked(false);
     } else if (
       vetoData.vetoVotedQuestions.length <
         roomData.data.competition.veto.max_vote &&
       !checkBoxChecked
     ) {
-      addVetoVote(qid);
+      addVetoVote(qId);
       setCheckBoxChecked(true);
     } else {
-      Alert.error(
-        `Maximum questions allowed for voting is ${roomData.data.competition.veto.max_vote}`
-      );
+      toast({
+        title: `Maximum questions allowed for voting is ${roomData.data.competition.veto.max_vote}`,
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
       setCheckBoxChecked(false);
     }
   };
@@ -43,37 +55,60 @@ const QuestionCard = (props) => {
   // Display tags from API
   let tagsText = questionTags.map((item, index) => {
     return (
-      <span key={index} className='question-card-tags'>
+      <Text key={index} fontSize='md' fontWeight='bold'>
         {item}
-        {index !== questionTags.length - 1 ? ', ' : ' '}
-      </span>
+      </Text>
     );
   });
 
   return (
-    <div
-      className='question-card-container'
-      onClick={() => {
-        handleQuestionVoted(questionID);
+    <Flex
+      bgColor='white'
+      padding='2em'
+      margin='2em'
+      cursor='pointer'
+      transition='0.5s ease'
+      boxShadow='0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19)'
+      _hover={{
+        transform: 'scale(1.05)',
+        boxShadow: `0 1px 5px 0 rgb(221, 44, 0, 0.2),
+      0 1px 1px 0 rgba(221, 44, 0, 0.19)`,
       }}
+      value={questionID}
+      onClick={handleQuestionVoted}
     >
-      <div className='question-card-select-question'>
-        <div className='question-card-select-indicator-section'>
-          <p className='question-card-number'>#{questionNumber}</p>
-          {checkBoxChecked ? (
-            <div className='question-card-select-indicator'>Selected</div>
-          ) : null}
-        </div>
-        <Checkbox
-          value={questionID}
-          onChange={handleQuestionVoted}
-          checked={checkBoxChecked}
-        ></Checkbox>
-      </div>
-      <p className='question-card-title'>{questionTitle}</p>
-      <p className='question-card-desc'>{questionDesc}</p>
-      <p>{tagsText}</p>
-    </div>
+      <Stack width='100%'>
+        <Flex>
+          <Flex>
+            <Text fontWeight='bold' fontSize='3xl' color='#6e6e6e'>
+              #{questionNumber}
+            </Text>
+            {checkBoxChecked ? (
+              <Text
+                color='#dd2c00'
+                fontWeight='bold'
+                p='0.2em'
+                marginLeft='1em'
+              >
+                Selected
+              </Text>
+            ) : null}
+          </Flex>
+          <Spacer />
+          <Checkbox
+            value={questionID}
+            colorScheme='orange'
+            isChecked={checkBoxChecked}
+            onChange={handleQuestionVoted}
+          />
+        </Flex>
+        <Text fontWeight='bold' fontSize='2xl'>
+          {questionTitle}
+        </Text>
+        <Text fontSize='lg'>{questionDesc}</Text>
+        {tagsText}
+      </Stack>
+    </Flex>
   );
 };
 
