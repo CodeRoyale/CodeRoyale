@@ -14,11 +14,11 @@ const NavBar = ({ loggedIn }) => {
       as='nav'
       position='fixed'
       width='100%'
+      height='70px'
       alignItems='center'
       padding='1em'
       bgColor='white'
       zIndex='10'
-      boxShadow='0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(250, 250, 242)'
     >
       <LogoContainer />
       <Spacer />

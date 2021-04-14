@@ -16,7 +16,7 @@ const DashboardBody = ({ getCreateRoomData, getJoinRoomData }) => {
 
   return (
     <Flex
-      height='100vh'
+      height='100%'
       bgColor='#FAE1DD'
       justifyContent='center'
       alignItems='center'

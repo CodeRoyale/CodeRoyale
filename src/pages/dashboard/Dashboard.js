@@ -28,9 +28,9 @@ const Dashboard = ({
   const [joinRoomActionDone, setJoinRoomActionDone] = useState(false);
 
   // For checking if user token is validated by server
-  useEffect(() => {
-    preCheckUser(history);
-  }, [preCheckUser, history]);
+  // useEffect(() => {
+  //   preCheckUser(history);
+  // }, [preCheckUser, history]);
 
   // PreCheck error handling
   useEffect(() => {
@@ -150,7 +150,7 @@ const Dashboard = ({
 
   // Default content
   let content = (
-    <Flex flexDir='column'>
+    <Flex flexDir='column' height='100vh'>
       <NavBar loggedIn={true} />
       <DashboardBody
         getCreateRoomData={handleCreateRoom}
