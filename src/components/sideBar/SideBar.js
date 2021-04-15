@@ -34,7 +34,7 @@ const SideBar = ({
   return (
     <Flex
       as='div'
-      pos='relative'
+      pos='fixed'
       bg='white'
       w='25%'
       height='100vh'

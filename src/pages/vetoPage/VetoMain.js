@@ -77,9 +77,14 @@ const VetoMain = ({
 
   // Default content
   let content = (
-    <Flex>
+    <Flex pos='relative'>
       <SideBar />
-      <VetoBody />
+      <VetoBody
+        vetoTime={vetoTimeLimit}
+        questionsLoading={vetoData.quesApiLoading}
+        preCheckLoading={userData.preCheckData.isLoading}
+        questions={vetoData.vetoQuestions}
+      />
     </Flex>
   );
 

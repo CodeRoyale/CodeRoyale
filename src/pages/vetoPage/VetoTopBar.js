@@ -2,14 +2,20 @@ import React from 'react';
 import { Button, Flex, Stack, Text } from '@chakra-ui/react';
 import Timer from '../../components/timer/Timer';
 
-const VetoTopBar = (props) => {
+const VetoTopBar = ({ vetoTime }) => {
   return (
-    <Flex bg='gray' height='14%' width='100%' alignItems='center' padding='1em'>
+    <Flex
+      bg='white'
+      height='115px'
+      width='100%'
+      alignItems='center'
+      padding='1.47em'
+    >
       <Stack width='100%'>
         <Text fontSize='md' fontWeight='bold'>
           Veto Time Left
         </Text>
-        <Timer milliseconds={1700000} />
+        <Timer milliseconds={vetoTime} />
       </Stack>
       <Stack marginLeft='1em'>
         <Button size='sm'>Veto Status</Button>
