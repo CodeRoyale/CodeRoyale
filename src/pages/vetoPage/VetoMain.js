@@ -13,6 +13,8 @@ import VetoQuestions from './VetoQuestions';
 import VetoSideBar from './VetoSideBar';
 import VetoTopBar from './VetoTopBar';
 import './VetoMain.css';
+import { Flex } from '@chakra-ui/layout';
+import SideBar from '../../components/sideBar/SideBar';
 
 const VetoMain = ({
   socketData,
@@ -51,9 +53,9 @@ const VetoMain = ({
   }, [socket, vetoStop, getVetoStatus]);
 
   // Checking if the socket is null (if null move user back to dashboard)
-  if (socket === null) {
-    history.push('/dashboard');
-  }
+  // if (socket === null) {
+  //   history.push('/dashboard');
+  // }
 
   // Move the user to Arena if veto has ended
   if (vetoData.vetoEnded) {
@@ -74,26 +76,9 @@ const VetoMain = ({
 
   // Default content
   let content = (
-    <div className='veto-page'>
-      <Navbar loggedIn={true} />
-      <VetoSideBar
-        vetoUsers={vetoData.vetoUsers}
-        vetoCompletedUsers={vetoData.vetoCompletedUsers}
-      />
-      <div className='veto-section'>
-        <div className='veto-section-interaction'>
-          <VetoTopBar
-            confirmVetoVotes={handleConfirmVetoVotes}
-            vetoTime={vetoTimeLimit}
-          />
-          <VetoQuestions
-            questionsLoading={vetoData.quesApiLoading}
-            preCheckLoading={userData.preCheckData.isLoading}
-            questions={vetoData.vetoQuestions}
-          />
-        </div>
-      </div>
-    </div>
+    <Flex height='100vh'>
+      <SideBar />
+    </Flex>
   );
 
   // Loading after user has voted
