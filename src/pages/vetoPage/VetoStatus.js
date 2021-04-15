@@ -1,19 +1,29 @@
 import React from 'react';
-import VetoPlayerStatusCard from '../../components/vetoPlayerStatusCard/VetoPlayerStatusCard';
-import { connect } from 'react-redux';
-import './VetoMain.css';
+import {
+  Drawer,
+  DrawerBody,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  Button,
+  useDisclosure,
+} from '@chakra-ui/react';
+import VetoStatusCard from './VetoStatusCard';
 
-const VetoStatus = ({ vetoUsers, roomData, vetoCompletedUsers }) => {
+const VetoStatus = ({ vetoUsers, vetoCompletedUsers, userProfilePictures }) => {
   let statusCards = null;
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   // Displaying all users in the room for veto status
   if (vetoUsers !== undefined && vetoCompletedUsers !== undefined) {
     statusCards = vetoUsers.map((item, index) => {
       return (
-        <VetoPlayerStatusCard
+        <VetoStatusCard
           key={index}
           userName={item.userName}
-          userImage={roomData.data.state.profilePictures[item.userName]}
+          userImage={userProfilePictures[item.userName]}
           team={item.team}
           userVoted={vetoCompletedUsers.includes(item.userName)}
         />
@@ -22,15 +32,22 @@ const VetoStatus = ({ vetoUsers, roomData, vetoCompletedUsers }) => {
   }
 
   return (
-    <div className='veto-status'>
-      <p className='veto-status-head'>Veto Status</p>
-      {statusCards}
-    </div>
+    <>
+      <Button size='sm' onClick={onOpen}>
+        Veto Status
+      </Button>
+
+      <Drawer placement='right' onClose={onClose} isOpen={isOpen}>
+        <DrawerOverlay>
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader borderBottomWidth='1px'>Veto Status</DrawerHeader>
+            <DrawerBody>{statusCards}</DrawerBody>
+          </DrawerContent>
+        </DrawerOverlay>
+      </Drawer>
+    </>
   );
 };
 
-const mapStateToProps = (state) => ({
-  roomData: state.roomData,
-});
-
-export default connect(mapStateToProps, null)(VetoStatus);
+export default VetoStatus;

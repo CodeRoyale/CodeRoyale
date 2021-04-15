@@ -5,9 +5,12 @@ import VetoTopBar from './VetoTopBar';
 
 const VetoBody = ({
   vetoTime,
+  vetoUsers,
+  vetoCompletedUsers,
   questionsLoading,
   preCheckLoading,
   questions,
+  userProfilePictures,
 }) => {
   return (
     <Flex
@@ -19,7 +22,12 @@ const VetoBody = ({
       width='75%'
       flexDir='column'
     >
-      <VetoTopBar vetoTime={vetoTime} />
+      <VetoTopBar
+        vetoUsers={vetoUsers}
+        vetoCompletedUsers={vetoCompletedUsers}
+        vetoTime={vetoTime}
+        userProfilePictures={userProfilePictures}
+      />
       <VetoQuestions
         questionsLoading={questionsLoading}
         preCheckLoading={preCheckLoading}

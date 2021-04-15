@@ -80,6 +80,11 @@ const VetoMain = ({
     <Flex pos='relative'>
       <SideBar />
       <VetoBody
+        vetoUsers={vetoData.vetoUsers}
+        vetoCompletedUsers={vetoData.vetoCompletedUsers}
+        userProfilePictures={
+          roomData.data !== null ? roomData.data.state.profilePictures : null
+        }
         vetoTime={vetoTimeLimit}
         questionsLoading={vetoData.quesApiLoading}
         preCheckLoading={userData.preCheckData.isLoading}

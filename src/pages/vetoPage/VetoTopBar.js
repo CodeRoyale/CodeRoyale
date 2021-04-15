@@ -1,8 +1,14 @@
 import React from 'react';
 import { Button, Flex, Stack, Text } from '@chakra-ui/react';
 import Timer from '../../components/timer/Timer';
+import VetoStatus from './VetoStatus';
 
-const VetoTopBar = ({ vetoTime }) => {
+const VetoTopBar = ({
+  vetoTime,
+  vetoUsers,
+  vetoCompletedUsers,
+  userProfilePictures,
+}) => {
   return (
     <Flex
       bg='white'
@@ -18,7 +24,11 @@ const VetoTopBar = ({ vetoTime }) => {
         <Timer milliseconds={vetoTime} />
       </Stack>
       <Stack marginLeft='1em'>
-        <Button size='sm'>Veto Status</Button>
+        <VetoStatus
+          vetoUsers={vetoUsers}
+          vetoCompletedUsers={vetoCompletedUsers}
+          userProfilePictures={userProfilePictures}
+        />
         <Button size='sm'>Confirm Veto</Button>
       </Stack>
     </Flex>
