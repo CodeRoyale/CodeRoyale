@@ -1,7 +1,7 @@
 import React from 'react';
 import { Loader } from 'rsuite';
 import QuestionCard from '../../components/questionCard/QuestionCard';
-import './VetoMain.css';
+import { Flex } from '@chakra-ui/react';
 
 const VetoQuestions = ({ questionsLoading, preCheckLoading, questions }) => {
   let questionsArray = null;
@@ -25,7 +25,17 @@ const VetoQuestions = ({ questionsLoading, preCheckLoading, questions }) => {
   }
 
   // Default content
-  let content = <div className='veto-questions'>{questionCards}</div>;
+  let content = (
+    <Flex
+      justifyContent='center'
+      alignItems='center'
+      bgColor='whitesmoke'
+      flexDir='column'
+      padding='5px'
+    >
+      {questionCards}
+    </Flex>
+  );
 
   // Loading while fetching questions
   if (questionsLoading || preCheckLoading) {

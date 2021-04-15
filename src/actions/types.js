@@ -51,6 +51,7 @@ export const TEAM_SUCCESS = 'TEAM_SUCCESS';
 export const TEAM_FAIL = 'TEAM_FAIL';
 
 // Chat Actions
+export const CHANGED_CHAT_TYPE = 'CHANGED_CHAT_TYPE';
 export const CHAT_EVERYONE_SUCCESS = 'CHAT_EVERYONE_SUCCESS';
 export const CHAT_TEAM_SUCCESS = 'CHAT_TEAM_SUCCESS';
 export const CHAT_FAIL = 'CHAT_FAIL';

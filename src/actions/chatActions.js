@@ -1,4 +1,17 @@
-import { CHAT_EVERYONE_SUCCESS, CHAT_TEAM_SUCCESS, CHAT_FAIL } from './types';
+import {
+  CHANGED_CHAT_TYPE,
+  CHAT_EVERYONE_SUCCESS,
+  CHAT_TEAM_SUCCESS,
+  CHAT_FAIL,
+} from './types';
+
+// Change chat type from everyone to team or vice versa
+export const changeChatType = (chatType) => (dispatch) => {
+  dispatch({
+    type: CHANGED_CHAT_TYPE,
+    payload: chatType,
+  });
+};
 
 // Send chat message to everyone in room
 export const sendEveryoneMsg = (socket, { message }) => (dispatch) => {

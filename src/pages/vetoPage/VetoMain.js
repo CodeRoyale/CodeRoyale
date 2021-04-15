@@ -15,6 +15,7 @@ import VetoTopBar from './VetoTopBar';
 import './VetoMain.css';
 import { Flex } from '@chakra-ui/layout';
 import SideBar from '../../components/sideBar/SideBar';
+import VetoBody from './VetoBody';
 
 const VetoMain = ({
   socketData,
@@ -76,8 +77,9 @@ const VetoMain = ({
 
   // Default content
   let content = (
-    <Flex height='100vh'>
+    <Flex>
       <SideBar />
+      <VetoBody />
     </Flex>
   );
 

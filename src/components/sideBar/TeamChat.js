@@ -7,11 +7,9 @@ import ChatBubble from './ChatBubble';
 import profileData from '../../utils/profileData';
 import { Flex, Stack, InputGroup, Input } from '@chakra-ui/react';
 
-const TeamChat = (props) => {
+const TeamChat = ({ teamMsgList, userProfilePictures, sendTeamMsg }) => {
   let chatBubbles = null;
   const [message, setMessage] = useState('');
-
-  const teamMsgList = props.teamMsgList;
 
   if (teamMsgList !== undefined) {
     chatBubbles = teamMsgList.map((item, index) => {
@@ -22,7 +20,7 @@ const TeamChat = (props) => {
           userImage={
             item.source === 'You'
               ? profileData().picture
-              : props.userProfilePictures[item.source]
+              : userProfilePictures[item.source]
           }
           userMessage={item.message}
           bubbleColor={index % 2 === 0 ? '#F0F0F0' : '#F9F9F9'}
@@ -33,7 +31,7 @@ const TeamChat = (props) => {
 
   const handleChatInputKeyPressed = (event) => {
     if (event.key === 'Enter') {
-      props.sendTeamMsg(event.target.value);
+      sendTeamMsg(event.target.value);
       setMessage('');
     }
   };
@@ -47,6 +45,7 @@ const TeamChat = (props) => {
       paddingBottom='0.8em'
       height='100%'
       width='100%'
+      flexDirection='column-reverse'
     >
       <Stack marginBottom='50px' overflow='auto'>
         {chatBubbles}

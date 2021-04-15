@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Progress } from 'rsuite';
-import './Timer.css';
+import { Flex, Progress, Text } from '@chakra-ui/react';
 
 const Timer = ({ milliseconds }) => {
-  const { Line } = Progress;
   const [over, setOver] = useState(false);
   const [time, setTime] = React.useState({
     minutes: parseInt(milliseconds / 60000),
@@ -46,15 +44,13 @@ const Timer = ({ milliseconds }) => {
   });
 
   return (
-    <div className='timer-container'>
-      <div className='timer-countdown'>
+    <Flex flexDir='column'>
+      <Text fontSize='lg'>
         {time.minutes.toString().padStart(2, '0')}:
         {time.seconds.toString().padStart(2, '0')}
-      </div>
-      <div className='timer-percentage'>
-        <Line percent={percentage} status='active' showInfo={false} />
-      </div>
-    </div>
+      </Text>
+      <Progress value={percentage} />
+    </Flex>
   );
 };
 

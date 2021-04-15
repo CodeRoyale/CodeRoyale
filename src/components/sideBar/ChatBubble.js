@@ -3,7 +3,12 @@ import { Flex, Image, Stack, Text } from '@chakra-ui/react';
 
 const ChatBubble = ({ userImage, userName, userMessage, bubbleColor }) => {
   return (
-    <Flex padding='0.5em' alignItems='center' bgColor={bubbleColor}>
+    <Flex
+      padding='0.5em'
+      alignItems='center'
+      bgColor={bubbleColor}
+      width='100%'
+    >
       <Image
         cursor='pointer'
         borderRadius='full'

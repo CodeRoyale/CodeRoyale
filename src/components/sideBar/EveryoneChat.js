@@ -7,11 +7,13 @@ import ChatBubble from './ChatBubble';
 import profileData from '../../utils/profileData';
 import { Flex, Stack, InputGroup, Input } from '@chakra-ui/react';
 
-const EveryoneChat = (props) => {
+const EveryoneChat = ({
+  everyoneMsgList,
+  userProfilePictures,
+  sendEveryoneMsg,
+}) => {
   let chatBubbles = null;
   const [message, setMessage] = useState('');
-
-  const everyoneMsgList = props.everyoneMsgList;
 
   if (everyoneMsgList !== undefined) {
     chatBubbles = everyoneMsgList.map((item, index) => {
@@ -22,7 +24,7 @@ const EveryoneChat = (props) => {
           userImage={
             item.source === 'You'
               ? profileData().picture
-              : props.userProfilePictures[item.source]
+              : userProfilePictures[item.source]
           }
           userMessage={item.message}
           bubbleColor={index % 2 === 0 ? '#F0F0F0' : '#F9F9F9'}
@@ -33,7 +35,7 @@ const EveryoneChat = (props) => {
 
   const handleChatInputKeyPressed = (event) => {
     if (event.key === 'Enter') {
-      props.sendEveryoneMsg(event.target.value);
+      sendEveryoneMsg(event.target.value);
       setMessage('');
     }
   };
@@ -47,6 +49,7 @@ const EveryoneChat = (props) => {
       paddingBottom='0.8em'
       height='100%'
       width='100%'
+      flexDirection='column-reverse'
     >
       <Stack marginBottom='50px' overflow='auto'>
         {chatBubbles}
