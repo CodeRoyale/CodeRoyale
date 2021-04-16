@@ -11,7 +11,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 
-const QuestionCard = ({
+const VetoQuestionCard = ({
   questionID,
   questionNumber,
   questionTitle,
@@ -113,5 +113,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { addVetoVote, removeVetoVote })(
-  QuestionCard
+  VetoQuestionCard
 );

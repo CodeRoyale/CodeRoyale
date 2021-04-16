@@ -1,5 +1,5 @@
 import React from 'react';
-import QuestionCard from '../../components/questionCard/QuestionCard';
+import VetoQuestionCard from './VetoQuestionCard';
 import { Flex, Skeleton } from '@chakra-ui/react';
 
 const VetoQuestions = ({
@@ -16,7 +16,7 @@ const VetoQuestions = ({
     questionsArray = questions.payload.data;
     questionCards = questionsArray.map((item, index) => {
       return (
-        <QuestionCard
+        <VetoQuestionCard
           key={index}
           questionNumber={index}
           questionTitle={item.questionTitle}
