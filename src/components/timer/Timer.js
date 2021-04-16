@@ -49,7 +49,7 @@ const Timer = ({ milliseconds }) => {
         {time.minutes.toString().padStart(2, '0')}:
         {time.seconds.toString().padStart(2, '0')}
       </Text>
-      <Progress value={percentage} />
+      <Progress value={percentage} colorScheme='orange' />
     </Flex>
   );
 };

@@ -41,7 +41,7 @@ const routes = [
   },
   {
     path: '/veto',
-    component: 'VetoMain',
+    component: 'Veto',
     title: 'Veto | CodeRoyale',
     needsAuth: true,
   },

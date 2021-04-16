@@ -11,11 +11,11 @@ import routes from './routes';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import SignUp from './pages/signUp/SignUp';
-import Dashboard from './pages/dashboard/Dashboard';
 import Settings from './pages/settings/Settings';
-import ArenaMain from './pages/arenaPage/ArenaMain';
+import Dashboard from './pages/dashboard/Dashboard';
 import RoomMain from './pages/roomPage/RoomMain';
-import VetoMain from './pages/vetoPage/VetoMain';
+import Veto from './pages/veto/Veto';
+import ArenaMain from './pages/arenaPage/ArenaMain';
 import ScoreboardMain from './pages/scoreboardPage/ScoreboardMain';
 import TestPage from './pages/testPage/TestPage';
 import isAuthenticated from './utils/isAuthenticated';
@@ -29,7 +29,7 @@ const componentRegistry = {
   ArenaMain: ArenaMain,
   ScoreboardMain: ScoreboardMain,
   RoomMain: RoomMain,
-  VetoMain: VetoMain,
+  Veto: Veto,
   Settings: Settings,
   Home: Home,
   TestPage: TestPage,

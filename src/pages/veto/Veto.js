@@ -11,7 +11,7 @@ import { Flex, useToast } from '@chakra-ui/react';
 import SideBar from '../../components/sideBar/SideBar';
 import VetoBody from './VetoBody';
 
-const VetoMain = ({
+const Veto = ({
   socketData,
   vetoData,
   roomData,
@@ -49,9 +49,9 @@ const VetoMain = ({
   }, [socket, vetoStop, getVetoStatus]);
 
   // Checking if the socket is null (if null move user back to dashboard)
-  // if (socket === null) {
-  //   history.push('/dashboard');
-  // }
+  if (socket === null) {
+    history.push('/dashboard');
+  }
 
   // Move the user to Arena if veto has ended
   if (vetoData.vetoEnded) {
@@ -111,4 +111,4 @@ export default connect(mapStateToProps, {
   getVetoStatus,
   vetoVoting,
   getAllVetoUsers,
-})(VetoMain);
+})(Veto);
