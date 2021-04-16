@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../../components/navBar/NavBar';
 import { useHistory } from 'react-router-dom';
-import { Alert, Loader } from 'rsuite';
 import { connect } from 'react-redux';
 import {
   getVetoStatus,
@@ -9,11 +7,7 @@ import {
   vetoVoting,
   getAllVetoUsers,
 } from '../../actions/vetoActions';
-import VetoQuestions from './VetoQuestions';
-import VetoSideBar from './VetoSideBar';
-import VetoTopBar from './VetoTopBar';
-import './VetoMain.css';
-import { Flex } from '@chakra-ui/layout';
+import { Flex, Spinner, useToast } from '@chakra-ui/react';
 import SideBar from '../../components/sideBar/SideBar';
 import VetoBody from './VetoBody';
 
@@ -29,6 +23,7 @@ const VetoMain = ({
 }) => {
   const history = useHistory();
   const socket = socketData.socket;
+  const toast = useToast();
   const [getUsersFinished, setGetUsersFinished] = useState(false);
 
   // Fetching the room details beforehand
@@ -69,9 +64,15 @@ const VetoMain = ({
     if (vetoData.vetoVotedQuestions.length !== 0) {
       vetoVoting(socket, vetoData.vetoVotedQuestions);
     } else {
-      Alert.error(
-        'You will need to vote for atleast 1 question to confirm your veto votes'
-      );
+      toast({
+        title: 'Error on Veto',
+        description:
+          'You will need to vote for atleast 1 question to confirm your veto votes',
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
     }
   };
 
@@ -89,6 +90,7 @@ const VetoMain = ({
         questionsLoading={vetoData.quesApiLoading}
         preCheckLoading={userData.preCheckData.isLoading}
         questions={vetoData.vetoQuestions}
+        confirmVetoVotes={handleConfirmVetoVotes}
       />
     </Flex>
   );
@@ -96,16 +98,19 @@ const VetoMain = ({
   // Loading after user has voted
   if (vetoData.userVoted) {
     content = (
-      <div className='veto-page'>
-        <Navbar loggedIn={true} />
-        <VetoSideBar
-          vetoUsers={vetoData.vetoUsers}
-          vetoCompletedUsers={vetoData.vetoCompletedUsers}
-        />
-        <div className='veto-page-loading'>
-          <Loader size='sm' content='Waiting for others to vote...' />
-        </div>
-      </div>
+      <Flex pos='relative'>
+        <SideBar />
+        <Flex
+          pos='absolute'
+          top='0'
+          right='0'
+          height='100%'
+          width='75%'
+          bgColor='whitesmoke'
+        >
+          <Spinner color='#dd2c00' />
+        </Flex>
+      </Flex>
     );
   }
 

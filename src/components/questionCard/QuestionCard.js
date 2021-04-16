@@ -7,6 +7,7 @@ import {
   Text,
   Spacer,
   Checkbox,
+  Badge,
   useToast,
 } from '@chakra-ui/react';
 
@@ -26,19 +27,17 @@ const QuestionCard = ({
 
   // Handle user voting for question
   // Show alert if user exceeds question vote max limit
-  const handleQuestionVoted = (e) => {
-    const qId = e.target.value;
-    console.log(qId);
+  const handleQuestionVoted = () => {
     // If checkbox is ticked and user clicks on questionCard then remove question from votes
     if (checkBoxChecked) {
-      removeVetoVote(qId);
+      removeVetoVote(questionID);
       setCheckBoxChecked(false);
     } else if (
       vetoData.vetoVotedQuestions.length <
         roomData.data.competition.veto.max_vote &&
       !checkBoxChecked
     ) {
-      addVetoVote(qId);
+      addVetoVote(questionID);
       setCheckBoxChecked(true);
     } else {
       toast({
@@ -63,6 +62,7 @@ const QuestionCard = ({
 
   return (
     <Flex
+      as='div'
       bgColor='white'
       padding='2em'
       margin='2em'
@@ -74,29 +74,22 @@ const QuestionCard = ({
         boxShadow: `0 1px 5px 0 rgb(221, 44, 0, 0.2),
       0 1px 1px 0 rgba(221, 44, 0, 0.19)`,
       }}
-      value={questionID}
       onClick={handleQuestionVoted}
     >
       <Stack width='100%'>
         <Flex>
-          <Flex>
+          <Flex alignItems='center'>
             <Text fontWeight='bold' fontSize='3xl' color='#6e6e6e'>
               #{questionNumber}
             </Text>
             {checkBoxChecked ? (
-              <Text
-                color='#dd2c00'
-                fontWeight='bold'
-                p='0.2em'
-                marginLeft='1em'
-              >
+              <Badge ml='1em' colorScheme='orange'>
                 Selected
-              </Text>
+              </Badge>
             ) : null}
           </Flex>
           <Spacer />
           <Checkbox
-            value={questionID}
             colorScheme='orange'
             isChecked={checkBoxChecked}
             onChange={handleQuestionVoted}

@@ -8,7 +8,13 @@ const VetoTopBar = ({
   vetoUsers,
   vetoCompletedUsers,
   userProfilePictures,
+  confirmVetoVotes,
 }) => {
+  // Sending confirm veto in props
+  const handleConfirmVetoVotes = () => {
+    confirmVetoVotes();
+  };
+
   return (
     <Flex
       bg='white'
@@ -29,7 +35,9 @@ const VetoTopBar = ({
           vetoCompletedUsers={vetoCompletedUsers}
           userProfilePictures={userProfilePictures}
         />
-        <Button size='sm'>Confirm Veto</Button>
+        <Button size='sm' onClick={handleConfirmVetoVotes}>
+          Confirm Veto
+        </Button>
       </Stack>
     </Flex>
   );
