@@ -1,6 +1,6 @@
 import React from 'react';
 import QuestionCard from '../../components/questionCard/QuestionCard';
-import { Flex, Spinner } from '@chakra-ui/react';
+import { Flex, Skeleton } from '@chakra-ui/react';
 
 const VetoQuestions = ({ questionsLoading, preCheckLoading, questions }) => {
   let questionsArray = null;
@@ -39,13 +39,16 @@ const VetoQuestions = ({ questionsLoading, preCheckLoading, questions }) => {
   // Loading while fetching questions
   if (questionsLoading || preCheckLoading) {
     content = (
-      <Flex
-        justifyContent='center'
-        alignItems='center'
-        bgColor='whitesmoke'
-        flexDir='column'
-      >
-        <Spinner color='#dd2c00' />
+      <Flex padding='35px' flexDir='column'>
+        <Skeleton height='20px' />
+        <Skeleton height='20px' marginTop='0.5em' />
+        <Skeleton height='20px' marginTop='0.5em' />
+        <Skeleton height='20px' marginTop='1em' />
+        <Skeleton height='20px' marginTop='0.5em' />
+        <Skeleton height='20px' marginTop='0.5em' />
+        <Skeleton height='20px' marginTop='1em' />
+        <Skeleton height='20px' marginTop='0.5em' />
+        <Skeleton height='20px' marginTop='0.5em' />
       </Flex>
     );
   }
