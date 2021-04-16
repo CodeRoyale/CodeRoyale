@@ -21,6 +21,7 @@ const QuestionCard = ({
   removeVetoVote,
   vetoData,
   roomData,
+  userVoted,
 }) => {
   const toast = useToast();
   const [checkBoxChecked, setCheckBoxChecked] = useState(false);
@@ -74,6 +75,7 @@ const QuestionCard = ({
         boxShadow: `0 1px 5px 0 rgb(221, 44, 0, 0.2),
       0 1px 1px 0 rgba(221, 44, 0, 0.19)`,
       }}
+      pointerEvents={userVoted ? 'none' : 'auto'}
       onClick={handleQuestionVoted}
     >
       <Stack width='100%'>

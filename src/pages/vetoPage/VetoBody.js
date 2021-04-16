@@ -12,6 +12,7 @@ const VetoBody = ({
   questions,
   userProfilePictures,
   confirmVetoVotes,
+  userVoted,
 }) => {
   // Sending confirm veto in props
   const handleConfirmVetoVotes = () => {
@@ -34,11 +35,13 @@ const VetoBody = ({
         vetoTime={vetoTime}
         userProfilePictures={userProfilePictures}
         confirmVetoVotes={handleConfirmVetoVotes}
+        userVoted={userVoted}
       />
       <VetoQuestions
         questionsLoading={questionsLoading}
         preCheckLoading={preCheckLoading}
         questions={questions}
+        userVoted={userVoted}
       />
     </Flex>
   );

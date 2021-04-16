@@ -9,6 +9,7 @@ const VetoTopBar = ({
   vetoCompletedUsers,
   userProfilePictures,
   confirmVetoVotes,
+  userVoted,
 }) => {
   // Sending confirm veto in props
   const handleConfirmVetoVotes = () => {
@@ -35,7 +36,13 @@ const VetoTopBar = ({
           vetoCompletedUsers={vetoCompletedUsers}
           userProfilePictures={userProfilePictures}
         />
-        <Button size='sm' onClick={handleConfirmVetoVotes}>
+        <Button
+          isLoading={userVoted}
+          loadingText='Waiting for others'
+          colorScheme='orange'
+          size='sm'
+          onClick={handleConfirmVetoVotes}
+        >
           Confirm Veto
         </Button>
       </Stack>

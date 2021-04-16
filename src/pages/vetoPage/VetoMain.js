@@ -7,7 +7,7 @@ import {
   vetoVoting,
   getAllVetoUsers,
 } from '../../actions/vetoActions';
-import { Flex, Spinner, useToast } from '@chakra-ui/react';
+import { Flex, useToast } from '@chakra-ui/react';
 import SideBar from '../../components/sideBar/SideBar';
 import VetoBody from './VetoBody';
 
@@ -91,28 +91,10 @@ const VetoMain = ({
         preCheckLoading={userData.preCheckData.isLoading}
         questions={vetoData.vetoQuestions}
         confirmVetoVotes={handleConfirmVetoVotes}
+        userVoted={vetoData.userVoted}
       />
     </Flex>
   );
-
-  // Loading after user has voted
-  if (vetoData.userVoted) {
-    content = (
-      <Flex pos='relative'>
-        <SideBar />
-        <Flex
-          pos='absolute'
-          top='0'
-          right='0'
-          height='100%'
-          width='75%'
-          bgColor='whitesmoke'
-        >
-          <Spinner color='#dd2c00' />
-        </Flex>
-      </Flex>
-    );
-  }
 
   return content;
 };

@@ -2,7 +2,12 @@ import React from 'react';
 import QuestionCard from '../../components/questionCard/QuestionCard';
 import { Flex, Skeleton } from '@chakra-ui/react';
 
-const VetoQuestions = ({ questionsLoading, preCheckLoading, questions }) => {
+const VetoQuestions = ({
+  questionsLoading,
+  preCheckLoading,
+  questions,
+  userVoted,
+}) => {
   let questionsArray = null;
   let questionCards = null;
 
@@ -18,6 +23,7 @@ const VetoQuestions = ({ questionsLoading, preCheckLoading, questions }) => {
           questionDesc={item.description}
           questionID={item._id}
           questionTags={item.tags}
+          userVoted={userVoted}
         />
       );
     });
