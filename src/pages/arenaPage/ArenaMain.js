@@ -148,11 +148,18 @@ const ArenaMain = ({
     problemOptionStyle = null;
   }
 
+  const questionsObject = {};
+  if (quesList) {
+    for (let i = 0; i < quesList.length; i++) {
+      questionsObject[quesList[i].problemCode] = quesList[i];
+    }
+  }
+
   // Default content
   let content = (
     <Flex pos='relative'>
       <SideBar />
-      <ArenaBody />
+      <ArenaBody questionsObject={questionsObject} />
     </Flex>
   );
 
