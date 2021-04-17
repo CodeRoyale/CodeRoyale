@@ -10,6 +10,9 @@ import QuestionStatus from '../../components/questionStatus/QuestionStatus';
 import { Loader } from 'rsuite';
 import { useHistory } from 'react-router-dom';
 import './ArenaMain.css';
+import { Flex } from '@chakra-ui/layout';
+import SideBar from '../../components/sideBar/SideBar';
+import ArenaBody from './ArenaBody';
 
 const ArenaMain = ({
   vetoData,
@@ -31,9 +34,9 @@ const ArenaMain = ({
   let teamName = null;
   let completedQues = [];
 
-  if (socket === null) {
-    history.push('/dashboard');
-  }
+  // if (socket === null) {
+  //   history.push('/dashboard');
+  // }
 
   // Getting the team name...
   if (roomData.data !== null) {
@@ -147,52 +150,10 @@ const ArenaMain = ({
 
   // Default content
   let content = (
-    <div className='arena-page'>
-      <div className='arena-body'>
-        <div className='arena-left'>
-          <div className='arena-left-top'>
-            <div className='arena-left-top-sections'>
-              <div
-                style={problemOptionStyle}
-                onClick={() => setArenaSection(PROBLEM)}
-                className='arena-left-top-option'
-              >
-                {PROBLEM}
-              </div>
-
-              <div
-                style={scoreboardOptionStyle}
-                onClick={() => setArenaSection(SCOREBOARD)}
-                className='arena-left-top-option'
-              >
-                {SCOREBOARD}
-              </div>
-            </div>
-
-            <div>{arenaSectionView}</div>
-          </div>
-          <ArenaSolution socket={socket} currentQuestion={currentQuestion} />
-        </div>
-        <div className='arena-right'>
-          <div>
-            <div className='arena-profile'>
-              {/* <ProfileButton profileData={profileData} /> */}
-              <p className='arena-profile-name'>{profileData().userName}</p>
-            </div>
-            <div className='arena-divider' />
-          </div>
-          <Header name='Question' icon={question_icon} />
-          <div className='arena-question-status'>{quesStatusView}</div>
-          <Header name='Chat' icon={chat_icon} />
-          <div>
-            <Chat
-              style={{ height: '52%', position: 'absolute' }}
-              restricted={true}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+    <Flex pos='relative'>
+      <SideBar />
+      <ArenaBody />
+    </Flex>
   );
 
   if (arenaData.isLoading) {
