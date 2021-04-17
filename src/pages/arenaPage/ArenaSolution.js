@@ -1,4 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import {
+  Flex,
+  Select,
+  IconButton,
+  Icon,
+  Text,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverArrow,
+  PopoverCloseButton,
+  Button,
+} from '@chakra-ui/react';
+import { IoMdSettings } from 'react-icons/io';
+import { BiReset } from 'react-icons/bi';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-java';
 import 'ace-builds/src-noconflict/mode-c_cpp';
@@ -11,20 +29,26 @@ import 'ace-builds/src-noconflict/snippets/c_cpp';
 import 'ace-builds/src-noconflict/snippets/python';
 import 'ace-builds/src-noconflict/snippets/java';
 import 'ace-builds/src-noconflict/ext-language_tools';
-import Button from '../../components/button/Button';
-import { Popover, Whisper } from 'rsuite';
-import { Grid, Row, Col, Icon } from 'rsuite';
-import { connect } from 'react-redux';
-import './ArenaMain.css';
+
+/*
+  {
+    language: languageID
+  }
+*/
+const editorLanguageData = {
+  c_cpp: 53,
+  java: 62,
+  python: 71,
+};
 
 const ArenaSolution = ({ socket, currentQuestion }) => {
-  const [ideLanguage, setLanguage] = useState('c_cpp');
-  const [ideFontSize, setFontSize] = useState('12');
-  const [ideTheme, setTheme] = useState('terminal');
-  const [ideCode, setCode] = useState('');
+  // Editor settings state
+  const [editorLanguage, setEditorLanguage] = useState('c_cpp');
+  const [editorFontSize, setEditorFontSize] = useState('12');
+  const [editorTheme, setEditorTheme] = useState('terminal');
 
-  const [sendCodeClicked, setSendCodeClicked] = useState(false);
-  const [languageID, setLanID] = useState(53);
+  // Code typed in editor
+  const [editorCode, setEditorCode] = useState('');
 
   let problemCode = null;
   let _id = null;
@@ -34,49 +58,66 @@ const ArenaSolution = ({ socket, currentQuestion }) => {
     _id = currentQuestion._id;
   }
 
-  const onChangeIDE = (newValue) => {
-    setCode(newValue);
+  const handleSubmitSolution = () => {
+    // To DO as redux action
+    socket.emit(
+      'CODE_SUBMISSION',
+      {
+        problemCode: problemCode,
+        code: editorCode,
+        langId: editorLanguageData[editorLanguage],
+        ques_id: _id,
+      },
+      (data) => {
+        console.log(data);
+      }
+    );
   };
 
-  useEffect(() => {
-    if (sendCodeClicked) {
-      socket.emit(
-        'CODE_SUBMISSION',
-        {
-          problemCode: problemCode,
-          code: ideCode,
-          langId: languageID,
-          ques_id: _id,
-        },
-        (data) => {
-          console.log(data);
-        }
-      );
-      setSendCodeClicked(false);
-    }
-  }, [sendCodeClicked, ideCode, socket, problemCode, languageID, _id]);
+  // Editor code onChange
+  const handleEditorCodeChange = (newEditorCode) => {
+    setEditorCode(newEditorCode);
+  };
 
-  useEffect(() => {
-    //should vary according to language selected c++=53, java=62, python 3.8=71
-    if (ideLanguage === 'c_cpp') {
-      setLanID(53);
-    } else if (ideLanguage === 'java') {
-      setLanID(62);
-    } else if (ideLanguage === 'python') {
-      setLanID(71);
-    }
-  }, [ideLanguage, languageID]);
-
-  const settingsPopupContent = (
-    <div className='ide-options-popup'>
-      <Grid fluid>
-        <Row className='ide-options-row'>
-          <Col span={20}>
-            <div>FontSize:</div>
-          </Col>
-          <Col span={20}>
-            <div>
-              <select onChange={(e) => setFontSize(Number(e.target.value))}>
+  return (
+    <Flex as='div' alignItems='flex-end' flexDir='column' bgColor='white'>
+      <Flex width='40%' padding='1.2em'>
+        <Select
+          variant='filled'
+          value={editorLanguage}
+          onChange={(e) => setEditorLanguage(e.target.value)}
+        >
+          <option value='c_cpp'>C++</option>
+          <option value='java'>Java</option>
+          <option value='python'>Python</option>
+        </Select>
+        <IconButton
+          aria-label='Reset Code'
+          marginLeft='0.8em'
+          onClick={() => setEditorCode('')}
+          icon={<Icon as={BiReset} />}
+        />
+        <Popover>
+          <PopoverTrigger>
+            <IconButton
+              aria-label='Settings'
+              marginLeft='0.8em'
+              icon={<Icon as={IoMdSettings} />}
+            />
+          </PopoverTrigger>
+          <PopoverContent>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            <PopoverHeader>Settings</PopoverHeader>
+            <PopoverBody>
+              <Text fontSize='sm' fontWeight='bold'>
+                Font Size
+              </Text>
+              <Select
+                marginTop='0.3em'
+                value={editorFontSize}
+                onChange={(e) => setEditorFontSize(Number(e.target.value))}
+              >
                 <option value='10'>10</option>
                 <option value='12'>12</option>
                 <option value='14'>14</option>
@@ -85,84 +126,45 @@ const ArenaSolution = ({ socket, currentQuestion }) => {
                 <option value='20'>20</option>
                 <option value='22'>22</option>
                 <option value='24'>24</option>
-              </select>
-            </div>
-          </Col>
-        </Row>
-        <Row className='ide-options-row'>
-          <Col span={20}>
-            <div>Theme:</div>
-          </Col>
-          <Col span={20}>
-            <div>
-              <select onChange={(e) => setTheme(e.target.value)}>
-                <option value='tomorrow'>tomorrow</option>
-                <option value='terminal'>terminal</option>
-                <option value='monokai'>monokai</option>
-              </select>
-            </div>
-          </Col>
-        </Row>
-      </Grid>
-    </div>
-  );
-
-  return (
-    <div className='solution'>
-      <div className='solution-options-container'>
-        <div className='solution-options'>
-          <div className='solution-language'>
-            <select onChange={(e) => setLanguage(e.target.value)}>
-              <option value='c_cpp'>c++</option>
-              <option value='java'>java</option>
-              <option value='python'>python</option>
-            </select>
-          </div>
-
-          <div className='solution-settings'>
-            <Whisper
-              trigger='click'
-              placement='bottomEnd'
-              speaker={
-                <Popover title='Settings'>{settingsPopupContent}</Popover>
-              }
-            >
-              <Icon icon='cog' />
-            </Whisper>
-          </div>
-        </div>
-      </div>
-      <div id='MyAceEditor'>
-        <AceEditor
-          height='500px'
-          width='100%'
-          mode={ideLanguage}
-          theme={ideTheme}
-          fontSize={ideFontSize}
-          showGutter={true}
-          showPrintMargin={false}
-          editorProps={{ $blockScrolling: Infinity }}
-          onChange={onChangeIDE}
-          setOptions={{
-            enableBasicAutocompletion: true,
-            enableLiveAutocompletion: false,
-            enableSnippets: true,
-            tabSize: 2,
-          }}
-        />
-      </div>
-
-      <div className='solution-button-container'>
-        <Button
-          type='button'
-          buttonStyle='btn--primary--normal'
-          buttonSize='btn--small'
-          onClick={() => setSendCodeClicked(true)}
-        >
-          Submit
-        </Button>
-      </div>
-    </div>
+              </Select>
+              <Text marginTop='0.3em' fontSize='sm' fontWeight='bold'>
+                Theme
+              </Text>
+              <Select
+                marginTop='0.3em'
+                value={editorTheme}
+                onChange={(e) => setEditorTheme(e.target.value)}
+              >
+                <option value='tomorrow'>Tomorrow</option>
+                <option value='terminal'>Terminal</option>
+                <option value='monokai'>Monokai</option>
+              </Select>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
+      </Flex>
+      <AceEditor
+        height='600px'
+        width='100%'
+        mode={editorLanguage}
+        theme={editorTheme}
+        fontSize={editorFontSize}
+        value={editorCode}
+        showGutter={true}
+        showPrintMargin={false}
+        editorProps={{ $blockScrolling: Infinity }}
+        onChange={handleEditorCodeChange}
+        setOptions={{
+          enableBasicAutocompletion: true,
+          enableLiveAutocompletion: false,
+          enableSnippets: true,
+          tabSize: 2,
+        }}
+      />
+      <Button margin='1em' onClick={handleSubmitSolution}>
+        Submit Code
+      </Button>
+    </Flex>
   );
 };
 

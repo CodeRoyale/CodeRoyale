@@ -8,9 +8,10 @@ const ArenaBody = () => {
       pos='absolute'
       top='0'
       right='0'
-      bgColor='white'
+      bgColor='whitesmoke'
       width='75%'
       flexDir='column'
+      padding='1em'
     >
       <ArenaSolution />
     </Flex>
