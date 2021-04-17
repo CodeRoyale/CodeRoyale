@@ -44,7 +44,7 @@ const editorLanguageData = {
 const ArenaSolution = ({ socket, currentQuestion }) => {
   // Editor settings state
   const [editorLanguage, setEditorLanguage] = useState('c_cpp');
-  const [editorFontSize, setEditorFontSize] = useState('12');
+  const [editorFontSize, setEditorFontSize] = useState(16);
   const [editorTheme, setEditorTheme] = useState('terminal');
 
   // Code typed in editor
@@ -118,14 +118,14 @@ const ArenaSolution = ({ socket, currentQuestion }) => {
                 value={editorFontSize}
                 onChange={(e) => setEditorFontSize(Number(e.target.value))}
               >
-                <option value='10'>10</option>
-                <option value='12'>12</option>
-                <option value='14'>14</option>
-                <option value='16'>16</option>
-                <option value='18'>18</option>
-                <option value='20'>20</option>
-                <option value='22'>22</option>
-                <option value='24'>24</option>
+                <option value={10}>10</option>
+                <option value={12}>12</option>
+                <option value={14}>14</option>
+                <option value={16}>16</option>
+                <option value={18}>18</option>
+                <option value={20}>20</option>
+                <option value={22}>22</option>
+                <option value={24}>24</option>
               </Select>
               <Text marginTop='0.3em' fontSize='sm' fontWeight='bold'>
                 Theme
