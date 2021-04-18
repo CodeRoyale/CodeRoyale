@@ -35,10 +35,39 @@ import 'ace-builds/src-noconflict/ext-language_tools';
     language: languageID
   }
 */
-const editorLanguageData = {
+const editorLanguageIdObject = {
   c_cpp: 53,
   java: 62,
   python: 71,
+};
+
+/* 
+  { 
+    value: label 
+  } 
+*/
+const editorLanguageObject = {
+  c_cpp: 'C++',
+  java: 'Java',
+  python: 'Python',
+};
+
+const editorFontSizesObject = {
+  10: '10',
+  12: '12',
+  14: '14',
+  16: '16',
+  18: '18',
+  20: '20',
+  22: '22',
+  24: '24',
+};
+
+const editorThemesObject = {
+  tomorrow: 'Tomorrow',
+  terminal: 'Terminal',
+  monokai: 'Monokai',
+  github: 'Github',
 };
 
 const ArenaSolution = ({ socket, currentQuestion }) => {
@@ -65,7 +94,7 @@ const ArenaSolution = ({ socket, currentQuestion }) => {
       {
         problemCode: problemCode,
         code: editorCode,
-        langId: editorLanguageData[editorLanguage],
+        langId: editorLanguageIdObject[editorLanguage],
         ques_id: _id,
       },
       (data) => {
@@ -87,9 +116,13 @@ const ArenaSolution = ({ socket, currentQuestion }) => {
           value={editorLanguage}
           onChange={(e) => setEditorLanguage(e.target.value)}
         >
-          <option value='c_cpp'>C++</option>
-          <option value='java'>Java</option>
-          <option value='python'>Python</option>
+          {Object.keys(editorLanguageObject).map((language, index) => {
+            return (
+              <option key={index} value={language}>
+                {editorLanguageObject[language]}
+              </option>
+            );
+          })}
         </Select>
         <IconButton
           aria-label='Reset Code'
@@ -118,14 +151,13 @@ const ArenaSolution = ({ socket, currentQuestion }) => {
                 value={editorFontSize}
                 onChange={(e) => setEditorFontSize(Number(e.target.value))}
               >
-                <option value={10}>10</option>
-                <option value={12}>12</option>
-                <option value={14}>14</option>
-                <option value={16}>16</option>
-                <option value={18}>18</option>
-                <option value={20}>20</option>
-                <option value={22}>22</option>
-                <option value={24}>24</option>
+                {Object.keys(editorFontSizesObject).map((fontSize, index) => {
+                  return (
+                    <option key={index} value={fontSize}>
+                      {editorFontSizesObject[fontSize]}
+                    </option>
+                  );
+                })}
               </Select>
               <Text marginTop='0.3em' fontSize='sm' fontWeight='bold'>
                 Theme
@@ -135,9 +167,13 @@ const ArenaSolution = ({ socket, currentQuestion }) => {
                 value={editorTheme}
                 onChange={(e) => setEditorTheme(e.target.value)}
               >
-                <option value='tomorrow'>Tomorrow</option>
-                <option value='terminal'>Terminal</option>
-                <option value='monokai'>Monokai</option>
+                {Object.keys(editorThemesObject).map((theme, index) => {
+                  return (
+                    <option key={index} value={theme}>
+                      {editorThemesObject[theme]}
+                    </option>
+                  );
+                })}
               </Select>
             </PopoverBody>
           </PopoverContent>
