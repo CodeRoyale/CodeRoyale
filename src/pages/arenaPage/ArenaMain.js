@@ -1,18 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import profileData from '../../utils/profileData';
-import ArenaProblem from './ArenaProblem';
-import ArenaSolution from './ArenaSolution';
-import ArenaScore from './ArenaScore';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getQuestion, competitionStopped } from '../../actions/arenaActions';
-import Chat from '../../components/chat/Chat';
-import QuestionStatus from '../../components/questionStatus/QuestionStatus';
-import { Loader } from 'rsuite';
 import { useHistory } from 'react-router-dom';
-import './ArenaMain.css';
-import { Flex } from '@chakra-ui/layout';
 import SideBar from '../../components/sideBar/SideBar';
 import ArenaBody from './ArenaBody';
+import { Flex, Spinner, Text } from '@chakra-ui/react';
 
 const ArenaMain = ({
   vetoData,
@@ -22,33 +14,13 @@ const ArenaMain = ({
   getQuestion,
   competitionStopped,
 }) => {
-  let quesIndex = 0;
-  let quesList = null;
-  let currentQuestion = null;
+  let questionsList;
   const socket = socketData.socket;
-  const PROBLEM = 'Problem';
-  const SCOREBOARD = 'Scoreboard';
-  const [arenaSection, setArenaSection] = useState(PROBLEM);
-  const username = profileData().username;
   const history = useHistory();
-  let teamName = null;
-  let completedQues = [];
 
   // if (socket === null) {
   //   history.push('/dashboard');
   // }
-
-  // Getting the team name...
-  if (roomData.data !== null) {
-    for (let team in roomData.data.teams) {
-      if (roomData.data.teams[team].includes(username)) {
-        teamName = team;
-      }
-    }
-    if (roomData.data.competition.scoreboard[teamName] !== undefined) {
-      completedQues = roomData.data.competition.scoreboard[teamName];
-    }
-  }
 
   // Fetching the questions from qapi
   useEffect(() => {
@@ -57,7 +29,7 @@ const ArenaMain = ({
     }
   }, [vetoData.contestQuestionIDs, getQuestion]);
 
-  // Initializing the listener for checking is competition stopped
+  // Initializing the listener for checking if competition stopped
   useEffect(() => {
     if (socket !== null) {
       competitionStopped(socket);
@@ -71,87 +43,13 @@ const ArenaMain = ({
 
   // Put all the questions in quesList from redux...
   if (arenaData.questions !== undefined && !arenaData.isLoading) {
-    quesList = arenaData.questions.payload.data;
-  }
-
-  // Setting the question to display...
-  let firstQuestion = null;
-  if (quesList !== null && quesList !== undefined) {
-    firstQuestion = quesList[0].problemCode;
-  }
-  const [quesCode, setQuesCode] = useState(firstQuestion);
-
-  if (quesList !== null && quesList !== undefined) {
-    for (let i in quesList) {
-      if (quesList[i].problemCode === quesCode) {
-        quesIndex = i;
-        break;
-      }
-    }
-    currentQuestion = quesList[quesIndex];
-  }
-
-  // Question Status...
-  let quesCodes = [];
-  for (let i in quesList) {
-    quesCodes.push(quesList[i].problemCode);
-  }
-
-  const quesStatusView = quesCodes.map((code) => (
-    <QuestionStatus
-      key={code}
-      code={code}
-      status={completedQues.includes(code) ? 1 : null}
-      onClick={() => setQuesCode(code)}
-    />
-  ));
-
-  // Header...
-  const chat_icon = 'chat-arena.svg';
-  const question_icon = 'problem.svg';
-  const Header = ({ name, icon }) => {
-    const icon_path = '/images/' + icon;
-    return (
-      <div className='arena-side-bar-header'>
-        <img
-          style={{ height: '25px', width: '25px' }}
-          src={icon_path}
-          alt='null'
-        />
-        <b>
-          <p style={{ fontSize: '16px', marginLeft: '4px' }}>{name}</p>
-        </b>
-      </div>
-    );
-  };
-
-  // Switching sections in arena...
-  let arenaSectionView = null;
-  if (arenaSection === PROBLEM) {
-    arenaSectionView = <ArenaProblem currentQuestion={currentQuestion} />;
-  } else if (arenaSection === SCOREBOARD) {
-    arenaSectionView = <ArenaScore quesCodes={quesCodes} />;
-  }
-
-  // Style of arena section switching...
-  const styleArenaTopSection = {
-    borderBottom: 'solid #DD4814',
-    background: 'rgba(221, 70, 20, 0.05)',
-  };
-  let problemOptionStyle = null;
-  let scoreboardOptionStyle = null;
-  if (arenaSection === PROBLEM) {
-    problemOptionStyle = styleArenaTopSection;
-    scoreboardOptionStyle = null;
-  } else if (arenaSection === SCOREBOARD) {
-    scoreboardOptionStyle = styleArenaTopSection;
-    problemOptionStyle = null;
+    questionsList = arenaData.questions.payload.data;
   }
 
   const questionsObject = {};
-  if (quesList) {
-    for (let i = 0; i < quesList.length; i++) {
-      questionsObject[quesList[i].problemCode] = quesList[i];
+  if (questionsList) {
+    for (let i = 0; i < questionsList.length; i++) {
+      questionsObject[questionsList[i].problemCode] = questionsList[i];
     }
   }
 
@@ -165,9 +63,17 @@ const ArenaMain = ({
 
   if (arenaData.isLoading) {
     content = (
-      <div className='arena-page-loading'>
-        <Loader size='sm' content='Setting up your coding environment...' />
-      </div>
+      <Flex
+        height='100vh'
+        justifyContent='center'
+        alignItems='center'
+        flexDir='column'
+      >
+        <Spinner color='orange' />
+        <Text marginTop='1em' fontSize='md'>
+          Setting up your coding environment...
+        </Text>
+      </Flex>
     );
   }
 
