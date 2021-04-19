@@ -1,15 +1,25 @@
 import React from 'react';
+import { Flex, Image, Spacer, Text } from '@chakra-ui/react';
 
 const ScoreboardPlayer = ({ userImage, userName }) => {
   return (
-    <div className='scoreboard-player'>
-      <img
-        className='scoreboard-player-profile-pic'
-        alt='profile img'
+    <Flex
+      pos='relative'
+      top='-50px'
+      alignItems='center'
+      padding='0.7em'
+      width='100%'
+      bgColor='white'
+    >
+      <Image
+        borderRadius='full'
+        boxSize='40px'
         src={userImage}
+        alt='Profile Pic'
       />
-      <div className='scoreboard-player-username'>{userName}</div>
-    </div>
+      <Spacer />
+      <Text fontSize='md'>{userName}</Text>
+    </Flex>
   );
 };
 

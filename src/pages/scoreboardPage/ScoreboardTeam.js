@@ -1,30 +1,40 @@
 import React from 'react';
 import ScoreboardPlayer from './ScoreboardPlayer';
+import { Flex, Text, Image } from '@chakra-ui/react';
+import goldMedal from '../../assets/gold-medal.svg';
+import silverMedal from '../../assets/silver-medal.svg';
+import bronzeMedal from '../../assets/bronze-medal.svg';
 import './ScoreboardMain.css';
 
 const ScoreboardTeam = ({ rank, teamName, team, userImages }) => {
-  let containerStyle;
-  let medalImg;
+  let medalStyle;
+
   let playerCards = null;
 
   // Styling based on rank
   if (rank === 'gold') {
-    containerStyle = {
-      'background-color': '#FFBA57',
+    medalStyle = {
+      style: {
+        bgColor: '#FFBA57',
+      },
+      medal: goldMedal,
     };
-    medalImg = '/images/gold_medal.svg';
   } else if (rank === 'silver') {
-    containerStyle = {
-      'background-color': '#9D9D9D',
-      margin: '70px 25px 0px 0px',
+    medalStyle = {
+      style: {
+        bgColor: '#9D9D9D',
+        margin: '70px 25px 0px 0px',
+      },
+      medal: silverMedal,
     };
-    medalImg = '/images/silver_medal.svg';
   } else if (rank === 'bronze') {
-    containerStyle = {
-      'background-color': '#CD7430',
-      margin: '100px 0px 0px 25px',
+    medalStyle = {
+      style: {
+        bgColor: '#CD7430',
+        margin: '100px 0px 0px 25px',
+      },
+      medal: bronzeMedal,
     };
-    medalImg = '/images/bronze_medal.svg';
   }
 
   if (team !== undefined) {
@@ -40,13 +50,27 @@ const ScoreboardTeam = ({ rank, teamName, team, userImages }) => {
   }
 
   return (
-    <div style={containerStyle} className='scoreboard-team-container'>
-      <img className='scoreboard-medal' alt='gold medal' src={medalImg} />
-      <div className='scoreboard-team-details'>
-        <h4 className='scoreboard-team-name'>{`${teamName}`}</h4>
-        <div className='scoreboard-team-player-cards'>{playerCards}</div>
-      </div>
-    </div>
+    <Flex
+      as='div'
+      width='23%'
+      height='500px'
+      flexDir='column'
+      alignItems='center'
+      padding='0.5em'
+      margin={medalStyle.style.margin}
+      bgColor={medalStyle.style.bgColor}
+    >
+      <Image
+        pos='relative'
+        top='-60px'
+        src={medalStyle.medal}
+        boxSize='100px'
+      ></Image>
+      <Text pos='relative' top='-55px' fontSize='2xl' fontWeight='bold'>
+        {teamName}
+      </Text>
+      {playerCards}
+    </Flex>
   );
 };
 
