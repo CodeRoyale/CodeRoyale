@@ -1,22 +1,23 @@
 import React from 'react';
 import './ScoreboardMain.css';
-import { Icon, Whisper, Tooltip } from 'rsuite';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ScoreboardTeam from './ScoreboardTeam';
+import { Flex, Icon, Text } from '@chakra-ui/react';
+import { BiArrowBack } from 'react-icons/bi';
 
 const ScoreboardMain = ({ roomData, socketData, arenaData }) => {
   const history = useHistory();
   const socket = socketData.socket;
 
-  if (socket === null) {
-    history.push('/dashboard');
-  }
+  // if (socket === null) {
+  //   history.push('/dashboard');
+  // }
 
   // After 20 secs move user to /dashboard
-  setTimeout(() => {
-    history.push('/dashboard');
-  }, 20000);
+  // setTimeout(() => {
+  //   history.push('/dashboard');
+  // }, 20000);
 
   // Getting the scorecard and teams from lobby
   let scoreCard;
@@ -45,30 +46,34 @@ const ScoreboardMain = ({ roomData, socketData, arenaData }) => {
   const displayScoreCards = () => {
     if (scores[0].score === 0) {
       return (
-        <div className='scoreboard-score-container'>
-          <h1>No one won!</h1>
-        </div>
+        <>
+          <Text fontSize='3xl' fontWeight='bold'>
+            No one won!
+          </Text>
+        </>
       );
     } else if (allEqual(justScores)) {
       return (
-        <div className='scoreboard-score-container'>
-          <h1>It's a draw!</h1>
-        </div>
+        <>
+          <Text fontSize='3xl' fontWeight='bold'>
+            It's a draw!
+          </Text>
+        </>
       );
     } else if (scores.length === 2) {
       return (
-        <div className='scoreboard-score-container'>
+        <>
           <ScoreboardTeam
             rank='gold'
             userImages={roomData.data.state.profilePictures}
             teamName={scores[0].team}
             team={roomTeams[scores[0].team]}
           />
-        </div>
+        </>
       );
     } else if (scores.length === 3) {
       return (
-        <div className='scoreboard-score-container'>
+        <>
           <ScoreboardTeam
             rank='gold'
             userImages={roomData.data.state.profilePictures}
@@ -81,11 +86,11 @@ const ScoreboardMain = ({ roomData, socketData, arenaData }) => {
             teamName={scores[1].team}
             team={roomTeams[scores[1].team]}
           />
-        </div>
+        </>
       );
     } else {
       return (
-        <div className='scoreboard-score-container'>
+        <>
           <ScoreboardTeam
             rank='silver'
             userImages={roomData.data.state.profilePictures}
@@ -104,33 +109,33 @@ const ScoreboardMain = ({ roomData, socketData, arenaData }) => {
             teamName={scores[2].team}
             team={roomTeams[scores[2].team]}
           />
-        </div>
+        </>
       );
     }
   };
 
   return (
-    <div className='scoreboard-page'>
-      <div className='scoreboard-back-button'>
-        <Whisper
-          placement='right'
-          trigger='hover'
-          speaker={<Tooltip>Go to Dashboard</Tooltip>}
-        >
-          <Icon
-            onClick={() => {
-              history.push('/dashboard');
-            }}
-            icon='back-arrow'
-            size='2x'
-            style={{ margin: '20px' }}
-          />
-        </Whisper>
-      </div>
-      {socket != null ? (
-        <div className='scoreboard-score-container'>{displayScoreCards()}</div>
-      ) : null}
-    </div>
+    <Flex bgColor='whitesmoke' width='100%' height='100%' flexDir='column'>
+      <Icon
+        as={BiArrowBack}
+        w={7}
+        h={7}
+        position='absolute'
+        top='0'
+        left='0'
+        cursor='pointer'
+        marginLeft='1em'
+        marginTop='1em'
+      />
+      <Flex
+        justifyContent='center'
+        alignItems='center'
+        width='100%'
+        height='100%'
+      >
+        {socket ? displayScoreCards() : null}
+      </Flex>
+    </Flex>
   );
 };
 const mapStateToProps = (state) => ({
