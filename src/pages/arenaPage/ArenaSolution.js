@@ -70,7 +70,8 @@ const editorThemesObject = {
   github: 'Github',
 };
 
-const ArenaSolution = ({ socket, currentQuestion }) => {
+const ArenaSolution = ({ socketData, currentQuestion }) => {
+  const socket = socketData.socket;
   // Editor settings state
   const [editorLanguage, setEditorLanguage] = useState('c_cpp');
   const [editorFontSize, setEditorFontSize] = useState(16);
@@ -205,7 +206,7 @@ const ArenaSolution = ({ socket, currentQuestion }) => {
 };
 
 const mapStateToProps = (state) => ({
-  roomData: state.roomData,
+  socketData: state.socketData,
 });
 
 export default connect(mapStateToProps, null)(ArenaSolution);

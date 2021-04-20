@@ -57,7 +57,7 @@ const ArenaBody = ({ questionsObject }) => {
         </Select>
       </Stack>
       <ArenaProblem currentQuestion={currentQuestion} />
-      <ArenaSolution />
+      <ArenaSolution currentQuestion={currentQuestion} />
     </Flex>
   );
 };
