@@ -4,7 +4,6 @@ import { Flex, Text, Image } from '@chakra-ui/react';
 import goldMedal from '../../assets/gold-medal.svg';
 import silverMedal from '../../assets/silver-medal.svg';
 import bronzeMedal from '../../assets/bronze-medal.svg';
-import './ScoreboardMain.css';
 
 const ScoreboardTeam = ({ rank, teamName, team, userImages }) => {
   let medalStyle;

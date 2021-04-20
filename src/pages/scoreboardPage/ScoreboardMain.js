@@ -1,5 +1,4 @@
 import React from 'react';
-import './ScoreboardMain.css';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ScoreboardTeam from './ScoreboardTeam';
@@ -126,6 +125,7 @@ const ScoreboardMain = ({ roomData, socketData, arenaData }) => {
         cursor='pointer'
         marginLeft='1em'
         marginTop='1em'
+        onClick={() => history.push('/dashboard')}
       />
       <Flex
         justifyContent='center'
@@ -138,9 +138,11 @@ const ScoreboardMain = ({ roomData, socketData, arenaData }) => {
     </Flex>
   );
 };
+
 const mapStateToProps = (state) => ({
   roomData: state.roomData,
   socketData: state.socketData,
   arenaData: state.arenaData,
 });
+
 export default connect(mapStateToProps, null)(ScoreboardMain);
