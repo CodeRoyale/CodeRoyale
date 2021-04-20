@@ -1,11 +1,11 @@
 import React from 'react';
-import ScoreboardPlayer from './ScoreboardPlayer';
+import PlayerCard from './PlayerCard';
 import { Flex, Text, Image } from '@chakra-ui/react';
 import goldMedal from '../../assets/gold-medal.svg';
 import silverMedal from '../../assets/silver-medal.svg';
 import bronzeMedal from '../../assets/bronze-medal.svg';
 
-const ScoreboardTeam = ({ rank, teamName, team, userImages }) => {
+const TeamCard = ({ rank, teamName, team, userImages }) => {
   let medalStyle;
 
   let playerCards = null;
@@ -39,7 +39,7 @@ const ScoreboardTeam = ({ rank, teamName, team, userImages }) => {
   if (team !== undefined) {
     playerCards = team.map((player, index) => {
       return (
-        <ScoreboardPlayer
+        <PlayerCard
           key={index}
           userImage={userImages[player]}
           userName={player}
@@ -73,4 +73,4 @@ const ScoreboardTeam = ({ rank, teamName, team, userImages }) => {
   );
 };
 
-export default ScoreboardTeam;
+export default TeamCard;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Flex, Image, Spacer, Text } from '@chakra-ui/react';
 
-const ScoreboardPlayer = ({ userImage, userName }) => {
+const PlayerCard = ({ userImage, userName }) => {
   return (
     <Flex
       pos='relative'
@@ -23,4 +23,4 @@ const ScoreboardPlayer = ({ userImage, userName }) => {
   );
 };
 
-export default ScoreboardPlayer;
+export default PlayerCard;

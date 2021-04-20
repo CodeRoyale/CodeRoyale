@@ -16,7 +16,7 @@ import Dashboard from './pages/dashboard/Dashboard';
 import RoomMain from './pages/roomPage/RoomMain';
 import Veto from './pages/veto/Veto';
 import ArenaMain from './pages/arenaPage/ArenaMain';
-import ScoreboardMain from './pages/scoreboardPage/ScoreboardMain';
+import Scoreboard from './pages/scoreboard/Scoreboard';
 import TestPage from './pages/testPage/TestPage';
 import isAuthenticated from './utils/isAuthenticated';
 import 'rsuite/lib/styles/index.less';
@@ -27,7 +27,7 @@ const componentRegistry = {
   Login: Login,
   SignUp: SignUp,
   ArenaMain: ArenaMain,
-  ScoreboardMain: ScoreboardMain,
+  Scoreboard: Scoreboard,
   RoomMain: RoomMain,
   Veto: Veto,
   Settings: Settings,

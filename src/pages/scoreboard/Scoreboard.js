@@ -1,11 +1,11 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import ScoreboardTeam from './ScoreboardTeam';
+import TeamCard from './TeamCard';
 import { Flex, Icon, Text } from '@chakra-ui/react';
 import { BiArrowBack } from 'react-icons/bi';
 
-const ScoreboardMain = ({ roomData, socketData, arenaData }) => {
+const Scoreboard = ({ roomData, socketData, arenaData }) => {
   const history = useHistory();
   const socket = socketData.socket;
 
@@ -62,7 +62,7 @@ const ScoreboardMain = ({ roomData, socketData, arenaData }) => {
     } else if (scores.length === 2) {
       return (
         <>
-          <ScoreboardTeam
+          <TeamCard
             rank='gold'
             userImages={roomData.data.state.profilePictures}
             teamName={scores[0].team}
@@ -73,13 +73,13 @@ const ScoreboardMain = ({ roomData, socketData, arenaData }) => {
     } else if (scores.length === 3) {
       return (
         <>
-          <ScoreboardTeam
+          <TeamCard
             rank='gold'
             userImages={roomData.data.state.profilePictures}
             teamName={scores[0].team}
             team={roomTeams[scores[0].team]}
           />
-          <ScoreboardTeam
+          <TeamCard
             rank='silver'
             userImages={roomData.data.state.profilePictures}
             teamName={scores[1].team}
@@ -90,19 +90,19 @@ const ScoreboardMain = ({ roomData, socketData, arenaData }) => {
     } else {
       return (
         <>
-          <ScoreboardTeam
+          <TeamCard
             rank='silver'
             userImages={roomData.data.state.profilePictures}
             teamName={scores[1].team}
             team={roomTeams[scores[1].team]}
           />
-          <ScoreboardTeam
+          <TeamCard
             rank='gold'
             userImages={roomData.data.state.profilePictures}
             teamName={scores[0].team}
             team={roomTeams[scores[0].team]}
           />
-          <ScoreboardTeam
+          <TeamCard
             rank='bronze'
             userImages={roomData.data.state.profilePictures}
             teamName={scores[2].team}
@@ -145,4 +145,4 @@ const mapStateToProps = (state) => ({
   arenaData: state.arenaData,
 });
 
-export default connect(mapStateToProps, null)(ScoreboardMain);
+export default connect(mapStateToProps, null)(Scoreboard);

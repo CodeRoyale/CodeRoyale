@@ -22,18 +22,6 @@ const routes = [
     needsAuth: false,
   },
   {
-    path: '/arena',
-    component: 'ArenaMain',
-    title: 'Arena | CodeRoyale',
-    needsAuth: true,
-  },
-  {
-    path: '/scoreboard',
-    component: 'ScoreboardMain',
-    title: 'Scoreboard | CodeRoyale',
-    needsAuth: true,
-  },
-  {
     path: '/room',
     component: 'RoomMain',
     title: 'Room | CodeRoyale',
@@ -43,6 +31,18 @@ const routes = [
     path: '/veto',
     component: 'Veto',
     title: 'Veto | CodeRoyale',
+    needsAuth: true,
+  },
+  {
+    path: '/arena',
+    component: 'ArenaMain',
+    title: 'Arena | CodeRoyale',
+    needsAuth: true,
+  },
+  {
+    path: '/scoreboard',
+    component: 'Scoreboard',
+    title: 'Scoreboard | CodeRoyale',
     needsAuth: true,
   },
   {
