@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './TeamCard.css';
-import CountBar from '../countBar/CountBar';
+import CountBar from '../../pages/roomPage/CountBar';
 import profileData from '../../utils/profileData';
 import { joinTeam, leaveTeam } from '../../actions/teamActions';
 import { connect } from 'react-redux';
+import { Flex, Text, Image, Icon, IconButton } from '@chakra-ui/react';
+import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 
 function TeamCard({
   team_name,
@@ -14,61 +16,65 @@ function TeamCard({
   joinTeam,
   leaveTeam,
 }) {
-  const [teamButtonClicked, setTeamButtonClicked] = useState(false);
+  // const [teamButtonClicked, setTeamButtonClicked] = useState(false);
   const userName = profileData().userName.toString();
-  const socket = socketData.socket;
-  const userCount = users.length;
-  let buttonText = '+';
+  // const socket = socketData.socket;
+  // const userCount = users.length;
+  // let buttonText = '+';
+  let buttonIcon = <Icon as={AiOutlinePlus} w={5} h={5} />;
 
-  // Checking if user is in the team or not...
+  // // Checking if user is in the team or not...
   if (users.includes(userName)) {
-    buttonText = '-';
+    buttonIcon = <Icon as={AiOutlineMinus} w={5} h={5} />;
   }
 
   //Join or leave team...
-  useEffect(() => {
-    if (teamButtonClicked) {
-      if (buttonText === '+') {
-        joinTeam(socket, { team_name });
-      } else if (buttonText === '-') {
-        leaveTeam(socket);
-      }
-      setTeamButtonClicked(false);
-    }
-  }, [teamButtonClicked, buttonText, joinTeam, leaveTeam, socket, team_name]);
+  // useEffect(() => {
+  //   if (teamButtonClicked) {
+  //     if (buttonText === '+') {
+  //       joinTeam(socket, { team_name });
+  //     } else if (buttonText === '-') {
+  //       leaveTeam(socket);
+  //     }
+  //     setTeamButtonClicked(false);
+  //   }
+  // }, [teamButtonClicked, buttonText, joinTeam, leaveTeam, socket, team_name]);
 
   // UserCard...
-  const userCards = users.map((user) => (
-    <div key={user} className='user-card'>
-      <img
-        className='user-card-image'
+  const userCards = users.map((user, index) => (
+    <Flex
+      key={index}
+      bgColor='rgba(221, 50, 20, 0.1)'
+      marginY='0.5em'
+      padding='0.5em'
+      alignItems='center'
+    >
+      <Image
+        borderRadius='full'
+        boxSize='40px'
         src={roomData.data.state.profilePictures[user]}
-        alt=''
+        alt='Profile Pic'
       />
-      <span className='user-card-text'>
-        <b>{user}</b>
-      </span>
-    </div>
+      <Text fontSize='sm' fontWeight='bold' color='#dd2c00' marginLeft='1em'>
+        {user}
+      </Text>
+    </Flex>
   ));
 
   return (
-    <div>
-      <div className='team-card'>
-        <div className='team-card-name'>{team_name}</div>
-        <div className='team-card-progress'>
-          <CountBar count={userCount} total={totalUsers} />
-        </div>
-        <div className='team-card-users'>{userCards}</div>
-        <div className='team-card-button-container'>
-          <button
-            className='team-card-button'
-            onClick={() => setTeamButtonClicked(true)}
-          >
-            {buttonText}
-          </button>
-        </div>
-      </div>
-    </div>
+    <Flex flexDir='column' border='2px red dotted' padding='1em'>
+      <Text textAlign='center' fontSize='lg' fontWeight='bold'>
+        Joel
+      </Text>
+      <CountBar count={1} total={2} />
+      {userCards}
+      <IconButton
+        size='sm'
+        aria-label='Join or leave team'
+        icon={buttonIcon}
+        colorScheme='orange'
+      />
+    </Flex>
   );
 }
 
