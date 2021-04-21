@@ -13,7 +13,7 @@ import Login from './pages/login/Login';
 import SignUp from './pages/signUp/SignUp';
 import Settings from './pages/settings/Settings';
 import Dashboard from './pages/dashboard/Dashboard';
-import RoomMain from './pages/roomPage/RoomMain';
+import Room from './pages/room/Room';
 import Veto from './pages/veto/Veto';
 import ArenaMain from './pages/arenaPage/ArenaMain';
 import Scoreboard from './pages/scoreboard/Scoreboard';
@@ -28,7 +28,7 @@ const componentRegistry = {
   SignUp: SignUp,
   ArenaMain: ArenaMain,
   Scoreboard: Scoreboard,
-  RoomMain: RoomMain,
+  Room: Room,
   Veto: Veto,
   Settings: Settings,
   Home: Home,

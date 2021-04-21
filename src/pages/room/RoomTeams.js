@@ -1,6 +1,6 @@
 import React from 'react';
 import { Flex } from '@chakra-ui/layout';
-import CreateTeamView from './CreateTeamView';
+import CreateTeam from './CreateTeam';
 import { connect } from 'react-redux';
 import TeamCard from './TeamCard';
 import profileData from '../../utils/profileData';
@@ -31,7 +31,7 @@ const RoomTeams = ({ roomData }) => {
   return (
     <Flex padding='0.4em'>
       {team_cards}
-      {userName === roomAdmin ? <CreateTeamView /> : null}
+      {userName === roomAdmin ? <CreateTeam /> : null}
     </Flex>
   );
 };

@@ -1,12 +1,12 @@
 import React from 'react';
-import CountBar from '../../pages/roomPage/CountBar';
+import CountBar from './CountBar';
 import profileData from '../../utils/profileData';
 import { joinTeam, leaveTeam } from '../../actions/teamActions';
 import { connect } from 'react-redux';
 import { Flex, Text, Image, Icon, IconButton } from '@chakra-ui/react';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 
-function TeamCard({
+const TeamCard = ({
   team_name,
   totalUsers,
   users,
@@ -14,7 +14,7 @@ function TeamCard({
   roomData,
   joinTeam,
   leaveTeam,
-}) {
+}) => {
   const userName = profileData().userName.toString();
   const socket = socketData.socket;
   const userCount = users.length;
@@ -82,7 +82,7 @@ function TeamCard({
       />
     </Flex>
   );
-}
+};
 
 export const mapStateToProps = (state) => ({
   socketData: state.socketData,

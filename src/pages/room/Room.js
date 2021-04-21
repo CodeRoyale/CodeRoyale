@@ -1,22 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import NavBar from '../../components/navBar/NavBar';
-import RoomHeader from './RoomHeader';
-import RoomRight from './RoomRight';
-import FloatingButton from '../../components/floatingButton/FloatingButton';
-import CreateTeamView from './CreateTeamView';
+import React, { useEffect } from 'react';
 import { getRoom } from '../../actions/roomActions';
 import { resetTeamAction } from '../../actions/teamActions';
 import { vetoStart } from '../../actions/vetoActions';
 import { TEAM_CREATED, TEAM_JOINED, TEAM_LEFT } from '../../utils/constants';
 import { connect } from 'react-redux';
-import profileData from '../../utils/profileData';
 import { useHistory } from 'react-router-dom';
-import './RoomMain.css';
 import { Flex, useToast } from '@chakra-ui/react';
 import SideBar from '../../components/sideBar/SideBar';
 import RoomBody from './RoomBody';
 
-const RoomMain = ({
+const Room = ({
   roomData,
   socketData,
   teamData,
@@ -26,22 +19,13 @@ const RoomMain = ({
   vetoStart,
 }) => {
   const toast = useToast();
-  const [createTeamShow, setCreateTeamShow] = useState(false);
   const socket = socketData.socket;
-  const userName = profileData().userName.toString();
   const history = useHistory();
 
-  // Room Details...
-  let roomTeams, roomConfig, roomState, roomCompetition, room_id, admin;
-  if (roomData.data !== null) {
-    roomTeams = roomData.data.teams;
-    roomConfig = roomData.data.config;
-    roomState = roomData.data.state;
-    roomCompetition = roomData.data.competition;
-    if (roomConfig !== undefined) {
-      room_id = roomConfig.id;
-      admin = roomConfig.admin;
-    }
+  // Getting the room Id
+  let room_id;
+  if (roomData.data) {
+    room_id = roomData.data.config.id;
   }
 
   // Get room & check if veto started
@@ -131,4 +115,4 @@ export default connect(mapStateToProps, {
   getRoom,
   vetoStart,
   resetTeamAction,
-})(RoomMain);
+})(Room);

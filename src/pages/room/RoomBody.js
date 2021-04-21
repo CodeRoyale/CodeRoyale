@@ -1,6 +1,6 @@
 import { Flex } from '@chakra-ui/layout';
 import React from 'react';
-import RoomHeader from './RoomHeader';
+import RoomTopBar from './RoomTopBar';
 import RoomTeams from './RoomTeams';
 
 const RoomBody = ({ roomData }) => {
@@ -14,7 +14,7 @@ const RoomBody = ({ roomData }) => {
       width='75%'
       flexDir='column'
     >
-      <RoomHeader />
+      <RoomTopBar />
       <RoomTeams />
     </Flex>
   );

@@ -20,7 +20,7 @@ import {
 } from '@chakra-ui/react';
 import { BsPlus } from 'react-icons/bs';
 
-const CreateTeamView = ({ socketData, createTeam }) => {
+const CreateTeam = ({ socketData, createTeam }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef();
 
@@ -77,4 +77,4 @@ const mapStateToProps = (state) => ({
   socketData: state.socketData,
 });
 
-export default connect(mapStateToProps, { createTeam })(CreateTeamView);
+export default connect(mapStateToProps, { createTeam })(CreateTeam);

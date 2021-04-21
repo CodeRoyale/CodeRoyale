@@ -4,12 +4,7 @@ import { connect } from 'react-redux';
 import { veto, resetVetoAction } from '../../actions/vetoActions';
 import { Button, useToast } from '@chakra-ui/react';
 
-const StartCompetitionButton = ({
-  socketData,
-  vetoData,
-  veto,
-  resetVetoAction,
-}) => {
+const StartCompetition = ({ socketData, vetoData, veto, resetVetoAction }) => {
   const socket = socketData.socket;
   const toast = useToast();
 
@@ -53,5 +48,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { veto, resetVetoAction })(
-  StartCompetitionButton
+  StartCompetition
 );

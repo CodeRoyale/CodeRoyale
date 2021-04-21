@@ -23,7 +23,7 @@ const routes = [
   },
   {
     path: '/room',
-    component: 'RoomMain',
+    component: 'Room',
     title: 'Room | CodeRoyale',
     needsAuth: true,
   },

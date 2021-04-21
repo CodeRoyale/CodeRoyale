@@ -1,13 +1,13 @@
 import React from 'react';
 import CountBar from './CountBar';
-import CloseRoomView from './CloseRoomView';
-import StartCompetitionButton from './StartCompetitionButton';
+import CloseRoom from './CloseRoom';
+import StartCompetition from './StartCompetition';
 import { connect } from 'react-redux';
 import profileData from '../../utils/profileData';
 import { Flex, Stack, Text } from '@chakra-ui/react';
 import RoomInfo from './RoomInfo';
 
-const RoomHeader = ({ roomData }) => {
+const RoomTopBar = ({ roomData }) => {
   let numberOfPlayers = 0;
   let playersInTeams = 0;
   let numberOfTeams = 0;
@@ -57,8 +57,8 @@ const RoomHeader = ({ roomData }) => {
       <Stack marginLeft='1em'>
         {userName === roomAdmin ? (
           <>
-            <CloseRoomView />
-            <StartCompetitionButton />
+            <CloseRoom />
+            <StartCompetition />
           </>
         ) : null}
         <RoomInfo />
@@ -71,4 +71,4 @@ const mapStateToProps = (state) => ({
   roomData: state.roomData,
 });
 
-export default connect(mapStateToProps, null)(RoomHeader);
+export default connect(mapStateToProps, null)(RoomTopBar);

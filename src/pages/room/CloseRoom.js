@@ -16,7 +16,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 
-const CloseRoomView = ({ roomData, socketData, closeRoom }) => {
+const CloseRoom = ({ roomData, socketData, closeRoom }) => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
@@ -94,4 +94,4 @@ const mapStateToProps = (state) => ({
   roomData: state.roomData,
 });
 
-export default connect(mapStateToProps, { closeRoom })(CloseRoomView);
+export default connect(mapStateToProps, { closeRoom })(CloseRoom);
