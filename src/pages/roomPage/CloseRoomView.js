@@ -1,84 +1,93 @@
-import React, { useState, useEffect } from 'react';
-import { Modal, Button, Alert } from 'rsuite';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { ROOM_CLOSED } from '../../utils/constants';
 import { closeRoom } from '../../actions/roomActions';
 import { useHistory } from 'react-router-dom';
+import {
+  Button,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  AlertDialogCloseButton,
+  useDisclosure,
+  useToast,
+} from '@chakra-ui/react';
 
-function CloseRoomView({ roomData, socketData, closeRoom }) {
-  const [showPrompt, setShowPrompt] = useState(false);
+const CloseRoomView = ({ roomData, socketData, closeRoom }) => {
+  const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
+
   const socket = socketData.socket;
   const history = useHistory();
-  const [state, setState] = useState({
-    closeRoomClicked: false,
-    actionDone: false,
-  });
-  const { closeRoomClicked, actionDone } = state;
-  const [redirect, setRedirect] = useState(false);
-
-  //Close Room...
-  useEffect(() => {
-    if (closeRoomClicked) {
-      closeRoom(socket);
-      setState({ ...state, closeRoomClicked: false, actionDone: true });
-    }
-  }, [closeRoomClicked, closeRoom, socket, state]);
+  const [closeRoomActionDone, setCloseRoomActionDone] = useState(false);
 
   useEffect(() => {
-    if (actionDone && roomData.type === ROOM_CLOSED) {
-      setRedirect(true);
-    } else if (actionDone && roomData.error !== null && !roomData.loading) {
-      Alert.error(roomData.error);
-      setState({ ...state, actionDone: false });
+    if (closeRoomActionDone && roomData.type === ROOM_CLOSED) {
+      history.push('/dashboard');
+      setCloseRoomActionDone(false);
+    } else if (closeRoomActionDone && roomData.error && !roomData.loading) {
+      toast({
+        title: 'Error on Close Room',
+        description: roomData.error,
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
+      setCloseRoomActionDone(false);
     }
   }, [
-    setRedirect,
-    roomData.type,
+    history,
+    toast,
+    closeRoomActionDone,
     roomData.error,
     roomData.loading,
-    state,
-    actionDone,
+    roomData.type,
   ]);
 
-  if (redirect) {
-    history.push('/dashboard');
-  }
+  const handleCloseRoom = () => {
+    closeRoom(socket);
+    setCloseRoomActionDone(true);
+  };
 
   return (
-    <div className='close-room-view'>
-      <Button
-        onClick={() => setShowPrompt(true)}
-        appearance='primary'
-        color='red'
-        size='sm'
-      >
+    <>
+      <Button onClick={onOpen} colorScheme='red' size='sm'>
         Close Room
       </Button>
-      <Modal
-        backdrop
-        show={showPrompt}
-        onHide={() => setShowPrompt(false)}
-        size='xs'
+      <AlertDialog
+        motionPreset='slideInBottom'
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+        isOpen={isOpen}
+        isCentered
       >
-        <Modal.Header>
-          <Modal.Title>Close Room</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Are you sure you want to delete this room..</Modal.Body>
-        <Modal.Footer>
-          <Button
-            onClick={() => setState({ ...state, closeRoomClicked: true })}
-            appearance='primary'
-          >
-            Ok
-          </Button>
-          <Button onClick={() => setShowPrompt(false)} appearance='subtle'>
-            Cancel
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </div>
+        <AlertDialogOverlay />
+
+        <AlertDialogContent>
+          <AlertDialogHeader>Close Room?</AlertDialogHeader>
+          <AlertDialogCloseButton />
+          <AlertDialogBody>
+            Are you sure you want to close the room? You can't undo this action
+            afterwards.
+          </AlertDialogBody>
+          <AlertDialogFooter>
+            <Button ref={cancelRef} onClick={onClose}>
+              Cancel
+            </Button>
+            <Button colorScheme='red' ml={3} onClick={handleCloseRoom}>
+              Close Room
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
-}
+};
 
 const mapStateToProps = (state) => ({
   socketData: state.socketData,

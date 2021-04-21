@@ -5,6 +5,7 @@ import CloseRoomView from './CloseRoomView';
 import StartCompetitionButton from './StartCompetitionButton';
 import profileData from '../../utils/profileData';
 import { Icon } from 'rsuite';
+import { Flex, Stack, Text, Progress } from '@chakra-ui/react';
 
 function RoomHeader({ config, state, teams, competition, admin }) {
   const [showExtraFeatures, setShowExtraFeatures] = useState(false);
@@ -91,51 +92,31 @@ function RoomHeader({ config, state, teams, competition, admin }) {
   }
 
   return (
-    <div>
-      <div className='room-body-header'>
-        <div className='room-body-header-left'>
-          <div>
-            <p
-              style={{
-                marginLeft: textMarginLeft,
-                fontSize: textFontSize,
-              }}
-            >
-              Number of Users
-            </p>
-            <CountBar count={playersRoom} total={max_perRoom} width={'100%'} />
-          </div>
-          <div>
-            <p
-              style={{
-                marginLeft: textMarginLeft,
-                fontSize: textFontSize,
-              }}
-            >
-              Number of Teams
-            </p>
-            <CountBar count={teamsNumber} total={max_teams} width={'100%'} />
-          </div>
-        </div>
-        {userName === admin ? (
-          <div className='room-body-header-right'>
-            <div>
-              <StartCompetitionButton />
-            </div>
-            <div>
-              <CloseRoomView />
-            </div>
-          </div>
-        ) : null}
-      </div>
-      <div
-        className='room-body-header-drawer'
-        onClick={() => setShowExtraFeatures(!showExtraFeatures)}
-      >
-        <Icon icon={icon} />
-      </div>
-      {extraFeatureView}
-    </div>
+    <Flex
+      bg='white'
+      height='115px'
+      width='100%'
+      alignItems='center'
+      padding='1.47em'
+      border='2px green dotted'
+    >
+      <Stack width='100%'>
+        <>
+          <Text>Number of Users in Room</Text>
+          <Progress value={playersRoom} />
+        </>
+        <>
+          <Text>Number of Teams in Room</Text>
+          <Progress value={teamsNumber} />
+        </>
+      </Stack>
+      {true ? (
+        <Stack marginLeft='1em'>
+          <StartCompetitionButton />
+          <CloseRoomView />
+        </Stack>
+      ) : null}
+    </Flex>
   );
 }
 

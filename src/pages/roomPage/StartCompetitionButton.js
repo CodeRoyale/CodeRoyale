@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { ERROR_MSG } from '../../utils/constants';
 import { connect } from 'react-redux';
 import { veto, resetVetoAction } from '../../actions/vetoActions';
-import { Loader, Alert, Button } from 'rsuite';
+import { Button, useToast } from '@chakra-ui/react';
 
 const StartCompetitionButton = ({
   socketData,
@@ -11,6 +11,7 @@ const StartCompetitionButton = ({
   resetVetoAction,
 }) => {
   const socket = socketData.socket;
+  const toast = useToast();
 
   const onClickStartCompetition = () => {
     veto(socket);
@@ -19,33 +20,29 @@ const StartCompetitionButton = ({
   // Starting veto error handling
   useEffect(() => {
     if (vetoData.error) {
-      Alert.error(ERROR_MSG);
+      toast({
+        title: 'Error on Veto',
+        description: ERROR_MSG,
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
       resetVetoAction();
     }
-  }, [vetoData.error, resetVetoAction]);
+  }, [vetoData.error, resetVetoAction, toast]);
 
   let content = (
-    <div className='start-competition-view'>
-      <div className='start-competition-view-button'>
-        <Button
-          size='sm'
-          onClick={onClickStartCompetition}
-          appearance='primary'
-        >
-          Start Competition
-        </Button>
-      </div>
-    </div>
+    <Button
+      colorScheme='orange'
+      size='sm'
+      onClick={onClickStartCompetition}
+      isLoading={vetoData.vetoRequested}
+      loadingText='Waiting for veto to start'
+    >
+      Start Competition
+    </Button>
   );
-
-  // Show loading if veto is requested by admin
-  if (vetoData.vetoRequested) {
-    content = (
-      <div className='start-competition-view'>
-        <Loader size='md' content='Waiting for veto to start..' />
-      </div>
-    );
-  }
 
   return content;
 };

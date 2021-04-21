@@ -14,6 +14,9 @@ import { connect } from 'react-redux';
 import profileData from '../../utils/profileData';
 import { useHistory } from 'react-router-dom';
 import './RoomMain.css';
+import { Flex } from '@chakra-ui/layout';
+import SideBar from '../../components/sideBar/SideBar';
+import RoomBody from './RoomBody';
 
 const RoomMain = ({
   roomData,
@@ -78,9 +81,9 @@ const RoomMain = ({
   });
 
   // Checking all the conditions to be in the room...
-  if (socket === null) {
-    history.push('/dashboard');
-  }
+  // if (socket === null) {
+  //   history.push('/dashboard');
+  // }
 
   if (vetoData.vetoStarted) {
     history.push('/veto');
@@ -100,36 +103,10 @@ const RoomMain = ({
   }
 
   return (
-    <div className='room'>
-      <NavBar loggedIn={true} />
-      <div className='room-body'>
-        <div className='room-body-left'>
-          <div>
-            <RoomHeader
-              admin={admin}
-              config={roomConfig}
-              state={roomState}
-              teams={roomTeams}
-              competition={roomCompetition}
-            />
-          </div>
-          <div className='room-left-body'>{team_cards}</div>
-        </div>
-        <div className='room-body-right'>
-          <RoomRight admin={admin} room_id={room_id} />
-        </div>
-      </div>
-      {userName === admin ? (
-        <FloatingButton onClick={() => setCreateTeamShow(true)}>
-          +
-        </FloatingButton>
-      ) : null}
-
-      <CreateTeamView
-        show={createTeamShow}
-        onClose={() => setCreateTeamShow(false)}
-      />
-    </div>
+    <Flex pos='relative'>
+      <SideBar />
+      <RoomBody />
+    </Flex>
   );
 };
 

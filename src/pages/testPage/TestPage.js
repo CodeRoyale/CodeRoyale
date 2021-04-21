@@ -1,7 +1,7 @@
 import React from 'react';
-import ScoreboardTeam from '../../pages/scoreboardPage/ScoreboardTeam';
+// import ScoreboardTeam from '../../pages/scoreboardPage/ScoreboardTeam';
 import './TestPage.css';
-import ScoreboardPlayer from '../scoreboardPage/ScoreboardPlayer';
+// import ScoreboardPlayer from '../scoreboardPage/ScoreboardPlayer';
 
 const TestPage = () => {
   // document.body.style = 'background: gray;';
@@ -11,12 +11,12 @@ const TestPage = () => {
         userImage='https://bit.ly/sage-adebayo'
         userName='joelmathew'
       /> */}
-      <ScoreboardTeam
+      {/* <ScoreboardTeam
         rank='gold'
         userImages={{ joelmathewkoshy: 'https://bit.ly/sage-adebayo' }}
         teamName={'asd'}
         team={['joelmathewkoshy']}
-      />
+      /> */}
     </div>
   );
 };
