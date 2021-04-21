@@ -30,6 +30,7 @@ const CreateTeam = ({ socketData, createTeam }) => {
   // Create team action
   const handleCreateTeam = () => {
     createTeam(socket, { team_name: teamName });
+    setTeamName('');
     onClose();
   };
 
