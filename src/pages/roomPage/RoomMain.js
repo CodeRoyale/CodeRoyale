@@ -8,12 +8,11 @@ import { getRoom } from '../../actions/roomActions';
 import { resetTeamAction } from '../../actions/teamActions';
 import { vetoStart } from '../../actions/vetoActions';
 import { TEAM_CREATED, TEAM_JOINED, TEAM_LEFT } from '../../utils/constants';
-import { Alert } from 'rsuite';
 import { connect } from 'react-redux';
 import profileData from '../../utils/profileData';
 import { useHistory } from 'react-router-dom';
 import './RoomMain.css';
-import { Flex } from '@chakra-ui/layout';
+import { Flex, useToast } from '@chakra-ui/react';
 import SideBar from '../../components/sideBar/SideBar';
 import RoomBody from './RoomBody';
 
@@ -26,6 +25,7 @@ const RoomMain = ({
   vetoData,
   vetoStart,
 }) => {
+  const toast = useToast();
   const [createTeamShow, setCreateTeamShow] = useState(false);
   const socket = socketData.socket;
   const userName = profileData().userName.toString();
@@ -59,22 +59,46 @@ const RoomMain = ({
   useEffect(() => {
     switch (teamData.type) {
       case TEAM_CREATED:
-        Alert.success('Team Created');
+        toast({
+          title: 'You have created a new team',
+          status: 'success',
+          position: 'top-right',
+          duration: 4000,
+          isClosable: true,
+        });
         resetTeamAction();
         break;
       case TEAM_JOINED:
-        Alert.success('You have joined a team');
+        toast({
+          title: 'You have joined a team',
+          status: 'success',
+          position: 'top-right',
+          duration: 4000,
+          isClosable: true,
+        });
         resetTeamAction();
         break;
       case TEAM_LEFT:
-        Alert.success('You have left a team');
+        toast({
+          title: 'You have left a team',
+          status: 'success',
+          position: 'top-right',
+          duration: 4000,
+          isClosable: true,
+        });
         resetTeamAction();
         break;
       default:
         break;
     }
     if (teamData.error !== null) {
-      Alert.error(teamData.error);
+      toast({
+        title: teamData.error,
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
       resetTeamAction();
     }
   });
@@ -96,14 +120,13 @@ const RoomMain = ({
   );
 };
 
-export const mapStateToProps = (state) => {
-  return {
-    roomData: state.roomData,
-    teamData: state.teamData,
-    socketData: state.socketData,
-    vetoData: state.vetoData,
-  };
-};
+export const mapStateToProps = (state) => ({
+  roomData: state.roomData,
+  teamData: state.teamData,
+  socketData: state.socketData,
+  vetoData: state.vetoData,
+});
+
 export default connect(mapStateToProps, {
   getRoom,
   vetoStart,
