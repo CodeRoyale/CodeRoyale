@@ -6,10 +6,9 @@ import StartCompetitionButton from './StartCompetitionButton';
 import profileData from '../../utils/profileData';
 import { Icon } from 'rsuite';
 import { Flex, Stack, Text, Progress } from '@chakra-ui/react';
+import RoomInfo from './RoomInfo';
 
 function RoomHeader({ config, state, teams, competition, admin }) {
-  const [showExtraFeatures, setShowExtraFeatures] = useState(false);
-  const userName = profileData().userName.toString();
   let playersRoom = 0;
   let max_perRoom = 0;
   let playersTeam = 0;
@@ -45,56 +44,10 @@ function RoomHeader({ config, state, teams, competition, admin }) {
     timeLimit = competition.veto.timeLimit;
   }
 
-  // Styles...
-  const textMarginLeft = '20px';
-  const textFontSize = 'small';
-  let icon = 'angle-down';
-
-  //Extra Features...
-  let extraFeatureView = null;
-  if (showExtraFeatures) {
-    extraFeatureView = (
-      <div className='room-body-header-extra'>
-        <table>
-          <tbody>
-            <tr>
-              <td>Maximum Questions</td>
-              <td>
-                <b>{max_questions}</b>
-              </td>
-              <td>Maximum Votes</td>
-              <td>
-                <b>{max_vote}</b>
-              </td>
-              <td>Number of Veto Questions</td>
-              <td>
-                <b>{vetoQuesCount}</b>
-              </td>
-            </tr>
-            <tr>
-              <td>Time Limit</td>
-              <td>
-                <b>{millisecondsToString(timeLimit)}</b>
-              </td>
-              <td>Private Room</td>
-              <td>
-                <b>{privateRoom ? 'True' : 'False'}</b>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    );
-    icon = 'angle-up';
-  } else {
-    extraFeatureView = null;
-    icon = 'angle-down';
-  }
-
   return (
     <Flex
       bg='white'
-      height='115px'
+      height='150px'
       width='100%'
       alignItems='center'
       padding='1.47em'
@@ -113,6 +66,7 @@ function RoomHeader({ config, state, teams, competition, admin }) {
       {true ? (
         <Stack marginLeft='1em'>
           <StartCompetitionButton />
+          <RoomInfo />
           <CloseRoomView />
         </Stack>
       ) : null}
