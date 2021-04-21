@@ -12,9 +12,11 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   AlertDialogCloseButton,
+  Icon,
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
+import { IoClose } from 'react-icons/io5';
 
 const CloseRoom = ({ roomData, socketData, closeRoom }) => {
   const toast = useToast();
@@ -56,7 +58,12 @@ const CloseRoom = ({ roomData, socketData, closeRoom }) => {
 
   return (
     <>
-      <Button onClick={onOpen} colorScheme='red' size='sm'>
+      <Button
+        leftIcon={<Icon as={IoClose} />}
+        onClick={onOpen}
+        colorScheme='red'
+        size='sm'
+      >
         Close Room
       </Button>
       <AlertDialog

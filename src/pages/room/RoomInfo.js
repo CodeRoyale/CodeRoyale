@@ -15,9 +15,11 @@ import {
   Tooltip,
   Text,
   Stack,
+  Icon,
 } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import { millisecondsToString } from '../../utils/timeToString';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 const RoomInfo = ({ roomData }) => {
   const [copied, setCopied] = useState(false);
@@ -70,7 +72,12 @@ const RoomInfo = ({ roomData }) => {
 
   return (
     <>
-      <Button size='sm' colorScheme='orange' onClick={onOpen}>
+      <Button
+        size='sm'
+        leftIcon={<Icon as={AiOutlineInfoCircle} />}
+        colorScheme='orange'
+        onClick={onOpen}
+      >
         Room Info
       </Button>
 
