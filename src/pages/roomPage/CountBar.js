@@ -11,6 +11,7 @@ const CountBar = ({ count, total }) => {
         marginRight='0.5em'
         value={percent}
         width='100%'
+        colorScheme='orange'
       />
       <Text fontWeight='bold'>{total}</Text>
     </Flex>

@@ -35,7 +35,6 @@ const RoomHeader = ({ roomData }) => {
       width='100%'
       alignItems='center'
       padding='1.47em'
-      border='2px green dotted'
     >
       <Stack width='100%'>
         <>
@@ -58,8 +57,8 @@ const RoomHeader = ({ roomData }) => {
       <Stack marginLeft='1em'>
         {userName === roomAdmin ? (
           <>
-            <StartCompetitionButton />
             <CloseRoomView />
+            <StartCompetitionButton />
           </>
         ) : null}
         <RoomInfo />

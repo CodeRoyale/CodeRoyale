@@ -1,58 +1,77 @@
-import React, { useState, useEffect } from 'react';
-import { Modal, Input, Button } from 'rsuite';
+import React, { useState, useRef } from 'react';
 import { createTeam } from '../../actions/teamActions';
 import { connect } from 'react-redux';
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  IconButton,
+  Icon,
+  Flex,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { BsPlus } from 'react-icons/bs';
 
-function CreateTeamView({ socketData, createTeam, show, onClose }) {
-  const [state, setState] = useState({
-    team_name: '',
-    createTeamClicked: false,
-  });
-  const { team_name, createTeamClicked } = state;
+const CreateTeamView = ({ socketData, createTeam }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const initialRef = useRef();
+
+  const [teamName, setTeamName] = useState('');
   const socket = socketData.socket;
 
-  //Create Team...
-  useEffect(() => {
-    if (createTeamClicked) {
-      createTeam(socket, { team_name });
-      setState({
-        ...state,
-        team_name: '',
-        createTeamClicked: false,
-      });
-    }
-  }, [createTeamClicked, setState, state, socket, team_name, createTeam]);
+  // Create team action
+  const handleCreateTeam = () => {
+    createTeam(socket, { team_name: teamName });
+    onClose();
+  };
 
   return (
-    <div>
-      <Modal size='xs' show={show} onHide={onClose}>
-        <Modal.Header>
-          <Modal.Title>Create Team</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Input
-            style={{ width: 300 }}
-            value={team_name}
-            onChange={(value) => {
-              setState({ ...state, team_name: value });
-            }}
-            placeholder='Enter Team Name...'
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            onClick={() => {
-              setState({ ...state, createTeamClicked: true });
-            }}
-            appearance='primary'
-          >
-            Create Team
-          </Button>
-        </Modal.Footer>
+    <Flex pos='fixed' bottom='0' right='0' marginRight='1em' marginBottom='1em'>
+      <IconButton
+        aria-label='Create Team'
+        icon={<Icon as={BsPlus} w={6} h={6} />}
+        borderRadius='full'
+        boxSize='50px'
+        colorScheme='orange'
+        onClick={onOpen}
+      />
+
+      <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Create a team</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>Team name</FormLabel>
+              <Input
+                ref={initialRef}
+                value={teamName}
+                placeholder='Team name'
+                onChange={(e) => setTeamName(e.target.value)}
+              />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='orange' mr={3} onClick={handleCreateTeam}>
+              Create Team
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
       </Modal>
-    </div>
+    </Flex>
   );
-}
+};
 
 const mapStateToProps = (state) => ({
   socketData: state.socketData,
