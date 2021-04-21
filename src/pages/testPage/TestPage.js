@@ -1,5 +1,5 @@
 import React from 'react';
-import TeamCard from '../../components/teamCard/TeamCard';
+
 // import ScoreboardTeam from '../../pages/scoreboardPage/ScoreboardTeam';
 import './TestPage.css';
 // import ScoreboardPlayer from '../scoreboardPage/ScoreboardPlayer';
@@ -18,7 +18,6 @@ const TestPage = () => {
         teamName={'asd'}
         team={['joelmathewkoshy']}
       /> */}
-      <TeamCard />
     </div>
   );
 };

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import './TeamCard.css';
+import React from 'react';
 import CountBar from '../../pages/roomPage/CountBar';
 import profileData from '../../utils/profileData';
 import { joinTeam, leaveTeam } from '../../actions/teamActions';
@@ -16,29 +15,27 @@ function TeamCard({
   joinTeam,
   leaveTeam,
 }) {
-  // const [teamButtonClicked, setTeamButtonClicked] = useState(false);
   const userName = profileData().userName.toString();
-  // const socket = socketData.socket;
-  // const userCount = users.length;
-  // let buttonText = '+';
-  let buttonIcon = <Icon as={AiOutlinePlus} w={5} h={5} />;
+  const socket = socketData.socket;
+  const userCount = users.length;
+  let buttonIcon = (
+    <Icon as={AiOutlinePlus} w={4} h={4} customtype='joinTeam' />
+  );
 
   // // Checking if user is in the team or not...
   if (users.includes(userName)) {
-    buttonIcon = <Icon as={AiOutlineMinus} w={5} h={5} />;
+    buttonIcon = (
+      <Icon as={AiOutlineMinus} w={4} h={4} customtype='leaveTeam' />
+    );
   }
 
-  //Join or leave team...
-  // useEffect(() => {
-  //   if (teamButtonClicked) {
-  //     if (buttonText === '+') {
-  //       joinTeam(socket, { team_name });
-  //     } else if (buttonText === '-') {
-  //       leaveTeam(socket);
-  //     }
-  //     setTeamButtonClicked(false);
-  //   }
-  // }, [teamButtonClicked, buttonText, joinTeam, leaveTeam, socket, team_name]);
+  const handleJoinOrLeaveTeam = () => {
+    if (buttonIcon.props.customtype === 'joinTeam') {
+      joinTeam(socket, { team_name });
+    } else if (buttonIcon.props.customtype === 'leaveTeam') {
+      leaveTeam(socket);
+    }
+  };
 
   // UserCard...
   const userCards = users.map((user, index) => (
@@ -62,28 +59,35 @@ function TeamCard({
   ));
 
   return (
-    <Flex flexDir='column' border='2px red dotted' padding='1em'>
+    <Flex
+      width='230px'
+      bgColor='white'
+      flexDir='column'
+      padding='1em'
+      margin='1em'
+      boxShadow='0 0 1px 1px rgba(0, 0, 0, 0.2)'
+    >
       <Text textAlign='center' fontSize='lg' fontWeight='bold'>
-        Joel
+        {team_name}
       </Text>
-      <CountBar count={1} total={2} />
+      <CountBar count={userCount} total={totalUsers} />
       {userCards}
       <IconButton
-        size='sm'
+        size='xs'
+        marginTop='0.4em'
         aria-label='Join or leave team'
         icon={buttonIcon}
         colorScheme='orange'
+        onClick={handleJoinOrLeaveTeam}
       />
     </Flex>
   );
 }
 
-export const mapStateToProps = (state) => {
-  return {
-    socketData: state.socketData,
-    roomData: state.roomData,
-    teamData: state.teamData,
-  };
-};
+export const mapStateToProps = (state) => ({
+  socketData: state.socketData,
+  roomData: state.roomData,
+  teamData: state.teamData,
+});
 
 export default connect(mapStateToProps, { joinTeam, leaveTeam })(TeamCard);

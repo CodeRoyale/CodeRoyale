@@ -3,7 +3,6 @@ import NavBar from '../../components/navBar/NavBar';
 import RoomHeader from './RoomHeader';
 import RoomRight from './RoomRight';
 import FloatingButton from '../../components/floatingButton/FloatingButton';
-import TeamCard from '../../components/teamCard/TeamCard';
 import CreateTeamView from './CreateTeamView';
 import { getRoom } from '../../actions/roomActions';
 import { resetTeamAction } from '../../actions/teamActions';
@@ -87,19 +86,6 @@ const RoomMain = ({
 
   if (vetoData.vetoStarted) {
     history.push('/veto');
-  }
-
-  // Setting Team Cards...
-  let team_cards = [];
-  for (var teamName in roomTeams) {
-    team_cards.push(
-      <TeamCard
-        key={teamName}
-        team_name={teamName}
-        totalUsers={roomConfig['max_perTeam']}
-        users={roomTeams[teamName]}
-      />
-    );
   }
 
   return (

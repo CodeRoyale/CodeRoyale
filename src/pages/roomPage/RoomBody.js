@@ -10,7 +10,7 @@ const RoomBody = ({ roomData }) => {
       top='0'
       right='0'
       height='100vh'
-      bgColor='white'
+      bgColor='whitesmoke'
       width='75%'
       flexDir='column'
     >

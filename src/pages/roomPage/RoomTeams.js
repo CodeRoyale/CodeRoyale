@@ -2,7 +2,7 @@ import React from 'react';
 import { Flex } from '@chakra-ui/layout';
 import CreateTeamView from './CreateTeamView';
 import { connect } from 'react-redux';
-import TeamCard from '../../components/teamCard/TeamCard';
+import TeamCard from './TeamCard';
 
 const RoomTeams = ({ roomData }) => {
   let roomTeams, roomConfig;
@@ -26,12 +26,7 @@ const RoomTeams = ({ roomData }) => {
   }
 
   return (
-    <Flex
-      bgColor='whitesmoke'
-      height='100%'
-      padding='1em'
-      border='2px red dotted'
-    >
+    <Flex padding='0.4em'>
       {team_cards}
       <CreateTeamView />
     </Flex>
