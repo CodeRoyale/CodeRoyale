@@ -2,16 +2,20 @@ import React from 'react';
 import CountBar from './CountBar';
 import CloseRoomView from './CloseRoomView';
 import StartCompetitionButton from './StartCompetitionButton';
+import { connect } from 'react-redux';
+import profileData from '../../utils/profileData';
 import { Flex, Stack, Text } from '@chakra-ui/react';
 import RoomInfo from './RoomInfo';
-import { connect } from 'react-redux';
 
 const RoomHeader = ({ roomData }) => {
-  let numberOfPlayers;
-  let playersInTeams;
-  let numberOfTeams;
-  let maxUsersInRoom;
-  let maxTeamsInRoom;
+  let numberOfPlayers = 0;
+  let playersInTeams = 0;
+  let numberOfTeams = 0;
+  let maxUsersInRoom = 0;
+  let maxTeamsInRoom = 0;
+  let roomAdmin;
+
+  const userName = profileData().userName.toString();
 
   if (roomData.data) {
     maxUsersInRoom = roomData.data.config.max_perRoom;
@@ -21,6 +25,7 @@ const RoomHeader = ({ roomData }) => {
       playersInTeams += roomData.data.teams[teamName].length;
     }
     numberOfPlayers = playersInTeams + roomData.data.state.bench.length;
+    roomAdmin = roomData.data.config.admin;
   }
 
   return (
@@ -50,13 +55,15 @@ const RoomHeader = ({ roomData }) => {
           />
         </>
       </Stack>
-      {true ? (
-        <Stack marginLeft='1em'>
-          <StartCompetitionButton />
-          <RoomInfo />
-          <CloseRoomView />
-        </Stack>
-      ) : null}
+      <Stack marginLeft='1em'>
+        {userName === roomAdmin ? (
+          <>
+            <StartCompetitionButton />
+            <CloseRoomView />
+          </>
+        ) : null}
+        <RoomInfo />
+      </Stack>
     </Flex>
   );
 };

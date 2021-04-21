@@ -61,7 +61,7 @@ const RoomInfo = ({ roomData }) => {
         <Text fontSize='md'>Maximum questions in veto: {maxVetoQuestions}</Text>
         <Text fontSize='md'>Maximum votes allowed in veto: {maxVotes}</Text>
         <Text fontSize='md'>
-          Time limit of competion: {millisecondsToString(2700000)}
+          Time limit of competion: {millisecondsToString(timeLimit)}
         </Text>
         <Text fontSize='md'>Private room: {privateRoom ? 'Yes' : 'No'}</Text>
       </Stack>
