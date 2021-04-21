@@ -17,6 +17,7 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { connect } from 'react-redux';
+import { millisecondsToString } from '../../utils/timeToString';
 
 const RoomInfo = ({ roomData }) => {
   const [copied, setCopied] = useState(false);
@@ -59,7 +60,9 @@ const RoomInfo = ({ roomData }) => {
         </Text>
         <Text fontSize='md'>Maximum questions in veto: {maxVetoQuestions}</Text>
         <Text fontSize='md'>Maximum votes allowed in veto: {maxVotes}</Text>
-        <Text fontSize='md'>Time limit of competion: {timeLimit}</Text>
+        <Text fontSize='md'>
+          Time limit of competion: {millisecondsToString(2700000)}
+        </Text>
         <Text fontSize='md'>Private room: {privateRoom ? 'Yes' : 'No'}</Text>
       </Stack>
     </>

@@ -1,47 +1,26 @@
-import React, { useState } from 'react';
-import CountBar from '../../components/countBar/CountBar';
-import { millisecondsToString } from '../../utils/timeToString';
+import React from 'react';
+import CountBar from './CountBar';
 import CloseRoomView from './CloseRoomView';
 import StartCompetitionButton from './StartCompetitionButton';
-import profileData from '../../utils/profileData';
-import { Icon } from 'rsuite';
-import { Flex, Stack, Text, Progress } from '@chakra-ui/react';
+import { Flex, Stack, Text } from '@chakra-ui/react';
 import RoomInfo from './RoomInfo';
+import { connect } from 'react-redux';
 
-function RoomHeader({ config, state, teams, competition, admin }) {
-  let playersRoom = 0;
-  let max_perRoom = 0;
-  let playersTeam = 0;
-  let teamsNumber = 0;
-  let max_teams = 0;
-  let max_questions = 0;
-  let vetoQuesCount = 0;
-  let max_vote = 0;
-  let timeLimit = 0;
-  let privateRoom = false;
+const RoomHeader = ({ roomData }) => {
+  let numberOfPlayers;
+  let playersInTeams;
+  let numberOfTeams;
+  let maxUsersInRoom;
+  let maxTeamsInRoom;
 
-  if (
-    config !== undefined &&
-    state !== undefined &&
-    teams !== undefined &&
-    competition !== undefined &&
-    config !== null &&
-    state !== null &&
-    teams !== null &&
-    competition !== null
-  ) {
-    max_perRoom = config.max_perRoom;
-    max_teams = config.max_teams;
-    privateRoom = config.privateRoom;
-    teamsNumber = Object.keys(teams).length;
-    for (let team_name in teams) {
-      playersTeam += teams[team_name].length;
+  if (roomData.data) {
+    maxUsersInRoom = roomData.data.config.max_perRoom;
+    maxTeamsInRoom = roomData.data.config.max_teams;
+    numberOfTeams = Object.keys(roomData.data.teams).length;
+    for (let teamName in roomData.data.teams) {
+      playersInTeams += roomData.data.teams[teamName].length;
     }
-    playersRoom = playersTeam + state.bench.length;
-    max_questions = competition.max_questions;
-    vetoQuesCount = competition.veto.quesCount;
-    max_vote = competition.veto.max_vote;
-    timeLimit = competition.veto.timeLimit;
+    numberOfPlayers = playersInTeams + roomData.data.state.bench.length;
   }
 
   return (
@@ -56,11 +35,19 @@ function RoomHeader({ config, state, teams, competition, admin }) {
       <Stack width='100%'>
         <>
           <Text>Number of Users in Room</Text>
-          <Progress value={playersRoom} />
+          <CountBar
+            count={numberOfPlayers}
+            total={maxUsersInRoom}
+            width={'100%'}
+          />
         </>
         <>
           <Text>Number of Teams in Room</Text>
-          <Progress value={teamsNumber} />
+          <CountBar
+            count={numberOfTeams}
+            total={maxTeamsInRoom}
+            width={'100%'}
+          />
         </>
       </Stack>
       {true ? (
@@ -72,6 +59,10 @@ function RoomHeader({ config, state, teams, competition, admin }) {
       ) : null}
     </Flex>
   );
-}
+};
 
-export default RoomHeader;
+const mapStateToProps = (state) => ({
+  roomData: state.roomData,
+});
+
+export default connect(mapStateToProps, null)(RoomHeader);
