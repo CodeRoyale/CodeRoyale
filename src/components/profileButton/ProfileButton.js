@@ -90,7 +90,7 @@ const ProfileButton = ({
   }, [userData.logoutData.data, userActionReset, history]);
 
   return (
-    <Popover>
+    <Popover placement='bottom-end'>
       <PopoverTrigger>
         <Image
           cursor='pointer'

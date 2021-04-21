@@ -59,7 +59,6 @@ const EveryoneChat = ({
         pos='absolute'
         bottom='0'
         left='0'
-        borderColor='#dd2c00'
         padding='inherit'
       >
         <Input
