@@ -160,7 +160,7 @@ const CreateRoom = ({ getCreateRoomData }) => {
                 </Select>
                 <Text>Private Room?</Text>
                 <Switch
-                  colorScheme='red'
+                  colorScheme='codeRoyale'
                   isChecked={privateRoom}
                   onChange={() => setPrivateRoom(!privateRoom)}
                 />
@@ -199,7 +199,7 @@ const CreateRoom = ({ getCreateRoomData }) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='orange' mr={3} onClick={handleCreateRoom}>
+            <Button colorScheme='codeRoyale' mr={3} onClick={handleCreateRoom}>
               Create Room
             </Button>
             <Button variant='ghost' onClick={onClose}>
