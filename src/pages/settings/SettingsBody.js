@@ -92,6 +92,7 @@ const SettingsBody = ({
         />
         <Button
           width='60%'
+          colorScheme='codeRoyale'
           onClick={() => {
             // Send new account data in props to Settings.js for updating account
             getUpdateAccountData(newAccountData);
@@ -101,6 +102,7 @@ const SettingsBody = ({
         </Button>
         <Button
           width='60%'
+          colorScheme='red'
           onClick={() => {
             // Send trigger to Settings.js to delete account in props
             getDeleteAccount();
