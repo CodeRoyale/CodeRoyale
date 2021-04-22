@@ -7,9 +7,10 @@ import {
   SOCKET_FAIL,
   CONNECTION_ACK,
   CONNECTION_DENY,
+  ROOM_SUCCESS,
+  ROOM_FAIL,
 } from './types';
 import io from 'socket.io-client';
-import { roomSuccess, roomFailure } from './roomActions';
 import { ROOM_CLOSED } from '../utils/constants';
 const ENDPOINT = process.env.REACT_APP_LOBBY_SERVER;
 
@@ -87,9 +88,16 @@ export const connectSocket = () => {
     // On Close room
     socket.on('ROOM_CLOSED', (data) => {
       if (data !== null) {
-        dispatch(roomSuccess(null, ROOM_CLOSED));
+        dispatch({
+          type: ROOM_SUCCESS,
+          payload: null,
+          action: ROOM_CLOSED,
+        });
       } else {
-        dispatch(roomFailure(data));
+        dispatch({
+          type: ROOM_FAIL,
+          payload: data,
+        });
       }
     });
   };
