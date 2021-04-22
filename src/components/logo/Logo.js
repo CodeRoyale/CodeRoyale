@@ -1,15 +1,16 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Box, Text } from '@chakra-ui/react';
-import './LogoContainer.scss';
+import './Logo.scss';
 
-const LogoContainer = () => {
+const Logo = () => {
   const history = useHistory();
 
   return (
     <Box>
       <Text
         fontSize='2xl'
+        cursor='pointer'
         onClick={() => history.push('/')}
         fontFamily='Kaushan Script, cursive'
       >
@@ -19,4 +20,4 @@ const LogoContainer = () => {
   );
 };
 
-export default LogoContainer;
+export default Logo;

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Flex, Select } from '@chakra-ui/react';
 import Chat from './Chat';
-import LogoContainer from '../../components/logoContainer/LogoContainer';
+import Logo from '../../components/logo/Logo';
 import ProfileButton from '../../components/profileButton/ProfileButton';
 import profileData from '../../utils/profileData';
 import { connect } from 'react-redux';
@@ -68,7 +68,7 @@ const SideBar = ({
           alignItems='center'
           padding='0.8em'
         >
-          <LogoContainer />
+          <Logo />
           <ProfileButton profileData={profileData()} />
         </Flex>
         <Select

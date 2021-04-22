@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import LogoContainer from '../../components/logoContainer/LogoContainer';
+import Logo from '../../components/logo/Logo';
 import ProfileButton from '../../components/profileButton/ProfileButton';
 import profileData from '../../utils/profileData';
 import { Flex, Button, Spacer } from '@chakra-ui/react';
@@ -20,7 +20,7 @@ const NavBar = ({ loggedIn }) => {
       bgColor='white'
       zIndex='10'
     >
-      <LogoContainer />
+      <Logo />
       <Spacer />
       <ProfileButton profileData={profileData()} />
     </Flex>
@@ -39,7 +39,7 @@ const NavBar = ({ loggedIn }) => {
         zIndex='10'
         boxShadow='0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(250, 250, 242)'
       >
-        <LogoContainer />
+        <Logo />
         <Spacer />
         <Flex alignItems='center'>
           <Button
