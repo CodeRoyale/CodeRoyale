@@ -122,6 +122,8 @@ const ProfileButton = ({
             colorScheme='red'
             variant='ghost'
             w='100%'
+            isLoading={userData.logoutData.isLoading}
+            loadingText='Logging out...'
             onClick={handleLogout}
           >
             Logout
