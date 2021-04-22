@@ -19,7 +19,7 @@ import ArenaMain from './pages/arenaPage/ArenaMain';
 import Scoreboard from './pages/scoreboard/Scoreboard';
 import TestPage from './pages/testPage/TestPage';
 import isAuthenticated from './utils/isAuthenticated';
-import './App.css';
+import './App.scss';
 
 const componentRegistry = {
   Dashboard: Dashboard,
