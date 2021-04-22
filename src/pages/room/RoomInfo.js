@@ -75,7 +75,7 @@ const RoomInfo = ({ roomData }) => {
       <Button
         size='sm'
         leftIcon={<Icon as={AiOutlineInfoCircle} />}
-        colorScheme='orange'
+        colorScheme='codeRoyale'
         onClick={onOpen}
       >
         Room Info

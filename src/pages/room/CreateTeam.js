@@ -41,7 +41,7 @@ const CreateTeam = ({ socketData, createTeam }) => {
         icon={<Icon as={BsPlus} w={6} h={6} />}
         borderRadius='full'
         boxSize='50px'
-        colorScheme='orange'
+        colorScheme='codeRoyale'
         onClick={onOpen}
       />
 
@@ -63,7 +63,7 @@ const CreateTeam = ({ socketData, createTeam }) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='orange' mr={3} onClick={handleCreateTeam}>
+            <Button colorScheme='codeRoyale' mr={3} onClick={handleCreateTeam}>
               Create Team
             </Button>
             <Button onClick={onClose}>Cancel</Button>

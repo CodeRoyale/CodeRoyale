@@ -77,7 +77,7 @@ const TeamCard = ({
         marginTop='0.4em'
         aria-label='Join or leave team'
         icon={buttonIcon}
-        colorScheme='orange'
+        colorScheme='codeRoyale'
         onClick={handleJoinOrLeaveTeam}
       />
     </Flex>
