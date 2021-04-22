@@ -51,7 +51,11 @@ const NavBar = ({ loggedIn }) => {
           >
             Sign up
           </Button>
-          <Button paddingX='1.3em' onClick={() => history.push('/login')}>
+          <Button
+            paddingX='1.3em'
+            onClick={() => history.push('/login')}
+            colorScheme='codeRoyale'
+          >
             Login
           </Button>
         </Flex>

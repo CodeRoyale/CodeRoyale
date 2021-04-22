@@ -26,7 +26,12 @@ const HomeBody = () => {
           <Text fontSize='lg'>
             Challenge teams/individuals to a coding match today for free
           </Text>
-          <Button width='30%' size='lg' onClick={() => history.push('/signup')}>
+          <Button
+            width='30%'
+            size='lg'
+            colorScheme='codeRoyale'
+            onClick={() => history.push('/signup')}
+          >
             Sign up now
           </Button>
         </Stack>
@@ -88,6 +93,7 @@ const HomeBody = () => {
             width='30%'
             marginTop='0.8em'
             size='lg'
+            colorScheme='codeRoyale'
             onClick={() => history.push('/signup')}
           >
             Sign up
