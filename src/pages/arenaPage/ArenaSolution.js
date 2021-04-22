@@ -198,7 +198,11 @@ const ArenaSolution = ({ socketData, currentQuestion }) => {
           tabSize: 2,
         }}
       />
-      <Button margin='1em' onClick={handleSubmitSolution}>
+      <Button
+        margin='1em'
+        colorScheme='codeRoyale'
+        onClick={handleSubmitSolution}
+      >
         Submit Code
       </Button>
     </Flex>
