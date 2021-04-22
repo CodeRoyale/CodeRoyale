@@ -14,130 +14,124 @@ export const resetTeamAction = () => {
 };
 
 // Create a team in room
-export const createTeam = (socket, { team_name }) => {
-  return (dispatch) => {
-    if (socket !== null) {
-      dispatch({
-        type: TEAM_LOADING,
-      });
-      socket.emit('CREATE_TEAM', { team_name }, (data) => {
-        if (data !== null) {
-          if (data !== ERROR_MSG && data.error === undefined) {
-            dispatch({
-              type: TEAM_SUCCESS,
-              payload: data,
-              action: TEAM_CREATED,
-            });
-          } else if (data.error !== undefined) {
-            dispatch({
-              type: TEAM_FAIL,
-              payload: data.error,
-            });
-          } else {
-            dispatch({
-              type: TEAM_FAIL,
-              payload: data,
-            });
-          }
+export const createTeam = (socket, { team_name }) => (dispatch) => {
+  if (socket !== null) {
+    dispatch({
+      type: TEAM_LOADING,
+    });
+    socket.emit('CREATE_TEAM', { team_name }, (data) => {
+      if (data !== null) {
+        if (data !== ERROR_MSG && data.error === undefined) {
+          dispatch({
+            type: TEAM_SUCCESS,
+            payload: data,
+            action: TEAM_CREATED,
+          });
+        } else if (data.error !== undefined) {
+          dispatch({
+            type: TEAM_FAIL,
+            payload: data.error,
+          });
         } else {
           dispatch({
             type: TEAM_FAIL,
-            payload: 'No data Received',
+            payload: data,
           });
         }
-        console.log('Create Team', data);
-      });
-    } else {
-      dispatch({
-        type: TEAM_FAIL,
-        payload: 'Not connected to the server',
-      });
-    }
-  };
+      } else {
+        dispatch({
+          type: TEAM_FAIL,
+          payload: 'No data Received',
+        });
+      }
+      console.log('Create Team', data);
+    });
+  } else {
+    dispatch({
+      type: TEAM_FAIL,
+      payload: 'Not connected to the server',
+    });
+  }
 };
 
 // Join a team in room
-export const joinTeam = (socket, { team_name }) => {
-  return (dispatch) => {
-    if (socket !== null) {
-      dispatch({
-        type: TEAM_LOADING,
-      });
-      socket.emit('JOIN_TEAM', { team_name }, (data) => {
-        if (data !== null) {
-          if (data !== ERROR_MSG && data.error === undefined) {
-            dispatch({
-              type: TEAM_SUCCESS,
-              payload: data,
-              action: TEAM_JOINED,
-            });
-          } else if (data.error !== undefined) {
-            dispatch({
-              type: TEAM_FAIL,
-              payload: data.error,
-            });
-          } else {
-            dispatch({
-              type: TEAM_FAIL,
-              payload: data,
-            });
-          }
+export const joinTeam = (socket, { team_name }) => (dispatch) => {
+  if (socket !== null) {
+    dispatch({
+      type: TEAM_LOADING,
+    });
+    socket.emit('JOIN_TEAM', { team_name }, (data) => {
+      if (data !== null) {
+        if (data !== ERROR_MSG && data.error === undefined) {
+          dispatch({
+            type: TEAM_SUCCESS,
+            payload: data,
+            action: TEAM_JOINED,
+          });
+        } else if (data.error !== undefined) {
+          dispatch({
+            type: TEAM_FAIL,
+            payload: data.error,
+          });
         } else {
           dispatch({
             type: TEAM_FAIL,
-            payload: 'No data Received',
+            payload: data,
           });
         }
-        console.log('Join Team', data);
-      });
-    } else {
-      dispatch({
-        type: TEAM_FAIL,
-        payload: 'Not connected to the server',
-      });
-    }
-  };
+      } else {
+        dispatch({
+          type: TEAM_FAIL,
+          payload: 'No data Received',
+        });
+      }
+      console.log('Join Team', data);
+    });
+  } else {
+    dispatch({
+      type: TEAM_FAIL,
+      payload: 'Not connected to the server',
+    });
+  }
 };
 
 // Leave a team in room
-export const leaveTeam = (socket) => {
-  return (dispatch) => {
-    if (socket !== null) {
-      dispatch({
-        type: TEAM_LOADING,
-      });
-      socket.emit('LEAVE_TEAM', {}, (data) => {
-        if (data !== null) {
-          if (data !== ERROR_MSG && data.error === undefined) {
-            dispatch({
-              type: TEAM_SUCCESS,
-              payload: data,
-              action: TEAM_LEFT,
-            });
-          } else if (data.error !== undefined) {
-            dispatch({
-              type: TEAM_FAIL,
-              payload: data.error,
-            });
-          } else {
-            dispatch({
-              type: TEAM_FAIL,
-              payload: data,
-            });
-          }
+export const leaveTeam = (socket) => (dispatch) => {
+  if (socket !== null) {
+    dispatch({
+      type: TEAM_LOADING,
+    });
+    socket.emit('LEAVE_TEAM', {}, (data) => {
+      if (data !== null) {
+        if (data !== ERROR_MSG && data.error === undefined) {
+          dispatch({
+            type: TEAM_SUCCESS,
+            payload: data,
+            action: TEAM_LEFT,
+          });
+        } else if (data.error !== undefined) {
+          dispatch({
+            type: TEAM_FAIL,
+            payload: data.error,
+          });
         } else {
           dispatch({
             type: TEAM_FAIL,
-            payload: 'No data Received',
+            payload: data,
           });
         }
-        console.log('Leave Team', data);
-      });
-    } else {
-      dispatch({
-        type: TEAM_FAIL,
-        payload: 'Not connected to the server',
-      });
-    }
-  };
+      } else {
+        dispatch({
+          type: TEAM_FAIL,
+          payload: 'No data Received',
+        });
+      }
+      console.log('Leave Team', data);
+    });
+  } else {
+    dispatch({
+      type: TEAM_FAIL,
+      payload: 'Not connected to the server',
+    });
+  }
 };
