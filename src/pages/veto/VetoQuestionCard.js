@@ -85,14 +85,14 @@ const VetoQuestionCard = ({
               #{questionNumber}
             </Text>
             {checkBoxChecked ? (
-              <Badge ml='1em' colorScheme='orange'>
+              <Badge ml='1em' colorScheme='codeRoyale'>
                 Selected
               </Badge>
             ) : null}
           </Flex>
           <Spacer />
           <Checkbox
-            colorScheme='orange'
+            colorScheme='codeRoyale'
             isChecked={checkBoxChecked}
             onChange={handleQuestionVoted}
           />

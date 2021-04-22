@@ -39,7 +39,7 @@ const VetoTopBar = ({
         <Button
           isLoading={userVoted}
           loadingText='Waiting for others'
-          colorScheme='orange'
+          colorScheme='codeRoyale'
           size='sm'
           onClick={handleConfirmVetoVotes}
         >
