@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { getRoom } from '../../actions/roomActions';
+import { getRoom, roomClosed } from '../../actions/roomActions';
 import { resetTeamAction } from '../../actions/teamActions';
 import { vetoStart } from '../../actions/vetoActions';
 import { TEAM_CREATED, TEAM_JOINED, TEAM_LEFT } from '../../utils/constants';
@@ -17,6 +17,7 @@ const Room = ({
   resetTeamAction,
   vetoData,
   vetoStart,
+  roomClosed,
 }) => {
   const toast = useToast();
   const socket = socketData.socket;
@@ -37,7 +38,11 @@ const Room = ({
     if (socket !== null) {
       vetoStart(socket, history);
     }
-  }, [room_id, socket, getRoom, vetoStart, teamData.type, history]);
+
+    if (socket) {
+      roomClosed(socket);
+    }
+  }, [room_id, socket, getRoom, vetoStart, teamData.type, roomClosed, history]);
 
   // Display Alert on every action...
   useEffect(() => {
@@ -113,6 +118,7 @@ export const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   getRoom,
+  roomClosed,
   vetoStart,
   resetTeamAction,
 })(Room);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Flex, Select } from '@chakra-ui/react';
 import Chat from './Chat';
 import LogoContainer from '../../components/logoContainer/LogoContainer';
@@ -9,6 +9,7 @@ import {
   sendEveryoneMsg,
   sendTeamMsg,
   changeChatType,
+  receivedMsg,
 } from '../../actions/chatActions';
 
 const SideBar = ({
@@ -18,8 +19,15 @@ const SideBar = ({
   changeChatType,
   sendEveryoneMsg,
   sendTeamMsg,
+  receivedMsg,
 }) => {
   const socket = socketData.socket;
+
+  useEffect(() => {
+    if (socket) {
+      receivedMsg(socket);
+    }
+  }, [socket, receivedMsg]);
 
   // Send message to everyone in room
   const handleEveryoneMsg = (message) => {
@@ -96,4 +104,5 @@ export default connect(mapStateToProps, {
   sendEveryoneMsg,
   sendTeamMsg,
   changeChatType,
+  receivedMsg,
 })(SideBar);

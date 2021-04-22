@@ -196,3 +196,21 @@ export const getRoom = (socket, { room_id }) => (dispatch) => {
     });
   }
 };
+
+// Listener for room closed
+export const roomClosed = (socket) => (dispatch) => {
+  socket.off('ROOM_CLOSED').on('ROOM_CLOSED', (data) => {
+    if (data !== null) {
+      dispatch({
+        type: ROOM_SUCCESS,
+        payload: null,
+        action: ROOM_CLOSED,
+      });
+    } else {
+      dispatch({
+        type: ROOM_FAIL,
+        payload: data,
+      });
+    }
+  });
+};

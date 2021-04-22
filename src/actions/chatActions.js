@@ -60,3 +60,34 @@ export const sendTeamMsg = (socket, { message }) => (dispatch) => {
     });
   }
 };
+
+// Listener for new message received
+export const receivedMsg = (socket) => (dispatch) => {
+  socket.off('RCV_MSG').on('RCV_MSG', (data) => {
+    if (data !== null && data.content !== undefined) {
+      if (data.toTeam) {
+        dispatch({
+          type: CHAT_TEAM_SUCCESS,
+          payload: {
+            message: data.content,
+            source: data.userName,
+          },
+        });
+      } else {
+        dispatch({
+          type: CHAT_EVERYONE_SUCCESS,
+          payload: {
+            message: data.content,
+            source: data.userName,
+          },
+        });
+      }
+    } else {
+      dispatch({
+        type: CHAT_FAIL,
+        payload: 'No chat Came',
+      });
+    }
+    console.log('chat data', data);
+  });
+};
