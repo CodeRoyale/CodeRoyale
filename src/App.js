@@ -19,7 +19,6 @@ import ArenaMain from './pages/arenaPage/ArenaMain';
 import Scoreboard from './pages/scoreboard/Scoreboard';
 import TestPage from './pages/testPage/TestPage';
 import isAuthenticated from './utils/isAuthenticated';
-import 'rsuite/lib/styles/index.less';
 import './App.css';
 
 const componentRegistry = {
