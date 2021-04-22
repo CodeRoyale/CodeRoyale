@@ -126,7 +126,7 @@ const CreateRoom = ({ getCreateRoomData }) => {
 
   return (
     <>
-      <Button onClick={onOpen} marginRight='1em'>
+      <Button onClick={onOpen} marginRight='1em' colorScheme='codeRoyale'>
         Create Room
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} size='xl'>
