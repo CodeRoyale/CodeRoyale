@@ -6,13 +6,31 @@ import FacebookAuth from '../../components/facebookAuth/FacebookAuth';
 
 const LoginRightSection = ({ isLoading, getAuthData }) => {
   const history = useHistory();
-  // Send back successful auth data to Login
+
+  // Send back successful auth data in props
   const handleAuthData = (data) => {
     getAuthData(data);
   };
 
-  // Default content
-  let content = (
+  // Loading indicator once request sent to server for login
+  if (isLoading) {
+    return (
+      <Flex
+        bg='white'
+        w='50%'
+        h='100vh'
+        justifyContent='center'
+        alignItems='center'
+      >
+        <Stack align='center'>
+          <Spinner color='#dd2c00' />
+          <Text fontSize='md'>Logging you in!</Text>
+        </Stack>
+      </Flex>
+    );
+  }
+
+  return (
     <Flex
       bg='white'
       w='50%'
@@ -51,26 +69,6 @@ const LoginRightSection = ({ isLoading, getAuthData }) => {
       </Stack>
     </Flex>
   );
-
-  // Loading indicator once request sent to server for login
-  if (isLoading) {
-    content = (
-      <Flex
-        bg='white'
-        w='50%'
-        h='100vh'
-        justifyContent='center'
-        alignItems='center'
-      >
-        <Stack align='center'>
-          <Spinner color='#dd2c00' />
-          <Text fontSize='md'>Logging you in!</Text>
-        </Stack>
-      </Flex>
-    );
-  }
-
-  return content;
 };
 
 export default LoginRightSection;
