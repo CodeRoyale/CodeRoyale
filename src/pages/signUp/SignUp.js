@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { signUpUser, userActionReset } from '../../actions/userActions';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   CONFLICT,
@@ -12,109 +10,84 @@ import {
 import { Flex, useToast } from '@chakra-ui/react';
 import SignUpLeftSection from './SignUpLeftSection';
 import SignUpRightSection from './SignUpRightSection';
+import { useMutation } from 'react-query';
+import { signUpUser } from '../../api/userAPI';
 
-const SignUp = ({ userData, signUpUser, userActionReset }) => {
+const SignUp = () => {
   const history = useHistory();
 
   // For displaying toast messages based on login events
   const toast = useToast();
 
+  // Making the login api call using mutation
+  const signUpMutation = useMutation((signUpData) => signUpUser(signUpData));
+  const { data, error, isError, isLoading, isSuccess } = signUpMutation;
+
+  // authData received in props
   const handleAuthData = (data) => {
-    signUpUser(data);
+    signUpMutation.mutate(data);
   };
 
-  useEffect(() => {
-    if (
-      userData.signUpData.error &&
-      userData.signUpData.error.payload !== undefined
-    ) {
-      switch (userData.signUpData.error.payload.message) {
-        case CONFLICT:
-          toast({
-            title: 'Error on Sign up',
-            description: 'You have already registered! Login to use CodeRoyale',
-            status: 'error',
-            position: 'top-right',
-            duration: 4000,
-            isClosable: true,
-          });
-          history.push('/login');
-          userActionReset();
-          break;
-        case MISSING:
-        case ERROR:
-        case ERRORTOKEN:
-          toast({
-            title: 'Error on Sign up',
-            description: 'Some error occurred, please try again later',
-            status: 'error',
-            position: 'top-right',
-            duration: 4000,
-            isClosable: true,
-          });
-          userActionReset();
-          break;
-        default:
-          toast({
-            title: 'Error on Sign up',
-            description: 'Some error occurred, please try again later',
-            status: 'error',
-            position: 'top-right',
-            duration: 4000,
-            isClosable: true,
-          });
-          userActionReset();
-          break;
-      }
-    } else if (userData.signUpData.error) {
-      toast({
-        title: 'Error on Sign up',
-        description: userData.signUpData.error,
-        status: 'error',
-        position: 'top-right',
-        duration: 4000,
-        isClosable: true,
-      });
-      userActionReset();
-    }
-  }, [userData.signUpData.error, userActionReset, history, toast]);
+  // SignUp success handling
+  if (isSuccess && data.payload.message === CREATED) {
+    toast({
+      title: 'Registered successfully!',
+      description: 'Welcome to CodeRoyale! Login to compete',
+      status: 'success',
+      position: 'top-right',
+      duration: 4000,
+      isClosable: true,
+    });
+    signUpMutation.reset();
+    history.push('/login');
+  }
 
-  // Check if user registered successfully
-  useEffect(() => {
-    if (userData.signUpData.data) {
-      if (userData.signUpData.data.payload.message === CREATED) {
+  // SignUp error handling
+  if (isError) {
+    switch (error.response.data.payload.message) {
+      case CONFLICT:
         toast({
-          title: 'Registered successfully!',
-          description: 'Welcome to CodeRoyale! Login to compete',
-          status: 'success',
+          title: 'Error on Sign up',
+          description: 'You have already registered! Login to use CodeRoyale',
+          status: 'error',
           position: 'top-right',
           duration: 4000,
           isClosable: true,
         });
-        userActionReset();
         history.push('/login');
-      }
+        break;
+      case MISSING:
+      case ERROR:
+      case ERRORTOKEN:
+        toast({
+          title: 'Error on Sign up',
+          description: 'Some error occurred, please try again later',
+          status: 'error',
+          position: 'top-right',
+          duration: 4000,
+          isClosable: true,
+        });
+        break;
+      default:
+        toast({
+          title: 'Error on Sign up',
+          description: 'Some error occurred, please try again later',
+          status: 'error',
+          position: 'top-right',
+          duration: 4000,
+          isClosable: true,
+        });
+        break;
     }
-  }, [userData.signUpData.data, history, userActionReset, toast]);
+    signUpMutation.reset();
+  }
 
-  // Default content
-  let content = (
+  return (
     <Flex>
       <SignUpLeftSection />
-      <SignUpRightSection
-        isLoading={userData.signUpData.isLoading}
-        getAuthData={handleAuthData}
-      />
+      <SignUpRightSection isLoading={isLoading} getAuthData={handleAuthData} />
     </Flex>
   );
-
-  return content;
 };
 
-const mapStateToProps = (state) => ({
-  userData: state.userData,
-});
-
-export default connect(mapStateToProps, { signUpUser, userActionReset })(
-  SignUp
-);
+export default SignUp;

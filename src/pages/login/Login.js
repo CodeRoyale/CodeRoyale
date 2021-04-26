@@ -31,6 +31,12 @@ const Login = () => {
     });
   };
 
+  // Login success handling
+  if (isSuccess && data.payload.message === LOGIN) {
+    localStorage.token = data.payload.accessToken;
+    history.push('/dashboard');
+  }
+
   // Login error handing
   if (isError) {
     switch (error.response.data.payload.message) {
@@ -77,12 +83,6 @@ const Login = () => {
         break;
     }
     loginMutation.reset();
-  }
-
-  // Login success handling
-  if (isSuccess && data.payload.message === LOGIN) {
-    localStorage.token = data.payload.accessToken;
-    history.push('/dashboard');
   }
 
   return (
