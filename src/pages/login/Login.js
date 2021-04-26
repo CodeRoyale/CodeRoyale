@@ -21,13 +21,7 @@ const Login = () => {
 
   // Making the login api call using mutation
   const loginMutation = useMutation((loginData) => loginUser(loginData));
-  const {
-    data: loginData,
-    error,
-    isError,
-    isLoading,
-    isSuccess,
-  } = loginMutation;
+  const { data, error, isError, isLoading, isSuccess } = loginMutation;
 
   // authData received in props
   const handleAuthData = (data) => {
@@ -86,8 +80,8 @@ const Login = () => {
   }
 
   // Login success handling
-  if (isSuccess && loginData.payload.message === LOGIN) {
-    localStorage.token = loginData.payload.accessToken;
+  if (isSuccess && data.payload.message === LOGIN) {
+    localStorage.token = data.payload.accessToken;
     history.push('/dashboard');
   }
 

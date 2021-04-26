@@ -1,7 +1,6 @@
 import loggedOutAxios from '../helpers/loggedOutAxios';
 
-export const loginUser = (loginData) => {
-  return loggedOutAxios
-    .post('/users/login', loginData)
-    .then((response) => response.data);
+export const loginUser = async (loginData) => {
+  const response = await loggedOutAxios.post('/users/login', loginData);
+  return response.data;
 };
