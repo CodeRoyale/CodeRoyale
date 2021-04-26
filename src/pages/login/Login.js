@@ -19,6 +19,7 @@ const Login = () => {
   // For displaying toast messages based on login events
   const toast = useToast();
 
+  // Making the login api call using mutation
   const loginMutation = useMutation((loginData) => loginUser(loginData));
   const {
     data: loginData,
