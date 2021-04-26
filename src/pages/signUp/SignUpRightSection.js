@@ -49,8 +49,57 @@ const SignUpRightSection = ({ isLoading, getAuthData }) => {
     }
   }, [showPasswordPrompt, sendSignUpRequest, signUpData, getAuthData]);
 
-  // Default content
-  let content = (
+  // Request user to input password for sign up
+  if (showPasswordPrompt) {
+    return (
+      <Flex
+        bg='white'
+        w='50%'
+        h='100vh'
+        justifyContent='center'
+        alignItems='center'
+      >
+        <Stack align='center'>
+          <InputGroup size='md'>
+            <Input
+              pr='4.5rem'
+              type={show ? 'text' : 'password'}
+              placeholder='Enter password'
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <InputRightElement width='4.5rem'>
+              <Button h='1.75rem' size='sm' onClick={handleClick}>
+                {show ? 'Hide' : 'Show'}
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+          <Button onClick={handleSignupClick} colorScheme='codeRoyale'>
+            Sign up
+          </Button>
+        </Stack>
+      </Flex>
+    );
+  }
+
+  // Loading indicator once request sent to server for signup
+  if (isLoading) {
+    return (
+      <Flex
+        bg='white'
+        w='50%'
+        h='100vh'
+        justifyContent='center'
+        alignItems='center'
+      >
+        <Stack align='center'>
+          <Spinner color='#dd2c00' />
+          <Text fontSize='md'>Signing you up!</Text>
+        </Stack>
+      </Flex>
+    );
+  }
+
+  return (
     <Flex
       bg='white'
       w='50%'
@@ -92,56 +141,6 @@ const SignUpRightSection = ({ isLoading, getAuthData }) => {
       </Stack>
     </Flex>
   );
-
-  // Request user to input password for sign up
-  if (showPasswordPrompt) {
-    content = (
-      <Flex
-        bg='white'
-        w='50%'
-        h='100vh'
-        justifyContent='center'
-        alignItems='center'
-      >
-        <Stack align='center'>
-          <InputGroup size='md'>
-            <Input
-              pr='4.5rem'
-              type={show ? 'text' : 'password'}
-              placeholder='Enter password'
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <InputRightElement width='4.5rem'>
-              <Button h='1.75rem' size='sm' onClick={handleClick}>
-                {show ? 'Hide' : 'Show'}
-              </Button>
-            </InputRightElement>
-          </InputGroup>
-          <Button onClick={handleSignupClick}>Sign up</Button>
-        </Stack>
-      </Flex>
-    );
-  }
-
-  // Loading indicator once request sent to server for signup
-  if (isLoading) {
-    content = (
-      <Flex
-        bg='white'
-        w='50%'
-        h='100vh'
-        justifyContent='center'
-        alignItems='center'
-      >
-        <Stack align='center'>
-          <Spinner color='#dd2c00' />
-          <Text fontSize='md'>Signing you up!</Text>
-        </Stack>
-      </Flex>
-    );
-  }
-
-  return content;
 };
 
 export default SignUpRightSection;
