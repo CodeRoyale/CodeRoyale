@@ -1,72 +1,84 @@
-import React from 'react'
+import React from 'react';
+import {
+  Drawer,
+  DrawerBody,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  Button,
+  useDisclosure,
+  Stack,
+  Text,
+} from '@chakra-ui/react';
+import TeamScoreCard from './TeamScoreCard';
 import { connect } from 'react-redux';
 
-function ArenaScore({roomData, quesCodes}) {
-    let scoreboard = {};
-    let problemCodes = [];
+const ArenaScore = ({ arenaData, roomData }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-    if(quesCodes !== null){
-        problemCodes = quesCodes;
+  let questionsList;
+  if (arenaData.questions) {
+    questionsList = arenaData.questions.payload.data;
+  }
+
+  const teamsList = [];
+  if (roomData.data) {
+    for (let team in roomData.data.teams) {
+      teamsList.push(team);
     }
+  }
 
-    if(roomData.data !== null){
-        scoreboard = roomData.data.competition.scoreboard;
+  const problemCodes = [];
+  if (questionsList) {
+    for (let i = 0; i < questionsList.length; i++) {
+      problemCodes.push(questionsList[i].problemCode);
     }
+  }
 
-    let scoreRows = [];
-    for(let teamName in scoreboard){
-        scoreRows.push(
-            <tr key={teamName}>
-                <td style={{textAlign: 'left', padding: '0px'}}><b>{teamName}</b></td>
-                {
-                    problemCodes.map(
-                        code => (
-                            <td key={code}>
-                                {
-                                    scoreboard[teamName].includes(code) ?
-                                    <img 
-                                        style={{height: '18px', width: '18px'}} 
-                                        src='./images/tick.svg' 
-                                        alt=''
-                                    /> :
-                                    <img
-                                        style={{height: '12px', width: '12px'}}
-                                        src='./images/minus.svg'
-                                        alt=''
-                                    />
-                                }
-                            </td>
-                        )
-                    )
-                }
-            </tr>
-        )
-    }
-
-    return (
-        <div className='arena-score'>
-            <table className='arena-score-table'>
-                <thead></thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        {
-                            problemCodes.map(code => 
-                                <td key={code}>
-                                    <b>{code}</b>
-                                </td>
-                            )
-                        }
-                        
-                    </tr>
-                    {scoreRows}
-                </tbody>
-            </table>            
-        </div>
-    )
-}
-const mapStateToProps = (state) => ({
-    roomData: state.roomData
+  let teamScoreCards;
+  teamScoreCards = teamsList.map((team, index) => {
+    return <TeamScoreCard key={index} teamName={team} />;
   });
-  
-  export default connect(mapStateToProps)(ArenaScore);
+
+  return (
+    <>
+      <Button
+        marginRight='0.8em'
+        marginTop='1em'
+        marginBottom='1em'
+        onClick={onOpen}
+      >
+        View Score
+      </Button>
+
+      <Drawer placement='right' onClose={onClose} isOpen={isOpen}>
+        <DrawerOverlay>
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader borderBottomWidth='1px'>Score</DrawerHeader>
+            <DrawerBody>
+              <Stack>
+                {problemCodes.map((problemCode, index) => {
+                  return (
+                    <Stack key={index}>
+                      <Text>{problemCode}</Text>
+                      {teamScoreCards}
+                    </Stack>
+                  );
+                })}
+              </Stack>
+            </DrawerBody>
+          </DrawerContent>
+        </DrawerOverlay>
+      </Drawer>
+    </>
+  );
+};
+
+const mapStateToProps = (state) => ({
+  arenaData: state.arenaData,
+  roomData: state.roomData,
+});
+
+export default connect(mapStateToProps, null)(ArenaScore);

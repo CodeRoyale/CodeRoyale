@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
   Flex,
@@ -29,6 +29,7 @@ import 'ace-builds/src-noconflict/snippets/c_cpp';
 import 'ace-builds/src-noconflict/snippets/python';
 import 'ace-builds/src-noconflict/snippets/java';
 import 'ace-builds/src-noconflict/ext-language_tools';
+import ArenaScore from './ArenaScore';
 
 /*
   {
@@ -87,6 +88,15 @@ const ArenaSolution = ({ socketData, currentQuestion }) => {
     problemCode = currentQuestion.problemCode;
     _id = currentQuestion._id;
   }
+
+  // useEffect(() => {
+  //   socket.on('CODE_SUBMITTED', (data) => {
+  //     console.log(data);
+  //   });
+  //   socket.on('SUCCESSFULLY_SUBMITTED', (data) => {
+  //     console.log(data);
+  //   });
+  // }, [socket]);
 
   const handleSubmitSolution = () => {
     // To DO as redux action
@@ -198,13 +208,18 @@ const ArenaSolution = ({ socketData, currentQuestion }) => {
           tabSize: 2,
         }}
       />
-      <Button
-        margin='1em'
-        colorScheme='codeRoyale'
-        onClick={handleSubmitSolution}
-      >
-        Submit Code
-      </Button>
+      <Flex>
+        <ArenaScore />
+        <Button
+          marginRight='1em'
+          marginTop='1em'
+          marginBottom='1em'
+          colorScheme='codeRoyale'
+          onClick={handleSubmitSolution}
+        >
+          Submit Code
+        </Button>
+      </Flex>
     </Flex>
   );
 };
