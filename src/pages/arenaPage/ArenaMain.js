@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getQuestion, competitionStopped } from '../../actions/arenaActions';
+import {
+  getQuestion,
+  competitionStopped,
+  codeSubmittedStatus,
+  roomCodeSubmissionSuccess,
+} from '../../actions/arenaActions';
 import { useHistory } from 'react-router-dom';
 import SideBar from '../../components/sideBar/SideBar';
 import ArenaBody from './ArenaBody';
@@ -13,6 +18,8 @@ const ArenaMain = ({
   roomData,
   getQuestion,
   competitionStopped,
+  codeSubmittedStatus,
+  roomCodeSubmissionSuccess,
 }) => {
   let questionsList;
   const socket = socketData.socket;
@@ -29,12 +36,19 @@ const ArenaMain = ({
     }
   }, [vetoData.contestQuestionIDs, getQuestion]);
 
-  // Initializing the listener for checking if competition stopped
+  // Listeners
   useEffect(() => {
     if (socket !== null) {
       competitionStopped(socket);
+      codeSubmittedStatus(socket);
+      roomCodeSubmissionSuccess(socket);
     }
-  }, [competitionStopped, socket]);
+  }, [
+    competitionStopped,
+    codeSubmittedStatus,
+    roomCodeSubmissionSuccess,
+    socket,
+  ]);
 
   // Move to /scoreboard once the competition stops
   if (arenaData.competitionStopped) {
@@ -87,6 +101,9 @@ const mapStateToProps = (state) => ({
   roomData: state.roomData,
 });
 
-export default connect(mapStateToProps, { getQuestion, competitionStopped })(
-  ArenaMain
-);
+export default connect(mapStateToProps, {
+  getQuestion,
+  competitionStopped,
+  codeSubmittedStatus,
+  roomCodeSubmissionSuccess,
+})(ArenaMain);

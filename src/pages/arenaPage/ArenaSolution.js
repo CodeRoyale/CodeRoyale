@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { submitCode } from '../../actions/arenaActions';
 import {
   Flex,
   Select,
@@ -71,7 +72,7 @@ const editorThemesObject = {
   github: 'Github',
 };
 
-const ArenaSolution = ({ socketData, currentQuestion }) => {
+const ArenaSolution = ({ socketData, submitCode, currentQuestion }) => {
   const socket = socketData.socket;
   // Editor settings state
   const [editorLanguage, setEditorLanguage] = useState('c_cpp');
@@ -89,29 +90,13 @@ const ArenaSolution = ({ socketData, currentQuestion }) => {
     _id = currentQuestion._id;
   }
 
-  // useEffect(() => {
-  //   socket.on('CODE_SUBMITTED', (data) => {
-  //     console.log(data);
-  //   });
-  //   socket.on('SUCCESSFULLY_SUBMITTED', (data) => {
-  //     console.log(data);
-  //   });
-  // }, [socket]);
-
   const handleSubmitSolution = () => {
-    // To DO as redux action
-    socket.emit(
-      'CODE_SUBMISSION',
-      {
-        problemCode: problemCode,
-        code: editorCode,
-        langId: editorLanguageIdObject[editorLanguage],
-        ques_id: _id,
-      },
-      (data) => {
-        console.log(data);
-      }
-    );
+    submitCode(socket, {
+      problemCode: problemCode,
+      code: editorCode,
+      langId: editorLanguageIdObject[editorLanguage],
+      ques_id: _id,
+    });
   };
 
   // Editor code onChange
@@ -228,4 +213,4 @@ const mapStateToProps = (state) => ({
   socketData: state.socketData,
 });
 
-export default connect(mapStateToProps, null)(ArenaSolution);
+export default connect(mapStateToProps, { submitCode })(ArenaSolution);

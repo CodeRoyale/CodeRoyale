@@ -37,10 +37,31 @@ export const getQuestion = (questionIDs) => (dispatch) => {
 
 // Listener to when the competition has stopped
 export const competitionStopped = (socket) => (dispatch) => {
-  socket.on('COMPETITION_STOPPED', (data) => {
+  socket.off('COMPETITION_STOPPED').on('COMPETITION_STOPPED', (data) => {
     dispatch({
       type: ARENA_COMPETITION_STOPPED,
       payload: data.scoreboard,
     });
+  });
+};
+
+export const submitCode = (socket, submittedCodeData) => (dispatch) => {
+  console.log(submittedCodeData);
+  socket.emit('CODE_SUBMISSION', submittedCodeData, (data) => {
+    console.log(data);
+  });
+};
+
+// Listener for checking submitted question solution status
+export const codeSubmittedStatus = (socket) => (dispatch) => {
+  socket.off('CODE_SUBMITTED').on('CODE_SUBMITTED', (data) => {
+    console.log(data);
+  });
+};
+
+// Listener to when someone in room submits right solution
+export const roomCodeSubmissionSuccess = (socket) => (dispatch) => {
+  socket.off('SUCCESSFULLY_SUBMITTED').on('SUCCESSFULLY_SUBMITTED', (data) => {
+    console.log(data);
   });
 };
