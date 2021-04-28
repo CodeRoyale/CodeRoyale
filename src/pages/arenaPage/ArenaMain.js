@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
+  competitionStarted,
   getQuestion,
   competitionStopped,
   codeSubmittedStatus,
@@ -16,6 +17,7 @@ const ArenaMain = ({
   socketData,
   arenaData,
   roomData,
+  competitionStarted,
   getQuestion,
   competitionStopped,
   codeSubmittedStatus,
@@ -39,11 +41,13 @@ const ArenaMain = ({
   // Listeners
   useEffect(() => {
     if (socket !== null) {
+      competitionStarted(socket);
       competitionStopped(socket);
       codeSubmittedStatus(socket);
       roomCodeSubmissionSuccess(socket);
     }
   }, [
+    competitionStarted,
     competitionStopped,
     codeSubmittedStatus,
     roomCodeSubmissionSuccess,
@@ -103,6 +107,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   getQuestion,
+  competitionStarted,
   competitionStopped,
   codeSubmittedStatus,
   roomCodeSubmissionSuccess,

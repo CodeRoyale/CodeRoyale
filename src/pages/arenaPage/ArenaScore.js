@@ -9,9 +9,8 @@ import {
   Button,
   useDisclosure,
   Stack,
-  Text,
 } from '@chakra-ui/react';
-import TeamScoreCard from './TeamScoreCard';
+import QuestionScoreCard from './QuestionScoreCard';
 import { connect } from 'react-redux';
 
 const ArenaScore = ({ arenaData, roomData }) => {
@@ -36,11 +35,6 @@ const ArenaScore = ({ arenaData, roomData }) => {
     }
   }
 
-  let teamScoreCards;
-  teamScoreCards = teamsList.map((team, index) => {
-    return <TeamScoreCard key={index} teamName={team} />;
-  });
-
   return (
     <>
       <Button
@@ -61,10 +55,12 @@ const ArenaScore = ({ arenaData, roomData }) => {
               <Stack>
                 {problemCodes.map((problemCode, index) => {
                   return (
-                    <Stack key={index}>
-                      <Text>{problemCode}</Text>
-                      {teamScoreCards}
-                    </Stack>
+                    <QuestionScoreCard
+                      key={index}
+                      problemCode={problemCode}
+                      teamsList={teamsList}
+                      scoreboard={arenaData.scoreboard}
+                    />
                   );
                 })}
               </Stack>

@@ -72,7 +72,12 @@ const editorThemesObject = {
   github: 'Github',
 };
 
-const ArenaSolution = ({ socketData, submitCode, currentQuestion }) => {
+const ArenaSolution = ({
+  arenaData,
+  socketData,
+  submitCode,
+  currentQuestion,
+}) => {
   const socket = socketData.socket;
   // Editor settings state
   const [editorLanguage, setEditorLanguage] = useState('c_cpp');
@@ -200,6 +205,8 @@ const ArenaSolution = ({ socketData, submitCode, currentQuestion }) => {
           marginTop='1em'
           marginBottom='1em'
           colorScheme='codeRoyale'
+          isLoading={arenaData.codeSubmission.isLoading}
+          loadingText='Submitting Code'
           onClick={handleSubmitSolution}
         >
           Submit Code
@@ -210,6 +217,7 @@ const ArenaSolution = ({ socketData, submitCode, currentQuestion }) => {
 };
 
 const mapStateToProps = (state) => ({
+  arenaData: state.arenaData,
   socketData: state.socketData,
 });
 

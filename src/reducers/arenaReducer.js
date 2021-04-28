@@ -3,15 +3,29 @@ import {
   ARENA_QUESTIONS_SUCCESS,
   ARENA_QUESTIONS_FAIL,
   ARENA_COMPETITION_STOPPED,
+  ARENA_ROOM_CODE_SUBMIT_STATUS,
+  ARENA_COMPETITION_STARTED,
+  ARENA_CODE_SUBMIT_LOADING,
+  ARENA_CODE_SUBMIT_SUCCESS,
+  ARENA_CODE_SUBMIT_FAIL,
 } from '../actions/types';
 
 const intialState = {
   isLoading: false,
   competitionStopped: false,
+  codeSubmission: {
+    isLoading: false,
+    error: false,
+  },
 };
 
 const arenaReducer = (state = intialState, action) => {
   switch (action.type) {
+    case ARENA_COMPETITION_STARTED:
+      return {
+        ...state,
+        scoreboard: action.payload.returnObj.scoreboard,
+      };
     case ARENA_QUESTIONS_LOADING:
       return {
         ...state,
@@ -28,6 +42,49 @@ const arenaReducer = (state = intialState, action) => {
         ...state,
         isLoading: false,
         questions: action.payload,
+      };
+    case ARENA_CODE_SUBMIT_LOADING:
+      return {
+        ...state,
+        codeSubmission: {
+          ...state.codeSubmission,
+          isLoading: true,
+        },
+      };
+    case ARENA_CODE_SUBMIT_FAIL:
+      return {
+        ...state,
+        codeSubmission: {
+          ...state.codeSubmission,
+          isLoading: false,
+          error: action.payload,
+        },
+      };
+    case ARENA_CODE_SUBMIT_SUCCESS:
+      return {
+        ...state,
+        codeSubmission: {
+          ...state.codeSubmission,
+          isLoading: false,
+        },
+        scoreboard: {
+          ...state.scoreboard,
+          [action.payload.team_name]: [
+            ...state.scoreboard[action.payload.team_name],
+            action.payload.problemCode,
+          ],
+        },
+      };
+    case ARENA_ROOM_CODE_SUBMIT_STATUS:
+      return {
+        ...state,
+        scoreboard: {
+          ...state.scoreboard,
+          [action.payload.team_name]: [
+            ...state.scoreboard[action.payload.team_name],
+            action.payload.quesId,
+          ],
+        },
       };
     case ARENA_COMPETITION_STOPPED:
       return {

@@ -2,7 +2,12 @@ import {
   ARENA_QUESTIONS_LOADING,
   ARENA_QUESTIONS_SUCCESS,
   ARENA_QUESTIONS_FAIL,
+  ARENA_COMPETITION_STARTED,
   ARENA_COMPETITION_STOPPED,
+  ARENA_ROOM_CODE_SUBMIT_STATUS,
+  ARENA_CODE_SUBMIT_LOADING,
+  ARENA_CODE_SUBMIT_SUCCESS,
+  ARENA_CODE_SUBMIT_FAIL,
 } from './types';
 import qapiAxios from '../helpers/qapiAxios';
 import { SERVER_DOWN } from '../utils/constants';
@@ -35,6 +40,15 @@ export const getQuestion = (questionIDs) => (dispatch) => {
     });
 };
 
+export const competitionStarted = (socket) => (dispatch) => {
+  socket.off('COMPETITION_STARTED').on('COMPETITION_STARTED', (data) => {
+    dispatch({
+      type: ARENA_COMPETITION_STARTED,
+      payload: data,
+    });
+  });
+};
+
 // Listener to when the competition has stopped
 export const competitionStopped = (socket) => (dispatch) => {
   socket.off('COMPETITION_STOPPED').on('COMPETITION_STOPPED', (data) => {
@@ -46,22 +60,36 @@ export const competitionStopped = (socket) => (dispatch) => {
 };
 
 export const submitCode = (socket, submittedCodeData) => (dispatch) => {
-  console.log(submittedCodeData);
-  socket.emit('CODE_SUBMISSION', submittedCodeData, (data) => {
-    console.log(data);
+  dispatch({
+    type: ARENA_CODE_SUBMIT_LOADING,
   });
+  socket.emit('CODE_SUBMISSION', submittedCodeData);
 };
 
 // Listener for checking submitted question solution status
 export const codeSubmittedStatus = (socket) => (dispatch) => {
   socket.off('CODE_SUBMITTED').on('CODE_SUBMITTED', (data) => {
     console.log(data);
+    if (data.sucess) {
+      dispatch({
+        type: ARENA_CODE_SUBMIT_SUCCESS,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: ARENA_CODE_SUBMIT_FAIL,
+        payload: data,
+      });
+    }
   });
 };
 
 // Listener to when someone in room submits right solution
 export const roomCodeSubmissionSuccess = (socket) => (dispatch) => {
   socket.off('SUCCESSFULLY_SUBMITTED').on('SUCCESSFULLY_SUBMITTED', (data) => {
-    console.log(data);
+    dispatch({
+      type: ARENA_ROOM_CODE_SUBMIT_STATUS,
+      payload: data,
+    });
   });
 };
