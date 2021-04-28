@@ -68,7 +68,7 @@ const Dashboard = ({
         title: 'Room Created!',
         status: 'success',
         position: 'top-right',
-        duration: 4000,
+        duration: 750,
         isClosable: true,
       });
       setCreateRoomActionDone(false);
@@ -106,7 +106,7 @@ const Dashboard = ({
         title: 'Joined Room',
         status: 'success',
         position: 'top-right',
-        duration: 4000,
+        duration: 750,
         isClosable: true,
       });
       history.push('/room');

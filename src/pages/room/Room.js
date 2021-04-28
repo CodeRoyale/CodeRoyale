@@ -52,7 +52,7 @@ const Room = ({
           title: 'You have created a new team',
           status: 'success',
           position: 'top-right',
-          duration: 4000,
+          duration: 750,
           isClosable: true,
         });
         resetTeamAction();
@@ -62,7 +62,7 @@ const Room = ({
           title: 'You have joined a team',
           status: 'success',
           position: 'top-right',
-          duration: 4000,
+          duration: 750,
           isClosable: true,
         });
         resetTeamAction();
@@ -72,7 +72,7 @@ const Room = ({
           title: 'You have left a team',
           status: 'success',
           position: 'top-right',
-          duration: 4000,
+          duration: 750,
           isClosable: true,
         });
         resetTeamAction();
@@ -85,7 +85,7 @@ const Room = ({
         title: teamData.error,
         status: 'error',
         position: 'top-right',
-        duration: 4000,
+        duration: 2000,
         isClosable: true,
       });
       resetTeamAction();
