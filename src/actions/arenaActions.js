@@ -8,9 +8,16 @@ import {
   ARENA_CODE_SUBMIT_LOADING,
   ARENA_CODE_SUBMIT_SUCCESS,
   ARENA_CODE_SUBMIT_FAIL,
+  ARENA_DATA_RESET,
 } from './types';
 import qapiAxios from '../helpers/qapiAxios';
 import { SERVER_DOWN } from '../utils/constants';
+
+export const arenaDataReset = () => (dispatch) => {
+  dispatch({
+    type: ARENA_DATA_RESET,
+  });
+};
 
 // Get question from qapi
 export const getQuestion = (questionIDs) => (dispatch) => {

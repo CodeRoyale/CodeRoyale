@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { submitCode } from '../../actions/arenaActions';
+import { submitCode, arenaDataReset } from '../../actions/arenaActions';
 import {
   Flex,
   Select,
@@ -15,6 +15,7 @@ import {
   PopoverArrow,
   PopoverCloseButton,
   Button,
+  useToast,
 } from '@chakra-ui/react';
 import { IoMdSettings } from 'react-icons/io';
 import { BiReset } from 'react-icons/bi';
@@ -76,9 +77,14 @@ const ArenaSolution = ({
   arenaData,
   socketData,
   submitCode,
+  arenaDataReset,
   currentQuestion,
 }) => {
   const socket = socketData.socket;
+
+  // For showing toast messages
+  const toast = useToast();
+
   // Editor settings state
   const [editorLanguage, setEditorLanguage] = useState('c_cpp');
   const [editorFontSize, setEditorFontSize] = useState(16);
@@ -94,6 +100,38 @@ const ArenaSolution = ({
     problemCode = currentQuestion.problemCode;
     _id = currentQuestion._id;
   }
+
+  // Error handling for code submission
+  useEffect(() => {
+    if (arenaData.codeSubmission.error) {
+      toast({
+        title: 'Error on Code Submission',
+        description: 'The code you submitted didnot pass the testcases',
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
+      arenaDataReset();
+    }
+  }, [arenaData.codeSubmission, arenaDataReset, toast]);
+
+  // If someone in room submits the right solution for problem
+  useEffect(() => {
+    if (arenaData.codeSubmission.data) {
+      const teamName = arenaData.codeSubmission.data.team_name;
+      const problemCode = arenaData.codeSubmission.data.problemCode;
+      toast({
+        title: 'Success on Code Submission',
+        description: `${teamName} passed all testcases for question ${problemCode}`,
+        status: 'success',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
+      arenaDataReset();
+    }
+  }, [arenaData.codeSubmission, arenaDataReset, toast]);
 
   const handleSubmitSolution = () => {
     submitCode(socket, {
@@ -221,4 +259,6 @@ const mapStateToProps = (state) => ({
   socketData: state.socketData,
 });
 
-export default connect(mapStateToProps, { submitCode })(ArenaSolution);
+export default connect(mapStateToProps, { submitCode, arenaDataReset })(
+  ArenaSolution
+);

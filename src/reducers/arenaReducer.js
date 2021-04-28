@@ -8,6 +8,7 @@ import {
   ARENA_CODE_SUBMIT_LOADING,
   ARENA_CODE_SUBMIT_SUCCESS,
   ARENA_CODE_SUBMIT_FAIL,
+  ARENA_DATA_RESET,
 } from '../actions/types';
 
 const intialState = {
@@ -66,6 +67,7 @@ const arenaReducer = (state = intialState, action) => {
         codeSubmission: {
           ...state.codeSubmission,
           isLoading: false,
+          data: action.payload,
         },
         scoreboard: {
           ...state.scoreboard,
@@ -78,6 +80,10 @@ const arenaReducer = (state = intialState, action) => {
     case ARENA_ROOM_CODE_SUBMIT_STATUS:
       return {
         ...state,
+        codeSubmission: {
+          ...state.codeSubmission,
+          data: action.payload,
+        },
         scoreboard: {
           ...state.scoreboard,
           [action.payload.team_name]: [
@@ -91,6 +97,14 @@ const arenaReducer = (state = intialState, action) => {
         ...state,
         competitionStopped: true,
         scoreboardData: action.payload,
+      };
+    case ARENA_DATA_RESET:
+      return {
+        ...state,
+        codeSubmission: {
+          error: false,
+          data: false,
+        },
       };
     default:
       return state;
