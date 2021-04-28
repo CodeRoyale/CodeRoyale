@@ -52,12 +52,6 @@ const routes = [
     needsAuth: true,
   },
   {
-    path: '/test',
-    component: 'TestPage',
-    title: 'Test | CodeRoyale',
-    needsAuth: true,
-  },
-  {
     path: '',
     component: 'Home',
     title: 'CodeRoyale',

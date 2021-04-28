@@ -8,16 +8,15 @@ import {
 import { Provider } from 'react-redux';
 import store from './store';
 import routes from './routes';
-import Home from './pages/home/Home';
-import Login from './pages/login/Login';
-import SignUp from './pages/signUp/SignUp';
-import Settings from './pages/settings/Settings';
-import Dashboard from './pages/dashboard/Dashboard';
-import Room from './pages/room/Room';
-import Veto from './pages/veto/Veto';
-import Arena from './pages/arena/Arena';
-import Scoreboard from './pages/scoreboard/Scoreboard';
-import TestPage from './pages/testPage/TestPage';
+import Home from './pages/home';
+import Login from './pages/login';
+import SignUp from './pages/signUp';
+import Settings from './pages/settings';
+import Dashboard from './pages/dashboard';
+import Room from './pages/room';
+import Veto from './pages/veto';
+import Arena from './pages/arena';
+import Scoreboard from './pages/scoreboard';
 import isAuthenticated from './utils/isAuthenticated';
 import './App.scss';
 
@@ -31,7 +30,6 @@ const componentRegistry = {
   Veto: Veto,
   Settings: Settings,
   Home: Home,
-  TestPage: TestPage,
 };
 
 const RenderRoute = (route) => {
