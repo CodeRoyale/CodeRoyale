@@ -10,8 +10,8 @@ import {
   InputRightElement,
 } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
-import GoogleAuth from '../../components/googleAuth/GoogleAuth';
-import FacebookAuth from '../../components/facebookAuth/FacebookAuth';
+import GoogleAuth from '../../components/googleAuth';
+import FacebookAuth from '../../components/facebookAuth';
 
 const SignUpRightSection = ({ isLoading, getAuthData }) => {
   const history = useHistory();

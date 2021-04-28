@@ -6,7 +6,7 @@ import { TEAM_CREATED, TEAM_JOINED, TEAM_LEFT } from '../../utils/constants';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Flex, useToast } from '@chakra-ui/react';
-import SideBar from '../../components/sideBar/SideBar';
+import SideBar from '../../components/sideBar';
 import RoomBody from './RoomBody';
 
 const Room = ({

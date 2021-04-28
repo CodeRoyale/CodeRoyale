@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SettingsField from '../../components/settingsField/SettingsField';
+import SettingsField from '../../components/settingsField';
 import profileData from '../../utils/profileData';
 import {
   Flex,

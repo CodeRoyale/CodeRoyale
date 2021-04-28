@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from '../../components/navBar/NavBar';
+import NavBar from '../../components/navBar';
 import HomeBody from './HomeBody';
 import { Flex } from '@chakra-ui/react';
 import './Home.scss';

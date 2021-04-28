@@ -8,7 +8,7 @@ import {
   userActionReset,
 } from '../../actions/userActions';
 import SettingsBody from './SettingsBody';
-import NavBar from '../../components/navBar/NavBar';
+import NavBar from '../../components/navBar';
 import {
   ERROR,
   DELETED,

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { connectSocket } from '../../actions/socketActions';
 import { preCheckUser, userActionReset } from '../../actions/userActions';
-import NavBar from '../../components/navBar/NavBar';
+import NavBar from '../../components/navBar';
 import { useHistory } from 'react-router-dom';
 import { PRECHECK_SUCCESS } from '../../actions/types';
 import { Flex, Spinner, useToast } from '@chakra-ui/react';

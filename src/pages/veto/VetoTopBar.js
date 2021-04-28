@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Flex, Stack, Text } from '@chakra-ui/react';
-import Timer from '../../components/timer/Timer';
+import Timer from '../../components/timer';
 import VetoStatus from './VetoStatus';
 
 const VetoTopBar = ({

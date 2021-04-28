@@ -8,7 +8,7 @@ import {
   roomCodeSubmissionSuccess,
 } from '../../actions/arenaActions';
 import { useHistory } from 'react-router-dom';
-import SideBar from '../../components/sideBar/SideBar';
+import SideBar from '../../components/sideBar';
 import ArenaBody from './ArenaBody';
 import { Flex, Spinner, Text } from '@chakra-ui/react';
 

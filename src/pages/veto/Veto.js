@@ -8,7 +8,7 @@ import {
   getAllVetoUsers,
 } from '../../actions/vetoActions';
 import { Flex, useToast } from '@chakra-ui/react';
-import SideBar from '../../components/sideBar/SideBar';
+import SideBar from '../../components/sideBar';
 import VetoBody from './VetoBody';
 
 const Veto = ({
