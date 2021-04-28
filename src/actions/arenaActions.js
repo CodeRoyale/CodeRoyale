@@ -66,6 +66,7 @@ export const competitionStopped = (socket) => (dispatch) => {
   });
 };
 
+// Submit code to server
 export const submitCode = (socket, submittedCodeData) => (dispatch) => {
   dispatch({
     type: ARENA_CODE_SUBMIT_LOADING,
