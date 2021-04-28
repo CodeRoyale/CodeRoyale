@@ -88,7 +88,7 @@ const arenaReducer = (state = intialState, action) => {
           ...state.scoreboard,
           [action.payload.team_name]: [
             ...state.scoreboard[action.payload.team_name],
-            action.payload.quesId,
+            action.payload.problemCode,
           ],
         },
       };
