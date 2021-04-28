@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import ArenaSolution from './ArenaSolution';
-import ArenaProblem from './ArenaProblem';
+import ArenaEditor from './ArenaEditor';
+import ArenaQuestion from './ArenaQuestion';
 import { Flex, Text, Select, Stack } from '@chakra-ui/react';
 
 const ArenaBody = ({ questionsObject }) => {
@@ -56,8 +56,8 @@ const ArenaBody = ({ questionsObject }) => {
           {questionCodesOptions}
         </Select>
       </Stack>
-      <ArenaProblem currentQuestion={currentQuestion} />
-      <ArenaSolution currentQuestion={currentQuestion} />
+      <ArenaQuestion currentQuestion={currentQuestion} />
+      <ArenaEditor currentQuestion={currentQuestion} />
     </Flex>
   );
 };

@@ -15,7 +15,7 @@ import Settings from './pages/settings/Settings';
 import Dashboard from './pages/dashboard/Dashboard';
 import Room from './pages/room/Room';
 import Veto from './pages/veto/Veto';
-import ArenaMain from './pages/arenaPage/ArenaMain';
+import Arena from './pages/arena/Arena';
 import Scoreboard from './pages/scoreboard/Scoreboard';
 import TestPage from './pages/testPage/TestPage';
 import isAuthenticated from './utils/isAuthenticated';
@@ -25,7 +25,7 @@ const componentRegistry = {
   Dashboard: Dashboard,
   Login: Login,
   SignUp: SignUp,
-  ArenaMain: ArenaMain,
+  Arena: Arena,
   Scoreboard: Scoreboard,
   Room: Room,
   Veto: Veto,

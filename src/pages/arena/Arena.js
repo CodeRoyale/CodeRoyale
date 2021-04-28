@@ -12,11 +12,10 @@ import SideBar from '../../components/sideBar/SideBar';
 import ArenaBody from './ArenaBody';
 import { Flex, Spinner, Text } from '@chakra-ui/react';
 
-const ArenaMain = ({
+const Arena = ({
   vetoData,
   socketData,
   arenaData,
-  roomData,
   competitionStarted,
   getQuestion,
   competitionStopped,
@@ -102,7 +101,6 @@ const mapStateToProps = (state) => ({
   vetoData: state.vetoData,
   socketData: state.socketData,
   arenaData: state.arenaData,
-  roomData: state.roomData,
 });
 
 export default connect(mapStateToProps, {
@@ -111,4 +109,4 @@ export default connect(mapStateToProps, {
   competitionStopped,
   codeSubmittedStatus,
   roomCodeSubmissionSuccess,
-})(ArenaMain);
+})(Arena);

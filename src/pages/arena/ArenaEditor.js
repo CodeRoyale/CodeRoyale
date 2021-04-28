@@ -73,7 +73,7 @@ const editorThemesObject = {
   github: 'Github',
 };
 
-const ArenaSolution = ({
+const ArenaEditor = ({
   arenaData,
   socketData,
   submitCode,
@@ -260,5 +260,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { submitCode, arenaDataReset })(
-  ArenaSolution
+  ArenaEditor
 );

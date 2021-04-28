@@ -1,7 +1,7 @@
 import React from 'react';
 import { Flex, Stack, Text } from '@chakra-ui/react';
 
-const ArenaProblem = ({ currentQuestion }) => {
+const ArenaQuestion = ({ currentQuestion }) => {
   // Question data variables
   let questionTitle;
   let questionCode;
@@ -87,4 +87,4 @@ const ArenaProblem = ({ currentQuestion }) => {
   );
 };
 
-export default ArenaProblem;
+export default ArenaQuestion;
