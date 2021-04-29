@@ -8,27 +8,9 @@ import { Flex, Button, Spacer } from '@chakra-ui/react';
 const NavBar = ({ loggedIn }) => {
   const history = useHistory();
 
-  // Default navBar (loggedIn)
-  let content = (
-    <Flex
-      as='nav'
-      position='fixed'
-      width='100%'
-      height='70px'
-      alignItems='center'
-      padding='1em'
-      bgColor='white'
-      zIndex='10'
-    >
-      <Logo />
-      <Spacer />
-      <ProfileButton profileData={profileData()} />
-    </Flex>
-  );
-
   // If user is not loggedIn
   if (!loggedIn) {
-    content = (
+    return (
       <Flex
         as='nav'
         position='fixed'
@@ -63,7 +45,23 @@ const NavBar = ({ loggedIn }) => {
     );
   }
 
-  return content;
+  // Default navBar (loggedIn)
+  return (
+    <Flex
+      as='nav'
+      position='fixed'
+      width='100%'
+      height='70px'
+      alignItems='center'
+      padding='1em'
+      bgColor='white'
+      zIndex='10'
+    >
+      <Logo />
+      <Spacer />
+      <ProfileButton profileData={profileData()} />
+    </Flex>
+  );
 };
 
 export default NavBar;
