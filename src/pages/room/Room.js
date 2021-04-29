@@ -23,6 +23,10 @@ const Room = ({
   const socket = socketData.socket;
   const history = useHistory();
 
+  if (socket === null) {
+    history.push('/dashboard');
+  }
+
   // Getting the room Id
   let room_id;
   if (roomData.data) {
@@ -91,11 +95,6 @@ const Room = ({
       resetTeamAction();
     }
   });
-
-  // Checking all the conditions to be in the room...
-  // if (socket === null) {
-  //   history.push('/dashboard');
-  // }
 
   if (vetoData.vetoStarted) {
     history.push('/veto');

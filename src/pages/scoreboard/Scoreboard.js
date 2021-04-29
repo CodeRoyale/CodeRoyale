@@ -9,14 +9,14 @@ const Scoreboard = ({ roomData, socketData, arenaData }) => {
   const history = useHistory();
   const socket = socketData.socket;
 
-  // if (socket === null) {
-  //   history.push('/dashboard');
-  // }
+  if (socket === null) {
+    history.push('/dashboard');
+  }
 
   // After 20 secs move user to /dashboard
-  // setTimeout(() => {
-  //   history.push('/dashboard');
-  // }, 20000);
+  setTimeout(() => {
+    history.push('/dashboard');
+  }, 20000);
 
   // Getting the scorecard and teams from lobby
   let scoreCard;

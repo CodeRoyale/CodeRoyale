@@ -26,6 +26,10 @@ const Veto = ({
   const toast = useToast();
   const [getUsersFinished, setGetUsersFinished] = useState(false);
 
+  if (socket === null) {
+    history.push('/dashboard');
+  }
+
   // Fetching the room details beforehand
   // To make sure render does not break due to roomData.data being null
   let roomTeams, vetoTimeLimit;
@@ -47,11 +51,6 @@ const Veto = ({
       getVetoStatus(socket);
     }
   }, [socket, vetoStop, getVetoStatus]);
-
-  // Checking if the socket is null (if null move user back to dashboard)
-  if (socket === null) {
-    history.push('/dashboard');
-  }
 
   // Move the user to Arena if veto has ended
   if (vetoData.vetoEnded) {

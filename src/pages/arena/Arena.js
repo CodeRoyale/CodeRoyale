@@ -26,9 +26,9 @@ const Arena = ({
   const socket = socketData.socket;
   const history = useHistory();
 
-  // if (socket === null) {
-  //   history.push('/dashboard');
-  // }
+  if (socket === null) {
+    history.push('/dashboard');
+  }
 
   // Fetching the questions from qapi
   useEffect(() => {
