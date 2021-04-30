@@ -1,12 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { ChakraProvider } from '@chakra-ui/react';
+import { theme } from './theme';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import './index.scss';
+
+const queryClient = new QueryClient();
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ChakraProvider resetCSS={true} theme={theme}>
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
+    </ChakraProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

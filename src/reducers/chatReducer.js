@@ -1,10 +1,12 @@
 import {
+  CHANGED_CHAT_TYPE,
   CHAT_EVERYONE_SUCCESS,
   CHAT_TEAM_SUCCESS,
   CHAT_FAIL,
 } from '../actions/types';
 
 const initialState = {
+  chatType: 'everyone',
   everyoneMsgList: [],
   teamMsgList: [],
   error: '', //id,msg,col,source
@@ -12,6 +14,11 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case CHANGED_CHAT_TYPE:
+      return {
+        ...state,
+        chatType: action.payload,
+      };
     case CHAT_EVERYONE_SUCCESS:
       return {
         ...state,

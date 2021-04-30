@@ -1,54 +1,67 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import LogoContainer from '../../components/logoContainer/LogoContainer';
+import Logo from '../../components/logo/Logo';
 import ProfileButton from '../../components/profileButton/ProfileButton';
-import Button from '../button/Button';
 import profileData from '../../utils/profileData';
-import './NavBar.css';
+import { Flex, Button, Spacer } from '@chakra-ui/react';
 
 const NavBar = ({ loggedIn }) => {
   const history = useHistory();
 
-  // Default navBar (loggedIn)
-  let content = (
-    <div className='nav-bar'>
-      <div className='nav-bar-logo'>
-        <LogoContainer />
-      </div>
-      <div className='nav-bar-profile'>
-        <ProfileButton profileData={profileData()} />
-      </div>
-    </div>
-  );
-
   // If user is not loggedIn
   if (!loggedIn) {
-    content = (
-      <div className='loggedOut-navbar'>
-        <LogoContainer />
-        <div className='loggedOut-nav-auth-container'>
-          <div
-            className='loggedOut-nav-signup'
+    return (
+      <Flex
+        as='nav'
+        position='fixed'
+        width='100%'
+        alignItems='center'
+        padding='1em'
+        bgColor='white'
+        zIndex='10'
+        boxShadow='0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(250, 250, 242)'
+      >
+        <Logo />
+        <Spacer />
+        <Flex alignItems='center'>
+          <Button
+            marginRight='0.8em'
+            variant='link'
             onClick={() => {
               history.push('/signup');
             }}
           >
             Sign up
-          </div>
+          </Button>
           <Button
-            type='button'
+            paddingX='1.3em'
             onClick={() => history.push('/login')}
-            buttonStyle='btn--primary--signin'
-            buttonSize='btn--small'
+            colorScheme='codeRoyale'
           >
             Login
           </Button>
-        </div>
-      </div>
+        </Flex>
+      </Flex>
     );
   }
 
-  return content;
+  // Default navBar (loggedIn)
+  return (
+    <Flex
+      as='nav'
+      position='fixed'
+      width='100%'
+      height='70px'
+      alignItems='center'
+      padding='1em'
+      bgColor='white'
+      zIndex='10'
+    >
+      <Logo />
+      <Spacer />
+      <ProfileButton profileData={profileData()} />
+    </Flex>
+  );
 };
 
 export default NavBar;

@@ -8,31 +8,28 @@ import {
 import { Provider } from 'react-redux';
 import store from './store';
 import routes from './routes';
-import DashboardMain from './pages/dashboardPage/DashboardMain';
-import LoginMain from './pages/loginPage/LoginMain';
-import HomeMain from './pages/homePage/HomeMain';
-import SettingsMain from './pages/settingsPage/SettingsMain';
-import SignUpMain from './pages/signUpPage/SignUpMain';
-import ArenaMain from './pages/arenaPage/ArenaMain';
-import RoomMain from './pages/roomPage/RoomMain';
-import VetoMain from './pages/vetoPage/VetoMain';
-import ScoreboardMain from './pages/scoreboardPage/ScoreboardMain';
-import TestPage from './pages/testPage/TestPage';
+import Home from './pages/home';
+import Login from './pages/login';
+import SignUp from './pages/signUp';
+import Settings from './pages/settings';
+import Dashboard from './pages/dashboard';
+import Room from './pages/room';
+import Veto from './pages/veto';
+import Arena from './pages/arena';
+import Scoreboard from './pages/scoreboard';
 import isAuthenticated from './utils/isAuthenticated';
-import 'rsuite/lib/styles/index.less';
-import './App.css';
+import './App.scss';
 
 const componentRegistry = {
-  DashboardMain: DashboardMain,
-  LoginMain: LoginMain,
-  SignUpMain: SignUpMain,
-  ArenaMain: ArenaMain,
-  ScoreboardMain: ScoreboardMain,
-  RoomMain: RoomMain,
-  VetoMain: VetoMain,
-  SettingsMain: SettingsMain,
-  HomeMain: HomeMain,
-  TestPage: TestPage,
+  Dashboard: Dashboard,
+  Login: Login,
+  SignUp: SignUp,
+  Arena: Arena,
+  Scoreboard: Scoreboard,
+  Room: Room,
+  Veto: Veto,
+  Settings: Settings,
+  Home: Home,
 };
 
 const RenderRoute = (route) => {
@@ -46,11 +43,11 @@ const RenderRoute = (route) => {
   }
 
   // If user is logged in then redirect to dashboard if home/login/signup is visited
-  if (route.component === 'HomeMain' && isAuthenticated()) {
+  if (route.component === 'Home' && isAuthenticated()) {
     history.push('/dashboard');
-  } else if (route.component === 'LoginMain' && isAuthenticated()) {
+  } else if (route.component === 'Login' && isAuthenticated()) {
     history.push('/dashboard');
-  } else if (route.component === 'SignUpMain' && isAuthenticated()) {
+  } else if (route.component === 'SignUp' && isAuthenticated()) {
     history.push('/dashboard');
   }
 

@@ -1,11 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser, userActionReset } from '../../actions/userActions';
 import { LOGOUT, ERROR } from '../../utils/constants';
-import { Alert } from 'rsuite';
-import Button from '../button/Button';
-import './ProfileButton.css';
+import {
+  Image,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverCloseButton,
+  Button,
+  Text,
+  Flex,
+  useToast,
+} from '@chakra-ui/react';
 
 const ProfileButton = ({
   userActionReset,
@@ -15,22 +25,14 @@ const ProfileButton = ({
 }) => {
   const history = useHistory();
 
+  // For showing toast messages
+  const toast = useToast();
+
   // Extracting relevant profile data
-  const imageUrl = profileData.picture;
-  const firstName = profileData.firstName;
-  const lastName = profileData.lastName;
-  const username = profileData.userName;
-  const email = profileData.email;
+  const { picture, firstName, lastName, userName, email } = profileData;
 
-  const [profileClicked, setProfileClicked] = useState(false);
-  const onClickProfileButton = () => {
-    setProfileClicked(!profileClicked);
-  };
-  let profileMenuBar;
-
-  // Showing error alert
-  const errorAlert = (message) => {
-    Alert.error(message);
+  const handleLogout = () => {
+    logoutUser(history);
   };
 
   // Logout user error handling
@@ -41,19 +43,40 @@ const ProfileButton = ({
     ) {
       switch (userData.logoutData.error) {
         case ERROR:
-          errorAlert("Couldn't logout, please try again later!");
+          toast({
+            title: 'Error on Logout',
+            description: "Couldn't logout, please try again later!",
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: false,
+          });
           userActionReset();
           break;
         default:
-          errorAlert("Couldn't logout, please try again later!");
+          toast({
+            title: 'Error on Logout',
+            description: "Couldn't logout, please try again later!",
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: false,
+          });
           userActionReset();
           break;
       }
     } else if (userData.logoutData.error) {
-      errorAlert(userData.logoutData.error);
+      toast({
+        title: 'Error on Logout',
+        description: userData.logoutData.error,
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: false,
+      });
       userActionReset();
     }
-  }, [userData.logoutData.error, userActionReset]);
+  }, [userData.logoutData.error, userActionReset, toast]);
 
   // Message to user when logout successfull
   useEffect(() => {
@@ -66,62 +89,48 @@ const ProfileButton = ({
     }
   }, [userData.logoutData.data, userActionReset, history]);
 
-  if (profileClicked) {
-    profileMenuBar = (
-      <div className='profile-menubar'>
-        <img
-          className='profile-menubar-profile-picture'
-          src={imageUrl}
-          alt='user-profile-pic'
-          onClick={onClickProfileButton}
-        />
-        <br />
-        <span className='profile-menubar-name'>
-          {firstName + ' ' + lastName}
-        </span>
-        <br />
-        <span className='profile-menubar-username'>{'@' + username}</span>
-        <br />
-        <span className='profile-menubar-email'>{email}</span>
-        <br />
-        <div className='profile-menubar-line'></div>
-        <div className='profile-menubar-settings-button'>
+  return (
+    <Popover placement='bottom-end'>
+      <PopoverTrigger>
+        <Image
+          cursor='pointer'
+          borderRadius='full'
+          boxSize='45px'
+          src={picture}
+          alt={userName}
+        ></Image>
+      </PopoverTrigger>
+      <PopoverContent>
+        <PopoverCloseButton />
+        <PopoverHeader fontWeight='semibold' fontSize='lg'>
+          {firstName} {lastName}
+          <Text fontSize='sm'>{email}</Text>
+        </PopoverHeader>
+        <PopoverBody>
+          <Flex>
+            <Text>Logged in as {userName}</Text>
+          </Flex>
           <Button
-            type='button'
+            colorScheme='teal'
+            variant='ghost'
+            w='100%'
             onClick={() => history.push('/settings')}
-            buttonStyle='btn--primary--normal'
-            buttonSize='btn--medium'
           >
             Settings
           </Button>
-        </div>
-        <div className='profile-menubar-logout-button'>
           <Button
-            type='button'
-            buttonStyle='btn--primary--logout'
-            buttonSize='btn--medium'
-            onClick={() => {
-              logoutUser(history);
-            }}
+            colorScheme='red'
+            variant='ghost'
+            w='100%'
+            isLoading={userData.logoutData.isLoading}
+            loadingText='Logging out...'
+            onClick={handleLogout}
           >
-            Log out
+            Logout
           </Button>
-        </div>
-      </div>
-    );
-  } else {
-    profileMenuBar = null;
-  }
-  return (
-    <div className='navbar-profile-button'>
-      <img
-        className='navbar-profile-image'
-        src={imageUrl}
-        alt='user-profile-pic'
-        onClick={onClickProfileButton}
-      />
-      {profileMenuBar}
-    </div>
+        </PopoverBody>
+      </PopoverContent>
+    </Popover>
   );
 };
 

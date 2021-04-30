@@ -1,9 +1,10 @@
 import React from 'react';
 import GoogleLogin from 'react-google-login';
-import { Icon } from 'rsuite';
-import './GoogleAuth.css';
+import { Icon } from '@chakra-ui/react';
+import { AiOutlineGoogle } from 'react-icons/ai';
+import './GoogleAuth.scss';
 
-const GoogleAuth = (props) => {
+const GoogleAuth = ({ getAuthData, text }) => {
   // Google Client ID from .env file
   const googleClientID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
@@ -15,7 +16,7 @@ const GoogleAuth = (props) => {
       signUpType: 'OAuth',
     };
     // Send back data to called function
-    props.getAuthData(authData);
+    getAuthData(authData);
   };
 
   return (
@@ -30,9 +31,9 @@ const GoogleAuth = (props) => {
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
           >
-            <Icon icon='google' size='2x' />
+            <Icon as={AiOutlineGoogle} w={6} h={6} />
             &nbsp; &nbsp;
-            {props.text}
+            {text}
           </div>
         )}
       />
