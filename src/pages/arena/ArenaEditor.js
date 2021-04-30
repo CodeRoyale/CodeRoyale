@@ -94,11 +94,11 @@ const ArenaEditor = ({
   const [editorCode, setEditorCode] = useState('');
 
   let problemCode = null;
-  let _id = null;
+  let questionId = null;
 
   if (currentQuestion !== undefined && currentQuestion !== null) {
     problemCode = currentQuestion.problemCode;
-    _id = currentQuestion._id;
+    questionId = currentQuestion._id;
   }
 
   // Error handling for code submission
@@ -138,7 +138,7 @@ const ArenaEditor = ({
       problemCode: problemCode,
       code: editorCode,
       langId: editorLanguageIdObject[editorLanguage],
-      ques_id: _id,
+      ques_id: questionId,
     });
   };
 
