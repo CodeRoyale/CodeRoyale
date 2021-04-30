@@ -7,7 +7,7 @@ import { Flex, Text, Image, Icon, IconButton } from '@chakra-ui/react';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 
 const TeamCard = ({
-  team_name,
+  teamName,
   totalUsers,
   users,
   socketData,
@@ -31,7 +31,7 @@ const TeamCard = ({
 
   const handleJoinOrLeaveTeam = () => {
     if (buttonIcon.props.customtype === 'joinTeam') {
-      joinTeam(socket, { team_name });
+      joinTeam(socket, { team_name: teamName });
     } else if (buttonIcon.props.customtype === 'leaveTeam') {
       leaveTeam(socket);
     }
@@ -68,7 +68,7 @@ const TeamCard = ({
       boxShadow='0 0 1px 1px rgba(0, 0, 0, 0.2)'
     >
       <Text textAlign='center' fontSize='lg' fontWeight='bold'>
-        {team_name}
+        {teamName}
       </Text>
       <CountBar count={userCount} total={totalUsers} />
       {userCards}

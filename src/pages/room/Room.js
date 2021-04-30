@@ -28,15 +28,15 @@ const Room = ({
   }
 
   // Getting the room Id
-  let room_id;
+  let roomId;
   if (roomData.data) {
-    room_id = roomData.data.config.id;
+    roomId = roomData.data.config.id;
   }
 
   // Get room & check if veto started
   useEffect(() => {
-    if (socket !== null && teamData.type !== '' && room_id !== undefined) {
-      getRoom(socket, { room_id });
+    if (socket !== null && teamData.type !== '' && roomId !== undefined) {
+      getRoom(socket, { room_id: roomId });
     }
 
     if (socket !== null) {
@@ -46,7 +46,7 @@ const Room = ({
     if (socket) {
       roomClosed(socket);
     }
-  }, [room_id, socket, getRoom, vetoStart, teamData.type, roomClosed, history]);
+  }, [roomId, socket, getRoom, vetoStart, teamData.type, roomClosed, history]);
 
   // Display Alert on every action...
   useEffect(() => {

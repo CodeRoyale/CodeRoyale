@@ -3,7 +3,7 @@ import React from 'react';
 import RoomTopBar from './RoomTopBar';
 import RoomTeams from './RoomTeams';
 
-const RoomBody = ({ roomData }) => {
+const RoomBody = () => {
   return (
     <Flex
       pos='absolute'

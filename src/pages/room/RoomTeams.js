@@ -16,12 +16,12 @@ const RoomTeams = ({ roomData }) => {
   }
 
   // Setting Team Cards...
-  let team_cards = [];
+  let teamCards = [];
   for (var teamName in roomTeams) {
-    team_cards.push(
+    teamCards.push(
       <TeamCard
         key={teamName}
-        team_name={teamName}
+        teamName={teamName}
         totalUsers={roomConfig['max_perTeam']}
         users={roomTeams[teamName]}
       />
@@ -30,7 +30,7 @@ const RoomTeams = ({ roomData }) => {
 
   return (
     <Flex padding='0.4em'>
-      {team_cards}
+      {teamCards}
       {userName === roomAdmin ? <CreateTeam /> : null}
     </Flex>
   );
