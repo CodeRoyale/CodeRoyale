@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {
   preCheckUser,
-  updateAccount,
   userNameCheck,
   userActionReset,
 } from '../../actions/userActions';
@@ -18,12 +17,11 @@ import {
 import { useHistory } from 'react-router-dom';
 import { Flex, useToast, Spinner } from '@chakra-ui/react';
 import { useMutation } from 'react-query';
-import { deleteAccount } from '../../api/userAPI';
+import { deleteAccount, updateAccount } from '../../api/userAPI';
 
 const Settings = ({
   userData,
   preCheckUser,
-  updateAccount,
   userNameCheck,
   userActionReset,
 }) => {
@@ -35,6 +33,9 @@ const Settings = ({
 
   const deleteAccountMutation = useMutation((history) =>
     deleteAccount(history)
+  );
+  const updateAccountMutation = useMutation((history, newAccountData) =>
+    updateAccount(history, newAccountData)
   );
 
   // For checking if user token is validated by server
@@ -92,49 +93,32 @@ const Settings = ({
   }
 
   // Update account error handling
-  useEffect(() => {
-    if (
-      userData.updateAccountData.error &&
-      userData.updateAccountData.error.payload !== undefined
-    ) {
-      switch (userData.updateAccountData.error.payload.message) {
-        case ERROR:
-          toast({
-            title: 'Error on updating account',
-            description:
-              "Couldn't update your profile, please try again later!",
-            status: 'error',
-            position: 'top-right',
-            duration: 4000,
-            isClosable: true,
-          });
-          userActionReset();
-          break;
-        default:
-          toast({
-            title: 'Error on updating account',
-            description:
-              "Couldn't update your profile, please try again later!",
-            status: 'error',
-            position: 'top-right',
-            duration: 4000,
-            isClosable: true,
-          });
-          userActionReset();
-          break;
-      }
-    } else if (userData.updateAccountData.error) {
-      toast({
-        title: 'Error on updating account',
-        description: userData.updateAccountData.error,
-        status: 'error',
-        position: 'top-right',
-        duration: 4000,
-        isClosable: true,
-      });
-      userActionReset();
+  if (updateAccountMutation.isError) {
+    switch (updateAccountMutation.error.response.payload.message) {
+      case ERROR:
+        toast({
+          title: 'Error on updating account',
+          description: "Couldn't update your profile, please try again later!",
+          status: 'error',
+          position: 'top-right',
+          duration: 4000,
+          isClosable: true,
+        });
+        userActionReset();
+        break;
+      default:
+        toast({
+          title: 'Error on updating account',
+          description: "Couldn't update your profile, please try again later!",
+          status: 'error',
+          position: 'top-right',
+          duration: 4000,
+          isClosable: true,
+        });
+        userActionReset();
+        break;
     }
-  }, [userData.updateAccountData.error, userActionReset, toast]);
+  }
 
   /* 
     - Show user if userName is not available if conflict from server
@@ -206,21 +190,21 @@ const Settings = ({
   }
 
   // Message to user when account is updated
-  useEffect(() => {
-    if (userData.updateAccountData.data) {
-      if (userData.updateAccountData.data.payload.message === UPDATE) {
-        toast({
-          title: 'Profile Updated',
-          description: 'Your profile has been updated with new information',
-          status: 'success',
-          position: 'top-right',
-          duration: 4000,
-          isClosable: true,
-        });
-        userActionReset();
-      }
-    }
-  }, [userData.updateAccountData.data, userActionReset, toast]);
+  if (
+    updateAccountMutation.isSuccess &&
+    updateAccountMutation.data.payload.message === UPDATE
+  ) {
+    localStorage.token = updateAccountMutation.data.payload.accessToken;
+    toast({
+      title: 'Profile Updated',
+      description: 'Your profile has been updated with new information',
+      status: 'success',
+      position: 'top-right',
+      duration: 4000,
+      isClosable: true,
+    });
+    updateAccountMutation.reset();
+  }
 
   // If userName is available
   useEffect(() => {
@@ -235,16 +219,20 @@ const Settings = ({
     deleteAccountMutation.mutate(history);
   };
 
+  const handleUpdateAccount = (data) => {
+    updateAccountMutation.mutate(history, data);
+  };
+
   // UI if user is valid and properly authenticated
   let content = (
     <Flex flexDir='column' height='100vh'>
       <NavBar loggedIn={true} />
       <SettingsBody
         sendDeleteAccountLoading={deleteAccountMutation.isLoading}
-        sendUpdateAccountLoading={userData.updateAccountData.isLoading}
+        sendUpdateAccountLoading={updateAccountMutation.isLoading}
         sendUserNameAvailable={userNameAvailable}
         getDeleteAccount={handleDeleteAccount}
-        getUpdateAccountData={(data) => updateAccount(history, data)}
+        getUpdateAccountData={handleUpdateAccount}
         getUserNameCheckData={(data) => userNameCheck(history, data)}
       />
     </Flex>
@@ -273,7 +261,6 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   preCheckUser,
-  updateAccount,
   userNameCheck,
   userActionReset,
 })(Settings);
