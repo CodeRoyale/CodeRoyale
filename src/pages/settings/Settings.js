@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {
   preCheckUser,
-  deleteAccount,
   updateAccount,
   userNameCheck,
   userActionReset,
@@ -18,11 +17,12 @@ import {
 } from '../../utils/constants';
 import { useHistory } from 'react-router-dom';
 import { Flex, useToast, Spinner } from '@chakra-ui/react';
+import { useMutation } from 'react-query';
+import { deleteAccount } from '../../api/userAPI';
 
 const Settings = ({
   userData,
   preCheckUser,
-  deleteAccount,
   updateAccount,
   userNameCheck,
   userActionReset,
@@ -32,6 +32,10 @@ const Settings = ({
   const toast = useToast();
 
   const [userNameAvailable, setUserNameAvailable] = useState(null);
+
+  const deleteAccountMutation = useMutation((history) =>
+    deleteAccount(history)
+  );
 
   // For checking if user token is validated by server
   useEffect(() => {
@@ -59,49 +63,33 @@ const Settings = ({
   }, [userData.preCheckData.error, userActionReset, history, toast]);
 
   // Delete account error handling
-  useEffect(() => {
-    if (
-      userData.deleteAccountData.error &&
-      userData.deleteAccountData.error.payload !== undefined
-    ) {
-      switch (userData.deleteAccountData.error.payload.message) {
-        case ERROR:
-          toast({
-            title: 'Error on deleting account',
-            description:
-              "Couldn't delete your account, please try again later!",
-            status: 'error',
-            position: 'top-right',
-            duration: 4000,
-            isClosable: true,
-          });
-          userActionReset();
-          break;
-        default:
-          toast({
-            title: 'Error on deleting account',
-            description:
-              "Couldn't delete your account, please try again later!",
-            status: 'error',
-            position: 'top-right',
-            duration: 4000,
-            isClosable: true,
-          });
-          userActionReset();
-          break;
-      }
-    } else if (userData.deleteAccountData.error) {
-      toast({
-        title: 'Error on deleting account',
-        description: userData.deleteAccountData.error,
-        status: 'error',
-        position: 'top-right',
-        duration: 4000,
-        isClosable: true,
-      });
-      userActionReset();
+  if (deleteAccountMutation.isError) {
+    switch (deleteAccountMutation.error.response.data.payload.message) {
+      case ERROR:
+        toast({
+          title: 'Error on deleting account',
+          description: "Couldn't delete your account, please try again later!",
+          status: 'error',
+          position: 'top-right',
+          duration: 4000,
+          isClosable: true,
+        });
+        userActionReset();
+        break;
+      default:
+        toast({
+          title: 'Error on deleting account',
+          description: "Couldn't delete your account, please try again later!",
+          status: 'error',
+          position: 'top-right',
+          duration: 4000,
+          isClosable: true,
+        });
+        userActionReset();
+        break;
     }
-  }, [userData.deleteAccountData.error, userActionReset, toast]);
+    deleteAccountMutation.reset();
+  }
 
   // Update account error handling
   useEffect(() => {
@@ -199,23 +187,23 @@ const Settings = ({
   }, [userData.userNameCheckData.error, userActionReset, toast]);
 
   // Message to user when account deleted
-  useEffect(() => {
-    if (userData.deleteAccountData.data) {
-      if (userData.deleteAccountData.data.payload.message === DELETED) {
-        toast({
-          title: 'Account deleted successfully!',
-          description:
-            'Your account has been deleted permanently. Sorry to see you go!',
-          status: 'success',
-          position: 'top-right',
-          duration: 4000,
-          isClosable: true,
-        });
-        history.push('/login');
-        userActionReset();
-      }
-    }
-  }, [userData.deleteAccountData.data, history, userActionReset, toast]);
+  if (
+    deleteAccountMutation.isSuccess &&
+    deleteAccountMutation.data.payload.message === DELETED
+  ) {
+    toast({
+      title: 'Account deleted successfully!',
+      description:
+        'Your account has been deleted permanently. Sorry to see you go!',
+      status: 'success',
+      position: 'top-right',
+      duration: 4000,
+      isClosable: true,
+    });
+    localStorage.removeItem('token');
+    history.push('/');
+    deleteAccountMutation.reset();
+  }
 
   // Message to user when account is updated
   useEffect(() => {
@@ -243,15 +231,19 @@ const Settings = ({
     }
   }, [userData.userNameCheckData.data, userActionReset]);
 
+  const handleDeleteAccount = () => {
+    deleteAccountMutation.mutate(history);
+  };
+
   // UI if user is valid and properly authenticated
   let content = (
     <Flex flexDir='column' height='100vh'>
       <NavBar loggedIn={true} />
       <SettingsBody
-        sendDeleteAccountLoading={userData.deleteAccountData.isLoading}
+        sendDeleteAccountLoading={deleteAccountMutation.isLoading}
         sendUpdateAccountLoading={userData.updateAccountData.isLoading}
         sendUserNameAvailable={userNameAvailable}
-        getDeleteAccount={() => deleteAccount(history)}
+        getDeleteAccount={handleDeleteAccount}
         getUpdateAccountData={(data) => updateAccount(history, data)}
         getUserNameCheckData={(data) => userNameCheck(history, data)}
       />
@@ -281,7 +273,6 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   preCheckUser,
-  deleteAccount,
   updateAccount,
   userNameCheck,
   userActionReset,
