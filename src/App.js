@@ -19,6 +19,7 @@ import Arena from './pages/arena';
 import Scoreboard from './pages/scoreboard';
 import isAuthenticated from './utils/isAuthenticated';
 import './App.scss';
+import PreCheck from './components/preCheck/PreCheck';
 
 const componentRegistry = {
   Dashboard: Dashboard,
@@ -49,6 +50,15 @@ const RenderRoute = (route) => {
     history.push('/dashboard');
   } else if (route.component === 'SignUp' && isAuthenticated()) {
     history.push('/dashboard');
+  }
+
+  if (route.component === 'Dashboard' || route.component === 'Settings') {
+    const Component = componentRegistry[route.component];
+    return (
+      <PreCheck route={route}>
+        <Component />
+      </PreCheck>
+    );
   }
 
   return (

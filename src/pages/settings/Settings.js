@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import {
-  preCheckUser,
-  userNameCheck,
-  userActionReset,
-} from '../../actions/userActions';
+import { userNameCheck, userActionReset } from '../../actions/userActions';
 import SettingsBody from './SettingsBody';
 import NavBar from '../../components/navBar';
 import {
@@ -15,16 +11,11 @@ import {
   CONFLICT,
 } from '../../utils/constants';
 import { useHistory } from 'react-router-dom';
-import { Flex, useToast, Spinner } from '@chakra-ui/react';
+import { Flex, useToast } from '@chakra-ui/react';
 import { useMutation } from 'react-query';
 import { deleteAccount, updateAccount } from '../../api/userAPI';
 
-const Settings = ({
-  userData,
-  preCheckUser,
-  userNameCheck,
-  userActionReset,
-}) => {
+const Settings = ({ userData, userNameCheck, userActionReset }) => {
   const history = useHistory();
   // For showing toast messages
   const toast = useToast();
@@ -37,31 +28,6 @@ const Settings = ({
   const updateAccountMutation = useMutation((history, newAccountData) =>
     updateAccount(history, newAccountData)
   );
-
-  // For checking if user token is validated by server
-  useEffect(() => {
-    preCheckUser(history);
-  }, [preCheckUser, history]);
-
-  // PreCheck error handling
-  useEffect(() => {
-    if (
-      userData.preCheckData.error &&
-      userData.preCheckData.error.payload === undefined
-    ) {
-      toast({
-        title: 'Error on Precheck',
-        description: userData.preCheckData.error,
-        status: 'error',
-        position: 'top-right',
-        duration: 4000,
-        isClosable: true,
-      });
-      localStorage.removeItem('token');
-      history.push('/login');
-      userActionReset();
-    }
-  }, [userData.preCheckData.error, userActionReset, history, toast]);
 
   // Delete account error handling
   if (deleteAccountMutation.isError) {
@@ -223,8 +189,7 @@ const Settings = ({
     updateAccountMutation.mutate(history, data);
   };
 
-  // UI if user is valid and properly authenticated
-  let content = (
+  return (
     <Flex flexDir='column' height='100vh'>
       <NavBar loggedIn={true} />
       <SettingsBody
@@ -237,22 +202,6 @@ const Settings = ({
       />
     </Flex>
   );
-
-  // Pre-check running
-  if (userData.preCheckData.isLoading) {
-    content = (
-      <Flex
-        height='100vh'
-        flexDir='column'
-        justifyContent='center'
-        alignItems='center'
-      >
-        <Spinner color='#dd2c00' />
-      </Flex>
-    );
-  }
-
-  return content;
 };
 
 const mapStateToProps = (state) => ({
@@ -260,7 +209,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  preCheckUser,
   userNameCheck,
   userActionReset,
 })(Settings);
