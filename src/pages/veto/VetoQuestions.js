@@ -2,12 +2,7 @@ import React from 'react';
 import VetoQuestionCard from './VetoQuestionCard';
 import { Flex, Skeleton } from '@chakra-ui/react';
 
-const VetoQuestions = ({
-  questionsLoading,
-  preCheckLoading,
-  questions,
-  userVoted,
-}) => {
+const VetoQuestions = ({ questionsLoading, questions, userVoted }) => {
   let questionsArray = null;
   let questionCards = null;
 
@@ -43,7 +38,7 @@ const VetoQuestions = ({
   );
 
   // Loading while fetching questions
-  if (questionsLoading || preCheckLoading) {
+  if (questionsLoading) {
     content = (
       <Flex padding='35px' flexDir='column'>
         <Skeleton height='20px' />

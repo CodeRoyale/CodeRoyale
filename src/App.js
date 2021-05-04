@@ -52,21 +52,26 @@ const RenderRoute = (route) => {
     history.push('/dashboard');
   }
 
-  if (route.component === 'Dashboard' || route.component === 'Settings') {
-    const Component = componentRegistry[route.component];
+  // If its Login, signup or home page then no need of preCheck
+  if (
+    route.component === 'Home' ||
+    route.component === 'Login' ||
+    route.component === 'SignUp'
+  ) {
     return (
-      <PreCheck route={route}>
-        <Component />
-      </PreCheck>
+      <Route
+        exact
+        path={route.path}
+        component={componentRegistry[route.component]}
+      />
     );
   }
 
+  const Component = componentRegistry[route.component];
   return (
-    <Route
-      exact
-      path={route.path}
-      component={componentRegistry[route.component]}
-    />
+    <PreCheck route={route}>
+      <Component />
+    </PreCheck>
   );
 };
 
