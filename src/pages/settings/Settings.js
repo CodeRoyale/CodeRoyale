@@ -1,26 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { userNameCheck, userActionReset } from '../../actions/userActions';
+import React from 'react';
 import SettingsBody from './SettingsBody';
 import NavBar from '../../components/navBar';
-import {
-  ERROR,
-  DELETED,
-  UPDATE,
-  AVAILABLE,
-  CONFLICT,
-} from '../../utils/constants';
+import { ERROR, DELETED, UPDATE } from '../../utils/constants';
 import { useHistory } from 'react-router-dom';
 import { Flex, useToast } from '@chakra-ui/react';
 import { useMutation } from 'react-query';
 import { deleteAccount, updateAccount } from '../../api/userAPI';
 
-const Settings = ({ userData, userNameCheck, userActionReset }) => {
+const Settings = () => {
   const history = useHistory();
   // For showing toast messages
   const toast = useToast();
 
-  const [userNameAvailable, setUserNameAvailable] = useState(null);
+  // const [userNameAvailable, setUserNameAvailable] = useState(null);
 
   const deleteAccountMutation = useMutation((history) =>
     deleteAccount(history)
@@ -41,7 +33,6 @@ const Settings = ({ userData, userNameCheck, userActionReset }) => {
           duration: 4000,
           isClosable: true,
         });
-        userActionReset();
         break;
       default:
         toast({
@@ -52,7 +43,6 @@ const Settings = ({ userData, userNameCheck, userActionReset }) => {
           duration: 4000,
           isClosable: true,
         });
-        userActionReset();
         break;
     }
     deleteAccountMutation.reset();
@@ -70,7 +60,6 @@ const Settings = ({ userData, userNameCheck, userActionReset }) => {
           duration: 4000,
           isClosable: true,
         });
-        userActionReset();
         break;
       default:
         toast({
@@ -81,7 +70,6 @@ const Settings = ({ userData, userNameCheck, userActionReset }) => {
           duration: 4000,
           isClosable: true,
         });
-        userActionReset();
         break;
     }
   }
@@ -90,51 +78,51 @@ const Settings = ({ userData, userNameCheck, userActionReset }) => {
     - Show user if userName is not available if conflict from server
     - userName checking error handling
   */
-  useEffect(() => {
-    if (
-      userData.userNameCheckData.error &&
-      userData.userNameCheckData.error.payload !== undefined
-    ) {
-      switch (userData.userNameCheckData.error.payload.message) {
-        case CONFLICT:
-          setUserNameAvailable(false);
-          userActionReset();
-          break;
-        case ERROR:
-          toast({
-            title: 'Error on username check',
-            description: 'Some error occured! Please try again later!',
-            status: 'error',
-            position: 'top-right',
-            duration: 4000,
-            isClosable: true,
-          });
-          userActionReset();
-          break;
-        default:
-          toast({
-            title: 'Error on username check',
-            description: 'Some error occured! Please try again later!',
-            status: 'error',
-            position: 'top-right',
-            duration: 4000,
-            isClosable: true,
-          });
-          userActionReset();
-          break;
-      }
-    } else if (userData.userNameCheckData.error) {
-      toast({
-        title: 'Error on username check',
-        description: userData.userNameCheckData.error,
-        status: 'error',
-        position: 'top-right',
-        duration: 4000,
-        isClosable: true,
-      });
-      userActionReset();
-    }
-  }, [userData.userNameCheckData.error, userActionReset, toast]);
+  // useEffect(() => {
+  //   if (
+  //     userData.userNameCheckData.error &&
+  //     userData.userNameCheckData.error.payload !== undefined
+  //   ) {
+  //     switch (userData.userNameCheckData.error.payload.message) {
+  //       case CONFLICT:
+  //         setUserNameAvailable(false);
+  //         userActionReset();
+  //         break;
+  //       case ERROR:
+  //         toast({
+  //           title: 'Error on username check',
+  //           description: 'Some error occured! Please try again later!',
+  //           status: 'error',
+  //           position: 'top-right',
+  //           duration: 4000,
+  //           isClosable: true,
+  //         });
+  //         userActionReset();
+  //         break;
+  //       default:
+  //         toast({
+  //           title: 'Error on username check',
+  //           description: 'Some error occured! Please try again later!',
+  //           status: 'error',
+  //           position: 'top-right',
+  //           duration: 4000,
+  //           isClosable: true,
+  //         });
+  //         userActionReset();
+  //         break;
+  //     }
+  //   } else if (userData.userNameCheckData.error) {
+  //     toast({
+  //       title: 'Error on username check',
+  //       description: userData.userNameCheckData.error,
+  //       status: 'error',
+  //       position: 'top-right',
+  //       duration: 4000,
+  //       isClosable: true,
+  //     });
+  //     userActionReset();
+  //   }
+  // }, [userData.userNameCheckData.error, userActionReset, toast]);
 
   // Message to user when account deleted
   if (
@@ -173,13 +161,13 @@ const Settings = ({ userData, userNameCheck, userActionReset }) => {
   }
 
   // If userName is available
-  useEffect(() => {
-    if (userData.userNameCheckData.data) {
-      if (userData.userNameCheckData.data.payload.message === AVAILABLE) {
-        setUserNameAvailable(true);
-      }
-    }
-  }, [userData.userNameCheckData.data, userActionReset]);
+  // useEffect(() => {
+  //   if (userData.userNameCheckData.data) {
+  //     if (userData.userNameCheckData.data.payload.message === AVAILABLE) {
+  //       setUserNameAvailable(true);
+  //     }
+  //   }
+  // }, [userData.userNameCheckData.data, userActionReset]);
 
   const handleDeleteAccount = () => {
     deleteAccountMutation.mutate(history);
@@ -195,20 +183,12 @@ const Settings = ({ userData, userNameCheck, userActionReset }) => {
       <SettingsBody
         sendDeleteAccountLoading={deleteAccountMutation.isLoading}
         sendUpdateAccountLoading={updateAccountMutation.isLoading}
-        sendUserNameAvailable={userNameAvailable}
         getDeleteAccount={handleDeleteAccount}
         getUpdateAccountData={handleUpdateAccount}
-        getUserNameCheckData={(data) => userNameCheck(history, data)}
+        // getUserNameCheckData={(data) => userNameCheck(history, data)}
       />
     </Flex>
   );
 };
 
-const mapStateToProps = (state) => ({
-  userData: state.userData,
-});
-
-export default connect(mapStateToProps, {
-  userNameCheck,
-  userActionReset,
-})(Settings);
+export default Settings;
