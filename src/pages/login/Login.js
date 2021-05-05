@@ -12,6 +12,7 @@ import LoginLeftSection from './LoginLeftSection';
 import LoginRightSection from './LoginRightSection';
 import { useMutation } from 'react-query';
 import { loginUser } from '../../api/userAPI';
+import { SERVER_DOWN } from '../../utils/constants';
 
 const Login = () => {
   const history = useHistory();
@@ -39,48 +40,59 @@ const Login = () => {
 
   // Login error handing
   if (isError) {
-    switch (error.response.data.payload.message) {
-      case REGISTER:
-        toast({
-          title: 'Error on Login',
-          description: 'You will have to Sign Up first to use CodeRoyale!',
-          status: 'error',
-          position: 'top-right',
-          duration: 4000,
-          isClosable: true,
-        });
-        break;
-      case ERROR:
-        toast({
-          title: 'Error on Login',
-          description: 'Some error occurred, we are working to fix it.',
-          status: 'error',
-          position: 'top-right',
-          duration: 4000,
-          isClosable: true,
-        });
-        break;
-      case AUTHERROR:
-      case INVALID:
-        toast({
-          title: 'Error on Login',
-          description: 'Some error occurred, please try again later.',
-          status: 'error',
-          position: 'top-right',
-          duration: 4000,
-          isClosable: true,
-        });
-        break;
-      default:
-        toast({
-          title: 'Error on Login',
-          description: 'Some error occurred, please try again later.',
-          status: 'error',
-          position: 'top-right',
-          duration: 4000,
-          isClosable: true,
-        });
-        break;
+    if (error.response) {
+      switch (error.response.data.payload.message) {
+        case REGISTER:
+          toast({
+            title: 'Error on Login',
+            description: 'You will have to Sign Up first to use CodeRoyale!',
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
+          break;
+        case ERROR:
+          toast({
+            title: 'Error on Login',
+            description: 'Some error occurred, we are working to fix it.',
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
+          break;
+        case AUTHERROR:
+        case INVALID:
+          toast({
+            title: 'Error on Login',
+            description: 'Some error occurred, please try again later.',
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
+          break;
+        default:
+          toast({
+            title: 'Error on Login',
+            description: 'Some error occurred, please try again later.',
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
+          break;
+      }
+    } else {
+      toast({
+        title: 'Error on Login',
+        description: SERVER_DOWN,
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
     }
     loginMutation.reset();
   }
