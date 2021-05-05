@@ -2,8 +2,10 @@ const nodemailer = require('nodemailer');
 const ejs = require('ejs');
 
 /* eslint-disable */
-const { MAIL } = process.env.MAIL || secrets.MAIL;
-const { MAILPASS } = process.env.MAILPASS || secrets.MAILPASS;
+const [MAIL, MAILPASS] = [
+  process.env.MAIL || secrets.MAIL,
+  process.env.MAILPASS || secrets.MAILPASS,
+];
 /* eslint-enable */
 
 // Creating transport instance
