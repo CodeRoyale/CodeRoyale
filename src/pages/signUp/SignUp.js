@@ -12,6 +12,7 @@ import SignUpLeftSection from './SignUpLeftSection';
 import SignUpRightSection from './SignUpRightSection';
 import { useMutation } from 'react-query';
 import { signUpUser } from '../../api/userAPI';
+import { SERVER_DOWN } from '../../utils/constants';
 
 const SignUp = () => {
   const history = useHistory();
@@ -44,40 +45,51 @@ const SignUp = () => {
 
   // SignUp error handling
   if (isError) {
-    switch (error.response.data.payload.message) {
-      case CONFLICT:
-        toast({
-          title: 'Error on Sign up',
-          description: 'You have already registered! Login to use CodeRoyale',
-          status: 'error',
-          position: 'top-right',
-          duration: 4000,
-          isClosable: true,
-        });
-        history.push('/login');
-        break;
-      case MISSING:
-      case ERROR:
-      case ERRORTOKEN:
-        toast({
-          title: 'Error on Sign up',
-          description: 'Some error occurred, please try again later',
-          status: 'error',
-          position: 'top-right',
-          duration: 4000,
-          isClosable: true,
-        });
-        break;
-      default:
-        toast({
-          title: 'Error on Sign up',
-          description: 'Some error occurred, please try again later',
-          status: 'error',
-          position: 'top-right',
-          duration: 4000,
-          isClosable: true,
-        });
-        break;
+    if (error.response) {
+      switch (error.response.data.payload.message) {
+        case CONFLICT:
+          toast({
+            title: 'Error on Sign up',
+            description: 'You have already registered! Login to use CodeRoyale',
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
+          history.push('/login');
+          break;
+        case MISSING:
+        case ERROR:
+        case ERRORTOKEN:
+          toast({
+            title: 'Error on Sign up',
+            description: 'Some error occurred, please try again later',
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
+          break;
+        default:
+          toast({
+            title: 'Error on Sign up',
+            description: 'Some error occurred, please try again later',
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
+          break;
+      }
+    } else {
+      toast({
+        title: 'Error on Sign up',
+        description: SERVER_DOWN,
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
     }
     signUpMutation.reset();
   }
