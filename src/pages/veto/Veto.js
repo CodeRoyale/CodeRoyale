@@ -15,7 +15,6 @@ const Veto = ({
   socketData,
   vetoData,
   roomData,
-  userData,
   vetoStop,
   getVetoStatus,
   getAllVetoUsers,
@@ -87,7 +86,6 @@ const Veto = ({
         }
         vetoTime={vetoTimeLimit}
         questionsLoading={vetoData.quesApiLoading}
-        preCheckLoading={userData.preCheckData.isLoading}
         questions={vetoData.vetoQuestions}
         confirmVetoVotes={handleConfirmVetoVotes}
         userVoted={vetoData.userVoted}
@@ -102,7 +100,6 @@ const mapStateToProps = (state) => ({
   vetoData: state.vetoData,
   socketData: state.socketData,
   roomData: state.roomData,
-  userData: state.userData,
 });
 
 export default connect(mapStateToProps, {

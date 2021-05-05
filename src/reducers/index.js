@@ -5,10 +5,8 @@ import teamReducer from './teamReducer';
 import chatReducer from './chatReducer';
 import vetoReducer from './vetoReducer';
 import arenaReducer from './arenaReducer';
-import userReducer from './userReducer';
 
 export default combineReducers({
-  userData: userReducer,
   socketData: socketReducer,
   roomData: roomReducer,
   teamData: teamReducer,

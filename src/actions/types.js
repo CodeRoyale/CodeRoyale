@@ -1,38 +1,3 @@
-// PreCheck actions
-export const PRECHECK_LOADING = 'PRECHECK_LOADING';
-export const PRECHECK_SUCCESS = 'PRECHECK_SUCCESS';
-export const PRECHECK_FAIL = 'PRECHECK_FAIL';
-
-// Login Actions
-export const LOGIN_LOADING = 'LOGIN_LOADING';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAIL = 'LOGIN_FAIL';
-
-// Signup Actions
-export const SIGNUP_LOADING = 'SIGNUP_LOADING';
-export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
-export const SIGNUP_FAIL = 'SIGNUP_FAIL';
-
-// Delete Account Actions
-export const DELETE_ACCOUNT_LOADING = 'DELETE_ACCOUNT_LOADING';
-export const DELETE_ACCOUNT_SUCCESS = 'DELETE_ACCOUNT_SUCCESS';
-export const DELETE_ACCOUNT_FAIL = 'DELETE_ACCOUNT_FAIL';
-
-// Update Account Actions
-export const UPDATE_ACCOUNT_LOADING = 'UPDATE_ACCOUNT_LOADING';
-export const UPDATE_ACCOUNT_SUCCESS = 'UPDATE_ACCOUNT_SUCCESS';
-export const UPDATE_ACCOUNT_FAIL = 'UPDATE_ACCOUNT_FAIL';
-
-// Logout user
-export const LOGOUT_LOADING = 'LOGOUT_LOADING';
-export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
-export const LOGOUT_FAIL = 'LOGOUT_FAIL';
-
-// Username check
-export const USERNAME_CHECK_LOADING = 'USERNAME_CHECK_LOADING';
-export const USERNAME_CHECK_SUCCESS = 'USERNAME_CHECK_SUCCESS';
-export const USERNAME_CHECK_FAIL = 'USERNAME_CHECK_FAIL';
-
 // Socket Actions
 export const SOCKET_LOADING = 'SOCKET_LOADING';
 export const SOCKET_SUCCESS = 'SOCKET_SUCCESS';

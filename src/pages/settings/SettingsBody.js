@@ -47,19 +47,19 @@ const SettingsBody = ({
           heading='Username'
           value={userName}
           disabled={false}
-          checkUserNameAvailability={true}
-          userNameAvailable={sendUserNameAvailable}
+          checkUserNameAvailability={false}
+          // userNameAvailable={sendUserNameAvailable}
           leftElement={<Icon as={AiOutlineUser} />}
           onChange={(e) => {
             setUserName(e.target.value);
             setNewAccountData({ ...newAccountData, userName: e.target.value });
           }}
-          onBlur={() => {
-            if (newAccountData != null && newAccountData.userName != null) {
-              // Sending userName in props to check if available or not to SettingsMain
-              getUserNameCheckData(newAccountData.userName);
-            }
-          }}
+          // onBlur={() => {
+          //   if (newAccountData != null && newAccountData.userName != null) {
+          //     // Sending userName in props to check if available or not to SettingsMain
+          //     getUserNameCheckData(newAccountData.userName);
+          //   }
+          // }}
         />
         <SettingsField
           heading='First Name'
@@ -133,8 +133,8 @@ const SettingsBody = ({
             heading='Username'
             value={userName}
             disabled={false}
-            checkUserNameAvailability={true}
-            userNameAvailable={sendUserNameAvailable}
+            checkUserNameAvailability={false}
+            // userNameAvailable={sendUserNameAvailable}
             leftElement={<Icon as={AiOutlineUser} />}
             onChange={(e) => {
               setUserName(e.target.value);
@@ -143,12 +143,12 @@ const SettingsBody = ({
                 userName: e.target.value,
               });
             }}
-            onBlur={() => {
-              if (newAccountData != null && newAccountData.userName != null) {
-                // Sending userName in props to check if available or not to SettingsMain
-                getUserNameCheckData(newAccountData.userName);
-              }
-            }}
+            // onBlur={() => {
+            //   if (newAccountData != null && newAccountData.userName != null) {
+            //     // Sending userName in props to check if available or not to SettingsMain
+            //     getUserNameCheckData(newAccountData.userName);
+            //   }
+            // }}
           />
           <SettingsField
             heading='First Name'

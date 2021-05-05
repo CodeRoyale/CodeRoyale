@@ -18,7 +18,12 @@ import Veto from './pages/veto';
 import Arena from './pages/arena';
 import Scoreboard from './pages/scoreboard';
 import isAuthenticated from './utils/isAuthenticated';
+import PreCheck from './components/preCheck/PreCheck';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import './App.scss';
+
+// Initializing react-query client
+const queryClient = new QueryClient();
 
 const componentRegistry = {
   Dashboard: Dashboard,
@@ -51,12 +56,33 @@ const RenderRoute = (route) => {
     history.push('/dashboard');
   }
 
+  const Component = componentRegistry[route.component];
+
+  // If its Login, signup or home page then no need of preCheck
+  if (
+    route.component === 'Home' ||
+    route.component === 'Login' ||
+    route.component === 'SignUp'
+  ) {
+    return (
+      <Route exact path={route.path}>
+        {route.component === 'Login' || route.component === 'SignUp' ? (
+          <QueryClientProvider client={queryClient}>
+            <Component />
+          </QueryClientProvider>
+        ) : (
+          <Component />
+        )}
+      </Route>
+    );
+  }
+
   return (
-    <Route
-      exact
-      path={route.path}
-      component={componentRegistry[route.component]}
-    />
+    <QueryClientProvider client={queryClient}>
+      <PreCheck route={route} componentName={route.component}>
+        <Component />
+      </PreCheck>
+    </QueryClientProvider>
   );
 };
 

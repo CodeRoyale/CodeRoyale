@@ -8,7 +8,6 @@ const VetoBody = ({
   vetoUsers,
   vetoCompletedUsers,
   questionsLoading,
-  preCheckLoading,
   questions,
   userProfilePictures,
   confirmVetoVotes,
@@ -39,7 +38,6 @@ const VetoBody = ({
       />
       <VetoQuestions
         questionsLoading={questionsLoading}
-        preCheckLoading={preCheckLoading}
         questions={questions}
         userVoted={userVoted}
       />
