@@ -151,7 +151,7 @@ app.get('/swagger.json', (req, res) => {
 
 // request for seeing the api-documentation live
 app.get('/docs', (req, res) => {
-  res.sendFile(path.join(__dirname, 'redoc.html'));
+  res.sendFile(path.join(__dirname, './utils/redoc.html'));
 });
 
 module.exports = {

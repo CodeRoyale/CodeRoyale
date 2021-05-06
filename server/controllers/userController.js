@@ -67,6 +67,7 @@ const signupUser = async (req, res) => {
                   firstName: data.given_name,
                   lastName: data.family_name,
                   email: data.email,
+                  emailVerified: true,
                   issuer: req.body.issuer,
                   password: hash,
                   signUpType: req.body.signUpType,
@@ -166,6 +167,7 @@ const signupUser = async (req, res) => {
               firstName: result.user.first_name,
               lastName: result.user.last_name,
               email: result.user.email,
+              emailVerified: true,
               issuer: req.body.issuer,
               password: hash,
               signUpType: req.body.signUpType,
@@ -250,6 +252,7 @@ const signupUser = async (req, res) => {
                   firstName: req.body.data.firstName,
                   lastName: req.body.data.lastName,
                   email: req.body.data.email,
+                  emailVerified: false,
                   issuer: 'self',
                   password: hash,
                   signUpType: req.body.data.signUpType,
@@ -521,7 +524,7 @@ const loginUser = async (req, res) => {
           });
         });
     } else if (req.body.issuer === 'self') {
-      await User.find({ email: req.body.data.email })
+      await User.find({ email: req.body.data.email, emailVerified: true })
         .exec()
         .then((user) => {
           if (user.length >= 1) {
