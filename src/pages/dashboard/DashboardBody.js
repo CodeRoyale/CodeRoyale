@@ -4,12 +4,7 @@ import dashboard from '../../assets/dashboard.svg';
 import JoinRoom from './JoinRoom';
 import CreateRoom from './CreateRoom';
 
-const DashboardBody = ({ getJoinRoomData }) => {
-  // Join room data is received from props
-  const handleJoinRoomData = (data) => {
-    getJoinRoomData(data);
-  };
-
+const DashboardBody = () => {
   return (
     <Flex
       height='100%'
@@ -28,7 +23,7 @@ const DashboardBody = ({ getJoinRoomData }) => {
         </Text>
         <Flex>
           <CreateRoom />
-          <JoinRoom getJoinRoomData={handleJoinRoomData} />
+          <JoinRoom />
         </Flex>
       </Stack>
       <Spacer />

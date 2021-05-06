@@ -32,15 +32,31 @@ export const createRoom = (
       if (data) {
         if (data !== ERROR_MSG) {
           // Create room success
-          cb(null, data);
-        } else {
-          // Create room fail
-          cb(data, null);
+          return cb(null, data);
         }
-      } else {
-        // Server didnt send back data
-        cb('No response from server', null);
+        // Create room fail
+        return cb(data, null);
       }
+      // Server didnt send back data
+      return cb('No response from server', null);
     }
   );
+};
+
+export const joinRoom = (socket, { room_id }, cb) => {
+  if (!socket) return false;
+
+  socket.emit('JOIN_ROOM', { room_id }, (data) => {
+    console.log(data);
+    if (data) {
+      if (data !== ERROR_MSG) {
+        // Join room success
+        return cb(null, data);
+      }
+      // Join room fail
+      return cb(data, null);
+    }
+    // Server didnt send back data
+    return cb('No response from server', null);
+  });
 };

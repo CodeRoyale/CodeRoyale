@@ -117,7 +117,6 @@ const CreateRoom = () => {
     );
   });
 
-  // Sending create room data into props
   const handleCreateRoom = () => {
     createRoom(
       socket,
@@ -132,9 +131,6 @@ const CreateRoom = () => {
         timeLimit,
       },
       (error, data) => {
-        console.log(error);
-        console.log(data);
-
         if (data) {
           toast({
             title: 'Room Created!',
