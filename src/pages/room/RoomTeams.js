@@ -1,21 +1,23 @@
 import React from 'react';
 import { Flex } from '@chakra-ui/layout';
 import CreateTeam from './CreateTeam';
-import { connect } from 'react-redux';
 import TeamCard from './TeamCard';
 import profileData from '../../utils/profileData';
+import useRoom from '../../global-stores/useRoom';
 
-const RoomTeams = ({ roomData }) => {
+const RoomTeams = () => {
+  const room = useRoom((state) => state.room);
+
   const userName = profileData().userName;
-  let roomTeams, roomConfig, roomAdmin;
 
-  if (roomData.data) {
-    roomTeams = roomData.data.teams;
-    roomConfig = roomData.data.config;
-    roomAdmin = roomData.data.config.admin;
+  let roomTeams, roomConfig, roomAdmin;
+  if (room) {
+    roomTeams = room.teams;
+    roomConfig = room.config;
+    roomAdmin = room.config.admin;
   }
 
-  // Setting Team Cards...
+  // Setting up the team cards
   let teamCards = [];
   for (var teamName in roomTeams) {
     teamCards.push(
@@ -36,8 +38,4 @@ const RoomTeams = ({ roomData }) => {
   );
 };
 
-export const mapStateToProps = (state) => ({
-  roomData: state.roomData,
-});
-
-export default connect(mapStateToProps, null)(RoomTeams);
+export default RoomTeams;
