@@ -1,22 +1,27 @@
 import React from 'react';
 import CountBar from './CountBar';
 import profileData from '../../utils/profileData';
-import { joinTeam, leaveTeam } from '../../actions/teamActions';
-import { connect } from 'react-redux';
-import { Flex, Text, Image, Icon, IconButton } from '@chakra-ui/react';
+import {
+  Flex,
+  Text,
+  Image,
+  Icon,
+  IconButton,
+  useToast,
+} from '@chakra-ui/react';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import { joinTeam, leaveTeam } from '../../service/teamSocket';
+import useSocket from '../../global-stores/useSocket';
+import useRoom from '../../global-stores/useRoom';
+import useTeamEvent from '../../global-stores/useTeamEvent';
 
-const TeamCard = ({
-  teamName,
-  totalUsers,
-  users,
-  socketData,
-  roomData,
-  joinTeam,
-  leaveTeam,
-}) => {
+const TeamCard = ({ teamName, totalUsers, users }) => {
+  const socket = useSocket((state) => state.socket);
+  const room = useRoom((state) => state.room);
+  const setTeamEvent = useTeamEvent((state) => state.setTeamEvent);
+  const toast = useToast();
+
   const userName = profileData().userName.toString();
-  const socket = socketData.socket;
   const userCount = users.length;
   let buttonIcon = (
     <Icon as={AiOutlinePlus} w={4} h={4} customtype='joinTeam' />
@@ -31,9 +36,51 @@ const TeamCard = ({
 
   const handleJoinOrLeaveTeam = () => {
     if (buttonIcon.props.customtype === 'joinTeam') {
-      joinTeam(socket, { team_name: teamName });
+      joinTeam(socket, { team_name: teamName }, (error, data) => {
+        if (data) {
+          setTeamEvent('JOINED_TEAM');
+          toast({
+            title: 'You joined a team',
+            status: 'success',
+            position: 'top-right',
+            duration: 750,
+            isClosable: true,
+          });
+        }
+
+        if (error) {
+          toast({
+            title: error,
+            status: 'error',
+            position: 'top-right',
+            duration: 750,
+            isClosable: true,
+          });
+        }
+      });
     } else if (buttonIcon.props.customtype === 'leaveTeam') {
-      leaveTeam(socket);
+      leaveTeam(socket, (error, data) => {
+        if (data) {
+          setTeamEvent('LEFT_TEAM');
+          toast({
+            title: 'You left a team',
+            status: 'success',
+            position: 'top-right',
+            duration: 750,
+            isClosable: true,
+          });
+        }
+
+        if (error) {
+          toast({
+            title: error,
+            status: 'error',
+            position: 'top-right',
+            duration: 750,
+            isClosable: true,
+          });
+        }
+      });
     }
   };
 
@@ -49,7 +96,7 @@ const TeamCard = ({
       <Image
         borderRadius='full'
         boxSize='40px'
-        src={roomData.data.state.profilePictures[user]}
+        src={room ? room.state.profilePictures[user] : null}
         alt='Profile Pic'
       />
       <Text fontSize='sm' fontWeight='bold' color='#dd2c00' marginLeft='1em'>
@@ -84,10 +131,4 @@ const TeamCard = ({
   );
 };
 
-export const mapStateToProps = (state) => ({
-  socketData: state.socketData,
-  roomData: state.roomData,
-  teamData: state.teamData,
-});
-
-export default connect(mapStateToProps, { joinTeam, leaveTeam })(TeamCard);
+export default TeamCard;

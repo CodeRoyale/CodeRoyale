@@ -17,6 +17,7 @@ const Room = ({ teamData, resetTeamAction, vetoData, vetoStart }) => {
   const socket = useSocket((state) => state.socket);
   const room = useRoom((state) => state.room);
   const teamEvent = useTeamEvent((state) => state.teamEvent);
+  const setTeamEvent = useTeamEvent((state) => state.setTeamEvent);
   const setRoom = useRoom((state) => state.setRoom);
   const history = useHistory();
 
@@ -34,6 +35,7 @@ const Room = ({ teamData, resetTeamAction, vetoData, vetoStart }) => {
     getRoom(socket, { room_id: roomId }, (error, data) => {
       if (data) {
         setRoom(data);
+        setTeamEvent(null);
       }
     });
   }
