@@ -98,7 +98,9 @@ export const roomClosed = (socket, cb) => {
   if (!socket) return false;
 
   socket.off('ROOM_CLOSED').on('ROOM_CLOSED', (data) => {
-    console.log(data);
+    if (data && data.data.dataToEmit === 'Room Closed') {
+      return cb(null, data);
+    }
   });
 };
 
@@ -107,7 +109,7 @@ export const roomUpdated = (socket, cb) => {
 
   socket.on('ROOM_UPDATED', (data) => {
     if (data && data.type !== undefined) {
-      console.log(data);
+      return cb(null, data);
     }
   });
 };

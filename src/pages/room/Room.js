@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { getRoom, roomClosed } from '../../actions/roomActions';
 import { resetTeamAction } from '../../actions/teamActions';
 import { vetoStart } from '../../actions/vetoActions';
 import { TEAM_CREATED, TEAM_JOINED, TEAM_LEFT } from '../../utils/constants';
@@ -10,20 +9,13 @@ import SideBar from '../../components/sideBar';
 import RoomBody from './RoomBody';
 import useSocket from '../../global-stores/useSocket';
 import useRoom from '../../global-stores/useRoom';
+import { getRoom, roomUpdated, roomClosed } from '../../service/roomSocket';
 
-const Room = ({
-  roomData,
-  socketData,
-  teamData,
-  getRoom,
-  resetTeamAction,
-  vetoData,
-  vetoStart,
-  roomClosed,
-}) => {
+const Room = ({ teamData, resetTeamAction, vetoData, vetoStart }) => {
   const toast = useToast();
   const socket = useSocket((state) => state.socket);
   const room = useRoom((state) => state.room);
+  const setRoom = useRoom((state) => state.setRoom);
   const history = useHistory();
 
   if (!socket) {
@@ -36,10 +28,22 @@ const Room = ({
     roomId = room.config.id;
   }
 
-  // Get room & check if veto started
+  // Listeners for room updated, veto started and room closed
   useEffect(() => {
-    if (socket !== null && teamData.type !== '' && roomId !== undefined) {
-      getRoom(socket, { room_id: roomId });
+    // if (socket !== null && teamData.type !== '' && roomId !== undefined) {
+    //   getRoom(socket, { room_id: roomId });
+    // }
+
+    if (socket) {
+      roomUpdated(socket, (error, data) => {
+        if (data) {
+          getRoom(socket, { room_id: roomId }, (error, data) => {
+            if (data) {
+              setRoom(data);
+            }
+          });
+        }
+      });
     }
 
     if (socket !== null) {
@@ -47,9 +51,23 @@ const Room = ({
     }
 
     if (socket) {
-      roomClosed(socket);
+      roomClosed(socket, (error, data) => {
+        console.log(data);
+        if (data) {
+          toast({
+            title: 'Room Closed',
+            description: 'The admin of the room decided to close the room',
+            variant: 'solid',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
+          setRoom(null);
+          history.push('/dashboard');
+        }
+      });
     }
-  }, [roomId, socket, getRoom, vetoStart, teamData.type, roomClosed, history]);
+  }, [history, setRoom, roomId, socket, vetoStart, toast]);
 
   // Display Alert on every action...
   useEffect(() => {
@@ -112,15 +130,11 @@ const Room = ({
 };
 
 export const mapStateToProps = (state) => ({
-  roomData: state.roomData,
   teamData: state.teamData,
-  socketData: state.socketData,
   vetoData: state.vetoData,
 });
 
 export default connect(mapStateToProps, {
-  getRoom,
-  roomClosed,
   vetoStart,
   resetTeamAction,
 })(Room);
