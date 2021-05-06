@@ -1,6 +1,4 @@
 import React, { useState, useRef } from 'react';
-import { createTeam } from '../../actions/teamActions';
-import { connect } from 'react-redux';
 import {
   Button,
   FormControl,
@@ -17,19 +15,42 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 import { BsPlus } from 'react-icons/bs';
+import useSocket from '../../global-stores/useSocket';
+import { createTeam } from '../../service/teamSocket';
 
-const CreateTeam = ({ socketData, createTeam }) => {
+const CreateTeam = () => {
+  const socket = useSocket((state) => state.socket);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef();
+  const toast = useToast();
 
   const [teamName, setTeamName] = useState('');
-  const socket = socketData.socket;
 
-  // Create team action
   const handleCreateTeam = () => {
-    createTeam(socket, { team_name: teamName });
+    createTeam(socket, { team_name: teamName }, (error, data) => {
+      if (data) {
+        toast({
+          title: 'You have created a new team',
+          status: 'success',
+          position: 'top-right',
+          duration: 750,
+          isClosable: true,
+        });
+      }
+
+      if (error) {
+        toast({
+          title: error,
+          status: 'error',
+          position: 'top-right',
+          duration: 750,
+          isClosable: true,
+        });
+      }
+    });
     setTeamName('');
     onClose();
   };
@@ -74,8 +95,4 @@ const CreateTeam = ({ socketData, createTeam }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  socketData: state.socketData,
-});
-
-export default connect(mapStateToProps, { createTeam })(CreateTeam);
+export default CreateTeam;
