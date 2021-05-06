@@ -17,11 +17,13 @@ import {
   Stack,
   Icon,
 } from '@chakra-ui/react';
-import { connect } from 'react-redux';
 import { millisecondsToString } from '../../utils/timeToString';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
+import useRoom from '../../global-stores/useRoom';
 
-const RoomInfo = ({ roomData }) => {
+const RoomInfo = () => {
+  const room = useRoom((state) => state.room);
+
   const [copied, setCopied] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -34,13 +36,13 @@ const RoomInfo = ({ roomData }) => {
   let privateRoom;
 
   // Getting the room info
-  if (roomData.data) {
-    roomId = roomData.data.config.id;
-    maxQuestions = roomData.data.competition.max_questions;
-    maxVetoQuestions = roomData.data.competition.veto.quesCount;
-    maxVotes = roomData.data.competition.veto.max_vote;
-    timeLimit = roomData.data.competition.timeLimit;
-    privateRoom = roomData.data.config.privateRoom;
+  if (room) {
+    roomId = room.config.id;
+    maxQuestions = room.competition.max_questions;
+    maxVetoQuestions = room.competition.veto.quesCount;
+    maxVotes = room.competition.veto.max_vote;
+    timeLimit = room.competition.timeLimit;
+    privateRoom = room.config.privateRoom;
   }
 
   const handleCopyRoomIdClick = () => {
@@ -109,8 +111,4 @@ const RoomInfo = ({ roomData }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  roomData: state.roomData,
-});
-
-export default connect(mapStateToProps, null)(RoomInfo);
+export default RoomInfo;
