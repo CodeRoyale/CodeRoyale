@@ -20,11 +20,13 @@ import { timeToString } from '../../utils/timeToString';
 import useSocket from '../../global-stores/useSocket';
 import useRoom from '../../global-stores/useRoom';
 import { createRoom } from '../../service/roomSocket';
+import { useHistory } from 'react-router-dom';
 
 const CreateRoom = () => {
   const socket = useSocket((state) => state.socket);
   const toast = useToast();
   const setRoom = useRoom((state) => state.setRoom);
+  const history = useHistory();
 
   const milliseconds = 60 * 60 * 1000;
 
@@ -140,6 +142,7 @@ const CreateRoom = () => {
             isClosable: true,
           });
           setRoom(data);
+          history.push('/room');
         }
 
         if (error) {

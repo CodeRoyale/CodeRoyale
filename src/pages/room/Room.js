@@ -8,6 +8,8 @@ import { useHistory } from 'react-router-dom';
 import { Flex, useToast } from '@chakra-ui/react';
 import SideBar from '../../components/sideBar';
 import RoomBody from './RoomBody';
+import useSocket from '../../global-stores/useSocket';
+import useRoom from '../../global-stores/useRoom';
 
 const Room = ({
   roomData,
@@ -20,17 +22,18 @@ const Room = ({
   roomClosed,
 }) => {
   const toast = useToast();
-  const socket = socketData.socket;
+  const socket = useSocket((state) => state.socket);
+  const room = useRoom((state) => state.room);
   const history = useHistory();
 
-  if (socket === null) {
+  if (!socket) {
     history.push('/dashboard');
   }
 
   // Getting the room Id
   let roomId;
-  if (roomData.data) {
-    roomId = roomData.data.config.id;
+  if (room) {
+    roomId = room.config.id;
   }
 
   // Get room & check if veto started

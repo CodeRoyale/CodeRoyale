@@ -4,11 +4,13 @@ import { AiOutlineArrowRight } from 'react-icons/ai';
 import useSocket from '../../global-stores/useSocket';
 import useRoom from '../../global-stores/useRoom';
 import { joinRoom } from '../../service/roomSocket';
+import { useHistory } from 'react-router-dom';
 
 const JoinRoom = () => {
   const socket = useSocket((state) => state.socket);
   const toast = useToast();
   const setRoom = useRoom((state) => state.setRoom);
+  const history = useHistory();
 
   const [roomId, setRoomId] = useState('');
 
@@ -25,6 +27,7 @@ const JoinRoom = () => {
           isClosable: true,
         });
         setRoom(data);
+        history.push('/room');
       }
 
       if (error) {
