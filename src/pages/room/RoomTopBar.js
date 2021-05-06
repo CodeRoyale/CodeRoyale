@@ -2,12 +2,14 @@ import React from 'react';
 import CountBar from './CountBar';
 import CloseRoom from './CloseRoom';
 import StartCompetition from './StartCompetition';
-import { connect } from 'react-redux';
 import profileData from '../../utils/profileData';
 import { Flex, Stack, Text } from '@chakra-ui/react';
 import RoomInfo from './RoomInfo';
+import useRoom from '../../global-stores/useRoom';
 
-const RoomTopBar = ({ roomData }) => {
+const RoomTopBar = () => {
+  const room = useRoom((state) => state.room);
+
   let numberOfPlayers = 0;
   let playersInTeams = 0;
   let numberOfTeams = 0;
@@ -17,15 +19,15 @@ const RoomTopBar = ({ roomData }) => {
 
   const userName = profileData().userName.toString();
 
-  if (roomData.data) {
-    maxUsersInRoom = roomData.data.config.max_perRoom;
-    maxTeamsInRoom = roomData.data.config.max_teams;
-    numberOfTeams = Object.keys(roomData.data.teams).length;
-    for (let teamName in roomData.data.teams) {
-      playersInTeams += roomData.data.teams[teamName].length;
+  if (room) {
+    maxUsersInRoom = room.config.max_perRoom;
+    maxTeamsInRoom = room.config.max_teams;
+    numberOfTeams = Object.keys(room.teams).length;
+    for (let teamName in room.teams) {
+      playersInTeams += room.teams[teamName].length;
     }
-    numberOfPlayers = playersInTeams + roomData.data.state.bench.length;
-    roomAdmin = roomData.data.config.admin;
+    numberOfPlayers = playersInTeams + room.state.bench.length;
+    roomAdmin = room.config.admin;
   }
 
   return (
@@ -67,8 +69,4 @@ const RoomTopBar = ({ roomData }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  roomData: state.roomData,
-});
-
-export default connect(mapStateToProps, null)(RoomTopBar);
+export default RoomTopBar;
