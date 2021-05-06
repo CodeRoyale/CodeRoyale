@@ -9,12 +9,14 @@ import SideBar from '../../components/sideBar';
 import RoomBody from './RoomBody';
 import useSocket from '../../global-stores/useSocket';
 import useRoom from '../../global-stores/useRoom';
+import useTeamEvent from '../../global-stores/useTeamEvent';
 import { getRoom, roomUpdated, roomClosed } from '../../service/roomSocket';
 
 const Room = ({ teamData, resetTeamAction, vetoData, vetoStart }) => {
   const toast = useToast();
   const socket = useSocket((state) => state.socket);
   const room = useRoom((state) => state.room);
+  const teamEvent = useTeamEvent((state) => state.teamEvent);
   const setRoom = useRoom((state) => state.setRoom);
   const history = useHistory();
 
@@ -28,12 +30,16 @@ const Room = ({ teamData, resetTeamAction, vetoData, vetoStart }) => {
     roomId = room.config.id;
   }
 
+  if (socket && teamEvent && roomId !== undefined) {
+    getRoom(socket, { room_id: roomId }, (error, data) => {
+      if (data) {
+        setRoom(data);
+      }
+    });
+  }
+
   // Listeners for room updated, veto started and room closed
   useEffect(() => {
-    // if (socket !== null && teamData.type !== '' && roomId !== undefined) {
-    //   getRoom(socket, { room_id: roomId });
-    // }
-
     if (socket) {
       roomUpdated(socket, (error, data) => {
         if (data) {
