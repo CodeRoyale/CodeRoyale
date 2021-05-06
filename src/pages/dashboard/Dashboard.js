@@ -1,30 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { connectSocket } from '../../actions/socketActions';
 import NavBar from '../../components/navBar';
 import { useHistory } from 'react-router-dom';
 import { Flex, useToast } from '@chakra-ui/react';
 import DashboardBody from './DashboardBody';
 import { createRoom, joinRoom } from '../../actions/roomActions';
 import { ROOM_CREATED, ROOM_JOINED } from '../../utils/constants';
+import { socketConnection } from '../../service/socket';
+import useSocket from '../../global-stores/useSocket';
 
-const Dashboard = ({
-  connectSocket,
-  roomData,
-  socketData,
-  createRoom,
-  joinRoom,
-}) => {
+const Dashboard = ({ roomData, socketData, createRoom, joinRoom }) => {
   const socket = socketData.socket;
   const toast = useToast();
   const history = useHistory();
+
+  const setSocket = useSocket((state) => state.setSocket);
 
   const [createRoomActionDone, setCreateRoomActionDone] = useState(false);
   const [joinRoomActionDone, setJoinRoomActionDone] = useState(false);
 
   useEffect(() => {
-    connectSocket();
-  }, [connectSocket]);
+    socketConnection((error, data) => {
+      if (data && data.message === 'CONNECTION_ACK') {
+        setSocket(data.socket);
+      }
+    });
+  }, [setSocket]);
 
   // Create room event messages
   useEffect(() => {
@@ -130,7 +131,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  connectSocket,
   createRoom,
   joinRoom,
 })(Dashboard);
