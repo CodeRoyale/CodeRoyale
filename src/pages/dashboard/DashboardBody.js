@@ -4,11 +4,7 @@ import dashboard from '../../assets/dashboard.svg';
 import JoinRoom from './JoinRoom';
 import CreateRoom from './CreateRoom';
 
-const DashboardBody = ({ getCreateRoomData, getJoinRoomData }) => {
-  // Create room data is received from props
-  const handleCreateRoomData = (data) => {
-    getCreateRoomData(data);
-  };
+const DashboardBody = ({ getJoinRoomData }) => {
   // Join room data is received from props
   const handleJoinRoomData = (data) => {
     getJoinRoomData(data);
@@ -31,7 +27,7 @@ const DashboardBody = ({ getCreateRoomData, getJoinRoomData }) => {
           competitive programming skills.
         </Text>
         <Flex>
-          <CreateRoom getCreateRoomData={handleCreateRoomData} />
+          <CreateRoom />
           <JoinRoom getJoinRoomData={handleJoinRoomData} />
         </Flex>
       </Stack>
