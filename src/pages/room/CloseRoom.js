@@ -29,6 +29,14 @@ const CloseRoom = () => {
   const handleCloseRoom = () => {
     closeRoom(socket, (error, data) => {
       if (data) {
+        toast({
+          title: 'Room closed',
+          description: error,
+          status: 'success',
+          position: 'top-right',
+          duration: 4000,
+          isClosable: true,
+        });
         setRoom(null);
         history.push('/dashboard');
       }
