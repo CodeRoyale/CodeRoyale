@@ -18,9 +18,13 @@ const Chat = ({ chatType }) => {
   useEffect(() => {
     subscribeToChat(socket, (error, data) => {
       if (data) {
-        if (data.type === 'everyone') setEveryoneChat(data);
+        if (data.type === 'everyone') {
+          setEveryoneChat(data);
+        }
 
-        if (data.type === 'team') setTeamChat(data);
+        if (data.type === 'team') {
+          setTeamChat(data);
+        }
       }
 
       if (error) {
