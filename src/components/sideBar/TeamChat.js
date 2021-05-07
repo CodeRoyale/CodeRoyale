@@ -1,7 +1,3 @@
-/*
- * Team chat for members in a team
- */
-
 import React, { useState } from 'react';
 import ChatBubble from './ChatBubble';
 import profileData from '../../utils/profileData';
@@ -25,9 +21,11 @@ const TeamChat = ({ userProfilePictures }) => {
           key={index}
           userName={item.source}
           userImage={
-            item.source === 'You'
-              ? profileData().picture
-              : userProfilePictures[item.source]
+            userProfilePictures
+              ? item.source === 'You'
+                ? profileData().picture
+                : userProfilePictures[item.source]
+              : profileData().picture
           }
           userMessage={item.message}
           bubbleColor={index % 2 === 0 ? '#F0F0F0' : '#F9F9F9'}

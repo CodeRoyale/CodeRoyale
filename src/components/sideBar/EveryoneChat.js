@@ -1,7 +1,3 @@
-/*
- * Everyone chat, send message to everyone in room
- */
-
 import React, { useState } from 'react';
 import ChatBubble from './ChatBubble';
 import profileData from '../../utils/profileData';

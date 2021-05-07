@@ -39,10 +39,18 @@ export const subscribeToChat = (socket, cb) => {
     if (data && data.content !== undefined) {
       if (data.toTeam) {
         // Team Chat
-        return cb(null, { message: data.content, source: data.userName });
+        return cb(null, {
+          type: 'team',
+          message: data.content,
+          source: data.userName,
+        });
       }
       // Everyone Chat
-      return cb(null, { message: data.content, source: data.userName });
+      return cb(null, {
+        type: 'everyone',
+        message: data.content,
+        source: data.userName,
+      });
     }
     // Chat fail
     return cb('Chat failed');

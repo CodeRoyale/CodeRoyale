@@ -1,43 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Flex, Select } from '@chakra-ui/react';
 import Chat from './Chat';
 import Logo from '../../components/logo/Logo';
 import ProfileButton from '../../components/profileButton/ProfileButton';
 import profileData from '../../utils/profileData';
-import { connect } from 'react-redux';
-import {
-  sendEveryoneMsg,
-  sendTeamMsg,
-  changeChatType,
-  receivedMsg,
-} from '../../actions/chatActions';
+import useChatType from '../../global-stores/useChatType';
 
-const SideBar = ({
-  socketData,
-  chatData,
-  roomData,
-  changeChatType,
-  sendEveryoneMsg,
-  sendTeamMsg,
-  receivedMsg,
-}) => {
-  const socket = socketData.socket;
-
-  useEffect(() => {
-    if (socket) {
-      receivedMsg(socket);
-    }
-  }, [socket, receivedMsg]);
-
-  // Send message to everyone in room
-  const handleEveryoneMsg = (message) => {
-    sendEveryoneMsg(socket, { message });
-  };
-
-  // Send message to team
-  const handleTeamMsg = (message) => {
-    sendTeamMsg(socket, { message });
-  };
+const SideBar = () => {
+  const chatType = useChatType((state) => state.chatType);
+  const setChatType = useChatType((state) => state.setChatType);
 
   return (
     <Flex
@@ -73,36 +44,16 @@ const SideBar = ({
         </Flex>
         <Select
           variant='filled'
-          value={chatData.chatType}
-          onChange={(e) => changeChatType(e.target.value)}
+          value={chatType}
+          onChange={(e) => setChatType(e.target.value)}
         >
           <option value='everyone'>Chat with everyone</option>
           <option value='team'>Chat with team</option>
         </Select>
       </Flex>
-      <Chat
-        chatType={chatData.chatType}
-        everyoneMsgList={chatData.everyoneMsgList}
-        teamMsgList={chatData.teamMsgList}
-        userProfilePictures={
-          roomData.data !== null ? roomData.data.state.profilePictures : null
-        }
-        sendEveryoneMsg={handleEveryoneMsg}
-        sendTeamMsg={handleTeamMsg}
-      />
+      <Chat chatType={chatType} />
     </Flex>
   );
 };
 
-const mapStateToProps = (state) => ({
-  socketData: state.socketData,
-  chatData: state.chatData,
-  roomData: state.roomData,
-});
-
-export default connect(mapStateToProps, {
-  sendEveryoneMsg,
-  sendTeamMsg,
-  changeChatType,
-  receivedMsg,
-})(SideBar);
+export default SideBar;
