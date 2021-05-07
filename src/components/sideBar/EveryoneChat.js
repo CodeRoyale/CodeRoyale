@@ -5,18 +5,21 @@
 import React, { useState } from 'react';
 import ChatBubble from './ChatBubble';
 import profileData from '../../utils/profileData';
-import { Flex, Stack, InputGroup, Input } from '@chakra-ui/react';
+import { Flex, Stack, InputGroup, Input, useToast } from '@chakra-ui/react';
+import useSocket from '../../global-stores/useSocket';
+import useEveryoneChat from '../../global-stores/useEveryoneChat';
+import { sendEveryoneMsg } from '../../service/chatSocket';
 
-const EveryoneChat = ({
-  everyoneMsgList,
-  userProfilePictures,
-  sendEveryoneMsg,
-}) => {
+const EveryoneChat = ({ userProfilePictures }) => {
   let chatBubbles = null;
+  const toast = useToast();
   const [message, setMessage] = useState('');
+  const socket = useSocket((state) => state.socket);
+  const everyoneChat = useEveryoneChat((state) => state.everyoneChat);
+  const setEveryoneChat = useEveryoneChat((state) => state.setEveryoneChat);
 
-  if (everyoneMsgList !== undefined) {
-    chatBubbles = everyoneMsgList.map((item, index) => {
+  if (everyoneChat) {
+    chatBubbles = everyoneChat.map((item, index) => {
       return (
         <ChatBubble
           key={index}
@@ -35,7 +38,25 @@ const EveryoneChat = ({
 
   const handleChatInputKeyPressed = (event) => {
     if (event.key === 'Enter') {
-      sendEveryoneMsg(event.target.value);
+      sendEveryoneMsg(
+        socket,
+        { message: event.target.value },
+        (error, data) => {
+          if (data) {
+            setEveryoneChat(data);
+          }
+
+          if (error) {
+            toast({
+              title: 'Chat Fail',
+              status: 'error',
+              position: 'top-right',
+              duration: 750,
+              isClosable: true,
+            });
+          }
+        }
+      );
       setMessage('');
     }
   };
