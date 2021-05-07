@@ -6,6 +6,7 @@ import RoomBody from './RoomBody';
 import useSocket from '../../global-stores/useSocket';
 import useRoom from '../../global-stores/useRoom';
 import useTeamEvent from '../../global-stores/useTeamEvent';
+import useVetoQuestions from '../../global-stores/useVetoQuestions';
 import { getRoom, roomUpdated, roomClosed } from '../../service/roomSocket';
 import { vetoStart } from '../../service/vetoSocket';
 
@@ -16,6 +17,7 @@ const Room = () => {
   const teamEvent = useTeamEvent((state) => state.teamEvent);
   const setTeamEvent = useTeamEvent((state) => state.setTeamEvent);
   const setRoom = useRoom((state) => state.setRoom);
+  const setVetoQuestions = useVetoQuestions((state) => state.setVetoQuestions);
   const history = useHistory();
 
   if (!socket) {
@@ -50,8 +52,10 @@ const Room = () => {
     });
 
     vetoStart(socket, (error, data) => {
-      console.log(error);
-      console.log(data);
+      if (data) {
+        setVetoQuestions(data);
+        // history.push('/veto')
+      }
     });
 
     roomClosed(socket, (error, data) => {
@@ -68,7 +72,7 @@ const Room = () => {
         history.push('/dashboard');
       }
     });
-  }, [history, setRoom, roomId, socket, toast]);
+  }, [history, setRoom, roomId, socket, toast, setVetoQuestions]);
 
   return (
     <Flex pos='relative'>
