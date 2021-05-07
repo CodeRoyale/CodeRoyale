@@ -54,7 +54,7 @@ const Room = () => {
     vetoStart(socket, (error, data) => {
       if (data) {
         setVetoQuestions(data);
-        // history.push('/veto')
+        history.push('/veto');
       }
     });
 
