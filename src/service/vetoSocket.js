@@ -38,7 +38,7 @@ export const vetoVote = (socket, { votes }, cb) => {
 export const vetoStop = (socket, cb) => {
   if (!socket) return false;
 
-  socket.on('VETO_STOP', (data) => {
+  socket.off('VETO_STOP').on('VETO_STOP', (data) => {
     if (data) {
       // Veto stop success
       return cb(null, data);

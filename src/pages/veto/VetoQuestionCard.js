@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 import useVetoVote from '../../global-stores/useVetoVote';
 import useRoom from '../../global-stores/useRoom';
+import useUserVetoed from '../../global-stores/useUserVetoed';
 
 const VetoQuestionCard = ({
   questionID,
@@ -17,13 +18,13 @@ const VetoQuestionCard = ({
   questionTitle,
   questionDesc,
   questionTags,
-  userVoted,
 }) => {
   const toast = useToast();
   const room = useRoom((state) => state.room);
   const vetoVotedQuestions = useVetoVote((state) => state.vetoVotedQuestions);
   const addVetoVote = useVetoVote((state) => state.addVetoVote);
   const removeVetoVote = useVetoVote((state) => state.removeVetoVote);
+  const userVetoed = useUserVetoed((state) => state.userVetoed);
   const [checkBoxChecked, setCheckBoxChecked] = useState(false);
 
   // Handle user voting for question
@@ -74,7 +75,7 @@ const VetoQuestionCard = ({
         boxShadow: `0 1px 5px 0 rgb(221, 44, 0, 0.2),
       0 1px 1px 0 rgba(221, 44, 0, 0.19)`,
       }}
-      pointerEvents={userVoted ? 'none' : 'auto'}
+      pointerEvents={userVetoed ? 'none' : 'auto'}
       onClick={handleQuestionVoted}
     >
       <Stack width='100%'>

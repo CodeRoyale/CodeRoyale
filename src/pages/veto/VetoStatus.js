@@ -41,7 +41,7 @@ const VetoStatus = () => {
           userName={item.userName}
           userImage={room.state.profilePictures[item.userName]}
           team={item.team}
-          userVoted={vetoedUsers.includes(item.userName)}
+          userVetoed={vetoedUsers.includes(item.userName)}
         />
       );
     });

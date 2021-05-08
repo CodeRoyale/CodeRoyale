@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getQuestionById } from '../../api/questionAPI';
 
-const VetoQuestions = ({ userVoted }) => {
+const VetoQuestions = () => {
   const history = useHistory();
   // TODO: need to rename of useVetoQuestions
   const vetoQuestionIds = useVetoQuestions((state) => state.vetoQuestions);
@@ -32,7 +32,6 @@ const VetoQuestions = ({ userVoted }) => {
           questionDesc={item.description}
           questionID={item._id}
           questionTags={item.tags}
-          userVoted={userVoted}
         />
       );
     });
