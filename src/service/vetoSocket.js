@@ -48,10 +48,10 @@ export const vetoStop = (socket, cb) => {
   });
 };
 
-export const userVoted = (socket, cb) => {
+export const vetoStatus = (socket, cb) => {
   if (!socket) return false;
 
-  socket.on('USER_VOTED', (data) => {
+  socket.off('USER_VOTED').on('USER_VOTED', (data) => {
     if (data) {
       // User voted success
       return cb(null, data);

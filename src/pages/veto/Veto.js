@@ -10,6 +10,9 @@ import {
 import { Flex, useToast } from '@chakra-ui/react';
 import SideBar from '../../components/sideBar';
 import VetoBody from './VetoBody';
+import useSocket from '../../global-stores/useSocket';
+import useVetoedUsers from '../../global-stores/useVetoedUsers';
+import { vetoStatus } from '../../service/vetoSocket';
 
 const Veto = ({
   socketData,
@@ -21,13 +24,14 @@ const Veto = ({
   vetoVoting,
 }) => {
   const history = useHistory();
-  const socket = socketData.socket;
+  const socket = useSocket((state) => state.socket);
+  const setVetoedUsers = useVetoedUsers((state) => state.setVetoedUsers);
   const toast = useToast();
   const [getUsersFinished, setGetUsersFinished] = useState(false);
 
-  if (socket === null) {
-    history.push('/dashboard');
-  }
+  // if (!socket) {
+  //   history.push('/dashboard');
+  // }
 
   // Fetching the room details beforehand
   // To make sure render does not break due to roomData.data being null
@@ -47,9 +51,15 @@ const Veto = ({
   useEffect(() => {
     if (socket !== null) {
       vetoStop(socket);
-      getVetoStatus(socket);
     }
-  }, [socket, vetoStop, getVetoStatus]);
+
+    vetoStatus(socket, (error, data) => {
+      if (data) {
+        setVetoedUsers(data);
+        console.log(data);
+      }
+    });
+  }, [socket, vetoStop, setVetoedUsers]);
 
   // Move the user to Arena if veto has ended
   if (vetoData.vetoEnded) {
