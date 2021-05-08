@@ -6,6 +6,7 @@ import VetoBody from './VetoBody';
 import useSocket from '../../global-stores/useSocket';
 import useRoom from '../../global-stores/useRoom';
 import useVetoedUsers from '../../global-stores/useVetoedUsers';
+import useCompQuestionIds from '../../global-stores/useCompQuestionIds';
 import { vetoStatus, vetoStop } from '../../service/vetoSocket';
 
 const Veto = () => {
@@ -13,6 +14,9 @@ const Veto = () => {
   const socket = useSocket((state) => state.socket);
   const room = useRoom((state) => state.room);
   const setVetoedUsers = useVetoedUsers((state) => state.setVetoedUsers);
+  const setCompQuestionIds = useCompQuestionIds(
+    (state) => state.setCompQuestionIds
+  );
 
   if (!socket) {
     history.push('/dashboard');
@@ -29,6 +33,7 @@ const Veto = () => {
   useEffect(() => {
     vetoStop(socket, (error, data) => {
       if (data) {
+        setCompQuestionIds(data);
         history.push('/arena');
       }
     });
@@ -38,7 +43,7 @@ const Veto = () => {
         setVetoedUsers(data.userName);
       }
     });
-  }, [socket, setVetoedUsers, history]);
+  }, [socket, setVetoedUsers, setCompQuestionIds, history]);
 
   return (
     <Flex pos='relative'>
