@@ -14,9 +14,9 @@ const Veto = () => {
   const room = useRoom((state) => state.room);
   const setVetoedUsers = useVetoedUsers((state) => state.setVetoedUsers);
 
-  // if (!socket) {
-  //   history.push('/dashboard');
-  // }
+  if (!socket) {
+    history.push('/dashboard');
+  }
 
   // Fetching the room details beforehand
   // To make sure render does not break due to room being null

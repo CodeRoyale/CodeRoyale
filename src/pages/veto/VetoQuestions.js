@@ -1,15 +1,14 @@
 import React from 'react';
 import VetoQuestionCard from './VetoQuestionCard';
 import { Flex, Skeleton } from '@chakra-ui/react';
-import useVetoQuestions from '../../global-stores/useVetoQuestions';
+import useVetoQuestionsIds from '../../global-stores/useVetoQuestionIds';
 import { useHistory } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getQuestionById } from '../../api/questionAPI';
 
 const VetoQuestions = () => {
   const history = useHistory();
-  // TODO: need to rename of useVetoQuestions
-  const vetoQuestionIds = useVetoQuestions((state) => state.vetoQuestions);
+  const vetoQuestionIds = useVetoQuestionsIds((state) => state.vetoQuestionIds);
 
   // Fetching veto questions
   const { data, isLoading, isSuccess, isError } = useQuery(
