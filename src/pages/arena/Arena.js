@@ -95,10 +95,17 @@ const Arena = () => {
     competitionStopped(socket, (error, data) => {
       if (data) {
         setScoreboard(data.scoreboard);
-        // history.push('/scoreboard');
+        history.push('/scoreboard');
       }
     });
-  }, [setScoreboard, updateScore, setCodeSubmitLoading, socket, toast]);
+  }, [
+    setScoreboard,
+    updateScore,
+    setCodeSubmitLoading,
+    socket,
+    toast,
+    history,
+  ]);
 
   // Fetching all questions from api response
   let questionsList;
