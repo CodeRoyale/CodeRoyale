@@ -5,8 +5,6 @@ import {
   Switch,
   useHistory,
 } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from './store';
 import routes from './routes';
 import Home from './pages/home';
 import Login from './pages/login';
@@ -88,17 +86,15 @@ const RenderRoute = (route) => {
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <div data-testid='App' className='App'>
-        <Router>
-          <Switch>
-            {routes.map((route, index) => (
-              <RenderRoute {...route} key={index} />
-            ))}
-          </Switch>
-        </Router>
-      </div>
-    </Provider>
+    <div data-testid='App' className='App'>
+      <Router>
+        <Switch>
+          {routes.map((route, index) => (
+            <RenderRoute {...route} key={index} />
+          ))}
+        </Switch>
+      </Router>
+    </div>
   );
 };
 
