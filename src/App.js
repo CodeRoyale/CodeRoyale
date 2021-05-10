@@ -16,7 +16,7 @@ import Veto from './pages/veto';
 import Arena from './pages/arena';
 import Scoreboard from './pages/scoreboard';
 import isAuthenticated from './utils/isAuthenticated';
-import PreCheck from './components/preCheck/PreCheck';
+import PreCheck from './components/preCheck';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import './App.scss';
 
