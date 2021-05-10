@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { submitCode, arenaDataReset } from '../../actions/arenaActions';
+import React, { useState } from 'react';
 import {
   Flex,
   Select,
@@ -19,6 +17,9 @@ import {
 } from '@chakra-ui/react';
 import { IoMdSettings } from 'react-icons/io';
 import { BiReset } from 'react-icons/bi';
+import useSocket from '../../global-stores/useSocket';
+import useCodeSubmitLoading from '../../global-stores/useCodeSubmitLoading';
+import { submitCode } from '../../service/arenaSocket';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-java';
 import 'ace-builds/src-noconflict/mode-c_cpp';
@@ -73,17 +74,15 @@ const editorThemesObject = {
   github: 'Github',
 };
 
-const ArenaEditor = ({
-  arenaData,
-  socketData,
-  submitCode,
-  arenaDataReset,
-  currentQuestion,
-}) => {
-  const socket = socketData.socket;
-
-  // For showing toast messages
+const ArenaEditor = ({ currentQuestion }) => {
   const toast = useToast();
+  const socket = useSocket((state) => state.socket);
+  const codeSubmitLoading = useCodeSubmitLoading(
+    (state) => state.codeSubmitLoading
+  );
+  const setCodeSubmitLoading = useCodeSubmitLoading(
+    (state) => state.setCodeSubmitLoading
+  );
 
   // Editor settings state
   const [editorLanguage, setEditorLanguage] = useState('c_cpp');
@@ -101,45 +100,40 @@ const ArenaEditor = ({
     questionId = currentQuestion._id;
   }
 
-  // Error handling for code submission
-  useEffect(() => {
-    if (arenaData.codeSubmission.error) {
-      toast({
-        title: 'Error on Code Submission',
-        description: 'The code you submitted didnot pass the testcases',
-        status: 'error',
-        position: 'top-right',
-        duration: 4000,
-        isClosable: true,
-      });
-      arenaDataReset();
-    }
-  }, [arenaData.codeSubmission, arenaDataReset, toast]);
+  const handleSubmitCode = () => {
+    setCodeSubmitLoading(true);
+    submitCode(
+      socket,
+      {
+        problemCode: problemCode,
+        code: editorCode,
+        langId: editorLanguageIdObject[editorLanguage],
+        ques_id: questionId,
+      },
+      (error, data) => {
+        if (data) {
+          toast({
+            title: 'Code Submitted!',
+            description: 'Submitted code is being tested...',
+            variant: 'solid',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
+        }
 
-  // If someone in room submits the right solution for problem
-  useEffect(() => {
-    if (arenaData.codeSubmission.data) {
-      const teamName = arenaData.codeSubmission.data.team_name;
-      const problemCode = arenaData.codeSubmission.data.problemCode;
-      toast({
-        title: 'Success on Code Submission',
-        description: `${teamName} passed all testcases for question ${problemCode}`,
-        status: 'success',
-        position: 'top-right',
-        duration: 4000,
-        isClosable: true,
-      });
-      arenaDataReset();
-    }
-  }, [arenaData.codeSubmission, arenaDataReset, toast]);
-
-  const handleSubmitSolution = () => {
-    submitCode(socket, {
-      problemCode: problemCode,
-      code: editorCode,
-      langId: editorLanguageIdObject[editorLanguage],
-      ques_id: questionId,
-    });
+        if (error) {
+          setCodeSubmitLoading(false);
+          toast({
+            title: 'The code could not be submitted. Please try again!',
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
+        }
+      }
+    );
   };
 
   // Editor code onChange
@@ -243,9 +237,9 @@ const ArenaEditor = ({
           marginTop='1em'
           marginBottom='1em'
           colorScheme='codeRoyale'
-          isLoading={arenaData.codeSubmission.isLoading}
+          isLoading={codeSubmitLoading}
           loadingText='Submitting Code'
-          onClick={handleSubmitSolution}
+          onClick={handleSubmitCode}
         >
           Submit Code
         </Button>
@@ -254,11 +248,4 @@ const ArenaEditor = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  arenaData: state.arenaData,
-  socketData: state.socketData,
-});
-
-export default connect(mapStateToProps, { submitCode, arenaDataReset })(
-  ArenaEditor
-);
+export default ArenaEditor;

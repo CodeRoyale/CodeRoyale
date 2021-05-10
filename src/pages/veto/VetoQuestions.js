@@ -14,7 +14,7 @@ const VetoQuestions = () => {
   const { data, isLoading, isSuccess, isError } = useQuery(
     'fetchVetoQuestions',
     () => getQuestionById(history, vetoQuestionIds),
-    { retry: false }
+    { retry: false, refetchOnWindowFocus: false }
   );
 
   // Mapping questions to the QuestionCard component

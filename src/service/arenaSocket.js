@@ -1,20 +1,33 @@
-export const competitionStopped = (socket, cb) => {
+export const competitionStarted = (socket, cb) => {
   if (!socket) return false;
 
-  socket.off('COMPETITION_STOPPED').on('COMPETITION_STOPPED', (data) => {
+  socket.off('COMPETITION_STARTED').on('COMPETITION_STARTED', (data) => {
     if (data) {
       // Competition started success
       return cb(null, data);
     }
     // Competition started fail
+    return cb('Competition started fail', null);
+  });
+};
+
+export const competitionStopped = (socket, cb) => {
+  if (!socket) return false;
+
+  socket.off('COMPETITION_STOPPED').on('COMPETITION_STOPPED', (data) => {
+    if (data) {
+      // Competition stopped success
+      return cb(null, data);
+    }
+    // Competition stopped fail
     return cb('Competition stopped fail', null);
   });
 };
 
-export const submitCode = (socket, { submittedCode }, cb) => {
+export const submitCode = (socket, codeSubmissionData, cb) => {
   if (!socket) return false;
 
-  socket.emit('CODE_SUBMISSION', submittedCode);
+  socket.emit('CODE_SUBMISSION', codeSubmissionData);
 
   return cb(null, 'Code submitted');
 };
