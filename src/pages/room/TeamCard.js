@@ -35,7 +35,7 @@ const TeamCard = ({ teamName, totalUsers, users }) => {
 
   const handleJoinOrLeaveTeam = () => {
     if (buttonIcon.props.customtype === 'joinTeam') {
-      joinTeam(socket, { team_name: teamName }, (error, data) => {
+      joinTeam(socket, { teamName }, (error, data) => {
         if (data) {
           updateRoomTeams(data);
           toast({

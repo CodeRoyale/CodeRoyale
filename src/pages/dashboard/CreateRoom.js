@@ -109,13 +109,13 @@ const CreateRoom = () => {
     createRoom(
       socket,
       {
-        max_teams: maxTeams,
-        max_perTeam: maxPerTeam,
-        max_perRoom: maxPerRoom,
+        maxTeams,
+        maxPerTeam,
+        maxPerRoom,
         privateRoom,
-        max_questions: maxQuestions,
-        veto_quesCount: maxVetoQuestions,
-        max_vote: maxVetoVotes,
+        maxQuestions,
+        maxVetoQuestions,
+        maxVetoVotes,
         timeLimit,
       },
       (error, data) => {

@@ -32,7 +32,7 @@ const CreateTeam = () => {
   const [teamName, setTeamName] = useState('');
 
   const handleCreateTeam = () => {
-    createTeam(socket, { team_name: teamName }, (error, data) => {
+    createTeam(socket, { teamName }, (error, data) => {
       if (data) {
         updateRoomTeams(data);
         toast({

@@ -1,16 +1,17 @@
+/* eslint-disable consistent-return */
 import { ERROR_MSG } from '../utils/constants';
 
 export const createRoom = (
   socket,
   {
-    max_teams,
-    max_perTeam,
-    max_perRoom,
+    maxTeams,
+    maxPerTeam,
+    maxPerRoom,
     timeLimit,
     privateRoom,
-    max_questions,
-    max_vote,
-    veto_quesCount,
+    maxQuestions,
+    maxVetoVotes,
+    maxVetoQuestions,
   },
   cb
 ) => {
@@ -19,14 +20,14 @@ export const createRoom = (
   socket.emit(
     'CREATE_ROOM',
     {
-      max_teams,
-      max_perTeam,
-      max_perRoom,
+      max_teams: maxTeams,
+      max_perTeam: maxPerTeam,
+      max_perRoom: maxPerRoom,
       timeLimit,
       privateRoom,
-      max_questions,
-      max_vote,
-      veto_quesCount,
+      max_questions: maxQuestions,
+      max_vote: maxVetoVotes,
+      veto_quesCount: maxVetoQuestions,
     },
     (data) => {
       if (data) {
@@ -43,11 +44,10 @@ export const createRoom = (
   );
 };
 
-export const joinRoom = (socket, { room_id }, cb) => {
+export const joinRoom = (socket, { roomId }, cb) => {
   if (!socket) return false;
 
-  socket.emit('JOIN_ROOM', { room_id }, (data) => {
-    console.log(data);
+  socket.emit('JOIN_ROOM', { room_id: roomId }, (data) => {
     if (data) {
       if (data !== ERROR_MSG) {
         // Join room success
@@ -78,10 +78,10 @@ export const closeRoom = (socket, cb) => {
   });
 };
 
-export const getRoom = (socket, { room_id }, cb) => {
+export const getRoom = (socket, { roomId }, cb) => {
   if (!socket) return false;
 
-  socket.emit('GET_ROOM', { room_id }, (data) => {
+  socket.emit('GET_ROOM', { room_id: roomId }, (data) => {
     if (data) {
       if (data !== ERROR_MSG) {
         // Get room success

@@ -33,7 +33,7 @@ const Room = () => {
   useEffect(() => {
     roomUpdated(socket, (error, data) => {
       if (data) {
-        getRoom(socket, { room_id: roomId }, (error, data) => {
+        getRoom(socket, { roomId }, (error, data) => {
           if (data) {
             setRoom(data);
           }

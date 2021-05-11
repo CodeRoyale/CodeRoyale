@@ -1,5 +1,7 @@
+/* eslint-disable consistent-return */
 import io from 'socket.io-client';
 
+/* eslint-disable import/prefer-default-export */
 export const socketConnection = (cb) => {
   const options = {
     transportOptions: {

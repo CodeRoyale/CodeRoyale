@@ -15,7 +15,7 @@ const JoinRoom = () => {
   const [roomId, setRoomId] = useState('');
 
   const handleJoinRoom = () => {
-    joinRoom(socket, { room_id: roomId }, (error, data) => {
+    joinRoom(socket, { roomId }, (error, data) => {
       console.log(error);
       console.log(data);
       if (data) {
