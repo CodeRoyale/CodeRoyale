@@ -19,12 +19,12 @@ import {
 } from '@chakra-ui/react';
 import { BsPlus } from 'react-icons/bs';
 import useSocket from '../../global-stores/useSocket';
-import useTeamEvent from '../../global-stores/useTeamEvent';
+import useRoom from '../../global-stores/useRoom';
 import { createTeam } from '../../service/teamSocket';
 
 const CreateTeam = () => {
   const socket = useSocket((state) => state.socket);
-  const setTeamEvent = useTeamEvent((state) => state.setTeamEvent);
+  const updateRoomTeams = useRoom((state) => state.updateRoomTeams);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef();
   const toast = useToast();
@@ -34,7 +34,7 @@ const CreateTeam = () => {
   const handleCreateTeam = () => {
     createTeam(socket, { team_name: teamName }, (error, data) => {
       if (data) {
-        setTeamEvent('TEAM_CREATED');
+        updateRoomTeams(data);
         toast({
           title: 'You have created a new team',
           status: 'success',

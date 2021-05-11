@@ -5,7 +5,6 @@ import SideBar from '../../components/sideBar';
 import RoomBody from './RoomBody';
 import useSocket from '../../global-stores/useSocket';
 import useRoom from '../../global-stores/useRoom';
-import useTeamEvent from '../../global-stores/useTeamEvent';
 import useVetoQuestionIds from '../../global-stores/useVetoQuestionIds';
 import { getRoom, roomUpdated, roomClosed } from '../../service/roomSocket';
 import { vetoStart } from '../../service/vetoSocket';
@@ -14,8 +13,6 @@ const Room = () => {
   const toast = useToast();
   const socket = useSocket((state) => state.socket);
   const room = useRoom((state) => state.room);
-  const teamEvent = useTeamEvent((state) => state.teamEvent);
-  const setTeamEvent = useTeamEvent((state) => state.setTeamEvent);
   const setRoom = useRoom((state) => state.setRoom);
   const setVetoQuestionIds = useVetoQuestionIds(
     (state) => state.setVetoQuestionIds
@@ -30,15 +27,6 @@ const Room = () => {
   let roomId;
   if (room) {
     roomId = room.config.id;
-  }
-
-  if (socket && teamEvent && roomId !== undefined) {
-    getRoom(socket, { room_id: roomId }, (error, data) => {
-      if (data) {
-        setRoom(data);
-        setTeamEvent(null);
-      }
-    });
   }
 
   // Listeners for room updated, veto started and room closed

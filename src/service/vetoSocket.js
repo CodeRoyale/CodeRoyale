@@ -12,6 +12,8 @@ export const startCompetition = (socket, cb) => {
 };
 
 export const vetoStart = (socket, cb) => {
+  if (!socket) return false;
+
   socket.off('VETO_START').on('VETO_START', (data) => {
     if (data) {
       // Veto start success

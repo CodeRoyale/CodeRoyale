@@ -13,12 +13,11 @@ import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { joinTeam, leaveTeam } from '../../service/teamSocket';
 import useSocket from '../../global-stores/useSocket';
 import useRoom from '../../global-stores/useRoom';
-import useTeamEvent from '../../global-stores/useTeamEvent';
 
 const TeamCard = ({ teamName, totalUsers, users }) => {
   const socket = useSocket((state) => state.socket);
   const room = useRoom((state) => state.room);
-  const setTeamEvent = useTeamEvent((state) => state.setTeamEvent);
+  const updateRoomTeams = useRoom((state) => state.updateRoomTeams);
   const toast = useToast();
 
   const userName = profileData().userName.toString();
@@ -38,7 +37,7 @@ const TeamCard = ({ teamName, totalUsers, users }) => {
     if (buttonIcon.props.customtype === 'joinTeam') {
       joinTeam(socket, { team_name: teamName }, (error, data) => {
         if (data) {
-          setTeamEvent('JOINED_TEAM');
+          updateRoomTeams(data);
           toast({
             title: 'You joined a team',
             status: 'success',
@@ -61,7 +60,7 @@ const TeamCard = ({ teamName, totalUsers, users }) => {
     } else if (buttonIcon.props.customtype === 'leaveTeam') {
       leaveTeam(socket, (error, data) => {
         if (data) {
-          setTeamEvent('LEFT_TEAM');
+          updateRoomTeams(data);
           toast({
             title: 'You left a team',
             status: 'success',
