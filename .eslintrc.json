@@ -7,5 +7,8 @@
     "func-names": "off",
     "object-shorthand": "off",
     "class-methods-use-this": "off"
+  },
+  "globals": {
+    "localStorage": true
   }
 }
