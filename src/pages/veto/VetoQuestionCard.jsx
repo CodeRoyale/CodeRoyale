@@ -8,6 +8,7 @@ import {
   Badge,
   useToast,
 } from '@chakra-ui/react';
+import { v4 as uuidv4 } from 'uuid';
 import useVetoVote from '../../global-stores/useVetoVote';
 import useRoom from '../../global-stores/useRoom';
 import useUserVetoed from '../../global-stores/useUserVetoed';
@@ -53,8 +54,8 @@ const VetoQuestionCard = ({
   };
 
   // Display tags from API
-  const tagsText = questionTags.map((item, index) => (
-    <Text key={index} fontSize='md' fontWeight='bold'>
+  const tagsText = questionTags.map((item) => (
+    <Text key={uuidv4()} fontSize='md' fontWeight='bold'>
       {item}
     </Text>
   ));

@@ -2,6 +2,7 @@ import React from 'react';
 import { Flex, Skeleton } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
 import { useQuery } from 'react-query';
+import { v4 as uuidv4 } from 'uuid';
 import useVetoQuestionsIds from '../../global-stores/useVetoQuestionIds';
 import VetoQuestionCard from './VetoQuestionCard';
 import { getQuestionById } from '../../api/questionAPI';
@@ -23,8 +24,9 @@ const VetoQuestions = () => {
   if (isSuccess) {
     questionsArray = data.payload.data;
     questionCards = questionsArray.map((item, index) => (
+      /* eslint-disable no-underscore-dangle */
       <VetoQuestionCard
-        key={index}
+        key={uuidv4()}
         questionNumber={index}
         questionTitle={item.questionTitle}
         questionDesc={item.description}
