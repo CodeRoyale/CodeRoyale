@@ -11,27 +11,27 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import QuestionScoreCard from './QuestionScoreCard';
-import { connect } from 'react-redux';
+import useRoom from '../../global-stores/useRoom';
+import useCompQuestions from '../../global-stores/useCompQuestions';
+import useScoreboard from '../../global-stores/useScoreboard';
 
-const ArenaScore = ({ arenaData, roomData }) => {
+const ArenaScore = () => {
+  const room = useRoom((state) => state.room);
+  const compQuestions = useCompQuestions((state) => state.compQuestions);
+  const scoreboard = useScoreboard((state) => state.scoreboard);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  let questionsList;
-  if (arenaData.questions) {
-    questionsList = arenaData.questions.payload.data;
-  }
-
   const teamsList = [];
-  if (roomData.data) {
-    for (let team in roomData.data.teams) {
+  if (room) {
+    for (let team in room.teams) {
       teamsList.push(team);
     }
   }
 
   const problemCodes = [];
-  if (questionsList) {
-    for (let i = 0; i < questionsList.length; i++) {
-      problemCodes.push(questionsList[i].problemCode);
+  if (compQuestions) {
+    for (let i = 0; i < compQuestions.length; i++) {
+      problemCodes.push(compQuestions[i].problemCode);
     }
   }
 
@@ -59,7 +59,7 @@ const ArenaScore = ({ arenaData, roomData }) => {
                       key={index}
                       problemCode={problemCode}
                       teamsList={teamsList}
-                      scoreboard={arenaData.scoreboard}
+                      scoreboard={scoreboard}
                     />
                   );
                 })}
@@ -72,9 +72,4 @@ const ArenaScore = ({ arenaData, roomData }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  arenaData: state.arenaData,
-  roomData: state.roomData,
-});
-
-export default connect(mapStateToProps, null)(ArenaScore);
+export default ArenaScore;

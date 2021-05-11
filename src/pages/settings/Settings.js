@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { Flex, useToast } from '@chakra-ui/react';
 import { useMutation } from 'react-query';
 import { deleteAccount, updateAccount } from '../../api/userAPI';
+import { SERVER_DOWN } from '../../utils/constants';
 
 const Settings = () => {
   const history = useHistory();
@@ -23,55 +24,82 @@ const Settings = () => {
 
   // Delete account error handling
   if (deleteAccountMutation.isError) {
-    switch (deleteAccountMutation.error.response.data.payload.message) {
-      case ERROR:
-        toast({
-          title: 'Error on deleting account',
-          description: "Couldn't delete your account, please try again later!",
-          status: 'error',
-          position: 'top-right',
-          duration: 4000,
-          isClosable: true,
-        });
-        break;
-      default:
-        toast({
-          title: 'Error on deleting account',
-          description: "Couldn't delete your account, please try again later!",
-          status: 'error',
-          position: 'top-right',
-          duration: 4000,
-          isClosable: true,
-        });
-        break;
+    if (deleteAccountMutation.error.response) {
+      switch (deleteAccountMutation.error.response.data.payload.message) {
+        case ERROR:
+          toast({
+            title: 'Error on deleting account',
+            description:
+              "Couldn't delete your account, please try again later!",
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
+          break;
+        default:
+          toast({
+            title: 'Error on deleting account',
+            description:
+              "Couldn't delete your account, please try again later!",
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
+          break;
+      }
+    } else {
+      toast({
+        title: 'Error on deleting account',
+        description: SERVER_DOWN,
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
     }
     deleteAccountMutation.reset();
   }
 
   // Update account error handling
   if (updateAccountMutation.isError) {
-    switch (updateAccountMutation.error.response.payload.message) {
-      case ERROR:
-        toast({
-          title: 'Error on updating account',
-          description: "Couldn't update your profile, please try again later!",
-          status: 'error',
-          position: 'top-right',
-          duration: 4000,
-          isClosable: true,
-        });
-        break;
-      default:
-        toast({
-          title: 'Error on updating account',
-          description: "Couldn't update your profile, please try again later!",
-          status: 'error',
-          position: 'top-right',
-          duration: 4000,
-          isClosable: true,
-        });
-        break;
+    if (updateAccountMutation.error.response) {
+      switch (updateAccountMutation.error.response.payload.message) {
+        case ERROR:
+          toast({
+            title: 'Error on updating account',
+            description:
+              "Couldn't update your profile, please try again later!",
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
+          break;
+        default:
+          toast({
+            title: 'Error on updating account',
+            description:
+              "Couldn't update your profile, please try again later!",
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
+          break;
+      }
+    } else {
+      toast({
+        title: 'Error on updating account',
+        description: SERVER_DOWN,
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      });
     }
+    updateAccountMutation.reset();
   }
 
   /* 

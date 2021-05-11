@@ -14,10 +14,20 @@ import {
   ModalBody,
   ModalCloseButton,
   Switch,
+  useToast,
 } from '@chakra-ui/react';
 import { timeToString } from '../../utils/timeToString';
+import useSocket from '../../global-stores/useSocket';
+import useRoom from '../../global-stores/useRoom';
+import { createRoom } from '../../service/roomSocket';
+import { useHistory } from 'react-router-dom';
 
-const CreateRoom = ({ getCreateRoomData }) => {
+const CreateRoom = () => {
+  const socket = useSocket((state) => state.socket);
+  const toast = useToast();
+  const setRoom = useRoom((state) => state.setRoom);
+  const history = useHistory();
+
   const milliseconds = 60 * 60 * 1000;
 
   const [maxTeams, setMaxTeams] = useState(2);
@@ -109,18 +119,45 @@ const CreateRoom = ({ getCreateRoomData }) => {
     );
   });
 
-  // Sending create room data into props
   const handleCreateRoom = () => {
-    getCreateRoomData({
-      max_teams: maxTeams,
-      max_perTeam: maxPerTeam,
-      max_perRoom: maxPerRoom,
-      privateRoom,
-      max_questions: maxQuestions,
-      veto_quesCount: maxVetoQuestions,
-      max_vote: maxVetoVotes,
-      timeLimit,
-    });
+    createRoom(
+      socket,
+      {
+        max_teams: maxTeams,
+        max_perTeam: maxPerTeam,
+        max_perRoom: maxPerRoom,
+        privateRoom,
+        max_questions: maxQuestions,
+        veto_quesCount: maxVetoQuestions,
+        max_vote: maxVetoVotes,
+        timeLimit,
+      },
+      (error, data) => {
+        if (data) {
+          toast({
+            title: 'Room Created!',
+            status: 'success',
+            position: 'top-right',
+            duration: 750,
+            isClosable: true,
+          });
+          setRoom(data);
+          history.push('/room');
+        }
+
+        if (error) {
+          toast({
+            title: 'Error on Create Room',
+            description:
+              'Some error occurred. Our team is in the process of fixing it',
+            status: 'error',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+          });
+        }
+      }
+    );
     onClose();
   };
 

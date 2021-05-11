@@ -1,15 +1,19 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
 import TeamCard from './TeamCard';
 import { Flex, Icon, Text } from '@chakra-ui/react';
 import { BiArrowBack } from 'react-icons/bi';
+import useSocket from '../../global-stores/useSocket';
+import useRoom from '../../global-stores/useRoom';
+import useScoreboard from '../../global-stores/useScoreboard';
 
-const Scoreboard = ({ roomData, socketData, arenaData }) => {
+const Scoreboard = () => {
   const history = useHistory();
-  const socket = socketData.socket;
+  const socket = useSocket((state) => state.socket);
+  const room = useRoom((state) => state.room);
+  const scoreboard = useScoreboard((state) => state.scoreboard);
 
-  if (socket === null) {
+  if (!socket) {
     history.push('/dashboard');
   }
 
@@ -18,19 +22,17 @@ const Scoreboard = ({ roomData, socketData, arenaData }) => {
     history.push('/dashboard');
   }, 20000);
 
-  // Getting the scorecard and teams from lobby
-  let scoreCard;
+  // Getting teams from room
   let roomTeams;
-  if (roomData.data != null && arenaData.scoreboardData != null) {
-    scoreCard = arenaData.scoreboardData;
-    roomTeams = roomData.data.teams;
+  if (room) {
+    roomTeams = room.teams;
   }
 
   let scores = [];
   let justScores = [];
-  for (let teamName in scoreCard) {
-    scores.push({ team: teamName, score: scoreCard[teamName].length });
-    justScores.push(scoreCard[teamName].length);
+  for (let teamName in scoreboard) {
+    scores.push({ team: teamName, score: scoreboard[teamName].length });
+    justScores.push(scoreboard[teamName].length);
   }
   if (scores != null && justScores != null) {
     // Sorting scores in descending order
@@ -64,7 +66,7 @@ const Scoreboard = ({ roomData, socketData, arenaData }) => {
         <>
           <TeamCard
             rank='gold'
-            userImages={roomData.data.state.profilePictures}
+            userImages={room.state.profilePictures}
             teamName={scores[0].team}
             team={roomTeams[scores[0].team]}
           />
@@ -75,13 +77,13 @@ const Scoreboard = ({ roomData, socketData, arenaData }) => {
         <>
           <TeamCard
             rank='gold'
-            userImages={roomData.data.state.profilePictures}
+            userImages={room.state.profilePictures}
             teamName={scores[0].team}
             team={roomTeams[scores[0].team]}
           />
           <TeamCard
             rank='silver'
-            userImages={roomData.data.state.profilePictures}
+            userImages={room.state.profilePictures}
             teamName={scores[1].team}
             team={roomTeams[scores[1].team]}
           />
@@ -92,19 +94,19 @@ const Scoreboard = ({ roomData, socketData, arenaData }) => {
         <>
           <TeamCard
             rank='silver'
-            userImages={roomData.data.state.profilePictures}
+            userImages={room.state.profilePictures}
             teamName={scores[1].team}
             team={roomTeams[scores[1].team]}
           />
           <TeamCard
             rank='gold'
-            userImages={roomData.data.state.profilePictures}
+            userImages={room.state.profilePictures}
             teamName={scores[0].team}
             team={roomTeams[scores[0].team]}
           />
           <TeamCard
             rank='bronze'
-            userImages={roomData.data.state.profilePictures}
+            userImages={room.state.profilePictures}
             teamName={scores[2].team}
             team={roomTeams[scores[2].team]}
           />
@@ -139,10 +141,4 @@ const Scoreboard = ({ roomData, socketData, arenaData }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  roomData: state.roomData,
-  socketData: state.socketData,
-  arenaData: state.arenaData,
-});
-
-export default connect(mapStateToProps, null)(Scoreboard);
+export default Scoreboard;

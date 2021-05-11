@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   Drawer,
   DrawerBody,
@@ -10,22 +10,38 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import VetoStatusCard from './VetoStatusCard';
+import useRoom from '../../global-stores/useRoom';
+import useVetoedUsers from '../../global-stores/useVetoedUsers';
 
-const VetoStatus = ({ vetoUsers, vetoCompletedUsers, userProfilePictures }) => {
+const VetoStatus = () => {
+  const room = useRoom((state) => state.room);
+  const vetoedUsers = useVetoedUsers((state) => state.vetoedUsers);
+
+  // Extracting all teams in room
+  let roomTeams;
+  if (room) {
+    roomTeams = room.teams;
+  }
+
+  // No need to calculate everything component renders since roomTeams does not change
+  const vetoUsers = useMemo(() => {
+    return getAllVetoUsers(roomTeams);
+  }, [roomTeams]);
+
   let statusCards = null;
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   // Displaying all users in the room for veto status
-  if (vetoUsers !== undefined && vetoCompletedUsers !== undefined) {
+  if (vetoUsers && vetoedUsers) {
     statusCards = vetoUsers.map((item, index) => {
       return (
         <VetoStatusCard
           key={index}
           userName={item.userName}
-          userImage={userProfilePictures[item.userName]}
+          userImage={room.state.profilePictures[item.userName]}
           team={item.team}
-          userVoted={vetoCompletedUsers.includes(item.userName)}
+          userVetoed={vetoedUsers.includes(item.userName)}
         />
       );
     });
@@ -48,6 +64,22 @@ const VetoStatus = ({ vetoUsers, vetoCompletedUsers, userProfilePictures }) => {
       </Drawer>
     </>
   );
+};
+
+// Get all users in room
+const getAllVetoUsers = (teams) => {
+  let vetoUsers = [];
+  for (let team in teams) {
+    // Gives the array of players in a team
+    let teamPlayers = teams[team];
+    for (let i = 0; i < teamPlayers.length; i++) {
+      vetoUsers.push({
+        userName: teamPlayers[i],
+        team,
+      });
+    }
+  }
+  return vetoUsers;
 };
 
 export default VetoStatus;

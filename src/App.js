@@ -5,8 +5,6 @@ import {
   Switch,
   useHistory,
 } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from './store';
 import routes from './routes';
 import Home from './pages/home';
 import Login from './pages/login';
@@ -18,7 +16,7 @@ import Veto from './pages/veto';
 import Arena from './pages/arena';
 import Scoreboard from './pages/scoreboard';
 import isAuthenticated from './utils/isAuthenticated';
-import PreCheck from './components/preCheck/PreCheck';
+import PreCheck from './components/preCheck';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import './App.scss';
 
@@ -88,17 +86,15 @@ const RenderRoute = (route) => {
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <div data-testid='App' className='App'>
-        <Router>
-          <Switch>
-            {routes.map((route, index) => (
-              <RenderRoute {...route} key={index} />
-            ))}
-          </Switch>
-        </Router>
-      </div>
-    </Provider>
+    <div data-testid='App' className='App'>
+      <Router>
+        <Switch>
+          {routes.map((route, index) => (
+            <RenderRoute {...route} key={index} />
+          ))}
+        </Switch>
+      </Router>
+    </div>
   );
 };
 

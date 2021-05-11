@@ -1,26 +1,31 @@
-/*
- * Team chat for members in a team
- */
-
 import React, { useState } from 'react';
 import ChatBubble from './ChatBubble';
 import profileData from '../../utils/profileData';
-import { Flex, Stack, InputGroup, Input } from '@chakra-ui/react';
+import { Flex, Stack, InputGroup, Input, useToast } from '@chakra-ui/react';
+import useSocket from '../../global-stores/useSocket';
+import useTeamChat from '../../global-stores/useTeamChat';
+import { sendTeamMsg } from '../../service/chatSocket';
 
-const TeamChat = ({ teamMsgList, userProfilePictures, sendTeamMsg }) => {
+const TeamChat = ({ userProfilePictures }) => {
   let chatBubbles = null;
+  const toast = useToast();
   const [message, setMessage] = useState('');
+  const socket = useSocket((state) => state.socket);
+  const teamChat = useTeamChat((state) => state.teamChat);
+  const setTeamChat = useTeamChat((state) => state.setTeamChat);
 
-  if (teamMsgList !== undefined) {
-    chatBubbles = teamMsgList.map((item, index) => {
+  if (teamChat) {
+    chatBubbles = teamChat.map((item, index) => {
       return (
         <ChatBubble
           key={index}
           userName={item.source}
           userImage={
-            item.source === 'You'
-              ? profileData().picture
-              : userProfilePictures[item.source]
+            userProfilePictures
+              ? item.source === 'You'
+                ? profileData().picture
+                : userProfilePictures[item.source]
+              : profileData().picture
           }
           userMessage={item.message}
           bubbleColor={index % 2 === 0 ? '#F0F0F0' : '#F9F9F9'}
@@ -31,7 +36,21 @@ const TeamChat = ({ teamMsgList, userProfilePictures, sendTeamMsg }) => {
 
   const handleChatInputKeyPressed = (event) => {
     if (event.key === 'Enter') {
-      sendTeamMsg(event.target.value);
+      sendTeamMsg(socket, { message: event.target.value }, (error, data) => {
+        if (data) {
+          setTeamChat(data);
+        }
+
+        if (error) {
+          toast({
+            title: 'Chat Fail',
+            status: 'error',
+            position: 'top-right',
+            duration: 750,
+            isClosable: true,
+          });
+        }
+      });
       setMessage('');
     }
   };

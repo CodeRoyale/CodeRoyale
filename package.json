@@ -20,13 +20,11 @@
     "react-google-login": "^5.2.2",
     "react-icons": "^4.2.0",
     "react-query": "^3.13.12",
-    "react-redux": "^7.2.3",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0",
-    "socket.io-client": "^2.4.0"
+    "socket.io-client": "^2.4.0",
+    "zustand": "^3.4.2"
   },
   "scripts": {
     "start": "react-scripts start",

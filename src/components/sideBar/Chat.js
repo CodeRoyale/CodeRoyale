@@ -1,31 +1,45 @@
-/*
- * Main Chat component
- */
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import TeamChat from './TeamChat';
 import EveryoneChat from './EveryoneChat';
-import { Flex } from '@chakra-ui/react';
+import { Flex, useToast } from '@chakra-ui/react';
+import useRoom from '../../global-stores/useRoom';
+import useSocket from '../../global-stores/useSocket';
+import useEveryoneChat from '../../global-stores/useEveryoneChat';
+import useTeamChat from '../../global-stores/useTeamChat';
+import { subscribeToChat } from '../../service/chatSocket';
 
-const Chat = ({
-  everyoneMsgList,
-  teamMsgList,
-  userProfilePictures,
-  chatType,
-  sendEveryoneMsg,
-  sendTeamMsg,
-}) => {
-  // Sending in props to main component for everyone message
-  const handleEveryoneMsg = (message) => {
-    sendEveryoneMsg(message);
-  };
+const Chat = ({ chatType }) => {
+  const toast = useToast();
+  const room = useRoom((state) => state.room);
+  const socket = useSocket((state) => state.socket);
+  const setEveryoneChat = useEveryoneChat((state) => state.setEveryoneChat);
+  const setTeamChat = useTeamChat((state) => state.setTeamChat);
 
-  // Sending in props to main component for team message
-  const handleTeamMsg = (message) => {
-    sendTeamMsg(message);
-  };
+  useEffect(() => {
+    subscribeToChat(socket, (error, data) => {
+      if (data) {
+        if (data.type === 'everyone') {
+          setEveryoneChat(data);
+        }
 
-  let content = (
+        if (data.type === 'team') {
+          setTeamChat(data);
+        }
+      }
+
+      if (error) {
+        toast({
+          title: 'Chat fail',
+          status: 'error',
+          position: 'top-right',
+          duration: 750,
+          isClosable: true,
+        });
+      }
+    });
+  }, [socket, setEveryoneChat, setTeamChat, toast]);
+
+  return (
     <Flex
       as='div'
       pos='relative'
@@ -36,21 +50,15 @@ const Chat = ({
     >
       {chatType === 'everyone' ? (
         <EveryoneChat
-          everyoneMsgList={everyoneMsgList}
-          userProfilePictures={userProfilePictures}
-          sendEveryoneMsg={handleEveryoneMsg}
+          userProfilePictures={room ? room.state.profilePictures : null}
         />
       ) : (
         <TeamChat
-          teamMsgList={teamMsgList}
-          userProfilePictures={userProfilePictures}
-          sendTeamMsg={handleTeamMsg}
+          userProfilePictures={room ? room.state.profilePictures : null}
         />
       )}
     </Flex>
   );
-
-  return content;
 };
 
 export default Chat;

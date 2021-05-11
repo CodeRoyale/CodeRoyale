@@ -1,8 +1,8 @@
 import React from 'react';
 import { Flex, Image, Badge } from '@chakra-ui/react';
 
-const VetoStatusCard = ({ userImage, userName, team, userVoted }) => {
-  const userVotedBadge = userVoted ? (
+const VetoStatusCard = ({ userImage, userName, team, userVetoed }) => {
+  const userVotedBadge = userVetoed ? (
     <Badge marginLeft='0.7em' colorScheme='green'>
       Veto
     </Badge>

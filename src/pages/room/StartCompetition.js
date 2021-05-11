@@ -1,54 +1,46 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { ERROR_MSG } from '../../utils/constants';
-import { connect } from 'react-redux';
-import { veto, resetVetoAction } from '../../actions/vetoActions';
 import { Button, Icon, useToast } from '@chakra-ui/react';
 import { IoMdArrowForward } from 'react-icons/io';
+import useSocket from '../../global-stores/useSocket';
+import { startCompetition } from '../../service/vetoSocket';
 
-const StartCompetition = ({ socketData, vetoData, veto, resetVetoAction }) => {
-  const socket = socketData.socket;
+const StartCompetition = () => {
+  const socket = useSocket((state) => state.socket);
+  const [startCompetitionLoading, setStartCompetitionLoading] = useState(false);
   const toast = useToast();
 
-  const onClickStartCompetition = () => {
-    veto(socket);
+  const handleStartCompetition = () => {
+    startCompetition(socket, (error, data) => {
+      if (data) {
+        setStartCompetitionLoading(true);
+      }
+
+      if (error) {
+        toast({
+          title: 'Error on Veto',
+          description: ERROR_MSG,
+          status: 'error',
+          position: 'top-right',
+          duration: 4000,
+          isClosable: true,
+        });
+      }
+    });
   };
 
-  // Starting veto error handling
-  useEffect(() => {
-    if (vetoData.error) {
-      toast({
-        title: 'Error on Veto',
-        description: ERROR_MSG,
-        status: 'error',
-        position: 'top-right',
-        duration: 4000,
-        isClosable: true,
-      });
-      resetVetoAction();
-    }
-  }, [vetoData.error, resetVetoAction, toast]);
-
-  let content = (
+  return (
     <Button
       leftIcon={<Icon as={IoMdArrowForward} />}
       colorScheme='green'
       size='sm'
-      onClick={onClickStartCompetition}
-      isLoading={vetoData.vetoRequested}
+      onClick={handleStartCompetition}
+      isLoading={startCompetitionLoading}
       loadingText='Waiting for veto to start'
     >
       Start Competition
     </Button>
   );
-
-  return content;
 };
 
-const mapStateToProps = (state) => ({
-  socketData: state.socketData,
-  vetoData: state.vetoData,
-});
-
-export default connect(mapStateToProps, { veto, resetVetoAction })(
-  StartCompetition
-);
+export default StartCompetition;

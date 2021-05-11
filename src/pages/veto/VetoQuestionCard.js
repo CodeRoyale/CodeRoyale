@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { addVetoVote, removeVetoVote } from '../../actions/vetoActions';
 import {
   Flex,
   Stack,
@@ -10,6 +8,9 @@ import {
   Badge,
   useToast,
 } from '@chakra-ui/react';
+import useVetoVote from '../../global-stores/useVetoVote';
+import useRoom from '../../global-stores/useRoom';
+import useUserVetoed from '../../global-stores/useUserVetoed';
 
 const VetoQuestionCard = ({
   questionID,
@@ -17,13 +18,13 @@ const VetoQuestionCard = ({
   questionTitle,
   questionDesc,
   questionTags,
-  addVetoVote,
-  removeVetoVote,
-  vetoData,
-  roomData,
-  userVoted,
 }) => {
   const toast = useToast();
+  const room = useRoom((state) => state.room);
+  const vetoVotedQuestions = useVetoVote((state) => state.vetoVotedQuestions);
+  const addVetoVote = useVetoVote((state) => state.addVetoVote);
+  const removeVetoVote = useVetoVote((state) => state.removeVetoVote);
+  const userVetoed = useUserVetoed((state) => state.userVetoed);
   const [checkBoxChecked, setCheckBoxChecked] = useState(false);
 
   // Handle user voting for question
@@ -34,15 +35,14 @@ const VetoQuestionCard = ({
       removeVetoVote(questionID);
       setCheckBoxChecked(false);
     } else if (
-      vetoData.vetoVotedQuestions.length <
-        roomData.data.competition.veto.max_vote &&
+      vetoVotedQuestions.length < room.competition.veto.max_vote &&
       !checkBoxChecked
     ) {
       addVetoVote(questionID);
       setCheckBoxChecked(true);
     } else {
       toast({
-        title: `Maximum questions allowed for voting is ${roomData.data.competition.veto.max_vote}`,
+        title: `Maximum questions allowed for voting is ${room.competition.veto.max_vote}`,
         status: 'error',
         position: 'top-right',
         duration: 4000,
@@ -75,7 +75,7 @@ const VetoQuestionCard = ({
         boxShadow: `0 1px 5px 0 rgb(221, 44, 0, 0.2),
       0 1px 1px 0 rgba(221, 44, 0, 0.19)`,
       }}
-      pointerEvents={userVoted ? 'none' : 'auto'}
+      pointerEvents={userVetoed ? 'none' : 'auto'}
       onClick={handleQuestionVoted}
     >
       <Stack width='100%'>
@@ -107,11 +107,4 @@ const VetoQuestionCard = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  vetoData: state.vetoData,
-  roomData: state.roomData,
-});
-
-export default connect(mapStateToProps, { addVetoVote, removeVetoVote })(
-  VetoQuestionCard
-);
+export default VetoQuestionCard;
