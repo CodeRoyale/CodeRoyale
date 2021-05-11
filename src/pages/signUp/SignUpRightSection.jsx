@@ -26,8 +26,8 @@ const SignUpRightSection = ({ isLoading, getAuthData }) => {
   const [password, setPassword] = useState('');
 
   // Send back successful auth data to SignUpMain
-  const handleAuthData = (data) => {
-    setSignUpData(data);
+  const handleAuthData = (authData) => {
+    setSignUpData(authData);
     setShowPasswordPrompt(true);
   };
 

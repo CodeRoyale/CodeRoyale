@@ -25,8 +25,8 @@ const SignUp = () => {
   const { data, error, isError, isLoading, isSuccess } = signUpMutation;
 
   // authData received in props
-  const handleAuthData = (data) => {
-    signUpMutation.mutate(data);
+  const handleAuthData = (authData) => {
+    signUpMutation.mutate(authData);
   };
 
   // SignUp success handling
