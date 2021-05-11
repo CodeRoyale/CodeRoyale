@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import TeamCard from './TeamCard';
 import { Flex, Icon, Text } from '@chakra-ui/react';
 import { BiArrowBack } from 'react-icons/bi';
+import TeamCard from './TeamCard';
 import useSocket from '../../global-stores/useSocket';
 import useRoom from '../../global-stores/useRoom';
 import useScoreboard from '../../global-stores/useScoreboard';
@@ -28,17 +28,15 @@ const Scoreboard = () => {
     roomTeams = room.teams;
   }
 
-  let scores = [];
-  let justScores = [];
-  for (let teamName in scoreboard) {
+  const scores = [];
+  const justScores = [];
+  for (const teamName in scoreboard) {
     scores.push({ team: teamName, score: scoreboard[teamName].length });
     justScores.push(scoreboard[teamName].length);
   }
   if (scores != null && justScores != null) {
     // Sorting scores in descending order
-    scores.sort(function (a, b) {
-      return a.score - b.score;
-    });
+    scores.sort((a, b) => a.score - b.score);
     scores.reverse();
   }
 
@@ -53,7 +51,8 @@ const Scoreboard = () => {
           </Text>
         </>
       );
-    } else if (allEqual(justScores)) {
+    }
+    if (allEqual(justScores)) {
       return (
         <>
           <Text fontSize='3xl' fontWeight='bold'>
@@ -61,7 +60,8 @@ const Scoreboard = () => {
           </Text>
         </>
       );
-    } else if (scores.length === 2) {
+    }
+    if (scores.length === 2) {
       return (
         <>
           <TeamCard
@@ -69,50 +69,50 @@ const Scoreboard = () => {
             userImages={room.state.profilePictures}
             teamName={scores[0].team}
             team={roomTeams[scores[0].team]}
-          />
-        </>
-      );
-    } else if (scores.length === 3) {
-      return (
-        <>
-          <TeamCard
-            rank='gold'
-            userImages={room.state.profilePictures}
-            teamName={scores[0].team}
-            team={roomTeams[scores[0].team]}
-          />
-          <TeamCard
-            rank='silver'
-            userImages={room.state.profilePictures}
-            teamName={scores[1].team}
-            team={roomTeams[scores[1].team]}
-          />
-        </>
-      );
-    } else {
-      return (
-        <>
-          <TeamCard
-            rank='silver'
-            userImages={room.state.profilePictures}
-            teamName={scores[1].team}
-            team={roomTeams[scores[1].team]}
-          />
-          <TeamCard
-            rank='gold'
-            userImages={room.state.profilePictures}
-            teamName={scores[0].team}
-            team={roomTeams[scores[0].team]}
-          />
-          <TeamCard
-            rank='bronze'
-            userImages={room.state.profilePictures}
-            teamName={scores[2].team}
-            team={roomTeams[scores[2].team]}
           />
         </>
       );
     }
+    if (scores.length === 3) {
+      return (
+        <>
+          <TeamCard
+            rank='gold'
+            userImages={room.state.profilePictures}
+            teamName={scores[0].team}
+            team={roomTeams[scores[0].team]}
+          />
+          <TeamCard
+            rank='silver'
+            userImages={room.state.profilePictures}
+            teamName={scores[1].team}
+            team={roomTeams[scores[1].team]}
+          />
+        </>
+      );
+    }
+    return (
+      <>
+        <TeamCard
+          rank='silver'
+          userImages={room.state.profilePictures}
+          teamName={scores[1].team}
+          team={roomTeams[scores[1].team]}
+        />
+        <TeamCard
+          rank='gold'
+          userImages={room.state.profilePictures}
+          teamName={scores[0].team}
+          team={roomTeams[scores[0].team]}
+        />
+        <TeamCard
+          rank='bronze'
+          userImages={room.state.profilePictures}
+          teamName={scores[2].team}
+          team={roomTeams[scores[2].team]}
+        />
+      </>
+    );
   };
 
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect, useHistory } from 'react-router-dom';
-import usePreCheck from '../../hooks/usePreCheck';
 import { Flex, Spinner } from '@chakra-ui/react';
+import usePreCheck from '../../hooks/usePreCheck';
 
 const PreCheck = ({ route, children }) => {
   const history = useHistory();

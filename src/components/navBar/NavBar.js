@@ -1,9 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Logo from '../../components/logo/Logo';
-import ProfileButton from '../../components/profileButton/ProfileButton';
-import profileData from '../../utils/profileData';
 import { Flex, Button, Spacer } from '@chakra-ui/react';
+import Logo from '../logo/Logo';
+import ProfileButton from '../profileButton/ProfileButton';
+import profileData from '../../utils/profileData';
 
 const NavBar = ({ loggedIn }) => {
   const history = useHistory();

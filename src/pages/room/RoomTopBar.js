@@ -1,9 +1,9 @@
 import React from 'react';
+import { Flex, Stack, Text } from '@chakra-ui/react';
 import CountBar from './CountBar';
 import CloseRoom from './CloseRoom';
 import StartCompetition from './StartCompetition';
 import profileData from '../../utils/profileData';
-import { Flex, Stack, Text } from '@chakra-ui/react';
 import RoomInfo from './RoomInfo';
 import useRoom from '../../global-stores/useRoom';
 
@@ -23,7 +23,7 @@ const RoomTopBar = () => {
     maxUsersInRoom = room.config.max_perRoom;
     maxTeamsInRoom = room.config.max_teams;
     numberOfTeams = Object.keys(room.teams).length;
-    for (let teamName in room.teams) {
+    for (const teamName in room.teams) {
       playersInTeams += room.teams[teamName].length;
     }
     numberOfPlayers = playersInTeams + room.state.bench.length;
@@ -44,16 +44,12 @@ const RoomTopBar = () => {
           <CountBar
             count={numberOfPlayers}
             total={maxUsersInRoom}
-            width={'100%'}
+            width='100%'
           />
         </>
         <>
           <Text>Number of Teams in Room</Text>
-          <CountBar
-            count={numberOfTeams}
-            total={maxTeamsInRoom}
-            width={'100%'}
-          />
+          <CountBar count={numberOfTeams} total={maxTeamsInRoom} width='100%' />
         </>
       </Stack>
       <Stack marginLeft='1em'>

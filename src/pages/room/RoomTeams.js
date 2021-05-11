@@ -8,9 +8,11 @@ import useRoom from '../../global-stores/useRoom';
 const RoomTeams = () => {
   const room = useRoom((state) => state.room);
 
-  const userName = profileData().userName;
+  const { userName } = profileData();
 
-  let roomTeams, roomConfig, roomAdmin;
+  let roomTeams;
+  let roomConfig;
+  let roomAdmin;
   if (room) {
     roomTeams = room.teams;
     roomConfig = room.config;
@@ -18,13 +20,13 @@ const RoomTeams = () => {
   }
 
   // Setting up the team cards
-  let teamCards = [];
-  for (var teamName in roomTeams) {
+  const teamCards = [];
+  for (const teamName in roomTeams) {
     teamCards.push(
       <TeamCard
         key={teamName}
         teamName={teamName}
-        totalUsers={roomConfig['max_perTeam']}
+        totalUsers={roomConfig.max_perTeam}
         users={roomTeams[teamName]}
       />
     );

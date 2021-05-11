@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, useToast } from '@chakra-ui/react';
-import { logoutUser } from '../../api/userAPI';
 import { useQuery } from 'react-query';
+import { logoutUser } from '../../api/userAPI';
 import { LOGOUT, ERROR } from '../../utils/constants';
 
 const Logout = () => {

@@ -17,10 +17,10 @@ import {
 } from '@chakra-ui/react';
 import { IoMdSettings } from 'react-icons/io';
 import { BiReset } from 'react-icons/bi';
+import AceEditor from 'react-ace';
 import useSocket from '../../global-stores/useSocket';
 import useCodeSubmitLoading from '../../global-stores/useCodeSubmitLoading';
 import { submitCode } from '../../service/arenaSocket';
-import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-java';
 import 'ace-builds/src-noconflict/mode-c_cpp';
 import 'ace-builds/src-noconflict/mode-python';
@@ -149,13 +149,11 @@ const ArenaEditor = ({ currentQuestion }) => {
           value={editorLanguage}
           onChange={(e) => setEditorLanguage(e.target.value)}
         >
-          {Object.keys(editorLanguageObject).map((language, index) => {
-            return (
-              <option key={index} value={language}>
-                {editorLanguageObject[language]}
-              </option>
-            );
-          })}
+          {Object.keys(editorLanguageObject).map((language, index) => (
+            <option key={index} value={language}>
+              {editorLanguageObject[language]}
+            </option>
+          ))}
         </Select>
         <IconButton
           aria-label='Reset Code'
@@ -184,13 +182,11 @@ const ArenaEditor = ({ currentQuestion }) => {
                 value={editorFontSize}
                 onChange={(e) => setEditorFontSize(Number(e.target.value))}
               >
-                {Object.keys(editorFontSizesObject).map((fontSize, index) => {
-                  return (
-                    <option key={index} value={fontSize}>
-                      {editorFontSizesObject[fontSize]}
-                    </option>
-                  );
-                })}
+                {Object.keys(editorFontSizesObject).map((fontSize, index) => (
+                  <option key={index} value={fontSize}>
+                    {editorFontSizesObject[fontSize]}
+                  </option>
+                ))}
               </Select>
               <Text marginTop='0.3em' fontSize='sm' fontWeight='bold'>
                 Theme
@@ -200,13 +196,11 @@ const ArenaEditor = ({ currentQuestion }) => {
                 value={editorTheme}
                 onChange={(e) => setEditorTheme(e.target.value)}
               >
-                {Object.keys(editorThemesObject).map((theme, index) => {
-                  return (
-                    <option key={index} value={theme}>
-                      {editorThemesObject[theme]}
-                    </option>
-                  );
-                })}
+                {Object.keys(editorThemesObject).map((theme, index) => (
+                  <option key={index} value={theme}>
+                    {editorThemesObject[theme]}
+                  </option>
+                ))}
               </Select>
             </PopoverBody>
           </PopoverContent>
@@ -219,7 +213,7 @@ const ArenaEditor = ({ currentQuestion }) => {
         theme={editorTheme}
         fontSize={editorFontSize}
         value={editorCode}
-        showGutter={true}
+        showGutter
         showPrintMargin={false}
         editorProps={{ $blockScrolling: Infinity }}
         onChange={handleEditorCodeChange}

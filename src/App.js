@@ -5,6 +5,7 @@ import {
   Switch,
   useHistory,
 } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import routes from './routes';
 import Home from './pages/home';
 import Login from './pages/login';
@@ -17,7 +18,6 @@ import Arena from './pages/arena';
 import Scoreboard from './pages/scoreboard';
 import isAuthenticated from './utils/isAuthenticated';
 import PreCheck from './components/preCheck';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import './App.scss';
 
 // Initializing react-query client
@@ -84,18 +84,16 @@ const RenderRoute = (route) => {
   );
 };
 
-const App = () => {
-  return (
-    <div data-testid='App' className='App'>
-      <Router>
-        <Switch>
-          {routes.map((route, index) => (
-            <RenderRoute {...route} key={index} />
-          ))}
-        </Switch>
-      </Router>
-    </div>
-  );
-};
+const App = () => (
+  <div data-testid='App' className='App'>
+    <Router>
+      <Switch>
+        {routes.map((route, index) => (
+          <RenderRoute {...route} key={index} />
+        ))}
+      </Switch>
+    </Router>
+  </div>
+);
 
 export default App;

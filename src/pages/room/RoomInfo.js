@@ -17,8 +17,8 @@ import {
   Stack,
   Icon,
 } from '@chakra-ui/react';
-import { millisecondsToString } from '../../utils/timeToString';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { millisecondsToString } from '../../utils/timeToString';
 import useRoom from '../../global-stores/useRoom';
 
 const RoomInfo = () => {
@@ -56,7 +56,7 @@ const RoomInfo = () => {
     }, 2000);
   };
 
-  let moreRoomInfo = (
+  const moreRoomInfo = (
     <>
       <Stack>
         <Text fontSize='md'>

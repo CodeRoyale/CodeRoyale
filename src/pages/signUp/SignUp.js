@@ -1,18 +1,18 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { Flex, useToast } from '@chakra-ui/react';
+import { useMutation } from 'react-query';
 import {
   CONFLICT,
   CREATED,
   MISSING,
   ERROR,
   ERRORTOKEN,
+  SERVER_DOWN,
 } from '../../utils/constants';
-import { Flex, useToast } from '@chakra-ui/react';
 import SignUpLeftSection from './SignUpLeftSection';
 import SignUpRightSection from './SignUpRightSection';
-import { useMutation } from 'react-query';
 import { signUpUser } from '../../api/userAPI';
-import { SERVER_DOWN } from '../../utils/constants';
 
 const SignUp = () => {
   const history = useHistory();

@@ -1,18 +1,18 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { Flex, useToast } from '@chakra-ui/react';
+import { useMutation } from 'react-query';
 import {
   LOGIN,
   REGISTER,
   AUTHERROR,
   ERROR,
   INVALID,
+  SERVER_DOWN,
 } from '../../utils/constants';
-import { Flex, useToast } from '@chakra-ui/react';
 import LoginLeftSection from './LoginLeftSection';
 import LoginRightSection from './LoginRightSection';
-import { useMutation } from 'react-query';
 import { loginUser } from '../../api/userAPI';
-import { SERVER_DOWN } from '../../utils/constants';
 
 const Login = () => {
   const history = useHistory();

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { Flex, Text, Select, Stack } from '@chakra-ui/react';
 import ArenaEditor from './ArenaEditor';
 import ArenaQuestion from './ArenaQuestion';
-import { Flex, Text, Select, Stack } from '@chakra-ui/react';
 
 const ArenaBody = ({ questionsObject }) => {
   const questionCodeList = [];
@@ -9,20 +9,18 @@ const ArenaBody = ({ questionsObject }) => {
 
   // Creating a list with only question codes
   if (questionsObject) {
-    for (let questionCode in questionsObject) {
+    for (const questionCode in questionsObject) {
       questionCodeList.push(questionCode);
     }
   }
 
   // Mapping question codes in select
   if (questionCodeList) {
-    questionCodesOptions = questionCodeList.map((item, index) => {
-      return (
-        <option key={index} value={item}>
-          {item}
-        </option>
-      );
-    });
+    questionCodesOptions = questionCodeList.map((item, index) => (
+      <option key={index} value={item}>
+        {item}
+      </option>
+    ));
   }
 
   // The current question data selected from select option

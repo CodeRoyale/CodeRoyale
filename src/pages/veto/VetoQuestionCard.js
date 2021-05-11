@@ -53,13 +53,11 @@ const VetoQuestionCard = ({
   };
 
   // Display tags from API
-  let tagsText = questionTags.map((item, index) => {
-    return (
-      <Text key={index} fontSize='md' fontWeight='bold'>
-        {item}
-      </Text>
-    );
-  });
+  const tagsText = questionTags.map((item, index) => (
+    <Text key={index} fontSize='md' fontWeight='bold'>
+      {item}
+    </Text>
+  ));
 
   return (
     <Flex

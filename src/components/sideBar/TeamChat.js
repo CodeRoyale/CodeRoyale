@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { Flex, Stack, InputGroup, Input, useToast } from '@chakra-ui/react';
 import ChatBubble from './ChatBubble';
 import profileData from '../../utils/profileData';
-import { Flex, Stack, InputGroup, Input, useToast } from '@chakra-ui/react';
 import useSocket from '../../global-stores/useSocket';
 import useTeamChat from '../../global-stores/useTeamChat';
 import { sendTeamMsg } from '../../service/chatSocket';
@@ -15,23 +15,21 @@ const TeamChat = ({ userProfilePictures }) => {
   const setTeamChat = useTeamChat((state) => state.setTeamChat);
 
   if (teamChat) {
-    chatBubbles = teamChat.map((item, index) => {
-      return (
-        <ChatBubble
-          key={index}
-          userName={item.source}
-          userImage={
-            userProfilePictures
-              ? item.source === 'You'
-                ? profileData().picture
-                : userProfilePictures[item.source]
-              : profileData().picture
-          }
-          userMessage={item.message}
-          bubbleColor={index % 2 === 0 ? '#F0F0F0' : '#F9F9F9'}
-        />
-      );
-    });
+    chatBubbles = teamChat.map((item, index) => (
+      <ChatBubble
+        key={index}
+        userName={item.source}
+        userImage={
+          userProfilePictures
+            ? item.source === 'You'
+              ? profileData().picture
+              : userProfilePictures[item.source]
+            : profileData().picture
+        }
+        userMessage={item.message}
+        bubbleColor={index % 2 === 0 ? '#F0F0F0' : '#F9F9F9'}
+      />
+    ));
   }
 
   const handleChatInputKeyPressed = (event) => {

@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import SettingsField from './SettingsField';
-import profileData from '../../utils/profileData';
 import {
   Flex,
   Stack,
@@ -11,6 +9,8 @@ import {
   Icon,
 } from '@chakra-ui/react';
 import { AiOutlineUser, AiOutlineMail } from 'react-icons/ai';
+import SettingsField from './SettingsField';
+import profileData from '../../utils/profileData';
 import settings from '../../assets/settings.svg';
 
 const SettingsBody = ({
@@ -25,7 +25,7 @@ const SettingsBody = ({
   const [userName, setUserName] = useState(profileData().userName);
   const [firstName, setFirstName] = useState(profileData().firstName);
   const [lastName, setLastName] = useState(profileData().lastName);
-  const email = profileData().email;
+  const { email } = profileData();
 
   // New user info for updation
   const [newAccountData, setNewAccountData] = useState(null);
@@ -86,7 +86,7 @@ const SettingsBody = ({
         <SettingsField
           heading='Email'
           value={email}
-          disabled={true}
+          disabled
           checkUserNameAvailability={false}
           leftElement={<Icon as={AiOutlineMail} />}
         />
@@ -181,7 +181,7 @@ const SettingsBody = ({
           <SettingsField
             heading='Email'
             value={email}
-            disabled={true}
+            disabled
             checkUserNameAvailability={false}
             leftElement={<Icon as={AiOutlineMail} />}
           />

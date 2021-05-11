@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import NavBar from '../../components/navBar';
 import { Flex } from '@chakra-ui/react';
+import NavBar from '../../components/navBar';
 import DashboardBody from './DashboardBody';
 import { socketConnection } from '../../service/socket';
 import useSocket from '../../global-stores/useSocket';
@@ -18,7 +18,7 @@ const Dashboard = () => {
 
   return (
     <Flex flexDir='column' height='100vh'>
-      <NavBar loggedIn={true} />
+      <NavBar loggedIn />
       <DashboardBody />
     </Flex>
   );

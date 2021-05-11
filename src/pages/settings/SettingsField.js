@@ -24,21 +24,22 @@ const SettingsField = ({
   const handleAvailability = () => {
     if (checkUserNameAvailability && userNameAvailable === null) {
       return null;
-    } else if (checkUserNameAvailability && userNameAvailable) {
+    }
+    if (checkUserNameAvailability && userNameAvailable) {
       return (
         <InputRightElement
           children={<Icon as={AiOutlineCheck} color='green.500' />}
         />
       );
-    } else if (checkUserNameAvailability && !userNameAvailable) {
+    }
+    if (checkUserNameAvailability && !userNameAvailable) {
       return (
         <InputRightElement
           children={<Icon as={AiOutlineClose} color='red.500' />}
         />
       );
-    } else {
-      return null;
     }
+    return null;
   };
 
   // Check if the input is disabled or not in props
@@ -64,27 +65,21 @@ const SettingsField = ({
         </InputGroup>
       </Flex>
     );
-  } else {
-    return (
-      <Flex flexDirection='column'>
-        <Text mb='6px'>{heading}</Text>
-        <InputGroup>
-          <InputLeftElement
-            pointerEvents='none'
-            color='gray.300'
-            fontSize='1.2em'
-            children={leftElement}
-          />
-          <Input
-            placeholder={heading}
-            value={value}
-            variant='filled'
-            disabled
-          />
-        </InputGroup>
-      </Flex>
-    );
   }
+  return (
+    <Flex flexDirection='column'>
+      <Text mb='6px'>{heading}</Text>
+      <InputGroup>
+        <InputLeftElement
+          pointerEvents='none'
+          color='gray.300'
+          fontSize='1.2em'
+          children={leftElement}
+        />
+        <Input placeholder={heading} value={value} variant='filled' disabled />
+      </InputGroup>
+    </Flex>
+  );
 };
 
 export default SettingsField;

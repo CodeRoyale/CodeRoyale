@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
+import { Flex, useToast } from '@chakra-ui/react';
 import TeamChat from './TeamChat';
 import EveryoneChat from './EveryoneChat';
-import { Flex, useToast } from '@chakra-ui/react';
 import useRoom from '../../global-stores/useRoom';
 import useSocket from '../../global-stores/useSocket';
 import useEveryoneChat from '../../global-stores/useEveryoneChat';

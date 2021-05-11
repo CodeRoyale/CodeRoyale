@@ -9,16 +9,16 @@ export default (history = null) => {
   const clientURL = process.env.REACT_APP_CLIENT_URL;
   const baseURL = process.env.REACT_APP_USER_API;
 
-  let headers = {};
+  const headers = {};
 
   if (localStorage.token) {
     headers['Content-Type'] = 'application/json';
-    headers['Origin'] = clientURL;
+    headers.Origin = clientURL;
     headers['Access-Control-Allow-Credentials'] = true;
     headers.Authorization = `Bearer ${localStorage.token}`;
   } else {
     headers['Content-Type'] = 'application/json';
-    headers['Origin'] = clientURL;
+    headers.Origin = clientURL;
     headers['Access-Control-Allow-Credentials'] = true;
   }
 
@@ -52,11 +52,10 @@ export default (history = null) => {
         return new Promise((resolve, reject) => {
           reject(error);
         });
-      } else {
-        return new Promise((resolve, reject) => {
-          reject(error);
-        });
       }
+      return new Promise((resolve, reject) => {
+        reject(error);
+      });
     }
   );
 

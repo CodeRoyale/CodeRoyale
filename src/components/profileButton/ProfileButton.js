@@ -29,7 +29,7 @@ const ProfileButton = ({ profileData }) => {
           boxSize='45px'
           src={picture}
           alt={userName}
-        ></Image>
+        />
       </PopoverTrigger>
       <PopoverContent>
         <PopoverCloseButton />

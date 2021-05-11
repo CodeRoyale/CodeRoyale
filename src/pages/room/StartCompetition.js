@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { ERROR_MSG } from '../../utils/constants';
 import { Button, Icon, useToast } from '@chakra-ui/react';
 import { IoMdArrowForward } from 'react-icons/io';
+import { ERROR_MSG } from '../../utils/constants';
 import useSocket from '../../global-stores/useSocket';
 import { startCompetition } from '../../service/vetoSocket';
 

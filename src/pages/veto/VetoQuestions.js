@@ -1,9 +1,9 @@
 import React from 'react';
-import VetoQuestionCard from './VetoQuestionCard';
 import { Flex, Skeleton } from '@chakra-ui/react';
-import useVetoQuestionsIds from '../../global-stores/useVetoQuestionIds';
 import { useHistory } from 'react-router-dom';
 import { useQuery } from 'react-query';
+import useVetoQuestionsIds from '../../global-stores/useVetoQuestionIds';
+import VetoQuestionCard from './VetoQuestionCard';
 import { getQuestionById } from '../../api/questionAPI';
 
 const VetoQuestions = () => {
@@ -22,18 +22,16 @@ const VetoQuestions = () => {
   let questionCards = null;
   if (isSuccess) {
     questionsArray = data.payload.data;
-    questionCards = questionsArray.map((item, index) => {
-      return (
-        <VetoQuestionCard
-          key={index}
-          questionNumber={index}
-          questionTitle={item.questionTitle}
-          questionDesc={item.description}
-          questionID={item._id}
-          questionTags={item.tags}
-        />
-      );
-    });
+    questionCards = questionsArray.map((item, index) => (
+      <VetoQuestionCard
+        key={index}
+        questionNumber={index}
+        questionTitle={item.questionTitle}
+        questionDesc={item.description}
+        questionID={item._id}
+        questionTags={item.tags}
+      />
+    ));
   }
 
   // Error in fetching questions

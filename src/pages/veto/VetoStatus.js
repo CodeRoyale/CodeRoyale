@@ -24,9 +24,7 @@ const VetoStatus = () => {
   }
 
   // No need to calculate everything component renders since roomTeams does not change
-  const vetoUsers = useMemo(() => {
-    return getAllVetoUsers(roomTeams);
-  }, [roomTeams]);
+  const vetoUsers = useMemo(() => getAllVetoUsers(roomTeams), [roomTeams]);
 
   let statusCards = null;
 
@@ -34,17 +32,15 @@ const VetoStatus = () => {
 
   // Displaying all users in the room for veto status
   if (vetoUsers && vetoedUsers) {
-    statusCards = vetoUsers.map((item, index) => {
-      return (
-        <VetoStatusCard
-          key={index}
-          userName={item.userName}
-          userImage={room.state.profilePictures[item.userName]}
-          team={item.team}
-          userVetoed={vetoedUsers.includes(item.userName)}
-        />
-      );
-    });
+    statusCards = vetoUsers.map((item, index) => (
+      <VetoStatusCard
+        key={index}
+        userName={item.userName}
+        userImage={room.state.profilePictures[item.userName]}
+        team={item.team}
+        userVetoed={vetoedUsers.includes(item.userName)}
+      />
+    ));
   }
 
   return (
@@ -68,10 +64,10 @@ const VetoStatus = () => {
 
 // Get all users in room
 const getAllVetoUsers = (teams) => {
-  let vetoUsers = [];
-  for (let team in teams) {
+  const vetoUsers = [];
+  for (const team in teams) {
     // Gives the array of players in a team
-    let teamPlayers = teams[team];
+    const teamPlayers = teams[team];
     for (let i = 0; i < teamPlayers.length; i++) {
       vetoUsers.push({
         userName: teamPlayers[i],

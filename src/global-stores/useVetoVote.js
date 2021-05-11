@@ -9,7 +9,7 @@ let useVetoVote = (set) => ({
     })),
   removeVetoVote: (quesIdToRemove) =>
     set((state) => {
-      let vetoVotedQuestions = state.vetoVotedQuestions;
+      let { vetoVotedQuestions } = state;
       vetoVotedQuestions = vetoVotedQuestions.filter(
         (quesId) => quesId !== quesIdToRemove
       );

@@ -23,7 +23,7 @@ const ArenaScore = () => {
 
   const teamsList = [];
   if (room) {
-    for (let team in room.teams) {
+    for (const team in room.teams) {
       teamsList.push(team);
     }
   }
@@ -53,16 +53,14 @@ const ArenaScore = () => {
             <DrawerHeader borderBottomWidth='1px'>Score</DrawerHeader>
             <DrawerBody>
               <Stack>
-                {problemCodes.map((problemCode, index) => {
-                  return (
-                    <QuestionScoreCard
-                      key={index}
-                      problemCode={problemCode}
-                      teamsList={teamsList}
-                      scoreboard={scoreboard}
-                    />
-                  );
-                })}
+                {problemCodes.map((problemCode, index) => (
+                  <QuestionScoreCard
+                    key={index}
+                    problemCode={problemCode}
+                    teamsList={teamsList}
+                    scoreboard={scoreboard}
+                  />
+                ))}
               </Stack>
             </DrawerBody>
           </DrawerContent>

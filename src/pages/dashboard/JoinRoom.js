@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Input, IconButton, Icon, Flex, useToast } from '@chakra-ui/react';
 import { AiOutlineArrowRight } from 'react-icons/ai';
+import { useHistory } from 'react-router-dom';
 import useSocket from '../../global-stores/useSocket';
 import useRoom from '../../global-stores/useRoom';
 import { joinRoom } from '../../service/roomSocket';
-import { useHistory } from 'react-router-dom';
 
 const JoinRoom = () => {
   const socket = useSocket((state) => state.socket);

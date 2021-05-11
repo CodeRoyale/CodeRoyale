@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 const profileData = () => {
-  const token = localStorage.token;
+  const { token } = localStorage;
   let user;
 
   // If token found in localStorage decode to get user info

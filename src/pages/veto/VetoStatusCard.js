@@ -20,7 +20,7 @@ const VetoStatusCard = ({ userImage, userName, team, userVetoed }) => {
         boxSize='45px'
         src={userImage}
         alt='Profile Picture'
-      ></Image>
+      />
       <Flex marginLeft='0.8em' flexDir='column'>
         <span style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>
           {userName}

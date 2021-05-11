@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { Flex, Stack, InputGroup, Input, useToast } from '@chakra-ui/react';
 import ChatBubble from './ChatBubble';
 import profileData from '../../utils/profileData';
-import { Flex, Stack, InputGroup, Input, useToast } from '@chakra-ui/react';
 import useSocket from '../../global-stores/useSocket';
 import useEveryoneChat from '../../global-stores/useEveryoneChat';
 import { sendEveryoneMsg } from '../../service/chatSocket';
@@ -15,21 +15,19 @@ const EveryoneChat = ({ userProfilePictures }) => {
   const setEveryoneChat = useEveryoneChat((state) => state.setEveryoneChat);
 
   if (everyoneChat) {
-    chatBubbles = everyoneChat.map((item, index) => {
-      return (
-        <ChatBubble
-          key={index}
-          userName={item.source}
-          userImage={
-            item.source === 'You'
-              ? profileData().picture
-              : userProfilePictures[item.source]
-          }
-          userMessage={item.message}
-          bubbleColor={index % 2 === 0 ? '#F0F0F0' : '#F9F9F9'}
-        />
-      );
-    });
+    chatBubbles = everyoneChat.map((item, index) => (
+      <ChatBubble
+        key={index}
+        userName={item.source}
+        userImage={
+          item.source === 'You'
+            ? profileData().picture
+            : userProfilePictures[item.source]
+        }
+        userMessage={item.message}
+        bubbleColor={index % 2 === 0 ? '#F0F0F0' : '#F9F9F9'}
+      />
+    ));
   }
 
   const handleChatInputKeyPressed = (event) => {

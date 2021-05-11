@@ -1,6 +1,4 @@
 import React from 'react';
-import CountBar from './CountBar';
-import profileData from '../../utils/profileData';
 import {
   Flex,
   Text,
@@ -10,6 +8,8 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import CountBar from './CountBar';
+import profileData from '../../utils/profileData';
 import { joinTeam, leaveTeam } from '../../service/teamSocket';
 import useSocket from '../../global-stores/useSocket';
 import useRoom from '../../global-stores/useRoom';

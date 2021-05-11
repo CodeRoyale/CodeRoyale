@@ -39,7 +39,7 @@ const Timer = ({ milliseconds }) => {
   };
 
   useEffect(() => {
-    let timerID = setInterval(() => tick(), 1000);
+    const timerID = setInterval(() => tick(), 1000);
     return () => clearInterval(timerID);
   });
 

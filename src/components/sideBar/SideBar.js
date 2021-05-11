@@ -1,8 +1,8 @@
 import React from 'react';
 import { Flex, Select } from '@chakra-ui/react';
 import Chat from './Chat';
-import Logo from '../../components/logo/Logo';
-import ProfileButton from '../../components/profileButton/ProfileButton';
+import Logo from '../logo/Logo';
+import ProfileButton from '../profileButton/ProfileButton';
 import profileData from '../../utils/profileData';
 import useChatType from '../../global-stores/useChatType';
 

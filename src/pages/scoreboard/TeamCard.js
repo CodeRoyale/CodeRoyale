@@ -1,6 +1,6 @@
 import React from 'react';
-import PlayerCard from './PlayerCard';
 import { Flex, Text, Image } from '@chakra-ui/react';
+import PlayerCard from './PlayerCard';
 import goldMedal from '../../assets/gold-medal.svg';
 import silverMedal from '../../assets/silver-medal.svg';
 import bronzeMedal from '../../assets/bronze-medal.svg';
@@ -37,15 +37,13 @@ const TeamCard = ({ rank, teamName, team, userImages }) => {
   }
 
   if (team !== undefined) {
-    playerCards = team.map((player, index) => {
-      return (
-        <PlayerCard
-          key={index}
-          userImage={userImages[player]}
-          userName={player}
-        />
-      );
-    });
+    playerCards = team.map((player, index) => (
+      <PlayerCard
+        key={index}
+        userImage={userImages[player]}
+        userName={player}
+      />
+    ));
   }
 
   return (
@@ -64,7 +62,7 @@ const TeamCard = ({ rank, teamName, team, userImages }) => {
         top='-60px'
         src={medalStyle.medal}
         boxSize='100px'
-      ></Image>
+      />
       <Text pos='relative' top='-55px' fontSize='2xl' fontWeight='bold'>
         {teamName}
       </Text>

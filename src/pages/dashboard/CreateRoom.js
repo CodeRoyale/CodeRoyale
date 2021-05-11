@@ -16,11 +16,11 @@ import {
   Switch,
   useToast,
 } from '@chakra-ui/react';
+import { useHistory } from 'react-router-dom';
 import { timeToString } from '../../utils/timeToString';
 import useSocket from '../../global-stores/useSocket';
 import useRoom from '../../global-stores/useRoom';
 import { createRoom } from '../../service/roomSocket';
-import { useHistory } from 'react-router-dom';
 
 const CreateRoom = () => {
   const socket = useSocket((state) => state.socket);
@@ -63,61 +63,47 @@ const CreateRoom = () => {
   }
 
   // Creating options for create room dialog
-  const maxTeamOptions = numberOptions.map((item, index) => {
-    return (
-      <option key={index} value={item.value}>
-        {item.label}
-      </option>
-    );
-  });
+  const maxTeamOptions = numberOptions.map((item, index) => (
+    <option key={index} value={item.value}>
+      {item.label}
+    </option>
+  ));
 
-  const maxRoomMemberOptions = numberOptions.map((item, index) => {
-    return (
-      <option key={index} value={item.value}>
-        {item.label}
-      </option>
-    );
-  });
+  const maxRoomMemberOptions = numberOptions.map((item, index) => (
+    <option key={index} value={item.value}>
+      {item.label}
+    </option>
+  ));
 
-  const maxTeamMemberOptions = numberOptions.map((item, index) => {
-    return (
-      <option key={index} value={item.value}>
-        {item.label}
-      </option>
-    );
-  });
+  const maxTeamMemberOptions = numberOptions.map((item, index) => (
+    <option key={index} value={item.value}>
+      {item.label}
+    </option>
+  ));
 
-  const maxQuestionsOption = numberOptions.map((item, index) => {
-    return (
-      <option key={index} value={item.value}>
-        {item.label}
-      </option>
-    );
-  });
+  const maxQuestionsOption = numberOptions.map((item, index) => (
+    <option key={index} value={item.value}>
+      {item.label}
+    </option>
+  ));
 
-  const maxVetoQuestionsOptions = numberOptions.map((item, index) => {
-    return (
-      <option key={index} value={item.value}>
-        {item.label}
-      </option>
-    );
-  });
+  const maxVetoQuestionsOptions = numberOptions.map((item, index) => (
+    <option key={index} value={item.value}>
+      {item.label}
+    </option>
+  ));
 
-  const maxVetoVotesOptions = vetoVoteOptions.map((item, index) => {
-    return (
-      <option key={index} value={item.value}>
-        {item.label}
-      </option>
-    );
-  });
+  const maxVetoVotesOptions = vetoVoteOptions.map((item, index) => (
+    <option key={index} value={item.value}>
+      {item.label}
+    </option>
+  ));
 
-  const maxTimeLimitOptions = timeOptions.map((item, index) => {
-    return (
-      <option key={index} value={item.value}>
-        {item.label}
-      </option>
-    );
-  });
+  const maxTimeLimitOptions = timeOptions.map((item, index) => (
+    <option key={index} value={item.value}>
+      {item.label}
+    </option>
+  ));
 
   const handleCreateRoom = () => {
     createRoom(

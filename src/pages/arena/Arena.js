@@ -1,14 +1,14 @@
 import React, { useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Flex, Spinner, Text, useToast } from '@chakra-ui/react';
+import { useQuery } from 'react-query';
 import SideBar from '../../components/sideBar';
 import ArenaBody from './ArenaBody';
-import { Flex, Spinner, Text, useToast } from '@chakra-ui/react';
 import useSocket from '../../global-stores/useSocket';
 import useCompQuestionIds from '../../global-stores/useCompQuestionIds';
 import useCodeSubmitLoading from '../../global-stores/useCodeSubmitLoading';
 import useCompQuestions from '../../global-stores/useCompQuestions';
 import useScoreboard from '../../global-stores/useScoreboard';
-import { useQuery } from 'react-query';
 import { getQuestionById } from '../../api/questionAPI';
 import {
   competitionStarted,
@@ -45,7 +45,7 @@ const Arena = () => {
       setCodeSubmitLoading(false);
       if (data) {
         const teamName = data.team_name;
-        const problemCode = data.problemCode;
+        const { problemCode } = data;
         updateScore(teamName, problemCode);
         toast({
           title: 'Success on Code Submission',
@@ -58,7 +58,7 @@ const Arena = () => {
       }
 
       if (error) {
-        const problemCode = error.problemCode;
+        const { problemCode } = error;
         toast({
           title: 'Error on Code Submission',
           description: `The code you submitted for ${problemCode} didnot pass the testcases`,
@@ -79,7 +79,7 @@ const Arena = () => {
     roomCodeSubmissionSuccess(socket, (error, data) => {
       if (data) {
         const teamName = data.team_name;
-        const problemCode = data.problemCode;
+        const { problemCode } = data;
         updateScore(teamName, problemCode);
         toast({
           title: 'Success on Code Submission',
@@ -114,9 +114,10 @@ const Arena = () => {
     setCompQuestions(compQuestionsQuery.data.payload.data);
   }
   // useMemo so that function doesnot compute for every single render
-  const questionsObject = useMemo(() => {
-    return getQuestionsObject(questionsList);
-  }, [questionsList]);
+  const questionsObject = useMemo(
+    () => getQuestionsObject(questionsList),
+    [questionsList]
+  );
 
   if (compQuestionsQuery.isError) {
     history.push('/dashboard');

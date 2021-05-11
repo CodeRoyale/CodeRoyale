@@ -1,12 +1,11 @@
 import React from 'react';
-import SettingsBody from './SettingsBody';
-import NavBar from '../../components/navBar';
-import { ERROR, DELETED, UPDATE } from '../../utils/constants';
 import { useHistory } from 'react-router-dom';
 import { Flex, useToast } from '@chakra-ui/react';
 import { useMutation } from 'react-query';
+import SettingsBody from './SettingsBody';
+import NavBar from '../../components/navBar';
+import { ERROR, DELETED, UPDATE, SERVER_DOWN } from '../../utils/constants';
 import { deleteAccount, updateAccount } from '../../api/userAPI';
-import { SERVER_DOWN } from '../../utils/constants';
 
 const Settings = () => {
   const history = useHistory();
@@ -207,7 +206,7 @@ const Settings = () => {
 
   return (
     <Flex flexDir='column' height='100vh'>
-      <NavBar loggedIn={true} />
+      <NavBar loggedIn />
       <SettingsBody
         sendDeleteAccountLoading={deleteAccountMutation.isLoading}
         sendUpdateAccountLoading={updateAccountMutation.isLoading}

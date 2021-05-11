@@ -24,7 +24,7 @@ const GoogleAuth = ({ getAuthData, text }) => {
       <GoogleLogin
         clientId={googleClientID}
         onSuccess={responseSuccess}
-        cookiePolicy={'single_host_origin'}
+        cookiePolicy='single_host_origin'
         render={(renderProps) => (
           <div
             className='google-custom-button'
