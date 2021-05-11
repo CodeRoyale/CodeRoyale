@@ -8,7 +8,10 @@ let useRoom = (set) => ({
     set((state) => ({ room: { ...state.room, teams: teamsData } })),
 });
 
-useRoom = devtools(useRoom);
+if (process.env.REACT_APP_ENV === 'development') {
+  useRoom = devtools(useRoom);
+}
+
 useRoom = create(useRoom);
 
 export default useRoom;

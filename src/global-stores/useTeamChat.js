@@ -7,7 +7,10 @@ let useTeamChat = (set) => ({
     set((state) => ({ teamChat: [...state.teamChat, chat] })),
 });
 
-useTeamChat = devtools(useTeamChat);
+if (process.env.REACT_APP_ENV === 'development') {
+  useTeamChat = devtools(useTeamChat);
+}
+
 useTeamChat = create(useTeamChat);
 
 export default useTeamChat;

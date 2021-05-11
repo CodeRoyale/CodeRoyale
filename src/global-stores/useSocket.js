@@ -6,7 +6,10 @@ let useSocket = (set) => ({
   setSocket: (socket) => set(() => ({ socket })),
 });
 
-useSocket = devtools(useSocket);
+if (process.env.REACT_APP_ENV === 'development') {
+  useSocket = devtools(useSocket);
+}
+
 useSocket = create(useSocket);
 
 export default useSocket;

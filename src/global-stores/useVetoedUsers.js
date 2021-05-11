@@ -7,7 +7,10 @@ let useVetoedUsers = (set) => ({
     set((state) => ({ vetoedUsers: [...state.vetoedUsers, vetoedUser] })),
 });
 
-useVetoedUsers = devtools(useVetoedUsers);
+if (process.env.REACT_APP_ENV === 'development') {
+  useVetoedUsers = devtools(useVetoedUsers);
+}
+
 useVetoedUsers = create(useVetoedUsers);
 
 export default useVetoedUsers;

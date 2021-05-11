@@ -13,7 +13,10 @@ let useScoreboard = (set) => ({
     })),
 });
 
-useScoreboard = devtools(useScoreboard);
+if (process.env.REACT_APP_ENV === 'development') {
+  useScoreboard = devtools(useScoreboard);
+}
+
 useScoreboard = create(useScoreboard);
 
 export default useScoreboard;

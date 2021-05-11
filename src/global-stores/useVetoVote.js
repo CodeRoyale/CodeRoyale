@@ -17,7 +17,10 @@ let useVetoVote = (set) => ({
     }),
 });
 
-useVetoVote = devtools(useVetoVote);
+if (process.env.REACT_APP_ENV === 'development') {
+  useVetoVote = devtools(useVetoVote);
+}
+
 useVetoVote = create(useVetoVote);
 
 export default useVetoVote;

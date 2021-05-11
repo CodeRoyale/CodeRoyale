@@ -6,7 +6,10 @@ let useVetoQuestionIds = (set) => ({
   setVetoQuestionIds: (vetoQuestionIds) => set(() => ({ vetoQuestionIds })),
 });
 
-useVetoQuestionIds = devtools(useVetoQuestionIds);
+if (process.env.REACT_APP_ENV === 'development') {
+  useVetoQuestionIds = devtools(useVetoQuestionIds);
+}
+
 useVetoQuestionIds = create(useVetoQuestionIds);
 
 export default useVetoQuestionIds;

@@ -7,7 +7,10 @@ let useCodeSubmitLoading = (set) => ({
     set(() => ({ codeSubmitLoading })),
 });
 
-useCodeSubmitLoading = devtools(useCodeSubmitLoading);
+if (process.env.REACT_APP_ENV === 'development') {
+  useCodeSubmitLoading = devtools(useCodeSubmitLoading);
+}
+
 useCodeSubmitLoading = create(useCodeSubmitLoading);
 
 export default useCodeSubmitLoading;

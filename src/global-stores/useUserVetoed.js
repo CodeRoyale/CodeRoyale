@@ -6,7 +6,10 @@ let useUserVetoed = (set) => ({
   setUserVetoed: () => set(() => ({ userVetoed: true })),
 });
 
-useUserVetoed = devtools(useUserVetoed);
+if (process.env.REACT_APP_ENV === 'development') {
+  useUserVetoed = devtools(useUserVetoed);
+}
+
 useUserVetoed = create(useUserVetoed);
 
 export default useUserVetoed;

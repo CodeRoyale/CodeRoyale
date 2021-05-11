@@ -6,7 +6,10 @@ let useChatType = (set) => ({
   setChatType: (type) => set(() => ({ chatType: type })),
 });
 
-useChatType = devtools(useChatType);
+if (process.env.REACT_APP_ENV === 'development') {
+  useChatType = devtools(useChatType);
+}
+
 useChatType = create(useChatType);
 
 export default useChatType;

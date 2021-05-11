@@ -6,7 +6,10 @@ let useCompQuestionIds = (set) => ({
   setCompQuestionIds: (compQuestionIds) => set(() => ({ compQuestionIds })),
 });
 
-useCompQuestionIds = devtools(useCompQuestionIds);
+if (process.env.REACT_APP_ENV === 'development') {
+  useCompQuestionIds = devtools(useCompQuestionIds);
+}
+
 useCompQuestionIds = create(useCompQuestionIds);
 
 export default useCompQuestionIds;

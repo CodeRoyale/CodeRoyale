@@ -6,7 +6,10 @@ let useCompQuestions = (set) => ({
   setCompQuestions: (compQuestions) => set(() => ({ compQuestions })),
 });
 
-useCompQuestions = devtools(useCompQuestions);
+if (process.env.REACT_APP_ENV === 'development') {
+  useCompQuestions = devtools(useCompQuestions);
+}
+
 useCompQuestions = create(useCompQuestions);
 
 export default useCompQuestions;
