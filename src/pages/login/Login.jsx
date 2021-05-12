@@ -25,10 +25,10 @@ const Login = () => {
   const { data, error, isError, isLoading, isSuccess } = loginMutation;
 
   // authData received in props
-  const handleAuthData = (data) => {
+  const handleAuthData = (authData) => {
     loginMutation.mutate({
-      issuer: data.issuer,
-      access_token: data.access_token,
+      issuer: authData.issuer,
+      access_token: authData.access_token,
     });
   };
 

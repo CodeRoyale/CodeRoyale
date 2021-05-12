@@ -8,8 +8,8 @@ const LoginRightSection = ({ isLoading, getAuthData }) => {
   const history = useHistory();
 
   // Send back successful auth data in props
-  const handleAuthData = (data) => {
-    getAuthData(data);
+  const handleAuthData = (authData) => {
+    getAuthData(authData);
   };
 
   // Loading indicator once request sent to server for login
