@@ -88,7 +88,13 @@ const App = () => (
     <Router>
       <Switch>
         {routes.map((route) => (
-          <RenderRoute {...route} key={uuidv4()} />
+          <RenderRoute
+            key={uuidv4()}
+            path={route.path}
+            component={route.component}
+            title={route.title}
+            needsAuth={route.needsAuth}
+          />
         ))}
       </Switch>
     </Router>
