@@ -16,6 +16,7 @@ import {
   Switch,
   useToast,
 } from '@chakra-ui/react';
+import { v4 as uuidv4 } from 'uuid';
 import { useHistory } from 'react-router-dom';
 import { timeToString } from '../../utils/timeToString';
 import useSocket from '../../global-stores/useSocket';
@@ -45,12 +46,12 @@ const CreateRoom = () => {
   const timeOptions = [0.5, 1, 3, 6, 12, 24, 48];
   const vetoVoteOptions = [];
 
-  for (let i = 0; i < numberOptions.length; i++) {
+  for (let i = 0; i < numberOptions.length; i += 1) {
     const number = numberOptions[i];
     numberOptions[i] = { label: number, value: number };
   }
 
-  for (let i = 0; i < timeOptions.length; i++) {
+  for (let i = 0; i < timeOptions.length; i += 1) {
     const time = timeOptions[i];
     timeOptions[i] = {
       label: timeToString(time),
@@ -58,49 +59,49 @@ const CreateRoom = () => {
     };
   }
 
-  for (let i = 1; i < maxVetoQuestions; i++) {
+  for (let i = 1; i < maxVetoQuestions; i += 1) {
     vetoVoteOptions.push({ label: i, value: i });
   }
 
   // Creating options for create room dialog
-  const maxTeamOptions = numberOptions.map((item, index) => (
-    <option key={index} value={item.value}>
+  const maxTeamOptions = numberOptions.map((item) => (
+    <option key={uuidv4()} value={item.value}>
       {item.label}
     </option>
   ));
 
-  const maxRoomMemberOptions = numberOptions.map((item, index) => (
-    <option key={index} value={item.value}>
+  const maxRoomMemberOptions = numberOptions.map((item) => (
+    <option key={uuidv4()} value={item.value}>
       {item.label}
     </option>
   ));
 
-  const maxTeamMemberOptions = numberOptions.map((item, index) => (
-    <option key={index} value={item.value}>
+  const maxTeamMemberOptions = numberOptions.map((item) => (
+    <option key={uuidv4()} value={item.value}>
       {item.label}
     </option>
   ));
 
-  const maxQuestionsOption = numberOptions.map((item, index) => (
-    <option key={index} value={item.value}>
+  const maxQuestionsOption = numberOptions.map((item) => (
+    <option key={uuidv4()} value={item.value}>
       {item.label}
     </option>
   ));
 
-  const maxVetoQuestionsOptions = numberOptions.map((item, index) => (
-    <option key={index} value={item.value}>
+  const maxVetoQuestionsOptions = numberOptions.map((item) => (
+    <option key={uuidv4()} value={item.value}>
       {item.label}
     </option>
   ));
 
-  const maxVetoVotesOptions = vetoVoteOptions.map((item, index) => (
-    <option key={index} value={item.value}>
+  const maxVetoVotesOptions = vetoVoteOptions.map((item) => (
+    <option key={uuidv4()} value={item.value}>
       {item.label}
     </option>
   ));
 
-  const maxTimeLimitOptions = timeOptions.map((item, index) => (
-    <option key={index} value={item.value}>
+  const maxTimeLimitOptions = timeOptions.map((item) => (
+    <option key={uuidv4()} value={item.value}>
       {item.label}
     </option>
   ));

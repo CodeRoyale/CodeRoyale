@@ -16,8 +16,6 @@ const JoinRoom = () => {
 
   const handleJoinRoom = () => {
     joinRoom(socket, { roomId }, (error, data) => {
-      console.log(error);
-      console.log(data);
       if (data) {
         toast({
           title: 'Joined Room',
