@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Flex, Stack, InputGroup, Input, useToast } from '@chakra-ui/react';
+import { v4 as uuidv4 } from 'uuid';
 import ChatBubble from './ChatBubble';
 import profileData from '../../utils/profileData';
 import useSocket from '../../global-stores/useSocket';
@@ -17,8 +18,9 @@ const TeamChat = ({ userProfilePictures }) => {
   if (teamChat) {
     chatBubbles = teamChat.map((item, index) => (
       <ChatBubble
-        key={index}
+        key={uuidv4()}
         userName={item.source}
+        /* eslint-disable no-nested-ternary */
         userImage={
           userProfilePictures
             ? item.source === 'You'

@@ -29,6 +29,7 @@ const FacebookAuth = ({ getAuthData, text }) => {
             className='facebook-custom-button'
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
+            aria-hidden='true'
           >
             <Icon as={AiFillFacebook} w={6} h={6} />
             &nbsp; &nbsp;

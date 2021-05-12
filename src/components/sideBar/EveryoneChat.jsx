@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Flex, Stack, InputGroup, Input, useToast } from '@chakra-ui/react';
+import { v4 as uuidv4 } from 'uuid';
 import ChatBubble from './ChatBubble';
 import profileData from '../../utils/profileData';
 import useSocket from '../../global-stores/useSocket';
@@ -17,7 +18,7 @@ const EveryoneChat = ({ userProfilePictures }) => {
   if (everyoneChat) {
     chatBubbles = everyoneChat.map((item, index) => (
       <ChatBubble
-        key={index}
+        key={uuidv4()}
         userName={item.source}
         userImage={
           item.source === 'You'

@@ -3,7 +3,8 @@ import { Flex, Progress, Text } from '@chakra-ui/react';
 
 const Timer = ({ milliseconds }) => {
   const [over, setOver] = useState(false);
-  const [time, setTime] = React.useState({
+  /* eslint-disable radix */
+  const [time, setTime] = useState({
     minutes: parseInt(milliseconds / 60000),
     seconds: parseInt(0),
   });
