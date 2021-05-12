@@ -14,6 +14,7 @@ const Settings = () => {
 
   // const [userNameAvailable, setUserNameAvailable] = useState(null);
 
+  /* eslint-disable no-shadow */
   const deleteAccountMutation = useMutation((history) =>
     deleteAccount(history)
   );

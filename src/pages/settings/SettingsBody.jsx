@@ -16,8 +16,8 @@ import settings from '../../assets/settings.svg';
 const SettingsBody = ({
   getDeleteAccount,
   getUpdateAccountData,
-  getUserNameCheckData,
-  sendUserNameAvailable,
+  // getUserNameCheckData,
+  // sendUserNameAvailable,
   sendDeleteAccountLoading,
   sendUpdateAccountLoading,
 }) => {

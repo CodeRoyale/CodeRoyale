@@ -27,16 +27,16 @@ const SettingsField = ({
     }
     if (checkUserNameAvailability && userNameAvailable) {
       return (
-        <InputRightElement
-          children={<Icon as={AiOutlineCheck} color='green.500' />}
-        />
+        <InputRightElement>
+          <Icon as={AiOutlineCheck} color='green.500' />
+        </InputRightElement>
       );
     }
     if (checkUserNameAvailability && !userNameAvailable) {
       return (
-        <InputRightElement
-          children={<Icon as={AiOutlineClose} color='red.500' />}
-        />
+        <InputRightElement>
+          <Icon as={AiOutlineClose} color='red.500' />
+        </InputRightElement>
       );
     }
     return null;
@@ -52,8 +52,9 @@ const SettingsField = ({
             pointerEvents='none'
             color='gray.300'
             fontSize='1.2em'
-            children={leftElement}
-          />
+          >
+            {leftElement}
+          </InputLeftElement>
           <Input
             placeholder={heading}
             value={value}
@@ -74,8 +75,9 @@ const SettingsField = ({
           pointerEvents='none'
           color='gray.300'
           fontSize='1.2em'
-          children={leftElement}
-        />
+        >
+          {leftElement}
+        </InputLeftElement>
         <Input placeholder={heading} value={value} variant='filled' disabled />
       </InputGroup>
     </Flex>
