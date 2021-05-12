@@ -30,7 +30,7 @@ export default (history = null) => {
 
   loggedInAxios.interceptors.response.use(
     (response) =>
-      new Promise((resolve, reject) => {
+      new Promise((resolve) => {
         resolve(response);
       }),
     (error) => {
