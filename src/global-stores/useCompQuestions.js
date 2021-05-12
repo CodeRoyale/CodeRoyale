@@ -1,6 +1,7 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 
+/* eslint-disable import/no-mutable-exports */
 let useCompQuestions = (set) => ({
   compQuestions: null,
   setCompQuestions: (compQuestions) => set(() => ({ compQuestions })),
