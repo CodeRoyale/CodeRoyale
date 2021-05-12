@@ -38,7 +38,7 @@
     "prettier:write": "prettier --write ./src"
   },
   "lint-staged": {
-    "./src/**/*.{js,jsx}": [
+    "./src/*.{js,jsx}": [
       "npm run prettier:write",
       "npm run lint"
     ]
