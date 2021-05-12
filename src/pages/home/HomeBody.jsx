@@ -87,7 +87,7 @@ const HomeBody = () => {
         <Stack justifyContent='center' alignItems='center'>
           <Text fontSize='5xl' fontWeight='bold' textAlign='center'>
             It takes only 1 min to sign up <br />
-            and <span className='home-body-span'>it's free!</span>
+            and <span className='home-body-span'>it`&apos;`s free!</span>
           </Text>
           <Button
             width='30%'
