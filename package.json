@@ -37,16 +37,16 @@
     "prettier:check": "prettier --check ./src",
     "prettier:write": "prettier --write ./src"
   },
+  "lint-staged": {
+    "./src/**/*.{js,jsx}": [
+      "npm run prettier:write",
+      "npm run lint"
+    ]
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx}": [
-      "npm run prettier:write",
-      "npm run lint"
-    ]
   },
   "browserslist": {
     "production": [
