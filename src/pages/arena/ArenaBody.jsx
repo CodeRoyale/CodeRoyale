@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Flex, Text, Select, Stack } from '@chakra-ui/react';
+import { v4 as uuidv4 } from 'uuid';
 import ArenaEditor from './ArenaEditor';
 import ArenaQuestion from './ArenaQuestion';
 
@@ -9,15 +10,15 @@ const ArenaBody = ({ questionsObject }) => {
 
   // Creating a list with only question codes
   if (questionsObject) {
-    for (const questionCode in questionsObject) {
+    Object.keys(questionsObject).forEach((questionCode) => {
       questionCodeList.push(questionCode);
-    }
+    });
   }
 
   // Mapping question codes in select
   if (questionCodeList) {
-    questionCodesOptions = questionCodeList.map((item, index) => (
-      <option key={index} value={item}>
+    questionCodesOptions = questionCodeList.map((item) => (
+      <option key={uuidv4()} value={item}>
         {item}
       </option>
     ));

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Stack, Flex, Badge, Text } from '@chakra-ui/react';
+import { v4 as uuidv4 } from 'uuid';
 
 const QuestionScoreCard = ({ problemCode, teamsList, scoreboard }) => {
-  let teamScoreCards;
-  teamScoreCards = teamsList.map((team, index) => (
-    <Flex key={index} padding='0.5em' alignItems='center' width='100%'>
+  const teamScoreCards = teamsList.map((team) => (
+    <Flex key={uuidv4()} padding='0.5em' alignItems='center' width='100%'>
       <span style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>
         Team {team}
       </span>

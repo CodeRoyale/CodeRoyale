@@ -1,5 +1,6 @@
 import React from 'react';
 import { Flex, Stack, Text } from '@chakra-ui/react';
+import { v4 as uuidv4 } from 'uuid';
 
 const ArenaQuestion = ({ currentQuestion }) => {
   // Question data variables
@@ -22,9 +23,9 @@ const ArenaQuestion = ({ currentQuestion }) => {
 
   // Question input output view
   if (questionIO) {
-    questionInputOutput = questionIO.map((item, index) => (
+    questionInputOutput = questionIO.map((item) => (
       <>
-        <Stack marginTop='1em' key={index}>
+        <Stack marginTop='1em' key={uuidv4()}>
           <Text fontSize='lg' fontWeight='bold'>
             Input
           </Text>

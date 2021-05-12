@@ -10,6 +10,7 @@ import {
   useDisclosure,
   Stack,
 } from '@chakra-ui/react';
+import { v4 as uuidv4 } from 'uuid';
 import QuestionScoreCard from './QuestionScoreCard';
 import useRoom from '../../global-stores/useRoom';
 import useCompQuestions from '../../global-stores/useCompQuestions';
@@ -23,14 +24,14 @@ const ArenaScore = () => {
 
   const teamsList = [];
   if (room) {
-    for (const team in room.teams) {
+    Object.keys(room.teams).forEach((team) => {
       teamsList.push(team);
-    }
+    });
   }
 
   const problemCodes = [];
   if (compQuestions) {
-    for (let i = 0; i < compQuestions.length; i++) {
+    for (let i = 0; i < compQuestions.length; i += 1) {
       problemCodes.push(compQuestions[i].problemCode);
     }
   }
@@ -53,9 +54,9 @@ const ArenaScore = () => {
             <DrawerHeader borderBottomWidth='1px'>Score</DrawerHeader>
             <DrawerBody>
               <Stack>
-                {problemCodes.map((problemCode, index) => (
+                {problemCodes.map((problemCode) => (
                   <QuestionScoreCard
-                    key={index}
+                    key={uuidv4()}
                     problemCode={problemCode}
                     teamsList={teamsList}
                     scoreboard={scoreboard}

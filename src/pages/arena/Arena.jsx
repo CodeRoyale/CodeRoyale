@@ -114,6 +114,7 @@ const Arena = () => {
     setCompQuestions(compQuestionsQuery.data.payload.data);
   }
   // useMemo so that function doesnot compute for every single render
+  /* eslint-disable no-use-before-define */
   const questionsObject = useMemo(
     () => getQuestionsObject(questionsList),
     [questionsList]
@@ -151,7 +152,7 @@ const Arena = () => {
 const getQuestionsObject = (questionsList) => {
   const questionsObject = {};
   if (questionsList) {
-    for (let i = 0; i < questionsList.length; i++) {
+    for (let i = 0; i < questionsList.length; i += 1) {
       questionsObject[questionsList[i].problemCode] = questionsList[i];
     }
   }

@@ -15,12 +15,14 @@ import {
   Button,
   useToast,
 } from '@chakra-ui/react';
+import { v4 as uuidv4 } from 'uuid';
 import { IoMdSettings } from 'react-icons/io';
 import { BiReset } from 'react-icons/bi';
 import AceEditor from 'react-ace';
 import useSocket from '../../global-stores/useSocket';
 import useCodeSubmitLoading from '../../global-stores/useCodeSubmitLoading';
 import { submitCode } from '../../service/arenaSocket';
+/* eslint-disable import/no-extraneous-dependencies */
 import 'ace-builds/src-noconflict/mode-java';
 import 'ace-builds/src-noconflict/mode-c_cpp';
 import 'ace-builds/src-noconflict/mode-python';
@@ -97,6 +99,7 @@ const ArenaEditor = ({ currentQuestion }) => {
 
   if (currentQuestion !== undefined && currentQuestion !== null) {
     problemCode = currentQuestion.problemCode;
+    /* eslint-disable no-underscore-dangle */
     questionId = currentQuestion._id;
   }
 
@@ -149,8 +152,8 @@ const ArenaEditor = ({ currentQuestion }) => {
           value={editorLanguage}
           onChange={(e) => setEditorLanguage(e.target.value)}
         >
-          {Object.keys(editorLanguageObject).map((language, index) => (
-            <option key={index} value={language}>
+          {Object.keys(editorLanguageObject).map((language) => (
+            <option key={uuidv4()} value={language}>
               {editorLanguageObject[language]}
             </option>
           ))}
@@ -182,8 +185,8 @@ const ArenaEditor = ({ currentQuestion }) => {
                 value={editorFontSize}
                 onChange={(e) => setEditorFontSize(Number(e.target.value))}
               >
-                {Object.keys(editorFontSizesObject).map((fontSize, index) => (
-                  <option key={index} value={fontSize}>
+                {Object.keys(editorFontSizesObject).map((fontSize) => (
+                  <option key={uuidv4()} value={fontSize}>
                     {editorFontSizesObject[fontSize]}
                   </option>
                 ))}
@@ -196,8 +199,8 @@ const ArenaEditor = ({ currentQuestion }) => {
                 value={editorTheme}
                 onChange={(e) => setEditorTheme(e.target.value)}
               >
-                {Object.keys(editorThemesObject).map((theme, index) => (
-                  <option key={index} value={theme}>
+                {Object.keys(editorThemesObject).map((theme) => (
+                  <option key={uuidv4()} value={theme}>
                     {editorThemesObject[theme]}
                   </option>
                 ))}
