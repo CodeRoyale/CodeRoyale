@@ -6,7 +6,7 @@
 import axios from 'axios';
 // import { reRequestQapi } from '../utils/reRequestQapi';
 
-export default (history = null, quesIds) => {
+export default (history = null) => {
   const clientURL = process.env.REACT_APP_CLIENT_URL;
   const baseURL = process.env.REACT_APP_QUESTION_API;
 
@@ -31,7 +31,7 @@ export default (history = null, quesIds) => {
 
   qapiAxios.interceptors.response.use(
     (response) =>
-      new Promise((resolve, reject) => {
+      new Promise((resolve) => {
         resolve(response);
       }),
     (error) => {
@@ -57,7 +57,7 @@ export default (history = null, quesIds) => {
       if (error.response.status === 403) {
         // 403 means token has expired
         // Update the token and re-request questions from qapi
-        // reRequestQapi(history, quesIds);
+        // reRequestQapi(history, quesIds); -> include in args
         return new Promise((resolve, reject) => {
           reject(error);
         });
