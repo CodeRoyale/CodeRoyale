@@ -6,6 +6,7 @@ import {
   useHistory,
 } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { v4 as uuidv4 } from 'uuid';
 import routes from './routes';
 import Home from './pages/home';
 import Login from './pages/login';
@@ -38,33 +39,31 @@ const componentRegistry = {
 const RenderRoute = (route) => {
   const history = useHistory();
 
-  // Setting titles for all pages
-  document.title = route.title || 'CodeRoyale';
+  const { title, needsAuth, component, path } = route;
 
-  if (route.needsAuth && !isAuthenticated()) {
+  // Setting titles for all pages
+  document.title = title || 'CodeRoyale';
+
+  if (needsAuth && !isAuthenticated()) {
     history.push('/login');
   }
 
   // If user is logged in then redirect to dashboard if home/login/signup is visited
-  if (route.component === 'Home' && isAuthenticated()) {
+  if (component === 'Home' && isAuthenticated()) {
     history.push('/dashboard');
-  } else if (route.component === 'Login' && isAuthenticated()) {
+  } else if (component === 'Login' && isAuthenticated()) {
     history.push('/dashboard');
-  } else if (route.component === 'SignUp' && isAuthenticated()) {
+  } else if (component === 'SignUp' && isAuthenticated()) {
     history.push('/dashboard');
   }
 
-  const Component = componentRegistry[route.component];
+  const Component = componentRegistry[component];
 
   // If its Login, signup or home page then no need of preCheck
-  if (
-    route.component === 'Home' ||
-    route.component === 'Login' ||
-    route.component === 'SignUp'
-  ) {
+  if (component === 'Home' || component === 'Login' || component === 'SignUp') {
     return (
-      <Route exact path={route.path}>
-        {route.component === 'Login' || route.component === 'SignUp' ? (
+      <Route exact path={path}>
+        {component === 'Login' || component === 'SignUp' ? (
           <QueryClientProvider client={queryClient}>
             <Component />
           </QueryClientProvider>
@@ -77,7 +76,7 @@ const RenderRoute = (route) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <PreCheck route={route} componentName={route.component}>
+      <PreCheck route={route} componentName={component}>
         <Component />
       </PreCheck>
     </QueryClientProvider>
@@ -88,8 +87,8 @@ const App = () => (
   <div data-testid='App' className='App'>
     <Router>
       <Switch>
-        {routes.map((route, index) => (
-          <RenderRoute {...route} key={index} />
+        {routes.map((route) => (
+          <RenderRoute {...route} key={uuidv4()} />
         ))}
       </Switch>
     </Router>
