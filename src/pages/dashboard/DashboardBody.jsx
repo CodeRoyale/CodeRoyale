@@ -17,8 +17,8 @@ const DashboardBody = () => (
         Compete Your Coding Skills <br /> with Others!
       </Text>
       <Text fontSize='lg'>
-        Get mapped into a coding room with friends to <br /> battle out your
-        competitive programming skills.
+        Create a coding room with friends to <br /> battle out your competitive
+        programming skills.
       </Text>
       <Flex>
         <CreateRoom />
