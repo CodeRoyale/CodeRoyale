@@ -5,6 +5,7 @@ import io from 'socket.io-client';
 export const socketConnection = (cb) => {
   const home = 'joel';
   const joel = 'joel';
+  const test = 'joel';
   const options = {
     transportOptions: {
       polling: {
