@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 /* eslint-disable import/prefer-default-export */
 export const socketConnection = (cb) => {
   const home = 'joel';
+  const joel = 'joel';
   const options = {
     transportOptions: {
       polling: {
