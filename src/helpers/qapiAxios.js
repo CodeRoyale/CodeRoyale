@@ -6,20 +6,20 @@
 import axios from 'axios';
 // import { reRequestQapi } from '../utils/reRequestQapi';
 
-export default (history = null, quesIds) => {
+export default (history = null) => {
   const clientURL = process.env.REACT_APP_CLIENT_URL;
   const baseURL = process.env.REACT_APP_QUESTION_API;
 
-  let headers = {};
+  const headers = {};
 
   if (localStorage.token) {
     headers['Content-Type'] = 'application/json';
-    headers['Origin'] = clientURL;
+    headers.Origin = clientURL;
     headers['Access-Control-Allow-Credentials'] = true;
     headers.Authorization = `Bearer ${localStorage.token}`;
   } else {
     headers['Content-Type'] = 'application/json';
-    headers['Origin'] = clientURL;
+    headers.Origin = clientURL;
     headers['Access-Control-Allow-Credentials'] = true;
   }
 
@@ -31,7 +31,7 @@ export default (history = null, quesIds) => {
 
   qapiAxios.interceptors.response.use(
     (response) =>
-      new Promise((resolve, reject) => {
+      new Promise((resolve) => {
         resolve(response);
       }),
     (error) => {
@@ -53,18 +53,18 @@ export default (history = null, quesIds) => {
         return new Promise((resolve, reject) => {
           reject(error);
         });
-      } else if (error.response.status === 403) {
+      }
+      if (error.response.status === 403) {
         // 403 means token has expired
         // Update the token and re-request questions from qapi
-        // reRequestQapi(history, quesIds);
-        return new Promise((resolve, reject) => {
-          reject(error);
-        });
-      } else {
+        // reRequestQapi(history, quesIds); -> include in args
         return new Promise((resolve, reject) => {
           reject(error);
         });
       }
+      return new Promise((resolve, reject) => {
+        reject(error);
+      });
     }
   );
 

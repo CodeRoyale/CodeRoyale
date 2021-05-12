@@ -1,12 +1,12 @@
 export const timeToString = (time) => {
-  return time < 1
-    ? (time * 60).toString() + ' Minutes'
-    : time < 24
-    ? time.toString() + ' Hour'
-    : (time / 24).toString() + ' Day';
+  if (time < 1) return `${(time * 60).toString()} Minutes`;
+
+  if (time < 24) return `${time.toString()} Hour`;
+
+  return `${(time / 24).toString()} Day`;
 };
 
 export const millisecondsToString = (time) => {
-  time = time / 1000 / 60;
-  return timeToString(time);
+  const timeMod = time / 1000 / 60;
+  return timeToString(timeMod);
 };

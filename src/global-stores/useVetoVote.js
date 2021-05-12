@@ -1,6 +1,7 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 
+/* eslint-disable import/no-mutable-exports */
 let useVetoVote = (set) => ({
   vetoVotedQuestions: [],
   addVetoVote: (quesId) =>
@@ -9,7 +10,7 @@ let useVetoVote = (set) => ({
     })),
   removeVetoVote: (quesIdToRemove) =>
     set((state) => {
-      let vetoVotedQuestions = state.vetoVotedQuestions;
+      let { vetoVotedQuestions } = state;
       vetoVotedQuestions = vetoVotedQuestions.filter(
         (quesId) => quesId !== quesIdToRemove
       );

@@ -8,7 +8,7 @@ import axios from 'axios';
 const clientURL = process.env.REACT_APP_CLIENT_URL;
 const baseURL = process.env.REACT_APP_USER_API;
 
-let headers = new Headers();
+const headers = new Headers();
 headers.append('Content-Type', 'application/json');
 headers.append('Origin', clientURL);
 headers.append('Access-Control-Allow-Credentials', 'true');

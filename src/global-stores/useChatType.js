@@ -1,6 +1,7 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 
+/* eslint-disable import/no-mutable-exports */
 let useChatType = (set) => ({
   chatType: 'everyone',
   setChatType: (type) => set(() => ({ chatType: type })),

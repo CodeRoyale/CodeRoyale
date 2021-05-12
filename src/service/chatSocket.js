@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 export const sendEveryoneMsg = (socket, { message }, cb) => {
   if (!socket) return false;
 

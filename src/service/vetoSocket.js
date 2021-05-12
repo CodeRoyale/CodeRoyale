@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 export const startCompetition = (socket, cb) => {
   if (!socket) return false;
 

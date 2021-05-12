@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 export const competitionStarted = (socket, cb) => {
   if (!socket) return false;
 
@@ -36,7 +37,6 @@ export const userCodeSubmittedStatus = (socket, cb) => {
   if (!socket) return false;
 
   socket.off('CODE_SUBMITTED').on('CODE_SUBMITTED', (data) => {
-    console.log(data);
     if (data.sucess) {
       return cb(null, data);
     }
