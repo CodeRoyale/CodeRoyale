@@ -30,10 +30,10 @@ const Scoreboard = () => {
 
   const scores = [];
   const justScores = [];
-  for (const teamName in scoreboard) {
+  Object.keys(scoreboard).forEach((teamName) => {
     scores.push({ team: teamName, score: scoreboard[teamName].length });
     justScores.push(scoreboard[teamName].length);
-  }
+  });
   if (scores != null && justScores != null) {
     // Sorting scores in descending order
     scores.sort((a, b) => a.score - b.score);
@@ -56,7 +56,7 @@ const Scoreboard = () => {
       return (
         <>
           <Text fontSize='3xl' fontWeight='bold'>
-            It's a draw!
+            It&apos;s a draw!
           </Text>
         </>
       );

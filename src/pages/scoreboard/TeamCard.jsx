@@ -1,5 +1,6 @@
 import React from 'react';
 import { Flex, Text, Image } from '@chakra-ui/react';
+import { v4 as uuidv4 } from 'uuid';
 import PlayerCard from './PlayerCard';
 import goldMedal from '../../assets/gold-medal.svg';
 import silverMedal from '../../assets/silver-medal.svg';
@@ -37,9 +38,9 @@ const TeamCard = ({ rank, teamName, team, userImages }) => {
   }
 
   if (team !== undefined) {
-    playerCards = team.map((player, index) => (
+    playerCards = team.map((player) => (
       <PlayerCard
-        key={index}
+        key={uuidv4()}
         userImage={userImages[player]}
         userName={player}
       />
