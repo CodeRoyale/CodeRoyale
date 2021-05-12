@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex } from '@chakra-ui/layout';
+import { Flex } from '@chakra-ui/react';
 import CreateTeam from './CreateTeam';
 import TeamCard from './TeamCard';
 import profileData from '../../utils/profileData';
@@ -21,7 +21,7 @@ const RoomTeams = () => {
 
   // Setting up the team cards
   const teamCards = [];
-  for (const teamName in roomTeams) {
+  Object.keys(roomTeams).forEach((teamName) => {
     teamCards.push(
       <TeamCard
         key={teamName}
@@ -30,7 +30,7 @@ const RoomTeams = () => {
         users={roomTeams[teamName]}
       />
     );
-  }
+  });
 
   return (
     <Flex padding='0.4em'>

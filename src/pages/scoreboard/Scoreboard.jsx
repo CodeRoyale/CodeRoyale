@@ -56,7 +56,7 @@ const Scoreboard = () => {
       return (
         <>
           <Text fontSize='3xl' fontWeight='bold'>
-            It&apos;s a draw!
+            It`&apos;`s a draw!
           </Text>
         </>
       );

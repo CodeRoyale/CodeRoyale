@@ -7,6 +7,7 @@ import {
   IconButton,
   useToast,
 } from '@chakra-ui/react';
+import { v4 as uuidv4 } from 'uuid';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import CountBar from './CountBar';
 import profileData from '../../utils/profileData';
@@ -84,9 +85,9 @@ const TeamCard = ({ teamName, totalUsers, users }) => {
   };
 
   // UserCard...
-  const userCards = users.map((user, index) => (
+  const userCards = users.map((user) => (
     <Flex
-      key={index}
+      key={uuidv4()}
       bgColor='rgba(221, 50, 20, 0.1)'
       marginY='0.5em'
       padding='0.5em'

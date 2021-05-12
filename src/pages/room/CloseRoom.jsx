@@ -77,8 +77,8 @@ const CloseRoom = () => {
           <AlertDialogHeader>Close Room?</AlertDialogHeader>
           <AlertDialogCloseButton />
           <AlertDialogBody>
-            Are you sure you want to close the room? You can't undo this action
-            afterwards.
+            Are you sure you want to close the room? You can`&apos;`t undo this
+            action afterwards.
           </AlertDialogBody>
           <AlertDialogFooter>
             <Button ref={cancelRef} onClick={onClose}>

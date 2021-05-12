@@ -23,9 +23,9 @@ const RoomTopBar = () => {
     maxUsersInRoom = room.config.max_perRoom;
     maxTeamsInRoom = room.config.max_teams;
     numberOfTeams = Object.keys(room.teams).length;
-    for (const teamName in room.teams) {
+    Object.keys(room.teams).forEach((teamName) => {
       playersInTeams += room.teams[teamName].length;
-    }
+    });
     numberOfPlayers = playersInTeams + room.state.bench.length;
     roomAdmin = room.config.admin;
   }

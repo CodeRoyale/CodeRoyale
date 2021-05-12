@@ -33,9 +33,9 @@ const Room = () => {
   useEffect(() => {
     roomUpdated(socket, (error, data) => {
       if (data) {
-        getRoom(socket, { roomId }, (error, data) => {
-          if (data) {
-            setRoom(data);
+        getRoom(socket, { roomId }, (getRoomError, getRoomData) => {
+          if (getRoomData) {
+            setRoom(getRoomData);
           }
         });
       }
