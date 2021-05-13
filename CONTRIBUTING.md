@@ -98,3 +98,11 @@
   - The comments should explain a bit about the purpose/history/overview – don’t assume the reader knows it (or link to the issue that explains everything).
 
   - Be explicit about what you want feedback on, or why you are asking for specific reviewers.
+
+## Branches
+
+- develop: This contains the latest code. All the contributing PRs must be sent to this branch.
+- prod: This branch contains the code running at production.
+
+If you face **any** problems, feel free to ask our community at [Discord](https://discord.com/invite/aCKem4h8te) (#contribution-help)
+
