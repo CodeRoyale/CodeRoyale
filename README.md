@@ -1,5 +1,5 @@
 <a href="https://coderoyale.netlify.app/"><p align="center">
-<img height=100 src="public/Coderoyale.jpeg"/>
+<img height=100 src="./public/Coderoyale.jpeg"/>
 
 </p></a>
 <p align="center">
