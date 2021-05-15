@@ -51,9 +51,9 @@ Contributors helping to review/merge pull requests:
 
 - [@SAchu47](https://github.com/SAchu47)
 - [@sastaachar](https://github.com/sastaachar)
-- [@naveen-770](https://github.com/naveen-770)
 - [@donald0109](https://github.com/donald0109)
 - [@vuld0](https://github.com/vuld0)
+- [@sanithps98](https://github.com/sanithps98)
 - [@Rec0iL99](https://github.com/Rec0iL99)
 
 ## Code of Conduct
