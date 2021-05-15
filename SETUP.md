@@ -16,47 +16,30 @@ prerequisites:
 1. Clone the repo and install all the required packages:
 
 ```
- git clone https://github.com/CodeRoyale/codeRoyale-api.git
- cd coderoyale-api/
- npm install
-
+# Fork the project
+# Clone this repository
+$ git clone https://github.com/YOUR_USERNAME/codeRoyale-user-api.git
+# Go into the repository
+$ cd codeRoyale-user-api
 ```
-2. Run development server command `npm run dev`
+### Creating a local environment for development
 
-3. Test by sending requests at `localhost:2500`
+1. Create a .env file at the root of the project. (Do not **edit** or **rename** .env.example)
 
-## Testing
+2. Copy the contents of .env.example into your .env file.
 
-1. To run all the tests with mocha:
+3. Create your Google Client ID by following [this](https://developers.google.com/adwords/api/docs/guides/authentication#create_a_client_id_and_client_secret) and replace `CLIENT_ID` in .env with your newly created Google Client ID.
 
-```
- npm run test
+4. Create your Facebook App ID & App Secret by following [this](https://developers.facebook.com/docs/development/) and replace `FACEBOOK_APP_ID ` , `FACEBOOK_APP_SECRET ` , `FACEBOOK_APP_URL ` in .env with your newly created Facebook Creds.
 
-```
+### Install dependencies and start development server
 
-# Development
-
-## Before starting to make changes
-
-1. Create a new branch
-
-```
-git checkout -b branch_name
-
-```
-2. Make your relevant changes
-
-3. Make appropriate changes in test if have changed the API or created new API
-
-4. Make sure to document the changes in code by commenting it. Make relevant changes in swagger documentation if required.
-
-5. To run all the tests with mocha before commiting it:
-
-```
- npm run test
-
+```bash
+# Install dependencies
+$ npm install --aslo=dev
+# Starts development server using nodemon
+$ npm run dev
+# Wait for the development server to load and the server should be live at http://localhost:5000
 ```
 
-## Before Commiting / Pushing to repo
-
-<-- All Style Guide scripts -->
+If you face **any** problems, feel free to ask our community at [Discord](https://discord.com/invite/aCKem4h8te) (#contribution-help)
