@@ -42,4 +42,23 @@ $ npm run dev
 # Wait for the development server to load and the server should be live at http://localhost:5000
 ```
 
-If you face **any** problems, feel free to ask our community at [Discord](https://discord.com/invite/aCKem4h8te) (#contribution-help)
+# Development
+
+## Before starting to make changes
+
+1. Create a new branch
+
+```bash
+# Create a new branch
+$ git checkout -b branch_name
+```
+
+2. Make your relevant changes
+
+3. Make sure to document the changes in code by commenting it.
+
+4. Make sure to rewrite or write new test case for new chnages
+
+## Before Commiting / Pushing to repo
+
+<-- All Style Guide scripts -->
