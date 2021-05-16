@@ -3,21 +3,21 @@ const jwt = require('jsonwebtoken');
 // secret keys and secret times
 /* eslint-disable */
 const [
-  ACCESS_SECRECT_KEY,
-  ACCESS_SECRECT_TIME,
-  REFRESH_SECRECT_KEY,
-  REFRESH_SECRECT_TIME,
-  EMAILVERIFICATION_SECRECT_KEY,
-  EMAILVERIFICATION_SECRECT_TIME,
+  ACCESS_SECRET_KEY,
+  ACCESS_SECRET_TIME,
+  REFRESH_SECRET_KEY,
+  REFRESH_SECRET_TIME,
+  EMAILVERIFICATION_SECRET_KEY,
+  EMAILVERIFICATION_SECRET_TIME,
 ] = [
-  process.env.ACCESS_SECRECT_KEY || secrets.ACCESS_SECRECT_KEY,
-  process.env.ACCESS_SECRECT_TIME || secrets.ACCESS_SECRECT_TIME,
-  process.env.REFRESH_SECRECT_KEY || secrets.REFRESH_SECRECT_KEY,
-  process.env.REFRESH_SECRECT_TIME || secrets.REFRESH_SECRECT_TIME,
-  process.env.EMAILVERIFICATION_SECRECT_KEY ||
-    secrets.EMAILVERIFICATION_SECRECT_KEY,
-  process.env.EMAILVERIFICATION_SECRECT_TIME ||
-    secrets.EMAILVERIFICATION_SECRECT_TIME,
+  process.env.ACCESS_SECRET_KEY || secrets.ACCESS_SECRET_KEY,
+  process.env.ACCESS_SECRET_TIME || secrets.ACCESS_SECRET_TIME,
+  process.env.REFRESH_SECRET_KEY || secrets.REFRESH_SECRET_KEY,
+  process.env.REFRESH_SECRET_TIME || secrets.REFRESH_SECRET_TIME,
+  process.env.EMAILVERIFICATION_SECRET_KEY ||
+    secrets.EMAILVERIFICATION_SECRET_KEY,
+  process.env.EMAILVERIFICATION_SECRET_TIME ||
+    secrets.EMAILVERIFICATION_SECRET_TIME,
 ];
 /* eslint-enable */
 
@@ -28,9 +28,9 @@ const getEmailVerificationToken = (user) => {
       userName: user.userName,
       firstName: user.firstName,
     },
-    EMAILVERIFICATION_SECRECT_KEY + user.userName,
+    EMAILVERIFICATION_SECRET_KEY + user.userName,
     {
-      expiresIn: EMAILVERIFICATION_SECRECT_TIME,
+      expiresIn: EMAILVERIFICATION_SECRET_TIME,
     }
   );
   return emailVerificationToken;
@@ -45,9 +45,9 @@ const getAccessToken = (user) => {
       lastName: user.lastName,
       picture: user.profilePic.url,
     },
-    ACCESS_SECRECT_KEY + user.userName,
+    ACCESS_SECRET_KEY + user.userName,
     {
-      expiresIn: ACCESS_SECRECT_TIME,
+      expiresIn: ACCESS_SECRET_TIME,
     }
   );
   return accessToken;
@@ -58,9 +58,9 @@ const getUserNameToken = (user) => {
     {
       userName: user.userName,
     },
-    ACCESS_SECRECT_KEY,
+    ACCESS_SECRET_KEY,
     {
-      expiresIn: REFRESH_SECRECT_TIME,
+      expiresIn: REFRESH_SECRET_TIME,
     }
   );
   return accessToken;
@@ -72,9 +72,9 @@ const getRefreshToken = (user) => {
       email: user.email,
       userName: user.userName,
     },
-    REFRESH_SECRECT_KEY + user.password,
+    REFRESH_SECRET_KEY + user.password,
     {
-      expiresIn: REFRESH_SECRECT_TIME,
+      expiresIn: REFRESH_SECRET_TIME,
     }
   );
   return refreshToken;

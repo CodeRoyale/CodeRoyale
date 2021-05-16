@@ -10,9 +10,9 @@ const {
 
 // secret keys and secret times
 /* eslint-disable */
-const [ACCESS_SECRECT_KEY, REFRESH_SECRECT_KEY] = [
-  process.env.ACCESS_SECRECT_KEY || secrets.ACCESS_SECRECT_KEY,
-  process.env.REFRESH_SECRECT_KEY || secrets.REFRESH_SECRECT_KEY,
+const [ACCESS_SECRET_KEY, REFRESH_SECRET_KEY] = [
+  process.env.ACCESS_SECRET_KEY || secrets.ACCESS_SECRET_KEY,
+  process.env.REFRESH_SECRET_KEY || secrets.REFRESH_SECRET_KEY,
 ];
 
 // check if the user has logged in before using the services
@@ -27,14 +27,14 @@ module.exports = async (req, res, next) => {
 
     // username is stored signed with JWT_KEY
     try {
-      userName = verifyToken(userName, ACCESS_SECRECT_KEY).userName;
+      userName = verifyToken(userName, ACCESS_SECRET_KEY).userName;
     } catch (err) {
       // console.log("UserToken", err);
       throw new Error('Token Not Provided');
     }
     // verify accessToken  with server
     try {
-      payload = verifyToken(token, ACCESS_SECRECT_KEY + userName);
+      payload = verifyToken(token, ACCESS_SECRET_KEY + userName);
     } catch (err) {
       if (err !== 'jwt expired') {
         // console.log("AccessToken", err);
@@ -51,7 +51,7 @@ module.exports = async (req, res, next) => {
       // check for the refreshtoken
       payload = verifyToken(
         refreshToken,
-        process.env.REFRESH_SECRECT_KEY + user.password
+        process.env.REFRESH_SECRET_KEY + user.password
       );
 
       // the access and refresh token failed
