@@ -87,7 +87,7 @@
 
 - The body of the PR should describe the purpose of the PR.
 
-  - When merged, this PR body will be part of the documentation for the next CodeRoyale release. Thus, the contents should be understandable to an average CodeRoyale instructor user or system administrator. The description can include links to related issues or PRs, but this description should not require the user to follow links to have a general understanding of the PR purpose.
+  - When merged, this PR body will be part of the documentation for the next CodeRoyale release. Thus, the contents should be understandable to an average CodeRoyale user or contributor. The description can include links to related issues or PRs, but this description should not require the user to follow links to have a general understanding of the PR purpose.
 
   - Include the string Closes #1234 or Fixes #1234 within the top comment of the PR so that GitHub issue will be automatically closed when the pull request is merged.
 
