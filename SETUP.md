@@ -6,7 +6,7 @@
 # Clone this repository
 $ git clone https://github.com/CodeRoyale/lobby.git
 # Go into the repository
-$ cd codeRoyale-lobby
+$ cd lobby
 # Install dependencies
 $ npm install
 # Start's development server
