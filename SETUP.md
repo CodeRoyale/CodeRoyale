@@ -7,9 +7,9 @@
 ```bash
 # Fork the project
 # Clone this repository
-$ git clone https://github.com/YOUR_USERNAME/coderoyale-frontend.git
+$ git clone https://github.com/YOUR_USERNAME/frontend.git
 # Go into the repository
-$ cd codeRoyale-frontend
+$ cd frontend
 ```
 
 ### Creating a local environment for development
