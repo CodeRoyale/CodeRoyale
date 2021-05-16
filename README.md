@@ -58,3 +58,7 @@ Contributors helping to review/merge pull requests:
 Check out [SETUP.md](https://github.com/CodeRoyale/lobby/blob/develop/SETUP.md)
 
 
+## Why did you make this?
+
+The goal of CodeRoyale is to create Competitive Programming platform where users can have coding battle with friends, random users and team battles to show case your DSA skills.
+
