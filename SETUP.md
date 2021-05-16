@@ -4,7 +4,7 @@
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/CodeRoyale/codeRoyale-lobby.git
+$ git clone https://github.com/CodeRoyale/lobby.git
 # Go into the repository
 $ cd codeRoyale-lobby
 # Install dependencies
