@@ -1,4 +1,3 @@
-<a href="https://dogehouse.tv"><p align="center">
 <img height=100 src="CodeRoyale.png"/>
 
 </p></a>
