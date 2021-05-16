@@ -3,8 +3,8 @@ const bodyParser = require('body-parser');
 const swaggerJSDoc = require('swagger-jsdoc');
 const os = require('os');
 const path = require('path');
-const connectDB = require('./utils/connectionDB');
 const cors = require('cors');
+const connectDB = require('./utils/connectionDB');
 
 const app = express();
 

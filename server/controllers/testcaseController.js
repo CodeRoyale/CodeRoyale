@@ -24,7 +24,7 @@ const putTestcase = async (req, res) => {
 const getTestcase = async (req, res) => {
   try {
     const testArray = {};
-    let arr = Array(req.query.id);
+    const arr = Array(req.query.id);
     const n = arr.length;
     let i;
     // eslint-disable-next-line no-plusplus
