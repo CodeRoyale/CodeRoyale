@@ -2,8 +2,6 @@
 
 const fetch = require('node-fetch');
 
-//POST URL
-//const postUrl = 'http://ec2-34-227-73-43.compute-1.amazonaws.com/submissions/batch?base64_encoded=true';
 const postUrl = 'www.example.com';
 
 //testcases encoding to base64
