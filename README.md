@@ -12,11 +12,11 @@
 </p>
 
 <h3 align="center">
-  <a href="https://github.com/benawad/dogehouse/blob/staging/CONTRIBUTING.md">Contribute</a>
+  <a href="https://github.com/CodeRoyale/lobby/blob/develop/CONTRIBUTING.md">Contribute</a>
   <span> · </span>
   <a href="https://discord.gg/aCKem4h8te">Community</a>
   <span> · </span>
-  <a href="https://github.com/FotieMConstant/dogehouse-docs">Documentation</a>
+  <a href="https://github.com/CodeRoyale/lobby/blob/develop/DOCUMENTATION.md">Documentation</a>
 </h3>
 
 ---
