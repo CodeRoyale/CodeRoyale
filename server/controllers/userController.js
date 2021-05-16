@@ -1,107 +1,83 @@
-// this is my db for now
-users = {};
+const UserModel = require('../models/user');
 
 // [userID] : {     }
 
 // all details related to a user connected to socket will be stored here
 
-const addUser = (userName, socket, profilePicture, rank = 10) => {
-  // returns user object if we can add user else false
-  try {
-    if (!users[userName]) {
-      // new connection
-      console.log(userName + " added");
-      users[userName] = {
-        socket_id: socket.id,
-        room_id: "",
-        team_name: "",
-        rank,
-        userName,
-        profilePicture,
-      };
-    } else {
-      // reconnecting
-      console.log(userName + " reconnected");
-      users[userName].socket_id = socket.id;
-      if (users[userName].room_id) {
-        // user was in a room
-        socket.join(users[userName].room_id);
-        if (users[userName].team_name) {
-          // user was in a team
-          socket.join(`${users[userName].room_id}/${users[userName].team_name}`);
-        }
-      }
-    }
-    return users[userName];
-  } catch (err) {
-    console.log(err.message);
-    return false;
-  }
+
+const addUser = (userName, socket_id, profilePicture, rank = 10) => {
+	const returnObj = UserModel.addUser({
+		userName,
+		socket_id,
+		// room_id,
+		// team_name,
+		rank,
+		profilePicture,
+	});
+	if (returnObj.status === 0) {
+		console.log(returnObj.error);
+		return false;
+	}
+	if (returnObj.status === 1) {
+		return returnObj.userObj;
+	}
+	return returnObj.userObj;
 };
 
-const removeUser = (userName) => {
-  try {
-    if (users[userName]) {
-      console.log(userName + " removed");
-      delete users[userName];
-      return true;
-    }
-    return false;
-  } catch (err) {
-    return err.message || false;
-  }
-};
+// const removeUser = (userName) => {
+// 	try {
+// 		if (users[userName]) {
+// 			console.log(userName + ' removed');
+// 			delete users[userName];
+// 			return true;
+// 		}
+// 		return false;
+// 	} catch (err) {
+// 		return err.message || false;
+// 	}
+// };
 
 // this is just for extra checking
 // can change room_id and team_name
-const setRoom = (userName, room_id, team_name) => {
-  try {
-    //check if user is still connected
-    if (users[userName]) {
-      users[userName].room_id = room_id;
-      users[userName].team_name = team_name || "";
-      return true;
-    }
-    return false;
-  } catch (err) {
-    return err.message || false;
-  }
-};
-
-const setTeam = (userName, team_name) => {
-  try {
-    if (users[userName]) {
-      users[userName].team_name = team_name;
-      return true;
-    }
-    return false;
-  } catch (err) {
-    return err.message || false;
-  }
+const updateUser = ({
+	userName = 'dummy',
+	socket_id = 'dummy',
+	room_id = 'dummy',
+	team_name = 'dummy',
+	rank = 'dummy',
+	profilePicture = 'dummy',
+}) => {
+	const returnObj = UserModel.updateUser({
+		userName,
+		socket_id,
+		room_id,
+		team_name,
+		rank,
+		profilePicture,
+	});
+	return returnObj.userObj;
 };
 
 const getUser = (userName) => {
-  try {
-    return users[userName];
-  } catch (err) {
-    return err.message || false;
-  }
+	const returnObj = UserModel.getUser(userName);
+	if (returnObj.status === 0) {
+		return returnObj.error;
+	}
+	return returnObj.userObj;
 };
 
 const getUserData = () => {
-  // need proper authorizations
-  try {
-    return users;
-  } catch (err) {
-    return err.message || false;
-  }
+	// need proper authorizations
+	const returnObj = UserModel.getUserData();
+	if (returnObj.status === 0) {
+		return returnObj.error;
+	}
+	return returnObj.userObj;
 };
 
 module.exports = {
-  addUser,
-  getUserData,
-  setRoom,
-  getUser,
-  removeUser,
-  setTeam,
+	addUser,
+	getUserData,
+	getUser,
+	updateUser,
 };
