@@ -35,8 +35,8 @@
 
 ## Branches
 
-- develop -> pr this branch for everything
-- prod -> don't touch, this is what's running in prod
+- develop: This contains the latest code. All the contributing PRs must be sent to this branch.
+- prod: This branch contains the code running at production.
 
 ## Contributions
 
