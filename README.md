@@ -40,12 +40,10 @@
 
 ## Contributions
 
-CodeRoyale-lobby is open to contributions, but I recommend creating an issue for letting us know about the feature you are working upon.
+CodeRoyale/lobby is open to contributions, but we recommend creating an issue for letting us know about the feature you are working upon.
 Please read [CONTRIBUTING.md](https://github.com/CodeRoyale/lobby/blob/develop/CONTRIBUTING.md)
 
 ## Reviewers
-
-Contributors helping to review/merge pull requests:
 
 - [@sastaachar](https://github.com/sastaachar)
 - [@naveen-770](https://github.com/naveen-770)
@@ -60,5 +58,5 @@ Check out [SETUP.md](https://github.com/CodeRoyale/lobby/blob/develop/SETUP.md)
 
 ## Why did we make this?
 
-The goal of CodeRoyale is to create Competitive Programming platform where users can have coding battle with friends, random users and team battles to show case your DSA skills.
+The goal of CodeRoyale is to create a Competitive Programming platform, where users can have coding battle with friends, random users and team battles to show case your programming skills.
 
