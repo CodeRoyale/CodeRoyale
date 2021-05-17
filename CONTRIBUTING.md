@@ -179,7 +179,7 @@
 
 ## Branches
 
-- **development**: This contains the latest code. All the contributing PRs must be sent to this branch.
-- **master**: This branch contains the code running at production.
+- **develop**: This contains the latest code. All the contributing PRs must be sent to this branch.
+- **prod**: This branch contains the code running at production.
 
 If you face **any** problems, feel free to ask our community at [Discord](https://discord.com/invite/aCKem4h8te) (#contribution-help)
