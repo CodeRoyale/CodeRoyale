@@ -1,5 +1,3 @@
-### Developer
-
 # How To Contribute
 
 ## How to make a Pull Request (PR) to CodeRoyale
@@ -8,7 +6,7 @@
 
 - Each pull request (PR) should be addressing/closing an open issue. Usually.
 
-- Before submitting a PR or updating an existing PR, you should make sure your code follows our [Style Guide](https://github.com/CodeRoyale/codeRoyale-frontend) and passes the relevant [tests](https://github.com/CodeRoyale/codeRoyale-frontend).
+- Before submitting a PR or updating an existing PR, you should make sure your code follows our style guide and passes the relevant eslint and prettier rules.
 
 - If the PR is making a UI change it is a must to have a screenshot/screen recording showing the changes.
 
@@ -81,13 +79,13 @@
 
     Note that #<PR NUMBER> is appended to the title automatically by GitHub when the PR is merged with “squash & merge”. Do not include this when you open a new pull request.
 
-- If your PR is Work In Progress, please make a [Draft_Pull_Request](https://github.blog/2019-02-14-introducing-draft-pull-requests/) on GitHub. This indicates to other developers and reviewers that you’d like detailed feedback on your work, but it is incomplete. When a PR is in the draft state it cannot be merged into the master branch. Note that draft pull requests will run the “Github Actions - Branch” test suite, but will skip the more extensive “Github Actions - Pull Request” test suite.
+- If your PR is Work In Progress, please make a [Draft_Pull_Request](https://github.blog/2019-02-14-introducing-draft-pull-requests/) on GitHub. This indicates to other developers and reviewers that you’d like detailed feedback on your work, but it is incomplete.
 
-- The PR description must follow the PR template (feel free to add new headings for better description).
+- The PR description must follow the PR template (feel free to add new headings for better description). Note that if your PR does not have a UI change feel free to remove the Screenshots / Screen capture video heading.
 
 - The body of the PR should describe the purpose of the PR.
 
-  - When merged, this PR body will be part of the documentation for the next CodeRoyale release. Thus, the contents should be understandable to an average CodeRoyale instructor user or system administrator. The description can include links to related issues or PRs, but this description should not require the user to follow links to have a general understanding of the PR purpose.
+  - When merged, this PR body will be part of the documentation for the next CodeRoyale release. Thus, the contents should be understandable to an average CodeRoyale user or contributor. The description can include links to related issues or PRs, but this description should not require the user to follow links to have a general understanding of the PR purpose.
 
   - Include the string Closes #1234 or Fixes #1234 within the top comment of the PR so that GitHub issue will be automatically closed when the pull request is merged.
 
@@ -98,3 +96,11 @@
   - The comments should explain a bit about the purpose/history/overview – don’t assume the reader knows it (or link to the issue that explains everything).
 
   - Be explicit about what you want feedback on, or why you are asking for specific reviewers.
+
+## Branches
+
+- **develop**: This contains the latest code. All the contributing PRs must be sent to this branch.
+- **prod**: This branch contains the code running at production.
+
+If you face **any** problems, feel free to ask our community at [Discord](https://discord.com/invite/aCKem4h8te) (#contribution-help)
+
