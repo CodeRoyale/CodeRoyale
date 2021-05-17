@@ -70,7 +70,7 @@
   - And `MODULE` is one of the following:
 
     - Docs,
-    - Frontend,
+    - Lobby,
     - Code-Setup
 
   - And `SUBJECT` adds more specific details.
