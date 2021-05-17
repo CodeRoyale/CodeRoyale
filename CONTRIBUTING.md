@@ -69,8 +69,8 @@
 
   - And `MODULE` is one of the following:
 
-    - Api,
-    - Auth, or
+    - Docs,
+    - API
     - Code-Setup
 
   - And `SUBJECT` adds more specific details.
