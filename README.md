@@ -25,10 +25,10 @@
 
 | Module           | Description |
 | :--------------- | :---------: |
-| [frontend]() |    desc     |
-| [lobby](link)    |    desc     |
-| [questionAPI](link)    |    desc     |
-| [userAPI](link)    |    desc     |
+| [frontend](https://github.com/CodeRoyale/frontend) |    React frontend     |
+| [lobby](https://github.com/CodeRoyale/lobby)    |    WebSocket server for managing competitions    |
+| [userAPI](https://github.com/CodeRoyale/userAPI)    |     JWT authentication server     |
+| [questionAPI](https://github.com/CodeRoyale/questionAPI)    |    REST API serving questions and test cases     |
 
 
 
