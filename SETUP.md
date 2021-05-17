@@ -18,7 +18,7 @@ $ cd frontend
 
 2. Copy the contents of .env.example into your .env file.
 
-3. Create your Google Client ID by following [this](https://developers.google.com/adwords/api/docs/guides/authentication#create_a_client_id_and_client_secret) and replace `REACT_APP_GOOGLE_CLIENT_I` in .env with your newly created Google Client ID.
+3. Create your Google Client ID by following [this](https://developers.google.com/adwords/api/docs/guides/authentication#create_a_client_id_and_client_secret) and replace `REACT_APP_GOOGLE_CLIENT_ID` in .env with your newly created Google Client ID.
 
 ### Install dependencies and start development server
 
