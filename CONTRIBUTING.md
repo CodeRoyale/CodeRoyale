@@ -1,5 +1,3 @@
-### Developer
-
 # How To Contribute
 
 ## How to make a Pull Request (PR) to CodeRoyale
@@ -73,7 +71,7 @@
   - And `MODULE` is one of the following:
 
     - Api,
-    - Auth, or
+    - Auth
     - Code-Setup
 
   - And `SUBJECT` adds more specific details.
