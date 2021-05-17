@@ -33,10 +33,8 @@ jobs:
     - run: npm install
     - run: npm run prettier:check --if-present
     - run: npm run lint --if-present
-    - run: npm test --if-present
     - run: TOKEN=${{ secrets.CODECOV_TOKEN }} npm run test:jest:codecov --if-present
     - run: npm run test-coverage --if-present
     - run: PORT=${{ secrets.CODECOV_TOKEN }} npm run codecov --if-present
     env:
         CI: true
-        secrets: ${{ secrets }}
