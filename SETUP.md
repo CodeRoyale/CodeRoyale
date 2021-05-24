@@ -18,9 +18,9 @@ prerequisites:
 ```
 # Fork the project
 # Clone this repository
-$ git clone https://github.com/YOUR_USERNAME/codeRoyale-user-api.git
+$ git clone https://github.com/YOUR_USERNAME/userAPI.git
 # Go into the repository
-$ cd codeRoyale-user-api
+$ cd userAPI
 ```
 ### Creating a local environment for development
 
