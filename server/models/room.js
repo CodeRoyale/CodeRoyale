@@ -40,7 +40,7 @@ const ROOM_LIMITS = {
 	max_teams: 25,
 	max_perTeam: 10,
 	max_perRoom: 250,
-	competitionTimelimit: 21600000,
+	competitionTimelimit: 172800001,
 	competitionMaxQues: 20,
 	vetoMaxVote: 1,
 	vetoTimeLimit: 18000000,
@@ -50,7 +50,6 @@ const ROOM_LIMITS = {
 const getProperValue = (field, passedValue) => {
 	// * Helper function to get the appropriate value for the field
 	// TODO : will require testing
-
 	return Math.min(ROOM_LIMITS[field], passedValue || ROOM_DEFAULTS[field]);
 };
 
@@ -102,25 +101,25 @@ const createRoom = (roomConfig, user) => {
 			questions: {},
 			max_questions: getProperValue(
 				'competitionMaxQues',
-				roomConfig['competitionMaxQues']
+				roomConfig['max_questions']
 			),
 			contestStartedAt: null,
 			contnetEndedAt: null,
 			contestOn: false,
 			timeLimit: getProperValue(
 				'competitionTimelimit',
-				roomConfig['competitionTimelimit']
+				roomConfig['timeLimit']
 			),
 			veto: {
 				allQuestions: {},
 				votes: {},
 				voted: [],
 				vetoOn: false,
-				max_vote: getProperValue('vetoMaxVote', roomConfig['vetoMaxVote']),
+				max_vote: getProperValue('vetoMaxVote', roomConfig['max_vote']),
 				timeLimit: getProperValue('vetoTimeLimit', roomConfig['vetoTimeLimit']),
 				quesCount: getProperValue(
 					'vetoQuestionCount',
-					roomConfig['vetoQuestionCount']
+					roomConfig['veto_quesCount']
 				),
 			},
 			scoreboard: {},
@@ -446,7 +445,7 @@ const startCompetition = (user, state) => {
 	}
 	rooms[room_id].competition.contestOn = false;
 	rooms[room_id].competition.contnetEndedAt = Date.now();
-	return { status: 2, returnObj: room.competition };
+	return { status: 2, roomObj: room.competition };
 };
 
 const startCompetitionRequirements = (user) => {
