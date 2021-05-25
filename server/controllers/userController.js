@@ -40,7 +40,6 @@ const addUser = (userName, socket_id, profilePicture, rank = 10) => {
 // can change room_id and team_name
 
 const updateUser = (updatedUser) => {
-	//TODO if wala karna hai!
 	const check = [
 		'userName',
 		'socket_id',
@@ -49,10 +48,16 @@ const updateUser = (updatedUser) => {
 		'rank',
 		'profilePicture',
 	];
-	let newUpdatedUser = Object.keys(updatedUser).filter((ele) =>
-		check.includes(ele)
-	);
-	const returnObj = UserModel.updateUser(newUpdatedUser);
+	const newUpdated = {}
+	check.forEach((field) => {
+		if(updatedUser[field]!=undefined)
+  		newUpdated[field] = updatedUser[field];
+	}) 
+	// let newUpdatedUser = Object.keys(updatedUser).filter((ele) =>
+	// 	check.includes(ele)
+	//);
+	console.log(newUpdated);
+	const returnObj = UserModel.updateUser(newUpdated);
 	return returnObj.userObj;
 };
 

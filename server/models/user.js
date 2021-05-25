@@ -35,8 +35,8 @@ const addUser = ({
 };
 
 const updateUser = (updatedUser) => {
-	users[updatedUser.userName] = {...users[updateUser.userName],...updateUser};
-	return { status: 1, userObj: users[userName] };
+	users[updatedUser.userName] = {...users[updatedUser.userName],...updatedUser};
+	return { status: 1, userObj: users[updatedUser.userName] };
 };
 
 const getUser = (userName) => {
