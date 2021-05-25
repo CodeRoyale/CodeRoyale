@@ -39,22 +39,10 @@ const addUser = (userName, socket_id, profilePicture, rank = 10) => {
 
 // this is just for extra checking
 // can change room_id and team_name
-const updateUser = ({
-	userName = 'dummy',
-	socket_id = 'dummy',
-	room_id = 'dummy',
-	team_name = 'dummy',
-	rank = 'dummy',
-	profilePicture = 'dummy',
-}) => {
-	const returnObj = UserModel.updateUser({
-		userName,
-		socket_id,
-		room_id,
-		team_name,
-		rank,
-		profilePicture,
-	});
+
+const updateUser = (updatedUser) => {
+	//TODO if wala karna hai!
+	const returnObj = UserModel.updateUser(updatedUser);
 	return returnObj.userObj;
 };
 

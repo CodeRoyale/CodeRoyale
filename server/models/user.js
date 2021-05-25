@@ -34,29 +34,8 @@ const addUser = ({
 	}
 };
 
-const updateUser = ({
-	userName,
-	socket_id,
-	room_id,
-	team_name,
-	rank,
-	profilePicture,
-}) => {
-	if ((socket_id || socket_id === '') && socket_id !== 'dummy') {
-		users[userName].socket_id = socket_id;
-	}
-	if ((room_id || room_id === '') && room_id !== 'dummy') {
-		users[userName].room_id = room_id;
-	}
-	if ((team_name || team_name === '') && team_name !== 'dummy') {
-		users[userName].team_name = team_name;
-	}
-	if (rank && rank !== 'dummy') {
-		users[userName].rank = rank;
-	}
-	if ((profilePicture || profilePicture === '') && profilePicture !== 'dummy') {
-		users[userName].profilePicture = profilePicture;
-	}
+const updateUser = (updatedUser) => {
+	users[updatedUser.userName] = {...users[updateUser.userName],...updateUser};
 	return { status: 1, userObj: users[userName] };
 };
 
