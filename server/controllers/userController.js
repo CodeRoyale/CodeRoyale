@@ -4,7 +4,6 @@ const UserModel = require('../models/user');
 
 // all details related to a user connected to socket will be stored here
 
-
 const addUser = (userName, socket_id, profilePicture, rank = 10) => {
 	const returnObj = UserModel.addUser({
 		userName,
@@ -42,7 +41,18 @@ const addUser = (userName, socket_id, profilePicture, rank = 10) => {
 
 const updateUser = (updatedUser) => {
 	//TODO if wala karna hai!
-	const returnObj = UserModel.updateUser(updatedUser);
+	const check = [
+		'userName',
+		'socket_id',
+		'room_id',
+		'team_name',
+		'rank',
+		'profilePicture',
+	];
+	let newUpdatedUser = Object.keys(updatedUser).filter((ele) =>
+		check.includes(ele)
+	);
+	const returnObj = UserModel.updateUser(newUpdatedUser);
 	return returnObj.userObj;
 };
 
