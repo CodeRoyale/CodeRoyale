@@ -47,7 +47,8 @@ export const createRoom = (
 export const joinRoom = (socket, { roomId }, cb) => {
   if (!socket) return false;
 
-  socket.emit('JOIN_ROOM', { room_id: roomId }, (data) => {
+  //! changed {room_id}
+  socket.emit('JOIN_ROOM', { roomId }, (data) => {
     if (data) {
       if (data !== ERROR_MSG) {
         // Join room success
@@ -81,7 +82,8 @@ export const closeRoom = (socket, cb) => {
 export const getRoom = (socket, { roomId }, cb) => {
   if (!socket) return false;
 
-  socket.emit('GET_ROOM', { room_id: roomId }, (data) => {
+  //! changed {room_id}
+  socket.emit('GET_ROOM', { roomId }, (data) => {
     if (data) {
       if (data !== ERROR_MSG) {
         // Get room success
