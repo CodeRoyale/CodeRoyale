@@ -44,7 +44,8 @@ const Arena = () => {
     userCodeSubmittedStatus(socket, (error, data) => {
       setCodeSubmitLoading(false);
       if (data) {
-        const teamName = data.team_name;
+        //! changed team_name
+        const { teamName } = data;
         const { problemCode } = data;
         updateScore(teamName, problemCode);
         toast({
@@ -78,7 +79,8 @@ const Arena = () => {
 
     roomCodeSubmissionSuccess(socket, (error, data) => {
       if (data) {
-        const teamName = data.team_name;
+        //! changed team_name
+        const { teamName } = data;
         const { problemCode } = data;
         updateScore(teamName, problemCode);
         toast({

@@ -20,14 +20,15 @@ export const createRoom = (
   socket.emit(
     'CREATE_ROOM',
     {
-      max_teams: maxTeams,
-      max_perTeam: maxPerTeam,
-      max_perRoom: maxPerRoom,
+      //! changed vars
+      maxTeams: maxTeams,
+      maxPerTeam: maxPerTeam,
+      maxPerRoom: maxPerRoom,
       timeLimit,
       privateRoom,
-      max_questions: maxQuestions,
-      max_vote: maxVetoVotes,
-      veto_quesCount: maxVetoQuestions,
+      maxQuestions: maxQuestions,
+      maxVote: maxVetoVotes,
+      vetoQuesCount: maxVetoQuestions,
     },
     (data) => {
       if (data) {

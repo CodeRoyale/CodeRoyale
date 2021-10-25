@@ -36,7 +36,8 @@ const VetoQuestionCard = ({
       removeVetoVote(questionID);
       setCheckBoxChecked(false);
     } else if (
-      vetoVotedQuestions.length < room.competition.veto.max_vote &&
+      //! changed max_vote
+      vetoVotedQuestions.length < room.competition.veto.maxVote &&
       !checkBoxChecked
     ) {
       addVetoVote(questionID);

@@ -3,7 +3,6 @@ import { ERROR_MSG } from '../utils/constants';
 
 export const createTeam = (socket, { teamName }, cb) => {
   if (!socket) return false;
-
   //! changed
   socket.emit('CREATE_TEAM', { teamName }, (data) => {
     if (data) {
