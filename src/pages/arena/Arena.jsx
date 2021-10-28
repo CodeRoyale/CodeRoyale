@@ -44,7 +44,6 @@ const Arena = () => {
     userCodeSubmittedStatus(socket, (error, data) => {
       setCodeSubmitLoading(false);
       if (data) {
-        //! changed team_name
         const { teamName } = data;
         const { problemCode } = data;
         updateScore(teamName, problemCode);
@@ -79,7 +78,6 @@ const Arena = () => {
 
     roomCodeSubmissionSuccess(socket, (error, data) => {
       if (data) {
-        //! changed team_name
         const { teamName } = data;
         const { problemCode } = data;
         updateScore(teamName, problemCode);

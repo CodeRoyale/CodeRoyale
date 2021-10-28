@@ -38,7 +38,6 @@ const RoomInfo = () => {
   // Getting the room info
   if (room) {
     roomId = room.config.id;
-    //! changed var names
     maxQuestions = room.competition.maxQuestions;
     maxVetoQuestions = room.competition.veto.quesCount;
     maxVotes = room.competition.veto.maxVote;
