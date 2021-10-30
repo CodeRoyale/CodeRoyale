@@ -4,7 +4,7 @@ import { ERROR_MSG } from '../utils/constants';
 export const createTeam = (socket, { teamName }, cb) => {
   if (!socket) return false;
 
-  socket.emit('CREATE_TEAM', { team_name: teamName }, (data) => {
+  socket.emit('CREATE_TEAM', { teamName }, (data) => {
     if (data) {
       if (data !== ERROR_MSG) {
         // Create team success
@@ -20,7 +20,7 @@ export const createTeam = (socket, { teamName }, cb) => {
 export const joinTeam = (socket, { teamName }, cb) => {
   if (!socket) return false;
 
-  socket.emit('JOIN_TEAM', { team_name: teamName }, (data) => {
+  socket.emit('JOIN_TEAM', { teamName }, (data) => {
     if (data) {
       if (data !== ERROR_MSG) {
         // Join team success

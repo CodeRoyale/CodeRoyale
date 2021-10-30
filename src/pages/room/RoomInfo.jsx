@@ -38,9 +38,9 @@ const RoomInfo = () => {
   // Getting the room info
   if (room) {
     roomId = room.config.id;
-    maxQuestions = room.competition.max_questions;
+    maxQuestions = room.competition.maxQuestions;
     maxVetoQuestions = room.competition.veto.quesCount;
-    maxVotes = room.competition.veto.max_vote;
+    maxVotes = room.competition.veto.maxVote;
     timeLimit = room.competition.timeLimit;
     privateRoom = room.config.privateRoom;
   }

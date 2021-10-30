@@ -20,14 +20,14 @@ export const createRoom = (
   socket.emit(
     'CREATE_ROOM',
     {
-      max_teams: maxTeams,
-      max_perTeam: maxPerTeam,
-      max_perRoom: maxPerRoom,
+      maxTeams,
+      maxPerTeam,
+      maxPerRoom,
       timeLimit,
       privateRoom,
-      max_questions: maxQuestions,
-      max_vote: maxVetoVotes,
-      veto_quesCount: maxVetoQuestions,
+      maxQuestions,
+      maxVote: maxVetoVotes,
+      vetoQuesCount: maxVetoQuestions,
     },
     (data) => {
       if (data) {
@@ -47,7 +47,7 @@ export const createRoom = (
 export const joinRoom = (socket, { roomId }, cb) => {
   if (!socket) return false;
 
-  socket.emit('JOIN_ROOM', { room_id: roomId }, (data) => {
+  socket.emit('JOIN_ROOM', { roomId }, (data) => {
     if (data) {
       if (data !== ERROR_MSG) {
         // Join room success
@@ -81,7 +81,7 @@ export const closeRoom = (socket, cb) => {
 export const getRoom = (socket, { roomId }, cb) => {
   if (!socket) return false;
 
-  socket.emit('GET_ROOM', { room_id: roomId }, (data) => {
+  socket.emit('GET_ROOM', { roomId }, (data) => {
     if (data) {
       if (data !== ERROR_MSG) {
         // Get room success

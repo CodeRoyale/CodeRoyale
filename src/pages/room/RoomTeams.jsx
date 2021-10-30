@@ -21,16 +21,18 @@ const RoomTeams = () => {
 
   // Setting up the team cards
   const teamCards = [];
-  Object.keys(roomTeams).forEach((teamName) => {
-    teamCards.push(
-      <TeamCard
-        key={teamName}
-        teamName={teamName}
-        totalUsers={roomConfig.max_perTeam}
-        users={roomTeams[teamName]}
-      />
-    );
-  });
+  if (roomTeams) {
+    Object.keys(roomTeams).forEach((teamName) => {
+      teamCards.push(
+        <TeamCard
+          key={teamName}
+          teamName={teamName}
+          totalUsers={roomConfig.max_perTeam}
+          users={roomTeams[teamName]}
+        />
+      );
+    });
+  }
 
   return (
     <Flex padding='0.4em'>

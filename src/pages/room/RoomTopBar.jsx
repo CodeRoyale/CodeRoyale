@@ -20,8 +20,8 @@ const RoomTopBar = () => {
   const userName = profileData().userName.toString();
 
   if (room) {
-    maxUsersInRoom = room.config.max_perRoom;
-    maxTeamsInRoom = room.config.max_teams;
+    maxUsersInRoom = room.config.maxPerRoom;
+    maxTeamsInRoom = room.config.maxTeams;
     numberOfTeams = Object.keys(room.teams).length;
     Object.keys(room.teams).forEach((teamName) => {
       playersInTeams += room.teams[teamName].length;
