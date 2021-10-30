@@ -1,10 +1,9 @@
-//- Please fill these
-const uuid = require("uuid");
-const jwt = require("jsonwebtoken");
+// - Please fill these
+const uuid = require('uuid');
+const jwt = require('jsonwebtoken');
 
-const encryptData = (data) => {
-  // TODO : pls fix this
-
+const encryptData = () => {
+  //  TODO : pls fix this
   return uuid.v4();
 };
 
@@ -16,7 +15,7 @@ const checkToken = (token) => {
       process.env.ACCESS_SECRECT_KEY + decodedToken.userName
     );
     return payload;
-  } catch {
+  } catch (err) {
     return false;
   }
 };
