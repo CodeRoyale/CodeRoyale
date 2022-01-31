@@ -1,5 +1,3 @@
-//* import utils
-
 /// / using relative paths here (need to find better)
 
 const auth = require('../utils/auth');
