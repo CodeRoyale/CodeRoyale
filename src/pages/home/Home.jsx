@@ -2,7 +2,7 @@ import React from 'react';
 import { Flex } from '@chakra-ui/react';
 import NavBar from '../../components/navBar';
 import HomeBody from './HomeBody';
-import './Home.scss';
+import './Home.css';
 
 const Home = () => (
   <Flex flexDir='column'>

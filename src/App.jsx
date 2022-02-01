@@ -19,7 +19,7 @@ import Arena from './pages/arena';
 import Scoreboard from './pages/scoreboard';
 import isAuthenticated from './utils/isAuthenticated';
 import PreCheck from './components/preCheck';
-import './App.scss';
+import './App.css';
 
 // Initializing react-query client
 const queryClient = new QueryClient();

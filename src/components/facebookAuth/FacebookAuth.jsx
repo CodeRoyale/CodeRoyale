@@ -2,7 +2,7 @@ import React from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { Icon } from '@chakra-ui/react';
 import { AiFillFacebook } from 'react-icons/ai';
-import './FacebookAuth.scss';
+import './FacebookAuth.css';
 
 const FacebookAuth = ({ getAuthData, text }) => {
   // Facebook app ID from .env file

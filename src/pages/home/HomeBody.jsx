@@ -6,7 +6,7 @@ import laptopCoding from '../../assets/laptop-coding.svg';
 import laptop from '../../assets/laptop.svg';
 import DiscordBanner from './DiscordBanner';
 import HomeFooter from './HomeFooter';
-import './Home.scss';
+import './Home.css';
 
 const HomeBody = () => {
   const history = useHistory();
