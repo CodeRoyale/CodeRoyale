@@ -1,3 +1,13 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "no-unused-vars": "warn",
+    "func-names": "off",
+    "object-shorthand": "off",
+    "class-methods-use-this": "off",
+    "react/prop-types": "off",
+    "react/jsx-props-no-spreading": "off"
+  }
 }
