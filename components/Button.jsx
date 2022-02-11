@@ -29,6 +29,8 @@ const Button = ({ color, size, children, onClick, ...props }) => {
   );
 };
 
+export default Button;
+
 Button.propTypes = {
   color: propTypes.oneOf(['primary', 'secondary', 'transparent']),
   size: propTypes.oneOf(['small', 'normal', 'large']),
@@ -41,5 +43,3 @@ Button.defaultProps = {
   size: 'normal',
   onClick: undefined,
 };
-
-export default Button;
