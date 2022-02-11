@@ -5,7 +5,7 @@ import './button.css';
 /**
  * Primary UI component for user interaction
  */
-function Button({ primary, backgroundColor, size, label, ...props }) {
+const Button = ({ primary, backgroundColor, size, label, ...props }) => {
   const mode = primary
     ? 'storybook-button--primary'
     : 'storybook-button--secondary';
@@ -21,7 +21,7 @@ function Button({ primary, backgroundColor, size, label, ...props }) {
       {label}
     </button>
   );
-}
+};
 
 export default Button;
 

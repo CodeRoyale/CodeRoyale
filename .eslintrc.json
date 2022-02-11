@@ -8,6 +8,7 @@
     "object-shorthand": "off",
     "class-methods-use-this": "off",
     "react/prop-types": "off",
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    "react/function-component-definition": "off"
   }
 }
