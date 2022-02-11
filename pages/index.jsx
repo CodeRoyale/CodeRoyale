@@ -1,9 +1,10 @@
 import React from 'react';
+import Button from '../components/Button';
 
 const Home = () => (
-  <h1 className='text-button-primary-default text-6xl font-sans font-bold'>
-    CodeRoyale
-  </h1>
+  <Button color='primary' size='normal' disabled>
+    Create Room
+  </Button>
 );
 
 export default Home;

@@ -26,6 +26,11 @@ module.exports = {
         hover: 'var(--color-button-primary-hover)',
         disabled: 'var(--color-button-primary-disabled)',
       },
+      'button-secondary': {
+        default: 'var(--color-primary-700)',
+        hover: 'var(--color-primary-600)',
+        disabled: 'var(--color-primary-600)',
+      },
     },
   },
   plugins: [],
