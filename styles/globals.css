@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-primary-100: #dee3ea;
+  --color-primary-200: #b2bdcd;
+  --color-primary-300: #5d7290;
+  --color-primary-600: #323d4d;
+  --color-primary-700: #242c37;
+  --color-primary-800: #151a21;
+  --color-primary-900: #0b0e11;
+  --color-button-primary: #dd2c00;
+  --color-button-primary-hover: #ff5930;
+  --color-button-primary-disabled: #ff9a81;
+}
+
 html,
 body {
   padding: 0;
