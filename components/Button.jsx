@@ -1,8 +1,8 @@
 import React from 'react';
 import propTypes from 'prop-types';
 
-const Button = ({ color, size, children, onClick, ...props }) => {
-  const colorClasses = {
+const Button = ({ buttonClass, size, children, onClick, ...props }) => {
+  const buttonClasses = {
     primary:
       'bg-button-primary-default text-white transition duration-200 ease-in-out hover:bg-button-primary-hover',
     secondary:
@@ -20,7 +20,7 @@ const Button = ({ color, size, children, onClick, ...props }) => {
   return (
     <button
       type='button'
-      className={`${colorClasses[color]} ${sizeClasses[size]} font-medium rounded-md`}
+      className={`${buttonClasses[buttonClass]} ${sizeClasses[size]} font-medium rounded-md`}
       onClick={onClick}
       {...props}
     >
@@ -32,14 +32,14 @@ const Button = ({ color, size, children, onClick, ...props }) => {
 export default Button;
 
 Button.propTypes = {
-  color: propTypes.oneOf(['primary', 'secondary', 'transparent']),
+  buttonClass: propTypes.oneOf(['primary', 'secondary', 'transparent']),
   size: propTypes.oneOf(['small', 'normal', 'large']),
   children: propTypes.string.isRequired,
   onClick: propTypes.func,
 };
 
 Button.defaultProps = {
-  color: 'primary',
+  buttonClass: 'primary',
   size: 'normal',
   onClick: undefined,
 };

@@ -1,10 +1,10 @@
 import React from 'react';
-import Button from '../components/Button';
+import AvatarDropdownMenu from '../components/avatarDropdownMenu/AvatarDropdownMenu';
 
 const Home = () => (
-  <Button color='primary' size='normal' disabled>
-    Create Room
-  </Button>
+  <div className=''>
+    <AvatarDropdownMenu />
+  </div>
 );
 
 export default Home;

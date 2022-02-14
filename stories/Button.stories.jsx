@@ -12,5 +12,5 @@ export const Main = Template.bind({});
 Main.args = {
   size: 'normal',
   children: 'Create Room',
-  color: 'primary',
+  buttonClass: 'primary',
 };
