@@ -1,9 +1,9 @@
 import React from 'react';
-import AvatarDropdownMenu from '../components/avatarDropdownMenu/AvatarDropdownMenu';
+import AvatarController from '../components/avatar/AvatarController';
 
 const Home = () => (
   <div className=''>
-    <AvatarDropdownMenu />
+    <AvatarController />
   </div>
 );
 

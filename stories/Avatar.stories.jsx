@@ -2,7 +2,7 @@ import React from 'react';
 import {
   UserAvatar as UserAvatarComponent,
   RoomUserAvatar as RoomUserAvatarComponent,
-} from '../components/Avatar';
+} from '../components/avatar/Avatar';
 
 export default {
   title: 'Avatar',

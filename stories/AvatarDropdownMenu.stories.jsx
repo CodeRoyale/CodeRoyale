@@ -9,3 +9,6 @@ export default {
 const Template = (args) => <AvatarDropdownMenu {...args} />;
 
 export const Main = Template.bind({});
+Main.args = {
+  isOpen: true,
+};

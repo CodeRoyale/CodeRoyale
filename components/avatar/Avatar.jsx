@@ -1,14 +1,16 @@
 import React from 'react';
 import propTypes from 'prop-types';
 
-const UserAvatar = ({ avatarImage }) => (
-  <img
-    className='rounded-full cursor-pointer'
-    src={avatarImage}
-    alt='User Avatar'
-    width={55}
-    height={55}
-  />
+const UserAvatar = ({ avatarImage, ...props }) => (
+  <div {...props}>
+    <img
+      className='rounded-full cursor-pointer'
+      src={avatarImage}
+      alt='User Avatar'
+      width={55}
+      height={55}
+    />
+  </div>
 );
 
 const RoomUserAvatar = ({ avatarImage }) => (

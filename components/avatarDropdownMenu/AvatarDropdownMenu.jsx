@@ -1,7 +1,8 @@
 import React from 'react';
+import propTypes from 'prop-types';
 import AvatarDropdownMenuIconButton from './AvatarDropdownMenuIconButton';
 
-const AvatarDropdownMenu = () => {
+const AvatarDropdownMenu = ({ isOpen, ...props }) => {
   // { icon: title }
   const dropdownOptions = {
     profile: 'Profile',
@@ -9,7 +10,7 @@ const AvatarDropdownMenu = () => {
   };
 
   return (
-    <div className='rounded-lg'>
+    <div className={`rounded-lg ${!isOpen ? 'invisible' : ''}`} {...props}>
       {Object.keys(dropdownOptions).map((dropdownOption, index) => (
         <AvatarDropdownMenuIconButton
           title={dropdownOptions[dropdownOption]}
@@ -28,3 +29,11 @@ const AvatarDropdownMenu = () => {
 };
 
 export default AvatarDropdownMenu;
+
+AvatarDropdownMenu.propTypes = {
+  isOpen: propTypes.bool,
+};
+
+AvatarDropdownMenu.defaultProps = {
+  isOpen: false,
+};
