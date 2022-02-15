@@ -10,7 +10,7 @@ const RoomInviteCard = ({ avatarUrl, fullName, userName }) => (
       <div className='ml-4'>
         <span className='text-primary-100 font-medium text-lg'>{fullName}</span>
 
-        <p className='text-primary-300 text-xs'>{`${fullName} invited you to a match`}</p>
+        <p className='text-primary-300 text-xs'>{`@${userName} invited you to a match`}</p>
 
         <div className='flex justify-between mt-3'>
           <Button buttonClass='secondary' size='normal'>
