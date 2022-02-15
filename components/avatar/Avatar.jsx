@@ -1,6 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 
+// TODO: Change alt of image to userName
 const UserAvatar = ({ avatarImage, ...props }) => (
   <div {...props}>
     <img
