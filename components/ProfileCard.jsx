@@ -11,7 +11,7 @@ const ProfileCard = ({
   following,
 }) => (
   <div className='bg-primary-800 rounded-md'>
-    <img className='w-full h-60 rounded-t-md' src={image} alt='User Avatar' />
+    <img className='w-full h-60 rounded-t-md' src={image} alt={userName} />
 
     <div className='p-6'>
       <div className='flex flex-col'>
