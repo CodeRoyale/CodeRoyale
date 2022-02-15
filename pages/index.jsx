@@ -1,9 +1,9 @@
 import React from 'react';
-import AvatarController from '../components/avatar/AvatarController';
+import RoomSummaryCard from '../components/RoomSummaryCard';
 
 const Home = () => (
   <div className=''>
-    <AvatarController />
+    <RoomSummaryCard />
   </div>
 );
 
