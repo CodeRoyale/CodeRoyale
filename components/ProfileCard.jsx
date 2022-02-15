@@ -2,7 +2,7 @@ import React from 'react';
 import propTypes from 'prop-types';
 
 const ProfileCard = ({
-  image,
+  avatarUrl,
   userName,
   firstName,
   lastName,
@@ -11,7 +11,7 @@ const ProfileCard = ({
   following,
 }) => (
   <div className='bg-primary-800 rounded-md'>
-    <img className='w-full h-60 rounded-t-md' src={image} alt={userName} />
+    <img className='w-full h-60 rounded-t-md' src={avatarUrl} alt={userName} />
 
     <div className='p-6'>
       <div className='flex flex-col'>
@@ -37,7 +37,7 @@ const ProfileCard = ({
 export default ProfileCard;
 
 ProfileCard.propTypes = {
-  image: propTypes.string.isRequired,
+  avatarUrl: propTypes.string.isRequired,
   userName: propTypes.string.isRequired,
   firstName: propTypes.string.isRequired,
   lastName: propTypes.string.isRequired,
