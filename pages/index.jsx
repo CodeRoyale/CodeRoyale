@@ -1,10 +1,5 @@
 import React from 'react';
-import RoomSummaryCard from '../components/RoomSummaryCard';
 
-const Home = () => (
-  <div className=''>
-    <RoomSummaryCard />
-  </div>
-);
+const Home = () => <div>Index Page</div>;
 
 export default Home;
