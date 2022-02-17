@@ -2,6 +2,7 @@ import React from 'react';
 import LeftHeader from '../../components/header/LeftHeader';
 import MiddleHeader from '../../components/header/MiddleHeader';
 import RightHeader from '../../components/header/RightHeader';
+import PeopleFollowingController from './PeopleFollowingController';
 
 const DashboardPage = () => (
   <div className='px-16'>
@@ -12,6 +13,7 @@ const DashboardPage = () => (
       <div>
         <div className='fixed h-full text-white' style={{ width: '250px' }}>
           <LeftHeader />
+          <PeopleFollowingController />
         </div>
       </div>
       <div className='text-white'>
