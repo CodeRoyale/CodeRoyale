@@ -49,7 +49,7 @@ const PublicRoomsController = () => {
   ];
 
   return (
-    <div className='w-full mt-6 px-4'>
+    <div className='w-full mt-8 px-4'>
       <div className='flex justify-between items-center w-full'>
         <h1 className='text-primary-100 font-bold text-2xl'>Public Rooms</h1>
         <Button buttonClass='primary' size='normal'>
@@ -72,7 +72,7 @@ const PublicRoomsController = () => {
               numberOfMembersInRoom={numberOfMembersInRoom}
               totalMembersAllowed={totalMembersAllowed}
               roomCompetitionQuestionTags={roomCompetitionQuestionTags}
-              marginTop={index !== 0 ? 'mt-6    ' : null}
+              marginTop={index !== 0 ? 'mt-6' : null}
             />
           )
         )}

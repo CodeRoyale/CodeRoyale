@@ -2,10 +2,10 @@ import React from 'react';
 import propTypes from 'prop-types';
 import Button from './Button';
 
-const RoomInviteCard = ({ avatarUrl, fullName, userName }) => (
-  <div className='bg-primary-800 rounded-md p-6'>
-    <div className='flex'>
-      <img className='rounded-full w-20 h-20' alt={userName} src={avatarUrl} />
+const RoomInviteCard = ({ avatarUrl, fullName, userName, marginTop }) => (
+  <div className={`bg-primary-800 rounded-md p-6 ${marginTop}`}>
+    <div className='flex justify-start'>
+      <img className='rounded-full w-12 h-12' alt={userName} src={avatarUrl} />
 
       <div className='ml-4'>
         <span className='text-primary-100 font-medium text-lg'>{fullName}</span>
@@ -32,4 +32,9 @@ RoomInviteCard.propTypes = {
   avatarUrl: propTypes.string.isRequired,
   fullName: propTypes.string.isRequired,
   userName: propTypes.string.isRequired,
+  marginTop: propTypes.string,
+};
+
+RoomInviteCard.defaultProps = {
+  marginTop: null,
 };

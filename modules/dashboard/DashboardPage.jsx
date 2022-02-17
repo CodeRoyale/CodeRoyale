@@ -3,6 +3,7 @@ import LeftHeader from '../../components/header/LeftHeader';
 import MiddleHeader from '../../components/header/MiddleHeader';
 import RightHeader from '../../components/header/RightHeader';
 import PeopleFollowingController from './PeopleFollowingController';
+import ProfileAndRoomInvitesController from './ProfileAndRoomInvitesController';
 import PublicRoomsController from './PublicRoomsController';
 
 const DashboardPage = () => (
@@ -24,6 +25,7 @@ const DashboardPage = () => (
       <div>
         <div className='fixed h-full' style={{ width: '325px' }}>
           <RightHeader />
+          <ProfileAndRoomInvitesController />
         </div>
       </div>
     </div>
