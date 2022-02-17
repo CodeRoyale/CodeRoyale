@@ -8,8 +8,8 @@ const UserAvatar = ({ avatarImage, ...props }) => (
       className='rounded-full cursor-pointer'
       src={avatarImage}
       alt='User Avatar'
-      width={55}
-      height={55}
+      width={45}
+      height={45}
     />
   </div>
 );

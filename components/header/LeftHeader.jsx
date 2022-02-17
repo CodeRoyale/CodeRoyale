@@ -1,7 +1,15 @@
 import React from 'react';
 
 const LeftHeader = () => (
-  <img src='/img/CodeRoyaleLogo.svg' alt='next' height={50} width={50} />
+  <div>
+    <img
+      className='py-6'
+      src='/img/CodeRoyaleLogo.png'
+      alt='next'
+      height={90}
+      width={90}
+    />
+  </div>
 );
 
 export default LeftHeader;
