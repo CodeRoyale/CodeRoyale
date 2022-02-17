@@ -8,13 +8,16 @@ const RoomSummaryCard = ({
   numberOfMembersInRoom,
   totalMembersAllowed,
   roomCompetitionQuestionTags,
+  marginTop,
 }) => {
   const marginStyle = {
     'margin-left': '1em',
   };
 
   return (
-    <div className='bg-primary-800 rounded-lg w-full cursor-pointer'>
+    <div
+      className={`bg-primary-800 rounded-lg w-full cursor-pointer ${marginTop}`}
+    >
       <div className='flex items-center justify-between p-4'>
         <span className='text-primary-100 font-medium text-lg'>{roomName}</span>
 
@@ -41,8 +44,10 @@ RoomSummaryCard.propTypes = {
   totalMembersAllowed: propTypes.number.isRequired,
   /* eslint-disable-next-line react/forbid-prop-types */
   roomCompetitionQuestionTags: propTypes.array,
+  marginTop: propTypes.string,
 };
 
 RoomSummaryCard.defaultProps = {
   roomCompetitionQuestionTags: [],
+  marginTop: null,
 };
