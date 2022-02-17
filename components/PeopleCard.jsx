@@ -2,7 +2,11 @@ import React from 'react';
 import propTypes from 'prop-types';
 
 const PeopleCard = ({ avatarUrl, fullName, matchStatus, online }) => (
-  <div className='flex items-center cursor-pointer py-3'>
+  <div
+    className='flex items-center cursor-pointer -ml-3 px-3 py-3 hover:bg-primary-800 focus:outline focus:outline-offset-2 focus:outline-focus-outline rounded-md'
+    /* eslint-disable-next-line */
+    tabIndex='1'
+  >
     <img
       className='rounded-full'
       alt={fullName}

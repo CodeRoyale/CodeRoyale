@@ -16,7 +16,9 @@ const RoomSummaryCard = ({
 
   return (
     <div
-      className={`bg-primary-800 rounded-lg w-full cursor-pointer ${marginTop}`}
+      /* eslint-disable-next-line */
+      tabIndex='1'
+      className={`bg-primary-800 rounded-lg w-full cursor-pointer ${marginTop} focus:outline focus:outline-offset-2 focus:outline-focus-outline`}
     >
       <div className='flex items-center justify-between p-4'>
         <span className='text-primary-100 font-medium text-lg'>{roomName}</span>
