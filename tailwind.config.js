@@ -13,6 +13,7 @@ module.exports = {
       current: 'currentColor',
       black: '#000',
       white: '#fff',
+      'focus-outline': 'var(--color-focus-outline)',
       primary: {
         100: 'var(--color-primary-100)',
         200: 'var(--color-primary-200)',
@@ -26,6 +27,7 @@ module.exports = {
         default: 'var(--color-button-primary)',
         hover: 'var(--color-button-primary-hover)',
         disabled: 'var(--color-button-primary-disabled)',
+        'focus-outline': 'var(--color-button-primary-focus-outline)',
       },
       'button-secondary': {
         default: 'var(--color-primary-700)',

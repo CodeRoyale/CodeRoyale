@@ -4,9 +4,9 @@ import propTypes from 'prop-types';
 const Button = ({ buttonClass, size, children, onClick, ...props }) => {
   const buttonClasses = {
     primary:
-      'bg-button-primary-default text-white transition duration-200 ease-in-out hover:bg-button-primary-hover',
+      'bg-button-primary-default text-white transition duration-200 ease-in-out hover:bg-button-primary-hover focus:outline focus:outline-offset-2 focus:outline-focus-outline',
     secondary:
-      'bg-button-secondary-default text-primary-100 transition duration-200 ease-in-out hover:bg-button-secondary-hover',
+      'bg-button-secondary-default text-primary-100 transition duration-200 ease-in-out hover:bg-button-secondary-hover focus:outline focus:outline-offset-2 focus:outline-focus-outline',
     transparent:
       'bg-transparent text-primary-100 transition duration-200 ease-in-out hover:underline',
   };
