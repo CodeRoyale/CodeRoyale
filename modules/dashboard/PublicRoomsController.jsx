@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '../../components/Button';
+import Modal from '../../components/Modal';
 import RoomSummaryCard from '../../components/RoomSummaryCard';
 
 const PublicRoomsController = () => {
@@ -48,13 +49,22 @@ const PublicRoomsController = () => {
     },
   ];
 
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
   return (
     <div className='w-full mt-8 px-4'>
       <div className='flex justify-between items-center w-full'>
         <h1 className='text-primary-100 font-bold text-2xl'>Public Rooms</h1>
-        <Button buttonClass='primary' size='normal'>
+        <Button
+          buttonClass='primary'
+          size='normal'
+          onClick={() => setModalIsOpen(true)}
+        >
           Create Room
         </Button>
+        <Modal modalIsOpen={modalIsOpen}>
+          <h2>Hello World</h2>
+        </Modal>
       </div>
       <div className='flex flex-col py-6'>
         {tempPublicRoomsData.map(
