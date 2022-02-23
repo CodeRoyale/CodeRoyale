@@ -1,9 +1,9 @@
 import React from 'react';
-import AvatarController from '../avatar/AvatarController';
+import UserAvatarController from '../avatar/UserAvatarController';
 
 const RightHeader = () => (
   <div className='flex justify-end py-6'>
-    <AvatarController />
+    <UserAvatarController />
   </div>
 );
 

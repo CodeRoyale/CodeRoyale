@@ -22,5 +22,5 @@ export const RoomUserAvatar = RoomUserAvatarTemplate.bind({});
 RoomUserAvatar.args = {
   avatarImage:
     'https://lh3.googleusercontent.com/a-/AOh14Ghc_V15s5eZUxP0PsKFcNnTX1On7c1UQ4BwSGGW=s96-c',
-  userName: 'Chirag Bablani',
+  userName: 'chiragbabulani',
 };

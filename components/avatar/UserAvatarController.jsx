@@ -3,7 +3,7 @@ import { usePopper } from 'react-popper';
 import { UserAvatar } from './Avatar';
 import AvatarDropdownMenu from '../avatarDropdownMenu/AvatarDropdownMenu';
 
-const AvatarController = () => {
+const UserAvatarController = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [referenceElement, setReferenceElement] = useState();
   const [popperElement, setPopperElement] = useState();
@@ -28,4 +28,4 @@ const AvatarController = () => {
   );
 };
 
-export default AvatarController;
+export default UserAvatarController;
