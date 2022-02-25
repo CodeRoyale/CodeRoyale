@@ -1,5 +1,5 @@
 import React from 'react';
-import PeopleCard from '../../components/PeopleCard';
+import PeopleCard from '../components/PeopleCard';
 
 const PeopleFollowingController = () => {
   const tempPeopleData = [

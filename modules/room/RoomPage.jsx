@@ -7,10 +7,8 @@ import MainContentColumn from '../../components/layouts/mainGridLayout/MainConte
 import MainGridLayout from '../../components/layouts/mainGridLayout/MainGridLayout';
 import RightColumn from '../../components/layouts/mainGridLayout/RightColumn';
 import PeopleFollowingController from '../PeopleFollowingController';
-import ProfileAndRoomInvitesController from './ProfileAndRoomInvitesController';
-import PublicRoomsController from './PublicRoomsController';
 
-const DashboardPage = () => (
+const RoomPage = () => (
   <MainGridLayout>
     <LeftColumn>
       <LeftHeader />
@@ -19,17 +17,12 @@ const DashboardPage = () => (
 
     <MainContentColumn>
       <MiddleHeader />
-      <PublicRoomsController />
     </MainContentColumn>
 
     <RightColumn>
       <RightHeader />
-      <ProfileAndRoomInvitesController />
     </RightColumn>
   </MainGridLayout>
 );
 
-export default DashboardPage;
-
-// className='relative grid gap-3 justify-center w-screen h-screen px-16'
-// style={{ gridTemplateColumns: '1fr 2fr 1fr' }}
+export default RoomPage;
