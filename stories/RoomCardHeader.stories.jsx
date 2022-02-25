@@ -1,5 +1,5 @@
 import React from 'react';
-import RoomCardHeader from '../components/RoomCardHeader';
+import RoomCardHeader from '../components/roomCard/RoomCardHeader';
 
 export default {
   title: 'Room Card Header',

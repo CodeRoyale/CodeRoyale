@@ -1,5 +1,5 @@
 import React from 'react';
-import RoomCardIconButton from '../components/RoomCardIconButton';
+import RoomCardIconButton from '../components/roomCard/RoomCardIconButton';
 
 export default {
   title: 'Room Card Icon Button',

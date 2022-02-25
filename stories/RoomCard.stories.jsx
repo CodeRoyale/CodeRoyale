@@ -1,5 +1,5 @@
 import React from 'react';
-import RoomCard from '../components/RoomCard';
+import RoomCard from '../components/roomCard/RoomCard';
 
 export default {
   title: 'Room Card',

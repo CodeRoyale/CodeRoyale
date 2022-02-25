@@ -1,7 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import { RoomUserAvatar } from './avatar/Avatar';
-import Button from './Button';
+import { RoomUserAvatar } from '../avatar/Avatar';
+import Button from '../Button';
 import RoomCardHeader from './RoomCardHeader';
 import RoomCardFooter from './RoomCardFooter';
 

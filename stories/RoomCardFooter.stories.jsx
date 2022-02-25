@@ -1,5 +1,5 @@
 import React from 'react';
-import RoomCardFooter from '../components/RoomCardFooter';
+import RoomCardFooter from '../components/roomCard/RoomCardFooter';
 
 export default {
   title: 'Room Card Footer',
