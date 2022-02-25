@@ -9,6 +9,7 @@ const Button = ({ buttonClass, size, children, onClick, ...props }) => {
       'bg-button-secondary-default text-primary-100 transition duration-200 ease-in-out hover:bg-button-secondary-hover focus:outline focus:outline-offset-2 focus:outline-focus-outline',
     transparent:
       'bg-transparent text-primary-100 transition duration-200 ease-in-out hover:underline',
+    dark: 'bg-primary-800 text-primary-100 transition duration-200 ease-in-out hover:bg-primary-600 focus:outline focus:outline-offset-2 focus:outline-focus-outline',
   };
 
   const sizeClasses = {
@@ -32,7 +33,7 @@ const Button = ({ buttonClass, size, children, onClick, ...props }) => {
 export default Button;
 
 Button.propTypes = {
-  buttonClass: propTypes.oneOf(['primary', 'secondary', 'transparent']),
+  buttonClass: propTypes.oneOf(['primary', 'secondary', 'transparent', 'dark']),
   size: propTypes.oneOf(['small', 'normal', 'large']),
   children: propTypes.string.isRequired,
   onClick: propTypes.func,

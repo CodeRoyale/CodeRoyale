@@ -11,5 +11,6 @@ const Template = (args) => <RoomCard {...args} />;
 export const Main = Template.bind({});
 Main.args = {
   title: 'Chirags competition',
+  admin: true,
   adminUserName: 'chiragbabulani',
 };
