@@ -4,6 +4,7 @@ import { RoomUserAvatar } from '../avatar/Avatar';
 import Button from '../Button';
 import RoomCardHeader from './RoomCardHeader';
 import RoomCardFooter from './RoomCardFooter';
+import RoomTeamCard from './RoomTeamCard';
 
 const RoomCard = ({ title, admin, adminUserName }) => (
   <div className='flex flex-col bg-primary-800 rounded-md w-screen'>
@@ -27,6 +28,10 @@ const RoomCard = ({ title, admin, adminUserName }) => (
             New Team
           </Button>
         ) : null}
+      </div>
+      <div className='flex space-x-4 pt-2 pb-4 px-4'>
+        <RoomTeamCard teamName='Chiragrules' />
+        <RoomTeamCard teamName='Chiragrules' />
       </div>
     </div>
 
