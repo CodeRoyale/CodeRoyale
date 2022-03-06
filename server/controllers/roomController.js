@@ -25,28 +25,25 @@ const RoomModel = require('../models/room');
 const UserController = require('./userController');
 
 // cant store them in roomObj cause it causes lot of problems
-// to stop comepetition
+// to stop competition
 const stopTimers = {};
 // resolvers
 const resolvers = {};
 
-// roomId will be admin name
-
-const createRoom = (config, { socket }) => {
-  const user = UserController.getUser(config.userName);
-  if (user.roomId) {
+const createRoom = async (config, { socket }) => {
+  const user = await UserController.getUser(config.userName);
+  if (user.roomId !== '') {
     // please leave current room
     return false;
   }
-
   // createRoom function to be called by the controller.
-  const roomObj = RoomModel.createRoom(config, user);
+  const roomObj = await RoomModel.createRoom(config, user);
   if (roomObj.status === 0) {
     return { err: roomObj.error };
   }
-  const roomId = roomObj.returnObj.config.id;
 
-  UserController.updateUser({
+  const roomId = roomObj.returnObj.config.id;
+  await UserController.updateUser({
     userName: config.userName,
     roomId,
   });
@@ -56,15 +53,18 @@ const createRoom = (config, { socket }) => {
   return roomObj.returnObj;
 };
 
-// users connecting to room
-// TODO -> refactor this fn if should return error
-const joinRoom = ({ userName, roomId, teamName }, { socket }) => {
-  const user = UserController.getUser(userName);
-  const roomObj = RoomModel.joinRoom(user, roomId, teamName);
+const joinRoom = async ({ userName, roomId, teamName }, { socket }) => {
+  const user = await UserController.getUser(userName);
+  const roomObj = await RoomModel.joinRoom(user, roomId, teamName);
   if (roomObj.status === 0) {
     return { err: roomObj.error };
   }
-  UserController.updateUser({ userName, roomId, teamName });
+
+  await UserController.updateUser({
+    userName,
+    roomId,
+    teamName,
+  });
   socket.join(roomId);
   socket.to(roomId).emit(ROOM_UPDATED, {
     type: JOINED_ROOM,
@@ -74,10 +74,10 @@ const joinRoom = ({ userName, roomId, teamName }, { socket }) => {
   return roomObj.returnObj;
 };
 
-const removeUserFromRoom = ({ userName }, { socket }) => {
-  const user = UserController.getUser(userName);
+const removeUserFromRoom = async ({ userName }, { socket }) => {
+  const user = await UserController.getUser(userName);
   const { roomId, teamName } = user;
-  const roomObj = RoomModel.removeUserFromRoom(user);
+  const roomObj = await RoomModel.removeUserFromRoom(user);
   if (roomObj.status === 0) {
     return false;
   }
@@ -101,10 +101,10 @@ const removeUserFromRoom = ({ userName }, { socket }) => {
   return true;
 };
 
-const createTeam = ({ userName, teamName }, { socket }) => {
-  const user = UserController.getUser(userName);
+const createTeam = async ({ userName, teamName }, { socket }) => {
+  const user = await UserController.getUser(userName);
   const { roomId } = user;
-  const roomObj = RoomModel.createTeam(user, teamName);
+  const roomObj = await RoomModel.createTeam(user, teamName);
   if (roomObj.status === 0) {
     return { err: roomObj.error };
   }
@@ -112,17 +112,17 @@ const createTeam = ({ userName, teamName }, { socket }) => {
     type: TEAM_CREATED,
     data: { teamName },
   });
-  console.log(roomObj.returnObj);
   return roomObj.returnObj;
 };
 
-const joinTeam = ({ userName, teamName }, { socket }) => {
-  const user = UserController.getUser(userName);
-  const roomObj = RoomModel.joinTeam(user, teamName);
+const joinTeam = async ({ userName, teamName }, { socket }) => {
+  const user = await UserController.getUser(userName);
+  const roomObj = await RoomModel.joinTeam(user, teamName);
   if (roomObj.status === 0) {
     return { err: roomObj.error };
   }
-  UserController.updateUser({ userName, teamName });
+
+  await UserController.updateUser({ userName, teamName });
   socket.join(`${user.roomId}/${teamName}`);
   socket.to(user.roomId).emit(ROOM_UPDATED, {
     type: JOINED_TEAM,
@@ -132,14 +132,15 @@ const joinTeam = ({ userName, teamName }, { socket }) => {
   return roomObj.returnObj;
 };
 
-const leaveTeam = ({ userName }, { socket }) => {
-  const user = UserController.getUser(userName);
+const leaveTeam = async ({ userName }, { socket }) => {
+  const user = await UserController.getUser(userName);
   const { roomId, teamName } = user;
-  const roomObj = RoomModel.leaveTeam(user);
+  const roomObj = await RoomModel.leaveTeam(user);
   if (roomObj.status === 0) {
     return { err: roomObj.error };
   }
-  UserController.updateUser({ userName, teamName: '' });
+
+  await UserController.updateUser({ userName, teamName: '' });
   socket.leave(`${user.roomId}/${user.teamName}`);
   socket.to(roomId).emit(ROOM_UPDATED, {
     type: LEFT_TEAM,
@@ -148,21 +149,21 @@ const leaveTeam = ({ userName }, { socket }) => {
   return roomObj.returnObj;
 };
 
-const closeRoom = ({ userName, forceCloseRoom }, { socket }) => {
-  const user = UserController.getUser(userName);
+const closeRoom = async ({ userName, forceCloseRoom }, { socket }) => {
+  const user = await UserController.getUser(userName);
   const { roomId } = user;
-  const roomObj = RoomModel.closeRoom(user, forceCloseRoom);
+  const roomObj = await RoomModel.closeRoom(user, forceCloseRoom);
   if (roomObj.status === 0) {
     return { err: roomObj.error };
   }
 
   const allMembers = roomObj.returnObj;
-  // console.log(allMembers);
   // not need to change room data since we are going to delete it
-  allMembers.forEach((users) => {
+  allMembers.forEach(async (users) => {
     // this is a server action notify all
     // TODO --> add kick all and remove functions for sockets
-    UserController.updateUser({ users, roomId: '', teamName: '' });
+    // TODO --> UpdateUser not working needs to be fixed
+    await UserController.updateUser({ users, roomId: '', teamName: '' });
   });
 
   // delete the room
@@ -174,19 +175,15 @@ const closeRoom = ({ userName, forceCloseRoom }, { socket }) => {
   return true;
 };
 
+// v2 testing done till here
+
 // TODO --> DELETE TEAM
+// TODO --> BAN MEMBER
 
-// const banMember = ({ roomId }) => {
-//   try {
-//   } catch (err) {
-//     return { error: err.message };
-//   }
-// };
-
-const addPrivateList = ({ userName, privateList }, { socket }) => {
+const addPrivateList = async ({ userName, privateList }, { socket }) => {
   // only private rooms can have private lists
-  const user = UserController.getUser(userName);
-  const roomObj = RoomModel.addPrivateList(user, privateList);
+  const user = await UserController.getUser(userName);
+  const roomObj = await RoomModel.addPrivateList(user, privateList);
 
   if (roomObj.status === 0) {
     return { err: roomObj.error };
@@ -199,17 +196,9 @@ const addPrivateList = ({ userName, privateList }, { socket }) => {
   return roomObj.returnObj;
 };
 
-// const handleUserDisconnect = ({ userName }) => {
-//   // need to fill this
-//   try {
-//   } catch (err) {
-//     return { error: err.message };
-//   }
-// };
-
-const forwardMsg = ({ userName, content, toTeam }, { socket }) => {
+const forwardMsg = async ({ userName, content, toTeam }, { socket }) => {
   try {
-    const { roomId, teamName } = UserController.getUser(userName);
+    const { roomId, teamName } = await UserController.getUser(userName);
 
     // not in a room
     if (!roomId || !content) return false;
@@ -225,9 +214,9 @@ const forwardMsg = ({ userName, content, toTeam }, { socket }) => {
   }
 };
 
-const registerVotes = ({ userName, votes }, { socket }) => {
-  const { roomId, teamName } = UserController.getUser(userName);
-  const roomObj = RoomModel.registerVotes({
+const registerVotes = async ({ userName, votes }, { socket }) => {
+  const { roomId, teamName } = await UserController.getUser(userName);
+  const roomObj = await RoomModel.registerVotes({
     roomId,
     userName,
     teamName,
@@ -252,10 +241,11 @@ const registerVotes = ({ userName, votes }, { socket }) => {
   return roomObj.returnObj;
 };
 
-const doVeto = async (quesIds, roomId, count, socket) => {
-  return new Promise((resolve) => {
+const doVeto = (quesIds, roomId, count, socket) => {
+  /* eslint-disable-next-line */
+  return new Promise(async (resolve) => {
     let state = 'start';
-    const roomCheck = RoomModel.doVetoRequirements({ roomId });
+    const roomCheck = await RoomModel.doVetoRequirements({ roomId });
     const room = roomCheck.returnObj;
     RoomModel.doVeto(quesIds, roomId, count, state);
     socket.to(roomId).emit(VETO_START, quesIds);
@@ -275,9 +265,9 @@ const doVeto = async (quesIds, roomId, count, socket) => {
 };
 
 const startCompetition = async ({ userName }, { socket }) => {
-  const user = UserController.getUser(userName);
+  const user = await UserController.getUser(userName);
   let state = 'start';
-  const roomCheck = RoomModel.startCompetitionRequirements(user);
+  const roomCheck = await RoomModel.startCompetitionRequirements(user);
   if (roomCheck.status === 0) {
     return { err: roomCheck.error };
   }
@@ -288,14 +278,14 @@ const startCompetition = async ({ userName }, { socket }) => {
   const allQuestions = await getQuestions(room.competition.veto.quesCount);
 
   await doVeto(allQuestions, roomId, room.competition.maxQuestions, socket);
-  let roomObj = RoomModel.startCompetition(user, state);
+  let roomObj = await RoomModel.startCompetition(user, state);
 
   socket.to(roomId).emit(COMPETITION_STARTED, roomObj);
   socket.emit(COMPETITION_STARTED, roomObj);
 
   state = 'stop';
-  stopTimers[roomId].competitionTimer = setTimeout(() => {
-    roomObj = RoomModel.startCompetition(user, state);
+  stopTimers[roomId].competitionTimer = setTimeout(async () => {
+    roomObj = await RoomModel.startCompetition(user, state);
     socket.to(roomId).emit(COMPETITION_STOPPED, roomObj.returnObj);
     socket.emit(COMPETITION_STOPPED, roomObj.returnObj);
   }, room.competition.timeLimit);
@@ -315,24 +305,17 @@ const startCompetition = async ({ userName }, { socket }) => {
 //   }
 // };
 
-const getRoomData = ({ userName, roomId }) => {
-  const user = UserController.getUser(userName);
-  const returnObj = RoomModel.getRoomData(user, roomId);
+const getRoomData = async ({ userName, roomId }) => {
+  const user = await UserController.getUser(userName);
+  const returnObj = await RoomModel.getRoomData(user, roomId);
   if (returnObj.status === 0) {
     return returnObj.error;
   }
   return returnObj.roomObj;
-  // try {
-  //   const user = UserController.getUser(userName);
-  //   if (user.roomId !== roomId) throw new Error('User not in room');
-  //   return rooms[roomId];
-  // } catch (err) {
-  //   return { error: err.message };
-  // }
 };
 
-const getRoomsData = () => {
-  const returnObj = RoomModel.getRoomsData();
+const getRoomsData = async () => {
+  const returnObj = await RoomModel.getRoomsData();
   if (returnObj.status === 0) {
     return returnObj.error;
   }
@@ -344,9 +327,9 @@ const codeSubmission = async (
   { socket }
 ) => {
   const quesId = problemCode;
-  const { roomId, teamName } = UserController.getUser(userName);
+  const { roomId, teamName } = await UserController.getUser(userName);
   const testcase = await getTestcase(problemCode);
-  const roomCheck = RoomModel.codeSubmissionRequirements(
+  const roomCheck = await RoomModel.codeSubmissionRequirements(
     roomId,
     teamName,
     testcase,
@@ -356,7 +339,7 @@ const codeSubmission = async (
     return { err: roomCheck.error };
   }
   const room = roomCheck.returnObj;
-  submitCode(testcase, code, langId, (dataFromSubmitCode) => {
+  submitCode(testcase, code, langId, async (dataFromSubmitCode) => {
     let allPass = true;
     dataFromSubmitCode.submissions.forEach((result) => {
       if (result.status_id !== 3) {
@@ -376,7 +359,7 @@ const codeSubmission = async (
     if (allPass) {
       // tell everyone except user
       let state = 'one-pass';
-      RoomModel.codeSubmission(roomId, state, teamName, quesId);
+      await RoomModel.codeSubmission(roomId, state, teamName, quesId);
       // console.log(roomObj);
 
       socket.to(roomId).emit(SUCCESSFULLY_SUBMITTED, { problemCode, teamName });
@@ -390,7 +373,7 @@ const codeSubmission = async (
         if (stopTimers[roomId].competitionTimer)
           clearTimeout(stopTimers[roomId].competitionTimer);
         state = 'all-pass';
-        const tempRoomObj = RoomModel.codeSubmission(roomId, state);
+        const tempRoomObj = await RoomModel.codeSubmission(roomId, state);
         socket.to(roomId).emit(COMPETITION_STOPPED, tempRoomObj.returnObj);
         socket.emit(COMPETITION_STOPPED, tempRoomObj.returnObj);
       }
