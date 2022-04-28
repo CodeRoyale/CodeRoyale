@@ -1,50 +1,12 @@
 {
-  "name": "coderoyale-frontend",
+  "name": "coderoyale",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint ./pages/** ./components/** ./modules/** -c .eslintrc.json --ext js,jsx",
-    "lint:fix": "eslint --fix ./pages/** ./components/** ./modules/** -c .eslintrc.json --ext js,jsx",
-    "prettier:check": "prettier --check ./pages/** ./components/** ./modules/**",
-    "prettier:write": "prettier --write ./pages/** ./components/** ./modules/**",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
-  },
-  "dependencies": {
-    "@popperjs/core": "^2.11.2",
-    "next": "12.0.10",
-    "prop-types": "^15.8.1",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-icons": "^4.3.1",
-    "react-modal": "^3.14.4",
-    "react-popper": "^2.2.5"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.17.2",
-    "@storybook/addon-actions": "^6.4.18",
-    "@storybook/addon-controls": "^6.4.18",
-    "@storybook/addon-essentials": "^6.4.18",
-    "@storybook/addon-links": "^6.4.18",
-    "@storybook/builder-webpack5": "^6.4.18",
-    "@storybook/manager-webpack5": "^6.4.18",
-    "@storybook/react": "^6.4.18",
-    "autoprefixer": "^10.4.2",
-    "babel-loader": "^8.2.3",
-    "eslint": "8.8.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-next": "12.0.10",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.28.0",
-    "eslint-plugin-react-hooks": "^4.3.0",
-    "postcss": "^8.4.6",
-    "prettier": "^2.5.1",
-    "tailwind-scrollbar": "^1.3.1",
-    "tailwindcss": "^3.0.19"
+  "workspaces": {
+    "packages": [
+      "frontend"
+    ],
+    "nohoist": [
+      "**"
+    ]
   }
 }
