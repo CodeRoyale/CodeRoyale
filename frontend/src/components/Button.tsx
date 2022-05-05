@@ -10,7 +10,6 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   onClick?: () => void;
 };
 
-// testing husky!
 const Button: React.FC<ButtonProps> = ({
   buttonClass = 'primary',
   size = 'normal',
