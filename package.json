@@ -10,15 +10,25 @@
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^16.2.4",
+    "@commitlint/config-conventional": "^16.2.4",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
     "husky": "^7.0.0",
     "lint-staged": "^12.4.1"
   },
   "scripts": {
+    "commit": "git-cz",
     "prepare": "husky install",
     "check-types": "yarn workspaces run check-types",
     "lint": "yarn workspaces run lint",
     "prettier:write": "yarn workspaces run prettier:write"
   },
+  "config":{
+    "commitizen":{
+     "path":"cz-conventional-changelog"
+    }
+   },
   "lint-staged": {
     "**/*.+(js|jsx|ts|tsx)": [
       "bash -c 'yarn check-types'",
