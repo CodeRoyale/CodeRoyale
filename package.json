@@ -21,6 +21,7 @@
   },
   "lint-staged": {
     "**/*.+(js|jsx|ts|tsx)": [
+      "bash -c 'yarn check-types'",
       "yarn lint",
       "yarn prettier:write"
     ]
