@@ -7,5 +7,7 @@ module.exports = {
   /*
    * Any rules defined here will override rules from @commitlint/config-conventional
    */
-  rules: {},
+  rules: {
+    "scope-enum": [2, "always", ["global", "api", "frontend", "lobby"]],
+  },
 };

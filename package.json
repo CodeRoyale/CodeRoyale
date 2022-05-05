@@ -26,7 +26,8 @@
   },
   "config":{
     "commitizen":{
-     "path":"cz-conventional-changelog"
+     "path":"cz-conventional-changelog",
+     "defaultScope": "global"
     }
    },
   "lint-staged": {
