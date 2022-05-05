@@ -15,7 +15,8 @@
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
     "husky": "^7.0.0",
-    "lint-staged": "^12.4.1"
+    "lint-staged": "^12.4.1",
+    "webpack": "^5.72.0"
   },
   "scripts": {
     "commit": "git-cz",
@@ -24,12 +25,12 @@
     "lint": "yarn workspaces run lint",
     "prettier:write": "yarn workspaces run prettier:write"
   },
-  "config":{
-    "commitizen":{
-     "path":"cz-conventional-changelog",
-     "defaultScope": "global"
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog",
+      "defaultScope": "global"
     }
-   },
+  },
   "lint-staged": {
     "**/*.+(js|jsx|ts|tsx)": [
       "bash -c 'yarn check-types'",
