@@ -1,7 +1,7 @@
 import React from 'react';
+import { v4 as uuid } from 'uuid';
 import ProfileCard from '../../components/ProfileCard';
 import RoomInviteCard from '../../components/RoomInviteCard';
-import { v4 as uuid } from 'uuid';
 
 const ProfileAndRoomInvitesController: React.FC<{}> = () => {
   const tempRoomInvitesData = [

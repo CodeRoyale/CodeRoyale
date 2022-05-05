@@ -1,6 +1,6 @@
 import React from 'react';
-import PeopleCard from '../components/PeopleCard';
 import { v4 as uuid } from 'uuid';
+import PeopleCard from '../components/PeopleCard';
 
 const PeopleFollowingController: React.FC<{}> = () => {
   const tempPeopleData = [

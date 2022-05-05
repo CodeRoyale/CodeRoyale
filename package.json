@@ -21,7 +21,6 @@
   },
   "lint-staged": {
     "**/*.+(js|jsx|ts|tsx)": [
-      "yarn check-types",
       "yarn lint",
       "yarn prettier:write"
     ]

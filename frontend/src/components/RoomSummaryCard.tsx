@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoIosPeople } from 'react-icons/io';
-import Tag from './Tag';
 import { v4 as uuid } from 'uuid';
+import Tag from './Tag';
 
 interface RoomSummaryCardProps {
   roomName: string;

@@ -9,8 +9,8 @@
     "check-types": "tsc --pretty --noEmit",
     "prettier:check": "prettier --check ./src",
     "prettier:write": "prettier --write ./src",
-    "lint": "eslint ./src -c .eslintrc.json --ext js,jsx",
-    "lint:fix": "eslint --fix ./src -c .eslintrc.json --ext js,jsx",
+    "lint": "eslint ./src -c .eslintrc.json --ext js,jsx,ts,tsx",
+    "lint:fix": "eslint --fix ./src -c .eslintrc.json --ext js,jsx,ts,tsx",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },

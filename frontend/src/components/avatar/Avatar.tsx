@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 
-interface UserAvatarProps {
+type UserAvatarProps = HTMLAttributes<HTMLDivElement> & {
   avatarImage: string;
-}
+};
 
 // TODO: Change alt of image to userName
 // TODO: Use next/image

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { v4 as uuid } from 'uuid';
 import Button from '../../components/Button';
 import Modal from '../../components/Modal';
 import RoomSummaryCard from '../../components/RoomSummaryCard';
-import { v4 as uuid } from 'uuid';
 
 const PublicRoomsController: React.FC<{}> = () => {
   const tempPublicRoomsData = [
