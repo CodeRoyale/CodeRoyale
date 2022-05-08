@@ -1,12 +1,12 @@
 import React from 'react';
-import Button from '../Button';
-import RoomCardIconButton from './RoomCardIconButton';
+import { Button } from '../Button';
+import { RoomCardIconButton } from './RoomCardIconButton';
 
 interface RoomCardFooterProps {
   admin: boolean;
 }
 
-const RoomCardFooter: React.FC<RoomCardFooterProps> = ({ admin }) => {
+export const RoomCardFooter: React.FC<RoomCardFooterProps> = ({ admin }) => {
   const justifyContent = admin ? 'justify-between' : 'justify-end';
 
   return (
@@ -39,5 +39,3 @@ const RoomCardFooter: React.FC<RoomCardFooterProps> = ({ admin }) => {
     </div>
   );
 };
-
-export default RoomCardFooter;

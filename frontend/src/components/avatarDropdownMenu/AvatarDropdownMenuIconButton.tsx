@@ -20,7 +20,7 @@ const getIconComponent = (icon: string) => {
   }
 };
 
-const AvatarDropdownMenuIconButton: React.FC<
+export const AvatarDropdownMenuIconButton: React.FC<
   AvatarDropdownMenuIconButtonProps
 > = ({ title, icon, borderRadius = '' }) => {
   const iconComponent = getIconComponent(icon);
@@ -35,5 +35,3 @@ const AvatarDropdownMenuIconButton: React.FC<
     </button>
   );
 };
-
-export default AvatarDropdownMenuIconButton;

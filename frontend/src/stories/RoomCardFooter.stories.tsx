@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import RoomCardFooter from '../components/roomCard/RoomCardFooter';
+import { RoomCardFooter } from '../components/roomCard/RoomCardFooter';
 
 export default {
   title: 'Room Card Footer',

@@ -1,9 +1,9 @@
 import React from 'react';
 import { RoomUserAvatar } from '../avatar/Avatar';
-import Button from '../Button';
-import RoomCardHeader from './RoomCardHeader';
-import RoomCardFooter from './RoomCardFooter';
-import RoomTeamCard from './RoomTeamCard';
+import { Button } from '../Button';
+import { RoomCardHeader } from './RoomCardHeader';
+import { RoomCardFooter } from './RoomCardFooter';
+import { RoomTeamCard } from './RoomTeamCard';
 
 interface RoomCardProps {
   title: string;
@@ -11,7 +11,11 @@ interface RoomCardProps {
   adminUserName: string;
 }
 
-const RoomCard: React.FC<RoomCardProps> = ({ title, admin, adminUserName }) => (
+export const RoomCard: React.FC<RoomCardProps> = ({
+  title,
+  admin,
+  adminUserName,
+}) => (
   <div className="flex flex-col bg-primary-800 rounded-md w-screen">
     <RoomCardHeader title={title} adminUserName={adminUserName} />
     <div className="flex p-4 space-x-5">
@@ -43,5 +47,3 @@ const RoomCard: React.FC<RoomCardProps> = ({ title, admin, adminUserName }) => (
     <RoomCardFooter admin={admin} />
   </div>
 );
-
-export default RoomCard;

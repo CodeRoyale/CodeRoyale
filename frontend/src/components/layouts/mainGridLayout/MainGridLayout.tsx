@@ -9,7 +9,7 @@ interface MainGridLayoutProps {
   children: React.ReactNode;
 }
 
-const MainGridLayout: React.FC<MainGridLayoutProps> = ({ children }) => (
+export const MainGridLayout: React.FC<MainGridLayoutProps> = ({ children }) => (
   <div className="px-16">
     <div
       className="grid gap-5"
@@ -19,5 +19,3 @@ const MainGridLayout: React.FC<MainGridLayoutProps> = ({ children }) => (
     </div>
   </div>
 );
-
-export default MainGridLayout;

@@ -7,7 +7,7 @@ interface PeopleCardProps {
   online: boolean;
 }
 
-const PeopleCard: React.FC<PeopleCardProps> = ({
+export const PeopleCard: React.FC<PeopleCardProps> = ({
   avatarUrl,
   fullName,
   matchStatus = false,
@@ -34,5 +34,3 @@ const PeopleCard: React.FC<PeopleCardProps> = ({
     </div>
   </div>
 );
-
-export default PeopleCard;

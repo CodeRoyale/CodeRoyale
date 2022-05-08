@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import RoomCard from '../components/roomCard/RoomCard';
+import { RoomCard } from '../components/roomCard/RoomCard';
 
 export default {
   title: 'Room Card',

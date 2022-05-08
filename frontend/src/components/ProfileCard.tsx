@@ -10,7 +10,7 @@ interface ProfileCardProps {
   following: number;
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({
+export const ProfileCard: React.FC<ProfileCardProps> = ({
   avatarUrl,
   userName,
   firstName,
@@ -42,5 +42,3 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
     </div>
   </div>
 );
-
-export default ProfileCard;

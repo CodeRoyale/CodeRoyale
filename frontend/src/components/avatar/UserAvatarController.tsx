@@ -3,7 +3,7 @@ import React from 'react';
 // import AvatarDropdownMenu from '../avatarDropdownMenu/AvatarDropdownMenu';
 import { UserAvatar } from './Avatar';
 
-const UserAvatarController = () => {
+export const UserAvatarController = () => {
   // const [isOpen, setIsOpen] = useState(false);
   // const [referenceElement, setReferenceElement] = useState();
   // const [popperElement, setPopperElement] = useState();
@@ -33,5 +33,3 @@ const UserAvatarController = () => {
     </React.Fragment>
   );
 };
-
-export default UserAvatarController;

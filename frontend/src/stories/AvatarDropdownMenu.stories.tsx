@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import AvatarDropdownMenu from '../components/avatarDropdownMenu/AvatarDropdownMenu';
+import { AvatarDropdownMenu } from '../components/avatarDropdownMenu/AvatarDropdownMenu';
 
 export default {
   title: 'Avatar Dropdown Menu',

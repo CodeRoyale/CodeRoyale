@@ -1,8 +1,8 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import PeopleCard from '../components/PeopleCard';
+import { PeopleCard } from '../components/PeopleCard';
 
-const PeopleFollowingController: React.FC<{}> = () => {
+export const PeopleFollowingController: React.FC<{}> = () => {
   const tempPeopleData = [
     {
       avatarUrl:
@@ -38,5 +38,3 @@ const PeopleFollowingController: React.FC<{}> = () => {
     </div>
   );
 };
-
-export default PeopleFollowingController;

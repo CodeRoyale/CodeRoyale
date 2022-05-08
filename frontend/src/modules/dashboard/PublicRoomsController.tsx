@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { v4 as uuid } from 'uuid';
-import Button from '../../components/Button';
-import Modal from '../../components/Modal';
-import RoomSummaryCard from '../../components/RoomSummaryCard';
+import { Button } from '../../components/Button';
+import { Modal } from '../../components/Modal';
+import { RoomSummaryCard } from '../../components/RoomSummaryCard';
 
-const PublicRoomsController: React.FC<{}> = () => {
+export const PublicRoomsController: React.FC<{}> = () => {
   const tempPublicRoomsData = [
     {
       roomName: "Chirag's room",
@@ -92,5 +92,3 @@ const PublicRoomsController: React.FC<{}> = () => {
     </div>
   );
 };
-
-export default PublicRoomsController;

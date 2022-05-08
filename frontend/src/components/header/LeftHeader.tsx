@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LeftHeader: React.FC<{}> = () => (
+export const LeftHeader: React.FC<{}> = () => (
   <div>
     <img
       className="py-7"
@@ -11,5 +11,3 @@ const LeftHeader: React.FC<{}> = () => (
     />
   </div>
 );
-
-export default LeftHeader;

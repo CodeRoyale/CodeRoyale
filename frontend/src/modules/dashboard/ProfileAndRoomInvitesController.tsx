@@ -1,9 +1,9 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import ProfileCard from '../../components/ProfileCard';
-import RoomInviteCard from '../../components/RoomInviteCard';
+import { ProfileCard } from '../../components/ProfileCard';
+import { RoomInviteCard } from '../../components/RoomInviteCard';
 
-const ProfileAndRoomInvitesController: React.FC<{}> = () => {
+export const ProfileAndRoomInvitesController: React.FC<{}> = () => {
   const tempRoomInvitesData = [
     {
       avatarUrl:
@@ -43,5 +43,3 @@ const ProfileAndRoomInvitesController: React.FC<{}> = () => {
     </div>
   );
 };
-
-export default ProfileAndRoomInvitesController;

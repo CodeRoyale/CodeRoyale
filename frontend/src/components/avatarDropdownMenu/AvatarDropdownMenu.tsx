@@ -1,12 +1,12 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import AvatarDropdownMenuIconButton from './AvatarDropdownMenuIconButton';
+import { AvatarDropdownMenuIconButton } from './AvatarDropdownMenuIconButton';
 
 interface AvatarDropdownMenuProps {
   isOpen: boolean;
 }
 
-const AvatarDropdownMenu: React.FC<AvatarDropdownMenuProps> = ({
+export const AvatarDropdownMenu: React.FC<AvatarDropdownMenuProps> = ({
   isOpen = false,
   ...props
 }) => {
@@ -35,5 +35,3 @@ const AvatarDropdownMenu: React.FC<AvatarDropdownMenuProps> = ({
     </div>
   );
 };
-
-export default AvatarDropdownMenu;

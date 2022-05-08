@@ -12,7 +12,7 @@ const iconLookup: Record<string, React.ReactNode> = {
   closeRoom: <IoClose size={22} />,
 };
 
-const RoomCardIconButton: React.FC<RoomCardIconButtonProps> = ({
+export const RoomCardIconButton: React.FC<RoomCardIconButtonProps> = ({
   icon,
   onClick,
   ...props
@@ -26,5 +26,3 @@ const RoomCardIconButton: React.FC<RoomCardIconButtonProps> = ({
     {iconLookup[icon]}
   </button>
 );
-
-export default RoomCardIconButton;

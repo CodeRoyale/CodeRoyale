@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from './Button';
+import { Button } from './Button';
 
 interface RoomInviteCardProps {
   avatarUrl: string;
@@ -8,7 +8,7 @@ interface RoomInviteCardProps {
   marginTop?: string | null;
 }
 
-const RoomInviteCard: React.FC<RoomInviteCardProps> = ({
+export const RoomInviteCard: React.FC<RoomInviteCardProps> = ({
   avatarUrl,
   fullName,
   userName,
@@ -36,5 +36,3 @@ const RoomInviteCard: React.FC<RoomInviteCardProps> = ({
     </div>
   </div>
 );
-
-export default RoomInviteCard;

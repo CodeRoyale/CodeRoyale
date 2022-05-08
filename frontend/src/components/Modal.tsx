@@ -6,8 +6,6 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
-const Modal: React.FC<ModalProps> = ({ modalIsOpen, children }) => (
+export const Modal: React.FC<ModalProps> = ({ modalIsOpen, children }) => (
   <ReactModal isOpen={modalIsOpen}>{children}</ReactModal>
 );
-
-export default Modal;

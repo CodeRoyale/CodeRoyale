@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoIosPeople } from 'react-icons/io';
 import { v4 as uuid } from 'uuid';
-import Tag from './Tag';
+import { Tag } from './Tag';
 
 interface RoomSummaryCardProps {
   roomName: string;
@@ -11,7 +11,7 @@ interface RoomSummaryCardProps {
   marginTop?: string | null;
 }
 
-const RoomSummaryCard: React.FC<RoomSummaryCardProps> = ({
+export const RoomSummaryCard: React.FC<RoomSummaryCardProps> = ({
   roomName,
   numberOfMembersInRoom,
   totalMembersAllowed,
@@ -48,5 +48,3 @@ const RoomSummaryCard: React.FC<RoomSummaryCardProps> = ({
     </div>
   );
 };
-
-export default RoomSummaryCard;

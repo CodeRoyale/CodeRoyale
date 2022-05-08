@@ -6,7 +6,10 @@ type UserAvatarProps = HTMLAttributes<HTMLDivElement> & {
 
 // TODO: Change alt of image to userName
 // TODO: Use next/image
-const UserAvatar: React.FC<UserAvatarProps> = ({ avatarImage, ...props }) => (
+export const UserAvatar: React.FC<UserAvatarProps> = ({
+  avatarImage,
+  ...props
+}) => (
   <div {...props}>
     <img
       className="rounded-full cursor-pointer"
@@ -23,7 +26,7 @@ interface RoomUserAvatarProps {
   userName: string;
 }
 
-const RoomUserAvatar: React.FC<RoomUserAvatarProps> = ({
+export const RoomUserAvatar: React.FC<RoomUserAvatarProps> = ({
   avatarImage,
   userName,
 }) => (
@@ -41,5 +44,3 @@ const RoomUserAvatar: React.FC<RoomUserAvatarProps> = ({
     <span className="text-primary-100 text-xs mt-1.5">{userName}</span>
   </div>
 );
-
-export { UserAvatar, RoomUserAvatar };

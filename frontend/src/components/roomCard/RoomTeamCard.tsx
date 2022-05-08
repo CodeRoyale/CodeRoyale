@@ -5,7 +5,7 @@ interface RoomTeamCardProps {
   teamName: string;
 }
 
-const RoomTeamCard: React.FC<RoomTeamCardProps> = ({ teamName }) => (
+export const RoomTeamCard: React.FC<RoomTeamCardProps> = ({ teamName }) => (
   <div className="bg-primary-900 rounded-md">
     <div className="py-4 pl-2 pr-8">
       <h1 className="text-primary-100 font-semibold text-lg">{teamName}</h1>
@@ -28,5 +28,3 @@ const RoomTeamCard: React.FC<RoomTeamCardProps> = ({ teamName }) => (
     </button>
   </div>
 );
-
-export default RoomTeamCard;

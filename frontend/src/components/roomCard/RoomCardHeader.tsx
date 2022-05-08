@@ -5,7 +5,7 @@ interface RoomCardHeaderProps {
   adminUserName: string;
 }
 
-const RoomCardHeader: React.FC<RoomCardHeaderProps> = ({
+export const RoomCardHeader: React.FC<RoomCardHeaderProps> = ({
   title,
   adminUserName,
 }) => (
@@ -18,5 +18,3 @@ const RoomCardHeader: React.FC<RoomCardHeaderProps> = ({
     </div>
   </div>
 );
-
-export default RoomCardHeader;

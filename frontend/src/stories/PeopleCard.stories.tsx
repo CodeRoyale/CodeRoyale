@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import PeopleCard from '../components/PeopleCard';
+import { PeopleCard } from '../components/PeopleCard';
 
 export default {
   title: 'People Card',

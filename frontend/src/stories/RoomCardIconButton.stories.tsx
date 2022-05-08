@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import RoomCardIconButton from '../components/roomCard/RoomCardIconButton';
+import { RoomCardIconButton } from '../components/roomCard/RoomCardIconButton';
 
 export default {
   title: 'Room Card Icon Button',
