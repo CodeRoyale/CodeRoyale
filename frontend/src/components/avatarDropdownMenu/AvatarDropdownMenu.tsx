@@ -2,14 +2,7 @@ import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { AvatarDropdownMenuIconButton } from './AvatarDropdownMenuIconButton';
 
-interface AvatarDropdownMenuProps {
-  isOpen: boolean;
-}
-
-export const AvatarDropdownMenu: React.FC<AvatarDropdownMenuProps> = ({
-  isOpen = false,
-  ...props
-}) => {
+export const AvatarDropdownMenu: React.FC = () => {
   // { icon: title }
   const dropdownOptions: Record<string, string> = {
     profile: 'Profile',
@@ -17,7 +10,7 @@ export const AvatarDropdownMenu: React.FC<AvatarDropdownMenuProps> = ({
   };
 
   return (
-    <div className={`rounded-lg ${!isOpen ? 'invisible' : ''}`} {...props}>
+    <div className="rounded-lg">
       {Object.keys(dropdownOptions).map((dropdownOption, index) => (
         <AvatarDropdownMenuIconButton
           key={uuidv4()}
