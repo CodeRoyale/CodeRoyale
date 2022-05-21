@@ -21,7 +21,9 @@
   "rules": {
     "@next/next/no-img-element": "off",
     "react/prop-types": "off",
-    "import/order": "error"
+    "import/order": "error",
+    "require-jsdoc": "off",
+    "valid-jsdoc": "off"
   },
   "settings": {
     "react": {

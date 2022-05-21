@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors');
+
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
@@ -30,8 +32,9 @@ module.exports = {
         hover: 'var(--color-primary-600)',
         disabled: 'var(--color-primary-600)',
       },
+      ...colors,
     },
   },
   /* eslint-disable-next-line */
-  plugins: [require('tailwind-scrollbar')],
+  plugins: [require('tailwind-scrollbar'), require('@tailwindcss/forms')],
 };

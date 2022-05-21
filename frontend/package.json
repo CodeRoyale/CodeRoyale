@@ -12,10 +12,17 @@
     "lint": "eslint ./src -c .eslintrc.json --ext js,jsx,ts,tsx",
     "lint:fix": "eslint --fix ./src -c .eslintrc.json --ext js,jsx,ts,tsx",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "graphql:gen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
+    "@apollo/client": "^3.6.4",
     "@popperjs/core": "^2.11.2",
+    "@react-oauth/google": "^0.2.1",
+    "axios": "^0.27.2",
+    "formik": "^2.2.9",
+    "graphql": "^16.5.0",
+    "jsonwebtoken": "^8.5.1",
     "next": "^12.1.6",
     "prop-types": "^15.8.1",
     "react": "17.0.2",
@@ -27,6 +34,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.2",
+    "@graphql-codegen/cli": "2.6.2",
+    "@graphql-codegen/typescript": "2.4.11",
+    "@graphql-codegen/typescript-operations": "2.4.0",
+    "@graphql-codegen/typescript-react-apollo": "3.2.14",
     "@storybook/addon-actions": "^6.4.22",
     "@storybook/addon-essentials": "^6.4.22",
     "@storybook/addon-interactions": "^6.4.22",
@@ -36,6 +47,8 @@
     "@storybook/manager-webpack5": "^6.4.22",
     "@storybook/react": "^6.4.22",
     "@storybook/testing-library": "^0.0.11",
+    "@tailwindcss/forms": "^0.5.1",
+    "@types/jsonwebtoken": "^8.5.8",
     "@types/react-modal": "^3.13.1",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.22.0",

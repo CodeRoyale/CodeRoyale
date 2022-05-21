@@ -1,4 +1,5 @@
 import React, { ButtonHTMLAttributes } from 'react';
+import { Spinner } from './Spinner';
 
 type ButtonClassType = 'primary' | 'secondary' | 'transparent' | 'dark';
 type SizeType = 'small' | 'normal' | 'large';
@@ -7,12 +8,16 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   buttonClass: ButtonClassType;
   size: SizeType;
   children: string;
+  loading?: boolean;
+  loadingText?: string | null;
   onClick?: () => void;
 };
 
 export const Button: React.FC<ButtonProps> = ({
   buttonClass = 'primary',
   size = 'normal',
+  loading = false,
+  loadingText = 'Loading',
   children,
   onClick,
   ...props
@@ -38,9 +43,16 @@ export const Button: React.FC<ButtonProps> = ({
       type="button"
       className={`${buttonClasses[buttonClass]} ${sizeClasses[size]} font-medium rounded-md`}
       onClick={onClick}
+      disabled={loading}
       {...props}
     >
-      {children}
+      {!loading ? children : null}
+      {loading ? (
+        <span className="flex items-center justify-center">
+          <Spinner size={size === 'small' ? 2 : 4} />
+          <span className="ml-3">{loadingText}</span>
+        </span>
+      ) : null}
     </button>
   );
 };

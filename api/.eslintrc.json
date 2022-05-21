@@ -10,5 +10,5 @@
     "sourceType": "module"
   },
   "plugins": ["@typescript-eslint"],
-  "rules": {}
+  "rules": { "require-jsdoc": "off", "new-cap": "off" }
 }

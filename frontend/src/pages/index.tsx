@@ -1,5 +1,3 @@
-import React from 'react';
+import { HomePage } from '../modules/home/HomePage';
 
-const Home = () => <div>Index Page</div>;
-
-export default Home;
+export default HomePage;
