@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { NextPage } from 'next';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { googleClientId } from '../../utils/constants';
 import { AuthFormController } from './AuthFormController';
@@ -10,7 +9,7 @@ import {
 // import { Form, Formik } from 'formik';
 // import { InputField } from '../../components/InputField';
 
-export const HomePage: NextPage<{}> = () => {
+export const HomePage = () => {
   const [showAuthForm, setShowAuthForm] = useState<boolean>(false);
 
   const [authOptions, setAuthOptions] = useState<GoogleUser>();

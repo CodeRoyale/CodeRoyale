@@ -1,3 +1,4 @@
 import { HomePage } from '../modules/home/HomePage';
+import { withApollo } from '../utils/withApollo';
 
-export default HomePage;
+export default withApollo({ ssr: false })(HomePage);

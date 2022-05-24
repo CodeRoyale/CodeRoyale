@@ -1,5 +1,4 @@
 import React from 'react';
-import { NextPage } from 'next';
 import { LeftHeader } from '../../components/header/LeftHeader';
 import { MiddleHeader } from '../../components/header/MiddleHeader';
 import { RightHeader } from '../../components/header/RightHeader';
@@ -9,7 +8,7 @@ import { MainGridLayout } from '../../components/layouts/mainGridLayout/MainGrid
 import { RightColumn } from '../../components/layouts/mainGridLayout/RightColumn';
 import { PeopleFollowingController } from '../PeopleFollowingController';
 
-export const RoomPage: NextPage<{}> = () => (
+export const RoomPage = () => (
   <MainGridLayout>
     <LeftColumn>
       <LeftHeader />

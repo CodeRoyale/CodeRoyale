@@ -1,5 +1,4 @@
 import React from 'react';
-import { NextPage } from 'next';
 import { LeftHeader } from '../../components/header/LeftHeader';
 import { MiddleHeader } from '../../components/header/MiddleHeader';
 import { RightHeader } from '../../components/header/RightHeader';
@@ -11,7 +10,7 @@ import { PeopleFollowingController } from '../PeopleFollowingController';
 import { ProfileAndRoomInvitesController } from './ProfileAndRoomInvitesController';
 import { PublicRoomsController } from './PublicRoomsController';
 
-export const DashboardPage: NextPage<{}> = () => {
+export const DashboardPage = () => {
   return (
     <MainGridLayout>
       <LeftColumn>

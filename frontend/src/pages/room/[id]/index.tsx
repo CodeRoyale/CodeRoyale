@@ -1,3 +1,4 @@
 import { RoomPage } from '../../../modules/room/RoomPage';
+import { withApollo } from '../../../utils/withApollo';
 
-export default RoomPage;
+export default withApollo({ ssr: false })(RoomPage);
