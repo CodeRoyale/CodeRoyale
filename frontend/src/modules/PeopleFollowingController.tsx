@@ -1,8 +1,11 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { PeopleCard } from '../components/PeopleCard';
+import { useMeQuery } from '../generated/graphql';
 
 export const PeopleFollowingController: React.FC<{}> = () => {
+  const { data, loading } = useMeQuery();
+
   const tempPeopleData = [
     {
       avatarUrl:
@@ -20,21 +23,30 @@ export const PeopleFollowingController: React.FC<{}> = () => {
     },
   ];
 
-  return (
-    <div className="flex flex-col mt-8">
-      <h1 className="text-primary-100 font-bold text-2xl">People</h1>
-      <span className="text-primary-300 text-sm mt-4">Online</span>
-      <div className="py-4">
-        {tempPeopleData.map(({ avatarUrl, fullName, matchStatus, online }) => (
-          <PeopleCard
-            key={uuid()}
-            avatarUrl={avatarUrl}
-            fullName={fullName}
-            matchStatus={matchStatus}
-            online={online}
-          />
-        ))}
-      </div>
-    </div>
-  );
+  let body = null;
+
+  if (loading) {
+  } else if (data?.me) {
+    body = (
+      <>
+        <h1 className="text-primary-100 font-bold text-2xl">People</h1>
+        <span className="text-primary-300 text-sm mt-4">Online</span>
+        <div className="py-4">
+          {tempPeopleData.map(
+            ({ avatarUrl, fullName, matchStatus, online }) => (
+              <PeopleCard
+                key={uuid()}
+                avatarUrl={avatarUrl}
+                fullName={fullName}
+                matchStatus={matchStatus}
+                online={online}
+              />
+            )
+          )}
+        </div>
+      </>
+    );
+  }
+
+  return <div className="flex flex-col mt-8">{body}</div>;
 };

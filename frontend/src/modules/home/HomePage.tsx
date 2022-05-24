@@ -10,8 +10,6 @@ import {
 // import { Form, Formik } from 'formik';
 // import { InputField } from '../../components/InputField';
 
-// ! need to remove tailwind colors
-
 export const HomePage: NextPage<{}> = () => {
   const [showAuthForm, setShowAuthForm] = useState<boolean>(false);
 

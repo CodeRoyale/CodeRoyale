@@ -2,9 +2,8 @@ import React from 'react';
 
 interface ProfileCardProps {
   avatarUrl: string;
-  userName: string;
-  firstName: string;
-  lastName: string;
+  username: string;
+  name: string;
   about?: string;
   followers: number;
   following: number;
@@ -12,20 +11,19 @@ interface ProfileCardProps {
 
 export const ProfileCard: React.FC<ProfileCardProps> = ({
   avatarUrl,
-  userName,
-  firstName,
-  lastName,
+  username,
+  name,
   about = '',
   followers,
   following,
 }) => (
   <div className="bg-primary-800 rounded-md">
-    <img className="w-full h-60 rounded-t-md" src={avatarUrl} alt={userName} />
+    <img className="w-full h-60 rounded-t-md" src={avatarUrl} alt={username} />
 
     <div className="p-6">
       <div className="flex flex-col">
-        <span className="text-primary-300 mt-px text-sm">{`@${userName}`}</span>
-        <h1 className="text-primary-100 font-bold text-lg">{`${firstName} ${lastName}`}</h1>
+        <span className="text-primary-300 mt-px text-sm">{`@${username}`}</span>
+        <h1 className="text-primary-100 font-bold text-lg">{name}</h1>
       </div>
 
       <div className="flex text-sm mt-2">

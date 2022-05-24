@@ -16,6 +16,7 @@ exports.UserResolver = exports.RegisterInput = void 0;
 const User_1 = require("../entities/User");
 const type_graphql_1 = require("type-graphql");
 const validateAuthOptions_1 = require("../utils/validateAuthOptions");
+const constants_1 = require("../utils/constants");
 let RegisterInput = class RegisterInput {
 };
 __decorate([
@@ -124,6 +125,16 @@ let UserResolver = class UserResolver {
         req.session.userId = user.id;
         return { user };
     }
+    logout({ req, res }) {
+        return new Promise((resolve) => req.session.destroy((error) => {
+            if (error) {
+                resolve(false);
+                return;
+            }
+            res.clearCookie(constants_1.COOKIE_NAME);
+            resolve(true);
+        }));
+    }
 };
 __decorate([
     (0, type_graphql_1.Query)(() => User_1.User, { nullable: true }),
@@ -148,6 +159,13 @@ __decorate([
     __metadata("design:paramtypes", [RegisterInput, Object]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "register", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
+    __param(0, (0, type_graphql_1.Ctx)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UserResolver.prototype, "logout", null);
 UserResolver = __decorate([
     (0, type_graphql_1.Resolver)()
 ], UserResolver);

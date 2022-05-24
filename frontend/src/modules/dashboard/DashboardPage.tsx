@@ -5,7 +5,6 @@ import { MiddleHeader } from '../../components/header/MiddleHeader';
 import { RightHeader } from '../../components/header/RightHeader';
 import { LeftColumn } from '../../components/layouts/mainGridLayout/LeftColumn';
 import { MainContentColumn } from '../../components/layouts/mainGridLayout/MainContentColumn';
-import { useIsAuth } from '../../custom-hooks/useIsAuth';
 import { MainGridLayout } from '../../components/layouts/mainGridLayout/MainGridLayout';
 import { RightColumn } from '../../components/layouts/mainGridLayout/RightColumn';
 import { PeopleFollowingController } from '../PeopleFollowingController';
@@ -13,8 +12,6 @@ import { ProfileAndRoomInvitesController } from './ProfileAndRoomInvitesControll
 import { PublicRoomsController } from './PublicRoomsController';
 
 export const DashboardPage: NextPage<{}> = () => {
-  useIsAuth();
-
   return (
     <MainGridLayout>
       <LeftColumn>

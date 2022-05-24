@@ -12,6 +12,4 @@ const Template: ComponentStory<typeof AvatarDropdownMenu> = (args) => (
 );
 
 export const Main = Template.bind({});
-Main.args = {
-  isOpen: true,
-};
+Main.args = {};
