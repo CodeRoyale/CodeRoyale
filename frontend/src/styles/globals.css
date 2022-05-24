@@ -32,3 +32,22 @@ a {
 * {
   box-sizing: border-box;
 }
+
+#nprogress {
+  position: relative;
+  z-index: 9999999;
+}
+
+#nprogress .bar {
+  background: var(--color-button-primary) !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px var(--color-button-primary-hover),
+    0 0 5px var(--color-button-primary-hover) !important;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: var(--color-button-primary-hover) !important;
+  border-left-color: var(--color-button-primary-hover) !important;
+}
