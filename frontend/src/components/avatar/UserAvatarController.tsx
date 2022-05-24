@@ -11,11 +11,23 @@ export const UserAvatarController = () => {
   const router = useRouter();
   const { data, loading } = useMeQuery();
 
+  let body = null;
+
   if (loading) {
+  } else if (!data?.me) {
+    body = (
+      <Button
+        buttonClass="primary"
+        size="normal"
+        onClick={() => router.push('/')}
+      >
+        Login / Register
+      </Button>
+    );
   }
   // user is logged in
-  else if (data?.me) {
-    return (
+  else {
+    body = (
       <Menu>
         <Float
           placement="bottom-end"
@@ -45,13 +57,5 @@ export const UserAvatarController = () => {
     );
   }
 
-  return (
-    <Button
-      buttonClass="primary"
-      size="normal"
-      onClick={() => router.push('/')}
-    >
-      Login / Register
-    </Button>
-  );
+  return <>{body}</>;
 };

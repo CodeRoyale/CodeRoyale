@@ -26,7 +26,8 @@ export const PeopleFollowingController: React.FC<{}> = () => {
   let body = null;
 
   if (loading) {
-  } else if (data?.me) {
+  } else if (!data?.me) {
+  } else {
     body = (
       <>
         <h1 className="text-primary-100 font-bold text-2xl">People</h1>

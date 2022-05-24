@@ -19,7 +19,8 @@ export const ProfileAndRoomInvitesController: React.FC<{}> = () => {
   let body = null;
 
   if (loading) {
-  } else if (data?.me) {
+  } else if (!data?.me) {
+  } else {
     body = (
       <>
         <ProfileCard
