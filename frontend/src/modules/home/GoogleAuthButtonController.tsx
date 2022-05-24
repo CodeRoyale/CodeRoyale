@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleAuthButton } from '../../components/GoogleAuthButton';
-import { useLoginMutation } from '../../generated/graphql';
+import { MeDocument, MeQuery, useLoginMutation } from '../../generated/graphql';
 
 export type GoogleUser = {
   email: string;
@@ -47,6 +47,15 @@ export const GoogleAuthButtonController: React.FC<
         const response = await login({
           variables: {
             email: googleUser.email,
+          },
+          update: (cache, { data }) => {
+            cache.writeQuery<MeQuery>({
+              query: MeDocument,
+              data: {
+                __typename: 'Query',
+                me: data?.login.user,
+              },
+            });
           },
         });
 

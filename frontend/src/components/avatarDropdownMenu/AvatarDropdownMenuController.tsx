@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { useApolloClient } from '@apollo/client';
 import { v4 as uuidv4 } from 'uuid';
 import { useLogoutMutation } from '../../generated/graphql';
 import { AvatarDropdownMenu } from './AvatarDropdownMenu';
@@ -7,6 +8,7 @@ import { AvatarDropdownMenuIconButton } from './AvatarDropdownMenuIconButton';
 
 export const AvatarDropdownMenuController: React.FC = () => {
   const router = useRouter();
+  const apolloClient = useApolloClient();
   const [logout] = useLogoutMutation();
 
   // { icon: title }
@@ -17,6 +19,7 @@ export const AvatarDropdownMenuController: React.FC = () => {
 
   const handleLogoutClick = async () => {
     const response = await logout();
+    await apolloClient.resetStore();
     if (response.data?.logout) {
       router.replace('/');
     }

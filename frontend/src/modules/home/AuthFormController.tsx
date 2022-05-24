@@ -1,7 +1,11 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import { useRouter } from 'next/router';
-import { useRegisterMutation } from '../../generated/graphql';
+import {
+  MeDocument,
+  MeQuery,
+  useRegisterMutation,
+} from '../../generated/graphql';
 import { InputField } from '../../components/InputField';
 import { Button } from '../../components/Button';
 import { toErrorMap } from '../../utils/toErrorMap';
@@ -40,6 +44,15 @@ export const AuthFormController: React.FC<AuthFormControllerProps> = ({
       onSubmit={async (values, { setErrors }) => {
         const response = await register({
           variables: { options: values },
+          update: (cache, { data }) => {
+            cache.writeQuery<MeQuery>({
+              query: MeDocument,
+              data: {
+                __typename: 'Query',
+                me: data?.register.user,
+              },
+            });
+          },
         });
 
         if (response.data?.register.errors) {
