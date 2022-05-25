@@ -13,6 +13,7 @@ const Template: ComponentStory<typeof ProfileAboutTab> = (args) => (
 
 export const main = Template.bind({});
 main.args = {
+  username: 'joelamthewkoshy',
   followers: 24,
   following: 45,
   bio: 'hello world',

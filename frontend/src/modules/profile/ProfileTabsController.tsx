@@ -17,6 +17,7 @@ export const ProfileTabsController: React.FC = () => {
         panels={
           <Tab.Panel className="py-4">
             <ProfileAboutTab
+              username={data.user.user.username}
               followers={45}
               following={90}
               bio={data.user.user.bio}
