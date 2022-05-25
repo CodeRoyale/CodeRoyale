@@ -70,11 +70,33 @@ UserResponse = __decorate([
     (0, type_graphql_1.ObjectType)()
 ], UserResponse);
 let UserResolver = class UserResolver {
+    email(user, { req }) {
+        if (req.session.userId === user.id) {
+            return user.email;
+        }
+        return "";
+    }
     me({ req }) {
         if (!req.session.userId) {
             return null;
         }
         return User_1.User.findOne({ where: { id: req.session.userId } });
+    }
+    async user(username) {
+        const user = await User_1.User.findOne({ where: { username } });
+        if (!user) {
+            return {
+                errors: [
+                    {
+                        field: "username",
+                        message: "username doesnot exist",
+                    },
+                ],
+            };
+        }
+        return {
+            user,
+        };
     }
     async login(email, { req }) {
         const user = await User_1.User.findOne({
@@ -137,12 +159,27 @@ let UserResolver = class UserResolver {
     }
 };
 __decorate([
+    (0, type_graphql_1.FieldResolver)(() => String),
+    __param(0, (0, type_graphql_1.Root)()),
+    __param(1, (0, type_graphql_1.Ctx)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [User_1.User, Object]),
+    __metadata("design:returntype", void 0)
+], UserResolver.prototype, "email", null);
+__decorate([
     (0, type_graphql_1.Query)(() => User_1.User, { nullable: true }),
     __param(0, (0, type_graphql_1.Ctx)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], UserResolver.prototype, "me", null);
+__decorate([
+    (0, type_graphql_1.Query)(() => UserResponse),
+    __param(0, (0, type_graphql_1.Arg)("username")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "user", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => UserResponse),
     __param(0, (0, type_graphql_1.Arg)("email")),
@@ -167,7 +204,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserResolver.prototype, "logout", null);
 UserResolver = __decorate([
-    (0, type_graphql_1.Resolver)()
+    (0, type_graphql_1.Resolver)(User_1.User)
 ], UserResolver);
 exports.UserResolver = UserResolver;
 //# sourceMappingURL=user.js.map

@@ -4,7 +4,7 @@ interface ProfileCardProps {
   avatarUrl: string;
   username: string;
   name: string;
-  about?: string;
+  bio: string | null | undefined;
   followers: number;
   following: number;
 }
@@ -13,7 +13,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
   avatarUrl,
   username,
   name,
-  about = '',
+  bio,
   followers,
   following,
 }) => (
@@ -28,15 +28,16 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
 
       <div className="flex text-sm mt-2">
         <span className="text-primary-100">
-          {`${followers} `}
-          <span className="text-primary-300">Followers</span>
+          {`${followers} `} <span className="text-primary-300">followers</span>
         </span>
         <span className="text-primary-100 ml-2">
-          {`${following} `} <span className="text-primary-300">Following</span>
+          {`${following} `} <span className="text-primary-300">following</span>
         </span>
       </div>
 
-      <p className="text-primary-300 mt-2 break-words text-left">{about}</p>
+      {!bio ? null : (
+        <p className="text-primary-300 mt-2 break-words text-left">{bio}</p>
+      )}
     </div>
   </div>
 );

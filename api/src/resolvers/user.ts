@@ -4,11 +4,13 @@ import {
   Arg,
   Ctx,
   Field,
+  FieldResolver,
   InputType,
   Mutation,
   ObjectType,
   Query,
   Resolver,
+  Root,
 } from "type-graphql";
 import { validateAuthOptions } from "../utils/validateAuthOptions";
 import { COOKIE_NAME } from "../utils/constants";
@@ -49,8 +51,23 @@ class UserResponse {
   user?: User;
 }
 
-@Resolver()
+@Resolver(User)
 export class UserResolver {
+  @FieldResolver(() => String)
+  email(
+    @Root()
+    user: User,
+    @Ctx()
+    { req }: MyContext
+  ) {
+    // email address should be private, you should only be able to see your own email address
+    if (req.session.userId === user.id) {
+      return user.email;
+    }
+
+    return "";
+  }
+
   @Query(() => User, { nullable: true })
   me(@Ctx() { req }: MyContext) {
     // not logged in
@@ -59,6 +76,29 @@ export class UserResolver {
     }
 
     return User.findOne({ where: { id: req.session.userId } });
+  }
+
+  @Query(() => UserResponse)
+  async user(
+    @Arg("username")
+    username: string
+  ): Promise<UserResponse> {
+    const user = await User.findOne({ where: { username } });
+
+    if (!user) {
+      return {
+        errors: [
+          {
+            field: "username",
+            message: "username doesnot exist",
+          },
+        ],
+      };
+    }
+
+    return {
+      user,
+    };
   }
 
   @Mutation(() => UserResponse)

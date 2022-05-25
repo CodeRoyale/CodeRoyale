@@ -17,7 +17,7 @@ Main.args = {
     'https://lh3.googleusercontent.com/a-/AOh14Ghc_V15s5eZUxP0PsKFcNnTX1On7c1UQ4BwSGGW=s96-c',
   username: 'chiragbablani',
   name: 'Chirag Bablani',
-  about: 'The best coder/hacker in the World',
+  bio: 'The best coder/hacker in the World',
   followers: 1204,
   following: 10,
 };

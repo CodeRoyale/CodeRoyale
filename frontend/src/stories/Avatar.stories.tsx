@@ -15,7 +15,9 @@ const UserAvatarTemplate: ComponentStory<typeof UserAvatarComponent> = (
 
 export const UserAvatar = UserAvatarTemplate.bind({});
 UserAvatar.args = {
-  avatarImage:
+  width: 45,
+  height: 45,
+  profilePicture:
     'https://lh3.googleusercontent.com/a-/AOh14Ghc_V15s5eZUxP0PsKFcNnTX1On7c1UQ4BwSGGW=s96-c',
 };
 
@@ -25,7 +27,7 @@ const RoomUserAvatarTemplate: ComponentStory<typeof RoomUserAvatarComponent> = (
 
 export const RoomUserAvatar = RoomUserAvatarTemplate.bind({});
 RoomUserAvatar.args = {
-  avatarImage:
+  profilePicture:
     'https://lh3.googleusercontent.com/a-/AOh14Ghc_V15s5eZUxP0PsKFcNnTX1On7c1UQ4BwSGGW=s96-c',
-  userName: 'chiragbabulani',
+  username: 'chiragbabulani',
 };

@@ -46,6 +46,11 @@ export type Query = {
   __typename?: 'Query';
   hello: Scalars['String'];
   me?: Maybe<User>;
+  user: UserResponse;
+};
+
+export type QueryUserArgs = {
+  username: Scalars['String'];
 };
 
 export type RegisterInput = {
@@ -87,6 +92,7 @@ export type RegularUserFragment = {
   email: string;
   profilePicture: string;
   name: string;
+  bio?: string | null;
 };
 
 export type RegularUserResponseFragment = {
@@ -103,6 +109,7 @@ export type RegularUserResponseFragment = {
     email: string;
     profilePicture: string;
     name: string;
+    bio?: string | null;
   } | null;
 };
 
@@ -126,6 +133,7 @@ export type LoginMutation = {
       email: string;
       profilePicture: string;
       name: string;
+      bio?: string | null;
     } | null;
   };
 };
@@ -154,6 +162,7 @@ export type RegisterMutation = {
       email: string;
       profilePicture: string;
       name: string;
+      bio?: string | null;
     } | null;
   };
 };
@@ -169,7 +178,33 @@ export type MeQuery = {
     email: string;
     profilePicture: string;
     name: string;
+    bio?: string | null;
   } | null;
+};
+
+export type UserQueryVariables = Exact<{
+  username: Scalars['String'];
+}>;
+
+export type UserQuery = {
+  __typename?: 'Query';
+  user: {
+    __typename?: 'UserResponse';
+    errors?: Array<{
+      __typename?: 'FieldError';
+      field: string;
+      message: string;
+    }> | null;
+    user?: {
+      __typename?: 'User';
+      id: number;
+      username: string;
+      email: string;
+      profilePicture: string;
+      name: string;
+      bio?: string | null;
+    } | null;
+  };
 };
 
 export const RegularErrorFragmentDoc = gql`
@@ -185,6 +220,7 @@ export const RegularUserFragmentDoc = gql`
     email
     profilePicture
     name
+    bio
   }
 `;
 export const RegularUserResponseFragmentDoc = gql`
@@ -342,13 +378,10 @@ export type RegisterMutationOptions = Apollo.BaseMutationOptions<
 export const MeDocument = gql`
   query Me {
     me {
-      id
-      username
-      email
-      profilePicture
-      name
+      ...RegularUser
     }
   }
+  ${RegularUserFragmentDoc}
 `;
 
 /**
@@ -381,3 +414,46 @@ export function useMeLazyQuery(
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const UserDocument = gql`
+  query User($username: String!) {
+    user(username: $username) {
+      ...RegularUserResponse
+    }
+  }
+  ${RegularUserResponseFragmentDoc}
+`;
+
+/**
+ * __useUserQuery__
+ *
+ * To run a query within a React component, call `useUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserQuery({
+ *   variables: {
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useUserQuery(
+  baseOptions: Apollo.QueryHookOptions<UserQuery, UserQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<UserQuery, UserQueryVariables>(UserDocument, options);
+}
+export function useUserLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<UserQuery, UserQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<UserQuery, UserQueryVariables>(
+    UserDocument,
+    options
+  );
+}
+export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
+export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
+export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;

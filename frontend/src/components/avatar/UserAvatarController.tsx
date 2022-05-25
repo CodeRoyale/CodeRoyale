@@ -46,7 +46,9 @@ export const UserAvatarController = () => {
           <Menu.Button>
             <UserAvatar
               aria-hidden="true"
-              avatarImage={data.me.profilePicture}
+              profilePicture={data.me.profilePicture}
+              width={45}
+              height={45}
             />
           </Menu.Button>
           <Menu.Items className="mt-2">

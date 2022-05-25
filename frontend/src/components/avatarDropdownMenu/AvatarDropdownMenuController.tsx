@@ -1,8 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { useApolloClient } from '@apollo/client';
-import { v4 as uuidv4 } from 'uuid';
-import { useLogoutMutation } from '../../generated/graphql';
+import { useLogoutMutation, useMeQuery } from '../../generated/graphql';
 import { AvatarDropdownMenu } from './AvatarDropdownMenu';
 import { AvatarDropdownMenuIconButton } from './AvatarDropdownMenuIconButton';
 
@@ -10,12 +9,7 @@ export const AvatarDropdownMenuController: React.FC = () => {
   const router = useRouter();
   const apolloClient = useApolloClient();
   const [logout] = useLogoutMutation();
-
-  // { icon: title }
-  const dropdownOptions: Record<string, string> = {
-    profile: 'Profile',
-    settings: 'Settings',
-  };
+  const { data, loading } = useMeQuery();
 
   const handleLogoutClick = async () => {
     const response = await logout();
@@ -25,16 +19,21 @@ export const AvatarDropdownMenuController: React.FC = () => {
     }
   };
 
+  const handleProfileClick = () => {
+    if (data?.me && !loading) {
+      router.push(`/profile/${data.me.username}`);
+    }
+  };
+
   return (
     <AvatarDropdownMenu>
-      {Object.keys(dropdownOptions).map((dropdownOption, index) => (
-        <AvatarDropdownMenuIconButton
-          key={uuidv4()}
-          title={dropdownOptions[dropdownOption]}
-          icon={dropdownOption}
-          borderRadius={index === 0 ? 'rounded-t-lg' : ''}
-        />
-      ))}
+      <AvatarDropdownMenuIconButton
+        title="Profile"
+        icon="profile"
+        borderRadius="rounded-t-lg"
+        onClick={handleProfileClick}
+      />
+      <AvatarDropdownMenuIconButton title="Settings" icon="settings" />
       <button
         type="button"
         className="bg-primary-700 pt-2 pb-2.5 pr-32 rounded-b-lg w-full transition duration-200 ease-in-out hover:bg-primary-600"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { LeftHeader } from '../../components/header/LeftHeader';
+import { LeftHeaderController } from '../../components/header/LeftHeaderController';
 import { MiddleHeader } from '../../components/header/MiddleHeader';
 import { RightHeader } from '../../components/header/RightHeader';
 import { LeftColumn } from '../../components/layouts/mainGridLayout/LeftColumn';
@@ -11,7 +11,7 @@ import { PeopleFollowingController } from '../PeopleFollowingController';
 export const RoomPage = () => (
   <MainGridLayout>
     <LeftColumn>
-      <LeftHeader />
+      <LeftHeaderController />
       <PeopleFollowingController />
     </LeftColumn>
 

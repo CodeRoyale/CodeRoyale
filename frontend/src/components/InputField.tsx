@@ -27,11 +27,11 @@ export const InputField: React.FC<InputFieldProps> = ({
         id={field.name}
         placeholder={props.placeholder}
         className={`rounded-md py-2 px-3 bg-primary-700 placeholder:text-primary-300 text-white focus:outline focus:outline-offset-2 focus:outline-focus-outline ${
-          error ? 'border border-red-500 text-red-500' : ''
+          error ? 'border border-error-red text-error-red' : ''
         }`}
       ></input>
       {error ? (
-        <span className="mt-2 text-red-500 text-xs">{error}</span>
+        <span className="mt-2 text-error-red text-xs">{error}</span>
       ) : null}
     </div>
   );

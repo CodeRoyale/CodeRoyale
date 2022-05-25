@@ -9,6 +9,7 @@ module.exports = {
       current: 'currentColor',
       black: '#000',
       white: '#fff',
+      'error-red': '#f44336',
       'focus-outline': 'var(--color-focus-outline)',
       primary: {
         100: 'var(--color-primary-100)',

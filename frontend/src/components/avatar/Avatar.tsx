@@ -1,34 +1,38 @@
 import React, { HTMLAttributes } from 'react';
 
 type UserAvatarProps = HTMLAttributes<HTMLDivElement> & {
-  avatarImage: string;
+  profilePicture: string;
+  width: number;
+  height: number;
 };
 
 // TODO: Change alt of image to userName
 // TODO: Use next/image
 export const UserAvatar: React.FC<UserAvatarProps> = ({
-  avatarImage,
+  profilePicture,
+  width,
+  height,
   ...props
 }) => (
   <div {...props}>
     <img
-      className="rounded-full cursor-pointer"
-      src={avatarImage}
+      className="rounded-full"
+      src={profilePicture}
       alt="User Avatar"
-      width={45}
-      height={45}
+      width={width}
+      height={height}
     />
   </div>
 );
 
 interface RoomUserAvatarProps {
-  avatarImage: string;
-  userName: string;
+  profilePicture: string;
+  username: string;
 }
 
 export const RoomUserAvatar: React.FC<RoomUserAvatarProps> = ({
-  avatarImage,
-  userName,
+  profilePicture,
+  username,
 }) => (
   <div
     className="flex flex-col items-center p-0.5 focus:outline focus:outline-offset-2 focus:outline-focus-outline cursor-pointer" /* eslint-disable-next-line */
@@ -36,11 +40,11 @@ export const RoomUserAvatar: React.FC<RoomUserAvatarProps> = ({
   >
     <img
       className="rounded-full"
-      src={avatarImage}
+      src={profilePicture}
       alt="Room User Avatar"
       width={60}
       height={60}
     />
-    <span className="text-primary-100 text-xs mt-1.5">{userName}</span>
+    <span className="text-primary-100 text-xs mt-1.5">{username}</span>
   </div>
 );

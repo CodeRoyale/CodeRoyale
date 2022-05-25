@@ -11,12 +11,12 @@ export const RoomTeamCard: React.FC<RoomTeamCardProps> = ({ teamName }) => (
       <h1 className="text-primary-100 font-semibold text-lg">{teamName}</h1>
       <div className="flex mt-2 space-x-5">
         <RoomUserAvatar
-          avatarImage="https://lh3.googleusercontent.com/a-/AOh14Ghc_V15s5eZUxP0PsKFcNnTX1On7c1UQ4BwSGGW=s96-c"
-          userName="joelmathew"
+          profilePicture="https://lh3.googleusercontent.com/a-/AOh14Ghc_V15s5eZUxP0PsKFcNnTX1On7c1UQ4BwSGGW=s96-c"
+          username="joelmathew"
         />
         <RoomUserAvatar
-          avatarImage="https://lh3.googleusercontent.com/a-/AOh14Ghc_V15s5eZUxP0PsKFcNnTX1On7c1UQ4BwSGGW=s96-c"
-          userName="joelmathew"
+          profilePicture="https://lh3.googleusercontent.com/a-/AOh14Ghc_V15s5eZUxP0PsKFcNnTX1On7c1UQ4BwSGGW=s96-c"
+          username="joelmathew"
         />
       </div>
     </div>

@@ -20,12 +20,12 @@ export const RoomCard: React.FC<RoomCardProps> = ({
     <RoomCardHeader title={title} adminUserName={adminUserName} />
     <div className="flex p-4 space-x-5">
       <RoomUserAvatar
-        avatarImage="https://lh3.googleusercontent.com/a-/AOh14Ghc_V15s5eZUxP0PsKFcNnTX1On7c1UQ4BwSGGW=s96-c"
-        userName="joelmathew"
+        profilePicture="https://lh3.googleusercontent.com/a-/AOh14Ghc_V15s5eZUxP0PsKFcNnTX1On7c1UQ4BwSGGW=s96-c"
+        username="joelmathew"
       />
       <RoomUserAvatar
-        avatarImage="https://lh3.googleusercontent.com/a-/AOh14Ghc_V15s5eZUxP0PsKFcNnTX1On7c1UQ4BwSGGW=s96-c"
-        userName="joelmathew"
+        profilePicture="https://lh3.googleusercontent.com/a-/AOh14Ghc_V15s5eZUxP0PsKFcNnTX1On7c1UQ4BwSGGW=s96-c"
+        username="joelmathew"
       />
     </div>
 

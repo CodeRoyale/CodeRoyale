@@ -6,8 +6,6 @@ import {
   GoogleAuthButtonController,
   GoogleUser,
 } from './GoogleAuthButtonController';
-// import { Form, Formik } from 'formik';
-// import { InputField } from '../../components/InputField';
 
 export const HomePage = () => {
   const [showAuthForm, setShowAuthForm] = useState<boolean>(false);

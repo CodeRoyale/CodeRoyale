@@ -7,11 +7,11 @@ import { MainContentColumn } from '../../components/layouts/mainGridLayout/MainC
 import { MainGridLayout } from '../../components/layouts/mainGridLayout/MainGridLayout';
 import { RightColumn } from '../../components/layouts/mainGridLayout/RightColumn';
 import { PeopleFollowingController } from '../PeopleFollowingController';
-import { ProfileCardController } from '../ProfileCardController';
 import { RoomInvitesController } from '../RoomInvitesController';
-import { PublicRoomsController } from './PublicRoomsController';
+import { ProfileBannerController } from './ProfileBannerController';
+import { ProfileTabsController } from './ProfileTabsController';
 
-export const DashboardPage = () => {
+export const ProfilePage = () => {
   return (
     <MainGridLayout>
       <LeftColumn>
@@ -21,17 +21,14 @@ export const DashboardPage = () => {
 
       <MainContentColumn>
         <MiddleHeader />
-        <PublicRoomsController />
+        <ProfileBannerController />
+        <ProfileTabsController />
       </MainContentColumn>
 
       <RightColumn>
         <RightHeader />
-        <ProfileCardController />
         <RoomInvitesController />
       </RightColumn>
     </MainGridLayout>
   );
 };
-
-// className='relative grid gap-3 justify-center w-screen h-screen px-16'
-// style={{ gridTemplateColumns: '1fr 2fr 1fr' }}
