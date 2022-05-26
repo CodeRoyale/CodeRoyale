@@ -31,9 +31,9 @@ export class User extends BaseEntity {
   @Column()
   profilePicture!: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  bio: string;
+  @Field(() => String, { nullable: true })
+  @Column({ type: "text", nullable: true })
+  bio: string | null;
 
   @Field(() => String)
   @CreateDateColumn()

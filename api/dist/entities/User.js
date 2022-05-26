@@ -40,9 +40,9 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "profilePicture", void 0);
 __decorate([
-    (0, type_graphql_1.Field)({ nullable: true }),
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
+    (0, type_graphql_1.Field)(() => String, { nullable: true }),
+    (0, typeorm_1.Column)({ type: "text", nullable: true }),
+    __metadata("design:type", Object)
 ], User.prototype, "bio", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => String),

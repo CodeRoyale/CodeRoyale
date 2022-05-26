@@ -11,9 +11,12 @@ import {
   Query,
   Resolver,
   Root,
+  UseMiddleware,
 } from "type-graphql";
 import { validateAuthOptions } from "../utils/validateAuthOptions";
 import { COOKIE_NAME } from "../utils/constants";
+import { isAuth } from "../middleware/isAuth";
+import { validateUpdateUserOptions } from "../utils/validateUpdateUserOptions";
 
 @InputType()
 export class RegisterInput {
@@ -31,6 +34,18 @@ export class RegisterInput {
 
   @Field()
   name: string;
+}
+
+@InputType()
+export class UpdateUserInput {
+  @Field()
+  username: string;
+
+  @Field()
+  name: string;
+
+  @Field({ nullable: true })
+  bio: string;
 }
 
 @ObjectType()
@@ -99,6 +114,52 @@ export class UserResolver {
     return {
       user,
     };
+  }
+
+  @Mutation(() => UserResponse)
+  @UseMiddleware(isAuth)
+  async updateUser(
+    @Arg("options")
+    options: UpdateUserInput,
+    @Ctx()
+    { req, dataSource }: MyContext
+  ): Promise<UserResponse> {
+    const errors = validateUpdateUserOptions(options);
+    if (errors) {
+      return { errors };
+    }
+
+    let user;
+
+    try {
+      const result = await dataSource
+        .createQueryBuilder()
+        .update(User)
+        .set({
+          username: options.username,
+          name: options.name,
+          bio: options.bio,
+        })
+        .where("id = :id", { id: req.session.userId })
+        .returning("*")
+        .execute();
+
+      user = result.raw[0];
+    } catch (error) {
+      if (error.code === "23505") {
+        return {
+          errors: [
+            {
+              field: "username",
+              message: "Username already exists",
+            },
+          ],
+        };
+      }
+      console.log("updateUser error", error);
+    }
+
+    return { user };
   }
 
   @Mutation(() => UserResponse)

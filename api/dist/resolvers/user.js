@@ -12,11 +12,13 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserResolver = exports.RegisterInput = void 0;
+exports.UserResolver = exports.UpdateUserInput = exports.RegisterInput = void 0;
 const User_1 = require("../entities/User");
 const type_graphql_1 = require("type-graphql");
 const validateAuthOptions_1 = require("../utils/validateAuthOptions");
 const constants_1 = require("../utils/constants");
+const isAuth_1 = require("../middleware/isAuth");
+const validateUpdateUserOptions_1 = require("../utils/validateUpdateUserOptions");
 let RegisterInput = class RegisterInput {
 };
 __decorate([
@@ -43,6 +45,24 @@ RegisterInput = __decorate([
     (0, type_graphql_1.InputType)()
 ], RegisterInput);
 exports.RegisterInput = RegisterInput;
+let UpdateUserInput = class UpdateUserInput {
+};
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], UpdateUserInput.prototype, "username", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], UpdateUserInput.prototype, "name", void 0);
+__decorate([
+    (0, type_graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], UpdateUserInput.prototype, "bio", void 0);
+UpdateUserInput = __decorate([
+    (0, type_graphql_1.InputType)()
+], UpdateUserInput);
+exports.UpdateUserInput = UpdateUserInput;
 let FieldError = class FieldError {
 };
 __decorate([
@@ -97,6 +117,41 @@ let UserResolver = class UserResolver {
         return {
             user,
         };
+    }
+    async updateUser(options, { req, dataSource }) {
+        const errors = (0, validateUpdateUserOptions_1.validateUpdateUserOptions)(options);
+        if (errors) {
+            return { errors };
+        }
+        let user;
+        try {
+            const result = await dataSource
+                .createQueryBuilder()
+                .update(User_1.User)
+                .set({
+                username: options.username,
+                name: options.name,
+                bio: options.bio,
+            })
+                .where("id = :id", { id: req.session.userId })
+                .returning("*")
+                .execute();
+            user = result.raw[0];
+        }
+        catch (error) {
+            if (error.code === "23505") {
+                return {
+                    errors: [
+                        {
+                            field: "username",
+                            message: "Username already exists",
+                        },
+                    ],
+                };
+            }
+            console.log("updateUser error", error);
+        }
+        return { user };
     }
     async login(email, { req }) {
         const user = await User_1.User.findOne({
@@ -180,6 +235,15 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "user", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => UserResponse),
+    (0, type_graphql_1.UseMiddleware)(isAuth_1.isAuth),
+    __param(0, (0, type_graphql_1.Arg)("options")),
+    __param(1, (0, type_graphql_1.Ctx)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [UpdateUserInput, Object]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "updateUser", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => UserResponse),
     __param(0, (0, type_graphql_1.Arg)("email")),

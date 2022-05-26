@@ -33,7 +33,11 @@ export const AvatarDropdownMenuController: React.FC = () => {
         borderRadius="rounded-t-lg"
         onClick={handleProfileClick}
       />
-      <AvatarDropdownMenuIconButton title="Settings" icon="settings" />
+      <AvatarDropdownMenuIconButton
+        title="Settings"
+        icon="settings"
+        onClick={() => router.push('/settings')}
+      />
       <button
         type="button"
         className="bg-primary-700 pt-2 pb-2.5 pr-32 rounded-b-lg w-full transition duration-200 ease-in-out hover:bg-primary-600"
