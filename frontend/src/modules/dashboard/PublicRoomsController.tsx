@@ -53,47 +53,55 @@ export const PublicRoomsController: React.FC<{}> = () => {
     },
   ];
 
+  let body = null;
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  return (
-    <div className="w-full mt-8 px-4">
-      <div className="flex justify-between items-center w-full">
-        <h1 className="text-primary-100 font-bold text-2xl">Public Rooms</h1>
-        {!data?.me || loading || !loading ? null : (
-          <Button
-            buttonClass="primary"
-            size="normal"
-            onClick={() => setModalIsOpen(true)}
-          >
-            Create Room
-          </Button>
-        )}
-        <Modal modalIsOpen={modalIsOpen}>
-          <h2>Hello World</h2>
-        </Modal>
-      </div>
-      <div className="flex flex-col py-6">
-        {tempPublicRoomsData.map(
-          (
-            {
-              roomName,
-              numberOfMembersInRoom,
-              totalMembersAllowed,
-              roomCompetitionQuestionTags,
-            },
-            index
-          ) => (
-            <RoomSummaryCard
-              key={uuid()}
-              roomName={roomName}
-              numberOfMembersInRoom={numberOfMembersInRoom}
-              totalMembersAllowed={totalMembersAllowed}
-              roomCompetitionQuestionTags={roomCompetitionQuestionTags}
-              marginTop={index !== 0 ? 'mt-6' : null}
-            />
-          )
-        )}
-      </div>
-    </div>
-  );
+  if (loading) {
+  } else if (!data?.me) {
+  } else {
+    body = (
+      <>
+        <div className="flex justify-between items-center w-full">
+          <h1 className="text-primary-100 font-bold text-2xl">Public Rooms</h1>
+          {!data?.me || loading || !loading ? null : (
+            <Button
+              buttonClass="primary"
+              size="normal"
+              onClick={() => setModalIsOpen(true)}
+            >
+              Create Room
+            </Button>
+          )}
+          <Modal modalIsOpen={modalIsOpen}>
+            <h2>Hello World</h2>
+          </Modal>
+        </div>
+        <div className="flex flex-col py-6">
+          {tempPublicRoomsData.map(
+            (
+              {
+                roomName,
+                numberOfMembersInRoom,
+                totalMembersAllowed,
+                roomCompetitionQuestionTags,
+              },
+              index
+            ) => (
+              <RoomSummaryCard
+                key={uuid()}
+                roomName={roomName}
+                numberOfMembersInRoom={numberOfMembersInRoom}
+                totalMembersAllowed={totalMembersAllowed}
+                roomCompetitionQuestionTags={roomCompetitionQuestionTags}
+                marginTop={index !== 0 ? 'mt-6' : null}
+              />
+            )
+          )}
+        </div>
+      </>
+    );
+  }
+
+  return <div className="w-full mt-8 px-4">{body}</div>;
 };
