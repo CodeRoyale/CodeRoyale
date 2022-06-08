@@ -6,6 +6,7 @@ import {
   Field,
   FieldResolver,
   InputType,
+  Int,
   Mutation,
   ObjectType,
   Query,
@@ -17,6 +18,9 @@ import { validateAuthOptions } from "../utils/validateAuthOptions";
 import { COOKIE_NAME } from "../utils/constants";
 import { isAuth } from "../middleware/isAuth";
 import { validateUpdateUserOptions } from "../utils/validateUpdateUserOptions";
+import { Connection } from "../entities/Connection";
+import { toFollowingUserIdsArr } from "../utils/toFollowingUserIdsArr";
+import { In } from "typeorm";
 
 @InputType()
 export class RegisterInput {
@@ -81,6 +85,26 @@ export class UserResolver {
     }
 
     return "";
+  }
+
+  @FieldResolver(() => Boolean, { nullable: true })
+  async connectionStatus(
+    @Root()
+    user: User,
+    @Ctx()
+    { req }: MyContext
+  ) {
+    const { userId } = req.session;
+
+    if (!userId) {
+      return null;
+    }
+
+    const connection = await Connection.findOne({
+      where: { userId, followingUserId: user.id },
+    });
+
+    return connection ? true : false;
   }
 
   @Query(() => User, { nullable: true })
@@ -160,6 +184,106 @@ export class UserResolver {
     }
 
     return { user };
+  }
+
+  @Mutation(() => Boolean)
+  @UseMiddleware(isAuth)
+  async connect(
+    @Arg("followingUserId", () => Int)
+    followingUserId: number,
+    @Arg("wantsToFollow")
+    wantsToFollow: boolean,
+    @Ctx()
+    { req, dataSource }: MyContext
+  ) {
+    const { userId } = req.session;
+
+    const connection = await Connection.findOne({
+      where: { userId, followingUserId },
+    });
+
+    // user already follows
+    if (connection && wantsToFollow) {
+    } else if (!connection && wantsToFollow) {
+      await dataSource.transaction(async (tm) => {
+        await tm.query(
+          `
+          insert into connection ("userId", "followingUserId")
+          values ($1, $2)
+          `,
+          [userId, followingUserId]
+        );
+
+        await tm.query(
+          `
+          update public.user
+          set following = following + 1
+          where id = ${userId}
+          `
+        );
+
+        await tm.query(
+          `
+          update public.user
+          set followers = followers + 1
+          where id = ${followingUserId}
+          `
+        );
+      });
+    } else if (connection && !wantsToFollow) {
+      await dataSource.transaction(async (tm) => {
+        await tm.query(
+          `
+          delete from connection
+          where userId = $1 and followingUserId = $2
+          `,
+          [userId, followingUserId]
+        );
+
+        await tm.query(
+          `
+          update public.user
+          set following = following - 1
+          where id = ${userId}
+          `
+        );
+
+        await tm.query(
+          `
+          update public.user
+          set followers = followers - 1
+          where id = ${followingUserId}
+          `
+        );
+      });
+    }
+
+    return true;
+  }
+
+  @Query(() => [User])
+  async people(
+    @Ctx()
+    { req, dataSource }: MyContext
+  ) {
+    const { userId } = req.session;
+
+    const result = await dataSource.query(
+      `
+      select c."followingUserId" from connection c
+      inner join public.user u on u.id = c."userId"
+      where c."userId" = $1
+      `,
+      [userId]
+    );
+
+    const followingUserIds = toFollowingUserIdsArr(result);
+
+    const people = await User.findBy({
+      id: In(followingUserIds),
+    });
+
+    return people;
   }
 
   @Mutation(() => UserResponse)

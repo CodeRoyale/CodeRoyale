@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
+const Connection_1 = require("./Connection");
 let User = class User extends typeorm_1.BaseEntity {
 };
 __decorate([
@@ -44,6 +45,20 @@ __decorate([
     (0, typeorm_1.Column)({ type: "text", nullable: true }),
     __metadata("design:type", Object)
 ], User.prototype, "bio", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.Column)({ type: "int", default: 0 }),
+    __metadata("design:type", Number)
+], User.prototype, "following", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.Column)({ type: "int", default: 0 }),
+    __metadata("design:type", Number)
+], User.prototype, "followers", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => Connection_1.Connection, (follow) => follow.user),
+    __metadata("design:type", Array)
+], User.prototype, "connections", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => String),
     (0, typeorm_1.CreateDateColumn)(),

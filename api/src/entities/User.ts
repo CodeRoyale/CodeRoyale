@@ -4,9 +4,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { Connection } from "./Connection";
 
 @ObjectType()
 @Entity()
@@ -34,6 +36,17 @@ export class User extends BaseEntity {
   @Field(() => String, { nullable: true })
   @Column({ type: "text", nullable: true })
   bio: string | null;
+
+  @Field()
+  @Column({ type: "int", default: 0 })
+  following: number;
+
+  @Field()
+  @Column({ type: "int", default: 0 })
+  followers: number;
+
+  @OneToMany(() => Connection, (follow) => follow.user)
+  connections: Connection[];
 
   @Field(() => String)
   @CreateDateColumn()

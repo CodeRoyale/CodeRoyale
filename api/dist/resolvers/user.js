@@ -19,6 +19,9 @@ const validateAuthOptions_1 = require("../utils/validateAuthOptions");
 const constants_1 = require("../utils/constants");
 const isAuth_1 = require("../middleware/isAuth");
 const validateUpdateUserOptions_1 = require("../utils/validateUpdateUserOptions");
+const Connection_1 = require("../entities/Connection");
+const toFollowingUserIdsArr_1 = require("../utils/toFollowingUserIdsArr");
+const typeorm_1 = require("typeorm");
 let RegisterInput = class RegisterInput {
 };
 __decorate([
@@ -96,6 +99,16 @@ let UserResolver = class UserResolver {
         }
         return "";
     }
+    async connectionStatus(user, { req }) {
+        const { userId } = req.session;
+        if (!userId) {
+            return null;
+        }
+        const connection = await Connection_1.Connection.findOne({
+            where: { userId, followingUserId: user.id },
+        });
+        return connection ? true : false;
+    }
     me({ req }) {
         if (!req.session.userId) {
             return null;
@@ -152,6 +165,64 @@ let UserResolver = class UserResolver {
             console.log("updateUser error", error);
         }
         return { user };
+    }
+    async connect(followingUserId, wantsToFollow, { req, dataSource }) {
+        const { userId } = req.session;
+        const connection = await Connection_1.Connection.findOne({
+            where: { userId, followingUserId },
+        });
+        if (connection && wantsToFollow) {
+        }
+        else if (!connection && wantsToFollow) {
+            await dataSource.transaction(async (tm) => {
+                await tm.query(`
+          insert into connection ("userId", "followingUserId")
+          values ($1, $2)
+          `, [userId, followingUserId]);
+                await tm.query(`
+          update public.user
+          set following = following + 1
+          where id = ${userId}
+          `);
+                await tm.query(`
+          update public.user
+          set followers = followers + 1
+          where id = ${followingUserId}
+          `);
+            });
+        }
+        else if (connection && !wantsToFollow) {
+            await dataSource.transaction(async (tm) => {
+                await tm.query(`
+          delete from connection
+          where userId = $1 and followingUserId = $2
+          `, [userId, followingUserId]);
+                await tm.query(`
+          update public.user
+          set following = following - 1
+          where id = ${userId}
+          `);
+                await tm.query(`
+          update public.user
+          set followers = followers - 1
+          where id = ${followingUserId}
+          `);
+            });
+        }
+        return true;
+    }
+    async people({ req, dataSource }) {
+        const { userId } = req.session;
+        const result = await dataSource.query(`
+      select c."followingUserId" from connection c
+      inner join public.user u on u.id = c."userId"
+      where c."userId" = $1
+      `, [userId]);
+        const followingUserIds = (0, toFollowingUserIdsArr_1.toFollowingUserIdsArr)(result);
+        const people = await User_1.User.findBy({
+            id: (0, typeorm_1.In)(followingUserIds),
+        });
+        return people;
     }
     async login(email, { req }) {
         const user = await User_1.User.findOne({
@@ -222,6 +293,14 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserResolver.prototype, "email", null);
 __decorate([
+    (0, type_graphql_1.FieldResolver)(() => Boolean, { nullable: true }),
+    __param(0, (0, type_graphql_1.Root)()),
+    __param(1, (0, type_graphql_1.Ctx)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [User_1.User, Object]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "connectionStatus", null);
+__decorate([
     (0, type_graphql_1.Query)(() => User_1.User, { nullable: true }),
     __param(0, (0, type_graphql_1.Ctx)()),
     __metadata("design:type", Function),
@@ -244,6 +323,23 @@ __decorate([
     __metadata("design:paramtypes", [UpdateUserInput, Object]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "updateUser", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
+    (0, type_graphql_1.UseMiddleware)(isAuth_1.isAuth),
+    __param(0, (0, type_graphql_1.Arg)("followingUserId", () => type_graphql_1.Int)),
+    __param(1, (0, type_graphql_1.Arg)("wantsToFollow")),
+    __param(2, (0, type_graphql_1.Ctx)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Boolean, Object]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "connect", null);
+__decorate([
+    (0, type_graphql_1.Query)(() => [User_1.User]),
+    __param(0, (0, type_graphql_1.Ctx)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "people", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => UserResponse),
     __param(0, (0, type_graphql_1.Arg)("email")),
