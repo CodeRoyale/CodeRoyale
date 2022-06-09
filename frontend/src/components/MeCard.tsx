@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface ProfileCardProps {
+interface MeCardProps {
   avatarUrl: string;
   username: string;
   name: string;
@@ -9,7 +9,7 @@ interface ProfileCardProps {
   following: number;
 }
 
-export const ProfileCard: React.FC<ProfileCardProps> = ({
+export const MeCard: React.FC<MeCardProps> = ({
   avatarUrl,
   username,
   name,

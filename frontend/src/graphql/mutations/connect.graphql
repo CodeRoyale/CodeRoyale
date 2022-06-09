@@ -1,0 +1,3 @@
+mutation Connect($followingUserId: Int!, $wantsToFollow: Boolean!) {
+  connect(followingUserId: $followingUserId, wantsToFollow: $wantsToFollow)
+}

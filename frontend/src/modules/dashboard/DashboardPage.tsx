@@ -9,7 +9,7 @@ import { MainGridLayout } from '../../components/layouts/mainGridLayout/MainGrid
 import { RightColumn } from '../../components/layouts/mainGridLayout/RightColumn';
 import { useMeQuery } from '../../generated/graphql';
 import { PeopleFollowingController } from '../PeopleFollowingController';
-import { ProfileCardController } from '../ProfileCardController';
+import { MeCardController } from '../MeCardController';
 import { RoomInvitesController } from '../RoomInvitesController';
 import { PublicRoomsController } from './PublicRoomsController';
 
@@ -37,7 +37,7 @@ export const DashboardPage = () => {
 
         <RightColumn>
           <RightHeader />
-          <ProfileCardController />
+          <MeCardController />
           <RoomInvitesController />
         </RightColumn>
       </>

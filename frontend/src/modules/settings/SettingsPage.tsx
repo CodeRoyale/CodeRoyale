@@ -7,7 +7,7 @@ import { MainContentColumn } from '../../components/layouts/mainGridLayout/MainC
 import { MainGridLayout } from '../../components/layouts/mainGridLayout/MainGridLayout';
 import { RightColumn } from '../../components/layouts/mainGridLayout/RightColumn';
 import { PeopleFollowingController } from '../PeopleFollowingController';
-import { ProfileCardController } from '../ProfileCardController';
+import { MeCardController } from '../MeCardController';
 import { RoomInvitesController } from '../RoomInvitesController';
 import { SettingsCardController } from './SettingsFormController';
 
@@ -26,7 +26,7 @@ export const SettingsPage = () => {
 
       <RightColumn>
         <RightHeader />
-        <ProfileCardController />
+        <MeCardController />
         <RoomInvitesController />
       </RightColumn>
     </MainGridLayout>

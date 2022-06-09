@@ -1,8 +1,8 @@
 import React from 'react';
-import { ProfileCard } from '../components/ProfileCard';
+import { MeCard } from '../components/MeCard';
 import { useMeQuery } from '../generated/graphql';
 
-export const ProfileCardController: React.FC = () => {
+export const MeCardController: React.FC = () => {
   const { data, loading } = useMeQuery();
 
   let body = null;
@@ -11,13 +11,13 @@ export const ProfileCardController: React.FC = () => {
   } else if (!data?.me) {
   } else {
     body = (
-      <ProfileCard
+      <MeCard
         avatarUrl={data.me.profilePicture}
         username={data.me.username}
         name={data.me.name}
-        bio={data.me?.bio}
-        followers={2434}
-        following={100}
+        bio={data.me.bio}
+        followers={data.me.followers}
+        following={data.me.following}
       />
     );
   }

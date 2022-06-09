@@ -6,12 +6,18 @@ interface ProfileBannerProps {
   profilePicture: string;
   name: string;
   username: string;
+  showConnectBtn: boolean;
+  connectBtnText: string;
+  connectBtnOnClick: () => void;
 }
 
 export const ProfileBanner: React.FC<ProfileBannerProps> = ({
   profilePicture,
   name,
   username,
+  showConnectBtn,
+  connectBtnText,
+  connectBtnOnClick,
 }) => {
   return (
     <div className="bg-primary-800 p-6 rounded-lg">
@@ -28,9 +34,15 @@ export const ProfileBanner: React.FC<ProfileBannerProps> = ({
             <span className="text-lg text-primary-100 font-bold">{name}</span>
           </div>
         </div>
-        <Button buttonClass="primary" size="small">
-          Follow
-        </Button>
+        {!showConnectBtn ? null : (
+          <Button
+            buttonClass="primary"
+            size="small"
+            onClick={connectBtnOnClick}
+          >
+            {connectBtnText}
+          </Button>
+        )}
       </div>
     </div>
   );

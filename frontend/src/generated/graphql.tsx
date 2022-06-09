@@ -29,10 +29,16 @@ export type FieldError = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  connect: Scalars['Boolean'];
   login: UserResponse;
   logout: Scalars['Boolean'];
   register: UserResponse;
   updateUser: UserResponse;
+};
+
+export type MutationConnectArgs = {
+  followingUserId: Scalars['Int'];
+  wantsToFollow: Scalars['Boolean'];
 };
 
 export type MutationLoginArgs = {
@@ -51,6 +57,7 @@ export type Query = {
   __typename?: 'Query';
   hello: Scalars['String'];
   me?: Maybe<User>;
+  people: Array<User>;
   user: UserResponse;
 };
 
@@ -75,8 +82,11 @@ export type UpdateUserInput = {
 export type User = {
   __typename?: 'User';
   bio?: Maybe<Scalars['String']>;
+  connectionStatus?: Maybe<Scalars['Boolean']>;
   createdAt: Scalars['String'];
   email: Scalars['String'];
+  followers: Scalars['Float'];
+  following: Scalars['Float'];
   id: Scalars['Float'];
   name: Scalars['String'];
   profilePicture: Scalars['String'];
@@ -104,6 +114,9 @@ export type RegularUserFragment = {
   profilePicture: string;
   name: string;
   bio?: string | null;
+  connectionStatus?: boolean | null;
+  following: number;
+  followers: number;
 };
 
 export type RegularUserResponseFragment = {
@@ -121,8 +134,18 @@ export type RegularUserResponseFragment = {
     profilePicture: string;
     name: string;
     bio?: string | null;
+    connectionStatus?: boolean | null;
+    following: number;
+    followers: number;
   } | null;
 };
+
+export type ConnectMutationVariables = Exact<{
+  followingUserId: Scalars['Int'];
+  wantsToFollow: Scalars['Boolean'];
+}>;
+
+export type ConnectMutation = { __typename?: 'Mutation'; connect: boolean };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -145,6 +168,9 @@ export type LoginMutation = {
       profilePicture: string;
       name: string;
       bio?: string | null;
+      connectionStatus?: boolean | null;
+      following: number;
+      followers: number;
     } | null;
   };
 };
@@ -174,6 +200,9 @@ export type RegisterMutation = {
       profilePicture: string;
       name: string;
       bio?: string | null;
+      connectionStatus?: boolean | null;
+      following: number;
+      followers: number;
     } | null;
   };
 };
@@ -199,6 +228,9 @@ export type UpdateUserMutation = {
       profilePicture: string;
       name: string;
       bio?: string | null;
+      connectionStatus?: boolean | null;
+      following: number;
+      followers: number;
     } | null;
   };
 };
@@ -215,6 +247,9 @@ export type MeQuery = {
     profilePicture: string;
     name: string;
     bio?: string | null;
+    connectionStatus?: boolean | null;
+    following: number;
+    followers: number;
   } | null;
 };
 
@@ -239,6 +274,9 @@ export type UserQuery = {
       profilePicture: string;
       name: string;
       bio?: string | null;
+      connectionStatus?: boolean | null;
+      following: number;
+      followers: number;
     } | null;
   };
 };
@@ -257,6 +295,9 @@ export const RegularUserFragmentDoc = gql`
     profilePicture
     name
     bio
+    connectionStatus
+    following
+    followers
   }
 `;
 export const RegularUserResponseFragmentDoc = gql`
@@ -271,6 +312,52 @@ export const RegularUserResponseFragmentDoc = gql`
   ${RegularErrorFragmentDoc}
   ${RegularUserFragmentDoc}
 `;
+export const ConnectDocument = gql`
+  mutation Connect($followingUserId: Int!, $wantsToFollow: Boolean!) {
+    connect(followingUserId: $followingUserId, wantsToFollow: $wantsToFollow)
+  }
+`;
+export type ConnectMutationFn = Apollo.MutationFunction<
+  ConnectMutation,
+  ConnectMutationVariables
+>;
+
+/**
+ * __useConnectMutation__
+ *
+ * To run a mutation, you first call `useConnectMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useConnectMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [connectMutation, { data, loading, error }] = useConnectMutation({
+ *   variables: {
+ *      followingUserId: // value for 'followingUserId'
+ *      wantsToFollow: // value for 'wantsToFollow'
+ *   },
+ * });
+ */
+export function useConnectMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ConnectMutation,
+    ConnectMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<ConnectMutation, ConnectMutationVariables>(
+    ConnectDocument,
+    options
+  );
+}
+export type ConnectMutationHookResult = ReturnType<typeof useConnectMutation>;
+export type ConnectMutationResult = Apollo.MutationResult<ConnectMutation>;
+export type ConnectMutationOptions = Apollo.BaseMutationOptions<
+  ConnectMutation,
+  ConnectMutationVariables
+>;
 export const LoginDocument = gql`
   mutation Login($email: String!) {
     login(email: $email) {

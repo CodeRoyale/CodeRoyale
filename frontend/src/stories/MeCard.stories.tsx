@@ -1,15 +1,13 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { ProfileCard } from '../components/ProfileCard';
+import { MeCard } from '../components/MeCard';
 
 export default {
-  title: 'Profile Card',
-  component: ProfileCard,
-} as ComponentMeta<typeof ProfileCard>;
+  title: 'Me Card',
+  component: MeCard,
+} as ComponentMeta<typeof MeCard>;
 
-const Template: ComponentStory<typeof ProfileCard> = (args) => (
-  <ProfileCard {...args} />
-);
+const Template: ComponentStory<typeof MeCard> = (args) => <MeCard {...args} />;
 
 export const Main = Template.bind({});
 Main.args = {

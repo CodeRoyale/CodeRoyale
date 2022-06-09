@@ -195,7 +195,7 @@ export class UserResolver {
     wantsToFollow: boolean,
     @Ctx()
     { req, dataSource }: MyContext
-  ) {
+  ): Promise<boolean> {
     const { userId } = req.session;
 
     const connection = await Connection.findOne({
@@ -218,16 +218,18 @@ export class UserResolver {
           `
           update public.user
           set following = following + 1
-          where id = ${userId}
-          `
+          where id = $1
+          `,
+          [userId]
         );
 
         await tm.query(
           `
           update public.user
           set followers = followers + 1
-          where id = ${followingUserId}
-          `
+          where id = $1
+          `,
+          [followingUserId]
         );
       });
     } else if (connection && !wantsToFollow) {
@@ -235,7 +237,7 @@ export class UserResolver {
         await tm.query(
           `
           delete from connection
-          where userId = $1 and followingUserId = $2
+          where "userId" = $1 and "followingUserId" = $2
           `,
           [userId, followingUserId]
         );
@@ -244,16 +246,18 @@ export class UserResolver {
           `
           update public.user
           set following = following - 1
-          where id = ${userId}
-          `
+          where id = $1
+          `,
+          [userId]
         );
 
         await tm.query(
           `
           update public.user
           set followers = followers - 1
-          where id = ${followingUserId}
-          `
+          where id = $1
+          `,
+          [followingUserId]
         );
       });
     }

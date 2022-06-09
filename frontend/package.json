@@ -22,6 +22,7 @@
     "axios": "^0.27.2",
     "formik": "^2.2.9",
     "graphql": "^16.5.0",
+    "graphql-tag": "^2.12.6",
     "headlessui-float-react": "^0.5.4",
     "jsonwebtoken": "^8.5.1",
     "next": "^12.1.6",

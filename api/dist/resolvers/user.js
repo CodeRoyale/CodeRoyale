@@ -182,31 +182,31 @@ let UserResolver = class UserResolver {
                 await tm.query(`
           update public.user
           set following = following + 1
-          where id = ${userId}
-          `);
+          where id = $1
+          `, [userId]);
                 await tm.query(`
           update public.user
           set followers = followers + 1
-          where id = ${followingUserId}
-          `);
+          where id = $1
+          `, [followingUserId]);
             });
         }
         else if (connection && !wantsToFollow) {
             await dataSource.transaction(async (tm) => {
                 await tm.query(`
           delete from connection
-          where userId = $1 and followingUserId = $2
+          where "userId" = $1 and "followingUserId" = $2
           `, [userId, followingUserId]);
                 await tm.query(`
           update public.user
           set following = following - 1
-          where id = ${userId}
-          `);
+          where id = $1
+          `, [userId]);
                 await tm.query(`
           update public.user
           set followers = followers - 1
-          where id = ${followingUserId}
-          `);
+          where id = $1
+          `, [followingUserId]);
             });
         }
         return true;
