@@ -10,7 +10,7 @@ interface MainGridLayoutProps {
 }
 
 export const MainGridLayout: React.FC<MainGridLayoutProps> = ({ children }) => (
-  <div className="px-16">
+  <div className="px-16 scrollbar-thin scrollbar-thumb-primary-700">
     <div
       className="grid gap-5"
       style={{ gridTemplateColumns: '235px 640px 325px', margin: '0 auto' }}
