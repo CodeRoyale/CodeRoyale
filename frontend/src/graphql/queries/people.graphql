@@ -1,0 +1,8 @@
+query People {
+  people {
+    id
+    username
+    profilePicture
+    name
+  }
+}

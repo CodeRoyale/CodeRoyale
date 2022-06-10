@@ -1,6 +1,6 @@
 import React from 'react';
-import { IoIosPeople } from 'react-icons/io';
 import { v4 as uuid } from 'uuid';
+import { People } from '../icons';
 import { Tag } from './Tag';
 
 interface RoomSummaryCardProps {
@@ -31,8 +31,8 @@ export const RoomSummaryCard: React.FC<RoomSummaryCardProps> = ({
         <span className="text-primary-100 font-medium text-lg">{roomName}</span>
 
         <div className="flex items-center text-primary-300">
-          <IoIosPeople size={22} />
-          <span className="ml-1 text-sm">{`${numberOfMembersInRoom}/${totalMembersAllowed}`}</span>
+          <People width={24} height={24} className="fill-primary-300" />
+          <span className="ml-2 text-sm">{`${numberOfMembersInRoom}/${totalMembersAllowed}`}</span>
         </div>
       </div>
 

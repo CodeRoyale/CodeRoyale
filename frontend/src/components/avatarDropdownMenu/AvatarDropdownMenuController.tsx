@@ -2,8 +2,8 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { useApolloClient } from '@apollo/client';
 import { useLogoutMutation, useMeQuery } from '../../generated/graphql';
+import { DropdownMenuIconButton } from '../DropdownMenuIconButton';
 import { AvatarDropdownMenu } from './AvatarDropdownMenu';
-import { AvatarDropdownMenuIconButton } from './AvatarDropdownMenuIconButton';
 
 export const AvatarDropdownMenuController: React.FC = () => {
   const router = useRouter();
@@ -27,13 +27,13 @@ export const AvatarDropdownMenuController: React.FC = () => {
 
   return (
     <AvatarDropdownMenu>
-      <AvatarDropdownMenuIconButton
+      <DropdownMenuIconButton
         title="Profile"
         icon="profile"
         borderRadius="rounded-t-lg"
         onClick={handleProfileClick}
       />
-      <AvatarDropdownMenuIconButton
+      <DropdownMenuIconButton
         title="Settings"
         icon="settings"
         onClick={() => router.push('/settings')}

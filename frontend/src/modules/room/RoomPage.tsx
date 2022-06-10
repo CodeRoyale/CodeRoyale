@@ -6,13 +6,13 @@ import { LeftColumn } from '../../components/layouts/mainGridLayout/LeftColumn';
 import { MainContentColumn } from '../../components/layouts/mainGridLayout/MainContentColumn';
 import { MainGridLayout } from '../../components/layouts/mainGridLayout/MainGridLayout';
 import { RightColumn } from '../../components/layouts/mainGridLayout/RightColumn';
-import { PeopleFollowingController } from '../PeopleFollowingController';
+import { PeopleController } from '../PeopleController';
 
 export const RoomPage = () => (
   <MainGridLayout>
     <LeftColumn>
       <LeftHeaderController />
-      <PeopleFollowingController />
+      <PeopleController />
     </LeftColumn>
 
     <MainContentColumn>

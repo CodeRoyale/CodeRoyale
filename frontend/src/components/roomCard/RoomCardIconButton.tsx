@@ -1,6 +1,5 @@
 import React, { ButtonHTMLAttributes } from 'react';
-import { IoMdSettings } from 'react-icons/io';
-import { IoClose } from 'react-icons/io5';
+import { Close, Settings } from '../../icons';
 
 type RoomCardIconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   icon: string;
@@ -8,8 +7,8 @@ type RoomCardIconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const iconLookup: Record<string, React.ReactNode> = {
-  settings: <IoMdSettings size={22} />,
-  closeRoom: <IoClose size={22} />,
+  settings: <Settings className="fill-primary-100" width={22} height={22} />,
+  closeRoom: <Close className="fill-primary-100" width={22} height={22} />,
 };
 
 export const RoomCardIconButton: React.FC<RoomCardIconButtonProps> = ({

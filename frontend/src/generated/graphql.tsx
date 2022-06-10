@@ -253,6 +253,19 @@ export type MeQuery = {
   } | null;
 };
 
+export type PeopleQueryVariables = Exact<{ [key: string]: never }>;
+
+export type PeopleQuery = {
+  __typename?: 'Query';
+  people: Array<{
+    __typename?: 'User';
+    id: number;
+    username: string;
+    profilePicture: string;
+    name: string;
+  }>;
+};
+
 export type UserQueryVariables = Exact<{
   username: Scalars['String'];
 }>;
@@ -588,6 +601,56 @@ export function useMeLazyQuery(
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const PeopleDocument = gql`
+  query People {
+    people {
+      id
+      username
+      profilePicture
+      name
+    }
+  }
+`;
+
+/**
+ * __usePeopleQuery__
+ *
+ * To run a query within a React component, call `usePeopleQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePeopleQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePeopleQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePeopleQuery(
+  baseOptions?: Apollo.QueryHookOptions<PeopleQuery, PeopleQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<PeopleQuery, PeopleQueryVariables>(
+    PeopleDocument,
+    options
+  );
+}
+export function usePeopleLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<PeopleQuery, PeopleQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<PeopleQuery, PeopleQueryVariables>(
+    PeopleDocument,
+    options
+  );
+}
+export type PeopleQueryHookResult = ReturnType<typeof usePeopleQuery>;
+export type PeopleLazyQueryHookResult = ReturnType<typeof usePeopleLazyQuery>;
+export type PeopleQueryResult = Apollo.QueryResult<
+  PeopleQuery,
+  PeopleQueryVariables
+>;
 export const UserDocument = gql`
   query User($username: String!) {
     user(username: $username) {
