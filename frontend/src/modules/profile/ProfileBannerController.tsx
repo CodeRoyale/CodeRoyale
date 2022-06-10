@@ -55,9 +55,23 @@ export const ProfileBannerController: React.FC = () => {
           `,
         });
 
+        // reading people query from cache
+        const peopleInCache: any = cache.readQuery({
+          query: gql`
+            query ReadPeople {
+              people {
+                id
+                username
+                profilePicture
+                name
+              }
+            }
+          `,
+        });
+
         if (profileFragment && meFragment) {
-          // user wants to follow the profile so update cache with new data
           if (wantsToFollow) {
+            // user wants to follow the profile so update cache with new data
             cache.writeFragment<{ following: number }>({
               id: 'User:' + meData?.me?.id,
               fragment: gql`
@@ -86,6 +100,35 @@ export const ProfileBannerController: React.FC = () => {
                 followers: profileFragment.followers + 1,
               },
             });
+
+            // updating people in cache
+            if (peopleInCache) {
+              cache.writeQuery({
+                query: gql`
+                  query WritePeople {
+                    people {
+                      id
+                      username
+                      profilePicture
+                      name
+                    }
+                  }
+                `,
+                data: {
+                  people: () => {
+                    peopleInCache.people.push({
+                      id: profileData.user.user?.id,
+                      name: profileData.user.user?.name,
+                      profilePicture: profileData.user.user?.profilePicture,
+                      username: profileData.user.user?.username,
+                      __typename: 'User',
+                    });
+
+                    return peopleInCache.people;
+                  },
+                },
+              });
+            }
           }
           // user wants to unfollow the profile so update cache with new data
           else {
@@ -115,6 +158,39 @@ export const ProfileBannerController: React.FC = () => {
                 followers: profileFragment.followers - 1,
               },
             });
+
+            // updating people in cache
+            if (peopleInCache) {
+              cache.writeQuery({
+                query: gql`
+                  query WritePeople {
+                    people {
+                      id
+                      username
+                      profilePicture
+                      name
+                    }
+                  }
+                `,
+                data: {
+                  people: () => {
+                    const index = peopleInCache.people.indexOf({
+                      id: profileData.user.user?.id,
+                      name: profileData.user.user?.name,
+                      profilePicture: profileData.user.user?.profilePicture,
+                      username: profileData.user.user?.username,
+                      __typename: 'User',
+                    });
+
+                    if (index > -1) {
+                      peopleInCache.people.splice(index, 1); // 2nd parameter means remove one item only
+                    }
+
+                    return peopleInCache.people;
+                  },
+                },
+              });
+            }
           }
         }
       },

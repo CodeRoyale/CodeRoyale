@@ -18,7 +18,14 @@ export const PeopleController: React.FC<{}> = () => {
     body = (
       <>
         <h1 className="text-primary-100 font-bold text-2xl">People</h1>
-        <span className="text-primary-300 text-sm mt-4">Online</span>
+        {peopleData.people.length === 0 ? (
+          <span className="text-primary-300 text-sm mt-4">
+            Currently you are not following anyone. Follow someone to see them
+            here!
+          </span>
+        ) : (
+          <span className="text-primary-300 text-sm mt-4">Online</span>
+        )}
         <div className="py-4">
           {peopleData.people.map(({ id, profilePicture, username, name }) => (
             <Menu key={id}>
