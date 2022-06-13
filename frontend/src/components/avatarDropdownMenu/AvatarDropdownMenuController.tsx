@@ -12,11 +12,8 @@ export const AvatarDropdownMenuController: React.FC = () => {
   const { data, loading } = useMeQuery();
 
   const handleLogoutClick = async () => {
-    const response = await logout();
+    await logout();
     await apolloClient.resetStore();
-    if (response.data?.logout) {
-      router.replace('/');
-    }
   };
 
   const handleProfileClick = () => {

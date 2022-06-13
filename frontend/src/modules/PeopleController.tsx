@@ -1,6 +1,6 @@
+import React from 'react';
 import { Menu } from '@headlessui/react';
 import { Float } from 'headlessui-float-react';
-import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { PeopleCard } from '../components/peopleCard/PeopleCard';
 import { PeopleCardMenuController } from '../components/peopleCard/PeopleCardMenuController';
@@ -12,8 +12,8 @@ export const PeopleController: React.FC<{}> = () => {
 
   let body = null;
 
-  if (meLoading || peopleLoading) {
-  } else if (!meData?.me || !peopleData?.people) {
+  if (peopleLoading || meLoading) {
+  } else if (!peopleData?.people || !meData?.me) {
   } else {
     body = (
       <>

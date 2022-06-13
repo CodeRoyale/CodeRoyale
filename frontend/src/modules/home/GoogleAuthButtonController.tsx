@@ -56,6 +56,7 @@ export const GoogleAuthButtonController: React.FC<
                 me: data?.login.user,
               },
             });
+            cache.evict({ fieldName: 'people' });
           },
         });
 
