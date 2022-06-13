@@ -1,8 +1,9 @@
 {
-  "name": "coderoyale-lobby",
+  "name": "@coderoyale/lobby",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "dev": "nodemon server/server.js",
     "start": "node server/server.js",
