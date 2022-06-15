@@ -3,16 +3,29 @@ import express from "express";
 import cors from "cors";
 import os from "os";
 import http from "http";
-// import socketio from "socket.io";
+import { Server } from "socket.io";
 import { mainRouter } from "./routes/main";
 import { usersRouter } from "./routes/users";
 import { roomsRouter } from "./routes/rooms";
+import {
+  COOKIE_NAME,
+  SESSION_PREFIX,
+  SOCKET_USER_PREFIX,
+  __prod__,
+} from "./utils/constants";
+import cookieParser from "cookie-parser";
+import cookie from "cookie";
+import Redis from "ioredis";
+import { redisSessionCookie } from "./types/types";
+import { CONNECTION_ACK, CONNECTION_DENY } from "./socketActions/serverActions";
 
 const main = async () => {
   // create server using http
   // we need to use http here for socket.io
   const app = express();
   const server = http.createServer(app);
+
+  const redis = new Redis();
 
   // middlewares
   app.use(
@@ -28,6 +41,65 @@ const main = async () => {
   app.use("/", mainRouter);
   app.use("/users", usersRouter);
   app.use("/rooms", roomsRouter);
+
+  // cors for socket.io
+  const io = new Server(server, {
+    cors: {
+      origin: process.env.CORS_ORIGIN,
+      credentials: true,
+    },
+  });
+
+  // only allow authenticated users
+  io.use(async (socket, next) => {
+    const cookies = socket.request.headers.cookie;
+    let parsedCookies;
+    let unsignedCookie;
+    let cookieData: redisSessionCookie | null = null;
+    if (cookies) {
+      parsedCookies = cookie.parse(cookies);
+      // unsign cookie
+      unsignedCookie = cookieParser.signedCookie(
+        parsedCookies[COOKIE_NAME],
+        process.env.SESSION_SECRET
+      );
+      // verifying user session in redis
+      const key = SESSION_PREFIX + unsignedCookie;
+      const result = await redis.get(key);
+      cookieData = result ? JSON.parse(result) : null;
+    }
+
+    // user is authentic and logged in
+    if (cookieData && cookieData.userId) {
+      // checking if user is already connected
+      const userInRedis = await redis.get(
+        SOCKET_USER_PREFIX + cookieData.userId
+      );
+      if (userInRedis) {
+        console.log(`userId:${cookieData.userId} reconnected`);
+        return next();
+      }
+
+      // new user connecting
+      // storing socket user in redis
+      const userObjInRedis = {
+        userId: cookieData.userId,
+        socketId: socket.id,
+      };
+      await redis.set(
+        SOCKET_USER_PREFIX + cookieData.userId,
+        JSON.stringify(userObjInRedis)
+      );
+      console.log(`userId:${cookieData.userId} connected`);
+      socket.emit(CONNECTION_ACK);
+      next();
+    } else {
+      socket.emit(CONNECTION_DENY);
+      next(new Error("Not authenticated"));
+    }
+  });
+
+  io.on("connection", (socket) => {});
 
   // start listening
   server.listen(process.env.PORT, () => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { LeftHeaderController } from '../../components/header/LeftHeaderController';
 import { MiddleHeader } from '../../components/header/MiddleHeader';
@@ -7,6 +7,7 @@ import { LeftColumn } from '../../components/layouts/mainGridLayout/LeftColumn';
 import { MainContentColumn } from '../../components/layouts/mainGridLayout/MainContentColumn';
 import { MainGridLayout } from '../../components/layouts/mainGridLayout/MainGridLayout';
 import { RightColumn } from '../../components/layouts/mainGridLayout/RightColumn';
+import { socketConnection } from '../../service/socket';
 import { useMeQuery } from '../../generated/graphql';
 import { PeopleController } from '../PeopleController';
 import { MeCardController } from '../MeCardController';
@@ -14,6 +15,14 @@ import { RoomInvitesController } from '../RoomInvitesController';
 import { PublicRoomsController } from './PublicRoomsController';
 
 export const DashboardPage = () => {
+  useEffect(() => {
+    socketConnection((error, data) => {
+      if (data && data.message === 'CONNECTION_ACK') {
+        console.log('working socket');
+      }
+    });
+  }, []);
+
   const router = useRouter();
   const { data, loading } = useMeQuery();
 
