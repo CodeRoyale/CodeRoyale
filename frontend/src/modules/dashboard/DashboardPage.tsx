@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import React from 'react';
 import { LeftHeaderController } from '../../components/header/LeftHeaderController';
 import { MiddleHeader } from '../../components/header/MiddleHeader';
 import { RightHeader } from '../../components/header/RightHeader';
@@ -7,33 +6,16 @@ import { LeftColumn } from '../../components/layouts/mainGridLayout/LeftColumn';
 import { MainContentColumn } from '../../components/layouts/mainGridLayout/MainContentColumn';
 import { MainGridLayout } from '../../components/layouts/mainGridLayout/MainGridLayout';
 import { RightColumn } from '../../components/layouts/mainGridLayout/RightColumn';
-import { socketConnection } from '../../service/socket';
-import { useMeQuery } from '../../generated/graphql';
 import { PeopleController } from '../PeopleController';
+import { WaitForWsAndAuth } from '../WaitForWsAndAuth';
 import { MeCardController } from '../MeCardController';
 import { RoomInvitesController } from '../RoomInvitesController';
 import { PublicRoomsController } from './PublicRoomsController';
 
 export const DashboardPage = () => {
-  useEffect(() => {
-    socketConnection((error, data) => {
-      if (data && data.message === 'CONNECTION_ACK') {
-        console.log('working socket');
-      }
-    });
-  }, []);
-
-  const router = useRouter();
-  const { data, loading } = useMeQuery();
-
-  let body = null;
-
-  if (loading) {
-  } else if (!data?.me) {
-    router.push('/');
-  } else {
-    body = (
-      <>
+  return (
+    <WaitForWsAndAuth>
+      <MainGridLayout>
         <LeftColumn>
           <LeftHeaderController />
           <PeopleController />
@@ -49,11 +31,9 @@ export const DashboardPage = () => {
           <MeCardController />
           <RoomInvitesController />
         </RightColumn>
-      </>
-    );
-  }
-
-  return <MainGridLayout>{body}</MainGridLayout>;
+      </MainGridLayout>
+    </WaitForWsAndAuth>
+  );
 };
 
 // className='relative grid gap-3 justify-center w-screen h-screen px-16'

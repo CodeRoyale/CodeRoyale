@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app';
 import ReactModal from 'react-modal';
 import NProgress from 'nprogress';
 import Router from 'next/router';
+import { WebSocketProvider } from '../modules/ws/WebSocketProvider';
 import 'nprogress/nprogress.css';
 import '../styles/globals.css';
 
@@ -14,8 +15,16 @@ Router.events.on('routeChangeStart', () => {
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
-const MyApp = ({ Component, pageProps }: AppProps) => (
-  <Component {...pageProps} />
-);
+const pagesThatNeedWs = 'DashboardPage';
+
+const MyApp = ({ Component, pageProps }: AppProps) => {
+  return (
+    <WebSocketProvider
+      shouldConnect={Component.displayName?.includes(pagesThatNeedWs)!}
+    >
+      <Component {...pageProps} />
+    </WebSocketProvider>
+  );
+};
 
 export default MyApp;

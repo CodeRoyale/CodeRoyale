@@ -13,11 +13,12 @@ export const socketConnection = (callback: CallBackType) => {
   if (!socket) return false;
 
   if (socket) {
-    socket.on('CONNECTION_ACK', () =>
-      callback(null, { message: 'CONNECTION_ACK', socket })
-    );
-    socket.on('CONNECTION_DENY', () =>
-      callback(null, { message: 'CONNECTION_DENY' })
-    );
+    socket.on('connect', () => {
+      console.log('connection accepted');
+    });
+
+    socket.on('connect_error', (err) => {
+      console.log(err.message);
+    });
   }
 };

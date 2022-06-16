@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 import os from "os";
 import http from "http";
-import { Server } from "socket.io";
+import { Server, Socket } from "socket.io";
 import { mainRouter } from "./routes/main";
 import { usersRouter } from "./routes/users";
 import { roomsRouter } from "./routes/rooms";
@@ -17,7 +17,6 @@ import cookieParser from "cookie-parser";
 import cookie from "cookie";
 import Redis from "ioredis";
 import { redisSessionCookie } from "./types/types";
-import { CONNECTION_ACK, CONNECTION_DENY } from "./socketActions/serverActions";
 
 const main = async () => {
   // create server using http
@@ -76,6 +75,13 @@ const main = async () => {
         SOCKET_USER_PREFIX + cookieData.userId
       );
       if (userInRedis) {
+        // update socketId of user on reconnection
+        const user = JSON.parse(userInRedis);
+        user.socketId = socket.id;
+        await redis.set(
+          SOCKET_USER_PREFIX + cookieData.userId,
+          JSON.stringify(user)
+        );
         console.log(`userId:${cookieData.userId} reconnected`);
         return next();
       }
@@ -91,10 +97,8 @@ const main = async () => {
         JSON.stringify(userObjInRedis)
       );
       console.log(`userId:${cookieData.userId} connected`);
-      socket.emit(CONNECTION_ACK);
       next();
     } else {
-      socket.emit(CONNECTION_DENY);
       next(new Error("Not authenticated"));
     }
   });

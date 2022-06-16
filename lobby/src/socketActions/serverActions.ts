@@ -1,6 +1,5 @@
-// connection ack
-const CONNECTION_ACK = "CONNECTION_ACK";
-// connection deny
-const CONNECTION_DENY = "CONNECTION_DENY";
+// update client about updated room
+// currently this will only track members updation
+const ROOM_UPDATED = "ROOM_UPDATED";
 
-export { CONNECTION_ACK, CONNECTION_DENY };
+export { ROOM_UPDATED };

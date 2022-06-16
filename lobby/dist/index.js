@@ -16,7 +16,6 @@ const constants_1 = require("./utils/constants");
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const cookie_1 = __importDefault(require("cookie"));
 const ioredis_1 = __importDefault(require("ioredis"));
-const serverActions_1 = require("./socketActions/serverActions");
 const main = async () => {
     const app = (0, express_1.default)();
     const server = http_1.default.createServer(app);
@@ -50,6 +49,9 @@ const main = async () => {
         if (cookieData && cookieData.userId) {
             const userInRedis = await redis.get(constants_1.SOCKET_USER_PREFIX + cookieData.userId);
             if (userInRedis) {
+                const user = JSON.parse(userInRedis);
+                user.socketId = socket.id;
+                await redis.set(constants_1.SOCKET_USER_PREFIX + cookieData.userId, JSON.stringify(user));
                 console.log(`userId:${cookieData.userId} reconnected`);
                 return next();
             }
@@ -59,11 +61,9 @@ const main = async () => {
             };
             await redis.set(constants_1.SOCKET_USER_PREFIX + cookieData.userId, JSON.stringify(userObjInRedis));
             console.log(`userId:${cookieData.userId} connected`);
-            socket.emit(serverActions_1.CONNECTION_ACK);
             next();
         }
         else {
-            socket.emit(serverActions_1.CONNECTION_DENY);
             next(new Error("Not authenticated"));
         }
     });
