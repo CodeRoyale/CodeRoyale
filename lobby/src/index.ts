@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 import os from "os";
 import http from "http";
-import { Server, Socket } from "socket.io";
+import { Server } from "socket.io";
 import { mainRouter } from "./routes/main";
 import { usersRouter } from "./routes/users";
 import { roomsRouter } from "./routes/rooms";
@@ -16,7 +16,8 @@ import {
 import cookieParser from "cookie-parser";
 import cookie from "cookie";
 import Redis from "ioredis";
-import { redisSessionCookie } from "./types/types";
+import { RedisSessionCookie } from "./types";
+import { handleUserEvents } from "./controllers/socketController";
 
 const main = async () => {
   // create server using http
@@ -49,12 +50,15 @@ const main = async () => {
     },
   });
 
+  // user id of current user connected
+  let currentUserId: number;
+
   // only allow authenticated users
   io.use(async (socket, next) => {
     const cookies = socket.request.headers.cookie;
     let parsedCookies;
     let unsignedCookie;
-    let cookieData: redisSessionCookie | null = null;
+    let cookieData: RedisSessionCookie | null = null;
     if (cookies) {
       parsedCookies = cookie.parse(cookies);
       // unsign cookie
@@ -66,6 +70,7 @@ const main = async () => {
       const key = SESSION_PREFIX + unsignedCookie;
       const result = await redis.get(key);
       cookieData = result ? JSON.parse(result) : null;
+      currentUserId = cookieData?.userId!;
     }
 
     // user is authentic and logged in
@@ -91,6 +96,7 @@ const main = async () => {
       const userObjInRedis = {
         userId: cookieData.userId,
         socketId: socket.id,
+        roomId: null,
       };
       await redis.set(
         SOCKET_USER_PREFIX + cookieData.userId,
@@ -103,7 +109,9 @@ const main = async () => {
     }
   });
 
-  io.on("connection", (socket) => {});
+  io.on("connection", (socket) => {
+    handleUserEvents({ socket, io, redis, currentUserId });
+  });
 
   // start listening
   server.listen(process.env.PORT, () => {

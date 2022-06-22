@@ -16,6 +16,7 @@ const constants_1 = require("./utils/constants");
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const cookie_1 = __importDefault(require("cookie"));
 const ioredis_1 = __importDefault(require("ioredis"));
+const socketController_1 = require("./controllers/socketController");
 const main = async () => {
     const app = (0, express_1.default)();
     const server = http_1.default.createServer(app);
@@ -34,6 +35,7 @@ const main = async () => {
             credentials: true,
         },
     });
+    let currentUserId;
     io.use(async (socket, next) => {
         const cookies = socket.request.headers.cookie;
         let parsedCookies;
@@ -45,6 +47,7 @@ const main = async () => {
             const key = constants_1.SESSION_PREFIX + unsignedCookie;
             const result = await redis.get(key);
             cookieData = result ? JSON.parse(result) : null;
+            currentUserId = cookieData === null || cookieData === void 0 ? void 0 : cookieData.userId;
         }
         if (cookieData && cookieData.userId) {
             const userInRedis = await redis.get(constants_1.SOCKET_USER_PREFIX + cookieData.userId);
@@ -58,6 +61,7 @@ const main = async () => {
             const userObjInRedis = {
                 userId: cookieData.userId,
                 socketId: socket.id,
+                roomId: null,
             };
             await redis.set(constants_1.SOCKET_USER_PREFIX + cookieData.userId, JSON.stringify(userObjInRedis));
             console.log(`userId:${cookieData.userId} connected`);
@@ -67,7 +71,9 @@ const main = async () => {
             next(new Error("Not authenticated"));
         }
     });
-    io.on("connection", (socket) => { });
+    io.on("connection", (socket) => {
+        (0, socketController_1.handleUserEvents)({ socket, io, redis, currentUserId });
+    });
     server.listen(process.env.PORT, () => {
         console.log(`Lobby Server running at - ${os_1.default.hostname()} on PORT : ${process.env.PORT}`);
     });
