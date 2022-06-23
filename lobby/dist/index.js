@@ -61,7 +61,7 @@ const main = async () => {
             const userObjInRedis = {
                 userId: cookieData.userId,
                 socketId: socket.id,
-                roomId: null,
+                currentRoom: null,
             };
             await redis.set(constants_1.SOCKET_USER_PREFIX + cookieData.userId, JSON.stringify(userObjInRedis));
             console.log(`userId:${cookieData.userId} connected`);

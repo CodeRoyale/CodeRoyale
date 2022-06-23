@@ -18,6 +18,7 @@ import session from "express-session";
 import Redis from "ioredis";
 import { UserResolver } from "./resolvers/user";
 import cors from "cors";
+import { RoomResolver } from "./resolvers/room";
 
 const main = async () => {
   await dataSource.initialize();
@@ -57,7 +58,7 @@ const main = async () => {
   // apollo server init
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [HelloResolver, UserResolver],
+      resolvers: [HelloResolver, UserResolver, RoomResolver],
       validate: false,
     }),
     plugins: [

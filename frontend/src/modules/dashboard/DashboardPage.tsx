@@ -23,8 +23,7 @@ export const DashboardPage = () => {
         'CREATE_ROOM',
         {
           config: {
-            title: 'Joels room',
-            description: 'sample',
+            title: 'This is the ultimate test for a room',
             private: true,
             maxTeams: 2,
             maxMembersPerTeam: 2,

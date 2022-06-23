@@ -9,33 +9,50 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Follow = void 0;
+exports.Room = void 0;
+const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
 const User_1 = require("./User");
-let Follow = class Follow extends typeorm_1.BaseEntity {
+let Room = class Room extends typeorm_1.BaseEntity {
 };
 __decorate([
-    (0, typeorm_1.PrimaryColumn)(),
-    __metadata("design:type", Number)
-], Follow.prototype, "userId", void 0);
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.PrimaryColumn)({ unique: true }),
+    __metadata("design:type", String)
+], Room.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.PrimaryColumn)(),
-    __metadata("design:type", Number)
-], Follow.prototype, "followingUserId", void 0);
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Room.prototype, "title", void 0);
 __decorate([
-    (0, typeorm_1.ManyToMany)(() => User_1.User, (user) => user.follows),
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.Column)({ type: "bool" }),
+    __metadata("design:type", Boolean)
+], Room.prototype, "private", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Room.prototype, "creatorId", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(() => User_1.User),
+    (0, typeorm_1.ManyToOne)(() => User_1.User, (user) => user.rooms),
     __metadata("design:type", User_1.User)
-], Follow.prototype, "user", void 0);
+], Room.prototype, "creator", void 0);
 __decorate([
+    (0, type_graphql_1.Field)(() => String),
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
-], Follow.prototype, "createdAt", void 0);
+], Room.prototype, "createdAt", void 0);
 __decorate([
+    (0, type_graphql_1.Field)(() => String),
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
-], Follow.prototype, "updatedAt", void 0);
-Follow = __decorate([
+], Room.prototype, "updatedAt", void 0);
+Room = __decorate([
+    (0, type_graphql_1.ObjectType)(),
     (0, typeorm_1.Entity)()
-], Follow);
-exports.Follow = Follow;
-//# sourceMappingURL=Follow.js.map
+], Room);
+exports.Room = Room;
+//# sourceMappingURL=Room.js.map

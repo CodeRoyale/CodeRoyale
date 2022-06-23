@@ -16,7 +16,7 @@ import {
 import cookieParser from "cookie-parser";
 import cookie from "cookie";
 import Redis from "ioredis";
-import { RedisSessionCookie } from "./types";
+import { RedisSessionCookie } from "./types/types";
 import { handleUserEvents } from "./controllers/socketController";
 
 const main = async () => {
@@ -96,7 +96,7 @@ const main = async () => {
       const userObjInRedis = {
         userId: cookieData.userId,
         socketId: socket.id,
-        roomId: null,
+        currentRoom: null,
       };
       await redis.set(
         SOCKET_USER_PREFIX + cookieData.userId,

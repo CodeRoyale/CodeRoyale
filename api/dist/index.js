@@ -18,6 +18,7 @@ const express_session_1 = __importDefault(require("express-session"));
 const ioredis_1 = __importDefault(require("ioredis"));
 const user_1 = require("./resolvers/user");
 const cors_1 = __importDefault(require("cors"));
+const room_1 = require("./resolvers/room");
 const main = async () => {
     await typeormConfig_1.dataSource.initialize();
     const app = (0, express_1.default)();
@@ -45,7 +46,7 @@ const main = async () => {
     }));
     const apolloServer = new apollo_server_express_1.ApolloServer({
         schema: await (0, type_graphql_1.buildSchema)({
-            resolvers: [hello_1.HelloResolver, user_1.UserResolver],
+            resolvers: [hello_1.HelloResolver, user_1.UserResolver, room_1.RoomResolver],
             validate: false,
         }),
         plugins: [

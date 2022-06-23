@@ -17,7 +17,9 @@ export type RedisSessionCookie = {
 
 export type Room = {
   config: {
-    roomCode: string;
+    id: string;
+    title: string;
+    private: boolean;
     adminUserId: number;
     maxMembers: number;
     maxTeams: number;

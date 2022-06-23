@@ -16,7 +16,6 @@ const genericActionCreater = (actionResponder, dataFromServer, asynFunc = false,
     else {
         actionResponder(dataFromClient, dataFromServer)
             .then((tempData) => {
-            console.log("tempData: ", tempData);
             if (callback)
                 callback(tempData);
         })

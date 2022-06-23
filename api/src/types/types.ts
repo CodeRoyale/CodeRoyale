@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
 import { Session, SessionData } from "express-session";
+import { IncomingHttpHeaders } from "http";
 import { DataSource } from "typeorm";
 
 export type MyContext = {
   req: Request & {
     session: Session & Partial<SessionData & { userId?: number }>;
+    headers: IncomingHttpHeaders & { "lobby-secret"?: string };
   };
   res: Response;
   dataSource: DataSource;

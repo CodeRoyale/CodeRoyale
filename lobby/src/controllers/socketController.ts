@@ -29,7 +29,7 @@ const genericActionCreater =
     } else {
       actionResponder(dataFromClient, dataFromServer)
         .then((tempData: any) => {
-          console.log("tempData: ", tempData);
+          // console.log("tempData: ", tempData);
           if (callback) callback(tempData);
         })
         .catch((err: any) => {

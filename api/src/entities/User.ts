@@ -9,6 +9,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { Connection } from "./Connection";
+import { Room } from "./Room";
 
 @ObjectType()
 @Entity()
@@ -47,6 +48,9 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Connection, (follow) => follow.user)
   connections: Connection[];
+
+  @OneToMany(() => Room, (room) => room.creator)
+  rooms: Room[];
 
   @Field(() => String)
   @CreateDateColumn()

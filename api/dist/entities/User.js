@@ -13,6 +13,7 @@ exports.User = void 0;
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
 const Connection_1 = require("./Connection");
+const Room_1 = require("./Room");
 let User = class User extends typeorm_1.BaseEntity {
 };
 __decorate([
@@ -59,6 +60,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => Connection_1.Connection, (follow) => follow.user),
     __metadata("design:type", Array)
 ], User.prototype, "connections", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => Room_1.Room, (room) => room.creator),
+    __metadata("design:type", Array)
+], User.prototype, "rooms", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => String),
     (0, typeorm_1.CreateDateColumn)(),
