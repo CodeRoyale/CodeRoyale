@@ -19,6 +19,7 @@ import Redis from "ioredis";
 import { UserResolver } from "./resolvers/user";
 import cors from "cors";
 import { RoomResolver } from "./resolvers/room";
+import { createUserLoader } from "./utils/createUserLoader";
 
 const main = async () => {
   await dataSource.initialize();
@@ -70,6 +71,7 @@ const main = async () => {
       req,
       res,
       dataSource,
+      userLoader: createUserLoader(),
     }),
   });
 

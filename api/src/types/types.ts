@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Session, SessionData } from "express-session";
 import { IncomingHttpHeaders } from "http";
+import { createUserLoader } from "src/utils/createUserLoader";
 import { DataSource } from "typeorm";
 
 export type MyContext = {
@@ -10,6 +11,7 @@ export type MyContext = {
   };
   res: Response;
   dataSource: DataSource;
+  userLoader: ReturnType<typeof createUserLoader>;
 };
 
 export type GoogleUser = {

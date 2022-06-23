@@ -19,6 +19,7 @@ const ioredis_1 = __importDefault(require("ioredis"));
 const user_1 = require("./resolvers/user");
 const cors_1 = __importDefault(require("cors"));
 const room_1 = require("./resolvers/room");
+const createUserLoader_1 = require("./utils/createUserLoader");
 const main = async () => {
     await typeormConfig_1.dataSource.initialize();
     const app = (0, express_1.default)();
@@ -58,6 +59,7 @@ const main = async () => {
             req,
             res,
             dataSource: typeormConfig_1.dataSource,
+            userLoader: (0, createUserLoader_1.createUserLoader)(),
         }),
     });
     await apolloServer.start();
