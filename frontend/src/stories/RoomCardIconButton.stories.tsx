@@ -1,14 +1,14 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { RoomCardIconButton } from '../components/roomCard/RoomCardIconButton';
+import { IconButton } from '../components/IconButton';
 
 export default {
   title: 'Room Card Icon Button',
-  component: RoomCardIconButton,
-} as ComponentMeta<typeof RoomCardIconButton>;
+  component: IconButton,
+} as ComponentMeta<typeof IconButton>;
 
-const Template: ComponentStory<typeof RoomCardIconButton> = (args) => (
-  <RoomCardIconButton {...args} />
+const Template: ComponentStory<typeof IconButton> = (args) => (
+  <IconButton {...args} />
 );
 
 export const Main = Template.bind({});

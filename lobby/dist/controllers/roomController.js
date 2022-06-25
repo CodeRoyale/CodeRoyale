@@ -19,7 +19,7 @@ const createRoom = async (createRoomInput, { socket, redis, currentUserId }) => 
     if (userInRedis) {
         user = JSON.parse(userInRedis);
     }
-    if (user.room) {
+    if (user.currentRoom) {
         return {
             error: "You are already in a room, leave to create a new room.",
         };

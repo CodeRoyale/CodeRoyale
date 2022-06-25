@@ -30,8 +30,8 @@ export const InputField: React.FC<InputFieldProps> = ({
           {...props}
           id={field.name}
           placeholder={props.placeholder}
-          className={`rounded-md py-2 px-3 bg-primary-700 placeholder:text-primary-300 text-white focus:outline focus:outline-offset-2 focus:outline-focus-outline ${
-            error ? 'border border-error-red text-error-red' : ''
+          className={`rounded-md bg-primary-700 placeholder:text-primary-300 text-white focus:border-none focus:ring-0 focus:outline focus:outline-offset-2 focus:outline-focus-outline ${
+            error ? 'border border-error-red text-error-red' : 'border-none'
           }`}
         ></textarea>
       ) : (
@@ -40,8 +40,8 @@ export const InputField: React.FC<InputFieldProps> = ({
           {...props}
           id={field.name}
           placeholder={props.placeholder}
-          className={`rounded-md py-2 px-3 bg-primary-700 placeholder:text-primary-300 text-white focus:outline focus:outline-offset-2 focus:outline-focus-outline ${
-            error ? 'border border-error-red text-error-red' : ''
+          className={`rounded-md bg-primary-700 placeholder:text-primary-300 text-white focus:border-none focus:ring-0 focus:outline focus:outline-offset-2 focus:outline-focus-outline ${
+            error ? 'border border-error-red text-error-red' : 'border-none'
           }`}
         ></input>
       )}

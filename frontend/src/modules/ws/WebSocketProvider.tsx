@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 
-type ISocket = Socket | null;
+export type ISocket = Socket | null;
 
 // initial value of socket in context will be null
 export const WebSocketContext = React.createContext<ISocket>(null);

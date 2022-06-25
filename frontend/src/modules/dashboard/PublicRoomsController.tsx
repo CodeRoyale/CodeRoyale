@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { Button } from '../../components/Button';
-import { Modal } from '../../components/Modal';
 import { RoomSummaryCard } from '../../components/RoomSummaryCard';
 import { useMeQuery } from '../../generated/graphql';
+import { CreateRoomController } from './CreateRoomController';
 
 export const PublicRoomsController: React.FC<{}> = () => {
   const { data, loading } = useMeQuery();
@@ -55,8 +54,6 @@ export const PublicRoomsController: React.FC<{}> = () => {
 
   let body = null;
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
   if (loading) {
   } else if (!data?.me) {
   } else {
@@ -64,18 +61,7 @@ export const PublicRoomsController: React.FC<{}> = () => {
       <>
         <div className="flex justify-between items-center w-full">
           <h1 className="text-primary-100 font-bold text-2xl">Public Rooms</h1>
-          {!data?.me || loading || !loading ? null : (
-            <Button
-              buttonClass="primary"
-              size="normal"
-              onClick={() => setModalIsOpen(true)}
-            >
-              Create Room
-            </Button>
-          )}
-          <Modal modalIsOpen={modalIsOpen}>
-            <h2>Hello World</h2>
-          </Modal>
+          {!data?.me || loading ? null : <CreateRoomController />}
         </div>
         <div className="flex flex-col py-6">
           {tempPublicRoomsData.map(
@@ -90,11 +76,12 @@ export const PublicRoomsController: React.FC<{}> = () => {
             ) => (
               <RoomSummaryCard
                 key={uuid()}
-                roomName={roomName}
-                numberOfMembersInRoom={numberOfMembersInRoom}
-                totalMembersAllowed={totalMembersAllowed}
+                title={roomName}
+                currMemberCount={numberOfMembersInRoom}
+                maxMembers={totalMembersAllowed}
                 roomCompetitionQuestionTags={roomCompetitionQuestionTags}
                 marginTop={index !== 0 ? 'mt-6' : null}
+                creatorUserName="joelmathew"
               />
             )
           )}

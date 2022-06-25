@@ -13,8 +13,9 @@ const Template: ComponentStory<typeof RoomSummaryCard> = (args) => (
 
 export const Main = Template.bind({});
 Main.args = {
-  roomName: `Chirag's room`,
-  numberOfMembersInRoom: 7,
-  totalMembersAllowed: 8,
+  title: `Chirag's room`,
+  currMemberCount: 7,
+  maxMembers: 8,
   roomCompetitionQuestionTags: ['Trees', 'Dynamic Programming'],
+  creatorUserName: 'joelmathew',
 };

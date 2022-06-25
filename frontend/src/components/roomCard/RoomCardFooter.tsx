@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '../Button';
-import { RoomCardIconButton } from './RoomCardIconButton';
+import { IconButton } from '../IconButton';
 
 interface RoomCardFooterProps {
   admin: boolean;
@@ -15,11 +15,8 @@ export const RoomCardFooter: React.FC<RoomCardFooterProps> = ({ admin }) => {
     >
       {admin ? (
         <div>
-          <RoomCardIconButton icon="settings" />
-          <RoomCardIconButton
-            icon="closeRoom"
-            style={{ marginLeft: '0.5rem' }}
-          />
+          <IconButton icon="settings" />
+          <IconButton icon="close" style={{ marginLeft: '0.5rem' }} />
         </div>
       ) : null}
       <div>

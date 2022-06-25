@@ -23,7 +23,8 @@
     "react/prop-types": "off",
     "import/order": "error",
     "require-jsdoc": "off",
-    "valid-jsdoc": "off"
+    "valid-jsdoc": "off",
+    "prefer-promise-reject-errors": "off"
   },
   "settings": {
     "react": {
