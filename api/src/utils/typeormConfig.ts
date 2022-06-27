@@ -8,8 +8,8 @@ import { Room } from "../entities/Room";
 export const dataSource = new DataSource({
   type: "postgres",
   database: "coderoyale-dev",
-  username: "postgres",
-  password: "postgres",
+  username: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
   logging: true,
   synchronize: true,
   // migrations: [path.join(__dirname, "./migrations/*")],

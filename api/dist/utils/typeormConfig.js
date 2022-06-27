@@ -8,8 +8,8 @@ const Room_1 = require("../entities/Room");
 exports.dataSource = new typeorm_1.DataSource({
     type: "postgres",
     database: "coderoyale-dev",
-    username: "postgres",
-    password: "postgres",
+    username: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
     logging: true,
     synchronize: true,
     entities: [User_1.User, Connection_1.Connection, Room_1.Room],
