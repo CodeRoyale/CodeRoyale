@@ -1,91 +1,94 @@
+import { useRouter } from 'next/router';
 import React from 'react';
-import { v4 as uuid } from 'uuid';
+import { Button } from '../../components/Button';
 import { RoomSummaryCard } from '../../components/RoomSummaryCard';
-import { useMeQuery } from '../../generated/graphql';
+import { useMeQuery, useRoomsQuery } from '../../generated/graphql';
 import { CreateRoomController } from './CreateRoomController';
 
 export const PublicRoomsController: React.FC<{}> = () => {
-  const { data, loading } = useMeQuery();
-
-  const tempPublicRoomsData = [
-    {
-      roomName: "Chirag's room",
-      numberOfMembersInRoom: 7,
-      totalMembersAllowed: 8,
-      roomCompetitionQuestionTags: ['Dynamic Programming', 'Trees'],
+  const router = useRouter();
+  const { data: meData, loading: meLoading } = useMeQuery();
+  const {
+    data: roomsData,
+    loading: roomsLoading,
+    fetchMore: roomsFetchMore,
+    variables: roomsVariables,
+  } = useRoomsQuery({
+    variables: {
+      isPrivate: false,
+      limit: 10,
+      cursor: null,
     },
-    {
-      roomName: 'KHacks Competitive Coding Contest',
-      numberOfMembersInRoom: 15,
-      totalMembersAllowed: 20,
-      roomCompetitionQuestionTags: ['Dynamic Programming', 'Trees', 'Stacks'],
-    },
-    {
-      roomName: 'KHacks Competitive Coding Contest',
-      numberOfMembersInRoom: 15,
-      totalMembersAllowed: 20,
-      roomCompetitionQuestionTags: ['Dynamic Programming', 'Trees', 'Stacks'],
-    },
-    {
-      roomName: 'KHacks Competitive Coding Contest',
-      numberOfMembersInRoom: 15,
-      totalMembersAllowed: 20,
-      roomCompetitionQuestionTags: ['Dynamic Programming', 'Trees', 'Stacks'],
-    },
-    {
-      roomName: 'KHacks Competitive Coding Contest',
-      numberOfMembersInRoom: 15,
-      totalMembersAllowed: 20,
-      roomCompetitionQuestionTags: ['Dynamic Programming', 'Trees', 'Stacks'],
-    },
-    {
-      roomName: 'KHacks Competitive Coding Contest',
-      numberOfMembersInRoom: 15,
-      totalMembersAllowed: 20,
-      roomCompetitionQuestionTags: ['Dynamic Programming', 'Trees', 'Stacks'],
-    },
-    {
-      roomName: 'KHacks Competitive Coding Contest',
-      numberOfMembersInRoom: 15,
-      totalMembersAllowed: 20,
-      roomCompetitionQuestionTags: ['Dynamic Programming', 'Trees', 'Stacks'],
-    },
-  ];
+    // to make loading true when fetching more rooms through pagination
+    notifyOnNetworkStatusChange: true,
+  });
 
   let body = null;
 
-  if (loading) {
-  } else if (!data?.me) {
+  if (roomsLoading || meLoading) {
+  } else if (!roomsData?.rooms || !meData?.me) {
   } else {
     body = (
       <>
         <div className="flex justify-between items-center w-full">
           <h1 className="text-primary-100 font-bold text-2xl">Public Rooms</h1>
-          {!data?.me || loading ? null : <CreateRoomController />}
+          {!meData?.me || meLoading ? null : <CreateRoomController />}
         </div>
         <div className="flex flex-col py-6">
-          {tempPublicRoomsData.map(
-            (
-              {
-                roomName,
-                numberOfMembersInRoom,
-                totalMembersAllowed,
-                roomCompetitionQuestionTags,
-              },
-              index
-            ) => (
+          {roomsData?.rooms.rooms.length === 0 ? (
+            <span className="text-primary-300 text-sm mt-4">
+              We could not find any public rooms, maybe you could create one for
+              others to join!
+            </span>
+          ) : null}
+          {!roomsData && roomsLoading ? (
+            <span className="text-primary-200">Loading...</span>
+          ) : (
+            roomsData?.rooms.rooms.map((room, index) => (
               <RoomSummaryCard
-                key={uuid()}
-                title={roomName}
-                currMemberCount={numberOfMembersInRoom}
-                maxMembers={totalMembersAllowed}
-                roomCompetitionQuestionTags={roomCompetitionQuestionTags}
+                key={index}
+                title={room.title}
+                currMemberCount={0}
+                maxMembers={room.maxMembers}
+                roomCompetitionQuestionTags={[
+                  'Dynamic Programming',
+                  'Trees',
+                  'Stacks',
+                ]}
                 marginTop={index !== 0 ? 'mt-6' : null}
-                creatorUserName="joelmathew"
+                creatorUserName={room.creator.username}
+                onClick={() => console.log('join the room')}
+                onCreatorOnClick={(event) => {
+                  event.stopPropagation();
+                  router.push(`/profile/${room.creator.username}`);
+                }}
               />
-            )
+            ))
           )}
         </div>
+        {!roomsData?.rooms.hasMore ? null : (
+          <div className="flex items-center justify-center pb-4">
+            <Button
+              buttonClass="transparent"
+              size="small"
+              onClick={() => {
+                roomsFetchMore({
+                  variables: {
+                    limit: roomsVariables?.limit,
+                    private: roomsVariables?.isPrivate,
+                    cursor:
+                      roomsData.rooms.rooms[roomsData.rooms.rooms.length - 1]
+                        .createdAt,
+                  },
+                });
+              }}
+              loading={roomsLoading}
+              loadingText="Loading more rooms..."
+            >
+              Load More
+            </Button>
+          </div>
+        )}
       </>
     );
   }

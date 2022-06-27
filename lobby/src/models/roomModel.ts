@@ -17,6 +17,7 @@ const createRoom = async (
     response = await api.createRoom({
       title: createRoomInput.config.title,
       private: createRoomInput.config.private,
+      maxMembers: createRoomInput.config.maxMembers,
       creatorId: currentUserId,
     });
 

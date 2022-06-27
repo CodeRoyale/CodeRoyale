@@ -10,6 +10,7 @@ const createRoom = async (data: {
   title: string;
   private: boolean;
   creatorId: number;
+  maxMembers: number;
 }) => {
   const mutation = gql`
     mutation CreateRoom($input: RoomInput!) {
@@ -17,6 +18,7 @@ const createRoom = async (data: {
         id
         title
         private
+        maxMembers
         creatorId
       }
     }

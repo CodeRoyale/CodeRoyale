@@ -1,0 +1,12 @@
+fragment RoomSnippet on Room {
+  id
+  title
+  private
+  maxMembers
+  createdAt
+  updatedAt
+  creator {
+    id
+    username
+  }
+}

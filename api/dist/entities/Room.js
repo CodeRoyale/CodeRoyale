@@ -34,6 +34,11 @@ __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
+], Room.prototype, "maxMembers", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
 ], Room.prototype, "creatorId", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => User_1.User),

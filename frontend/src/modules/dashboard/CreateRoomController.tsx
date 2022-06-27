@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { useApolloClient } from '@apollo/client';
 import { Form, Formik } from 'formik';
 import { Button } from '../../components/Button';
 import { InputField } from '../../components/InputField';
@@ -12,6 +13,7 @@ const maxNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const questionOptions = [1, 2, 3, 4, 5];
 
 export const CreateRoomController: React.FC = () => {
+  const client = useApolloClient();
   const conn = useContext(WebSocketContext);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -68,6 +70,7 @@ export const CreateRoomController: React.FC = () => {
               if (response.data) {
                 console.log('CREATE_ROOM: ', response.data);
                 setIsOpen(false);
+                client.cache.evict({ fieldName: 'rooms:{}' });
               }
             } catch (error) {
               console.log(error);

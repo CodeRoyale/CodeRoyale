@@ -12,6 +12,7 @@ const createRoom = async (createRoomInput, currentUserId, redis) => {
         response = await api_1.default.createRoom({
             title: createRoomInput.config.title,
             private: createRoomInput.config.private,
+            maxMembers: createRoomInput.config.maxMembers,
             creatorId: currentUserId,
         });
         roomId = response.createRoom.id;

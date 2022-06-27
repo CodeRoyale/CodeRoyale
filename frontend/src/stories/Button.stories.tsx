@@ -14,4 +14,6 @@ Main.args = {
   size: 'normal',
   children: 'Create Room',
   buttonClass: 'primary',
+  loading: false,
+  loadingText: 'hello',
 };

@@ -30,6 +30,7 @@ export type FieldError = {
 export type Mutation = {
   __typename?: 'Mutation';
   connect: Scalars['Boolean'];
+  createRoom: Room;
   login: UserResponse;
   logout: Scalars['Boolean'];
   register: UserResponse;
@@ -39,6 +40,10 @@ export type Mutation = {
 export type MutationConnectArgs = {
   followingUserId: Scalars['Int'];
   wantsToFollow: Scalars['Boolean'];
+};
+
+export type MutationCreateRoomArgs = {
+  input: RoomInput;
 };
 
 export type MutationLoginArgs = {
@@ -53,12 +58,25 @@ export type MutationUpdateUserArgs = {
   options: UpdateUserInput;
 };
 
+export type PaginatedRooms = {
+  __typename?: 'PaginatedRooms';
+  hasMore: Scalars['Boolean'];
+  rooms: Array<Room>;
+};
+
 export type Query = {
   __typename?: 'Query';
   hello: Scalars['String'];
   me?: Maybe<User>;
   people: Array<User>;
+  rooms: PaginatedRooms;
   user: UserResponse;
+};
+
+export type QueryRoomsArgs = {
+  cursor?: InputMaybe<Scalars['String']>;
+  isPrivate: Scalars['Boolean'];
+  limit: Scalars['Int'];
 };
 
 export type QueryUserArgs = {
@@ -71,6 +89,25 @@ export type RegisterInput = {
   name: Scalars['String'];
   profilePicture: Scalars['String'];
   username: Scalars['String'];
+};
+
+export type Room = {
+  __typename?: 'Room';
+  createdAt: Scalars['String'];
+  creator: User;
+  creatorId: Scalars['Float'];
+  id: Scalars['String'];
+  maxMembers: Scalars['Float'];
+  private: Scalars['Boolean'];
+  title: Scalars['String'];
+  updatedAt: Scalars['String'];
+};
+
+export type RoomInput = {
+  creatorId: Scalars['Float'];
+  maxMembers: Scalars['Float'];
+  private: Scalars['Boolean'];
+  title: Scalars['String'];
 };
 
 export type UpdateUserInput = {
@@ -138,6 +175,17 @@ export type RegularUserResponseFragment = {
     following: number;
     followers: number;
   } | null;
+};
+
+export type RoomSnippetFragment = {
+  __typename?: 'Room';
+  id: string;
+  title: string;
+  private: boolean;
+  maxMembers: number;
+  createdAt: string;
+  updatedAt: string;
+  creator: { __typename?: 'User'; id: number; username: string };
 };
 
 export type ConnectMutationVariables = Exact<{
@@ -266,6 +314,30 @@ export type PeopleQuery = {
   }>;
 };
 
+export type RoomsQueryVariables = Exact<{
+  isPrivate: Scalars['Boolean'];
+  cursor?: InputMaybe<Scalars['String']>;
+  limit: Scalars['Int'];
+}>;
+
+export type RoomsQuery = {
+  __typename?: 'Query';
+  rooms: {
+    __typename?: 'PaginatedRooms';
+    hasMore: boolean;
+    rooms: Array<{
+      __typename?: 'Room';
+      id: string;
+      title: string;
+      private: boolean;
+      maxMembers: number;
+      createdAt: string;
+      updatedAt: string;
+      creator: { __typename?: 'User'; id: number; username: string };
+    }>;
+  };
+};
+
 export type UserQueryVariables = Exact<{
   username: Scalars['String'];
 }>;
@@ -324,6 +396,20 @@ export const RegularUserResponseFragmentDoc = gql`
   }
   ${RegularErrorFragmentDoc}
   ${RegularUserFragmentDoc}
+`;
+export const RoomSnippetFragmentDoc = gql`
+  fragment RoomSnippet on Room {
+    id
+    title
+    private
+    maxMembers
+    createdAt
+    updatedAt
+    creator {
+      id
+      username
+    }
+  }
 `;
 export const ConnectDocument = gql`
   mutation Connect($followingUserId: Int!, $wantsToFollow: Boolean!) {
@@ -650,6 +736,60 @@ export type PeopleLazyQueryHookResult = ReturnType<typeof usePeopleLazyQuery>;
 export type PeopleQueryResult = Apollo.QueryResult<
   PeopleQuery,
   PeopleQueryVariables
+>;
+export const RoomsDocument = gql`
+  query Rooms($isPrivate: Boolean!, $cursor: String, $limit: Int!) {
+    rooms(isPrivate: $isPrivate, limit: $limit, cursor: $cursor) {
+      rooms {
+        ...RoomSnippet
+      }
+      hasMore
+    }
+  }
+  ${RoomSnippetFragmentDoc}
+`;
+
+/**
+ * __useRoomsQuery__
+ *
+ * To run a query within a React component, call `useRoomsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRoomsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRoomsQuery({
+ *   variables: {
+ *      isPrivate: // value for 'isPrivate'
+ *      cursor: // value for 'cursor'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useRoomsQuery(
+  baseOptions: Apollo.QueryHookOptions<RoomsQuery, RoomsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<RoomsQuery, RoomsQueryVariables>(
+    RoomsDocument,
+    options
+  );
+}
+export function useRoomsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<RoomsQuery, RoomsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<RoomsQuery, RoomsQueryVariables>(
+    RoomsDocument,
+    options
+  );
+}
+export type RoomsQueryHookResult = ReturnType<typeof useRoomsQuery>;
+export type RoomsLazyQueryHookResult = ReturnType<typeof useRoomsLazyQuery>;
+export type RoomsQueryResult = Apollo.QueryResult<
+  RoomsQuery,
+  RoomsQueryVariables
 >;
 export const UserDocument = gql`
   query User($username: String!) {

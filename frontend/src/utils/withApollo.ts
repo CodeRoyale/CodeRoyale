@@ -1,6 +1,7 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { NextPageContext } from 'next';
 import { withApollo as createWithApollo } from 'next-apollo';
+import { PaginatedRooms } from '../generated/graphql';
 
 const createClient = (ctx?: NextPageContext) =>
   new ApolloClient({
@@ -14,7 +15,26 @@ const createClient = (ctx?: NextPageContext) =>
           ? ctx?.req?.headers.cookie
           : undefined) || '',
     },
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Query: {
+          fields: {
+            rooms: {
+              keyArgs: [],
+              merge(
+                existing: PaginatedRooms | undefined,
+                incoming: PaginatedRooms
+              ): PaginatedRooms {
+                return {
+                  ...incoming,
+                  rooms: [...(existing?.rooms || []), ...incoming.rooms],
+                };
+              },
+            },
+          },
+        },
+      },
+    }),
   });
 
 export const withApollo = createWithApollo(createClient);

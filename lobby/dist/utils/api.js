@@ -13,6 +13,7 @@ const createRoom = async (data) => {
         id
         title
         private
+        maxMembers
         creatorId
       }
     }

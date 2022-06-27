@@ -26,6 +26,8 @@ class RoomInput {
   @Field()
   private: boolean;
   @Field()
+  maxMembers: number;
+  @Field()
   creatorId: number;
 }
 
@@ -74,28 +76,43 @@ export class RoomResolver {
     @Ctx()
     { dataSource }: MyContext
   ): Promise<PaginatedRooms> {
-    console.log(isPrivate);
     const realLimit = Math.min(30, limit);
     const realLimitPlusOne = realLimit + 1;
 
     const replacements: any[] = [realLimitPlusOne];
 
-    console.log("date format: ", new Date(parseInt(cursor!)));
-
     if (cursor) {
       replacements.push(new Date(parseInt(cursor)));
     }
 
-    const rooms = await dataSource.query(
-      `
-      select r.*
-      from room r
-      ${cursor ? `where r."createdAt" < $2` : ""}
-      order by r."createdAt" DESC
-      limit $1
-    `,
-      replacements
-    );
+    let rooms;
+    if (isPrivate) {
+      rooms = await dataSource.query(
+        `
+        select r.*
+        from room r
+        ${cursor ? `where r."createdAt" < $2 and r.private` : "where r.private"}
+        order by r."createdAt" DESC
+        limit $1
+      `,
+        replacements
+      );
+    } else {
+      rooms = await dataSource.query(
+        `
+        select r.*
+        from room r
+        ${
+          cursor
+            ? `where r."createdAt" < $2 and not r.private`
+            : "where not r.private"
+        }
+        order by r."createdAt" DESC
+        limit $1
+      `,
+        replacements
+      );
+    }
 
     return {
       rooms: rooms.slice(0, realLimit),

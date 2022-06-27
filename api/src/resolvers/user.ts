@@ -266,6 +266,7 @@ export class UserResolver {
   }
 
   @Query(() => [User])
+  @UseMiddleware(isAuth)
   async people(
     @Ctx()
     { req, dataSource }: MyContext

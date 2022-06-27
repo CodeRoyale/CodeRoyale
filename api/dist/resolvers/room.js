@@ -32,6 +32,10 @@ __decorate([
 __decorate([
     (0, type_graphql_1.Field)(),
     __metadata("design:type", Number)
+], RoomInput.prototype, "maxMembers", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", Number)
 ], RoomInput.prototype, "creatorId", void 0);
 RoomInput = __decorate([
     (0, type_graphql_1.InputType)()
@@ -57,21 +61,33 @@ let RoomResolver = class RoomResolver {
         return Room_1.Room.create(Object.assign({ id: (0, uuid_1.v4)() }, input)).save();
     }
     async rooms(limit, cursor, isPrivate, { dataSource }) {
-        console.log(isPrivate);
         const realLimit = Math.min(30, limit);
         const realLimitPlusOne = realLimit + 1;
         const replacements = [realLimitPlusOne];
-        console.log("date format: ", new Date(parseInt(cursor)));
         if (cursor) {
             replacements.push(new Date(parseInt(cursor)));
         }
-        const rooms = await dataSource.query(`
-      select r.*
-      from room r
-      ${cursor ? `where r."createdAt" < $2` : ""}
-      order by r."createdAt" DESC
-      limit $1
-    `, replacements);
+        let rooms;
+        if (isPrivate) {
+            rooms = await dataSource.query(`
+        select r.*
+        from room r
+        ${cursor ? `where r."createdAt" < $2 and r.private` : "where r.private"}
+        order by r."createdAt" DESC
+        limit $1
+      `, replacements);
+        }
+        else {
+            rooms = await dataSource.query(`
+        select r.*
+        from room r
+        ${cursor
+                ? `where r."createdAt" < $2 and not r.private`
+                : "where not r.private"}
+        order by r."createdAt" DESC
+        limit $1
+      `, replacements);
+        }
         return {
             rooms: rooms.slice(0, realLimit),
             hasMore: rooms.length === realLimitPlusOne,

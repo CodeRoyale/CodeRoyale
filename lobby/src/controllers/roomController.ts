@@ -25,12 +25,13 @@ export const createRoom = async (
   if (userInRedis) {
     user = JSON.parse(userInRedis);
   }
-  if (user.currentRoom) {
-    // user already in a room, must leave room to create a new room
-    return {
-      error: "You are already in a room, leave to create a new room.",
-    };
-  }
+  // disabled for testing, have to re enable
+  // if (user.currentRoom) {
+  //   // user already in a room, must leave room to create a new room
+  //   return {
+  //     error: "You are already in a room, leave to create a new room.",
+  //   };
+  // }
   // createRoom logic (user is not in a room and hence can continue creating a room)
   const roomObj = await RoomModel.createRoom(
     createRoomInput,

@@ -65,12 +65,27 @@ export const AuthFormController: React.FC<AuthFormControllerProps> = ({
     >
       {({ isSubmitting }) => (
         <Form>
-          <InputField name="username" label="Username" placeholder="Username" />
+          <InputField
+            name="username"
+            label="Username"
+            placeholder="Username"
+            type="text"
+          />
           <div className="mt-3">
-            <InputField name="name" label="Name" placeholder="Name" />
+            <InputField
+              name="name"
+              label="Name"
+              placeholder="Name"
+              type="text"
+            />
           </div>
           <div className="mt-3">
-            <InputField name="email" label="Email" placeholder="Email" />
+            <InputField
+              name="email"
+              label="Email"
+              placeholder="Email"
+              type="email"
+            />
           </div>
           <Button
             type="submit"

@@ -27,6 +27,10 @@ export class Room extends BaseEntity {
 
   @Field()
   @Column()
+  maxMembers!: number;
+
+  @Field()
+  @Column()
   creatorId: number;
 
   @Field(() => User)

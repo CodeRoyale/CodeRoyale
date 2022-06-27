@@ -1,0 +1,8 @@
+query Rooms($isPrivate: Boolean!, $cursor: String, $limit: Int!) {
+  rooms(isPrivate: $isPrivate, limit: $limit, cursor: $cursor) {
+    rooms {
+      ...RoomSnippet
+    }
+    hasMore
+  }
+}

@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import { v4 as uuid } from 'uuid';
 import { People } from '../icons';
 import { Tag } from './Tag';
 
-interface RoomSummaryCardProps {
+type RoomSummaryCardProps = HTMLAttributes<HTMLDivElement> & {
   title: string;
   currMemberCount: number;
   maxMembers: number;
   roomCompetitionQuestionTags?: string[];
   marginTop?: string | null;
   creatorUserName: string;
-}
+  onCreatorOnClick: (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => void;
+};
 
 export const RoomSummaryCard: React.FC<RoomSummaryCardProps> = ({
   title,
@@ -19,6 +22,8 @@ export const RoomSummaryCard: React.FC<RoomSummaryCardProps> = ({
   roomCompetitionQuestionTags = [],
   marginTop = null,
   creatorUserName,
+  onCreatorOnClick,
+  ...props
 }) => {
   const marginStyle = {
     marginLeft: '1em',
@@ -28,15 +33,9 @@ export const RoomSummaryCard: React.FC<RoomSummaryCardProps> = ({
     <div
       tabIndex={1}
       className={`bg-primary-800 rounded-lg w-full cursor-pointer ${marginTop} focus:outline focus:outline-offset-2 focus:outline-focus-outline`}
+      {...props}
     >
-      <div
-        className="pt-2 pl-4"
-        onClick={(event) => {
-          // for stopping the parent div onClick from working
-          event.stopPropagation();
-          console.log('creator');
-        }}
-      >
+      <div className="pt-2 pl-4" onClick={onCreatorOnClick}>
         <span className="text-primary-300">{creatorUserName}</span>
       </div>
       <div className="flex items-center justify-between px-4 pb-4 pt-2">
