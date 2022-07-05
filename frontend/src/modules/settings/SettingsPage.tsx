@@ -9,26 +9,29 @@ import { RightColumn } from '../../components/layouts/mainGridLayout/RightColumn
 import { PeopleController } from '../PeopleController';
 import { MeCardController } from '../MeCardController';
 import { RoomInvitesController } from '../RoomInvitesController';
+import { WaitForWsAndAuth } from '../WaitForWsAndAuth';
 import { SettingsCardController } from './SettingsFormController';
 
 export const SettingsPage = () => {
   return (
-    <MainGridLayout>
-      <LeftColumn>
-        <LeftHeaderController />
-        <PeopleController />
-      </LeftColumn>
+    <WaitForWsAndAuth>
+      <MainGridLayout>
+        <LeftColumn>
+          <LeftHeaderController />
+          <PeopleController />
+        </LeftColumn>
 
-      <MainContentColumn>
-        <MiddleHeader />
-        <SettingsCardController />
-      </MainContentColumn>
+        <MainContentColumn>
+          <MiddleHeader />
+          <SettingsCardController />
+        </MainContentColumn>
 
-      <RightColumn>
-        <RightHeader />
-        <MeCardController />
-        <RoomInvitesController />
-      </RightColumn>
-    </MainGridLayout>
+        <RightColumn>
+          <RightHeader />
+          <MeCardController />
+          <RoomInvitesController />
+        </RightColumn>
+      </MainGridLayout>
+    </WaitForWsAndAuth>
   );
 };

@@ -15,12 +15,14 @@ Router.events.on('routeChangeStart', () => {
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
-const pagesThatNeedWs = 'DashboardPage';
+const pagesThatNeedWs = ['DashboardPage', 'SettingsPage', 'ProfilePage'];
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <WebSocketProvider
-      shouldConnect={Component.displayName?.includes(pagesThatNeedWs)!}
+      shouldConnect={pagesThatNeedWs.some((page) =>
+        Component.displayName?.includes(page)
+      )}
     >
       <Component {...pageProps} />
     </WebSocketProvider>

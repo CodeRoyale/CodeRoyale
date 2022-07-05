@@ -8,27 +8,30 @@ import { MainGridLayout } from '../../components/layouts/mainGridLayout/MainGrid
 import { RightColumn } from '../../components/layouts/mainGridLayout/RightColumn';
 import { PeopleController } from '../PeopleController';
 import { RoomInvitesController } from '../RoomInvitesController';
+import { WaitForWsAndAuth } from '../WaitForWsAndAuth';
 import { ProfileBannerController } from './ProfileBannerController';
 import { ProfileTabsController } from './ProfileTabsController';
 
 export const ProfilePage = () => {
   return (
-    <MainGridLayout>
-      <LeftColumn>
-        <LeftHeaderController />
-        <PeopleController />
-      </LeftColumn>
+    <WaitForWsAndAuth>
+      <MainGridLayout>
+        <LeftColumn>
+          <LeftHeaderController />
+          <PeopleController />
+        </LeftColumn>
 
-      <MainContentColumn>
-        <MiddleHeader />
-        <ProfileBannerController />
-        <ProfileTabsController />
-      </MainContentColumn>
+        <MainContentColumn>
+          <MiddleHeader />
+          <ProfileBannerController />
+          <ProfileTabsController />
+        </MainContentColumn>
 
-      <RightColumn>
-        <RightHeader />
-        <RoomInvitesController />
-      </RightColumn>
-    </MainGridLayout>
+        <RightColumn>
+          <RightHeader />
+          <RoomInvitesController />
+        </RightColumn>
+      </MainGridLayout>
+    </WaitForWsAndAuth>
   );
 };
