@@ -3,6 +3,7 @@ declare global {
     interface ProcessEnv {
       NODE_ENV: string;
       CORS_ORIGIN: string;
+      SOCKET_ADMIN_DASHBOARD_ORIGIN: string;
       API: string;
       PORT: string;
       SESSION_SECRET: string;

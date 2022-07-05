@@ -4,30 +4,27 @@ import { Float } from 'headlessui-float-react';
 import { v4 as uuid } from 'uuid';
 import { PeopleCard } from '../components/peopleCard/PeopleCard';
 import { PeopleCardMenuController } from '../components/peopleCard/PeopleCardMenuController';
-import { useMeQuery, usePeopleQuery } from '../generated/graphql';
+import { usePeopleQuery } from '../generated/graphql';
 
 export const PeopleController: React.FC<{}> = () => {
-  const { data: meData, loading: meLoading } = useMeQuery();
-  const { data: peopleData, loading: peopleLoading } = usePeopleQuery();
+  const { data, loading } = usePeopleQuery();
 
-  let body = null;
-
-  if (peopleLoading || meLoading) {
-  } else if (!peopleData?.people || !meData?.me) {
-  } else {
-    body = (
-      <>
-        <h1 className="text-primary-100 font-bold text-2xl">People</h1>
-        {peopleData.people.length === 0 ? (
-          <span className="text-primary-300 text-sm mt-4">
-            Currently you are not following anyone. Follow someone to see them
-            here!
-          </span>
+  return (
+    <div className="flex flex-col mt-8">
+      <h1 className="text-primary-100 font-bold text-2xl">People</h1>
+      {data?.people.length === 0 ? (
+        <span className="text-primary-300 text-sm mt-4">
+          Currently you are not following anyone. Follow someone to see them
+          here!
+        </span>
+      ) : (
+        <span className="text-primary-300 text-sm mt-4">Online</span>
+      )}
+      <div className="py-4">
+        {!data && loading ? (
+          <span className="text-primary-200">Loading...</span>
         ) : (
-          <span className="text-primary-300 text-sm mt-4">Online</span>
-        )}
-        <div className="py-4">
-          {peopleData.people.map(({ id, profilePicture, username, name }) => (
+          data?.people.map(({ id, profilePicture, username, name }) => (
             <Menu key={id}>
               <Float
                 placement="right"
@@ -56,11 +53,9 @@ export const PeopleController: React.FC<{}> = () => {
                 </Menu.Items>
               </Float>
             </Menu>
-          ))}
-        </div>
-      </>
-    );
-  }
-
-  return <div className="flex flex-col mt-8">{body}</div>;
+          ))
+        )}
+      </div>
+    </div>
+  );
 };

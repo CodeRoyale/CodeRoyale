@@ -13,13 +13,16 @@ export const WaitForWsAndAuth: React.FC<WaitForWsAndAuthProps> = ({
   let body = null;
   const { data, loading } = useMeQuery();
   const router = useRouter();
-  const conn = useContext(WebSocketContext);
+  const { conn } = useContext(WebSocketContext);
 
   if (loading) {
-  } else if (!data?.me) {
+  } else if (!data?.me && !loading) {
     router.push('/');
   } else if (!conn) {
-  } else {
+  }
+  // user is logged in and has web socket connection
+  else if (data?.me && conn.connected) {
+    // show user component requested
     body = children;
   }
 

@@ -18,6 +18,7 @@ import cookie from "cookie";
 import Redis from "ioredis";
 import { RedisSessionCookie } from "./types/types";
 import { handleUserEvents } from "./controllers/socketController";
+import { instrument } from "@socket.io/admin-ui";
 
 const main = async () => {
   // create server using http
@@ -45,7 +46,10 @@ const main = async () => {
   // cors for socket.io
   const io = new Server(server, {
     cors: {
-      origin: process.env.CORS_ORIGIN,
+      origin: [
+        process.env.CORS_ORIGIN,
+        process.env.SOCKET_ADMIN_DASHBOARD_ORIGIN,
+      ],
       credentials: true,
     },
   });
@@ -111,6 +115,20 @@ const main = async () => {
 
   io.on("connection", (socket) => {
     handleUserEvents({ socket, io, redis, currentUserId });
+    socket.on("disconnect", async () => {
+      // delete the user from cache
+      const key = SOCKET_USER_PREFIX + currentUserId;
+      const userInRedis = await redis.get(key);
+      if (userInRedis) {
+        await redis.del(key);
+      }
+
+      console.log(`userId:${currentUserId} disconnected`);
+    });
+  });
+
+  instrument(io, {
+    auth: false,
   });
 
   // start listening

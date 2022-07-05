@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { useRouter } from 'next/router';
 import { googleClientId } from '../../utils/constants';
-// import { socketConnection } from '../../service/socket';
 import { useMeQuery } from '../../generated/graphql';
 import { AuthFormController } from './AuthFormController';
 import {
@@ -11,13 +10,6 @@ import {
 } from './GoogleAuthButtonController';
 
 export const HomePage = () => {
-  // useEffect(() => {
-  //   socketConnection((error, data) => {
-  //     if (data && data.message === 'CONNECTION_DENY') {
-  //       console.log('deny');
-  //     }
-  //   });
-  // }, []);
   const router = useRouter();
   const { data, loading } = useMeQuery();
 

@@ -28,7 +28,7 @@ export const SettingsCardController: React.FC = () => {
             username: data.me.username,
             name: data.me.name,
             email: data.me.email,
-            bio: data.me.bio,
+            bio: !data.me.bio ? '' : data.me.bio,
           }}
           onSubmit={async (values, { setErrors }) => {
             const response = await updateUser({
@@ -76,21 +76,34 @@ export const SettingsCardController: React.FC = () => {
                   name="username"
                   label="Username"
                   placeholder="Username"
+                  type="text"
                 />
               </div>
               <div className="mt-3">
-                <InputField name="name" label="Name" placeholder="Name" />
+                <InputField
+                  name="name"
+                  label="Name"
+                  placeholder="Name"
+                  type="text"
+                />
               </div>
               <div className="mt-3">
                 <InputField
                   name="email"
                   label="Email"
                   placeholder="Email"
+                  type="email"
                   disabled
                 />
               </div>
               <div className="mt-3">
-                <InputField textarea name="bio" label="Bio" placeholder="Bio" />
+                <InputField
+                  textarea
+                  name="bio"
+                  label="Bio"
+                  placeholder="Bio"
+                  type="text"
+                />
               </div>
               <Button
                 type="submit"

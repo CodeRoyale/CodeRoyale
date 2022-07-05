@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useRouter } from 'next/router';
 import { useApolloClient } from '@apollo/client';
 import { useLogoutMutation, useMeQuery } from '../../generated/graphql';
 import { DropdownMenuIconButton } from '../DropdownMenuIconButton';
+import { WebSocketContext } from '../../modules/ws/WebSocketProvider';
 import { AvatarDropdownMenu } from './AvatarDropdownMenu';
 
 export const AvatarDropdownMenuController: React.FC = () => {
+  const { conn, setConn } = useContext(WebSocketContext);
   const router = useRouter();
   const apolloClient = useApolloClient();
   const [logout] = useLogoutMutation();
   const { data, loading } = useMeQuery();
 
   const handleLogoutClick = async () => {
+    conn?.disconnect();
+    setConn(null);
     await logout();
     await apolloClient.resetStore();
   };

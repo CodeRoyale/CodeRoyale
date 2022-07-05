@@ -14,7 +14,7 @@ const questionOptions = [1, 2, 3, 4, 5];
 
 export const CreateRoomController: React.FC = () => {
   const client = useApolloClient();
-  const conn = useContext(WebSocketContext);
+  const { conn } = useContext(WebSocketContext);
   const [isOpen, setIsOpen] = useState(false);
 
   const maxQuestionsOptions = questionOptions.map((n) => {
