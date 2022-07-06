@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { Form, Formik } from 'formik';
+import { toast, ToastContainer } from 'react-toastify';
 import { Button } from '../../components/Button';
 import { InputField } from '../../components/InputField';
 import { Modal } from '../../components/Modal';
@@ -8,6 +9,8 @@ import { Switch } from '../../components/Switch';
 import { Select } from '../../components/Select';
 import { WebSocketContext } from '../ws/WebSocketProvider';
 import { createRoom } from '../../service/roomSocket';
+import { toErrorMap } from '../../utils/toErrorMap';
+import 'react-toastify/dist/ReactToastify.css';
 
 const maxNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const questionOptions = [1, 2, 3, 4, 5];
@@ -37,6 +40,7 @@ export const CreateRoomController: React.FC = () => {
 
   return (
     <>
+      <ToastContainer theme="dark" />
       <Button
         buttonClass="primary"
         size="normal"
@@ -67,13 +71,26 @@ export const CreateRoomController: React.FC = () => {
             try {
               const response: any = await createRoom(conn, values);
 
-              if (response.data) {
-                console.log('CREATE_ROOM: ', response.data);
+              if (response.room) {
+                console.log('CREATE_ROOM: ', response.room);
                 setIsOpen(false);
                 client.cache.evict({ fieldName: 'rooms:{}' });
               }
-            } catch (error) {
+            } catch (error: any) {
               console.log(error);
+              if (error.errors[0].message === 'Create room failed') {
+                toast('Create Room Failed', {
+                  position: 'top-right',
+                  autoClose: 2000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: false,
+                  draggable: false,
+                  progress: undefined,
+                });
+              } else {
+                setErrors(toErrorMap((error as any).errors));
+              }
             }
           }}
         >

@@ -1,7 +1,7 @@
 import { Server, Socket } from "socket.io";
 import { CREATE_ROOM } from "../socketActions/userActions";
 import Redis from "ioredis";
-import { createRoom } from "./roomController";
+import { createRoom } from "./roomController/createRoom";
 
 export interface DataFromServerInterface {
   socket: Socket;
@@ -29,7 +29,6 @@ const genericActionCreater =
     } else {
       actionResponder(dataFromClient, dataFromServer)
         .then((tempData: any) => {
-          // console.log("tempData: ", tempData);
           if (callback) callback(tempData);
         })
         .catch((err: any) => {
@@ -46,7 +45,4 @@ export const handleUserEvents = (args: DataFromServerInterface) => {
     CREATE_ROOM,
     genericActionCreater(createRoom, { socket, currentUserId, redis }, true)
   );
-  socket.on("disconnect", () => {
-    // removeUser(socket.userDetails.userName);
-  });
 };

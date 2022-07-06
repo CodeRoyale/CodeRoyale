@@ -1,9 +1,10 @@
 import Redis from "ioredis";
-import { ROOM_PREFIX } from "../utils/constants";
-import { ModelResponse, Room, CreateRoomInput } from "../types/types";
-import api from "../utils/api";
+import { ModelResponse, Room } from "../../types/types";
+import { CreateRoomInput } from "../../controllers/roomController/createRoom";
+import api from "../../utils/api";
+import { ROOM_PREFIX } from "../../utils/constants";
 
-const createRoom = async (
+export const createRoom = async (
   createRoomInput: CreateRoomInput,
   currentUserId: number,
   redis: Redis
@@ -73,5 +74,3 @@ const createRoom = async (
   await redis.set(ROOM_PREFIX + roomId, JSON.stringify(newRoom));
   return { status: 1, data: newRoom };
 };
-
-export default { createRoom };

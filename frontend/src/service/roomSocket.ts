@@ -40,7 +40,7 @@ export const createRoom = (
           },
         },
         (res: any) => {
-          if (res.error) {
+          if (res.errors) {
             reject(res);
           } else {
             resolve(res);
