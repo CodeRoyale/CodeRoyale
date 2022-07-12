@@ -1,7 +1,5 @@
 import Redis from "ioredis";
 import { Server, Socket } from "socket.io";
-import { CreateRoomInputSchema } from "../utils/schemas";
-import { z } from "zod";
 
 export type RedisSessionCookie = {
   cookie: {
@@ -48,6 +46,12 @@ export type Room = {
   };
 };
 
+export type SocketUser = {
+  userId: number;
+  socketId: string;
+  currentRoom: string | null;
+};
+
 export type DataFromServer = {
   socket: Socket;
   io?: Server;
@@ -59,11 +63,3 @@ export type ControllerResponse<T> = {
   error?: string;
   data?: T;
 };
-
-export type ModelResponse<T> = {
-  status: 0 | 1;
-  error?: string;
-  data?: T;
-};
-
-export type CreateRoomInput = z.infer<typeof CreateRoomInputSchema>;

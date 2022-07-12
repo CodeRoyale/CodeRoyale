@@ -7,18 +7,15 @@ import { Server } from "socket.io";
 import { mainRouter } from "./routes/main";
 import { usersRouter } from "./routes/users";
 import { roomsRouter } from "./routes/rooms";
-import {
-  COOKIE_NAME,
-  SESSION_PREFIX,
-  SOCKET_USER_PREFIX,
-  __prod__,
-} from "./utils/constants";
+import { COOKIE_NAME, SESSION_PREFIX, __prod__ } from "./utils/constants";
 import cookieParser from "cookie-parser";
 import cookie from "cookie";
 import Redis from "ioredis";
 import { RedisSessionCookie } from "./types/types";
 import { handleUserEvents } from "./controllers/socketController";
 import { instrument } from "@socket.io/admin-ui";
+import { addUser } from "./controllers/userController";
+import { deleteUser } from "./controllers/userController";
 
 const main = async () => {
   // create server using http
@@ -79,35 +76,18 @@ const main = async () => {
 
     // user is authentic and logged in
     if (cookieData && cookieData.userId) {
-      // checking if user is already connected
-      const userInRedis = await redis.get(
-        SOCKET_USER_PREFIX + cookieData.userId
+      const result = await addUser(
+        {
+          userId: cookieData.userId,
+          currentRoom: null,
+          socketId: socket.id,
+        },
+        redis
       );
-      if (userInRedis) {
-        // update socketId of user on reconnection
-        const user = JSON.parse(userInRedis);
-        user.socketId = socket.id;
-        await redis.set(
-          SOCKET_USER_PREFIX + cookieData.userId,
-          JSON.stringify(user)
-        );
-        console.log(`userId:${cookieData.userId} reconnected`);
-        return next();
-      }
 
-      // new user connecting
-      // storing socket user in redis
-      const userObjInRedis = {
-        userId: cookieData.userId,
-        socketId: socket.id,
-        currentRoom: null,
-      };
-      await redis.set(
-        SOCKET_USER_PREFIX + cookieData.userId,
-        JSON.stringify(userObjInRedis)
-      );
-      console.log(`userId:${cookieData.userId} connected`);
-      next();
+      if (result.data) {
+        next();
+      }
     } else {
       next(new Error("Not authenticated"));
     }
@@ -117,13 +97,11 @@ const main = async () => {
     handleUserEvents({ socket, io, redis, currentUserId });
     socket.on("disconnect", async () => {
       // delete the user from cache
-      const key = SOCKET_USER_PREFIX + currentUserId;
-      const userInRedis = await redis.get(key);
-      if (userInRedis) {
-        await redis.del(key);
-      }
+      const result = await deleteUser(currentUserId, redis);
 
-      console.log(`userId:${currentUserId} disconnected`);
+      if (result.data) {
+        console.log(`userId:${currentUserId} disconnected`);
+      }
     });
   });
 
