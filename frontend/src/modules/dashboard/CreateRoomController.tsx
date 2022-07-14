@@ -233,6 +233,7 @@ export const CreateRoomController: React.FC = () => {
                 <Switch
                   label="Will this be a private room?"
                   value={values.private}
+                  size="normal"
                   onChange={(val) => setFieldValue('private', val)}
                 />
               </div>

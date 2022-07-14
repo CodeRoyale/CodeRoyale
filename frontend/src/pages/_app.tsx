@@ -15,7 +15,12 @@ Router.events.on('routeChangeStart', () => {
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
-const pagesThatNeedWs = ['DashboardPage', 'SettingsPage', 'ProfilePage'];
+const pagesThatNeedWs = [
+  'DashboardPage',
+  'SettingsPage',
+  'ProfilePage',
+  'RoomPage',
+];
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
