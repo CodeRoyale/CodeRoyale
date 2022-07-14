@@ -10,11 +10,11 @@ export const Chat: React.FC<{}> = () => {
     <div className="bottom-0 left-0 w-full mt-8 bg-primary-800 rounded-md">
       <div
         className="relative px-4 py-2 w-full h-auto overflow-y-hidden hover:overflow-y-auto scrollbar-thin scrollbar-thumb-primary-700"
-        style={{ height: 'calc(80vh - 100px)' }}
+        style={{ height: 'calc(100vh - 272px)' }}
       >
         <div className="text-primary-300 text-sm">Welcome to chat!</div>
         {messages.map((message, key) => (
-          <div key={key} className="text-white">
+          <div key={key} className="text-white break-words">
             {message}
           </div>
         ))}
@@ -24,9 +24,10 @@ export const Chat: React.FC<{}> = () => {
           message: '',
           toTeam: false,
         }}
-        onSubmit={(values, { setErrors }) => {
+        onSubmit={(values, { setErrors, setFieldValue }) => {
           setMessages((old) => [...old, values.message]);
           console.log(values);
+          setFieldValue('message', '');
         }}
       >
         {({ values, setFieldValue }) => (

@@ -19,7 +19,7 @@ export const RoomPage = () => (
         <PeopleController />
       </LeftColumn>
 
-      <MainContentColumn>
+      <MainContentColumn isFixed>
         <MiddleHeader />
         <RoomCard title="Joel" admin={true} adminUserName="joel" />
       </MainContentColumn>
