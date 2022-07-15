@@ -1,7 +1,7 @@
 import { ROOM_PREFIX } from "../../utils/constants";
 import { DataFromServer, Room } from "../../types/types";
 import { getUser, updateUser } from "../userController";
-import { JOINED_ROOM, ROOM_UPDATED } from "src/socketActions/serverActions";
+import { JOINED_ROOM, ROOM_UPDATED } from "../../socketActions/serverActions";
 
 export const joinRoom = async (
     roomId: string,
