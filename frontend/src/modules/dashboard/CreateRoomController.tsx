@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { Form, Formik } from 'formik';
+import { useRouter } from 'next/router';
 import { toast, ToastContainer } from 'react-toastify';
 import { Button } from '../../components/Button';
 import { InputField } from '../../components/InputField';
@@ -10,12 +11,15 @@ import { Select } from '../../components/Select';
 import { WebSocketContext } from '../ws/WebSocketProvider';
 import { createRoom } from '../../service/roomSocket';
 import { toErrorMap } from '../../utils/toErrorMap';
+import { useRoom } from '../../global-stores';
 import 'react-toastify/dist/ReactToastify.css';
 
 const maxNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const questionOptions = [1, 2, 3, 4, 5];
 
 export const CreateRoomController: React.FC = () => {
+  const router = useRouter();
+  const setRoom = useRoom((state) => state.setRoom);
   const client = useApolloClient();
   const { conn } = useContext(WebSocketContext);
   const [isOpen, setIsOpen] = useState(false);
@@ -74,7 +78,9 @@ export const CreateRoomController: React.FC = () => {
               if (response.room) {
                 console.log('CREATE_ROOM: ', response.room);
                 setIsOpen(false);
+                setRoom(response.room);
                 client.cache.evict({ fieldName: 'rooms:{}' });
+                router.push(`/room/${response.room.config.id}`);
               }
             } catch (error: any) {
               console.log(error);

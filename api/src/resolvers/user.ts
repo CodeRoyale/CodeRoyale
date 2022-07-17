@@ -140,6 +140,17 @@ export class UserResolver {
     };
   }
 
+  @Query(() => [User])
+  @UseMiddleware(isAuth)
+  async users(
+    @Arg("userIds", () => [Int])
+    userIds: number[]
+  ) {
+    return User.findBy({
+      id: In(userIds),
+    });
+  }
+
   @Mutation(() => UserResponse)
   @UseMiddleware(isAuth)
   async updateUser(

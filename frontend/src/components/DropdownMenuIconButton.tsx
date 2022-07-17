@@ -1,13 +1,27 @@
 import React, { ButtonHTMLAttributes } from 'react';
-import { Error, Profile, RoomInvite, Settings } from '../icons';
+import {
+  AddModerator,
+  Error,
+  Profile,
+  RemoveUser,
+  RoomInvite,
+  Settings,
+} from '../icons';
+
+type IconType =
+  | 'profile'
+  | 'settings'
+  | 'roomInvite'
+  | 'removeUser'
+  | 'addModerator';
 
 type DropdownMenuIconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   title: string;
-  icon: string;
+  icon: IconType;
   borderRadius?: string;
 };
 
-const getIconComponent = (icon: string) => {
+const getIconComponent = (icon: IconType) => {
   switch (icon) {
     case 'profile':
       return <Profile className="fill-primary-100" width={18} height={18} />;
@@ -15,6 +29,12 @@ const getIconComponent = (icon: string) => {
       return <Settings className="fill-primary-100" width={18} height={18} />;
     case 'roomInvite':
       return <RoomInvite className="fill-primary-100" width={18} height={18} />;
+    case 'removeUser':
+      return <RemoveUser className="fill-primary-100" width={18} height={18} />;
+    case 'addModerator':
+      return (
+        <AddModerator className="fill-primary-100" width={18} height={18} />
+      );
     default:
       return <Error className="fill-primary-100" width={18} height={18} />;
   }

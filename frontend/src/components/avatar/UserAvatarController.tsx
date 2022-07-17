@@ -7,7 +7,7 @@ import { Button } from '../Button';
 import { AvatarDropdownMenuController } from '../avatarDropdownMenu/AvatarDropdownMenuController';
 import { UserAvatar } from './Avatar';
 
-export const UserAvatarController = () => {
+export const UserAvatarController: React.FC<{}> = () => {
   const router = useRouter();
   const { data, loading } = useMeQuery();
 

@@ -58,8 +58,8 @@ export const createRoom = async (
   }
 
   // find user in redis
-  const getUserResult = await getUser(currentUserId, redis!);
-  if (getUserResult.error) {
+  let user = await getUser(currentUserId, redis!);
+  if (!user) {
     return {
       errors: [
         {
@@ -69,7 +69,6 @@ export const createRoom = async (
       ],
     };
   }
-  let user = getUserResult.data!;
 
   // disabled for testing, have to re enable
   // if (user.currentRoom) {

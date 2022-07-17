@@ -1,5 +1,5 @@
 import Redis from "ioredis";
-import { ControllerResponse, SocketUser } from "../../types/types";
+import { SocketUser } from "../../types/types";
 import { SOCKET_USER_PREFIX } from "../../utils/constants";
 import { getUser } from "./getUser";
 import { updateUser } from "./updateUser";
@@ -7,17 +7,16 @@ import { updateUser } from "./updateUser";
 export const addUser = async (
   input: SocketUser,
   redis: Redis
-): Promise<ControllerResponse<SocketUser>> => {
+): Promise<SocketUser> => {
   // checking if user exists in cache
-  const result = await getUser(input.userId, redis);
-  if (result.data) {
-    let user = result.data;
+  const user = await getUser(input.userId, redis);
+  if (user) {
     user.socketId = input.socketId;
-    const updateResult = await updateUser(user, redis);
+    const updateUserResult = await updateUser(user, redis);
     // if update in cache was successful
-    if (updateResult.data) {
+    if (updateUserResult) {
       console.log(`userId:${user.userId} reconnected`);
-      return { data: user };
+      return user;
     }
   }
 
@@ -33,5 +32,5 @@ export const addUser = async (
   );
   console.log(`userId:${newUser.userId} connected`);
 
-  return { data: newUser };
+  return newUser;
 };

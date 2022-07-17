@@ -1,51 +1,47 @@
 import { ROOM_PREFIX } from "../../utils/constants";
-import { DataFromServer, Room } from "../../types/types";
+import { ControllerResponse, DataFromServer, Room } from "../../types/types";
 import { getUser, updateUser } from "../userController";
 import { JOINED_ROOM, ROOM_UPDATED } from "../../socketActions/serverActions";
 
 export const joinRoom = async (
-    roomId: string,
-    { socket, redis, currentUserId }: DataFromServer
-) => {
-    const getUserResult = await getUser(currentUserId, redis!);
-    const user = getUserResult.data;
-    const roomResult = await redis?.get(ROOM_PREFIX + roomId);
-    let room: Room;
+  roomId: string,
+  { socket, redis, currentUserId }: DataFromServer
+): Promise<ControllerResponse<Room>> => {
+  const user = await getUser(currentUserId, redis!);
+  if (!user) {
+    return { error: "User who tried to join the room does not exist" };
+  }
 
-    if (roomResult) {
-        room = JSON.parse(roomResult);
-    } else {
-        return false;
-    }
+  const roomResult = await redis?.get(ROOM_PREFIX + roomId);
+  let room: Room;
+  if (roomResult) {
+    room = JSON.parse(roomResult);
+  } else {
+    return { error: `Room with roomId:${roomId} does not exist` };
+  }
 
-    // (only run if room doesn't exists) and (user is allowed if private) and (space is there)
-    //! privateList needs to be added
-    if (
-        !room &&
-        !room['config']['private']  &&
-        room['state']['currMemberCount'] > room['config']['maxMembers']
-    ) {
-        return { status: 0, error: "The User doesn't meet the specifications" };
-    }
+  // (only run if room doesn't exists) and (user is allowed if private) and (space is there)
+  //! privateList needs to be added
+  if (room["state"]["currMemberCount"] + 1 > room["config"]["maxMembers"]) {
+    return { error: "Max members in room reached" };
+  }
 
-    // User is already in a different room do not allow
-    if (user?.userId) {
-        return { status: 1, error: 'User already in room' };
-    }
+  // User is already in a different room do not allow
+  if (user?.currentRoom) {
+    return { error: "User is already in a room" };
+  }
 
-    room.state.currMemberCount += 1;
-    await redis?.set(ROOM_PREFIX + roomId, JSON.stringify(room));
+  room.state.currMemberCount += 1;
+  await redis?.set(ROOM_PREFIX + roomId, JSON.stringify(room));
 
-    await updateUser(user!, redis!);
+  user.currentRoom = roomId;
+  await updateUser(user!, redis!);
 
-    socket.join(roomId);
-    socket.to(roomId).emit(ROOM_UPDATED, {
-      type: JOINED_ROOM,
-      data: { currentUserId },
-    });
-    console.log(`userId:${currentUserId} joined from ${roomId}`);
-    return room;
-    
-}; 
-    
-    
+  socket.join(roomId);
+  socket.to(roomId).emit(ROOM_UPDATED, {
+    type: JOINED_ROOM,
+    data: { currentUserId },
+  });
+  console.log(`userId:${currentUserId} joined from ${roomId}`);
+  return { data: room };
+};

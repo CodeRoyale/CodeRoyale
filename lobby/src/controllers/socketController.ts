@@ -1,8 +1,7 @@
 import { Server, Socket } from "socket.io";
-import { CREATE_ROOM } from "../socketActions/userActions";
+import { CREATE_ROOM, JOIN_ROOM } from "../socketActions/userActions";
 import Redis from "ioredis";
 import { createRoom } from "./roomController/";
-import { JOINED_ROOM } from "../socketActions/serverActions";
 import { joinRoom } from "./roomController/";
 
 export interface DataFromServerInterface {
@@ -49,7 +48,7 @@ export const handleUserEvents = (args: DataFromServerInterface) => {
   );
 
   socket.on(
-    JOINED_ROOM,
+    JOIN_ROOM,
     genericActionCreater(joinRoom, { socket, currentUserId, redis }, true)
   );
 };

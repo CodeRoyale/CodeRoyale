@@ -1,0 +1,7 @@
+query Users($userIds: [Int!]!) {
+  users(userIds: $userIds) {
+    id
+    username
+    profilePicture
+  }
+}

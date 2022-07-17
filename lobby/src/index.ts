@@ -76,7 +76,7 @@ const main = async () => {
 
     // user is authentic and logged in
     if (cookieData && cookieData.userId) {
-      const result = await addUser(
+      const user = await addUser(
         {
           userId: cookieData.userId,
           currentRoom: null,
@@ -85,7 +85,7 @@ const main = async () => {
         redis
       );
 
-      if (result.data) {
+      if (user) {
         next();
       }
     } else {
@@ -99,7 +99,7 @@ const main = async () => {
       // delete the user from cache
       const result = await deleteUser(currentUserId, redis);
 
-      if (result.data) {
+      if (result) {
         console.log(`userId:${currentUserId} disconnected`);
       }
     });
