@@ -3,6 +3,8 @@ import { CREATE_ROOM, JOIN_ROOM } from "../socketActions/userActions";
 import Redis from "ioredis";
 import { createRoom } from "./roomController/";
 import { joinRoom } from "./roomController/";
+import { deleteUser, getUser, updateUser } from "./userController";
+import { getRoom } from "./roomController/getRoom";
 
 export interface DataFromServerInterface {
   socket: Socket;
@@ -51,4 +53,32 @@ export const handleUserEvents = (args: DataFromServerInterface) => {
     JOIN_ROOM,
     genericActionCreater(joinRoom, { socket, currentUserId, redis }, true)
   );
+
+  socket.on("disconnect", async () => {
+    const user = await getUser(currentUserId, redis!);
+    // user is not in an active room so remove the user from cache
+    if (!user?.currentRoom) {
+      // delete the user from cache since user is not in any room
+      const result = await deleteUser(currentUserId, redis!);
+
+      if (result) {
+        console.log(`userId:${currentUserId} disconnected`);
+      }
+    } else {
+      const room = await getRoom(user.currentRoom, redis!);
+      // remove user from cache only if room they are currently part of has not started veto or the competition
+      if (!room?.competition.veto.isOngoing && !room?.competition.isOngoing) {
+        // delete the user from cache
+        const result = await deleteUser(currentUserId, redis!);
+
+        if (result) {
+          console.log(`userId:${currentUserId} disconnected`);
+        }
+      } else {
+        user.hasActiveConnection = false;
+        await updateUser(user, redis!);
+        console.log(`userId:${currentUserId} has disconnected temporarily`);
+      }
+    }
+  });
 };

@@ -31,7 +31,7 @@ export type Room = {
   competition: {
     questionIds: number[];
     maxQuestions: number;
-    isCompOn: boolean;
+    isOngoing: boolean;
     timeLimit: number;
     contestStartedAt: Date | null;
     contestEndedAt: Date | null;
@@ -39,7 +39,7 @@ export type Room = {
       questionCount: number;
       questionIds: number[];
       maxVoteAllowed: number;
-      isVetoOn: boolean;
+      isOngoing: boolean;
       timeLimit: number;
       votedUserIds: number[];
     };
@@ -50,6 +50,7 @@ export type SocketUser = {
   userId: number;
   socketId: string;
   currentRoom: string | null;
+  hasActiveConnection: boolean;
 };
 
 export type DataFromServer = {

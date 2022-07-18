@@ -12,6 +12,7 @@ export const addUser = async (
   const user = await getUser(input.userId, redis);
   if (user) {
     user.socketId = input.socketId;
+    user.hasActiveConnection = true;
     const updateUserResult = await updateUser(user, redis);
     // if update in cache was successful
     if (updateUserResult) {
@@ -25,6 +26,7 @@ export const addUser = async (
     userId: input.userId,
     socketId: input.socketId,
     currentRoom: input.currentRoom,
+    hasActiveConnection: input.hasActiveConnection,
   };
   await redis?.set(
     SOCKET_USER_PREFIX + newUser.userId,

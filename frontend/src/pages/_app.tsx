@@ -20,6 +20,8 @@ const pagesThatNeedWs = [
   'SettingsPage',
   'ProfilePage',
   'RoomPage',
+  'VetoPage',
+  'ArenaPage',
 ];
 
 const MyApp = ({ Component, pageProps }: AppProps) => {

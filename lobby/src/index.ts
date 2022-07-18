@@ -14,8 +14,8 @@ import Redis from "ioredis";
 import { RedisSessionCookie } from "./types/types";
 import { handleUserEvents } from "./controllers/socketController";
 import { instrument } from "@socket.io/admin-ui";
-import { addUser } from "./controllers/userController";
-import { deleteUser } from "./controllers/userController";
+import { addUser, getUser } from "./controllers/userController";
+import { getRoom } from "./controllers/roomController/getRoom";
 
 const main = async () => {
   // create server using http
@@ -81,6 +81,7 @@ const main = async () => {
           userId: cookieData.userId,
           currentRoom: null,
           socketId: socket.id,
+          hasActiveConnection: true,
         },
         redis
       );
@@ -93,16 +94,13 @@ const main = async () => {
     }
   });
 
-  io.on("connection", (socket) => {
+  io.on("connection", async (socket) => {
+    const user = await getUser(currentUserId, redis);
+    if (user?.currentRoom) {
+      const room = await getRoom(user.currentRoom, redis);
+      socket.emit("get_room_after_connect", room);
+    }
     handleUserEvents({ socket, io, redis, currentUserId });
-    socket.on("disconnect", async () => {
-      // delete the user from cache
-      const result = await deleteUser(currentUserId, redis);
-
-      if (result) {
-        console.log(`userId:${currentUserId} disconnected`);
-      }
-    });
   });
 
   instrument(io, {

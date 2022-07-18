@@ -11,6 +11,6 @@ export const getUser = async (
     return null;
   }
 
-  let user = JSON.parse(userInRedis);
+  const user = JSON.parse(userInRedis);
   return user;
 };
