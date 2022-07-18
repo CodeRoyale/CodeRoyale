@@ -44,6 +44,7 @@ export type Room = {
       votedUserIds: number[];
     };
   };
+  teams: Record<string, number[]> | null;
 };
 
 export type SocketUser = {

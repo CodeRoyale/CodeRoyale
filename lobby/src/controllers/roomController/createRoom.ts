@@ -145,6 +145,7 @@ export const createRoom = async (
         votedUserIds: [],
       },
     },
+    teams: null,
   };
 
   await redis?.set(ROOM_PREFIX + roomId, JSON.stringify(newRoom));
