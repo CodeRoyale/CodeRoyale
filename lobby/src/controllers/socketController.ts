@@ -1,10 +1,12 @@
 import { Server, Socket } from "socket.io";
-import { CREATE_ROOM, JOIN_ROOM } from "../socketActions/userActions";
+import { CLOSE_ROOM, CREATE_ROOM, JOIN_ROOM, LEAVE_ROOM } from "../socketActions/userActions";
 import Redis from "ioredis";
 import { createRoom } from "./roomController/";
 import { joinRoom } from "./roomController/";
 import { deleteUser, getUser, updateUser } from "./userController";
 import { getRoom } from "./roomController/getRoom";
+import { closeRoom } from "./roomController/closeRoom";
+import { leaveRoom } from "./roomController/leaveRoom";
 
 export interface DataFromServerInterface {
   socket: Socket;
@@ -52,6 +54,16 @@ export const handleUserEvents = (args: DataFromServerInterface) => {
   socket.on(
     JOIN_ROOM,
     genericActionCreater(joinRoom, { socket, currentUserId, redis }, true)
+  );
+
+  socket.on(
+    CLOSE_ROOM,
+    genericActionCreater(closeRoom, { socket, currentUserId, redis }, true)
+  );
+
+  socket.on(
+    LEAVE_ROOM,
+    genericActionCreater(leaveRoom, { socket, currentUserId, redis }, true)
   );
 
   socket.on("disconnect", async () => {
