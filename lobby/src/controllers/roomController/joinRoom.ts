@@ -31,6 +31,7 @@ export const joinRoom = async (
     return { error: "User is already in a room" };
   }
 
+  room.state.bench.push(currentUserId);
   room.state.currMemberCount += 1;
   await redis?.set(ROOM_PREFIX + roomId, JSON.stringify(room));
 

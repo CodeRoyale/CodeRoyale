@@ -10,6 +10,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: string;
   loading?: boolean;
   loadingText?: string | null;
+  stretch?: boolean;
   onClick?: () => void;
 };
 
@@ -18,6 +19,7 @@ export const Button: React.FC<ButtonProps> = ({
   size = 'normal',
   loading = false,
   loadingText = 'Loading',
+  stretch = false,
   children,
   onClick,
   ...props
@@ -41,7 +43,9 @@ export const Button: React.FC<ButtonProps> = ({
   return (
     <button
       type="button"
-      className={`${buttonClasses[buttonClass]} ${sizeClasses[size]} font-medium rounded-md`}
+      className={`${buttonClasses[buttonClass]} ${
+        sizeClasses[size]
+      } font-medium rounded-md ${stretch ? 'w-full' : ''}`}
       onClick={onClick}
       disabled={loading}
       {...props}

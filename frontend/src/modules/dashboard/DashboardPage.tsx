@@ -10,9 +10,13 @@ import { PeopleController } from '../PeopleController';
 import { WaitForWsAndAuth } from '../WaitForWsAndAuth';
 import { MeCardController } from '../MeCardController';
 import { RoomInvitesController } from '../RoomInvitesController';
+import { useRoom } from '../../global-stores';
 import { PublicRoomsController } from './PublicRoomsController';
+import { CurrentRoomCardController } from './CurrentRoomCardController';
 
 export const DashboardPage = () => {
+  const room = useRoom((state) => state.room);
+
   return (
     <WaitForWsAndAuth>
       <MainGridLayout>
@@ -28,6 +32,7 @@ export const DashboardPage = () => {
 
         <RightColumn>
           <RightHeader />
+          {room ? <CurrentRoomCardController /> : null}
           <MeCardController />
           <RoomInvitesController />
         </RightColumn>

@@ -8,6 +8,7 @@ import { People } from './People';
 import { Close } from './Close';
 import { RemoveUser } from './RemoveUser';
 import { AddModerator } from './AddModerator';
+import { Launch } from './Launch';
 
 export {
   Google,
@@ -20,4 +21,5 @@ export {
   Close,
   RemoveUser,
   AddModerator,
+  Launch,
 };

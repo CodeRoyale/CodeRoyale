@@ -20,6 +20,9 @@ const createRoom = async (data: {
         private
         maxMembers
         creatorId
+        creator {
+          username
+        }
       }
     }
   `;

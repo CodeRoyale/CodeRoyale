@@ -1,4 +1,5 @@
 import { ISocket } from '../modules/ws/WebSocketProvider';
+import { NO_CONNECTION } from '../utils/constants';
 
 export const createRoom = (
   socket: ISocket,
@@ -17,7 +18,7 @@ export const createRoom = (
 ) => {
   return new Promise((resolve, reject) => {
     if (!socket) {
-      reject('No connection');
+      reject(NO_CONNECTION);
     } else {
       socket.emit(
         'CREATE_ROOM',
@@ -47,6 +48,23 @@ export const createRoom = (
           }
         }
       );
+    }
+  });
+};
+
+export const joinRoom = (socket: ISocket, roomId: string) => {
+  return new Promise((resolve, reject) => {
+    if (!socket) {
+      reject(NO_CONNECTION);
+    } else {
+      socket.emit('JOIN_ROOM', roomId, (res: any) => {
+        console.log('joinRoom: ', res);
+        if (res.error) {
+          reject(res);
+        } else {
+          resolve(res);
+        }
+      });
     }
   });
 };

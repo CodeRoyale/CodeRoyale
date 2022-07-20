@@ -14,5 +14,5 @@ const Template: ComponentStory<typeof RoomCardHeader> = (args) => (
 export const Main = Template.bind({});
 Main.args = {
   title: 'Chirags Competition',
-  adminUserName: 'chiragbabulani',
+  creatorUsername: 'chiragbabulani',
 };

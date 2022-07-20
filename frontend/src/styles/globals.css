@@ -48,3 +48,11 @@ a {
   border-top-color: var(--color-button-primary-hover) !important;
   border-left-color: var(--color-button-primary-hover) !important;
 }
+
+html {
+  overflow: scroll;
+}
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
+}

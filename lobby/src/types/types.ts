@@ -17,6 +17,7 @@ export type Room = {
   config: {
     id: string;
     title: string;
+    creatorUsername: string;
     private: boolean;
     adminUserId: number;
     maxMembers: number;

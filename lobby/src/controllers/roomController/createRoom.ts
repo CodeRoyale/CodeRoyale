@@ -119,6 +119,7 @@ export const createRoom = async (
       id: roomId,
       private: response.createRoom.private,
       title: response.createRoom.title,
+      creatorUsername: response.createRoom.creator.username,
       adminUserId: currentUserId,
       maxTeams: createRoomInput.config.maxTeams,
       maxMembersPerTeam: createRoomInput.config.maxMembersPerTeam,

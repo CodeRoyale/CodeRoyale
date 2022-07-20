@@ -1,5 +1,5 @@
 import React, { ButtonHTMLAttributes } from 'react';
-import { Close, Settings } from '../icons';
+import { Close, Launch, Settings } from '../icons';
 
 type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   icon: string;
@@ -8,6 +8,7 @@ type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 const iconLookup: Record<string, React.ReactNode> = {
   settings: <Settings className="fill-primary-100" width={22} height={22} />,
   close: <Close className="fill-primary-100" width={22} height={22} />,
+  launch: <Launch className="fill-primary-100" width={22} height={22} />,
 };
 
 export const IconButton: React.FC<IconButtonProps> = ({ icon, ...props }) => (

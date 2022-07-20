@@ -46,7 +46,9 @@ export const PublicRoomsController: React.FC<{}> = () => {
               ]}
               marginTop={index !== 0 ? 'mt-6' : null}
               creatorUserName={room.creator.username}
-              onClick={() => console.log('join the room')}
+              onClick={() => {
+                router.push(`/room/${room.id}`);
+              }}
               onCreatorOnClick={(event) => {
                 event.stopPropagation();
                 router.push(`/profile/${room.creator.username}`);
