@@ -1,14 +1,11 @@
 import { Server, Socket } from "socket.io";
-<<<<<<< HEAD
 import {
   CLOSE_ROOM,
   CREATE_ROOM,
+  CREATE_TEAM,
   JOIN_ROOM,
   LEAVE_ROOM,
 } from "../socketActions/userActions";
-=======
-import { CLOSE_ROOM, CREATE_ROOM, CREATE_TEAM, JOIN_ROOM, LEAVE_ROOM } from "../socketActions/userActions";
->>>>>>> origin/v2
 import Redis from "ioredis";
 import { createRoom } from "./roomController/";
 import { joinRoom } from "./roomController/";
