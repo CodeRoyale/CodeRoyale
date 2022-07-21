@@ -68,3 +68,20 @@ export const joinRoom = (socket: ISocket, roomId: string) => {
     }
   });
 };
+
+export const leaveRoom = (socket: ISocket) => {
+  return new Promise((resolve, reject) => {
+    if (!socket) {
+      reject(NO_CONNECTION);
+    } else {
+      socket.emit('LEAVE_ROOM', {}, (res: any) => {
+        console.log('leaveRoom: ', res);
+        if (res.error) {
+          reject(res);
+        } else {
+          resolve(res);
+        }
+      });
+    }
+  });
+};

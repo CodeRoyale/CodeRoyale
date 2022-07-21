@@ -41,7 +41,7 @@ export const joinRoom = async (
   socket.join(roomId);
   socket.to(roomId).emit(ROOM_UPDATED, {
     type: JOINED_ROOM,
-    data: { currentUserId },
+    data: room,
   });
   console.log(`userId:${currentUserId} joined from ${roomId}`);
   return { data: room };

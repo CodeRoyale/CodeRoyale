@@ -1,10 +1,12 @@
-import React from 'react';
 import { useRouter } from 'next/router';
+import React, { useContext } from 'react';
 import { Button } from '../../components/Button';
 import { RoomCardFooter } from '../../components/roomCard/RoomCardFooter';
 import { RoomCardHeader } from '../../components/roomCard/RoomCardHeader';
 import { useMeQuery, useUsersQuery } from '../../generated/graphql';
 import { useRoom } from '../../global-stores';
+import { leaveRoom } from '../../service/roomSocket';
+import { WebSocketContext } from '../ws/WebSocketProvider';
 import { RoomUserAvatarController } from './RoomUserAvatarController';
 
 export const RoomCardController: React.FC<{}> = () => {
@@ -13,7 +15,9 @@ export const RoomCardController: React.FC<{}> = () => {
 
   const { data: meData } = useMeQuery();
   const router = useRouter();
+  const { conn } = useContext(WebSocketContext);
   const room = useRoom((state) => state.room);
+  const setRoom = useRoom((state) => state.setRoom);
   const { data: usersData, loading: usersLoading } = useUsersQuery({
     variables: { userIds: room?.state.bench! },
   });
@@ -64,7 +68,17 @@ export const RoomCardController: React.FC<{}> = () => {
         </div>
       </div>
 
-      <RoomCardFooter admin={room?.config.adminUserId === meData?.me?.id} />
+      <RoomCardFooter
+        admin={room?.config.adminUserId === meData?.me?.id}
+        leaveRoomOnClick={async () => {
+          const response: any = await leaveRoom(conn);
+
+          if (response.data) {
+            setRoom(null);
+            router.push('/dashboard');
+          }
+        }}
+      />
     </div>
   );
 };

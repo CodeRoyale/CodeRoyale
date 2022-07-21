@@ -1,5 +1,10 @@
 import { Server, Socket } from "socket.io";
-import { CLOSE_ROOM, CREATE_ROOM, JOIN_ROOM, LEAVE_ROOM } from "../socketActions/userActions";
+import {
+  CLOSE_ROOM,
+  CREATE_ROOM,
+  JOIN_ROOM,
+  LEAVE_ROOM,
+} from "../socketActions/userActions";
 import Redis from "ioredis";
 import { createRoom } from "./roomController/";
 import { joinRoom } from "./roomController/";
@@ -80,6 +85,7 @@ export const handleUserEvents = (args: DataFromServerInterface) => {
       const room = await getRoom(user.currentRoom, redis!);
       // remove user from cache only if room they are currently part of has not started veto or the competition
       if (!room?.competition.veto.isOngoing && !room?.competition.isOngoing) {
+        await leaveRoom({}, { socket, currentUserId, redis });
         // delete the user from cache
         const result = await deleteUser(currentUserId, redis!);
 
