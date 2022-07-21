@@ -4,3 +4,4 @@ export const ROOM_UPDATED = "ROOM_UPDATED";
 export const JOINED_ROOM = "JOINED_ROOM";
 export const CLOSED_ROOM = "CLOSED_ROOM";
 export const LEFT_ROOM = "LEFT_ROOM";
+export const TEAM_CREATED = "TEAM_CREATED";
