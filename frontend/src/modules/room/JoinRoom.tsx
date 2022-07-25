@@ -34,7 +34,12 @@ export const JoinRoom: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   const handleRoomUpdated = (res: any) => {
-    setRoom(res.data);
+    if (res.type === 'CLOSED_ROOM') {
+      setRoom(null);
+      router.push('/dashboard');
+    } else {
+      setRoom(res.data);
+    }
   };
 
   useEffect(() => {

@@ -85,3 +85,23 @@ export const leaveRoom = (socket: ISocket) => {
     }
   });
 };
+
+export const closeRoom = (
+  socket: ISocket,
+  { roomId, forceCloseRoom }: { roomId: string; forceCloseRoom: boolean }
+) => {
+  return new Promise((resolve, reject) => {
+    if (!socket) {
+      reject(NO_CONNECTION);
+    } else {
+      socket.emit('CLOSE_ROOM', { roomId, forceCloseRoom }, (res: any) => {
+        console.log('closeRoom: ', res);
+        if (res.error) {
+          reject(res);
+        } else {
+          resolve(res);
+        }
+      });
+    }
+  });
+};

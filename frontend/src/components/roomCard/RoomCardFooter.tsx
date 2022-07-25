@@ -4,11 +4,13 @@ import { IconButton } from '../IconButton';
 
 interface RoomCardFooterProps {
   admin: boolean;
+  closeRoomOnClick: () => void;
   leaveRoomOnClick: () => void;
 }
 
 export const RoomCardFooter: React.FC<RoomCardFooterProps> = ({
   admin,
+  closeRoomOnClick,
   leaveRoomOnClick,
 }) => {
   const justifyContent = admin ? 'justify-between' : 'justify-end';
@@ -20,7 +22,11 @@ export const RoomCardFooter: React.FC<RoomCardFooterProps> = ({
       {admin ? (
         <div>
           <IconButton icon="settings" />
-          <IconButton icon="close" style={{ marginLeft: '0.5rem' }} />
+          <IconButton
+            icon="close"
+            style={{ marginLeft: '0.5rem' }}
+            onClick={closeRoomOnClick}
+          />
         </div>
       ) : null}
       <div>

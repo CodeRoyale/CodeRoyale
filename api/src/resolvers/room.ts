@@ -64,6 +64,22 @@ export class RoomResolver {
     }).save();
   }
 
+  @Mutation(() => Boolean)
+  @UseMiddleware(isLobby)
+  async deleteRoom(
+    @Arg("roomId")
+    id: string
+  ): Promise<boolean> {
+    const room = await Room.findOne({ where: { id } });
+    if (!room) {
+      return false;
+    }
+
+    await Room.delete({ id });
+
+    return true;
+  }
+
   @Query(() => PaginatedRooms)
   @UseMiddleware(isAuth)
   async rooms(

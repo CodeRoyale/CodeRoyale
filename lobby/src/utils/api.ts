@@ -34,4 +34,18 @@ const createRoom = async (data: {
   return graphQLClient.request(mutation, variables);
 };
 
-export default { createRoom };
+const deleteRoom = async (roomId: string) => {
+  const mutation = gql`
+    mutation DeleteRoom($roomId: String!) {
+      deleteRoom(roomId: $roomId)
+    }
+  `;
+
+  const variables = {
+    roomId,
+  };
+
+  return graphQLClient.request(mutation, variables);
+};
+
+export default { createRoom, deleteRoom };
