@@ -1,7 +1,7 @@
-import { useRouter } from 'next/router';
-import React from 'react';
-import { DropdownMenuIconButton } from '../DropdownMenuIconButton';
-import { PeopleCardMenu } from './PeopleCardMenu';
+import { useRouter } from "next/router";
+import React from "react";
+import { DropdownMenuIconButton } from "../DropdownMenuIconButton";
+import { PeopleCardMenu } from "./PeopleCardMenu";
 
 interface PeopleCardMenuControllerProps {
   username: string;

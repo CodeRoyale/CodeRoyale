@@ -1,5 +1,5 @@
-import React, { ButtonHTMLAttributes } from 'react';
-import { Google } from '../icons';
+import React, { ButtonHTMLAttributes } from "react";
+import { Google } from "../icons";
 
 export const GoogleAuthButton: React.FC<
   ButtonHTMLAttributes<HTMLButtonElement>

@@ -1,8 +1,8 @@
-import React from 'react';
-import { Tab } from '@headlessui/react';
-import { ProfileAboutTab } from '../../components/profileTabs/ProfileAboutTab';
-import { ProfileTabs } from '../../components/profileTabs/ProfileTabs';
-import { useGetProfileFromUrl } from '../../custom-hooks/useGetProfileFromUrl';
+import React from "react";
+import { Tab } from "@headlessui/react";
+import { ProfileAboutTab } from "../../components/profileTabs/ProfileAboutTab";
+import { ProfileTabs } from "../../components/profileTabs/ProfileTabs";
+import { useGetProfileFromUrl } from "../../custom-hooks/useGetProfileFromUrl";
 
 export const ProfileTabsController: React.FC = () => {
   const { data, loading } = useGetProfileFromUrl();

@@ -1,6 +1,6 @@
-import { useRouter } from 'next/router';
-import React from 'react';
-import { useRoom } from '../../global-stores';
+import { useRouter } from "next/router";
+import React from "react";
+import { useRoom } from "../../global-stores";
 
 export const ArenaPage = () => {
   const router = useRouter();

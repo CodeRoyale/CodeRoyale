@@ -1,6 +1,6 @@
-import React from 'react';
-import { UserAvatar } from './avatar/Avatar';
-import { Button } from './Button';
+import React from "react";
+import { UserAvatar } from "./avatar/Avatar";
+import { Button } from "./Button";
 
 interface ProfileBannerProps {
   profilePicture: string;

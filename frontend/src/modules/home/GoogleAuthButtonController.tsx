@@ -1,9 +1,9 @@
-import React from 'react';
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import { useGoogleLogin } from '@react-oauth/google';
-import { GoogleAuthButton } from '../../components/GoogleAuthButton';
-import { MeDocument, MeQuery, useLoginMutation } from '../../generated/graphql';
+import React from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useGoogleLogin } from "@react-oauth/google";
+import { GoogleAuthButton } from "../../components/GoogleAuthButton";
+import { MeDocument, MeQuery, useLoginMutation } from "../../generated/graphql";
 
 export type GoogleUser = {
   email: string;
@@ -30,7 +30,7 @@ export const GoogleAuthButtonController: React.FC<
   const googleLogin = useGoogleLogin({
     onSuccess: async (codeResponse) => {
       const responseFromGoogle = await axios.get(
-        'https://www.googleapis.com/oauth2/v3/userinfo',
+        "https://www.googleapis.com/oauth2/v3/userinfo",
         {
           headers: { Authorization: `Bearer ${codeResponse.access_token}` },
         }
@@ -42,7 +42,7 @@ export const GoogleAuthButtonController: React.FC<
       };
 
       if (!googleUser) {
-        console.log('Google OAuth failed');
+        console.log("Google OAuth failed");
       } else {
         const response = await login({
           variables: {
@@ -52,11 +52,11 @@ export const GoogleAuthButtonController: React.FC<
             cache.writeQuery<MeQuery>({
               query: MeDocument,
               data: {
-                __typename: 'Query',
+                __typename: "Query",
                 me: data?.login.user,
               },
             });
-            cache.evict({ fieldName: 'people' });
+            cache.evict({ fieldName: "people" });
           },
         });
 
@@ -67,7 +67,7 @@ export const GoogleAuthButtonController: React.FC<
           // do a notification here
         } else if (response.data.login.user) {
           // login successful
-          router.push('/dashboard');
+          router.push("/dashboard");
         }
       }
     },

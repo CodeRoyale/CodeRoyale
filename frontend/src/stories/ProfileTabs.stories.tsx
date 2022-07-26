@@ -1,9 +1,9 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { ProfileTabs } from '../components/profileTabs/ProfileTabs';
+import React from "react";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ProfileTabs } from "../components/profileTabs/ProfileTabs";
 
 export default {
-  title: 'Profile Tabs',
+  title: "Profile Tabs",
   component: ProfileTabs,
 } as ComponentMeta<typeof ProfileTabs>;
 

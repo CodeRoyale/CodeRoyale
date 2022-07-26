@@ -1,18 +1,18 @@
-import React, { useContext, useState } from 'react';
-import { useApolloClient } from '@apollo/client';
-import { Form, Formik } from 'formik';
-import { useRouter } from 'next/router';
-import { toast, ToastContainer } from 'react-toastify';
-import { Button } from '../../components/Button';
-import { InputField } from '../../components/InputField';
-import { Modal } from '../../components/Modal';
-import { Switch } from '../../components/Switch';
-import { Select } from '../../components/Select';
-import { WebSocketContext } from '../ws/WebSocketProvider';
-import { createRoom } from '../../service/roomSocket';
-import { toErrorMap } from '../../utils/toErrorMap';
-import { useRoom } from '../../global-stores';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useContext, useState } from "react";
+import { useApolloClient } from "@apollo/client";
+import { Form, Formik } from "formik";
+import { useRouter } from "next/router";
+import { toast, ToastContainer } from "react-toastify";
+import { Button } from "../../components/Button";
+import { InputField } from "../../components/InputField";
+import { Modal } from "../../components/Modal";
+import { Switch } from "../../components/Switch";
+import { Select } from "../../components/Select";
+import { WebSocketContext } from "../ws/WebSocketProvider";
+import { createRoom } from "../../service/roomSocket";
+import { toErrorMap } from "../../utils/toErrorMap";
+import { useRoom } from "../../global-stores";
+import "react-toastify/dist/ReactToastify.css";
 
 const maxNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const questionOptions = [1, 2, 3, 4, 5];
@@ -59,7 +59,7 @@ export const CreateRoomController: React.FC = () => {
       >
         <Formik
           initialValues={{
-            title: '',
+            title: "",
             private: false,
             maxMembers: 2,
             maxTeams: 2,
@@ -71,22 +71,22 @@ export const CreateRoomController: React.FC = () => {
             vetoTimeLimit: 3 * 60 * 1000,
           }}
           onSubmit={async (values, { setErrors }) => {
-            console.log('onSubmit: ', values);
+            console.log("onSubmit: ", values);
             try {
               const response: any = await createRoom(conn, values);
 
               if (response.room) {
-                console.log('CREATE_ROOM: ', response.room);
+                console.log("CREATE_ROOM: ", response.room);
                 setIsOpen(false);
                 setRoom(response.room);
-                client.cache.evict({ fieldName: 'rooms:{}' });
+                client.cache.evict({ fieldName: "rooms:{}" });
                 router.push(`/room/${response.room.config.id}`);
               }
             } catch (error: any) {
               console.log(error);
-              if (error.errors[0].message === 'Create room failed') {
-                toast('Create Room Failed', {
-                  position: 'top-right',
+              if (error.errors[0].message === "Create room failed") {
+                toast("Create Room Failed", {
+                  position: "top-right",
                   autoClose: 2000,
                   hideProgressBar: false,
                   closeOnClick: true,
@@ -113,19 +113,19 @@ export const CreateRoomController: React.FC = () => {
                   label="Max members allowed to join room"
                   value={values.maxMembers}
                   onChange={(val) =>
-                    setFieldValue('maxMembers', val.target.value)
+                    setFieldValue("maxMembers", val.target.value)
                   }
                   // need to change to 2,4,6,8
                   options={[
-                    { option: '2 members', value: 2 },
-                    { option: '3 members', value: 3 },
-                    { option: '4 members', value: 4 },
-                    { option: '5 members', value: 5 },
-                    { option: '6 members', value: 6 },
-                    { option: '7 members', value: 7 },
-                    { option: '8 members', value: 8 },
-                    { option: '9 members', value: 9 },
-                    { option: '10 members', value: 10 },
+                    { option: "2 members", value: 2 },
+                    { option: "3 members", value: 3 },
+                    { option: "4 members", value: 4 },
+                    { option: "5 members", value: 5 },
+                    { option: "6 members", value: 6 },
+                    { option: "7 members", value: 7 },
+                    { option: "8 members", value: 8 },
+                    { option: "9 members", value: 9 },
+                    { option: "10 members", value: 10 },
                   ]}
                 />
               </div>
@@ -134,7 +134,7 @@ export const CreateRoomController: React.FC = () => {
                   label="Total number of questions for competition"
                   value={values.maxCompQuestions}
                   onChange={(val) =>
-                    setFieldValue('maxQuestions', val.target.value)
+                    setFieldValue("maxQuestions", val.target.value)
                   }
                   options={maxQuestionsOptions}
                 />
@@ -144,44 +144,44 @@ export const CreateRoomController: React.FC = () => {
                   label="Max teams allowed in room"
                   value={values.maxTeams}
                   onChange={(val) =>
-                    setFieldValue('maxTeams', val.target.value)
+                    setFieldValue("maxTeams", val.target.value)
                   }
                   options={[
-                    { option: '2 teams', value: 2 },
-                    { option: '3 teams', value: 3 },
-                    { option: '4 teams', value: 4 },
-                    { option: '5 teams', value: 5 },
-                    { option: '6 teams', value: 6 },
-                    { option: '7 teams', value: 7 },
-                    { option: '8 teams', value: 8 },
-                    { option: '9 teams', value: 9 },
-                    { option: '10 teams', value: 10 },
+                    { option: "2 teams", value: 2 },
+                    { option: "3 teams", value: 3 },
+                    { option: "4 teams", value: 4 },
+                    { option: "5 teams", value: 5 },
+                    { option: "6 teams", value: 6 },
+                    { option: "7 teams", value: 7 },
+                    { option: "8 teams", value: 8 },
+                    { option: "9 teams", value: 9 },
+                    { option: "10 teams", value: 10 },
                   ]}
                 />
                 <Select
                   label="Max members allowed per team"
                   value={values.maxMembersPerTeam}
                   onChange={(val) =>
-                    setFieldValue('maxMembersPerTeam', val.target.value)
+                    setFieldValue("maxMembersPerTeam", val.target.value)
                   }
                   options={[
-                    { option: '1 member', value: 1 },
-                    { option: '2 members', value: 2 },
-                    { option: '3 members', value: 3 },
-                    { option: '4 members', value: 4 },
-                    { option: '5 members', value: 5 },
-                    { option: '6 members', value: 6 },
-                    { option: '7 members', value: 7 },
-                    { option: '8 members', value: 8 },
-                    { option: '9 members', value: 9 },
-                    { option: '10 members', value: 10 },
+                    { option: "1 member", value: 1 },
+                    { option: "2 members", value: 2 },
+                    { option: "3 members", value: 3 },
+                    { option: "4 members", value: 4 },
+                    { option: "5 members", value: 5 },
+                    { option: "6 members", value: 6 },
+                    { option: "7 members", value: 7 },
+                    { option: "8 members", value: 8 },
+                    { option: "9 members", value: 9 },
+                    { option: "10 members", value: 10 },
                   ]}
                 />
                 <Select
                   label="Number of questions for veto"
                   value={values.vetoQuestionCount}
                   onChange={(val) =>
-                    setFieldValue('vetoQuestionCount', val.target.value)
+                    setFieldValue("vetoQuestionCount", val.target.value)
                   }
                   options={maxVetoQuestionOptions}
                 />
@@ -189,49 +189,49 @@ export const CreateRoomController: React.FC = () => {
                   label="Max number of votes allowed"
                   value={values.maxVetoVotesAllowed}
                   onChange={(val) =>
-                    setFieldValue('maxVetoVoteAllowed', val.target.value)
+                    setFieldValue("maxVetoVoteAllowed", val.target.value)
                   }
                   options={[
-                    { option: '2 questions', value: 2 },
-                    { option: '3 questions', value: 3 },
-                    { option: '4 questions', value: 4 },
-                    { option: '5 questions', value: 5 },
-                    { option: '6 questions', value: 6 },
-                    { option: '7 questions', value: 7 },
-                    { option: '8 questions', value: 8 },
-                    { option: '9 questions', value: 9 },
-                    { option: '10 questions', value: 10 },
+                    { option: "2 questions", value: 2 },
+                    { option: "3 questions", value: 3 },
+                    { option: "4 questions", value: 4 },
+                    { option: "5 questions", value: 5 },
+                    { option: "6 questions", value: 6 },
+                    { option: "7 questions", value: 7 },
+                    { option: "8 questions", value: 8 },
+                    { option: "9 questions", value: 9 },
+                    { option: "10 questions", value: 10 },
                   ]}
                 />
                 <Select
                   label="Veto time limit"
                   value={values.vetoTimeLimit}
                   onChange={(val) =>
-                    setFieldValue('vetoTimeLimit', val.target.value)
+                    setFieldValue("vetoTimeLimit", val.target.value)
                   }
                   options={[
-                    { option: '3 minutes', value: 3 * 60 * 1000 },
-                    { option: '5 minutes', value: 4 * 60 * 1000 },
-                    { option: '7 minutes', value: 6 * 60 * 1000 },
-                    { option: '9 minutes', value: 8 * 60 * 1000 },
-                    { option: '11 minutes', value: 10 * 60 * 1000 },
-                    { option: '13 minutes', value: 10 * 60 * 1000 },
-                    { option: '15 minutes', value: 10 * 60 * 1000 },
+                    { option: "3 minutes", value: 3 * 60 * 1000 },
+                    { option: "5 minutes", value: 4 * 60 * 1000 },
+                    { option: "7 minutes", value: 6 * 60 * 1000 },
+                    { option: "9 minutes", value: 8 * 60 * 1000 },
+                    { option: "11 minutes", value: 10 * 60 * 1000 },
+                    { option: "13 minutes", value: 10 * 60 * 1000 },
+                    { option: "15 minutes", value: 10 * 60 * 1000 },
                   ]}
                 />
                 <Select
                   label="Competition time limit"
                   value={values.compTimeLimit}
                   onChange={(val) =>
-                    setFieldValue('compTimeLimit', val.target.value)
+                    setFieldValue("compTimeLimit", val.target.value)
                   }
                   options={[
-                    { option: '30 minutes', value: 30 * 60 * 1000 },
-                    { option: '1 hour', value: 1 * 60 * 60 * 1000 },
-                    { option: '3 hours', value: 3 * 60 * 60 * 1000 },
-                    { option: '6 hours', value: 6 * 60 * 60 * 1000 },
-                    { option: '9 hours', value: 9 * 60 * 60 * 1000 },
-                    { option: '12 hours', value: 12 * 60 * 60 * 1000 },
+                    { option: "30 minutes", value: 30 * 60 * 1000 },
+                    { option: "1 hour", value: 1 * 60 * 60 * 1000 },
+                    { option: "3 hours", value: 3 * 60 * 60 * 1000 },
+                    { option: "6 hours", value: 6 * 60 * 60 * 1000 },
+                    { option: "9 hours", value: 9 * 60 * 60 * 1000 },
+                    { option: "12 hours", value: 12 * 60 * 60 * 1000 },
                   ]}
                 />
               </div>
@@ -240,16 +240,16 @@ export const CreateRoomController: React.FC = () => {
                   label="Will this be a private room?"
                   value={values.private}
                   size="normal"
-                  onChange={(val) => setFieldValue('private', val)}
+                  onChange={(val) => setFieldValue("private", val)}
                 />
               </div>
               <Button
                 type="submit"
                 buttonClass="primary"
                 size="normal"
-                style={{ marginTop: '2em' }}
+                style={{ marginTop: "2em" }}
                 loading={isSubmitting}
-                loadingText={isSubmitting ? 'Creating a Room' : null}
+                loadingText={isSubmitting ? "Creating a Room" : null}
               >
                 Create Room
               </Button>

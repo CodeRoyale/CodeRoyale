@@ -1,16 +1,16 @@
-import React from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import { Form, Formik } from 'formik';
-import { Button } from '../../components/Button';
-import { InputField } from '../../components/InputField';
+import React from "react";
+import { ToastContainer, toast } from "react-toastify";
+import { Form, Formik } from "formik";
+import { Button } from "../../components/Button";
+import { InputField } from "../../components/InputField";
 import {
   MeDocument,
   MeQuery,
   useMeQuery,
   useUpdateUserMutation,
-} from '../../generated/graphql';
-import { toErrorMap } from '../../utils/toErrorMap';
-import 'react-toastify/dist/ReactToastify.css';
+} from "../../generated/graphql";
+import { toErrorMap } from "../../utils/toErrorMap";
+import "react-toastify/dist/ReactToastify.css";
 
 export const SettingsCardController: React.FC = () => {
   const { data, loading } = useMeQuery();
@@ -28,7 +28,7 @@ export const SettingsCardController: React.FC = () => {
             username: data.me.username,
             name: data.me.name,
             email: data.me.email,
-            bio: !data.me.bio ? '' : data.me.bio,
+            bio: !data.me.bio ? "" : data.me.bio,
           }}
           onSubmit={async (values, { setErrors }) => {
             const response = await updateUser({
@@ -43,7 +43,7 @@ export const SettingsCardController: React.FC = () => {
                 cache.writeQuery<MeQuery>({
                   query: MeDocument,
                   data: {
-                    __typename: 'Query',
+                    __typename: "Query",
                     me: data?.updateUser.user,
                   },
                 });
@@ -54,8 +54,8 @@ export const SettingsCardController: React.FC = () => {
               setErrors(toErrorMap(response.data.updateUser.errors));
             } else if (response.data?.updateUser.user) {
               // update user successful
-              toast('Updated profile successfully!', {
-                position: 'top-right',
+              toast("Updated profile successfully!", {
+                position: "top-right",
                 autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -109,9 +109,9 @@ export const SettingsCardController: React.FC = () => {
                 type="submit"
                 buttonClass="primary"
                 size="normal"
-                style={{ marginTop: '2em' }}
+                style={{ marginTop: "2em" }}
                 loading={isSubmitting}
-                loadingText={isSubmitting ? 'Registering' : null}
+                loadingText={isSubmitting ? "Registering" : null}
               >
                 Update
               </Button>

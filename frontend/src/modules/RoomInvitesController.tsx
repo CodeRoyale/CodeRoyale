@@ -1,7 +1,7 @@
-import React from 'react';
-import { v4 as uuid } from 'uuid';
-import { RoomInviteCard } from '../components/RoomInviteCard';
-import { useMeQuery } from '../generated/graphql';
+import React from "react";
+import { v4 as uuid } from "uuid";
+import { RoomInviteCard } from "../components/RoomInviteCard";
+import { useMeQuery } from "../generated/graphql";
 
 export const RoomInvitesController = () => {
   const { data, loading } = useMeQuery();
@@ -9,9 +9,9 @@ export const RoomInvitesController = () => {
   const tempRoomInvitesData = [
     {
       avatarUrl:
-        'https://lh3.googleusercontent.com/a-/AOh14Ghc_V15s5eZUxP0PsKFcNnTX1On7c1UQ4BwSGGW=s96-c',
-      fullName: 'Joel Mathew',
-      userName: 'Rec0iL99',
+        "https://lh3.googleusercontent.com/a-/AOh14Ghc_V15s5eZUxP0PsKFcNnTX1On7c1UQ4BwSGGW=s96-c",
+      fullName: "Joel Mathew",
+      userName: "Rec0iL99",
     },
   ];
 
@@ -31,7 +31,7 @@ export const RoomInvitesController = () => {
                 avatarUrl={avatarUrl}
                 fullName={fullName}
                 userName={userName}
-                marginTop={index !== 0 ? 'mt-6' : null}
+                marginTop={index !== 0 ? "mt-6" : null}
               />
             )
           )}

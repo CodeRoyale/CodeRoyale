@@ -1,9 +1,9 @@
-import { useRouter } from 'next/router';
-import React from 'react';
-import { Button } from '../../components/Button';
-import { RoomSummaryCard } from '../../components/RoomSummaryCard';
-import { useRoomsQuery } from '../../generated/graphql';
-import { CreateRoomController } from './CreateRoomController';
+import { useRouter } from "next/router";
+import React from "react";
+import { Button } from "../../components/Button";
+import { RoomSummaryCard } from "../../components/RoomSummaryCard";
+import { useRoomsQuery } from "../../generated/graphql";
+import { CreateRoomController } from "./CreateRoomController";
 
 export const PublicRoomsController: React.FC<{}> = () => {
   const router = useRouter();
@@ -40,11 +40,11 @@ export const PublicRoomsController: React.FC<{}> = () => {
               currMemberCount={0}
               maxMembers={room.maxMembers}
               roomCompetitionQuestionTags={[
-                'Dynamic Programming',
-                'Trees',
-                'Stacks',
+                "Dynamic Programming",
+                "Trees",
+                "Stacks",
               ]}
-              marginTop={index !== 0 ? 'mt-6' : null}
+              marginTop={index !== 0 ? "mt-6" : null}
               creatorUserName={room.creator.username}
               onClick={() => {
                 router.push(`/room/${room.id}`);

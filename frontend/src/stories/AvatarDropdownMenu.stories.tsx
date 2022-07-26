@@ -1,9 +1,9 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { AvatarDropdownMenu } from '../components/avatarDropdownMenu/AvatarDropdownMenu';
+import React from "react";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { AvatarDropdownMenu } from "../components/avatarDropdownMenu/AvatarDropdownMenu";
 
 export default {
-  title: 'Avatar Dropdown Menu',
+  title: "Avatar Dropdown Menu",
   component: AvatarDropdownMenu,
 } as ComponentMeta<typeof AvatarDropdownMenu>;
 

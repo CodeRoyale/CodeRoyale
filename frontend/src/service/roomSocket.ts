@@ -1,5 +1,5 @@
-import { ISocket } from '../modules/ws/WebSocketProvider';
-import { NO_CONNECTION } from '../utils/constants';
+import { ISocket } from "../modules/ws/WebSocketProvider";
+import { NO_CONNECTION } from "../utils/constants";
 
 export const createRoom = (
   socket: ISocket,
@@ -21,7 +21,7 @@ export const createRoom = (
       reject(NO_CONNECTION);
     } else {
       socket.emit(
-        'CREATE_ROOM',
+        "CREATE_ROOM",
         {
           config: {
             title: data.title,
@@ -57,8 +57,8 @@ export const joinRoom = (socket: ISocket, roomId: string) => {
     if (!socket) {
       reject(NO_CONNECTION);
     } else {
-      socket.emit('JOIN_ROOM', roomId, (res: any) => {
-        console.log('joinRoom: ', res);
+      socket.emit("JOIN_ROOM", roomId, (res: any) => {
+        console.log("joinRoom: ", res);
         if (res.error) {
           reject(res);
         } else {
@@ -74,8 +74,8 @@ export const leaveRoom = (socket: ISocket) => {
     if (!socket) {
       reject(NO_CONNECTION);
     } else {
-      socket.emit('LEAVE_ROOM', {}, (res: any) => {
-        console.log('leaveRoom: ', res);
+      socket.emit("LEAVE_ROOM", {}, (res: any) => {
+        console.log("leaveRoom: ", res);
         if (res.error) {
           reject(res);
         } else {
@@ -94,8 +94,8 @@ export const closeRoom = (
     if (!socket) {
       reject(NO_CONNECTION);
     } else {
-      socket.emit('CLOSE_ROOM', { roomId, forceCloseRoom }, (res: any) => {
-        console.log('closeRoom: ', res);
+      socket.emit("CLOSE_ROOM", { roomId, forceCloseRoom }, (res: any) => {
+        console.log("closeRoom: ", res);
         if (res.error) {
           reject(res);
         } else {

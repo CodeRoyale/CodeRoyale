@@ -1,9 +1,9 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { Button } from '../components/Button';
+import React from "react";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Button } from "../components/Button";
 
 export default {
-  title: 'Button',
+  title: "Button",
   component: Button,
 } as ComponentMeta<typeof Button>;
 
@@ -11,9 +11,9 @@ const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 
 export const Main = Template.bind({});
 Main.args = {
-  size: 'normal',
-  children: 'Create Room',
-  buttonClass: 'primary',
+  size: "normal",
+  children: "Create Room",
+  buttonClass: "primary",
   loading: false,
-  loadingText: 'hello',
+  loadingText: "hello",
 };

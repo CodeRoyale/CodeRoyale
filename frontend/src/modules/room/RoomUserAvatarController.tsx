@@ -1,11 +1,11 @@
-import React from 'react';
-import { Menu } from '@headlessui/react';
-import { Float } from 'headlessui-float-react';
+import React from "react";
+import { Menu } from "@headlessui/react";
+import { Float } from "headlessui-float-react";
 import {
   RoomUserAvatar,
   RoomUserAvatarProps,
-} from '../../components/avatar/Avatar';
-import { RoomUserAvatarPopupController } from './RoomUserAvatarPopupController';
+} from "../../components/avatar/Avatar";
+import { RoomUserAvatarPopupController } from "./RoomUserAvatarPopupController";
 
 export const RoomUserAvatarController: React.FC<RoomUserAvatarProps> = ({
   profilePicture,

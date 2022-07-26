@@ -1,5 +1,5 @@
-import React from 'react';
-import { Email } from '../../icons';
+import React from "react";
+import { Email } from "../../icons";
 
 // ! change types to meQuery
 interface ProfileAboutTabProps {

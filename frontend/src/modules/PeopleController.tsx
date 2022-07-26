@@ -1,10 +1,10 @@
-import React from 'react';
-import { Menu } from '@headlessui/react';
-import { Float } from 'headlessui-float-react';
-import { v4 as uuid } from 'uuid';
-import { PeopleCard } from '../components/peopleCard/PeopleCard';
-import { PeopleCardMenuController } from '../components/peopleCard/PeopleCardMenuController';
-import { usePeopleQuery } from '../generated/graphql';
+import React from "react";
+import { Menu } from "@headlessui/react";
+import { Float } from "headlessui-float-react";
+import { v4 as uuid } from "uuid";
+import { PeopleCard } from "../components/peopleCard/PeopleCard";
+import { PeopleCardMenuController } from "../components/peopleCard/PeopleCardMenuController";
+import { usePeopleQuery } from "../generated/graphql";
 
 export const PeopleController: React.FC<{}> = () => {
   const { data, loading } = usePeopleQuery();

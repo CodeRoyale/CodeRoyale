@@ -1,5 +1,5 @@
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import { gql } from "@apollo/client";
+import * as Apollo from "@apollo/client";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -22,24 +22,24 @@ export type Scalars = {
 };
 
 export type FieldError = {
-  __typename?: 'FieldError';
-  field: Scalars['String'];
-  message: Scalars['String'];
+  __typename?: "FieldError";
+  field: Scalars["String"];
+  message: Scalars["String"];
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
-  connect: Scalars['Boolean'];
+  __typename?: "Mutation";
+  connect: Scalars["Boolean"];
   createRoom: Room;
   login: UserResponse;
-  logout: Scalars['Boolean'];
+  logout: Scalars["Boolean"];
   register: UserResponse;
   updateUser: UserResponse;
 };
 
 export type MutationConnectArgs = {
-  followingUserId: Scalars['Int'];
-  wantsToFollow: Scalars['Boolean'];
+  followingUserId: Scalars["Int"];
+  wantsToFollow: Scalars["Boolean"];
 };
 
 export type MutationCreateRoomArgs = {
@@ -47,7 +47,7 @@ export type MutationCreateRoomArgs = {
 };
 
 export type MutationLoginArgs = {
-  email: Scalars['String'];
+  email: Scalars["String"];
 };
 
 export type MutationRegisterArgs = {
@@ -59,14 +59,14 @@ export type MutationUpdateUserArgs = {
 };
 
 export type PaginatedRooms = {
-  __typename?: 'PaginatedRooms';
-  hasMore: Scalars['Boolean'];
+  __typename?: "PaginatedRooms";
+  hasMore: Scalars["Boolean"];
   rooms: Array<Room>;
 };
 
 export type Query = {
-  __typename?: 'Query';
-  hello: Scalars['String'];
+  __typename?: "Query";
+  hello: Scalars["String"];
   me?: Maybe<User>;
   people: Array<User>;
   rooms: PaginatedRooms;
@@ -75,81 +75,81 @@ export type Query = {
 };
 
 export type QueryRoomsArgs = {
-  cursor?: InputMaybe<Scalars['String']>;
-  isPrivate: Scalars['Boolean'];
-  limit: Scalars['Int'];
+  cursor?: InputMaybe<Scalars["String"]>;
+  isPrivate: Scalars["Boolean"];
+  limit: Scalars["Int"];
 };
 
 export type QueryUserArgs = {
-  username: Scalars['String'];
+  username: Scalars["String"];
 };
 
 export type QueryUsersArgs = {
-  userIds: Array<Scalars['Int']>;
+  userIds: Array<Scalars["Int"]>;
 };
 
 export type RegisterInput = {
-  accessToken: Scalars['String'];
-  email: Scalars['String'];
-  name: Scalars['String'];
-  profilePicture: Scalars['String'];
-  username: Scalars['String'];
+  accessToken: Scalars["String"];
+  email: Scalars["String"];
+  name: Scalars["String"];
+  profilePicture: Scalars["String"];
+  username: Scalars["String"];
 };
 
 export type Room = {
-  __typename?: 'Room';
-  createdAt: Scalars['String'];
+  __typename?: "Room";
+  createdAt: Scalars["String"];
   creator: User;
-  creatorId: Scalars['Float'];
-  id: Scalars['String'];
-  maxMembers: Scalars['Float'];
-  private: Scalars['Boolean'];
-  title: Scalars['String'];
-  updatedAt: Scalars['String'];
+  creatorId: Scalars["Float"];
+  id: Scalars["String"];
+  maxMembers: Scalars["Float"];
+  private: Scalars["Boolean"];
+  title: Scalars["String"];
+  updatedAt: Scalars["String"];
 };
 
 export type RoomInput = {
-  creatorId: Scalars['Float'];
-  maxMembers: Scalars['Float'];
-  private: Scalars['Boolean'];
-  title: Scalars['String'];
+  creatorId: Scalars["Float"];
+  maxMembers: Scalars["Float"];
+  private: Scalars["Boolean"];
+  title: Scalars["String"];
 };
 
 export type UpdateUserInput = {
-  bio?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
-  username: Scalars['String'];
+  bio?: InputMaybe<Scalars["String"]>;
+  name: Scalars["String"];
+  username: Scalars["String"];
 };
 
 export type User = {
-  __typename?: 'User';
-  bio?: Maybe<Scalars['String']>;
-  connectionStatus?: Maybe<Scalars['Boolean']>;
-  createdAt: Scalars['String'];
-  email: Scalars['String'];
-  followers: Scalars['Float'];
-  following: Scalars['Float'];
-  id: Scalars['Float'];
-  name: Scalars['String'];
-  profilePicture: Scalars['String'];
-  updatedAt: Scalars['String'];
-  username: Scalars['String'];
+  __typename?: "User";
+  bio?: Maybe<Scalars["String"]>;
+  connectionStatus?: Maybe<Scalars["Boolean"]>;
+  createdAt: Scalars["String"];
+  email: Scalars["String"];
+  followers: Scalars["Float"];
+  following: Scalars["Float"];
+  id: Scalars["Float"];
+  name: Scalars["String"];
+  profilePicture: Scalars["String"];
+  updatedAt: Scalars["String"];
+  username: Scalars["String"];
 };
 
 export type UserResponse = {
-  __typename?: 'UserResponse';
+  __typename?: "UserResponse";
   errors?: Maybe<Array<FieldError>>;
   user?: Maybe<User>;
 };
 
 export type RegularErrorFragment = {
-  __typename?: 'FieldError';
+  __typename?: "FieldError";
   field: string;
   message: string;
 };
 
 export type RegularUserFragment = {
-  __typename?: 'User';
+  __typename?: "User";
   id: number;
   username: string;
   email: string;
@@ -162,14 +162,14 @@ export type RegularUserFragment = {
 };
 
 export type RegularUserResponseFragment = {
-  __typename?: 'UserResponse';
+  __typename?: "UserResponse";
   errors?: Array<{
-    __typename?: 'FieldError';
+    __typename?: "FieldError";
     field: string;
     message: string;
   }> | null;
   user?: {
-    __typename?: 'User';
+    __typename?: "User";
     id: number;
     username: string;
     email: string;
@@ -183,38 +183,38 @@ export type RegularUserResponseFragment = {
 };
 
 export type RoomSnippetFragment = {
-  __typename?: 'Room';
+  __typename?: "Room";
   id: string;
   title: string;
   private: boolean;
   maxMembers: number;
   createdAt: string;
   updatedAt: string;
-  creator: { __typename?: 'User'; id: number; username: string };
+  creator: { __typename?: "User"; id: number; username: string };
 };
 
 export type ConnectMutationVariables = Exact<{
-  followingUserId: Scalars['Int'];
-  wantsToFollow: Scalars['Boolean'];
+  followingUserId: Scalars["Int"];
+  wantsToFollow: Scalars["Boolean"];
 }>;
 
-export type ConnectMutation = { __typename?: 'Mutation'; connect: boolean };
+export type ConnectMutation = { __typename?: "Mutation"; connect: boolean };
 
 export type LoginMutationVariables = Exact<{
-  email: Scalars['String'];
+  email: Scalars["String"];
 }>;
 
 export type LoginMutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
   login: {
-    __typename?: 'UserResponse';
+    __typename?: "UserResponse";
     errors?: Array<{
-      __typename?: 'FieldError';
+      __typename?: "FieldError";
       field: string;
       message: string;
     }> | null;
     user?: {
-      __typename?: 'User';
+      __typename?: "User";
       id: number;
       username: string;
       email: string;
@@ -230,23 +230,23 @@ export type LoginMutation = {
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never }>;
 
-export type LogoutMutation = { __typename?: 'Mutation'; logout: boolean };
+export type LogoutMutation = { __typename?: "Mutation"; logout: boolean };
 
 export type RegisterMutationVariables = Exact<{
   options: RegisterInput;
 }>;
 
 export type RegisterMutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
   register: {
-    __typename?: 'UserResponse';
+    __typename?: "UserResponse";
     errors?: Array<{
-      __typename?: 'FieldError';
+      __typename?: "FieldError";
       field: string;
       message: string;
     }> | null;
     user?: {
-      __typename?: 'User';
+      __typename?: "User";
       id: number;
       username: string;
       email: string;
@@ -265,16 +265,16 @@ export type UpdateUserMutationVariables = Exact<{
 }>;
 
 export type UpdateUserMutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
   updateUser: {
-    __typename?: 'UserResponse';
+    __typename?: "UserResponse";
     errors?: Array<{
-      __typename?: 'FieldError';
+      __typename?: "FieldError";
       field: string;
       message: string;
     }> | null;
     user?: {
-      __typename?: 'User';
+      __typename?: "User";
       id: number;
       username: string;
       email: string;
@@ -291,9 +291,9 @@ export type UpdateUserMutation = {
 export type MeQueryVariables = Exact<{ [key: string]: never }>;
 
 export type MeQuery = {
-  __typename?: 'Query';
+  __typename?: "Query";
   me?: {
-    __typename?: 'User';
+    __typename?: "User";
     id: number;
     username: string;
     email: string;
@@ -309,9 +309,9 @@ export type MeQuery = {
 export type PeopleQueryVariables = Exact<{ [key: string]: never }>;
 
 export type PeopleQuery = {
-  __typename?: 'Query';
+  __typename?: "Query";
   people: Array<{
-    __typename?: 'User';
+    __typename?: "User";
     id: number;
     username: string;
     profilePicture: string;
@@ -320,44 +320,44 @@ export type PeopleQuery = {
 };
 
 export type RoomsQueryVariables = Exact<{
-  isPrivate: Scalars['Boolean'];
-  cursor?: InputMaybe<Scalars['String']>;
-  limit: Scalars['Int'];
+  isPrivate: Scalars["Boolean"];
+  cursor?: InputMaybe<Scalars["String"]>;
+  limit: Scalars["Int"];
 }>;
 
 export type RoomsQuery = {
-  __typename?: 'Query';
+  __typename?: "Query";
   rooms: {
-    __typename?: 'PaginatedRooms';
+    __typename?: "PaginatedRooms";
     hasMore: boolean;
     rooms: Array<{
-      __typename?: 'Room';
+      __typename?: "Room";
       id: string;
       title: string;
       private: boolean;
       maxMembers: number;
       createdAt: string;
       updatedAt: string;
-      creator: { __typename?: 'User'; id: number; username: string };
+      creator: { __typename?: "User"; id: number; username: string };
     }>;
   };
 };
 
 export type UserQueryVariables = Exact<{
-  username: Scalars['String'];
+  username: Scalars["String"];
 }>;
 
 export type UserQuery = {
-  __typename?: 'Query';
+  __typename?: "Query";
   user: {
-    __typename?: 'UserResponse';
+    __typename?: "UserResponse";
     errors?: Array<{
-      __typename?: 'FieldError';
+      __typename?: "FieldError";
       field: string;
       message: string;
     }> | null;
     user?: {
-      __typename?: 'User';
+      __typename?: "User";
       id: number;
       username: string;
       email: string;
@@ -372,13 +372,13 @@ export type UserQuery = {
 };
 
 export type UsersQueryVariables = Exact<{
-  userIds: Array<Scalars['Int']> | Scalars['Int'];
+  userIds: Array<Scalars["Int"]> | Scalars["Int"];
 }>;
 
 export type UsersQuery = {
-  __typename?: 'Query';
+  __typename?: "Query";
   users: Array<{
-    __typename?: 'User';
+    __typename?: "User";
     id: number;
     username: string;
     profilePicture: string;

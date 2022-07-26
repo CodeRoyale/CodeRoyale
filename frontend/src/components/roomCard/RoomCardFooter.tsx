@@ -1,6 +1,6 @@
-import React from 'react';
-import { Button } from '../Button';
-import { IconButton } from '../IconButton';
+import React from "react";
+import { Button } from "../Button";
+import { IconButton } from "../IconButton";
 
 interface RoomCardFooterProps {
   admin: boolean;
@@ -13,7 +13,7 @@ export const RoomCardFooter: React.FC<RoomCardFooterProps> = ({
   closeRoomOnClick,
   leaveRoomOnClick,
 }) => {
-  const justifyContent = admin ? 'justify-between' : 'justify-end';
+  const justifyContent = admin ? "justify-between" : "justify-end";
 
   return (
     <div
@@ -24,7 +24,7 @@ export const RoomCardFooter: React.FC<RoomCardFooterProps> = ({
           <IconButton icon="settings" />
           <IconButton
             icon="close"
-            style={{ marginLeft: '0.5rem' }}
+            style={{ marginLeft: "0.5rem" }}
             onClick={closeRoomOnClick}
           />
         </div>
@@ -33,7 +33,7 @@ export const RoomCardFooter: React.FC<RoomCardFooterProps> = ({
         <Button
           buttonClass="dark"
           size="normal"
-          style={{ marginRight: '0.5rem' }}
+          style={{ marginRight: "0.5rem" }}
           onClick={leaveRoomOnClick}
         >
           Leave

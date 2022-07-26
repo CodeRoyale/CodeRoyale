@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
 const sizes = {
-  2: 'h-2 w-2',
-  4: 'h-4 w-4',
+  2: "h-2 w-2",
+  4: "h-4 w-4",
 };
 
 export const Spinner: React.FC<{ size?: keyof typeof sizes }> = ({

@@ -1,8 +1,8 @@
-import React from 'react';
-import ReactModal from 'react-modal';
-import { IconButton } from './IconButton';
+import React from "react";
+import ReactModal from "react-modal";
+import { IconButton } from "./IconButton";
 
-type ModalProps = ReactModal['props'] & {
+type ModalProps = ReactModal["props"] & {
   title: string;
   children: React.ReactNode;
 };
@@ -13,22 +13,22 @@ export const Modal: React.FC<ModalProps> = ({ title, children, ...props }) => {
       shouldCloseOnEsc
       style={{
         overlay: {
-          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          backgroundColor: "rgba(0, 0, 0, 0.8)",
           zIndex: 1000,
-          overflowY: 'auto',
+          overflowY: "auto",
         },
         content: {
-          top: '50%',
-          left: '50%',
-          right: 'auto',
-          bottom: 'auto',
-          marginRight: '-50%',
+          top: "50%",
+          left: "50%",
+          right: "auto",
+          bottom: "auto",
+          marginRight: "-50%",
           borderRadius: 8,
-          padding: '40px 40px 40px 40px',
-          transform: 'translate(-50%, -50%)',
-          backgroundColor: 'var(--color-primary-900)',
-          border: 'none',
-          width: '90%',
+          padding: "40px 40px 40px 40px",
+          transform: "translate(-50%, -50%)",
+          backgroundColor: "var(--color-primary-900)",
+          border: "none",
+          width: "90%",
           maxWidth: 650,
         },
       }}

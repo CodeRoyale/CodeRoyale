@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export const PeopleCardMenu: React.FC<{ children: React.ReactNode }> = ({
   children,

@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { useRoom } from '../../global-stores';
-import { joinRoom } from '../../service/roomSocket';
-import { WebSocketContext } from '../ws/WebSocketProvider';
+import React, { useContext, useEffect } from "react";
+import { useRouter } from "next/router";
+import { useRoom } from "../../global-stores";
+import { joinRoom } from "../../service/roomSocket";
+import { WebSocketContext } from "../ws/WebSocketProvider";
 
 export const JoinRoom: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -25,7 +25,7 @@ export const JoinRoom: React.FC<{ children: React.ReactNode }> = ({
         } catch (error) {
           console.log(error);
           // show toast and push to /dashboard
-          router.push('/dashboard');
+          router.push("/dashboard");
         }
       }
     };
@@ -34,19 +34,19 @@ export const JoinRoom: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   const handleRoomUpdated = (res: any) => {
-    if (res.type === 'CLOSED_ROOM') {
+    if (res.type === "CLOSED_ROOM") {
       setRoom(null);
-      router.push('/dashboard');
+      router.push("/dashboard");
     } else {
       setRoom(res.data);
     }
   };
 
   useEffect(() => {
-    conn?.on('ROOM_UPDATED', handleRoomUpdated);
+    conn?.on("ROOM_UPDATED", handleRoomUpdated);
 
     return () => {
-      conn?.off('ROOM_UPDATED', handleRoomUpdated);
+      conn?.off("ROOM_UPDATED", handleRoomUpdated);
     };
   }, []);
 

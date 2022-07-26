@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import React, { ButtonHTMLAttributes } from "react";
 import {
   AddModerator,
   Error,
@@ -6,14 +6,14 @@ import {
   RemoveUser,
   RoomInvite,
   Settings,
-} from '../icons';
+} from "../icons";
 
 type IconType =
-  | 'profile'
-  | 'settings'
-  | 'roomInvite'
-  | 'removeUser'
-  | 'addModerator';
+  | "profile"
+  | "settings"
+  | "roomInvite"
+  | "removeUser"
+  | "addModerator";
 
 type DropdownMenuIconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   title: string;
@@ -23,15 +23,15 @@ type DropdownMenuIconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const getIconComponent = (icon: IconType) => {
   switch (icon) {
-    case 'profile':
+    case "profile":
       return <Profile className="fill-primary-100" width={18} height={18} />;
-    case 'settings':
+    case "settings":
       return <Settings className="fill-primary-100" width={18} height={18} />;
-    case 'roomInvite':
+    case "roomInvite":
       return <RoomInvite className="fill-primary-100" width={18} height={18} />;
-    case 'removeUser':
+    case "removeUser":
       return <RemoveUser className="fill-primary-100" width={18} height={18} />;
-    case 'addModerator':
+    case "addModerator":
       return (
         <AddModerator className="fill-primary-100" width={18} height={18} />
       );
@@ -43,7 +43,7 @@ const getIconComponent = (icon: IconType) => {
 export const DropdownMenuIconButton: React.FC<DropdownMenuIconButtonProps> = ({
   title,
   icon,
-  borderRadius = '',
+  borderRadius = "",
   ...props
 }) => {
   const iconComponent = getIconComponent(icon);

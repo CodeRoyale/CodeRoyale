@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react';
+import React, { HTMLAttributes } from "react";
 
 type UserAvatarProps = HTMLAttributes<HTMLDivElement> & {
   profilePicture: string;

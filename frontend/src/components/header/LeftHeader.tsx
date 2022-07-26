@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react';
+import React, { HTMLAttributes } from "react";
 
 export const LeftHeader: React.FC<HTMLAttributes<HTMLDivElement>> = (props) => {
   return (

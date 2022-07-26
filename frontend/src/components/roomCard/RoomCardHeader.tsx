@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface RoomCardHeaderProps {
   title: string;
@@ -15,7 +15,7 @@ export const RoomCardHeader: React.FC<RoomCardHeaderProps> = ({
     <h1 className="text-lg text-primary-100 font-semibold">{title}</h1>
     <div className="text-xs mt-0.5">
       <span className="text-primary-300">
-        By{' '}
+        By{" "}
         <span
           className="text-primary-100 cursor-pointer"
           onClick={creatorUsernameOnClick}

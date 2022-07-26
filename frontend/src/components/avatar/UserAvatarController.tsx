@@ -1,11 +1,11 @@
-import React from 'react';
-import { useRouter } from 'next/router';
-import { Menu } from '@headlessui/react';
-import { Float } from 'headlessui-float-react';
-import { useMeQuery } from '../../generated/graphql';
-import { Button } from '../Button';
-import { AvatarDropdownMenuController } from '../avatarDropdownMenu/AvatarDropdownMenuController';
-import { UserAvatar } from './Avatar';
+import React from "react";
+import { useRouter } from "next/router";
+import { Menu } from "@headlessui/react";
+import { Float } from "headlessui-float-react";
+import { useMeQuery } from "../../generated/graphql";
+import { Button } from "../Button";
+import { AvatarDropdownMenuController } from "../avatarDropdownMenu/AvatarDropdownMenuController";
+import { UserAvatar } from "./Avatar";
 
 export const UserAvatarController: React.FC<{}> = () => {
   const router = useRouter();
@@ -19,7 +19,7 @@ export const UserAvatarController: React.FC<{}> = () => {
       <Button
         buttonClass="primary"
         size="normal"
-        onClick={() => router.push('/')}
+        onClick={() => router.push("/")}
       >
         Login / Register
       </Button>

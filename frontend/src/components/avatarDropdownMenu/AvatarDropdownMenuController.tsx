@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import { useRouter } from 'next/router';
-import { useApolloClient } from '@apollo/client';
-import { useLogoutMutation, useMeQuery } from '../../generated/graphql';
-import { DropdownMenuIconButton } from '../DropdownMenuIconButton';
-import { WebSocketContext } from '../../modules/ws/WebSocketProvider';
-import { AvatarDropdownMenu } from './AvatarDropdownMenu';
+import React, { useContext } from "react";
+import { useRouter } from "next/router";
+import { useApolloClient } from "@apollo/client";
+import { useLogoutMutation, useMeQuery } from "../../generated/graphql";
+import { DropdownMenuIconButton } from "../DropdownMenuIconButton";
+import { WebSocketContext } from "../../modules/ws/WebSocketProvider";
+import { AvatarDropdownMenu } from "./AvatarDropdownMenu";
 
 export const AvatarDropdownMenuController: React.FC = () => {
   const { conn, setConn } = useContext(WebSocketContext);
@@ -37,7 +37,7 @@ export const AvatarDropdownMenuController: React.FC = () => {
       <DropdownMenuIconButton
         title="Settings"
         icon="settings"
-        onClick={() => router.push('/settings')}
+        onClick={() => router.push("/settings")}
       />
       <button
         type="button"

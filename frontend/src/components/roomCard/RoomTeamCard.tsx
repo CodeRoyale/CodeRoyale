@@ -1,5 +1,5 @@
-import React from 'react';
-import { RoomUserAvatar } from '../avatar/Avatar';
+import React from "react";
+import { RoomUserAvatar } from "../avatar/Avatar";
 
 interface RoomTeamCardProps {
   teamName: string;

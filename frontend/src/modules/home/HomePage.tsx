@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import { useRouter } from 'next/router';
-import { googleClientId } from '../../utils/constants';
-import { useMeQuery } from '../../generated/graphql';
-import { AuthFormController } from './AuthFormController';
+import React, { useState } from "react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { useRouter } from "next/router";
+import { googleClientId } from "../../utils/constants";
+import { useMeQuery } from "../../generated/graphql";
+import { AuthFormController } from "./AuthFormController";
 import {
   GoogleAuthButtonController,
   GoogleUser,
-} from './GoogleAuthButtonController';
+} from "./GoogleAuthButtonController";
 
 export const HomePage = () => {
   const router = useRouter();
@@ -47,13 +47,13 @@ export const HomePage = () => {
       </>
     );
   } else {
-    router.push('/dashboard');
+    router.push("/dashboard");
   }
 
   return (
     <div
       className="grid gap-5 justify-center h-screen w-screen"
-      style={{ gridTemplateColumns: '640px 640px', margin: '0 auto' }}
+      style={{ gridTemplateColumns: "640px 640px", margin: "0 auto" }}
     >
       {body}
     </div>

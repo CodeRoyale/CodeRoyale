@@ -1,5 +1,5 @@
-import { useField } from 'formik';
-import React, { InputHTMLAttributes } from 'react';
+import { useField } from "formik";
+import React, { InputHTMLAttributes } from "react";
 
 type ChatInputProps = InputHTMLAttributes<HTMLInputElement> & {
   name: string;
@@ -16,7 +16,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ size: _, ...props }) => {
         id={field.name}
         placeholder={props.placeholder}
         className={`rounded-md bg-primary-700 placeholder:text-primary-300 text-white focus:border-none focus:ring-0 focus:outline focus:outline-offset-2 focus:outline-focus-outline ${
-          error ? 'border border-error-red text-error-red' : 'border-none'
+          error ? "border border-error-red text-error-red" : "border-none"
         }`}
       ></input>
       {error ? (

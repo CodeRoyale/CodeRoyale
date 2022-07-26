@@ -1,6 +1,6 @@
-import React from 'react';
-import { MeCard } from '../components/MeCard';
-import { useMeQuery } from '../generated/graphql';
+import React from "react";
+import { MeCard } from "../components/MeCard";
+import { useMeQuery } from "../generated/graphql";
 
 export const MeCardController: React.FC = () => {
   const { data, loading } = useMeQuery();

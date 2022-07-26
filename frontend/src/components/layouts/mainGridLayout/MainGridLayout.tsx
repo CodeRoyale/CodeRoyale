@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 /* 
   - The grid is a 3 column grid
@@ -13,7 +13,7 @@ export const MainGridLayout: React.FC<MainGridLayoutProps> = ({ children }) => (
   <div className="px-16 scrollbar-thin scrollbar-thumb-primary-700 flex items-center">
     <div
       className="grid gap-5"
-      style={{ gridTemplateColumns: '235px 640px 325px', margin: '0 auto' }}
+      style={{ gridTemplateColumns: "235px 640px 325px", margin: "0 auto" }}
     >
       {children}
     </div>

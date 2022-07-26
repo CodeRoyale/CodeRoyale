@@ -1,7 +1,7 @@
-import React, { HTMLAttributes } from 'react';
-import { v4 as uuid } from 'uuid';
-import { People } from '../icons';
-import { Tag } from './Tag';
+import React, { HTMLAttributes } from "react";
+import { v4 as uuid } from "uuid";
+import { People } from "../icons";
+import { Tag } from "./Tag";
 
 type RoomSummaryCardProps = HTMLAttributes<HTMLDivElement> & {
   title: string;
@@ -26,7 +26,7 @@ export const RoomSummaryCard: React.FC<RoomSummaryCardProps> = ({
   ...props
 }) => {
   const marginStyle = {
-    marginLeft: '1em',
+    marginLeft: "1em",
   };
 
   return (

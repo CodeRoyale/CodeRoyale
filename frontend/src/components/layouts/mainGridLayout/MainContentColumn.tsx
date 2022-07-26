@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface MainContentColumnProps {
   isFixed?: boolean;
@@ -12,7 +12,7 @@ export const MainContentColumn: React.FC<MainContentColumnProps> = ({
   if (isFixed) {
     return (
       <div>
-        <div className="fixed h-screen" style={{ width: '640px' }}>
+        <div className="fixed h-screen" style={{ width: "640px" }}>
           {children}
         </div>
       </div>
@@ -20,7 +20,7 @@ export const MainContentColumn: React.FC<MainContentColumnProps> = ({
   }
 
   return (
-    <div className="h-screen" style={{ width: '640px' }}>
+    <div className="h-screen" style={{ width: "640px" }}>
       {children}
     </div>
   );

@@ -1,5 +1,5 @@
-import React, { ButtonHTMLAttributes } from 'react';
-import { Close, Launch, Settings } from '../icons';
+import React, { ButtonHTMLAttributes } from "react";
+import { Close, Launch, Settings } from "../icons";
 
 type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   icon: string;

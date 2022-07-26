@@ -1,15 +1,15 @@
-import React from 'react';
-import { Formik, Form } from 'formik';
-import { useRouter } from 'next/router';
+import React from "react";
+import { Formik, Form } from "formik";
+import { useRouter } from "next/router";
 import {
   MeDocument,
   MeQuery,
   useRegisterMutation,
-} from '../../generated/graphql';
-import { InputField } from '../../components/InputField';
-import { Button } from '../../components/Button';
-import { toErrorMap } from '../../utils/toErrorMap';
-import { GoogleUser } from './GoogleAuthButtonController';
+} from "../../generated/graphql";
+import { InputField } from "../../components/InputField";
+import { Button } from "../../components/Button";
+import { toErrorMap } from "../../utils/toErrorMap";
+import { GoogleUser } from "./GoogleAuthButtonController";
 
 interface AuthFormControllerProps {
   authOptions: GoogleUser | undefined;
@@ -34,11 +34,11 @@ export const AuthFormController: React.FC<AuthFormControllerProps> = ({
               accessToken: authOptions.access_token,
             }
           : {
-              email: '',
-              name: '',
-              username: '',
-              profilePicture: '',
-              accessToken: '',
+              email: "",
+              name: "",
+              username: "",
+              profilePicture: "",
+              accessToken: "",
             }
       }
       onSubmit={async (values, { setErrors }) => {
@@ -48,7 +48,7 @@ export const AuthFormController: React.FC<AuthFormControllerProps> = ({
             cache.writeQuery<MeQuery>({
               query: MeDocument,
               data: {
-                __typename: 'Query',
+                __typename: "Query",
                 me: data?.register.user,
               },
             });
@@ -59,7 +59,7 @@ export const AuthFormController: React.FC<AuthFormControllerProps> = ({
           setErrors(toErrorMap(response.data.register.errors));
         } else if (response.data?.register.user) {
           // register successful
-          router.push('/dashboard');
+          router.push("/dashboard");
         }
       }}
     >
@@ -91,9 +91,9 @@ export const AuthFormController: React.FC<AuthFormControllerProps> = ({
             type="submit"
             buttonClass="primary"
             size="normal"
-            style={{ marginTop: '2em' }}
+            style={{ marginTop: "2em" }}
             loading={isSubmitting}
-            loadingText={isSubmitting ? 'Registering' : null}
+            loadingText={isSubmitting ? "Registering" : null}
           >
             Register
           </Button>

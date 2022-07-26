@@ -1,7 +1,7 @@
-import React from 'react';
-import { useRouter } from 'next/router';
-import { DropdownMenuIconButton } from '../../components/DropdownMenuIconButton';
-import { RoomUserAvatarPopup } from '../../components/avatar/RoomUserAvatarPopup';
+import React from "react";
+import { useRouter } from "next/router";
+import { DropdownMenuIconButton } from "../../components/DropdownMenuIconButton";
+import { RoomUserAvatarPopup } from "../../components/avatar/RoomUserAvatarPopup";
 
 interface RoomUserAvatarPopupControllerProps {
   username: string;

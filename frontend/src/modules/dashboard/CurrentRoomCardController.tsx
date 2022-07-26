@@ -1,9 +1,9 @@
-import { useRouter } from 'next/router';
-import React, { useContext, useEffect } from 'react';
-import { CurrentRoomCard } from '../../components/CurrentRoomCard';
-import { useRoom } from '../../global-stores';
-import { leaveRoom } from '../../service/roomSocket';
-import { WebSocketContext } from '../ws/WebSocketProvider';
+import { useRouter } from "next/router";
+import React, { useContext, useEffect } from "react";
+import { CurrentRoomCard } from "../../components/CurrentRoomCard";
+import { useRoom } from "../../global-stores";
+import { leaveRoom } from "../../service/roomSocket";
+import { WebSocketContext } from "../ws/WebSocketProvider";
 
 export const CurrentRoomCardController: React.FC<{}> = () => {
   const { conn } = useContext(WebSocketContext);
@@ -16,10 +16,10 @@ export const CurrentRoomCardController: React.FC<{}> = () => {
   };
 
   useEffect(() => {
-    conn?.on('ROOM_UPDATED', handleRoomUpdated);
+    conn?.on("ROOM_UPDATED", handleRoomUpdated);
 
     return () => {
-      conn?.off('ROOM_UPDATED', handleRoomUpdated);
+      conn?.off("ROOM_UPDATED", handleRoomUpdated);
     };
   }, []);
 
@@ -34,7 +34,7 @@ export const CurrentRoomCardController: React.FC<{}> = () => {
 
           if (response.data) {
             setRoom(null);
-            router.push('/dashboard');
+            router.push("/dashboard");
           }
         }}
       />

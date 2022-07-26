@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { Tab } from '@headlessui/react';
+import React, { Fragment } from "react";
+import { Tab } from "@headlessui/react";
 
 interface ProfileTabsProps {
   panels: React.ReactNode;
@@ -15,8 +15,8 @@ export const ProfileTabs: React.FC<ProfileTabsProps> = ({ panels }) => {
               <button
                 className={`text-primary-100 ${
                   selected
-                    ? 'border-b-2 border-b-button-primary-default text-button-primary-default'
-                    : ''
+                    ? "border-b-2 border-b-button-primary-default text-button-primary-default"
+                    : ""
                 }`}
               >
                 About

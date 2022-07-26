@@ -1,8 +1,8 @@
-import React from 'react';
-import gql from 'graphql-tag';
-import { ProfileBanner } from '../../components/ProfileBanner';
-import { useGetProfileFromUrl } from '../../custom-hooks/useGetProfileFromUrl';
-import { useConnectMutation, useMeQuery } from '../../generated/graphql';
+import React from "react";
+import gql from "graphql-tag";
+import { ProfileBanner } from "../../components/ProfileBanner";
+import { useGetProfileFromUrl } from "../../custom-hooks/useGetProfileFromUrl";
+import { useConnectMutation, useMeQuery } from "../../generated/graphql";
 
 export const ProfileBannerController: React.FC = () => {
   const { data: meData, loading: meLoading } = useMeQuery();
@@ -30,7 +30,7 @@ export const ProfileBannerController: React.FC = () => {
           id: number;
           following: number;
         }>({
-          id: 'User:' + meData?.me?.id,
+          id: "User:" + meData?.me?.id,
           fragment: gql`
             fragment ___ on User {
               id
@@ -45,7 +45,7 @@ export const ProfileBannerController: React.FC = () => {
           connectionStatus: boolean;
           followers: number;
         }>({
-          id: 'User:' + profileData.user.user?.id,
+          id: "User:" + profileData.user.user?.id,
           fragment: gql`
             fragment __ on User {
               id
@@ -59,7 +59,7 @@ export const ProfileBannerController: React.FC = () => {
           if (wantsToFollow) {
             // user wants to follow the profile so update cache with new data
             cache.writeFragment<{ following: number }>({
-              id: 'User:' + meData?.me?.id,
+              id: "User:" + meData?.me?.id,
               fragment: gql`
                 fragment __ on User {
                   following
@@ -74,7 +74,7 @@ export const ProfileBannerController: React.FC = () => {
               connectionStatus: boolean;
               followers: number;
             }>({
-              id: 'User:' + profileData.user.user?.id,
+              id: "User:" + profileData.user.user?.id,
               fragment: gql`
                 fragment __ on User {
                   connectionStatus
@@ -90,7 +90,7 @@ export const ProfileBannerController: React.FC = () => {
           // user wants to unfollow the profile so update cache with new data
           else {
             cache.writeFragment<{ following: number }>({
-              id: 'User:' + meData?.me?.id,
+              id: "User:" + meData?.me?.id,
               fragment: gql`
                 fragment __ on User {
                   following
@@ -103,7 +103,7 @@ export const ProfileBannerController: React.FC = () => {
               connectionStatus: boolean;
               followers: number;
             }>({
-              id: 'User:' + profileData.user.user?.id,
+              id: "User:" + profileData.user.user?.id,
               fragment: gql`
                 fragment __ on User {
                   connectionStatus
@@ -117,7 +117,7 @@ export const ProfileBannerController: React.FC = () => {
             });
           }
           // evicting people from cache so that it refetches to get new people data
-          cache.evict({ fieldName: 'people' });
+          cache.evict({ fieldName: "people" });
         }
       },
     });
@@ -137,7 +137,7 @@ export const ProfileBannerController: React.FC = () => {
             : true
         }
         connectBtnText={
-          profileData.user.user.connectionStatus ? 'Unfollow' : 'Follow'
+          profileData.user.user.connectionStatus ? "Unfollow" : "Follow"
         }
         connectBtnOnClick={handleConnectBtn}
       />

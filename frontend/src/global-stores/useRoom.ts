@@ -1,5 +1,5 @@
-import create from 'zustand';
-import { Room } from '../types/types';
+import create from "zustand";
+import { Room } from "../types/types";
 
 interface RoomState {
   room: Room | null;

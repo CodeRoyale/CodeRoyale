@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export const AvatarDropdownMenu: React.FC<{ children: React.ReactNode }> = ({
   children,
