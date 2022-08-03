@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { useApolloClient } from "@apollo/client";
 import { useRouter } from "next/router";
-import { Button } from "../../components/Button";
 import { RoomCardFooter } from "../../components/roomCard/RoomCardFooter";
 import { RoomCardHeader } from "../../components/roomCard/RoomCardHeader";
 import { useMeQuery, useUsersQuery } from "../../generated/graphql";
@@ -9,10 +8,11 @@ import { useRoom } from "../../global-stores";
 import { closeRoom, leaveRoom } from "../../service/roomSocket";
 import { WebSocketContext } from "../ws/WebSocketProvider";
 import { RoomUserAvatarController } from "./RoomUserAvatarController";
+import { CreateTeamController } from "./CreateTeamController";
+import { RoomTeamCardController } from "./RoomTeamCardController";
 
 export const RoomCardController: React.FC<{}> = () => {
   let benchRoomUserAvatars = null;
-  // let teamRoomUserAvatars = null;
 
   const { data: meData } = useMeQuery();
   const router = useRouter();
@@ -62,12 +62,22 @@ export const RoomCardController: React.FC<{}> = () => {
             <div className="flex items-center justify-between p-4">
               <h1 className="text-lg text-primary-100 font-medium">Teams</h1>
               {meData?.me?.id !== room?.config.adminUserId ? null : (
-                <Button buttonClass="primary" size="normal">
-                  New Team
-                </Button>
+                <CreateTeamController />
               )}
             </div>
-            <div className="grid grid-cols-2 gap-4 pt-2 pb-4 px-4"></div>
+            <div className="grid grid-cols-2 gap-4 pt-2 pb-4 px-4">
+              {Object.keys(room?.teams!).length > 0 ? (
+                Object.keys(room?.teams!).map((teamName, id) => (
+                  <RoomTeamCardController key={id} teamName={teamName} />
+                ))
+              ) : (
+                <span className="col-span-2 text-primary-300 text-sm mt-4">
+                  Currently there are no teams created to join in this Room.
+                  Kindly request the admin to create new teams for the
+                  competition.
+                </span>
+              )}
+            </div>
           </div>
         </div>
 

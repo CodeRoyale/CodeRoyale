@@ -69,6 +69,23 @@ export const joinRoom = (socket: ISocket, roomId: string) => {
   });
 };
 
+export const createTeam = (socket: ISocket, teamName: string) => {
+  return new Promise((resolve, reject) => {
+    if (!socket) {
+      reject(NO_CONNECTION);
+    } else {
+      socket.emit("CREATE_TEAM", teamName, (res: any) => {
+        console.log("createTeam: ", res);
+        if (res.errors) {
+          reject(res);
+        } else {
+          resolve(res);
+        }
+      });
+    }
+  });
+};
+
 export const leaveRoom = (socket: ISocket) => {
   return new Promise((resolve, reject) => {
     if (!socket) {

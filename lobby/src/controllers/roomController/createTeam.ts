@@ -1,44 +1,109 @@
 import { ROOM_UPDATED, TEAM_CREATED } from "../../socketActions/serverActions";
-import { ControllerResponse, DataFromServer, Room } from "../../types/types";
+import { DataFromServer, Room } from "../../types/types";
 import { ROOM_PREFIX } from "../../utils/constants";
-import { getUser } from "../userController"
+import { getUser } from "../userController";
+import { z } from "zod";
 
-export const createTeam = async ( teamName: string,
-    { socket, redis, currentUserId }: DataFromServer
-): Promise<ControllerResponse<Room>> => {
-    const user = await getUser(currentUserId, redis!);
-    if (!user) {
-        return { error: "User who tried to create the team does not exist!" };
-    }
+const TeamNameSchema = z
+  .string()
+  .trim()
+  .min(2, { message: "Must be 2 or more characters long" })
+  .max(20, { message: "Cannot be more than 20 characters" });
 
-    const roomResult = await redis?.get(ROOM_PREFIX + user.currentRoom);
-    let room: Room;
+type TeamNameType = z.infer<typeof TeamNameSchema>;
 
-    if (roomResult) {
-        room = JSON.parse(roomResult);
-    } else {
-        return { error: `Room with roomId:${user.currentRoom} does not exist` };
-    }
+type FieldError = {
+  field: string;
+  message: string;
+};
 
-    // If user not in room or is not admin of the room
-    if (!user.currentRoom || room.config.adminUserId !== currentUserId) {
-        return { error: 'Only admin can do this' };
-    }
-    
-    // If teams in room exceed the max team limit
-    // If team is already created before
-    if (Object.keys(room.teams).length > room.config.maxTeams && room.teams[teamName]) {
-        return { error: 'The team name has already been alloted or the team is already in' };
-    }
+type CreateTeamResponse = {
+  errors?: FieldError[] | null;
+  room?: Room | null;
+};
 
-    room.teams[teamName] = [];
-    await redis?.set(ROOM_PREFIX + user.currentRoom, JSON.stringify(room));
+export const createTeam = async (
+  teamName: TeamNameType,
+  { socket, redis, currentUserId }: DataFromServer
+): Promise<CreateTeamResponse> => {
+  // check input from client
+  const checkInputResult = TeamNameSchema.safeParse(teamName);
+  if (!checkInputResult.success) {
+    // TODO: need to find a better way
+    return {
+      errors: [
+        {
+          field: "teamName",
+          message: checkInputResult.error.issues[0].message,
+        },
+      ],
+    };
+  }
 
-    socket.to(user.currentRoom).emit(ROOM_UPDATED, {
-        type: TEAM_CREATED,
-        data: { teamName }
-    });
+  const user = await getUser(currentUserId, redis!);
+  if (!user) {
+    return {
+      errors: [
+        {
+          field: "CreateTeam",
+          message: "User who tried to create the team does not exist!",
+        },
+      ],
+    };
+  }
 
-    return { data: room };
+  const roomResult = await redis?.get(ROOM_PREFIX + user.currentRoom);
+  let room: Room;
 
-}
+  if (roomResult) {
+    room = JSON.parse(roomResult);
+  } else {
+    return {
+      errors: [
+        {
+          field: "CreateTeam",
+          message: `Room with roomId:${user.currentRoom} does not exist`,
+        },
+      ],
+    };
+  }
+
+  // If user not in room or is not admin of the room
+  if (!user.currentRoom || room.config.adminUserId !== currentUserId) {
+    return {
+      errors: [
+        {
+          field: "CreateTeam",
+          message: "Only admin can do this",
+        },
+      ],
+    };
+  }
+
+  // If teams in room exceed the max team limit
+  // If team is already created before
+  if (
+    Object.keys(room.teams).length > room.config.maxTeams &&
+    room.teams[teamName]
+  ) {
+    return {
+      errors: [
+        {
+          field: "CreateTeam",
+          message:
+            "The team name has already been alloted or the team is already in",
+        },
+      ],
+    };
+  }
+
+  room.teams[teamName] = [];
+  await redis?.set(ROOM_PREFIX + user.currentRoom, JSON.stringify(room));
+
+  socket.to(user.currentRoom).emit(ROOM_UPDATED, {
+    type: TEAM_CREATED,
+    data: { teamName },
+  });
+
+  return { room };
+};

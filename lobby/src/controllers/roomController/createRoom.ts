@@ -44,14 +44,14 @@ export const createRoom = async (
   { socket, redis, currentUserId }: DataFromServer
 ): Promise<CreateRoomResponse> => {
   // check input from client
-  const checkInputresult = CreateRoomInputSchema.safeParse(createRoomInput);
-  if (!checkInputresult.success) {
+  const checkInputResult = CreateRoomInputSchema.safeParse(createRoomInput);
+  if (!checkInputResult.success) {
     // need to find a better way to do this...this works for now
     return {
       errors: [
         {
-          field: checkInputresult.error.issues[0].path[1].toString(),
-          message: checkInputresult.error.issues[0].message,
+          field: checkInputResult.error.issues[0].path[1].toString(),
+          message: checkInputResult.error.issues[0].message,
         },
       ],
     };

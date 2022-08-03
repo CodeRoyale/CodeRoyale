@@ -1,31 +1,25 @@
 import React from "react";
-import { RoomUserAvatar } from "../avatar/Avatar";
 
 interface RoomTeamCardProps {
   teamName: string;
+  teamMemberCards: React.ReactNode | null;
 }
 
-export const RoomTeamCard: React.FC<RoomTeamCardProps> = ({ teamName }) => (
+export const RoomTeamCard: React.FC<RoomTeamCardProps> = ({
+  teamName,
+  teamMemberCards,
+}) => (
   <div className="bg-primary-900 rounded-md">
     <div className="py-4 pl-2 pr-8">
       <h1 className="text-primary-100 font-semibold text-lg">{teamName}</h1>
       <div className="grid grid-cols-3 gap-2 mt-2">
-        <RoomUserAvatar
-          profilePicture="https://lh3.googleusercontent.com/a-/AOh14Ghc_V15s5eZUxP0PsKFcNnTX1On7c1UQ4BwSGGW=s96-c"
-          username="joelmathew"
-        />
-        <RoomUserAvatar
-          profilePicture="https://lh3.googleusercontent.com/a-/AOh14Ghc_V15s5eZUxP0PsKFcNnTX1On7c1UQ4BwSGGW=s96-c"
-          username="joelmathew"
-        />
-        <RoomUserAvatar
-          profilePicture="https://lh3.googleusercontent.com/a-/AOh14Ghc_V15s5eZUxP0PsKFcNnTX1On7c1UQ4BwSGGW=s96-c"
-          username="joelmathew"
-        />
-        <RoomUserAvatar
-          profilePicture="https://lh3.googleusercontent.com/a-/AOh14Ghc_V15s5eZUxP0PsKFcNnTX1On7c1UQ4BwSGGW=s96-c"
-          username="joelmathew"
-        />
+        {!teamMemberCards ? (
+          <span className="col-span-2 text-primary-300 text-sm mt-4">
+            This team currently has no members in it.
+          </span>
+        ) : (
+          teamMemberCards
+        )}
       </div>
     </div>
     <button
