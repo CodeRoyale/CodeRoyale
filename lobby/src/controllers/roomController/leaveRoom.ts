@@ -42,6 +42,7 @@ export const leaveRoom = async (
   user = {
     ...user,
     currentRoom: null,
+    currentTeam: null,
   };
   await updateUser(user, redis!);
 

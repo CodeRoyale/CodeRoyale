@@ -52,6 +52,7 @@ export type SocketUser = {
   userId: number;
   socketId: string;
   currentRoom: string | null;
+  currentTeam: string | null;
   hasActiveConnection: boolean;
 };
 

@@ -80,6 +80,7 @@ const main = async () => {
         {
           userId: cookieData.userId,
           currentRoom: null,
+          currentTeam: null,
           socketId: socket.id,
           hasActiveConnection: true,
         },

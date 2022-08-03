@@ -26,6 +26,7 @@ export const addUser = async (
     userId: input.userId,
     socketId: input.socketId,
     currentRoom: input.currentRoom,
+    currentTeam: input.currentTeam,
     hasActiveConnection: input.hasActiveConnection,
   };
   await redis?.set(

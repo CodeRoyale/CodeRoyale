@@ -65,6 +65,7 @@ export const closeRoom = async (
       // user cannot be null, we have to trust lobby
       ...user!,
       currentRoom: null,
+      currentTeam: null,
     };
     await updateUser(user, redis!);
   });
