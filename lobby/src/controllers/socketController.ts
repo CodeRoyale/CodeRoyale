@@ -3,11 +3,12 @@ import {
   CLOSE_ROOM,
   CREATE_ROOM,
   CREATE_TEAM,
+  INVITE_TO_ROOM,
   JOIN_ROOM,
   LEAVE_ROOM,
 } from "../socketActions/userActions";
 import Redis from "ioredis";
-import { createRoom } from "./roomController/";
+import { createRoom, inviteToRoom } from "./roomController/";
 import { joinRoom } from "./roomController/";
 import { deleteUser, getUser, updateUser } from "./userController";
 import { getRoom } from "./roomController/getRoom";
@@ -51,11 +52,16 @@ const genericActionCreater =
   };
 
 export const handleUserEvents = (args: DataFromServerInterface) => {
-  const { socket, redis, currentUserId } = args;
+  const { io, socket, redis, currentUserId } = args;
 
   socket.on(
     CREATE_ROOM,
     genericActionCreater(createRoom, { socket, currentUserId, redis }, true)
+  );
+
+  socket.on(
+    INVITE_TO_ROOM,
+    genericActionCreater(inviteToRoom, { socket, io, currentUserId }, true)
   );
 
   socket.on(

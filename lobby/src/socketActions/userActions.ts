@@ -1,5 +1,7 @@
 // user tries to create a room
 export const CREATE_ROOM = "CREATE_ROOM";
+// user invites other user to room
+export const INVITE_TO_ROOM = "INVITE_TO_ROOM";
 // user tries to join a room
 export const JOIN_ROOM = "JOIN_ROOM";
 // user tries to close a room
