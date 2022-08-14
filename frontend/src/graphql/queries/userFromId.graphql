@@ -1,0 +1,5 @@
+query UserFromId($userId: Int!) {
+  userFromId(userId: $userId) {
+    ...RegularUserResponse
+  }
+}

@@ -1,18 +1,39 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Menu } from "@headlessui/react";
 import { Float } from "headlessui-float-react";
 import { v4 as uuid } from "uuid";
 import { PeopleCard } from "../components/peopleCard/PeopleCard";
 import { PeopleCardMenuController } from "../components/peopleCard/PeopleCardMenuController";
-import { usePeopleQuery } from "../generated/graphql";
+import { useMeQuery, usePeopleQuery } from "../generated/graphql";
+import { useRoomInvites } from "../global-stores";
+import { WebSocketContext } from "./ws/WebSocketProvider";
 
 export const PeopleController: React.FC<{}> = () => {
-  const { data, loading } = usePeopleQuery();
+  const { data: meData } = useMeQuery();
+  const { data: peopleData, loading: peopleLoading } = usePeopleQuery();
+  const { conn } = useContext(WebSocketContext);
+  const addRoomInvite = useRoomInvites((state) => state.addRoomInvite);
+
+  const handleInvitedToRoom = (res: any) => {
+    addRoomInvite({
+      sender: res.by,
+      receiver: meData?.me?.id!,
+      invitedRoomId: res.to,
+    });
+  };
+
+  useEffect(() => {
+    conn?.on("INVITED_TO_ROOM", handleInvitedToRoom);
+
+    return () => {
+      conn?.off("ROOM_UPDATED", handleInvitedToRoom);
+    };
+  }, []);
 
   return (
     <div className="flex flex-col mt-8">
       <h1 className="text-primary-100 font-bold text-2xl">People</h1>
-      {data?.people.length === 0 ? (
+      {peopleData?.people.length === 0 ? (
         <span className="text-primary-300 text-sm mt-4">
           Currently you are not following anyone. Follow someone to see them
           here!
@@ -21,10 +42,10 @@ export const PeopleController: React.FC<{}> = () => {
         <span className="text-primary-300 text-sm mt-4">Online</span>
       )}
       <div className="py-4">
-        {!data && loading ? (
+        {!peopleData && peopleLoading ? (
           <span className="text-primary-200">Loading...</span>
         ) : (
-          data?.people.map(({ id, profilePicture, username, name }) => (
+          peopleData?.people.map(({ id, profilePicture, username, name }) => (
             <Menu key={id}>
               <Float
                 placement="right"
@@ -49,7 +70,7 @@ export const PeopleController: React.FC<{}> = () => {
                   />
                 </Menu.Button>
                 <Menu.Items className="mt-2">
-                  <PeopleCardMenuController username={username} />
+                  <PeopleCardMenuController username={username} userId={id} />
                 </Menu.Items>
               </Float>
             </Menu>

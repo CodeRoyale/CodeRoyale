@@ -61,7 +61,11 @@ export const handleUserEvents = (args: DataFromServerInterface) => {
 
   socket.on(
     INVITE_TO_ROOM,
-    genericActionCreater(inviteToRoom, { socket, io, currentUserId }, true)
+    genericActionCreater(
+      inviteToRoom,
+      { socket, io, currentUserId, redis },
+      true
+    )
   );
 
   socket.on(

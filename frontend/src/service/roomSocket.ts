@@ -69,6 +69,29 @@ export const joinRoom = (socket: ISocket, roomId: string) => {
   });
 };
 
+export const inviteToRoom = (
+  socket: ISocket,
+  input: {
+    invitedUserId: number;
+    invitedRoomId: string;
+  }
+) => {
+  return new Promise((resolve, reject) => {
+    if (!socket) {
+      reject(NO_CONNECTION);
+    } else {
+      socket.emit("INVITE_TO_ROOM", input, (res: any) => {
+        console.log("inviteToRoom: ", res);
+        if (res.error) {
+          reject(res);
+        } else {
+          resolve(res);
+        }
+      });
+    }
+  });
+};
+
 export const createTeam = (socket: ISocket, teamName: string) => {
   return new Promise((resolve, reject) => {
     if (!socket) {

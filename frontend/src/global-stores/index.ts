@@ -1,3 +1,4 @@
 import { useRoom } from "./useRoom";
+import { useRoomInvites } from "./useRoomInvites";
 
-export { useRoom };
+export { useRoom, useRoomInvites };

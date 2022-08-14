@@ -1,4 +1,4 @@
-import { INVITED_TO_ROOM } from "src/socketActions/serverActions";
+import { INVITED_TO_ROOM } from "../../socketActions/serverActions";
 import { DataFromServer } from "../../types/types";
 import { getUser } from "../userController";
 import { getRoom } from "./getRoom";
@@ -17,6 +17,11 @@ export const inviteToRoom = async (
   const invitedRoom = await getRoom(invitedRoomId, redis!);
   // invited user/room doesnot exist
   if (!invitedUser || !invitedRoom) {
+    return false;
+  }
+
+  if (invitedUser.currentRoom) {
+    // cannot invite a user that is currently in another room
     return false;
   }
 

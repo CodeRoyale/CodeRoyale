@@ -140,6 +140,28 @@ export class UserResolver {
     };
   }
 
+  @Query(() => UserResponse)
+  @UseMiddleware(isAuth)
+  async userFromId(
+    @Arg("userId", () => Int)
+    userId: number
+  ): Promise<UserResponse> {
+    const user = await User.findOne({ where: { id: userId } });
+
+    if (!user) {
+      return {
+        errors: [
+          {
+            field: "id",
+            message: "userId doesnot exist",
+          },
+        ],
+      };
+    }
+
+    return { user };
+  }
+
   @Query(() => [User])
   @UseMiddleware(isAuth)
   async users(

@@ -31,6 +31,7 @@ export type Mutation = {
   __typename?: "Mutation";
   connect: Scalars["Boolean"];
   createRoom: Room;
+  deleteRoom: Scalars["Boolean"];
   login: UserResponse;
   logout: Scalars["Boolean"];
   register: UserResponse;
@@ -44,6 +45,10 @@ export type MutationConnectArgs = {
 
 export type MutationCreateRoomArgs = {
   input: RoomInput;
+};
+
+export type MutationDeleteRoomArgs = {
+  roomId: Scalars["String"];
 };
 
 export type MutationLoginArgs = {
@@ -71,6 +76,7 @@ export type Query = {
   people: Array<User>;
   rooms: PaginatedRooms;
   user: UserResponse;
+  userFromId: UserResponse;
   users: Array<User>;
 };
 
@@ -82,6 +88,10 @@ export type QueryRoomsArgs = {
 
 export type QueryUserArgs = {
   username: Scalars["String"];
+};
+
+export type QueryUserFromIdArgs = {
+  userId: Scalars["Int"];
 };
 
 export type QueryUsersArgs = {
@@ -350,6 +360,34 @@ export type UserQueryVariables = Exact<{
 export type UserQuery = {
   __typename?: "Query";
   user: {
+    __typename?: "UserResponse";
+    errors?: Array<{
+      __typename?: "FieldError";
+      field: string;
+      message: string;
+    }> | null;
+    user?: {
+      __typename?: "User";
+      id: number;
+      username: string;
+      email: string;
+      profilePicture: string;
+      name: string;
+      bio?: string | null;
+      connectionStatus?: boolean | null;
+      following: number;
+      followers: number;
+    } | null;
+  };
+};
+
+export type UserFromIdQueryVariables = Exact<{
+  userId: Scalars["Int"];
+}>;
+
+export type UserFromIdQuery = {
+  __typename?: "Query";
+  userFromId: {
     __typename?: "UserResponse";
     errors?: Array<{
       __typename?: "FieldError";
@@ -853,6 +891,63 @@ export function useUserLazyQuery(
 export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
 export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
 export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
+export const UserFromIdDocument = gql`
+  query UserFromId($userId: Int!) {
+    userFromId(userId: $userId) {
+      ...RegularUserResponse
+    }
+  }
+  ${RegularUserResponseFragmentDoc}
+`;
+
+/**
+ * __useUserFromIdQuery__
+ *
+ * To run a query within a React component, call `useUserFromIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserFromIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserFromIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useUserFromIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    UserFromIdQuery,
+    UserFromIdQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<UserFromIdQuery, UserFromIdQueryVariables>(
+    UserFromIdDocument,
+    options
+  );
+}
+export function useUserFromIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    UserFromIdQuery,
+    UserFromIdQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<UserFromIdQuery, UserFromIdQueryVariables>(
+    UserFromIdDocument,
+    options
+  );
+}
+export type UserFromIdQueryHookResult = ReturnType<typeof useUserFromIdQuery>;
+export type UserFromIdLazyQueryHookResult = ReturnType<
+  typeof useUserFromIdLazyQuery
+>;
+export type UserFromIdQueryResult = Apollo.QueryResult<
+  UserFromIdQuery,
+  UserFromIdQueryVariables
+>;
 export const UsersDocument = gql`
   query Users($userIds: [Int!]!) {
     users(userIds: $userIds) {

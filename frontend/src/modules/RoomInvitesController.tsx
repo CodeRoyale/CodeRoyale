@@ -1,19 +1,11 @@
 import React from "react";
-import { v4 as uuid } from "uuid";
-import { RoomInviteCard } from "../components/RoomInviteCard";
 import { useMeQuery } from "../generated/graphql";
+import { useRoomInvites } from "../global-stores";
+import { RoomInviteCardController } from "./RoomInviteCardController";
 
 export const RoomInvitesController = () => {
   const { data, loading } = useMeQuery();
-
-  const tempRoomInvitesData = [
-    {
-      avatarUrl:
-        "https://lh3.googleusercontent.com/a-/AOh14Ghc_V15s5eZUxP0PsKFcNnTX1On7c1UQ4BwSGGW=s96-c",
-      fullName: "Joel Mathew",
-      userName: "Rec0iL99",
-    },
-  ];
+  const roomInvites = useRoomInvites((state) => state.invites);
 
   let body = null;
 
@@ -24,16 +16,22 @@ export const RoomInvitesController = () => {
       <>
         <h1 className="text-primary-100 font-semibold text-xl">Room Invites</h1>
         <div className="mt-4">
-          {tempRoomInvitesData.map(
-            ({ avatarUrl, fullName, userName }, index) => (
-              <RoomInviteCard
-                key={uuid()}
-                avatarUrl={avatarUrl}
-                fullName={fullName}
-                userName={userName}
-                marginTop={index !== 0 ? "mt-6" : null}
-              />
-            )
+          {Object.keys(roomInvites).length > 0 ? (
+            Object.keys(roomInvites).map((roomInvite, index) => {
+              return (
+                <RoomInviteCardController
+                  key={index}
+                  index={index}
+                  roomInviteKey={roomInvite}
+                  invitedRoomId={roomInvites[roomInvite].invitedRoomId}
+                  senderUserId={roomInvites[roomInvite].sender}
+                />
+              );
+            })
+          ) : (
+            <span className="text-primary-300 text-sm mt-4">
+              You have zero/no room invites!
+            </span>
           )}
         </div>
       </>
