@@ -10,3 +10,5 @@ export const CLOSE_ROOM = "CLOSE_ROOM";
 export const LEAVE_ROOM = "LEAVE_ROOM";
 // user tries to create a team
 export const CREATE_TEAM = "CREATE_TEAM";
+// user tries to leave a team
+export const LEAVE_TEAM = "LEAVE_TEAM";
