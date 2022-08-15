@@ -15,6 +15,8 @@ import { getRoom } from "./roomController/getRoom";
 import { closeRoom } from "./roomController/closeRoom";
 import { leaveRoom } from "./roomController/leaveRoom";
 import { createTeam } from "./roomController/createTeam";
+import { JOINED_TEAM } from "src/socketActions/serverActions";
+import { joinTeam } from "./roomController/joinTeam";
 
 export interface DataFromServerInterface {
   socket: Socket;
@@ -86,6 +88,11 @@ export const handleUserEvents = (args: DataFromServerInterface) => {
   socket.on(
     CREATE_TEAM,
     genericActionCreater(createTeam, { socket, currentUserId, redis }, true)
+  );
+
+  socket.on(
+    JOINED_TEAM,
+    genericActionCreater(joinTeam, { socket, currentUserId, redis }, true)
   );
 
   socket.on("disconnect", async () => {

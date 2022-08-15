@@ -12,3 +12,5 @@ export const LEAVE_ROOM = "LEAVE_ROOM";
 export const CREATE_TEAM = "CREATE_TEAM";
 // user tries to leave a team
 export const LEAVE_TEAM = "LEAVE_TEAM";
+// user tries to join a team
+export const JOIN_TEAM = "JOIN_TEAM";

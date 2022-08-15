@@ -7,3 +7,4 @@ export const LEFT_ROOM = "LEFT_ROOM";
 export const TEAM_CREATED = "TEAM_CREATED";
 export const INVITED_TO_ROOM = "INVITED_TO_ROOM";
 export const LEFT_TEAM = "LEFT_TEAM";
+export const JOINED_TEAM = "JOINED_TEAM";

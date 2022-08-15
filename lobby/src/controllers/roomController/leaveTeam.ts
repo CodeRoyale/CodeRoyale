@@ -3,6 +3,7 @@ import { getUser, updateUser } from "../userController";
 import { ROOM_PREFIX } from "../../utils/constants";
 import { LEFT_TEAM, ROOM_UPDATED } from "src/socketActions/serverActions";
 
+// todo remove roomId
 export const leaveTeam = async(roomId: string, {socket, redis, currentUserId}: DataFromServer): Promise<ControllerResponse<Room>> => {
     const user = await getUser(currentUserId, redis!);
     if (!user) {
