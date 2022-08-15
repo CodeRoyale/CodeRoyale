@@ -1,7 +1,8 @@
 import { ROOM_PREFIX } from "../../utils/constants";
-import { ControllerResponse, DataFromServer, Room } from "../../types/types";
+import { ControllerResponse, DataFromServer} from "../../types/types";
 import { getUser, updateUser } from "../userController";
 import { LEFT_ROOM, ROOM_UPDATED } from "../../socketActions/serverActions";
+import { getRoom } from "./getRoom";
 
 export const leaveRoom = async (
   {},
@@ -12,11 +13,8 @@ export const leaveRoom = async (
     return { error: "User who tried to join the room does not exist" };
   }
 
-  const roomResult = await redis?.get(ROOM_PREFIX + user.currentRoom);
-  let room: Room;
-  if (roomResult) {
-    room = JSON.parse(roomResult);
-  } else {
+  const room = await getRoom(user.currentRoom!, redis!);
+  if (!room){
     return { error: `Room with roomId:${user.currentRoom} does not exist` };
   }
 

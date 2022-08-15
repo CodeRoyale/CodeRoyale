@@ -3,6 +3,7 @@ import { DataFromServer, Room } from "../../types/types";
 import { ROOM_PREFIX } from "../../utils/constants";
 import { getUser } from "../userController";
 import { z } from "zod";
+import { getRoom } from "./getRoom";
 
 const TeamNameSchema = z
   .string()
@@ -52,12 +53,9 @@ export const createTeam = async (
     };
   }
 
-  const roomResult = await redis?.get(ROOM_PREFIX + user.currentRoom);
-  let room: Room;
+  const room = await getRoom(user.currentRoom!, redis!);
 
-  if (roomResult) {
-    room = JSON.parse(roomResult);
-  } else {
+  if (!room){
     return {
       errors: [
         {

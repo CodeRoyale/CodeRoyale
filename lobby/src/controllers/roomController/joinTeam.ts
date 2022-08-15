@@ -1,5 +1,5 @@
-import { JOINED_TEAM, ROOM_UPDATED } from "src/socketActions/serverActions";
-import { ROOM_PREFIX } from "src/utils/constants";
+import { JOINED_TEAM, ROOM_UPDATED } from "../../socketActions/serverActions";
+import { ROOM_PREFIX } from "../../utils/constants";
 import { ControllerResponse, DataFromServer, Room } from "../../types/types";
 import { updateUser } from "../userController";
 import { getUser } from "../userController/getUser";
