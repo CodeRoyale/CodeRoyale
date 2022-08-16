@@ -1,10 +1,10 @@
-import { ControllerResponse, DataFromServer, Room } from "../../types/types";
+import { ControllerResponse, DataFromServer } from "../../types/types";
 import { getUser, updateUser } from "../userController";
 import { ROOM_PREFIX } from "../../utils/constants";
 import { LEFT_TEAM, ROOM_UPDATED } from "../../socketActions/serverActions";
 import { getRoom } from "./getRoom";
 
-export const leaveTeam = async({socket, redis, currentUserId}: DataFromServer): Promise<ControllerResponse<Room>> => {
+export const leaveTeam = async({socket, redis, currentUserId}: DataFromServer): Promise<ControllerResponse<boolean>> => {
     const user = await getUser(currentUserId, redis!);
     if (!user) {
         return { error: "User who tried to join the room does not exist" };
@@ -38,5 +38,5 @@ export const leaveTeam = async({socket, redis, currentUserId}: DataFromServer): 
     });
 
 
-    return { data: room! };
+    return { data: true };
 }

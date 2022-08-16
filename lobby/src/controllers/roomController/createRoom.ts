@@ -3,6 +3,7 @@ import { ROOM_PREFIX } from "../../utils/constants";
 import { z } from "zod";
 import api from "../../utils/api";
 import { getUser, updateUser } from "../userController";
+import { getRoom } from "./getRoom";
 
 const CreateRoomInputSchema = z.object({
   config: z.object({
@@ -102,7 +103,7 @@ export const createRoom = async (
     };
   }
 
-  const room = await redis?.get(ROOM_PREFIX + roomId);
+  const room = await getRoom(user.currentRoom!, redis!);
   if (room) {
     return {
       errors: [
