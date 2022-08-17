@@ -109,6 +109,40 @@ export const createTeam = (socket: ISocket, teamName: string) => {
   });
 };
 
+export const joinTeam = (socket: ISocket, teamName: string) => {
+  return new Promise((resolve, reject) => {
+    if (!socket) {
+      reject(NO_CONNECTION);
+    } else {
+      socket.emit("JOIN_TEAM", teamName, (res: any) => {
+        console.log("joinTeam: ", res);
+        if (res.error) {
+          reject(res);
+        } else {
+          resolve(res);
+        }
+      });
+    }
+  });
+};
+
+export const leaveTeam = (socket: ISocket) => {
+  return new Promise((resolve, reject) => {
+    if (!socket) {
+      reject(NO_CONNECTION);
+    } else {
+      socket.emit("LEAVE_TEAM", {}, (res: any) => {
+        console.log("leaveTeam: ", res);
+        if (res.error) {
+          reject(res);
+        } else {
+          resolve(res);
+        }
+      });
+    }
+  });
+};
+
 export const leaveRoom = (socket: ISocket) => {
   return new Promise((resolve, reject) => {
     if (!socket) {

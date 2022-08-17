@@ -1,5 +1,5 @@
 import { ROOM_PREFIX } from "../../utils/constants";
-import { ControllerResponse, DataFromServer} from "../../types/types";
+import { ControllerResponse, DataFromServer } from "../../types/types";
 import { getUser, updateUser } from "../userController";
 import { LEFT_ROOM, ROOM_UPDATED } from "../../socketActions/serverActions";
 import { getRoom } from "./getRoom";
@@ -14,26 +14,32 @@ export const leaveRoom = async (
   }
 
   const room = await getRoom(user.currentRoom!, redis!);
-  if (!room){
+  if (!room) {
     return { error: `Room with roomId:${user.currentRoom} does not exist` };
   }
 
-  // TODO if user has joined team, remove him!!
-
-  const newBench = room.state.bench.filter((ele) => ele !== currentUserId);
-  room.state.bench = newBench;
+  // if user is part of a team
+  if (user.currentTeam) {
+    const newTeam = room.teams[user.currentTeam].filter(
+      (ele) => ele !== currentUserId
+    );
+    room.teams[user.currentTeam] = newTeam;
+  } else {
+    const newBench = room.state.bench.filter((ele) => ele !== currentUserId);
+    room.state.bench = newBench;
+  }
 
   // decrement the currentMemberCount
   room.state.currMemberCount -= 1;
 
   await redis?.set(ROOM_PREFIX + user.currentRoom, JSON.stringify(room));
 
-  // TODO : socket.leave(`${roomId}/${teamName}`);
   socket.to(user.currentRoom!).emit(ROOM_UPDATED, {
     type: LEFT_ROOM,
     data: room,
   });
 
+  socket.leave(`${user.currentRoom}/${user.currentTeam}`);
   socket.leave(user.currentRoom!);
   console.log(`User: ${currentUserId} has left the room: ${user.currentRoom}`);
 

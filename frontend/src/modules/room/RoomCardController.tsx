@@ -50,26 +50,36 @@ export const RoomCardController: React.FC<{}> = () => {
           }
         />
         <div className="h-full overflow-y-auto scrollbar-thin scrollbar-thumb-primary-700">
-          <div
-            className={`grid grid-cols-7 gap-4 items-start ${
-              benchRoomUserAvatars ? "p-4" : ""
-            }`}
-          >
-            {benchRoomUserAvatars}
-          </div>
+          {room?.state.bench.length! === 0 ? null : (
+            <div
+              className={`grid grid-cols-7 gap-4 items-start ${
+                benchRoomUserAvatars ? "p-4" : ""
+              }`}
+            >
+              {benchRoomUserAvatars}
+            </div>
+          )}
 
           <div>
             <div className="flex items-center justify-between p-4">
-              <h1 className="text-lg text-primary-100 font-medium">Teams</h1>
+              <h1 className="text-xl text-primary-100 font-medium">Teams</h1>
               {meData?.me?.id !== room?.config.adminUserId ? null : (
                 <CreateTeamController />
               )}
             </div>
             <div className="grid grid-cols-2 gap-4 pt-2 pb-4 px-4">
               {Object.keys(room?.teams!).length > 0 ? (
-                Object.keys(room?.teams!).map((teamName, id) => (
-                  <RoomTeamCardController key={id} teamName={teamName} />
-                ))
+                Object.keys(room?.teams!).map((teamName, id) => {
+                  const team = room?.teams![teamName];
+
+                  return (
+                    <RoomTeamCardController
+                      key={id}
+                      teamName={teamName}
+                      canJoinTeam={!team?.includes(meData?.me?.id!)!}
+                    />
+                  );
+                })
               ) : (
                 <span className="col-span-2 text-primary-300 text-sm mt-4">
                   Currently there are no teams created to join in this Room.

@@ -1,3 +1,4 @@
+import Redis from "ioredis";
 import { Server, Socket } from "socket.io";
 import {
   CLOSE_ROOM,
@@ -5,18 +6,18 @@ import {
   CREATE_TEAM,
   INVITE_TO_ROOM,
   JOIN_ROOM,
+  JOIN_TEAM,
   LEAVE_ROOM,
+  LEAVE_TEAM,
 } from "../socketActions/userActions";
-import Redis from "ioredis";
-import { createRoom, inviteToRoom } from "./roomController/";
-import { joinRoom } from "./roomController/";
-import { deleteUser, getUser, updateUser } from "./userController";
-import { getRoom } from "./roomController/getRoom";
+import { createRoom, inviteToRoom, joinRoom } from "./roomController/";
 import { closeRoom } from "./roomController/closeRoom";
-import { leaveRoom } from "./roomController/leaveRoom";
 import { createTeam } from "./roomController/createTeam";
-import { JOINED_TEAM } from "src/socketActions/serverActions";
+import { getRoom } from "./roomController/getRoom";
 import { joinTeam } from "./roomController/joinTeam";
+import { leaveRoom } from "./roomController/leaveRoom";
+import { leaveTeam } from "./roomController/leaveTeam";
+import { deleteUser, getUser, updateUser } from "./userController";
 
 export interface DataFromServerInterface {
   socket: Socket;
@@ -91,8 +92,13 @@ export const handleUserEvents = (args: DataFromServerInterface) => {
   );
 
   socket.on(
-    JOINED_TEAM,
+    JOIN_TEAM,
     genericActionCreater(joinTeam, { socket, currentUserId, redis }, true)
+  );
+
+  socket.on(
+    LEAVE_TEAM,
+    genericActionCreater(leaveTeam, { socket, currentUserId, redis }, true)
   );
 
   socket.on("disconnect", async () => {
@@ -109,6 +115,7 @@ export const handleUserEvents = (args: DataFromServerInterface) => {
       const room = await getRoom(user.currentRoom, redis!);
       // remove user from cache only if room they are currently part of has not started veto or the competition
       if (!room?.competition.veto.isOngoing && !room?.competition.isOngoing) {
+        // make user leave the room they are part of
         await leaveRoom({}, { socket, currentUserId, redis });
         // delete the user from cache
         const result = await deleteUser(currentUserId, redis!);

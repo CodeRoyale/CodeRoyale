@@ -5,17 +5,18 @@ import { updateUser } from "../userController";
 import { getUser } from "../userController/getUser";
 import { getRoom } from "./getRoom";
 
-
-export const joinTeam = async (teamName: string, { socket, redis, currentUserId }: DataFromServer): Promise<ControllerResponse<Room>> => {
+export const joinTeam = async (
+  teamName: string,
+  { socket, redis, currentUserId }: DataFromServer
+): Promise<ControllerResponse<Room>> => {
   const user = await getUser(currentUserId, redis!);
   if (!user) {
     return { error: "User who tried to join the team does not exist" };
   }
 
-  const room = await getRoom(user.currentRoom!, redis!);
   // Only run if room exists and user is in that room
   // and there is space
-    
+  const room = await getRoom(user.currentRoom!, redis!);
   if (
     !room ||
     !room!.teams[teamName] ||
@@ -25,15 +26,14 @@ export const joinTeam = async (teamName: string, { socket, redis, currentUserId 
       error: "The User doesn't meet the specifications to join the team",
     };
   }
+
   if (user.currentTeam) {
     // ditch prev team
-    return { error: 'Already in team' };
+    return { error: "Already in team" };
   }
-  
+
   // remove from bench
-  const newBench = room?.state.bench.filter(
-    (ele) => ele !== currentUserId
-  );
+  const newBench = room?.state.bench.filter((ele) => ele !== currentUserId);
 
   if (room) {
     room.state.bench = newBench!;
@@ -51,6 +51,6 @@ export const joinTeam = async (teamName: string, { socket, redis, currentUserId 
     type: JOINED_TEAM,
     data: room,
   });
-  
+
   return { data: room! };
-}
+};
