@@ -13,7 +13,7 @@ export const joinRoom = async (
     return { error: "User who tried to join the room does not exist" };
   }
 
-  const room = await getRoom(user.currentRoom!, redis!);
+  const room = await getRoom(roomId, redis!);
   if (!room) {
     return { error: `Room with roomId:${roomId} does not exist` };
   }

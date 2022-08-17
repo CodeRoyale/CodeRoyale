@@ -103,7 +103,7 @@ export const createRoom = async (
     };
   }
 
-  const room = await getRoom(user.currentRoom!, redis!);
+  const room = await getRoom(roomId, redis!);
   if (room) {
     return {
       errors: [
