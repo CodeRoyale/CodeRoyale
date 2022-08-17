@@ -17,15 +17,14 @@ export const joinTeam = async (
   // Only run if room exists and user is in that room
   // and there is space
   const room = await getRoom(user.currentRoom!, redis!);
-  if (
-    !room ||
-    !room!.teams[teamName] ||
-    room!.teams[teamName].length > room!.config.maxMembersPerTeam
-  ) {
-    return {
-      error: "The User doesn't meet the specifications to join the team",
-    };
-  }
+  if (!room) return { error: "The room was not found!" };
+
+  // check if the team was found for the user to join
+  if (!room!.teams[teamName]) return { error: "The team was not found for the user to join!" };
+
+  // check if the team has space in it
+  if (room!.teams[teamName].length > room!.config.maxMembersPerTeam) return { error: "Cannot join the team as the team has reached it's limit of max members" };
+  
 
   if (user.currentTeam) {
     // ditch prev team
