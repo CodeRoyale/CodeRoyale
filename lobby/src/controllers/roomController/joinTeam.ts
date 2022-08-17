@@ -17,8 +17,8 @@ export const joinTeam = async (teamName: string, { socket, redis, currentUserId 
   // and there is space
     
   if (
-    !room &&
-    !room!.teams[teamName] &&
+    !room ||
+    !room!.teams[teamName] ||
     room!.teams[teamName].length > room!.config.maxMembersPerTeam
   ) {
     return {
