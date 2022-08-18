@@ -1,7 +1,11 @@
 import { ControllerResponse, DataFromServer, Room } from "../../types/types";
 import { getUser, updateUser } from "../userController";
-import { ROOM_PREFIX } from "../../utils/constants";
-import { LEFT_TEAM, ROOM_UPDATED } from "../../socketActions/serverActions";
+import { ROOM_ALERT_MSG, ROOM_PREFIX } from "../../utils/constants";
+import {
+  LEFT_TEAM,
+  RCV_MSG,
+  ROOM_UPDATED,
+} from "../../socketActions/serverActions";
 import { getRoom } from "./getRoom";
 
 export const leaveTeam = async (
@@ -30,11 +34,19 @@ export const leaveTeam = async (
   room!.state.bench.push(currentUserId);
   await redis?.set(ROOM_PREFIX + user.currentRoom, JSON.stringify(room));
 
+  // notify the room through a alert message
+  socket.to(user.currentRoom!).emit(RCV_MSG, {
+    type: ROOM_ALERT_MSG,
+    fromUserId: currentUserId,
+    message: `has left team ${user.currentTeam}`,
+  });
+
+  socket.leave(`${user.currentRoom}/${user.currentTeam}`);
+
   // emptying the currentTeam for the user
   user.currentTeam = null;
   await updateUser(user, redis!);
 
-  socket.leave(`${user.currentRoom}/${user.currentTeam}`);
   socket.to(user.currentRoom!).emit(ROOM_UPDATED, {
     type: LEFT_TEAM,
     data: room,

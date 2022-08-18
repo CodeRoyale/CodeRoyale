@@ -58,9 +58,17 @@ export const closeRoom = async (
 
   await redis?.del(ROOM_PREFIX + roomId);
 
+  socket.to(roomId).emit(ROOM_UPDATED, {
+    type: CLOSED_ROOM,
+    data: true,
+  });
+  socket.emit(CLOSED_ROOM);
+
   // updating users in cache
   allMemberIds.forEach(async (userId) => {
     let user = await getUser(userId, redis!);
+    socket.leave(`${user?.currentRoom}/${user?.currentTeam}`);
+    socket.leave(user?.currentRoom!);
     user = {
       // user cannot be null, we have to trust lobby
       ...user!,
@@ -70,11 +78,6 @@ export const closeRoom = async (
     await updateUser(user, redis!);
   });
 
-  socket.to(roomId).emit(ROOM_UPDATED, {
-    type: CLOSED_ROOM,
-    data: true,
-  });
-  socket.emit(CLOSED_ROOM);
   console.log(`userId:${currentUserId} closed the room ${roomId}`);
   return { data: true };
 };

@@ -1,7 +1,11 @@
-import { ROOM_PREFIX } from "../../utils/constants";
+import { ROOM_ALERT_MSG, ROOM_PREFIX } from "../../utils/constants";
 import { ControllerResponse, DataFromServer, Room } from "../../types/types";
 import { getUser, updateUser } from "../userController";
-import { JOINED_ROOM, ROOM_UPDATED } from "../../socketActions/serverActions";
+import {
+  JOINED_ROOM,
+  RCV_MSG,
+  ROOM_UPDATED,
+} from "../../socketActions/serverActions";
 import { getRoom } from "./getRoom";
 
 export const joinRoom = async (
@@ -39,7 +43,13 @@ export const joinRoom = async (
   socket.join(roomId);
   socket.to(roomId).emit(ROOM_UPDATED, {
     type: JOINED_ROOM,
+    joineeUserId: currentUserId,
     data: room,
+  });
+  socket.to(roomId).emit(RCV_MSG, {
+    type: ROOM_ALERT_MSG,
+    fromUserId: currentUserId,
+    message: "joined the room",
   });
   console.log(`userId:${currentUserId} joined from ${roomId}`);
   return { data: room };

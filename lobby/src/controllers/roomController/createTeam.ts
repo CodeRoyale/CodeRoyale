@@ -1,6 +1,10 @@
-import { ROOM_UPDATED, TEAM_CREATED } from "../../socketActions/serverActions";
+import {
+  RCV_MSG,
+  ROOM_UPDATED,
+  TEAM_CREATED,
+} from "../../socketActions/serverActions";
 import { DataFromServer, Room } from "../../types/types";
-import { ROOM_PREFIX } from "../../utils/constants";
+import { ROOM_ALERT_MSG, ROOM_PREFIX } from "../../utils/constants";
 import { getUser } from "../userController";
 import { z } from "zod";
 import { getRoom } from "./getRoom";
@@ -55,7 +59,7 @@ export const createTeam = async (
 
   const room = await getRoom(user.currentRoom!, redis!);
 
-  if (!room){
+  if (!room) {
     return {
       errors: [
         {
@@ -101,6 +105,11 @@ export const createTeam = async (
   socket.to(user.currentRoom).emit(ROOM_UPDATED, {
     type: TEAM_CREATED,
     data: { teamName },
+  });
+  socket.to(user.currentRoom!).emit(RCV_MSG, {
+    type: ROOM_ALERT_MSG,
+    fromUserId: currentUserId,
+    message: `has created team ${teamName}`,
   });
 
   return { room };

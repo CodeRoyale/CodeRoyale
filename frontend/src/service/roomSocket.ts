@@ -160,6 +160,26 @@ export const leaveRoom = (socket: ISocket) => {
   });
 };
 
+export const sendChatMessage = (
+  socket: ISocket,
+  { message, toTeam }: { message: string; toTeam: boolean }
+) => {
+  return new Promise((resolve, reject) => {
+    if (!socket) {
+      reject(NO_CONNECTION);
+    } else {
+      socket.emit("SEND_CHAT_MSG", { message, toTeam }, (res: any) => {
+        console.log("sendChatMessage: ", res);
+        if (res.error) {
+          reject(res);
+        } else {
+          resolve(res);
+        }
+      });
+    }
+  });
+};
+
 export const closeRoom = (
   socket: ISocket,
   { roomId, forceCloseRoom }: { roomId: string; forceCloseRoom: boolean }

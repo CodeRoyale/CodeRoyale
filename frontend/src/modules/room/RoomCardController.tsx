@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { RoomCardFooter } from "../../components/roomCard/RoomCardFooter";
 import { RoomCardHeader } from "../../components/roomCard/RoomCardHeader";
 import { useMeQuery, useUsersQuery } from "../../generated/graphql";
-import { useRoom } from "../../global-stores";
+import { useChat, useRoom } from "../../global-stores";
 import { closeRoom, leaveRoom } from "../../service/roomSocket";
 import { WebSocketContext } from "../ws/WebSocketProvider";
 import { RoomUserAvatarController } from "./RoomUserAvatarController";
@@ -18,6 +18,10 @@ export const RoomCardController: React.FC<{}> = () => {
   const router = useRouter();
   const { conn } = useContext(WebSocketContext);
   const room = useRoom((state) => state.room);
+  const emptyChat = useChat((state) => state.emptyChat);
+  const emptyUserChatIdentityColors = useChat(
+    (state) => state.emptyUserChatIdentityColors
+  );
   const setRoom = useRoom((state) => state.setRoom);
   const { data: usersData, loading: usersLoading } = useUsersQuery({
     variables: { userIds: room?.state.bench! },
@@ -101,6 +105,9 @@ export const RoomCardController: React.FC<{}> = () => {
 
             if (response.data) {
               setRoom(null);
+              // empty chat messages and identities in state
+              emptyChat();
+              emptyUserChatIdentityColors();
               client.cache.evict({ fieldName: "rooms:{}" });
               router.push("/dashboard");
             }
@@ -110,6 +117,9 @@ export const RoomCardController: React.FC<{}> = () => {
 
             if (response.data) {
               setRoom(null);
+              // empty chat messages and identities in state
+              emptyChat();
+              emptyUserChatIdentityColors();
               router.push("/dashboard");
             }
           }}

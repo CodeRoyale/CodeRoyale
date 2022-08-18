@@ -1,5 +1,4 @@
 import React from "react";
-import { Chat } from "../../components/chat/Chat";
 import { LeftHeaderController } from "../../components/header/LeftHeaderController";
 import { MiddleHeader } from "../../components/header/MiddleHeader";
 import { RightHeader } from "../../components/header/RightHeader";
@@ -7,6 +6,7 @@ import { LeftColumn } from "../../components/layouts/mainGridLayout/LeftColumn";
 import { MainContentColumn } from "../../components/layouts/mainGridLayout/MainContentColumn";
 import { MainGridLayout } from "../../components/layouts/mainGridLayout/MainGridLayout";
 import { RightColumn } from "../../components/layouts/mainGridLayout/RightColumn";
+import { ChatController } from "../chat/ChatController";
 import { PeopleController } from "../PeopleController";
 import { WaitForWsAndAuth } from "../WaitForWsAndAuth";
 import { JoinRoom } from "./JoinRoom";
@@ -29,7 +29,7 @@ export const RoomPage = () => {
 
           <RightColumn>
             <RightHeader />
-            <Chat />
+            <ChatController />
           </RightColumn>
         </MainGridLayout>
       </JoinRoom>

@@ -14,3 +14,5 @@ export const CREATE_TEAM = "CREATE_TEAM";
 export const LEAVE_TEAM = "LEAVE_TEAM";
 // user tries to join a team
 export const JOIN_TEAM = "JOIN_TEAM";
+// user tries to send a chat message in room
+export const SEND_CHAT_MSG = "SEND_CHAT_MSG";

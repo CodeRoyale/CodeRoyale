@@ -9,8 +9,10 @@ import {
   JOIN_TEAM,
   LEAVE_ROOM,
   LEAVE_TEAM,
+  SEND_CHAT_MSG,
 } from "../socketActions/userActions";
 import { createRoom, inviteToRoom, joinRoom } from "./roomController/";
+import { chat } from "./roomController/chat";
 import { closeRoom } from "./roomController/closeRoom";
 import { createTeam } from "./roomController/createTeam";
 import { getRoom } from "./roomController/getRoom";
@@ -99,6 +101,11 @@ export const handleUserEvents = (args: DataFromServerInterface) => {
   socket.on(
     LEAVE_TEAM,
     genericActionCreater(leaveTeam, { socket, currentUserId, redis }, true)
+  );
+
+  socket.on(
+    SEND_CHAT_MSG,
+    genericActionCreater(chat, { socket, currentUserId, redis }, true)
   );
 
   socket.on("disconnect", async () => {

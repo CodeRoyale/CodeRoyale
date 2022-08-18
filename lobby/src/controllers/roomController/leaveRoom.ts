@@ -1,7 +1,11 @@
-import { ROOM_PREFIX } from "../../utils/constants";
+import { ROOM_ALERT_MSG, ROOM_PREFIX } from "../../utils/constants";
 import { ControllerResponse, DataFromServer } from "../../types/types";
 import { getUser, updateUser } from "../userController";
-import { LEFT_ROOM, ROOM_UPDATED } from "../../socketActions/serverActions";
+import {
+  LEFT_ROOM,
+  RCV_MSG,
+  ROOM_UPDATED,
+} from "../../socketActions/serverActions";
 import { getRoom } from "./getRoom";
 
 export const leaveRoom = async (
@@ -37,6 +41,11 @@ export const leaveRoom = async (
   socket.to(user.currentRoom!).emit(ROOM_UPDATED, {
     type: LEFT_ROOM,
     data: room,
+  });
+  socket.to(user.currentRoom!).emit(RCV_MSG, {
+    type: ROOM_ALERT_MSG,
+    fromUserId: currentUserId,
+    message: "has left the room",
   });
 
   socket.leave(`${user.currentRoom}/${user.currentTeam}`);
