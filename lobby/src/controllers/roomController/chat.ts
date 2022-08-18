@@ -1,5 +1,5 @@
-import { RCV_MSG } from "src/socketActions/serverActions";
-import { ControllerResponse, DataFromServer } from "src/types/types";
+import { RCV_MSG } from "../../socketActions/serverActions";
+import { ControllerResponse, DataFromServer } from "../../types/types";
 import { getUser } from "../userController";
 import { getRoom } from "./getRoom";
 
@@ -15,10 +15,11 @@ export const chat = async (message: string, toTeam: string, { socket, redis, cur
     }
 
     if (!message) return { data: false };
+    // todo: change the variable name of 'rcvrs'
     let rcvrs = user.currentRoom;
 
-    if (rcvrs && user.currentRoom) {
-        rcvrs += `/${user.currentRoom}`;
+    if (toTeam && user.currentTeam) {
+        rcvrs += `/${user.currentTeam}`;
     }
 
     socket.to(rcvrs!).emit(RCV_MSG, { message, toTeam });
