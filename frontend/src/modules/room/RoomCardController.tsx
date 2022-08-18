@@ -72,25 +72,27 @@ export const RoomCardController: React.FC<{}> = () => {
               )}
             </div>
             <div className="grid grid-cols-2 gap-4 pt-2 pb-4 px-4">
-              {Object.keys(room?.teams!).length > 0 ? (
-                Object.keys(room?.teams!).map((teamName, id) => {
-                  const team = room?.teams![teamName];
+              {room?.teams ? (
+                Object.keys(room?.teams!).length > 0 ? (
+                  Object.keys(room?.teams!).map((teamName, id) => {
+                    const team = room?.teams![teamName];
 
-                  return (
-                    <RoomTeamCardController
-                      key={id}
-                      teamName={teamName}
-                      canJoinTeam={!team?.includes(meData?.me?.id!)!}
-                    />
-                  );
-                })
-              ) : (
-                <span className="col-span-2 text-primary-300 text-sm mt-4">
-                  Currently there are no teams created to join in this Room.
-                  Kindly request the admin to create new teams for the
-                  competition.
-                </span>
-              )}
+                    return (
+                      <RoomTeamCardController
+                        key={id}
+                        teamName={teamName}
+                        canJoinTeam={!team?.includes(meData?.me?.id!)!}
+                      />
+                    );
+                  })
+                ) : (
+                  <span className="col-span-2 text-primary-300 text-sm mt-4">
+                    Currently there are no teams created to join in this Room.
+                    Kindly request the admin to create new teams for the
+                    competition.
+                  </span>
+                )
+              ) : null}
             </div>
           </div>
         </div>
