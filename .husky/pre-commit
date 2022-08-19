@@ -4,5 +4,8 @@
 cd frontend
 npx lint-staged
 
+cd ../lobby
+npx lint-staged
+
 cd ../api
 npx lint-staged
