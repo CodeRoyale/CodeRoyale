@@ -1,4 +1,4 @@
-import { DataFromServer, Room } from "../../types/types";
+import { DataFromServer, FieldError, Room } from "../../types/types";
 import { ROOM_PREFIX } from "../../utils/constants";
 import { z } from "zod";
 import api from "../../utils/api";
@@ -29,11 +29,6 @@ const CreateRoomInputSchema = z.object({
 });
 
 export type CreateRoomInput = z.infer<typeof CreateRoomInputSchema>;
-
-type FieldError = {
-  field: string;
-  message: string;
-};
 
 type CreateRoomResponse = {
   errors?: FieldError[] | null;

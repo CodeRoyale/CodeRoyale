@@ -77,28 +77,46 @@ export const ChatController: React.FC<{}> = () => {
           toTeam: false,
         }}
         onSubmit={async (values, { setErrors, setFieldValue }) => {
-          const res: any = await sendChatMessage(conn, {
-            message: values.message,
-            toTeam: values.toTeam,
-          });
-          if (res.data) {
-            addChat({
-              type: values.toTeam ? "ToTeam" : "Normal",
-              fromUserId: data?.me?.id!,
+          const trimmedMessage = values.message.trim();
+
+          // dont send an empty message
+          if (trimmedMessage.length > 0) {
+            const res: any = await sendChatMessage(conn, {
               message: values.message,
+              toTeam: values.toTeam,
             });
-            setFieldValue("message", "");
+            if (res.data) {
+              addChat({
+                type: values.toTeam ? "ToTeam" : "Normal",
+                fromUserId: data?.me?.id!,
+                message: values.message,
+              });
+              setFieldValue("message", "");
+            }
+          } else {
+            setErrors({ message: "Cannot send a empty character" });
           }
-          // console.log(values);
         }}
       >
-        {({ values, setFieldValue }) => (
+        {({ values, setFieldValue, setErrors }) => (
           <Form className="w-full pt-2 pb-4 px-4">
             <ChatInput
               name="message"
               placeholder="Send a message"
               type="text"
               autoComplete="off"
+              onChange={(e) => {
+                // check char count to make sure user does not send a big message
+                const trimmedMessage = e.target.value.trim();
+
+                if (trimmedMessage.length > 350) {
+                  setErrors({
+                    message: "Cannot exceed more than 350 characters",
+                  });
+                } else {
+                  setFieldValue("message", e.target.value);
+                }
+              }}
             />
             <div className="mt-3">
               <Switch

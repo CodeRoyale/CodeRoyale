@@ -67,3 +67,8 @@ export type ControllerResponse<T> = {
   error?: string;
   data?: T;
 };
+
+export type FieldError = {
+  field: string;
+  message: string;
+};

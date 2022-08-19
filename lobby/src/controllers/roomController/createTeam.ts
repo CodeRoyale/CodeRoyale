@@ -3,7 +3,7 @@ import {
   ROOM_UPDATED,
   TEAM_CREATED,
 } from "../../socketActions/serverActions";
-import { DataFromServer, Room } from "../../types/types";
+import { DataFromServer, FieldError, Room } from "../../types/types";
 import { ROOM_ALERT_MSG, ROOM_PREFIX } from "../../utils/constants";
 import { getUser } from "../userController";
 import { z } from "zod";
@@ -16,11 +16,6 @@ const TeamNameSchema = z
   .max(20, { message: "Cannot be more than 20 characters" });
 
 type TeamNameType = z.infer<typeof TeamNameSchema>;
-
-type FieldError = {
-  field: string;
-  message: string;
-};
 
 type CreateTeamResponse = {
   errors?: FieldError[] | null;
