@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { RoomTeamCard } from "../../components/roomCard/RoomTeamCard";
-import { useUsersQuery } from "../../generated/graphql";
+import { useMeQuery, useUsersQuery } from "../../generated/graphql";
 import { useRoom } from "../../global-stores";
 import { joinTeam, leaveTeam } from "../../service/roomSocket";
 import { WebSocketContext } from "../ws/WebSocketProvider";
@@ -18,15 +18,16 @@ export const RoomTeamCardController: React.FC<RoomTeamCardControllerProps> = ({
   const room = useRoom((state) => state.room);
   const setRoom = useRoom((state) => state.setRoom);
   const { conn } = useContext(WebSocketContext);
-  const { data, loading } = useUsersQuery({
+  const { data: meData } = useMeQuery();
+  const { data: userQueryData, loading: userQueryLoading } = useUsersQuery({
     variables: { userIds: room?.teams![teamName]! },
   });
   let teamMemberCards = null;
 
-  if (loading) {
-  } else if (!data?.users) {
+  if (userQueryLoading) {
+  } else if (!userQueryData?.users) {
   } else {
-    teamMemberCards = data.users.map((user) => (
+    teamMemberCards = userQueryData.users.map((user) => (
       <RoomUserAvatarController
         key={user.id}
         username={user.username}
@@ -67,13 +68,19 @@ export const RoomTeamCardController: React.FC<RoomTeamCardControllerProps> = ({
     }
   };
 
+  const handleDeleteTeam = async () => {
+    console.log("deleteTeam");
+  };
+
   return (
     <RoomTeamCard
+      isAdmin={meData?.me?.id === room?.config.adminUserId}
       teamName={teamName}
       teamMemberCards={teamMemberCards}
       joinOrLeaveTeamBtnText={canJoinTeam ? "Join" : "Leave"}
       joinTeamOnClick={handleJoinTeam}
       leaveTeamOnClick={handleLeaveTeam}
+      deleteTeamOnClick={handleDeleteTeam}
     />
   );
 };

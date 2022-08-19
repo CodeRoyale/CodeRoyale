@@ -143,6 +143,23 @@ export const leaveTeam = (socket: ISocket) => {
   });
 };
 
+export const deleteTeam = (socket: ISocket, teamName: string) => {
+  return new Promise((resolve, reject) => {
+    if (!socket) {
+      reject(NO_CONNECTION);
+    } else {
+      socket.emit("DELETE_TEAM", { teamName }, (res: any) => {
+        console.log("deleteTeam: ", res);
+        if (res.error) {
+          reject(res);
+        } else {
+          resolve(res);
+        }
+      });
+    }
+  });
+};
+
 export const leaveRoom = (socket: ISocket) => {
   return new Promise((resolve, reject) => {
     if (!socket) {

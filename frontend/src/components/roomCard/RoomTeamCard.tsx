@@ -1,23 +1,35 @@
 import React from "react";
+import { IconButton } from "../IconButton";
 
 interface RoomTeamCardProps {
+  isAdmin: boolean;
   teamName: string;
   teamMemberCards: React.ReactNode | null;
   joinOrLeaveTeamBtnText: "Join" | "Leave";
   joinTeamOnClick: () => void;
   leaveTeamOnClick: () => void;
+  deleteTeamOnClick: () => void;
 }
 
 export const RoomTeamCard: React.FC<RoomTeamCardProps> = ({
+  isAdmin,
   teamName,
   teamMemberCards,
   joinOrLeaveTeamBtnText,
   joinTeamOnClick,
   leaveTeamOnClick,
+  deleteTeamOnClick,
 }) => (
   <div className="flex flex-col bg-primary-900 rounded-md">
-    <div className="py-4 pl-2 pr-8">
-      <h1 className="text-primary-100 font-semibold text-lg">{teamName}</h1>
+    <div className="py-4 px-2">
+      {isAdmin ? (
+        <div className="flex items-center justify-between">
+          <h1 className="text-primary-100 font-semibold text-lg">{teamName}</h1>
+          <IconButton icon="close" onClick={deleteTeamOnClick} />
+        </div>
+      ) : (
+        <h1 className="text-primary-100 font-semibold text-lg">{teamName}</h1>
+      )}
       <div className="grid grid-cols-3 gap-2 mt-2">
         {!teamMemberCards ? (
           <span className="col-span-2 text-primary-300 text-sm mt-4">

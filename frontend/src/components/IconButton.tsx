@@ -1,8 +1,10 @@
 import React, { ButtonHTMLAttributes } from "react";
 import { Close, Launch, Settings } from "../icons";
 
+type IconType = "settings" | "close" | "launch";
+
 type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  icon: string;
+  icon: IconType;
 };
 
 const iconLookup: Record<string, React.ReactNode> = {
