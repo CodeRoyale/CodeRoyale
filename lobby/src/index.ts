@@ -7,7 +7,7 @@ import { Server } from "socket.io";
 import { mainRouter } from "./routes/main";
 import { usersRouter } from "./routes/users";
 import { roomsRouter } from "./routes/rooms";
-import { COOKIE_NAME, SESSION_PREFIX, __prod__ } from "./utils/constants";
+import { COOKIE_NAME, SESSION_PREFIX } from "./utils/constants";
 import cookieParser from "cookie-parser";
 import cookie from "cookie";
 import Redis from "ioredis";

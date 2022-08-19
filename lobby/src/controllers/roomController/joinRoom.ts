@@ -23,7 +23,7 @@ export const joinRoom = async (
   }
 
   // (only run if room doesn't exists) and (user is allowed if private) and (space is there)
-  //! privateList needs to be added
+  // ! privateList needs to be added
   if (room["state"]["currMemberCount"] + 1 > room["config"]["maxMembers"]) {
     return { error: "Max members in room reached" };
   }
