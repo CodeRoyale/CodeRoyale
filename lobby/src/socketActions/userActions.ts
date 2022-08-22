@@ -16,3 +16,5 @@ export const LEAVE_TEAM = "LEAVE_TEAM";
 export const JOIN_TEAM = "JOIN_TEAM";
 // user tries to send a chat message in room
 export const SEND_CHAT_MSG = "SEND_CHAT_MSG";
+// admin tries to delete a team
+export const DELETE_TEAM = "DELETE_TEAM";
