@@ -1,6 +1,6 @@
-import { RCV_MSG, ROOM_UPDATED } from "src/socketActions/serverActions";
-import { DELETE_TEAM } from "src/socketActions/userActions";
-import { ROOM_ALERT_MSG, ROOM_PREFIX } from "src/utils/constants";
+import { RCV_MSG, ROOM_UPDATED } from "../../socketActions/serverActions";
+import { DELETE_TEAM } from "../../socketActions/userActions";
+import { ROOM_ALERT_MSG, ROOM_PREFIX } from "../../utils/constants";
 import { ControllerResponse, DataFromServer, Room } from "../../types/types";
 import { getUser, updateUser } from "../userController";
 import { getRoom } from "./getRoom";
@@ -56,7 +56,7 @@ export const deleteTeam = async (
   socket.to(user.currentRoom!).emit(RCV_MSG, {
     type: ROOM_ALERT_MSG,
     fromUserId: currentUserId,
-    message: `has deleted the team ${teamName}`,
+    message: `has deleted team ${teamName}`,
   });
 
   return { data: room };

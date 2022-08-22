@@ -4,6 +4,7 @@ import {
   CLOSE_ROOM,
   CREATE_ROOM,
   CREATE_TEAM,
+  DELETE_TEAM,
   INVITE_TO_ROOM,
   JOIN_ROOM,
   JOIN_TEAM,
@@ -15,6 +16,7 @@ import { createRoom, inviteToRoom, joinRoom } from "./roomController/";
 import { chat } from "./roomController/chat";
 import { closeRoom } from "./roomController/closeRoom";
 import { createTeam } from "./roomController/createTeam";
+import { deleteTeam } from "./roomController/deleteTeam";
 import { getRoom } from "./roomController/getRoom";
 import { joinTeam } from "./roomController/joinTeam";
 import { leaveRoom } from "./roomController/leaveRoom";
@@ -106,6 +108,11 @@ export const handleUserEvents = (args: DataFromServerInterface) => {
   socket.on(
     SEND_CHAT_MSG,
     genericActionCreater(chat, { socket, currentUserId, redis }, true)
+  );
+
+  socket.on(
+    DELETE_TEAM,
+    genericActionCreater(deleteTeam, { socket, currentUserId, redis }, true)
   );
 
   socket.on("disconnect", async () => {

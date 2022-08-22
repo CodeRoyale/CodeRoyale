@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { RoomTeamCard } from "../../components/roomCard/RoomTeamCard";
 import { useMeQuery, useUsersQuery } from "../../generated/graphql";
 import { useRoom } from "../../global-stores";
-import { joinTeam, leaveTeam } from "../../service/roomSocket";
+import { deleteTeam, joinTeam, leaveTeam } from "../../service/roomSocket";
 import { WebSocketContext } from "../ws/WebSocketProvider";
 import { RoomUserAvatarController } from "./RoomUserAvatarController";
 
@@ -69,7 +69,14 @@ export const RoomTeamCardController: React.FC<RoomTeamCardControllerProps> = ({
   };
 
   const handleDeleteTeam = async () => {
-    console.log("deleteTeam");
+    try {
+      const res: any = await deleteTeam(conn, teamName);
+      if (res.data) {
+        setRoom(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

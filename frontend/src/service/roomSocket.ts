@@ -148,7 +148,7 @@ export const deleteTeam = (socket: ISocket, teamName: string) => {
     if (!socket) {
       reject(NO_CONNECTION);
     } else {
-      socket.emit("DELETE_TEAM", { teamName }, (res: any) => {
+      socket.emit("DELETE_TEAM", teamName, (res: any) => {
         console.log("deleteTeam: ", res);
         if (res.error) {
           reject(res);

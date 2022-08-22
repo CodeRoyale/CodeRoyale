@@ -76,14 +76,19 @@ export const RoomCardController: React.FC<{}> = () => {
                 Object.keys(room?.teams!).length > 0 ? (
                   Object.keys(room?.teams!).map((teamName, id) => {
                     const team = room?.teams![teamName];
+                    let roomTeamCardController = null;
 
-                    return (
-                      <RoomTeamCardController
-                        key={id}
-                        teamName={teamName}
-                        canJoinTeam={!team?.includes(meData?.me?.id!)!}
-                      />
-                    );
+                    if (team) {
+                      roomTeamCardController = (
+                        <RoomTeamCardController
+                          key={id}
+                          teamName={teamName}
+                          canJoinTeam={!team?.includes(meData?.me?.id!)!}
+                        />
+                      );
+                    }
+
+                    return roomTeamCardController;
                   })
                 ) : (
                   <span className="col-span-2 text-primary-300 text-sm mt-4">

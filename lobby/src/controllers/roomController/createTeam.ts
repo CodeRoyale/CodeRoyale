@@ -99,7 +99,7 @@ export const createTeam = async (
 
   socket.to(user.currentRoom).emit(ROOM_UPDATED, {
     type: TEAM_CREATED,
-    data: { teamName },
+    data: room,
   });
   socket.to(user.currentRoom!).emit(RCV_MSG, {
     type: ROOM_ALERT_MSG,
