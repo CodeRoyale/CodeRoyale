@@ -72,3 +72,6 @@ export type FieldError = {
   field: string;
   message: string;
 };
+
+// typesafe socket.io
+export interface ServerToClientEvents {}

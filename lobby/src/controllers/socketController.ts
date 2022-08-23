@@ -1,5 +1,4 @@
-import Redis from "ioredis";
-import { Server, Socket } from "socket.io";
+import { DataFromServer } from "src/types/types";
 import {
   CLOSE_ROOM,
   CREATE_ROOM,
@@ -23,17 +22,10 @@ import { leaveRoom } from "./roomController/leaveRoom";
 import { leaveTeam } from "./roomController/leaveTeam";
 import { deleteUser, getUser, updateUser } from "./userController";
 
-export interface DataFromServerInterface {
-  socket: Socket;
-  io?: Server;
-  currentUserId: number;
-  redis?: Redis;
-}
-
 const genericActionCreater =
   (
     actionResponder: any,
-    dataFromServer: DataFromServerInterface,
+    dataFromServer: DataFromServer,
     asynFunc: boolean = false,
     failReply: string = "Some error occured!"
   ) =>
@@ -58,7 +50,7 @@ const genericActionCreater =
     }
   };
 
-export const handleUserEvents = (args: DataFromServerInterface) => {
+export const handleUserEvents = (args: DataFromServer) => {
   const { io, socket, redis, currentUserId } = args;
 
   socket.on(
