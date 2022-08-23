@@ -23,26 +23,28 @@ export const PeopleCardMenuController: React.FC<
       <DropdownMenuIconButton
         title="Profile"
         icon="profile"
-        borderRadius="rounded-t-lg"
+        borderRadius={room ? "rounded-t-lg" : "rounded-lg"}
         onClick={() => {
           router.push(`/profile/${username}`);
         }}
       />
-      <DropdownMenuIconButton
-        title="Invite to room"
-        icon="roomInvite"
-        borderRadius="rounded-b-lg"
-        onClick={async () => {
-          if (!room) {
-            console.log("cannot invite to room");
-          }
+      {!room ? null : (
+        <DropdownMenuIconButton
+          title="Invite to room"
+          icon="roomInvite"
+          borderRadius="rounded-b-lg"
+          onClick={async () => {
+            if (!room) {
+              console.log("cannot invite to room");
+            }
 
-          await inviteToRoom(conn, {
-            invitedUserId: userId,
-            invitedRoomId: room?.config.id!,
-          });
-        }}
-      />
+            await inviteToRoom(conn, {
+              invitedUserId: userId,
+              invitedRoomId: room?.config.id!,
+            });
+          }}
+        />
+      )}
     </PeopleCardMenu>
   );
 };
