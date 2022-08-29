@@ -20,6 +20,7 @@ import { UserResolver } from "./resolvers/user";
 import cors from "cors";
 import { RoomResolver } from "./resolvers/room";
 import { createUserLoader } from "./utils/createUserLoader";
+import { QuestionResolver } from "./resolvers/question";
 
 const main = async () => {
   await dataSource.initialize();
@@ -32,7 +33,7 @@ const main = async () => {
 
   app.use(
     cors({
-      origin: process.env.CORS_ORIGIN,
+      origin: [process.env.CORS_ORIGIN, "https://studio.apollographql.com"],
       credentials: true,
     })
   );
@@ -59,7 +60,7 @@ const main = async () => {
   // apollo server init
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [HelloResolver, UserResolver, RoomResolver],
+      resolvers: [HelloResolver, UserResolver, RoomResolver, QuestionResolver],
       validate: false,
     }),
     plugins: [
