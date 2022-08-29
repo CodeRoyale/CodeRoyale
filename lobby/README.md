@@ -55,4 +55,4 @@ Check out [SETUP.md](https://github.com/CodeRoyale/lobby/blob/develop/SETUP.md)
 
 ## Why did we make this?
 
-The goal of CodeRoyale is to create a Competitive Programming platform, where users can have coding battle with friends, random users and team battles to show case your programming skills.
+The goal of CodeRoyale is to create a Competitive Programming platform, where users can have coding battle with friends, random users or team members, to show case their programming skills.
