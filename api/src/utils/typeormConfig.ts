@@ -9,7 +9,7 @@ import { Testcase } from "../entities/Testcase";
 // https://github.com/typeorm/typeorm/issues/8810#issuecomment-1090650075
 export const dataSource = new DataSource({
   type: "postgres",
-  database: "coderoyale-dev",
+  database: process.env.POSTGRES_DBNAME,
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   logging: true,
