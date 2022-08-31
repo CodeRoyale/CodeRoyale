@@ -22,14 +22,21 @@ export class Question extends BaseEntity {
   title!: string;
 
   @Field()
-  @Column()
-  problemCode!: string;
-
-  @Field()
   @Column({ type: "text" })
   description!: string;
 
-  @OneToMany(() => Testcase, (testcase) => testcase.problemCode)
+  // TODO: add this when doing migrations
+  // https://stackoverflow.com/questions/35699564/min-and-max-length-of-a-varchar-in-postgres
+  @Field()
+  @Column({ unique: true })
+  problemCode!: string;
+
+  @Field()
+  @Column({ type: "int", default: 0 })
+  numberOfTestcases!: number;
+
+  @Field(() => Testcase)
+  @OneToMany(() => Testcase, (testcase) => testcase.questionId)
   testcases: Testcase[];
 
   @Field(() => String)

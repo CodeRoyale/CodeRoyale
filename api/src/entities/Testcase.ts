@@ -18,16 +18,17 @@ export class Testcase extends BaseEntity {
   id!: number;
 
   @Field()
-  @Column()
-  problemCode!: string;
-
-  @Field()
   @Column({ type: "text" })
   input!: string;
 
   @Field()
   @Column({ type: "text" })
   output!: string;
+
+  // foreign key that references the Questions table
+  @Field()
+  @Column()
+  questionId: number;
 
   @ManyToOne(() => Question, (question) => question.testcases)
   question: Question;
