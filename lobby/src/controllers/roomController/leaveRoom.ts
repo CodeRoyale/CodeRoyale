@@ -1,4 +1,4 @@
-import { ROOM_ALERT_MSG, ROOM_PREFIX } from "../../utils/constants";
+import { ROOM_ALERT_MSG } from "../../utils/constants";
 import { ControllerResponse, DataFromServer } from "../../types/types";
 import { getUser, updateUser } from "../userController";
 import {
@@ -7,6 +7,7 @@ import {
   ROOM_UPDATED,
 } from "../../socketActions/serverActions";
 import { getRoom } from "./getRoom";
+import { updateRoom } from "./updateRoom";
 
 export const leaveRoom = async (
   {},
@@ -36,7 +37,8 @@ export const leaveRoom = async (
   // decrement the currentMemberCount
   room.state.currMemberCount -= 1;
 
-  await redis?.set(ROOM_PREFIX + user.currentRoom, JSON.stringify(room));
+  // await redis?.set(ROOM_PREFIX + user.currentRoom, JSON.stringify(room));
+  await updateRoom(room, redis!);
 
   socket.to(user.currentRoom!).emit(ROOM_UPDATED, {
     type: LEFT_ROOM,

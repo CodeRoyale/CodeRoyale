@@ -4,10 +4,11 @@ import {
   TEAM_CREATED,
 } from "../../socketActions/serverActions";
 import { DataFromServer, FieldError, Room } from "../../types/types";
-import { ROOM_ALERT_MSG, ROOM_PREFIX } from "../../utils/constants";
+import { ROOM_ALERT_MSG } from "../../utils/constants";
 import { getUser } from "../userController";
 import { z } from "zod";
 import { getRoom } from "./getRoom";
+import { updateRoom } from "./updateRoom";
 
 const TeamNameSchema = z
   .string()
@@ -95,7 +96,7 @@ export const createTeam = async (
   }
 
   room.teams[teamName] = [];
-  await redis?.set(ROOM_PREFIX + user.currentRoom, JSON.stringify(room));
+  await updateRoom(room, redis!);
 
   socket.to(user.currentRoom).emit(ROOM_UPDATED, {
     type: TEAM_CREATED,

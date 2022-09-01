@@ -1,12 +1,13 @@
 import { ControllerResponse, DataFromServer, Room } from "../../types/types";
 import { getUser, updateUser } from "../userController";
-import { ROOM_ALERT_MSG, ROOM_PREFIX } from "../../utils/constants";
+import { ROOM_ALERT_MSG } from "../../utils/constants";
 import {
   LEFT_TEAM,
   RCV_MSG,
   ROOM_UPDATED,
 } from "../../socketActions/serverActions";
 import { getRoom } from "./getRoom";
+import { updateRoom } from "./updateRoom";
 
 export const leaveTeam = async (
   {},
@@ -32,7 +33,8 @@ export const leaveTeam = async (
 
   room!.teams[user.currentTeam!] = filteredTeam;
   room!.state.bench.push(currentUserId);
-  await redis?.set(ROOM_PREFIX + user.currentRoom, JSON.stringify(room));
+
+  await updateRoom(room!, redis!);
 
   // notify the room through a alert message
   socket.to(user.currentRoom!).emit(RCV_MSG, {

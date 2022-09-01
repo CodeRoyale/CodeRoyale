@@ -1,9 +1,10 @@
 import { RCV_MSG, ROOM_UPDATED } from "../../socketActions/serverActions";
 import { DELETE_TEAM } from "../../socketActions/userActions";
-import { ROOM_ALERT_MSG, ROOM_PREFIX } from "../../utils/constants";
+import { ROOM_ALERT_MSG } from "../../utils/constants";
 import { ControllerResponse, DataFromServer, Room } from "../../types/types";
 import { getUser, updateUser } from "../userController";
 import { getRoom } from "./getRoom";
+import { updateRoom } from "./updateRoom";
 
 export const deleteTeam = async (
   teamName: string,
@@ -47,7 +48,7 @@ export const deleteTeam = async (
   room.state.bench = newBench;
   delete room.teams[teamName];
 
-  await redis?.set(ROOM_PREFIX + user.currentRoom, JSON.stringify(room));
+  await updateRoom(room, redis!);
 
   socket.to(user.currentRoom!).emit(ROOM_UPDATED, {
     type: DELETE_TEAM,

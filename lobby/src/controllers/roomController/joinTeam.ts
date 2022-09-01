@@ -3,7 +3,7 @@ import {
   RCV_MSG,
   ROOM_UPDATED,
 } from "../../socketActions/serverActions";
-import { ROOM_ALERT_MSG, ROOM_PREFIX } from "../../utils/constants";
+import { ROOM_ALERT_MSG } from "../../utils/constants";
 import { ControllerResponse, DataFromServer, Room } from "../../types/types";
 import { updateUser } from "../userController";
 import { getUser } from "../userController/getUser";
@@ -50,7 +50,6 @@ export const joinTeam = async (
   room!.teams[teamName].push(currentUserId);
   user.currentTeam = teamName;
 
-  await redis?.set(ROOM_PREFIX + user.currentRoom, JSON.stringify(room));
   await updateUser(user, redis!);
 
   socket.join(`${user.currentRoom}/${teamName}`);

@@ -1,4 +1,4 @@
-import { ROOM_ALERT_MSG, ROOM_PREFIX } from "../../utils/constants";
+import { ROOM_ALERT_MSG } from "../../utils/constants";
 import { ControllerResponse, DataFromServer, Room } from "../../types/types";
 import { getUser, updateUser } from "../userController";
 import {
@@ -7,6 +7,7 @@ import {
   ROOM_UPDATED,
 } from "../../socketActions/serverActions";
 import { getRoom } from "./getRoom";
+import { updateRoom } from "./updateRoom";
 
 export const joinRoom = async (
   roomId: string,
@@ -35,7 +36,7 @@ export const joinRoom = async (
 
   room.state.bench.push(currentUserId);
   room.state.currMemberCount += 1;
-  await redis?.set(ROOM_PREFIX + roomId, JSON.stringify(room));
+  await updateRoom(room, redis!);
 
   user.currentRoom = roomId;
   await updateUser(user!, redis!);

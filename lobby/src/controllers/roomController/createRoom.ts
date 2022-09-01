@@ -1,9 +1,9 @@
 import { DataFromServer, FieldError, Room } from "../../types/types";
-import { ROOM_PREFIX } from "../../utils/constants";
 import { z } from "zod";
 import api from "../../utils/api";
 import { getUser, updateUser } from "../userController";
 import { getRoom } from "./getRoom";
+import { updateRoom } from "./updateRoom";
 
 const CreateRoomInputSchema = z.object({
   config: z.object({
@@ -145,7 +145,7 @@ export const createRoom = async (
     teams: {},
   };
 
-  await redis?.set(ROOM_PREFIX + roomId, JSON.stringify(newRoom));
+  await updateRoom(newRoom, redis!);
 
   // update user in cache
   user = {
