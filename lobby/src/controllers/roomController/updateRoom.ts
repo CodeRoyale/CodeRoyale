@@ -1,5 +1,5 @@
 import Redis from "ioredis";
-import { ROOM_PREFIX } from "src/utils/constants";
+import { ROOM_PREFIX } from "../../utils/constants";
 import { Room } from "../../types/types";
 
 export const updateRoom = async (

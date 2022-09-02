@@ -8,6 +8,7 @@ import { ControllerResponse, DataFromServer, Room } from "../../types/types";
 import { updateUser } from "../userController";
 import { getUser } from "../userController/getUser";
 import { getRoom } from "./getRoom";
+import { updateRoom } from "./updateRoom";
 
 export const joinTeam = async (
   teamName: string,
@@ -50,6 +51,7 @@ export const joinTeam = async (
   room!.teams[teamName].push(currentUserId);
   user.currentTeam = teamName;
 
+  await updateRoom(room, redis!);
   await updateUser(user, redis!);
 
   socket.join(`${user.currentRoom}/${teamName}`);
