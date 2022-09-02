@@ -1,0 +1,12 @@
+.markdown {
+  @apply leading-relaxed;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+  @apply my-3 text-primary-200;
+}

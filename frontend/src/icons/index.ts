@@ -9,8 +9,12 @@ import { Close } from "./Close";
 import { RemoveUser } from "./RemoveUser";
 import { AddModerator } from "./AddModerator";
 import { Launch } from "./Launch";
+import { HalfArrowDown } from "./HalfArrowDown";
+import { HalfArrowUp } from "./HalfArrowUp";
 
 export {
+  HalfArrowDown,
+  HalfArrowUp,
   Google,
   Email,
   RoomInvite,
