@@ -4,7 +4,10 @@ import { getRoom } from "./getRoom";
 import api from "../../utils/api";
 
 const atLeastPerTeam = (room: Room, minSize = 1) => {
-  const results: number[] = [];
+  // 0 -> number of members in team is less than the minSize
+  // 1 -> all good
+
+  const results: 0[] & 1[] = [];
   Object.values(room.teams).forEach((teamMembers: any) => {
     if (teamMembers.length < minSize) {
       results.push(0);
@@ -12,6 +15,7 @@ const atLeastPerTeam = (room: Room, minSize = 1) => {
       results.push(1);
     }
   });
+
   if (results.includes(0)) {
     return false;
   } else {
