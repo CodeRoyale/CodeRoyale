@@ -87,7 +87,7 @@ export class QuestionResolver {
   @Query(() => [Int])
   @UseMiddleware(isLobby)
   async getRandomQuestionIds(
-    @Arg("noOfIds")
+    @Arg("noOfIds", () => Int)
     noOfIds: number,
     @Ctx()
     { dataSource }: MyContext

@@ -48,4 +48,18 @@ const deleteRoom = async (roomId: string) => {
   return graphQLClient.request(mutation, variables);
 };
 
-export default { createRoom, deleteRoom };
+const getRandomQuestionIds = async (noOfIds: number) => {
+  const query = gql`
+    query GetRandomQuestionIds($noOfIds: Int!) {
+      getRandomQuestionIds(noOfIds: $noOfIds)
+    }
+  `;
+
+  const variables = {
+    noOfIds,
+  };
+
+  return graphQLClient.request(query, variables);
+};
+
+export default { createRoom, deleteRoom, getRandomQuestionIds };

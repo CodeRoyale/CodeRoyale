@@ -1,6 +1,7 @@
 import { ControllerResponse, DataFromServer, Room } from "src/types/types";
 import { getUser } from "../userController";
 import { getRoom } from "./getRoom";
+import api from "../../utils/api";
 
 const atLeastPerTeam = (room: Room, minSize = 1) => {
   const results: number[] = [];
@@ -39,7 +40,12 @@ export const startCompetition = async ({
   console.log(`Competition starting for room: ${room.config.id}`);
   // TODO:
   // 1. stopTimers = {}
-  // 2. getQuestions()
+
+  // get random veto questions ids from api
+  const vetoQuestionIds = await api.getRandomQuestionIds(
+    room.competition.veto.questionCount
+  );
+  console.log(vetoQuestionIds);
 
   return { data: true };
 };
