@@ -10,7 +10,7 @@ export const deleteTeam = async (
   teamName: string,
   { socket, redis, currentUserId }: DataFromServer
 ): Promise<ControllerResponse<Room>> => {
-  const user = await getUser(currentUserId!, redis!);
+  const user = await getUser(currentUserId, redis!);
   if (!user) {
     return { error: "The user wanting to delete the team doesn't exist" };
   }
