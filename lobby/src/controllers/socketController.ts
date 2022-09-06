@@ -20,6 +20,7 @@ import { getRoom } from "./roomController/getRoom";
 import { joinTeam } from "./roomController/joinTeam";
 import { leaveRoom } from "./roomController/leaveRoom";
 import { leaveTeam } from "./roomController/leaveTeam";
+import { startCompetition } from "./roomController/startCompetition";
 import { deleteUser, getUser, updateUser } from "./userController";
 
 const genericActionCreater =
@@ -105,6 +106,15 @@ export const handleUserEvents = (args: DataFromServer) => {
   socket.on(
     DELETE_TEAM,
     genericActionCreater(deleteTeam, { socket, currentUserId, redis }, true)
+  );
+
+  socket.on(
+    "START_COMPETITION",
+    genericActionCreater(
+      startCompetition,
+      { socket, currentUserId, redis },
+      true
+    )
   );
 
   socket.on("disconnect", async () => {

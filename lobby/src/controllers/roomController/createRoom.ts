@@ -1,9 +1,9 @@
-import { DataFromServer, FieldError, Room } from "../../types/types";
+import { DataFromServer, FieldError, Room, RoomTimer } from "../../types/types";
 import { z } from "zod";
 import api from "../../utils/api";
 import { getUser, updateUser } from "../userController";
 import { getRoom } from "./getRoom";
-import { updateRoom } from "./updateRoom";
+import { ROOM_PREFIX, ROOM_TIMER_PREFIX } from "../../utils/constants";
 
 const CreateRoomInputSchema = z.object({
   config: z.object({
@@ -146,7 +146,15 @@ export const createRoom = async (
     teams: {},
   };
 
-  await updateRoom(newRoom, redis!);
+  // initializing veto and competition timers
+  const newRoomTimer: RoomTimer = {
+    competitionTimer: null,
+    vetoTimer: null,
+  };
+
+  await redis?.set(ROOM_PREFIX + roomId, JSON.stringify(newRoom));
+  // initialize timers
+  await redis?.set(ROOM_TIMER_PREFIX + roomId, JSON.stringify(newRoomTimer));
 
   // update user in cache
   user = {

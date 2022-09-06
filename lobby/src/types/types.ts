@@ -34,8 +34,8 @@ export type Room = {
     maxQuestions: number;
     isOngoing: boolean;
     timeLimit: number;
-    contestStartedAt: Date | null;
-    contestEndedAt: Date | null;
+    contestStartedAt: number | null;
+    contestEndedAt: number | null;
     veto: {
       questionCount: number;
       questionIds: number[];
@@ -47,6 +47,11 @@ export type Room = {
     };
   };
   teams: Record<string, number[]>;
+};
+
+export type RoomTimer = {
+  competitionTimer: ReturnType<typeof setTimeout> | null;
+  vetoTimer: ReturnType<typeof setTimeout> | null;
 };
 
 export type SocketUser = {

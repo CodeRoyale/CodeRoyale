@@ -19,8 +19,8 @@ export type Room = {
     maxQuestions: number;
     isOngoing: boolean;
     timeLimit: number;
-    contestStartedAt: Date | null;
-    contestEndedAt: Date | null;
+    contestStartedAt: number | null;
+    contestEndedAt: number | null;
     veto: {
       questionCount: number;
       questionIds: number[];
