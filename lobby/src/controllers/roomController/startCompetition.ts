@@ -2,6 +2,9 @@ import { ControllerResponse, DataFromServer, Room } from "src/types/types";
 import { getUser } from "../userController";
 import { getRoom } from "./getRoom";
 import api from "../../utils/api";
+import { startVeto } from "./startVeto";
+import { updateRoom } from "./updateRoom";
+import Redis from "ioredis";
 
 // this is temporary will replace with redis
 const stopTimers: any = {};
@@ -27,9 +30,30 @@ const atLeastPerTeam = (room: Room, minSize = 1) => {
   }
 };
 
+const initializeCompetition = async (
+  room: Room,
+  state: string,
+  redis: Redis
+) => {
+  if (state === "start") {
+    room.competition.isOngoing = true;
+    // TODO room.competition.contestStartedAt = Date.now();
+    Object.keys(room.teams).forEach((ele) => {
+      console.log(ele);
+      // TODO room.competition.scoreboard[ele] = [];
+    });
+    await updateRoom(room, redis);
+  } else {
+    room.competition.isOngoing = false;
+    // TODO room.competition.contestEndedAt = Date.now();
+    await updateRoom(room, redis);
+  }
+};
+
 export const startCompetition = async ({
   redis,
   currentUserId,
+  socket,
 }: DataFromServer): Promise<ControllerResponse<boolean>> => {
   const user = await getUser(currentUserId, redis!);
   const room = await getRoom(user?.currentRoom!, redis!);
@@ -53,7 +77,20 @@ export const startCompetition = async ({
   const vetoQuestionIds = await api.getRandomQuestionIds(
     room.competition.veto.questionCount
   );
-  console.log(vetoQuestionIds);
+
+  await startVeto(vetoQuestionIds, room, socket, redis!);
+  let state = "start";
+  await initializeCompetition(room, state, redis!);
+
+  socket.to(room.config.id).emit("COMPETITION_STARTED", room);
+  socket.emit("COMPETITION_STARTED", room);
+
+  state = "stop";
+  stopTimers[room.config.id].competitionTimer = setTimeout(async () => {
+    await initializeCompetition(room, state, redis!);
+    socket.to(room.config.id).emit("COMPETITION_STOPPED", room);
+    socket.emit("COMPETITION_STOPPED", room);
+  }, room.competition.timeLimit);
 
   return { data: true };
 };
