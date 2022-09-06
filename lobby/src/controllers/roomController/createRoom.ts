@@ -140,6 +140,7 @@ export const createRoom = async (
         isOngoing: false,
         timeLimit: createRoomInput.veto.timeLimit,
         votedUserIds: [],
+        votes: {},
       },
     },
     teams: {},

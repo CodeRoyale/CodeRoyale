@@ -43,6 +43,7 @@ export type Room = {
       isOngoing: boolean;
       timeLimit: number;
       votedUserIds: number[];
+      votes: Record<number, number>;
     };
   };
   teams: Record<string, number[]>;

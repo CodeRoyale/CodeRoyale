@@ -3,6 +3,10 @@ import { getUser } from "../userController";
 import { getRoom } from "./getRoom";
 import api from "../../utils/api";
 
+// this is temporary will replace with redis
+const stopTimers: any = {};
+
+// checks if a team is of minSize
 const atLeastPerTeam = (room: Room, minSize = 1) => {
   // 0 -> number of members in team is less than the minSize
   // 1 -> all good
@@ -31,19 +35,19 @@ export const startCompetition = async ({
   const room = await getRoom(user?.currentRoom!, redis!);
 
   if (
-    room?.config.adminUserId !== currentUserId ||
+    !room ||
+    room.config.adminUserId !== currentUserId ||
     room.state.currMemberCount < 2 ||
     Object.keys(room.teams).length < 2 ||
-    !atLeastPerTeam(room) ||
-    room.competition.contestStartedAt ||
+    !atLeastPerTeam(room, 1) ||
+    room.competition.isOngoing ||
     room?.competition.veto.isOngoing
   ) {
     return { error: "Room doesn't meet the requirements." };
   }
 
   console.log(`Competition starting for room: ${room.config.id}`);
-  // TODO:
-  // 1. stopTimers = {}
+  stopTimers[room.config.id] = {};
 
   // get random veto questions ids from api
   const vetoQuestionIds = await api.getRandomQuestionIds(
