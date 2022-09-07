@@ -1,5 +1,6 @@
 import { CLOSED_ROOM } from "../../socketActions/serverActions";
-import { ControllerResponse, DataFromServer, Room } from "src/types/types";
+import { ControllerResponse, DataFromServer } from "../../types/types";
+import { Room } from "@coderoyale/common";
 import { ROOM_PREFIX } from "../../utils/constants";
 import { ROOM_UPDATED } from "../../socketActions/serverActions";
 import { getUser, updateUser } from "../userController";

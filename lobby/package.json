@@ -35,7 +35,8 @@
     "redis": "^4.0.1",
     "socket.io": "^4.5.1",
     "uuid": "^8.3.0",
-    "zod": "^3.17.3"
+    "zod": "^3.17.3",
+    "@coderoyale/common": "1.0.0"
   },
   "devDependencies": {
     "@types/cookie": "^0.5.1",

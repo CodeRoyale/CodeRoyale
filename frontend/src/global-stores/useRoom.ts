@@ -1,5 +1,5 @@
 import create from "zustand";
-import { Room } from "../types/types";
+import { Room } from "@coderoyale/common";
 
 interface RoomState {
   room: Room | null;

@@ -1,4 +1,5 @@
-import { DataFromServer, FieldError, Room, RoomTimer } from "../../types/types";
+import { DataFromServer, FieldError, RoomTimer } from "../../types/types";
+import { Room } from "@coderoyale/common";
 import { z } from "zod";
 import api from "../../utils/api";
 import { getUser, updateUser } from "../userController";

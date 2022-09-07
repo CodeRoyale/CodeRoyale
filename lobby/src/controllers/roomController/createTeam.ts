@@ -3,7 +3,8 @@ import {
   ROOM_UPDATED,
   TEAM_CREATED,
 } from "../../socketActions/serverActions";
-import { DataFromServer, FieldError, Room } from "../../types/types";
+import { DataFromServer, FieldError } from "../../types/types";
+import { Room } from "@coderoyale/common";
 import { ROOM_ALERT_MSG } from "../../utils/constants";
 import { getUser } from "../userController";
 import { z } from "zod";

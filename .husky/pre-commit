@@ -9,3 +9,6 @@ npx lint-staged
 
 cd ../api
 npx lint-staged
+
+cd ../common
+npx lint-staged

@@ -1,6 +1,6 @@
 import Redis from "ioredis";
 import { ROOM_PREFIX } from "../../utils/constants";
-import { Room } from "../../types/types";
+import { Room } from "@coderoyale/common";
 
 export const getRoom = async (
   roomId: string,

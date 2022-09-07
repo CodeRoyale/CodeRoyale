@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
+import { Room } from "@coderoyale/common";
 import { useRoom } from "../../global-stores";
-import { Room } from "../../types/types";
 
 export type ISocket = Socket | null;
 

@@ -1,4 +1,5 @@
-import { ControllerResponse, DataFromServer, Room } from "src/types/types";
+import { ControllerResponse, DataFromServer } from "../../types/types";
+import { Room } from "@coderoyale/common";
 import { getUser } from "../userController";
 import { getRoom } from "./getRoom";
 import api from "../../utils/api";

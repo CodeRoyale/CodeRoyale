@@ -1,6 +1,6 @@
 import Redis from "ioredis";
 import { Socket } from "socket.io";
-import { Room } from "src/types/types";
+import { Room } from "@coderoyale/common";
 import { getRoomTimer } from "./getRoomTimer";
 import { updateRoom } from "./updateRoom";
 

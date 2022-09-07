@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import useCollapse from "react-collapsed";
 import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
+// import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+// import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { HalfArrowDown, HalfArrowUp } from "../icons";
 import { Check } from "../icons/Check";
 import "../styles/markdown.css";
@@ -40,13 +40,15 @@ export const VetoQuestionCard: React.FC<VetoQuestionCardProps> = ({
             code({ node, inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || "");
               return !inline && match ? (
-                <SyntaxHighlighter
-                  children={String(children).replace(/\n$/, "")}
-                  style={vscDarkPlus}
-                  language={match[1]}
-                  PreTag="div"
-                  {...props}
-                />
+                // !imp need fixing
+                // <SyntaxHighlighter
+                //   children={String(children).replace(/\n$/, "")}
+                //   style={vscDarkPlus}
+                //   language={match[1]}
+                //   PreTag="div"
+                //   {...props}
+                // />
+                <></>
               ) : (
                 <code className={className} {...props}>
                   {children}

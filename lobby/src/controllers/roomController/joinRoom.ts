@@ -1,5 +1,6 @@
 import { ROOM_ALERT_MSG } from "../../utils/constants";
-import { ControllerResponse, DataFromServer, Room } from "../../types/types";
+import { ControllerResponse, DataFromServer } from "../../types/types";
+import { Room } from "@coderoyale/common";
 import { getUser, updateUser } from "../userController";
 import {
   JOINED_ROOM,

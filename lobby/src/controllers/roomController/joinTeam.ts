@@ -4,7 +4,8 @@ import {
   ROOM_UPDATED,
 } from "../../socketActions/serverActions";
 import { ROOM_ALERT_MSG } from "../../utils/constants";
-import { ControllerResponse, DataFromServer, Room } from "../../types/types";
+import { ControllerResponse, DataFromServer } from "../../types/types";
+import { Room } from "@coderoyale/common";
 import { updateUser } from "../userController";
 import { getUser } from "../userController/getUser";
 import { getRoom } from "./getRoom";
