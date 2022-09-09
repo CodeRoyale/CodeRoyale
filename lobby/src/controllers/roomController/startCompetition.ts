@@ -71,15 +71,17 @@ export const startCompetition = async ({
   });
   await updateRoom(room, redis!);
 
-  socket.to(room.config.id).emit("COMPETITION_STARTED", room);
-  socket.emit("COMPETITION_STARTED", room);
+  // TODO
+  // socket.to(room.config.id).emit("COMPETITION_STARTED", room);
+  // socket.emit("COMPETITION_STARTED", room);
 
   roomTimer!.competitionTimer = setTimeout(async () => {
     room.competition.isOngoing = false;
     room.competition.contestEndedAt = Date.now();
     await updateRoom(room, redis!);
-    socket.to(room.config.id).emit("COMPETITION_STOPPED", room);
-    socket.emit("COMPETITION_STOPPED", room);
+    // TODO
+    // socket.to(room.config.id).emit("COMPETITION_STOPPED", room);
+    // socket.emit("COMPETITION_STOPPED", room);
   }, room.competition.timeLimit);
 
   return { data: true };

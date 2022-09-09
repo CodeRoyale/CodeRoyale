@@ -1,18 +1,14 @@
-import { ROOM_ALERT_MSG } from "../../utils/constants";
-import { ControllerResponse, DataFromServer } from "../../types/types";
+import { ControllerResponse } from "@coderoyale/common";
+import { DataFromServer } from "../../types/types";
 import { getUser, updateUser } from "../userController";
-import {
-  LEFT_ROOM,
-  RCV_MSG,
-  ROOM_UPDATED,
-} from "../../socketActions/serverActions";
 import { getRoom } from "./getRoom";
 import { updateRoom } from "./updateRoom";
 
-export const leaveRoom = async (
-  {},
-  { socket, redis, currentUserId }: DataFromServer
-): Promise<ControllerResponse<boolean>> => {
+export const leaveRoom = async ({
+  socket,
+  redis,
+  currentUserId,
+}: DataFromServer): Promise<ControllerResponse<boolean>> => {
   let user = await getUser(currentUserId, redis!);
   if (!user) {
     return { error: "User who tried to join the room does not exist" };
@@ -40,12 +36,9 @@ export const leaveRoom = async (
   // await redis?.set(ROOM_PREFIX + user.currentRoom, JSON.stringify(room));
   await updateRoom(room, redis!);
 
-  socket.to(user.currentRoom!).emit(ROOM_UPDATED, {
-    type: LEFT_ROOM,
-    data: room,
-  });
-  socket.to(user.currentRoom!).emit(RCV_MSG, {
-    type: ROOM_ALERT_MSG,
+  socket.to(user.currentRoom!).emit("roomUpdated", room);
+  socket.to(user.currentRoom!).emit("receiveChatMessage", {
+    type: "ROOM_ALERT_MESSAGE",
     fromUserId: currentUserId,
     message: "has left the room",
   });

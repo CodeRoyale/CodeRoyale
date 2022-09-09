@@ -1,16 +1,4 @@
 import { DataFromServer } from "src/types/types";
-import {
-  CLOSE_ROOM,
-  CREATE_ROOM,
-  CREATE_TEAM,
-  DELETE_TEAM,
-  INVITE_TO_ROOM,
-  JOIN_ROOM,
-  JOIN_TEAM,
-  LEAVE_ROOM,
-  LEAVE_TEAM,
-  SEND_CHAT_MSG,
-} from "../socketActions/userActions";
 import { createRoom, inviteToRoom, joinRoom } from "./roomController/";
 import { chat } from "./roomController/chat";
 import { closeRoom } from "./roomController/closeRoom";
@@ -20,102 +8,113 @@ import { getRoom } from "./roomController/getRoom";
 import { joinTeam } from "./roomController/joinTeam";
 import { leaveRoom } from "./roomController/leaveRoom";
 import { leaveTeam } from "./roomController/leaveTeam";
-import { startCompetition } from "./roomController/startCompetition";
 import { deleteUser, getUser, updateUser } from "./userController";
-
-const genericActionCreater =
-  (
-    actionResponder: any,
-    dataFromServer: DataFromServer,
-    asynFunc: boolean = false,
-    failReply: string = "Some error occured!"
-  ) =>
-  (dataFromClient: any, callback: (data: any) => void) => {
-    // if user didnt pass anything
-    if (!dataFromClient) dataFromClient = {};
-
-    let data;
-    if (!asynFunc) {
-      data = actionResponder(dataFromClient, dataFromServer) || failReply;
-      console.log(data);
-      if (callback) callback(data);
-    } else {
-      actionResponder(dataFromClient, dataFromServer)
-        .then((tempData: any) => {
-          if (callback) callback(tempData);
-        })
-        .catch((err: any) => {
-          console.log(err);
-          if (callback) callback(err.message);
-        });
-    }
-  };
 
 export const handleUserEvents = (args: DataFromServer) => {
   const { io, socket, redis, currentUserId } = args;
 
-  socket.on(
-    CREATE_ROOM,
-    genericActionCreater(createRoom, { socket, currentUserId, redis }, true)
-  );
+  socket.on("createRoom", async (dataFromClient, callback) => {
+    const response = await createRoom(dataFromClient, {
+      socket,
+      redis,
+      currentUserId,
+    });
+    callback(response);
+  });
 
-  socket.on(
-    INVITE_TO_ROOM,
-    genericActionCreater(
-      inviteToRoom,
-      { socket, io, currentUserId, redis },
-      true
-    )
-  );
+  socket.on("inviteToRoom", async (dataFromClient, callback) => {
+    const response = await inviteToRoom(dataFromClient, {
+      socket,
+      io,
+      currentUserId,
+      redis,
+    });
+    callback(response);
+  });
 
-  socket.on(
-    JOIN_ROOM,
-    genericActionCreater(joinRoom, { socket, currentUserId, redis }, true)
-  );
+  socket.on("joinRoom", async (dataFromClient, callback) => {
+    const response = await joinRoom(dataFromClient, {
+      socket,
+      currentUserId,
+      redis,
+    });
+    callback(response);
+  });
 
-  socket.on(
-    CLOSE_ROOM,
-    genericActionCreater(closeRoom, { socket, currentUserId, redis }, true)
-  );
+  socket.on("closeRoom", async (dataFromClient, callback) => {
+    const response = await closeRoom(dataFromClient, {
+      socket,
+      currentUserId,
+      redis,
+    });
 
-  socket.on(
-    LEAVE_ROOM,
-    genericActionCreater(leaveRoom, { socket, currentUserId, redis }, true)
-  );
+    callback(response);
+  });
 
-  socket.on(
-    CREATE_TEAM,
-    genericActionCreater(createTeam, { socket, currentUserId, redis }, true)
-  );
+  socket.on("leaveRoom", async (callback) => {
+    const response = await leaveRoom({
+      socket,
+      currentUserId,
+      redis,
+    });
 
-  socket.on(
-    JOIN_TEAM,
-    genericActionCreater(joinTeam, { socket, currentUserId, redis }, true)
-  );
+    callback(response);
+  });
 
-  socket.on(
-    LEAVE_TEAM,
-    genericActionCreater(leaveTeam, { socket, currentUserId, redis }, true)
-  );
+  socket.on("createTeam", async (dataFromClient, callback) => {
+    const response = await createTeam(dataFromClient, {
+      socket,
+      currentUserId,
+      redis,
+    });
 
-  socket.on(
-    SEND_CHAT_MSG,
-    genericActionCreater(chat, { socket, currentUserId, redis }, true)
-  );
+    callback(response);
+  });
 
-  socket.on(
-    DELETE_TEAM,
-    genericActionCreater(deleteTeam, { socket, currentUserId, redis }, true)
-  );
+  socket.on("joinTeam", async (dataFromClient, callback) => {
+    const response = await joinTeam(dataFromClient, {
+      socket,
+      currentUserId,
+      redis,
+    });
 
-  socket.on(
-    "START_COMPETITION",
-    genericActionCreater(
-      startCompetition,
-      { socket, currentUserId, redis },
-      true
-    )
-  );
+    callback(response);
+  });
+
+  socket.on("leaveTeam", async (callback) => {
+    const response = await leaveTeam({ socket, currentUserId, redis });
+
+    callback(response);
+  });
+
+  socket.on("deleteTeam", async (dataFromClient, callback) => {
+    const response = await deleteTeam(dataFromClient, {
+      socket,
+      currentUserId,
+      redis,
+    });
+
+    callback(response);
+  });
+
+  socket.on("sendChatMessage", async (dataFromClient, callback) => {
+    const response = await chat(dataFromClient, {
+      socket,
+      currentUserId,
+      redis,
+    });
+
+    callback(response);
+  });
+
+  // socket.on(
+  //   "START_COMPETITION",
+  //   genericActionCreater(
+  //     startCompetition,
+  //     { socket, currentUserId, redis },
+  //     true
+  //   )
+  // );
 
   socket.on("disconnect", async () => {
     const user = await getUser(currentUserId, redis!);
@@ -132,7 +131,7 @@ export const handleUserEvents = (args: DataFromServer) => {
       // remove user from cache only if room they are currently part of has not started veto or the competition
       if (!room?.competition.veto.isOngoing && !room?.competition.isOngoing) {
         // make user leave the room they are part of
-        await leaveRoom({}, { socket, currentUserId, redis });
+        await leaveRoom({ socket, currentUserId, redis });
         // delete the user from cache
         const result = await deleteUser(currentUserId, redis!);
 

@@ -16,6 +16,7 @@ import { handleUserEvents } from "./controllers/socketController";
 import { instrument } from "@socket.io/admin-ui";
 import { addUser, getUser } from "./controllers/userController";
 import { getRoom } from "./controllers/roomController/getRoom";
+import { ClientToServerEvents, ServerToClientEvents } from "@coderoyale/common";
 
 const main = async () => {
   // create server using http
@@ -41,7 +42,7 @@ const main = async () => {
   app.use("/rooms", roomsRouter);
 
   // cors for socket.io
-  const io = new Server(server, {
+  const io = new Server<ClientToServerEvents, ServerToClientEvents>(server, {
     cors: {
       origin: [
         process.env.CORS_ORIGIN,
@@ -99,7 +100,7 @@ const main = async () => {
     const user = await getUser(currentUserId, redis);
     if (user?.currentRoom) {
       const room = await getRoom(user.currentRoom, redis);
-      socket.emit("get_room_after_connect", room);
+      socket.emit("getRoomAfterConnection", room!);
     }
     handleUserEvents({ socket, io, redis, currentUserId });
   });

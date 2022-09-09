@@ -1,12 +1,7 @@
-import { INVITED_TO_ROOM } from "../../socketActions/serverActions";
+import { InviteToRoomInput } from "@coderoyale/common";
 import { DataFromServer } from "../../types/types";
 import { getUser } from "../userController";
 import { getRoom } from "./getRoom";
-
-interface InviteToRoomInput {
-  invitedUserId: number;
-  invitedRoomId: string;
-}
 
 export const inviteToRoom = async (
   { invitedUserId, invitedRoomId }: InviteToRoomInput,
@@ -26,7 +21,7 @@ export const inviteToRoom = async (
   }
 
   // to individual socketid (private message)
-  io?.to(invitedUser.socketId).emit(INVITED_TO_ROOM, {
+  io?.to(invitedUser.socketId).emit("invitedToRoom", {
     by: currentUserId,
     to: invitedRoomId,
   });

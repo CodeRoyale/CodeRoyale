@@ -1,3 +1,37 @@
-import { Room } from "./types/types";
+import {
+  Room,
+  FieldError,
+  CreateRoomInput,
+  ZodValidationResponse,
+  ServerToClientEvents,
+  ClientToServerEvents,
+  CreateRoomInputSchema,
+  InviteToRoomInput,
+  ControllerResponse,
+  CloseRoomInput,
+  CreateTeamNameSchema,
+  CreateTeamNameType,
+  ChatMessageSchema,
+  ChatInterface,
+  ChatResponse,
+  ReceiveChatMessageInterface,
+} from "./types/types";
 
-export { Room };
+export {
+  Room,
+  FieldError,
+  CreateRoomInput,
+  ZodValidationResponse,
+  ServerToClientEvents,
+  ClientToServerEvents,
+  CreateRoomInputSchema,
+  InviteToRoomInput,
+  ControllerResponse,
+  CloseRoomInput,
+  CreateTeamNameSchema,
+  CreateTeamNameType,
+  ChatMessageSchema,
+  ChatInterface,
+  ChatResponse,
+  ReceiveChatMessageInterface,
+};

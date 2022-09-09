@@ -1,27 +1,11 @@
-import { ROOM_CHAT_MSG } from "../../utils/constants";
-import { RCV_MSG } from "../../socketActions/serverActions";
-import { DataFromServer, FieldError } from "../../types/types";
+import {
+  ChatInterface,
+  ChatMessageSchema,
+  ChatResponse,
+} from "@coderoyale/common";
+import { DataFromServer } from "../../types/types";
 import { getUser } from "../userController";
 import { getRoom } from "./getRoom";
-import { z } from "zod";
-
-const ChatMessageSchema = z
-  .string()
-  .trim()
-  .min(2, { message: "Must be 2 or more characters long" })
-  .max(350, { message: "Cannot exceed more than 350 characters" });
-
-type ChatMessageType = z.infer<typeof ChatMessageSchema>;
-
-interface ChatInterface {
-  message: ChatMessageType;
-  toTeam: boolean;
-}
-
-type ChatResponse = {
-  errors?: FieldError[] | null;
-  data?: boolean | null;
-};
 
 export const chat = async (
   { message, toTeam }: ChatInterface,
@@ -73,9 +57,9 @@ export const chat = async (
     rcvrs += `/${user.currentTeam}`;
   }
 
-  socket.to(rcvrs!).emit(RCV_MSG, {
+  socket.to(rcvrs!).emit("receiveChatMessage", {
     fromUserId: currentUserId,
-    type: ROOM_CHAT_MSG,
+    type: "ROOM_CHAT_MESSAGE",
     message,
     toTeam,
   });

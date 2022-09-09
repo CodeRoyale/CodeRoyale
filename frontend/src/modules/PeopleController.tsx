@@ -14,7 +14,7 @@ export const PeopleController: React.FC<{}> = () => {
   const { conn } = useContext(WebSocketContext);
   const addRoomInvite = useRoomInvites((state) => state.addRoomInvite);
 
-  const handleInvitedToRoom = (res: any) => {
+  const handleInvitedToRoom = (res: { by: number; to: string }) => {
     addRoomInvite({
       sender: res.by,
       receiver: meData?.me?.id!,
@@ -23,10 +23,10 @@ export const PeopleController: React.FC<{}> = () => {
   };
 
   useEffect(() => {
-    conn?.on("INVITED_TO_ROOM", handleInvitedToRoom);
+    conn?.on("invitedToRoom", handleInvitedToRoom);
 
     return () => {
-      conn?.off("ROOM_UPDATED", handleInvitedToRoom);
+      conn?.off("invitedToRoom", handleInvitedToRoom);
     };
   }, []);
 

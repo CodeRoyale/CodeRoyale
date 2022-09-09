@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
-import { Room } from "@coderoyale/common";
+import { ClientToServerEvents, ServerToClientEvents } from "@coderoyale/common";
 import { useRoom } from "../../global-stores";
 
-export type ISocket = Socket | null;
+export type ISocket = Socket<ServerToClientEvents, ClientToServerEvents> | null;
 
 // initial value of socket in context will be null
 export const WebSocketContext = React.createContext<{
@@ -44,8 +44,8 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({
 
       // get the room that user is part of
       socket
-        .off("get_room_after_connect")
-        .on("get_room_after_connect", (room: Room) => {
+        .off("getRoomAfterConnection")
+        .on("getRoomAfterConnection", (room) => {
           console.log("room from lobby: ", room);
           setRoom(room);
           // push to veto page since veto is going on

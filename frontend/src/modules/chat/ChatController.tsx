@@ -1,3 +1,4 @@
+import { ReceiveChatMessageInterface } from "@coderoyale/common";
 import { Form, Formik } from "formik";
 import React, { useContext, useEffect, useRef } from "react";
 import { ChatInput } from "../../components/chat/ChatInput";
@@ -18,15 +19,15 @@ export const ChatController: React.FC<{}> = () => {
   const addChat = useChat((state) => state.addChat);
   const bottomRef = useRef<null | HTMLDivElement>(null);
 
-  const handleRcvChatMessage = (res: any) => {
+  const handleRcvChatMessage = (res: ReceiveChatMessageInterface) => {
     console.log(res);
-    if (res.type === "ROOM_ALERT_MSG") {
+    if (res.type === "ROOM_ALERT_MESSAGE") {
       addChat({
         fromUserId: res.fromUserId,
         type: "RoomAlert",
         message: res.message,
       });
-    } else if (res.type === "ROOM_CHAT_MSG")
+    } else if (res.type === "ROOM_CHAT_MESSAGE")
       addChat({
         fromUserId: res.fromUserId,
         type: res.toTeam ? "ToTeam" : "Normal",
@@ -35,10 +36,10 @@ export const ChatController: React.FC<{}> = () => {
   };
 
   useEffect(() => {
-    conn?.on("RCV_MSG", handleRcvChatMessage);
+    conn?.on("receiveChatMessage", handleRcvChatMessage);
 
     return () => {
-      conn?.off("RCV_MSG", handleRcvChatMessage);
+      conn?.off("receiveChatMessage", handleRcvChatMessage);
     };
   }, []);
 

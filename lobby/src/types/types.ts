@@ -1,3 +1,4 @@
+import { ClientToServerEvents, ServerToClientEvents } from "@coderoyale/common";
 import Redis from "ioredis";
 import { Server, Socket } from "socket.io";
 
@@ -27,8 +28,8 @@ export type SocketUser = {
 };
 
 export type DataFromServer = {
-  socket: Socket;
-  io?: Server;
+  socket: Socket<ClientToServerEvents, ServerToClientEvents>;
+  io?: Server<ClientToServerEvents, ServerToClientEvents>;
   currentUserId: number;
   redis?: Redis;
 };
@@ -42,6 +43,3 @@ export type FieldError = {
   field: string;
   message: string;
 };
-
-// typesafe socket.io
-export interface ServerToClientEvents {}

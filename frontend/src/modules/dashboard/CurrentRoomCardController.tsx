@@ -1,5 +1,6 @@
-import { useRouter } from "next/router";
 import React, { useContext, useEffect } from "react";
+import { Room } from "@coderoyale/common";
+import { useRouter } from "next/router";
 import { CurrentRoomCard } from "../../components/CurrentRoomCard";
 import { useRoom } from "../../global-stores";
 import { leaveRoom } from "../../service/roomSocket";
@@ -11,15 +12,15 @@ export const CurrentRoomCardController: React.FC<{}> = () => {
   const room = useRoom((state) => state.room);
   const setRoom = useRoom((state) => state.setRoom);
 
-  const handleRoomUpdated = (res: any) => {
-    setRoom(res.data);
+  const handleRoomUpdated = (res: Room) => {
+    setRoom(res);
   };
 
   useEffect(() => {
-    conn?.on("ROOM_UPDATED", handleRoomUpdated);
+    conn?.on("roomUpdated", handleRoomUpdated);
 
     return () => {
-      conn?.off("ROOM_UPDATED", handleRoomUpdated);
+      conn?.off("roomUpdated", handleRoomUpdated);
     };
   }, []);
 

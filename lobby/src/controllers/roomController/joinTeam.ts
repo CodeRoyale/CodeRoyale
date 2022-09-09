@@ -1,11 +1,5 @@
-import {
-  JOINED_TEAM,
-  RCV_MSG,
-  ROOM_UPDATED,
-} from "../../socketActions/serverActions";
-import { ROOM_ALERT_MSG } from "../../utils/constants";
-import { ControllerResponse, DataFromServer } from "../../types/types";
 import { Room } from "@coderoyale/common";
+import { ControllerResponse, DataFromServer } from "../../types/types";
 import { updateUser } from "../userController";
 import { getUser } from "../userController/getUser";
 import { getRoom } from "./getRoom";
@@ -56,15 +50,12 @@ export const joinTeam = async (
   await updateUser(user, redis!);
 
   socket.join(`${user.currentRoom}/${teamName}`);
-  socket.to(user.currentRoom!).emit(ROOM_UPDATED, {
-    type: JOINED_TEAM,
-    data: room,
-  });
-  socket.to(user.currentRoom!).emit(RCV_MSG, {
-    type: ROOM_ALERT_MSG,
+  socket.to(user.currentRoom!).emit("roomUpdated", room);
+  socket.to(user.currentRoom!).emit("receiveChatMessage", {
+    type: "ROOM_ALERT_MESSAGE",
     fromUserId: currentUserId,
     message: `has joined team ${teamName}`,
   });
 
-  return { data: room! };
+  return { data: room };
 };

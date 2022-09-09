@@ -1,35 +1,19 @@
 import {
-  RCV_MSG,
-  ROOM_UPDATED,
-  TEAM_CREATED,
-} from "../../socketActions/serverActions";
-import { DataFromServer, FieldError } from "../../types/types";
-import { Room } from "@coderoyale/common";
-import { ROOM_ALERT_MSG } from "../../utils/constants";
+  CreateTeamNameSchema,
+  CreateTeamNameType,
+  ZodValidationResponse,
+} from "@coderoyale/common";
+import { DataFromServer } from "../../types/types";
 import { getUser } from "../userController";
-import { z } from "zod";
 import { getRoom } from "./getRoom";
 import { updateRoom } from "./updateRoom";
 
-const TeamNameSchema = z
-  .string()
-  .trim()
-  .min(2, { message: "Must be 2 or more characters long" })
-  .max(20, { message: "Cannot be more than 20 characters" });
-
-type TeamNameType = z.infer<typeof TeamNameSchema>;
-
-type CreateTeamResponse = {
-  errors?: FieldError[] | null;
-  room?: Room | null;
-};
-
 export const createTeam = async (
-  teamName: TeamNameType,
+  teamName: CreateTeamNameType,
   { socket, redis, currentUserId }: DataFromServer
-): Promise<CreateTeamResponse> => {
+): Promise<ZodValidationResponse> => {
   // check input from client
-  const checkInputResult = TeamNameSchema.safeParse(teamName);
+  const checkInputResult = CreateTeamNameSchema.safeParse(teamName);
   if (!checkInputResult.success) {
     // TODO: need to find a better way
     return {
@@ -99,12 +83,9 @@ export const createTeam = async (
   room.teams[teamName] = [];
   await updateRoom(room, redis!);
 
-  socket.to(user.currentRoom).emit(ROOM_UPDATED, {
-    type: TEAM_CREATED,
-    data: room,
-  });
-  socket.to(user.currentRoom!).emit(RCV_MSG, {
-    type: ROOM_ALERT_MSG,
+  socket.to(user.currentRoom).emit("roomUpdated", room);
+  socket.to(user.currentRoom!).emit("receiveChatMessage", {
+    type: "ROOM_ALERT_MESSAGE",
     fromUserId: currentUserId,
     message: `has created team ${teamName}`,
   });

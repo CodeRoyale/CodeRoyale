@@ -1,18 +1,11 @@
-import { CLOSED_ROOM } from "../../socketActions/serverActions";
 import { ControllerResponse, DataFromServer } from "../../types/types";
-import { Room } from "@coderoyale/common";
+import { CloseRoomInput, Room } from "@coderoyale/common";
 import { ROOM_PREFIX } from "../../utils/constants";
-import { ROOM_UPDATED } from "../../socketActions/serverActions";
 import { getUser, updateUser } from "../userController";
 import api from "../../utils/api";
 
-interface CloseRoomInterface {
-  roomId: string;
-  forceCloseRoom: boolean;
-}
-
 export const closeRoom = async (
-  { roomId, forceCloseRoom }: CloseRoomInterface,
+  { roomId, forceCloseRoom }: CloseRoomInput,
   { socket, redis, currentUserId }: DataFromServer
 ): Promise<ControllerResponse<boolean>> => {
   const roomResult = await redis?.get(ROOM_PREFIX + roomId);
@@ -59,11 +52,7 @@ export const closeRoom = async (
 
   await redis?.del(ROOM_PREFIX + roomId);
 
-  socket.to(roomId).emit(ROOM_UPDATED, {
-    type: CLOSED_ROOM,
-    data: true,
-  });
-  socket.emit(CLOSED_ROOM);
+  socket.to(roomId).emit("roomClosed");
 
   // updating users in cache
   allMemberIds.forEach(async (userId) => {

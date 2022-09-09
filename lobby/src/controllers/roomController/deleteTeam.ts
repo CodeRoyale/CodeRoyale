@@ -1,6 +1,3 @@
-import { RCV_MSG, ROOM_UPDATED } from "../../socketActions/serverActions";
-import { DELETE_TEAM } from "../../socketActions/userActions";
-import { ROOM_ALERT_MSG } from "../../utils/constants";
 import { ControllerResponse, DataFromServer } from "../../types/types";
 import { Room } from "@coderoyale/common";
 import { getUser, updateUser } from "../userController";
@@ -51,12 +48,9 @@ export const deleteTeam = async (
 
   await updateRoom(room, redis!);
 
-  socket.to(user.currentRoom!).emit(ROOM_UPDATED, {
-    type: DELETE_TEAM,
-    data: room,
-  });
-  socket.to(user.currentRoom!).emit(RCV_MSG, {
-    type: ROOM_ALERT_MSG,
+  socket.to(user.currentRoom!).emit("roomUpdated", room);
+  socket.to(user.currentRoom!).emit("receiveChatMessage", {
+    type: "ROOM_ALERT_MESSAGE",
     fromUserId: currentUserId,
     message: `has deleted team ${teamName}`,
   });

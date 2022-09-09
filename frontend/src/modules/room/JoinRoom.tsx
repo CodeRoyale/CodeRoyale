@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import { Room } from "@coderoyale/common";
 import { useRouter } from "next/router";
 import { useChat, useRoom } from "../../global-stores";
 import { joinRoom } from "../../service/roomSocket";
@@ -43,26 +44,41 @@ export const JoinRoom: React.FC<{ children: React.ReactNode }> = ({
     joinRoomFunction();
   }, []);
 
-  const handleRoomUpdated = (res: any) => {
-    if (res.type === "CLOSED_ROOM") {
-      setRoom(null);
-      router.push("/dashboard");
-    } else {
-      if (res.type === "JOINED_ROOM") {
-        // setting chat identities for the users in room
-        // generating a random number from 1 to 10
-        const randomNumber = Math.floor(Math.random() * 10) + 1;
-        addUserChatIdentityColor(res.joineeUserId, chatColors[randomNumber]);
-      }
-      setRoom(res.data);
-    }
+  const handleRoomUpdated = (room: Room) => {
+    setRoom(room);
+  };
+
+  const handleUserJoinedRoom = (res: { joineeUserId: number }) => {
+    const randomNumber = Math.floor(Math.random() * 10) + 1;
+    addUserChatIdentityColor(res.joineeUserId, chatColors[randomNumber]);
+  };
+
+  const handleRoomClosed = () => {
+    setRoom(null);
+    router.push("/dashboard");
   };
 
   useEffect(() => {
-    conn?.on("ROOM_UPDATED", handleRoomUpdated);
+    conn?.on("roomUpdated", handleRoomUpdated);
 
     return () => {
-      conn?.off("ROOM_UPDATED", handleRoomUpdated);
+      conn?.off("roomUpdated", handleRoomUpdated);
+    };
+  }, []);
+
+  useEffect(() => {
+    conn?.on("userJoinedRoom", handleUserJoinedRoom);
+
+    return () => {
+      conn?.off("userJoinedRoom", handleUserJoinedRoom);
+    };
+  }, []);
+
+  useEffect(() => {
+    conn?.on("roomClosed", handleRoomClosed);
+
+    return () => {
+      conn?.off("roomClosed", handleRoomClosed);
     };
   }, []);
 

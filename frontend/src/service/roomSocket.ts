@@ -21,7 +21,7 @@ export const createRoom = (
       reject(NO_CONNECTION);
     } else {
       socket.emit(
-        "CREATE_ROOM",
+        "createRoom",
         {
           config: {
             title: data.title,
@@ -40,7 +40,7 @@ export const createRoom = (
             timeLimit: data.vetoTimeLimit,
           },
         },
-        (res: any) => {
+        (res) => {
           if (res.errors) {
             reject(res);
           } else {
@@ -57,7 +57,7 @@ export const joinRoom = (socket: ISocket, roomId: string) => {
     if (!socket) {
       reject(NO_CONNECTION);
     } else {
-      socket.emit("JOIN_ROOM", roomId, (res: any) => {
+      socket.emit("joinRoom", roomId, (res) => {
         console.log("joinRoom: ", res);
         if (res.error) {
           reject(res);
@@ -80,9 +80,9 @@ export const inviteToRoom = (
     if (!socket) {
       reject(NO_CONNECTION);
     } else {
-      socket.emit("INVITE_TO_ROOM", input, (res: any) => {
+      socket.emit("inviteToRoom", input, (res) => {
         console.log("inviteToRoom: ", res);
-        if (res.error) {
+        if (res) {
           reject(res);
         } else {
           resolve(res);
@@ -97,7 +97,7 @@ export const createTeam = (socket: ISocket, teamName: string) => {
     if (!socket) {
       reject(NO_CONNECTION);
     } else {
-      socket.emit("CREATE_TEAM", teamName, (res: any) => {
+      socket.emit("createTeam", teamName, (res) => {
         console.log("createTeam: ", res);
         if (res.errors) {
           reject(res);
@@ -114,7 +114,7 @@ export const joinTeam = (socket: ISocket, teamName: string) => {
     if (!socket) {
       reject(NO_CONNECTION);
     } else {
-      socket.emit("JOIN_TEAM", teamName, (res: any) => {
+      socket.emit("joinTeam", teamName, (res) => {
         console.log("joinTeam: ", res);
         if (res.error) {
           reject(res);
@@ -131,7 +131,7 @@ export const leaveTeam = (socket: ISocket) => {
     if (!socket) {
       reject(NO_CONNECTION);
     } else {
-      socket.emit("LEAVE_TEAM", {}, (res: any) => {
+      socket.emit("leaveTeam", (res) => {
         console.log("leaveTeam: ", res);
         if (res.error) {
           reject(res);
@@ -148,7 +148,7 @@ export const deleteTeam = (socket: ISocket, teamName: string) => {
     if (!socket) {
       reject(NO_CONNECTION);
     } else {
-      socket.emit("DELETE_TEAM", teamName, (res: any) => {
+      socket.emit("deleteTeam", teamName, (res) => {
         console.log("deleteTeam: ", res);
         if (res.error) {
           reject(res);
@@ -165,7 +165,7 @@ export const leaveRoom = (socket: ISocket) => {
     if (!socket) {
       reject(NO_CONNECTION);
     } else {
-      socket.emit("LEAVE_ROOM", {}, (res: any) => {
+      socket.emit("leaveRoom", (res) => {
         console.log("leaveRoom: ", res);
         if (res.error) {
           reject(res);
@@ -185,9 +185,9 @@ export const sendChatMessage = (
     if (!socket) {
       reject(NO_CONNECTION);
     } else {
-      socket.emit("SEND_CHAT_MSG", { message, toTeam }, (res: any) => {
+      socket.emit("sendChatMessage", { message, toTeam }, (res) => {
         console.log("sendChatMessage: ", res);
-        if (res.error) {
+        if (res.errors) {
           reject(res);
         } else {
           resolve(res);
@@ -205,7 +205,7 @@ export const closeRoom = (
     if (!socket) {
       reject(NO_CONNECTION);
     } else {
-      socket.emit("CLOSE_ROOM", { roomId, forceCloseRoom }, (res: any) => {
+      socket.emit("closeRoom", { roomId, forceCloseRoom }, (res) => {
         console.log("closeRoom: ", res);
         if (res.error) {
           reject(res);
