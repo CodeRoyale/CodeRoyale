@@ -27,8 +27,10 @@ export type SocketUser = {
   hasActiveConnection: boolean;
 };
 
+export type ISocket = Socket<ClientToServerEvents, ServerToClientEvents>;
+
 export type DataFromServer = {
-  socket: Socket<ClientToServerEvents, ServerToClientEvents>;
+  socket: ISocket;
   io?: Server<ClientToServerEvents, ServerToClientEvents>;
   currentUserId: number;
   redis?: Redis;

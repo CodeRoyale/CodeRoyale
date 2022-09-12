@@ -1,13 +1,13 @@
 import Redis from "ioredis";
-import { Socket } from "socket.io";
 import { Room } from "@coderoyale/common";
 import { getRoomTimer } from "./getRoomTimer";
 import { updateRoom } from "./updateRoom";
+import { ISocket } from "../../types/types";
 
 export const startVeto = (
   questionIds: number[],
   room: Room,
-  socket: Socket,
+  socket: ISocket,
   redis: Redis
 ) => {
   return new Promise(async (resolve, reject) => {
@@ -32,8 +32,8 @@ export const startVeto = (
 
     await updateRoom(room, redis!);
 
-    socket.to(roomId).emit("VETO_START", questionIds);
-    socket.emit("VETO_START", questionIds);
+    socket.to(roomId).emit("vetoStarted", room);
+    // socket.emit("VETO_START", questionIds);
 
     roomTimer!.vetoTimer = setTimeout(async () => {
       // calculate veto results
@@ -56,8 +56,8 @@ export const startVeto = (
 
       await updateRoom(room, redis!);
 
-      socket.to(roomId).emit("VETO_STOP", "return the room here");
-      socket.emit("VETO_STOP", "return the room here");
+      socket.to(roomId).emit("vetoStopped", room);
+      // socket.emit("VETO_STOP", "return the room here");
 
       resolve(room.competition.questionIds);
     }, room.competition.veto.timeLimit);

@@ -48,8 +48,10 @@ export const startCompetition = async ({
     return { error: "Room doesn't meet the requirements." };
   }
 
-  console.log(`Competition starting for room: ${room.config.id}`);
-  const roomTimer = await getRoomTimer(room.config.id, redis!);
+  const roomId = room.config.id;
+
+  console.log(`Competition starting for room: ${roomId}`);
+  const roomTimer = await getRoomTimer(roomId, redis!);
 
   // get random veto questions ids from api
   const vetoQuestionIds = await api.getRandomQuestionIds(
@@ -71,16 +73,14 @@ export const startCompetition = async ({
   });
   await updateRoom(room, redis!);
 
-  // TODO
-  // socket.to(room.config.id).emit("COMPETITION_STARTED", room);
+  socket.to(roomId).emit("competitionStarted", room);
   // socket.emit("COMPETITION_STARTED", room);
 
   roomTimer!.competitionTimer = setTimeout(async () => {
     room.competition.isOngoing = false;
     room.competition.contestEndedAt = Date.now();
     await updateRoom(room, redis!);
-    // TODO
-    // socket.to(room.config.id).emit("COMPETITION_STOPPED", room);
+    socket.to(roomId).emit("competitionStopped");
     // socket.emit("COMPETITION_STOPPED", room);
   }, room.competition.timeLimit);
 

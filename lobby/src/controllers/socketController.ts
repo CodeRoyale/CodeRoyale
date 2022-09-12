@@ -8,6 +8,7 @@ import { getRoom } from "./roomController/getRoom";
 import { joinTeam } from "./roomController/joinTeam";
 import { leaveRoom } from "./roomController/leaveRoom";
 import { leaveTeam } from "./roomController/leaveTeam";
+import { startCompetition } from "./roomController/startCompetition";
 import { deleteUser, getUser, updateUser } from "./userController";
 
 export const handleUserEvents = (args: DataFromServer) => {
@@ -107,14 +108,11 @@ export const handleUserEvents = (args: DataFromServer) => {
     callback(response);
   });
 
-  // socket.on(
-  //   "START_COMPETITION",
-  //   genericActionCreater(
-  //     startCompetition,
-  //     { socket, currentUserId, redis },
-  //     true
-  //   )
-  // );
+  socket.on("startCompetition", async (callback) => {
+    const response = await startCompetition({ socket, currentUserId, redis });
+
+    callback(response);
+  });
 
   socket.on("disconnect", async () => {
     const user = await getUser(currentUserId, redis!);

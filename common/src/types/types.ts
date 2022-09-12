@@ -128,6 +128,10 @@ export interface ServerToClientEvents {
   roomUpdated: (room: Room) => void;
   roomClosed: () => void;
   userJoinedRoom: (data: { joineeUserId: number }) => void;
+  competitionStarted: (room: Room) => void;
+  competitionStopped: () => void;
+  vetoStarted: (room: Room) => void;
+  vetoStopped: (room: Room) => void;
 }
 
 export interface ClientToServerEvents {
@@ -164,5 +168,8 @@ export interface ClientToServerEvents {
   sendChatMessage: (
     chatInput: ChatInterface,
     callback: (e: ChatResponse) => void
+  ) => void;
+  startCompetition: (
+    callback: (e: ControllerResponse<boolean>) => void
   ) => void;
 }
