@@ -30,7 +30,9 @@ export type FieldError = {
 export type Mutation = {
   __typename?: "Mutation";
   connect: Scalars["Boolean"];
+  createQuestion: Question;
   createRoom: Room;
+  createTestcase: Scalars["Boolean"];
   deleteRoom: Scalars["Boolean"];
   login: UserResponse;
   logout: Scalars["Boolean"];
@@ -43,8 +45,20 @@ export type MutationConnectArgs = {
   wantsToFollow: Scalars["Boolean"];
 };
 
+export type MutationCreateQuestionArgs = {
+  description: Scalars["String"];
+  problemCode: Scalars["String"];
+  title: Scalars["String"];
+};
+
 export type MutationCreateRoomArgs = {
   input: RoomInput;
+};
+
+export type MutationCreateTestcaseArgs = {
+  input: Scalars["String"];
+  output: Scalars["String"];
+  questionId: Scalars["Float"];
 };
 
 export type MutationDeleteRoomArgs = {
@@ -71,19 +85,34 @@ export type PaginatedRooms = {
 
 export type Query = {
   __typename?: "Query";
+  getRandomQuestionIds: Array<Scalars["Int"]>;
   hello: Scalars["String"];
   me?: Maybe<User>;
   people: Array<User>;
+  questions: Array<Question>;
   rooms: PaginatedRooms;
+  testcases: Array<Testcase>;
   user: UserResponse;
   userFromId: UserResponse;
   users: Array<User>;
+};
+
+export type QueryGetRandomQuestionIdsArgs = {
+  noOfIds: Scalars["Int"];
+};
+
+export type QueryQuestionsArgs = {
+  questionIds: Array<Scalars["Int"]>;
 };
 
 export type QueryRoomsArgs = {
   cursor?: InputMaybe<Scalars["String"]>;
   isPrivate: Scalars["Boolean"];
   limit: Scalars["Int"];
+};
+
+export type QueryTestcasesArgs = {
+  questionId: Scalars["Float"];
 };
 
 export type QueryUserArgs = {
@@ -96,6 +125,18 @@ export type QueryUserFromIdArgs = {
 
 export type QueryUsersArgs = {
   userIds: Array<Scalars["Int"]>;
+};
+
+export type Question = {
+  __typename?: "Question";
+  createdAt: Scalars["String"];
+  description: Scalars["String"];
+  id: Scalars["Float"];
+  numberOfTestcases: Scalars["Float"];
+  problemCode: Scalars["String"];
+  testcases: Testcase;
+  title: Scalars["String"];
+  updatedAt: Scalars["String"];
 };
 
 export type RegisterInput = {
@@ -123,6 +164,16 @@ export type RoomInput = {
   maxMembers: Scalars["Float"];
   private: Scalars["Boolean"];
   title: Scalars["String"];
+};
+
+export type Testcase = {
+  __typename?: "Testcase";
+  createdAt: Scalars["String"];
+  id: Scalars["Float"];
+  input: Scalars["String"];
+  output: Scalars["String"];
+  questionId: Scalars["Float"];
+  updatedAt: Scalars["String"];
 };
 
 export type UpdateUserInput = {
@@ -329,6 +380,21 @@ export type PeopleQuery = {
   }>;
 };
 
+export type QuestionsQueryVariables = Exact<{
+  questionIds: Array<Scalars["Int"]> | Scalars["Int"];
+}>;
+
+export type QuestionsQuery = {
+  __typename?: "Query";
+  questions: Array<{
+    __typename?: "Question";
+    id: number;
+    title: string;
+    description: string;
+    problemCode: string;
+  }>;
+};
+
 export type RoomsQueryVariables = Exact<{
   isPrivate: Scalars["Boolean"];
   cursor?: InputMaybe<Scalars["String"]>;
@@ -419,7 +485,13 @@ export type UsersQuery = {
     __typename?: "User";
     id: number;
     username: string;
+    email: string;
     profilePicture: string;
+    name: string;
+    bio?: string | null;
+    connectionStatus?: boolean | null;
+    following: number;
+    followers: number;
   }>;
 };
 
@@ -794,6 +866,62 @@ export type PeopleQueryResult = Apollo.QueryResult<
   PeopleQuery,
   PeopleQueryVariables
 >;
+export const QuestionsDocument = gql`
+  query Questions($questionIds: [Int!]!) {
+    questions(questionIds: $questionIds) {
+      id
+      title
+      description
+      problemCode
+    }
+  }
+`;
+
+/**
+ * __useQuestionsQuery__
+ *
+ * To run a query within a React component, call `useQuestionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQuestionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQuestionsQuery({
+ *   variables: {
+ *      questionIds: // value for 'questionIds'
+ *   },
+ * });
+ */
+export function useQuestionsQuery(
+  baseOptions: Apollo.QueryHookOptions<QuestionsQuery, QuestionsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<QuestionsQuery, QuestionsQueryVariables>(
+    QuestionsDocument,
+    options
+  );
+}
+export function useQuestionsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    QuestionsQuery,
+    QuestionsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<QuestionsQuery, QuestionsQueryVariables>(
+    QuestionsDocument,
+    options
+  );
+}
+export type QuestionsQueryHookResult = ReturnType<typeof useQuestionsQuery>;
+export type QuestionsLazyQueryHookResult = ReturnType<
+  typeof useQuestionsLazyQuery
+>;
+export type QuestionsQueryResult = Apollo.QueryResult<
+  QuestionsQuery,
+  QuestionsQueryVariables
+>;
 export const RoomsDocument = gql`
   query Rooms($isPrivate: Boolean!, $cursor: String, $limit: Int!) {
     rooms(isPrivate: $isPrivate, limit: $limit, cursor: $cursor) {
@@ -951,11 +1079,10 @@ export type UserFromIdQueryResult = Apollo.QueryResult<
 export const UsersDocument = gql`
   query Users($userIds: [Int!]!) {
     users(userIds: $userIds) {
-      id
-      username
-      profilePicture
+      ...RegularUser
     }
   }
+  ${RegularUserFragmentDoc}
 `;
 
 /**

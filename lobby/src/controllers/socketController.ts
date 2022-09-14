@@ -109,7 +109,12 @@ export const handleUserEvents = (args: DataFromServer) => {
   });
 
   socket.on("startCompetition", async (callback) => {
-    const response = await startCompetition({ socket, currentUserId, redis });
+    const response = await startCompetition({
+      socket,
+      currentUserId,
+      redis,
+      io,
+    });
 
     callback(response);
   });

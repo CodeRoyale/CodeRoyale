@@ -32,6 +32,7 @@ export const startCompetition = async ({
   redis,
   currentUserId,
   socket,
+  io,
 }: DataFromServer): Promise<ControllerResponse<boolean>> => {
   const user = await getUser(currentUserId, redis!);
   const room = await getRoom(user?.currentRoom!, redis!);
@@ -54,12 +55,14 @@ export const startCompetition = async ({
   const roomTimer = await getRoomTimer(roomId, redis!);
 
   // get random veto questions ids from api
-  const vetoQuestionIds = await api.getRandomQuestionIds(
+  const getRandomQuestionIdsRes = await api.getRandomQuestionIds(
     room.competition.veto.questionCount
   );
 
   try {
-    await startVeto(vetoQuestionIds, room, socket, redis!);
+    // getting the array of questionIds
+    const vetoQuestionIds = getRandomQuestionIdsRes.getRandomQuestionIds;
+    await startVeto(vetoQuestionIds, room, io!, redis!);
   } catch (error) {
     console.log(error.message);
     return { error: error.message };

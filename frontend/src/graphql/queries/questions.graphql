@@ -1,0 +1,8 @@
+query Questions($questionIds: [Int!]!) {
+  questions(questionIds: $questionIds) {
+    id
+    title
+    description
+    problemCode
+  }
+}

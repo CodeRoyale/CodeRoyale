@@ -5,7 +5,11 @@ import { RoomCardFooter } from "../../components/roomCard/RoomCardFooter";
 import { RoomCardHeader } from "../../components/roomCard/RoomCardHeader";
 import { useMeQuery, useUsersQuery } from "../../generated/graphql";
 import { useChat, useRoom } from "../../global-stores";
-import { closeRoom, leaveRoom } from "../../service/roomSocket";
+import {
+  closeRoom,
+  leaveRoom,
+  startCompetition,
+} from "../../service/roomSocket";
 import { WebSocketContext } from "../ws/WebSocketProvider";
 import { RoomUserAvatarController } from "./RoomUserAvatarController";
 import { CreateTeamController } from "./CreateTeamController";
@@ -129,6 +133,9 @@ export const RoomCardController: React.FC<{}> = () => {
               emptyUserChatIdentityColors();
               router.push("/dashboard");
             }
+          }}
+          startCompetitionOnClick={async () => {
+            await startCompetition(conn);
           }}
         />
       </div>

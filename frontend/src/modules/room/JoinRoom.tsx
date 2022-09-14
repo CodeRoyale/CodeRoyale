@@ -53,6 +53,11 @@ export const JoinRoom: React.FC<{ children: React.ReactNode }> = ({
     addUserChatIdentityColor(res.joineeUserId, chatColors[randomNumber]);
   };
 
+  const handleVetoStarted = (room: Room) => {
+    setRoom(room);
+    router.push(`/veto/${room.config.id}`);
+  };
+
   const handleRoomClosed = () => {
     setRoom(null);
     router.push("/dashboard");
@@ -71,6 +76,14 @@ export const JoinRoom: React.FC<{ children: React.ReactNode }> = ({
 
     return () => {
       conn?.off("userJoinedRoom", handleUserJoinedRoom);
+    };
+  }, []);
+
+  useEffect(() => {
+    conn?.on("vetoStarted", handleVetoStarted);
+
+    return () => {
+      conn?.off("vetoStarted", handleVetoStarted);
     };
   }, []);
 

@@ -6,12 +6,14 @@ interface RoomCardFooterProps {
   admin: boolean;
   closeRoomOnClick: () => void;
   leaveRoomOnClick: () => void;
+  startCompetitionOnClick: () => void;
 }
 
 export const RoomCardFooter: React.FC<RoomCardFooterProps> = ({
   admin,
   closeRoomOnClick,
   leaveRoomOnClick,
+  startCompetitionOnClick,
 }) => {
   const justifyContent = admin ? "justify-between" : "justify-end";
 
@@ -39,7 +41,11 @@ export const RoomCardFooter: React.FC<RoomCardFooterProps> = ({
           Leave
         </Button>
         {admin ? (
-          <Button buttonClass="dark" size="normal">
+          <Button
+            buttonClass="dark"
+            size="normal"
+            onClick={startCompetitionOnClick}
+          >
             Start Competition
           </Button>
         ) : null}

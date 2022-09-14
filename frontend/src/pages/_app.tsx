@@ -6,6 +6,7 @@ import Router from "next/router";
 import { WebSocketProvider } from "../modules/ws/WebSocketProvider";
 import "nprogress/nprogress.css";
 import "../styles/globals.css";
+import "../styles/markdown.css";
 
 ReactModal.setAppElement("#__next");
 

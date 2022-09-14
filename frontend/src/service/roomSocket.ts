@@ -1,3 +1,4 @@
+import { ControllerResponse } from "@coderoyale/common";
 import { ISocket } from "../modules/ws/WebSocketProvider";
 import { NO_CONNECTION } from "../utils/constants";
 
@@ -188,6 +189,25 @@ export const sendChatMessage = (
       socket.emit("sendChatMessage", { message, toTeam }, (res) => {
         console.log("sendChatMessage: ", res);
         if (res.errors) {
+          reject(res);
+        } else {
+          resolve(res);
+        }
+      });
+    }
+  });
+};
+
+export const startCompetition = (
+  socket: ISocket
+): Promise<ControllerResponse<boolean>> => {
+  return new Promise((resolve, reject) => {
+    if (!socket) {
+      reject(NO_CONNECTION);
+    } else {
+      socket.emit("startCompetition", (res) => {
+        console.log("startCompetition: ", res);
+        if (res.error) {
           reject(res);
         } else {
           resolve(res);

@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import useCollapse from "react-collapsed";
 import ReactMarkdown from "react-markdown";
-// import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-// import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { HalfArrowDown, HalfArrowUp } from "../icons";
 import { Check } from "../icons/Check";
-import "../styles/markdown.css";
 
 interface VetoQuestionCardProps {
   title: string;
   description: string;
+  marginTop?: string;
 }
 
 export const VetoQuestionCard: React.FC<VetoQuestionCardProps> = ({
   title,
   description,
+  marginTop,
 }) => {
   const [isExpanded, setExpanded] = useState(false);
   const { getCollapseProps, getToggleProps } = useCollapse({
@@ -22,7 +23,7 @@ export const VetoQuestionCard: React.FC<VetoQuestionCardProps> = ({
   });
 
   return (
-    <div className="bg-primary-800 rounded-lg">
+    <div className={`bg-primary-800 rounded-lg ${marginTop}`}>
       <div className="flex justify-between items-center bg-primary-700 text-lg font-semibold text-primary-100 rounded-t-lg px-4 py-3">
         {title}
         <span className="flex items-center font-normal text-sm cursor-pointer">
@@ -40,15 +41,14 @@ export const VetoQuestionCard: React.FC<VetoQuestionCardProps> = ({
             code({ node, inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || "");
               return !inline && match ? (
-                // !imp need fixing
-                // <SyntaxHighlighter
-                //   children={String(children).replace(/\n$/, "")}
-                //   style={vscDarkPlus}
-                //   language={match[1]}
-                //   PreTag="div"
-                //   {...props}
-                // />
-                <></>
+                <SyntaxHighlighter
+                  children={String(children).replace(/\n$/, "")}
+                  // @ts-ignore
+                  style={vscDarkPlus}
+                  language={match[1]}
+                  PreTag="div"
+                  {...props}
+                />
               ) : (
                 <code className={className} {...props}>
                   {children}

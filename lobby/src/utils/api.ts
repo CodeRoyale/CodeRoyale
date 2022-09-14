@@ -48,7 +48,9 @@ const deleteRoom = async (roomId: string) => {
   return graphQLClient.request(mutation, variables);
 };
 
-const getRandomQuestionIds = async (noOfIds: number): Promise<number[]> => {
+const getRandomQuestionIds = async (
+  noOfIds: number
+): Promise<{ getRandomQuestionIds: number[] }> => {
   const query = gql`
     query GetRandomQuestionIds($noOfIds: Int!) {
       getRandomQuestionIds(noOfIds: $noOfIds)
