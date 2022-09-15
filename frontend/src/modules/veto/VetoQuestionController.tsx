@@ -1,4 +1,5 @@
 import React from "react";
+import { VetoControlPanel } from "../../components/VetoControlPanel";
 import { VetoQuestionCard } from "../../components/VetoQuestionCard";
 import { useQuestionsQuery } from "../../generated/graphql";
 import { useRoom, useVetoUsers } from "../../global-stores";
@@ -15,6 +16,7 @@ export const VetoQuestionController: React.FC = () => {
 
   return (
     <div className="mt-8 px-4">
+      <VetoControlPanel />
       {loading && !data ? (
         <span className="text-primary-200">Loading...</span>
       ) : (
@@ -23,7 +25,7 @@ export const VetoQuestionController: React.FC = () => {
             key={index}
             title={question.title}
             description={question.description}
-            marginTop={index !== 0 ? "mt-6" : ""}
+            marginTop="mt-6"
           />
         ))
       )}
