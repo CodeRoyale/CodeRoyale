@@ -52,6 +52,11 @@ export const startCompetition = async ({
   const roomId = room.config.id;
 
   console.log(`Competition starting for room: ${roomId}`);
+  socket.to(roomId).emit("receiveChatMessage", {
+    type: "ROOM_ALERT_MESSAGE",
+    fromUserId: currentUserId,
+    message: "is starting the competition! All the best!",
+  });
   const roomTimer = await getRoomTimer(roomId, redis!);
 
   // get random veto questions ids from api
