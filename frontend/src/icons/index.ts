@@ -11,8 +11,10 @@ import { AddModerator } from "./AddModerator";
 import { Launch } from "./Launch";
 import { HalfArrowDown } from "./HalfArrowDown";
 import { HalfArrowUp } from "./HalfArrowUp";
+import { Delete } from "./Delete";
 
 export {
+  Delete,
   HalfArrowDown,
   HalfArrowUp,
   Google,

@@ -3,34 +3,87 @@ import useCollapse from "react-collapsed";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import { HalfArrowDown, HalfArrowUp } from "../icons";
+import { Delete, HalfArrowDown, HalfArrowUp } from "../icons";
 import { Check } from "../icons/Check";
 
 interface VetoQuestionCardProps {
   title: string;
   description: string;
   marginTop?: string;
+  isSelected: boolean;
+  voteQuestionOnClick: () => void;
 }
 
 export const VetoQuestionCard: React.FC<VetoQuestionCardProps> = ({
   title,
   description,
   marginTop,
+  isSelected,
+  voteQuestionOnClick,
 }) => {
+  const [selectedQuestionState, setSelectedQuestionState] = useState({
+    color: "#00FF00",
+    displayChild: (
+      <>
+        Question vote added
+        <Check className="ml-2" fill="#00FF00" width={18} height={18} />
+      </>
+    ),
+  });
   const [isExpanded, setExpanded] = useState(false);
   const { getCollapseProps, getToggleProps } = useCollapse({
     collapsedHeight: 100,
   });
 
+  const handleIsSelectedMouseOver = () => {
+    setSelectedQuestionState({
+      color: "#FF0000",
+      displayChild: (
+        <>
+          Delete question vote
+          <Delete className="ml-2" fill="#FF0000" width={18} height={18} />
+        </>
+      ),
+    });
+  };
+
+  const handleIsSelectedMouseLeave = () => {
+    setSelectedQuestionState({
+      color: "#00FF00",
+      displayChild: (
+        <>
+          Question vote added
+          <Check className="ml-2" fill="#00FF00" width={18} height={18} />
+        </>
+      ),
+    });
+  };
+
   return (
     <div className={`bg-primary-800 rounded-lg ${marginTop}`}>
       <div className="flex justify-between items-center bg-primary-700 text-lg font-semibold text-primary-100 rounded-t-lg px-4 py-3">
         {title}
-        <span className="flex items-center font-normal text-sm cursor-pointer">
-          Vote question
-          <Check className="ml-2" fill="#DEE3EA" width={18} height={18} />
-          {/* <Check className="ml-2" fill="#00FF00" width={18} height={18} /> */}
-        </span>
+        {isSelected ? (
+          <span
+            className="flex items-center font-normal text-sm cursor-pointer transition duration-75 ease-in-out"
+            onClick={voteQuestionOnClick}
+            style={{
+              color: selectedQuestionState.color,
+            }}
+            onMouseOver={handleIsSelectedMouseOver}
+            onMouseLeave={handleIsSelectedMouseLeave}
+          >
+            {selectedQuestionState.displayChild}
+          </span>
+        ) : (
+          <span
+            className="flex items-center font-normal text-sm cursor-pointer"
+            onClick={voteQuestionOnClick}
+          >
+            Vote question
+            <Check className="ml-2" fill="#DEE3EA" width={18} height={18} />
+          </span>
+        )}
       </div>
       <div className="markdown" {...getCollapseProps()}>
         <ReactMarkdown
