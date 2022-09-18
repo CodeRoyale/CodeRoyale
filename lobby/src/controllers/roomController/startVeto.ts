@@ -29,6 +29,12 @@ export const startVeto = (
     room.competition.veto.isOngoing = true;
     room.competition.veto.questionIds = questionIds;
 
+    Object.keys(room.teams).forEach((team) => {
+      room.teams[team].forEach((teamMemberId) => {
+        room.competition.veto.yetToVoteUserIds.push(teamMemberId);
+      });
+    });
+
     // initialize votes with 0
     questionIds.forEach((questionId) => {
       room.competition.veto.votes[questionId] = 0;

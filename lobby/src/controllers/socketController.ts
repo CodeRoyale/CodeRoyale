@@ -8,6 +8,7 @@ import { getRoom } from "./roomController/getRoom";
 import { joinTeam } from "./roomController/joinTeam";
 import { leaveRoom } from "./roomController/leaveRoom";
 import { leaveTeam } from "./roomController/leaveTeam";
+import { registerVotes } from "./roomController/registerVotes";
 import { startCompetition } from "./roomController/startCompetition";
 import { deleteUser, getUser, updateUser } from "./userController";
 
@@ -113,6 +114,17 @@ export const handleUserEvents = (args: DataFromServer) => {
       socket,
       currentUserId,
       redis,
+      io,
+    });
+
+    callback(response);
+  });
+
+  socket.on("registerVotes", async (dataFromClient, callback) => {
+    const response = await registerVotes(dataFromClient, {
+      redis,
+      currentUserId,
+      socket,
       io,
     });
 

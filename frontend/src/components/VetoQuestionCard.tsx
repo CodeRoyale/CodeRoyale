@@ -11,6 +11,7 @@ interface VetoQuestionCardProps {
   description: string;
   marginTop?: string;
   isSelected: boolean;
+  canVote: boolean;
   voteQuestionOnClick: () => void;
 }
 
@@ -19,6 +20,7 @@ export const VetoQuestionCard: React.FC<VetoQuestionCardProps> = ({
   description,
   marginTop,
   isSelected,
+  canVote,
   voteQuestionOnClick,
 }) => {
   const [selectedQuestionState, setSelectedQuestionState] = useState({
@@ -63,27 +65,29 @@ export const VetoQuestionCard: React.FC<VetoQuestionCardProps> = ({
     <div className={`bg-primary-800 rounded-lg ${marginTop}`}>
       <div className="flex justify-between items-center bg-primary-700 text-lg font-semibold text-primary-100 rounded-t-lg px-4 py-3">
         {title}
-        {isSelected ? (
-          <span
-            className="flex items-center font-normal text-sm cursor-pointer transition duration-75 ease-in-out"
-            onClick={voteQuestionOnClick}
-            style={{
-              color: selectedQuestionState.color,
-            }}
-            onMouseOver={handleIsSelectedMouseOver}
-            onMouseLeave={handleIsSelectedMouseLeave}
-          >
-            {selectedQuestionState.displayChild}
-          </span>
-        ) : (
-          <span
-            className="flex items-center font-normal text-sm cursor-pointer"
-            onClick={voteQuestionOnClick}
-          >
-            Vote question
-            <Check className="ml-2" fill="#DEE3EA" width={18} height={18} />
-          </span>
-        )}
+        {canVote ? (
+          isSelected ? (
+            <span
+              className="flex items-center font-normal text-sm cursor-pointer transition duration-75 ease-in-out"
+              onClick={voteQuestionOnClick}
+              style={{
+                color: selectedQuestionState.color,
+              }}
+              onMouseOver={handleIsSelectedMouseOver}
+              onMouseLeave={handleIsSelectedMouseLeave}
+            >
+              {selectedQuestionState.displayChild}
+            </span>
+          ) : (
+            <span
+              className="flex items-center font-normal text-sm cursor-pointer"
+              onClick={voteQuestionOnClick}
+            >
+              Vote question
+              <Check className="ml-2" fill="#DEE3EA" width={18} height={18} />
+            </span>
+          )
+        ) : null}
       </div>
       <div className="markdown" {...getCollapseProps()}>
         <ReactMarkdown

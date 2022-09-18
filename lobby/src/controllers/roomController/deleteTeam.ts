@@ -29,19 +29,22 @@ export const deleteTeam = async (
   }
 
   let newBench = room.state.bench;
-  const teamToDeleteMembers = room.teams[teamName];
+  const teamToDelete = room.teams[teamName];
 
-  teamToDeleteMembers.forEach(async (teamMember) => {
+  for (let i = 0; i < teamToDelete.length; i++) {
+    const teamMember = teamToDelete[i];
     const teamUser = await getUser(teamMember, redis!);
     if (!teamUser?.currentTeam) {
-      return;
+      continue;
     }
     socket.leave(`${teamUser.currentRoom}/${teamUser.currentTeam}`);
     teamUser.currentTeam = null;
+    console.log(room.state.users[teamMember].team);
+    room.state.users[teamMember].team = null;
     await updateUser(teamUser, redis!);
-  });
+  }
 
-  newBench = [...newBench, ...teamToDeleteMembers];
+  newBench = [...newBench, ...teamToDelete];
 
   room.state.bench = newBench;
   delete room.teams[teamName];

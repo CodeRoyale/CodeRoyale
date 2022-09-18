@@ -29,6 +29,7 @@ export const leaveTeam = async ({
 
   room!.teams[user.currentTeam!] = filteredTeam;
   room!.state.bench.push(currentUserId);
+  room!.state.users[currentUserId].team = null;
 
   await updateRoom(room!, redis!);
 

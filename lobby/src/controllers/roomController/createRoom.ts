@@ -105,6 +105,7 @@ export const createRoom = async (
       currMemberCount: 1,
       bannedMemberIds: [],
       bench: [currentUserId],
+      users: { [currentUserId]: { team: null } },
     },
     competition: {
       questionIds: [],
@@ -120,6 +121,7 @@ export const createRoom = async (
         isOngoing: false,
         timeLimit: createRoomInput.veto.timeLimit,
         votedUserIds: [],
+        yetToVoteUserIds: [],
         votes: {},
       },
     },

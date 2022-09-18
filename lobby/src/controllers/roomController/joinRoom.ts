@@ -31,6 +31,12 @@ export const joinRoom = async (
 
   room.state.bench.push(currentUserId);
   room.state.currMemberCount += 1;
+  room.state.users = {
+    ...room.state.users,
+    [currentUserId]: {
+      team: null,
+    },
+  };
   await updateRoom(room, redis!);
 
   user.currentRoom = roomId;

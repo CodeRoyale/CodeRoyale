@@ -1,7 +1,7 @@
 import React from "react";
-import { VetoControlPanel } from "../../components/VetoControlPanel";
 import { useQuestionsQuery } from "../../generated/graphql";
 import { useRoom } from "../../global-stores";
+import { VetoControlPanelController } from "./VetoControlPanelController";
 import { VetoQuestionCardController } from "./VetoQuestionCardController";
 
 export const VetoQuestionsController: React.FC = () => {
@@ -12,7 +12,7 @@ export const VetoQuestionsController: React.FC = () => {
 
   return (
     <div className="mt-8 px-4">
-      <VetoControlPanel />
+      <VetoControlPanelController />
       {loading && !data ? (
         <span className="text-primary-200">Loading...</span>
       ) : (

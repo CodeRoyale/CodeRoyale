@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { VetoQuestionCard } from "../../components/VetoQuestionCard";
 import { useRoom, useVetoVote } from "../../global-stores";
+import { userCanVote } from "../../utils/userCanVote";
 
 interface VetoQuestionCardControllerProps {
   questionId: number;
@@ -41,6 +42,7 @@ export const VetoQuestionCardController: React.FC<
       title={title}
       marginTop={marginTop}
       isSelected={isSelected}
+      canVote={userCanVote()}
       voteQuestionOnClick={handleQuestionVote}
     />
   );

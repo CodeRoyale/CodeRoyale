@@ -32,6 +32,7 @@ export const leaveRoom = async ({
 
   // decrement the currentMemberCount
   room.state.currMemberCount -= 1;
+  delete room.state.users[currentUserId];
 
   // await redis?.set(ROOM_PREFIX + user.currentRoom, JSON.stringify(room));
   await updateRoom(room, redis!);

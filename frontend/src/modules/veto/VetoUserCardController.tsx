@@ -1,11 +1,12 @@
 import React from "react";
 import { VetoUserCard } from "../../components/VetoUserCard";
 import { useUserFromIdQuery } from "../../generated/graphql";
+import { useRoom } from "../../global-stores";
 
 export const VetoUserCardController: React.FC<{
   userId: number;
-  teamName: string;
-}> = ({ userId, teamName }) => {
+}> = ({ userId }) => {
+  const room = useRoom((state) => state.room);
   const { data, loading } = useUserFromIdQuery({
     variables: { userId },
   });
@@ -17,7 +18,7 @@ export const VetoUserCardController: React.FC<{
   return (
     <VetoUserCard
       name={data?.userFromId.user?.name!}
-      teamName={teamName}
+      teamName={room?.state.users[userId].team!}
       profilePicture={data?.userFromId.user?.profilePicture!}
     />
   );

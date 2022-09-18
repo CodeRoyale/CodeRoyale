@@ -16,6 +16,7 @@ export type Room = {
     currMemberCount: number;
     bannedMemberIds: number[];
     bench: number[]; // without a team
+    users: Record<number, { team: string | null }>; // {userId: {team: 'someTeam'}}
   };
   competition: {
     questionIds: number[];
@@ -31,6 +32,7 @@ export type Room = {
       isOngoing: boolean;
       timeLimit: number;
       votedUserIds: number[];
+      yetToVoteUserIds: number[];
       votes: Record<number, number>;
     };
   };
@@ -171,5 +173,9 @@ export interface ClientToServerEvents {
   ) => void;
   startCompetition: (
     callback: (e: ControllerResponse<boolean>) => void
+  ) => void;
+  registerVotes: (
+    votedQuestionIds: number[],
+    callback: (e: ControllerResponse<Room>) => void
   ) => void;
 }

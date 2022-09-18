@@ -43,7 +43,8 @@ export const joinTeam = async (
   }
 
   // Push user into team
-  room!.teams[teamName].push(currentUserId);
+  room.teams[teamName].push(currentUserId);
+  room.state.users[currentUserId].team = teamName;
   user.currentTeam = teamName;
 
   await updateRoom(room, redis!);
