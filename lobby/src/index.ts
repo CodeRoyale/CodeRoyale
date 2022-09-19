@@ -100,6 +100,10 @@ const main = async () => {
     const user = await getUser(currentUserId, redis);
     if (user?.currentRoom) {
       const room = await getRoom(user.currentRoom, redis);
+      socket.join(`${user.currentRoom}`);
+      if (user.currentTeam) {
+        socket.join(`${user.currentRoom}/${user.currentTeam}`);
+      }
       socket.emit("getRoomAfterConnection", room!);
     }
     handleUserEvents({ socket, io, redis, currentUserId });
