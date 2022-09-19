@@ -5,8 +5,6 @@ import os from "os";
 import http from "http";
 import { Server } from "socket.io";
 import { mainRouter } from "./routes/main";
-import { usersRouter } from "./routes/users";
-import { roomsRouter } from "./routes/rooms";
 import { COOKIE_NAME, SESSION_PREFIX } from "./utils/constants";
 import cookieParser from "cookie-parser";
 import cookie from "cookie";
@@ -38,8 +36,6 @@ const main = async () => {
 
   // Routes
   app.use("/", mainRouter);
-  app.use("/users", usersRouter);
-  app.use("/rooms", roomsRouter);
 
   // cors for socket.io
   const io = new Server<ClientToServerEvents, ServerToClientEvents>(server, {
