@@ -29,7 +29,15 @@ export const CurrentRoomCardController: React.FC<{}> = () => {
       <CurrentRoomCard
         title={room?.config.title!}
         creatorUsername="joel"
-        launchOnClick={() => router.push(`/room/${room?.config.id}`)}
+        launchOnClick={() => {
+          if (room?.competition.veto.isOngoing) {
+            router.push(`/veto/${room?.config.id}`);
+          } else if (room?.competition.isOngoing) {
+            router.push(`/arena/${room?.config.id}`);
+          } else {
+            router.push(`/room/${room?.config.id}`);
+          }
+        }}
         leaveRoomOnClick={async () => {
           const response: any = await leaveRoom(conn);
 
