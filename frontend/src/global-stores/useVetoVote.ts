@@ -1,4 +1,5 @@
 import create from "zustand";
+import { persist } from "zustand/middleware";
 
 interface VetoVoteState {
   votes: number[];
@@ -6,15 +7,28 @@ interface VetoVoteState {
   deleteVote: (questionId: number) => void;
 }
 
-export const useVetoVote = create<VetoVoteState>()((set) => ({
-  votes: [],
-  addVote: (questionId) =>
-    set((state) => ({ votes: [...state.votes, questionId] })),
-  deleteVote: (questionId) =>
-    set((state) => {
-      let { votes } = state;
-      votes = votes.filter((vote) => vote !== questionId);
+export const useVetoVote = create<VetoVoteState>()(
+  persist(
+    (set, get) => ({
+      votes: [],
+      addVote: (questionId) =>
+        set(() => {
+          const { votes } = get();
+          votes.push(questionId);
 
-      return { votes };
+          return { votes };
+        }),
+      deleteVote: (questionId) =>
+        set(() => {
+          let { votes } = get();
+          votes = votes.filter((vote) => vote !== questionId);
+
+          return { votes };
+        }),
     }),
-}));
+    {
+      name: "veto-vote-storage", // name of item in the storage (must be unique)
+      partialize: (state) => ({ votes: state.votes }),
+    }
+  )
+);
