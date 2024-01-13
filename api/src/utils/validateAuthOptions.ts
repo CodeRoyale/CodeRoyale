@@ -1,7 +1,7 @@
 // import { GoogleUser } from "src/types/types";
 import { RegisterInput } from "../resolvers/user";
-import axios from "axios";
-import { GoogleUser } from "src/types/types";
+// import axios from "axios";
+// import { GoogleUser } from "src/types/types";
 
 export const validateAuthOptions = async (options: RegisterInput) => {
   const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
@@ -9,32 +9,32 @@ export const validateAuthOptions = async (options: RegisterInput) => {
   const usernameSpecialChars = /[!@#$%^&*()+\-=\[\]{};':"\\|,<>\/?]+/;
   const hasNumber = /\d/;
 
-  const responseFromGoogle = await axios.get(
-    "https://www.googleapis.com/oauth2/v3/userinfo",
-    {
-      headers: { Authorization: `Bearer ${options.accessToken}` },
-    }
-  );
+  // const responseFromGoogle = await axios.get(
+  //   "https://www.googleapis.com/oauth2/v3/userinfo",
+  //   {
+  //     headers: { Authorization: `Bearer ${options.accessToken}` },
+  //   }
+  // );
 
-  const googleUser: GoogleUser = responseFromGoogle.data;
+  // const googleUser: GoogleUser = responseFromGoogle.data;
 
-  if (!googleUser) {
-    return [
-      {
-        field: "token",
-        message: "Bad Google code",
-      },
-    ];
-  }
+  // if (!googleUser) {
+  //   return [
+  //     {
+  //       field: "token",
+  //       message: "Bad Google code",
+  //     },
+  //   ];
+  // }
 
-  if (options.email !== googleUser.email) {
-    return [
-      {
-        field: "email",
-        message: "Email does not match OAuth email",
-      },
-    ];
-  }
+  // if (options.email !== googleUser.email) {
+  //   return [
+  //     {
+  //       field: "email",
+  //       message: "Email does not match OAuth email",
+  //     },
+  //   ];
+  // }
 
   if (usernameSpecialChars.test(options.username)) {
     return [

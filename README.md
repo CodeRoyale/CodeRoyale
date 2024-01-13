@@ -2,7 +2,7 @@
     <img height=100 src="CodeRoyale.png"/>
 </p>
 <p align="center">
-  <strong>Building a fun environment for people to do competitive programming!</strong>
+  <strong>Building a fun environment for folks to compete in coding contests</strong>
 </p>
 <p align="center">
   <a href="https://discord.gg/aCKem4h8te">
@@ -23,9 +23,28 @@
 | Module                                                                |                            Description                            |
 | :-------------------------------------------------------------------- | :---------------------------------------------------------------: |
 | [frontend](https://github.com/CodeRoyale/CodeRoyale/tree/v2/frontend) |                      React (Nextjs) frontend                      |
-| [lobby](https://github.com/CodeRoyale/lobby)                          |            WebSocket server for managing competitions             |
-| [api](https://github.com/CodeRoyale/userAPI)                          | Graphql API for handling authentication and serving question data |
+| [lobby](https://github.com/CodeRoyale/CodeRoyale/tree/v2/lobby)       |            WebSocket server for managing competitions             |
+| [api](https://github.com/CodeRoyale/CodeRoyale/tree/v2/api)           | Graphql API for handling authentication and serving question data |
+| [common](https://github.com/CodeRoyale/CodeRoyale/tree/v2/common)     |                          Common TS types                          |
 
-## Important!
+## Screenshots
 
-This project currently is a work in progress and we will be releasing a stable build soon! Join our discord community to get in touch with us.
+Discover public rooms and compete in a contest easily!
+
+<img src="./screenshots/Dashboard.png"/>
+
+Public profile page with ability to follow folks and create connections
+
+<img src="./screenshots/Profile.png"/>
+
+Room page
+
+<img src="./screenshots/Room.png"/>
+
+Invite connections to join a room!
+
+<img src="./screenshots/RoomInvites.png"/>
+
+Create teams
+
+<img src="./screenshots/Teams.png"/>
