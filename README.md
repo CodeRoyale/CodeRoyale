@@ -48,3 +48,5 @@ Invite connections to join a room!
 Create teams
 
 <img src="./screenshots/Teams.png"/>
+
+🙏 Special thanks to [BellatrixLestrangee](https://github.com/BellatrixLestrangee) for the help with the UI designs.
