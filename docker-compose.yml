@@ -1,0 +1,86 @@
+version: '3.3'
+
+services:
+  # API Service
+  api:
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    ports:
+      - '5000:5000'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    environment:
+      NODE_ENV: development
+      PORT: 5000
+      CORS_ORIGIN: http://localhost:3000
+      SESSION_SECRET: 2b541410-f640-11ec-b939-0242ac120002 # !SET THIS!
+      LOBBY_SECRET: fe8d2973-1fcd-4006-8d71-6113a4d93195 # !SET THIS!
+
+      # --- CONNECTS TO YOUR LOCAL DB/REDIS ---
+      POSTGRES_HOST: host.docker.internal
+      POSTGRES_PORT: 5432 # Or your local Postgres port
+      REDIS_HOST: host.docker.internal
+      REDIS_PORT: 6379 # Or your local Redis port
+
+      # --- YOUR LOCAL DB CREDENTIALS ---
+      POSTGRES_DBNAME: postgres # !SET THIS!
+      POSTGRES_USER: postgres # !SET THIS!
+      POSTGRES_PASSWORD: '@Zerois22' # !SET THIS!
+    networks:
+      - app-network
+
+  # Lobby Service
+  lobby:
+    build:
+      context: .
+      dockerfile: lobby.Dockerfile
+    ports:
+      - '2500:2500'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    environment:
+      NODE_ENV: development
+      PORT: 2500
+      CORS_ORIGIN: http://localhost:3000
+      SESSION_SECRET: 2b541410-f640-11ec-b939-0242ac120002 # !SET THIS! (Must match API)
+      LOBBY_SECRET: fe8d2973-1fcd-4006-8d71-6113a4d93195 # !SET THIS! (Must match API)
+      API: 'http://api:5000/graphql' # Connects to the 'api' container
+
+      # --- CONNECTS TO YOUR LOCAL REDIS ---
+      REDIS_HOST: host.docker.internal
+      REDIS_PORT: 6379 # Or your local Redis port
+
+      # --- QAPI VARS ---
+      QAPI_URL: 'YOUR_QAPI_URL'
+      ACCESS_SECRECT_KEY: 'YOUR_ACCESS_KEY'
+      QAPI_BEARER: 'YOUR_QAPI_BEARER'
+      LOBBY_ID: 'YOUR_LOBBY_ID'
+    depends_on:
+      - api
+    networks:
+      - app-network
+
+  # Frontend Service
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend.Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: 'http://localhost:5000/graphql'
+        NEXT_PUBLIC_LOBBY_URL: 'http://localhost:2500'
+        NEXT_PUBLIC_GOOGLE_CLIENT_ID: 1011215903549-gk04pquqgtbkkeft8rvked0eb08lks61.apps.googleusercontent.com # !SET THIS!
+    ports:
+      - '3000:3000' # Next.js default port
+    environment:
+      NODE_ENV: development
+      SESSION_SECRET: 2b541410-f640-11ec-b939-0242ac120002 # !SET THIS!
+    depends_on:
+      - api
+      - lobby
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
