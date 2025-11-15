@@ -22,7 +22,10 @@ const main = async () => {
   const app = express();
   const server = http.createServer(app);
 
-  const redis = new Redis();
+  const redis = new Redis({
+    host: process.env.REDIS_HOST,
+    port: 6379, // Assuming your local Redis is on the default port
+  });
 
   // middlewares
   app.use(

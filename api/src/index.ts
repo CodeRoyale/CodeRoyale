@@ -29,7 +29,10 @@ const main = async () => {
   const app = express();
 
   const RedisStore = connectRedis(session);
-  const redis = new Redis();
+  const redis = new Redis({
+    host: process.env.REDIS_HOST,
+    port: 6379, // Assuming your local Redis is on the default port
+  });
 
   app.use(
     cors({
@@ -48,7 +51,7 @@ const main = async () => {
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
         httpOnly: true,
-        sameSite: "lax",
+        sameSite: __prod__ ? "lax" : undefined,
         secure: __prod__,
       },
       saveUninitialized: false,
