@@ -40,11 +40,9 @@ const main = async () => {
   // cors for socket.io
   const io = new Server<ClientToServerEvents, ServerToClientEvents>(server, {
     cors: {
-      origin: [
-        process.env.CORS_ORIGIN,
-        process.env.SOCKET_ADMIN_DASHBOARD_ORIGIN,
-      ],
+      origin: process.env.CORS_ORIGIN || "http://localhost:3000",
       credentials: true,
+      methods: ["GET", "POST"],
     },
   });
 

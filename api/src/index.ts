@@ -31,10 +31,13 @@ const main = async () => {
   const RedisStore = connectRedis(session);
   const redis = new Redis();
 
+  // CORS must be configured before session middleware
   app.use(
     cors({
-      origin: [process.env.CORS_ORIGIN, "https://studio.apollographql.com"],
+      origin: process.env.CORS_ORIGIN || "http://localhost:3000",
       credentials: true,
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "Authorization"],
     })
   );
 
@@ -52,7 +55,7 @@ const main = async () => {
         secure: __prod__,
       },
       saveUninitialized: false,
-      secret: process.env.SESSION_SECRET,
+      secret: process.env.SESSION_SECRET as string,
       resave: false,
     })
   );
