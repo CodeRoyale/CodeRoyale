@@ -134,5 +134,15 @@ export const GoogleAuthButtonController: React.FC<
   //   },
   // });
 
-  return <GoogleLogin onSuccess={handleGoogleLogin} />;
+  return (
+    <GoogleLogin
+      onSuccess={handleGoogleLogin}
+      theme="filled_black"
+      size="large"
+      text="signin_with"
+      shape="rectangular"
+      width="320"
+      logo_alignment="left"
+    />
+  );
 };
